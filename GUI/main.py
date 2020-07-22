@@ -89,9 +89,9 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         self.aboutapp = AboutApp()
         self.aboutapp.show()
         self.aboutapp.toolButton_6.clicked.connect(self.aboutapp.close)
-        self.aboutapp.label_11.setText('<a href="https://github.com/CineEncoder/CineEncoder"> https://github.com/CineEncoder/CineEncoder </a>')
+        self.aboutapp.label_11.setText('<a href="https://github.com/CineEncoder/cine-encoder"> https://github.com/CineEncoder/cine-encoder </a>')
         self.aboutapp.label_11.setOpenExternalLinks(True)
-        self.aboutapp.label_12.setText('<a href="https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE"> License: GNU Lesser General Public License Version 3 </a>')
+        self.aboutapp.label_12.setText('<a href="https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE"> License: GNU Lesser General Public License Version 3 </a>')
         self.aboutapp.label_12.setOpenExternalLinks(True)
 
     def donate(self):
