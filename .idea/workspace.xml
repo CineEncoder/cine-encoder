@@ -10,11 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Create">
-      <change beforePath="$PROJECT_DIR$/.idea/CineEncoder.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CineEncoder.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-    </list>
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Create icons" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,7 +79,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595409944447</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Create icons">
+      <created>1595418306086</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1595418306086</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -101,7 +104,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Create" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create" />
+    <MESSAGE value="Create icons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create icons" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595411006170">
@@ -120,9 +124,9 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595411006170" />
-    <state x="560" y="260" key="Vcs.Push.Dialog.v2" timestamp="1595409956306">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595418325181">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595409956306" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595418325181" />
   </component>
 </project>
