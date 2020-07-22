@@ -11,7 +11,7 @@ setuptools.setup(
     description="Encoder",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/CineEncoder/CineEncoder",
+    url="https://github.com/CineEncoder/cine-encoder",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
