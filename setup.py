@@ -10,7 +10,7 @@ setuptools.setup(
     author_email="depositmail@mail.ru",
     description="Encoder",
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="video",
     url="https://github.com/CineEncoder/cine-encoder",
     packages=setuptools.find_packages(),
     classifiers=[

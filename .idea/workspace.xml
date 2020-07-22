@@ -25,7 +25,10 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -3" />
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -4">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -175,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595446276932</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Change desktop -4">
+      <created>1595446464930</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1595446464930</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -213,7 +223,8 @@
     <MESSAGE value="Change desktop -1" />
     <MESSAGE value="Change desktop -2" />
     <MESSAGE value="Change desktop -3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -3" />
+    <MESSAGE value="Change desktop -4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -4" />
   </component>
   <component name="WindowStateProjectService">
     <state x="834" y="424" key="Github.ShareDialog" timestamp="1595432950130">
@@ -236,9 +247,9 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595411006170" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595446286355">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595446473681">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595446286355" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595446473681" />
   </component>
 </project>
