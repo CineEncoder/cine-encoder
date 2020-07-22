@@ -25,7 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Create 2 files" />
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -147,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595435048810</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Change desktop">
+      <created>1595441419686</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1595441419686</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -181,7 +188,8 @@
     <MESSAGE value="Create icons two" />
     <MESSAGE value="Create all" />
     <MESSAGE value="Create 2 files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create 2 files" />
+    <MESSAGE value="Change desktop" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change desktop" />
   </component>
   <component name="WindowStateProjectService">
     <state x="834" y="424" key="Github.ShareDialog" timestamp="1595432950130">
@@ -204,9 +212,9 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595411006170" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595435058566">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595441433785">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595435058566" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595441433785" />
   </component>
 </project>
