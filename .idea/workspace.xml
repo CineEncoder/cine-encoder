@@ -25,23 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Create icons two">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/cine-encoder.desktop" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/cine-encoder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/ui_about.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/ui_donate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/ui_main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/GUI/ui_options.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cine_encoder_helg1980.egg-info/PKG-INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cine_encoder_helg1980.egg-info/SOURCES.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cine_encoder_helg1980.egg-info/dependency_links.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cine_encoder_helg1980.egg-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cine-encoder-helg1980-1.0.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/cine_encoder_helg1980-1.0-py3-none-any.whl" beforeDir="false" />
-    </list>
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Create 2 files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,6 +60,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/GUI" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -144,7 +133,21 @@
       <option name="project" value="LOCAL" />
       <updated>1595433506379</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Create all">
+      <created>1595434994704</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1595434994704</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Create 2 files">
+      <created>1595435048810</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1595435048810</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,7 +179,9 @@
     <MESSAGE value="Create" />
     <MESSAGE value="Create icons" />
     <MESSAGE value="Create icons two" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create icons two" />
+    <MESSAGE value="Create all" />
+    <MESSAGE value="Create 2 files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create 2 files" />
   </component>
   <component name="WindowStateProjectService">
     <state x="834" y="424" key="Github.ShareDialog" timestamp="1595432950130">
@@ -199,9 +204,9 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595411006170" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595433521503">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595435058566">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595433521503" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595435058566" />
   </component>
 </project>
