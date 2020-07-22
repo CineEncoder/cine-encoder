@@ -6,17 +6,47 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Create icons" />
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Create icons two">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1f2Ihy1NekG6qHq84q9wnzeyVrk" />
@@ -86,7 +116,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595418306086</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Create icons two">
+      <created>1595428635648</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1595428635648</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -94,7 +131,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -105,9 +154,14 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Create" />
     <MESSAGE value="Create icons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create icons" />
+    <MESSAGE value="Create icons two" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create icons two" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="834" y="424" key="Github.ShareDialog" timestamp="1595432950130">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state x="834" y="424" key="Github.ShareDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1595432950130" />
     <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595411006170">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
@@ -124,9 +178,9 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595411006170" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595418325181">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595432917923">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595418325181" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595432917923" />
   </component>
 </project>
