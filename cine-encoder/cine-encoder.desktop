@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment[cv_RU]=
 Comment=
-Exec=python /usr/lib/cine-encoder/GUI/main.py
+Exec=python /usr/lib/python3.8/site-packages/cine-encoder/main.py
 GenericName[cv_RU]=Cine Encoder
 GenericName=Cine Encoder
 Icon=cine-encoder
