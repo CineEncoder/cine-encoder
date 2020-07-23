@@ -25,7 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -10">
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -11">
       <change beforePath="$PROJECT_DIR$/.idea/CineEncoder.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CineEncoder.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -69,7 +69,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cine-encoder/main.py" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
@@ -90,11 +90,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GUI" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cine-encoder" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/-----/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cine-encoder/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -246,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595505453328</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Change desktop -11">
+      <created>1595505814943</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1595505814943</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -291,37 +298,46 @@
     <MESSAGE value="Change desktop -8" />
     <MESSAGE value="Change desktop -9" />
     <MESSAGE value="Change desktop -10" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -10" />
+    <MESSAGE value="Change desktop -11" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -11" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="424" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595506101281">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state x="424" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1595506101281" />
     <state x="708" y="379" width="494" height="288" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1595505389276">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="708" y="379" width="494" height="288" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1048@0.0.1920.1048" timestamp="1595505389276" />
+    <state x="748" y="268" key="FileChooserDialogImpl" timestamp="1595506097503">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state x="748" y="268" key="FileChooserDialogImpl/0.0.1920.1048@0.0.1920.1048" timestamp="1595506097503" />
     <state x="834" y="424" key="Github.ShareDialog" timestamp="1595432950130">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="834" y="424" key="Github.ShareDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1595432950130" />
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595500098188">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595506081030">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595500098188" />
-    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595500098187">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081030" />
+    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595506081028">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595500098187" />
-    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595500098186">
+    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081028" />
+    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595506081027">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595500098186" />
-    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595500098188">
+    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081027" />
+    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595506081029">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595500098188" />
-    <state x="469" y="159" key="SettingsEditor" timestamp="1595505789695">
+    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081029" />
+    <state x="469" y="159" key="SettingsEditor" timestamp="1595506077837">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="469" y="159" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1595505789695" />
+    <state x="469" y="159" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1595506077837" />
     <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595462068759">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
