@@ -25,21 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -6">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/cine-encoder.desktop" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/cine-encoder.desktop" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/cine-encoder.png" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/cine-encoder.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_about.py" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_about.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_about.ui" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_about.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_donate.py" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_donate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_donate.ui" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_donate.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_main.ui" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_main.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_options.py" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_options.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/ui_options.ui" beforeDir="false" afterPath="$PROJECT_DIR$/cine-encoder/ui_options.ui" afterDir="false" />
-    </list>
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -7" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,6 +70,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cine-encoder" />
       <recent name="$PROJECT_DIR$/GUI" />
     </key>
   </component>
@@ -217,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595462059187</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Change desktop -7">
+      <created>1595498596971</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1595498596971</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -258,29 +252,30 @@
     <MESSAGE value="Change desktop -4" />
     <MESSAGE value="Change desktop -5" />
     <MESSAGE value="Change desktop -6" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -6" />
+    <MESSAGE value="Change desktop -7" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -7" />
   </component>
   <component name="WindowStateProjectService">
     <state x="834" y="424" key="Github.ShareDialog" timestamp="1595432950130">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="834" y="424" key="Github.ShareDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1595432950130" />
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595462476301">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595498614398">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595462476301" />
-    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595462476300">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595498614398" />
+    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595498614398">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595462476300" />
-    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595462476300">
+    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595498614398" />
+    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595498614398">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595462476300" />
-    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595462476301">
+    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595498614398" />
+    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595498614398">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595462476301" />
+    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595498614398" />
     <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595462068759">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
