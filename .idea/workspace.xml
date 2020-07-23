@@ -25,10 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -11">
-      <change beforePath="$PROJECT_DIR$/.idea/CineEncoder.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CineEncoder.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -12" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -253,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595505814943</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Change desktop -12">
+      <created>1595506150052</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1595506150052</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -299,7 +303,8 @@
     <MESSAGE value="Change desktop -9" />
     <MESSAGE value="Change desktop -10" />
     <MESSAGE value="Change desktop -11" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -11" />
+    <MESSAGE value="Change desktop -12" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -12" />
   </component>
   <component name="WindowStateProjectService">
     <state x="424" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595506101281">
@@ -318,30 +323,30 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="834" y="424" key="Github.ShareDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1595432950130" />
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595506081030">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595506167899">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081030" />
-    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595506081028">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595506167899" />
+    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595506167899">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081028" />
-    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595506081027">
+    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595506167899" />
+    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595506167899">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081027" />
-    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595506081029">
+    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595506167899" />
+    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595506167899">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595506081029" />
+    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595506167899" />
     <state x="469" y="159" key="SettingsEditor" timestamp="1595506077837">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="469" y="159" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1595506077837" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595462068759">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595506160264">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595462068759" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595506160264" />
     <state x="666" y="96" width="587" height="855" key="find.popup" timestamp="1595498716920">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
