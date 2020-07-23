@@ -25,7 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change desktop -13" />
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Add PKGBUILD">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -264,7 +266,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595507572596</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Add PKGBUILD">
+      <created>1595527650874</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1595527650874</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -312,7 +321,8 @@
     <MESSAGE value="Change desktop -11" />
     <MESSAGE value="Change desktop -12" />
     <MESSAGE value="Change desktop -13" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change desktop -13" />
+    <MESSAGE value="Add PKGBUILD" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add PKGBUILD" />
   </component>
   <component name="WindowStateProjectService">
     <state x="424" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595506101281">
@@ -351,10 +361,10 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="469" y="159" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1595506077837" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595507589374">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595527659047">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595507589374" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595527659047" />
     <state x="666" y="96" width="587" height="855" key="find.popup" timestamp="1595498716920">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
