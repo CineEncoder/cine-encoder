@@ -25,7 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Change logo size">
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Add file index.rst">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +68,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cine-encoder/main.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
@@ -280,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595528400367</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Add file index.rst">
+      <created>1595717427528</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1595717427528</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -330,7 +337,8 @@
     <MESSAGE value="Change desktop -13" />
     <MESSAGE value="Add PKGBUILD" />
     <MESSAGE value="Change logo size" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change logo size" />
+    <MESSAGE value="Add file index.rst" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add file index.rst" />
   </component>
   <component name="WindowStateProjectService">
     <state x="424" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595506101281">
@@ -349,33 +357,37 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="834" y="424" key="Github.ShareDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1595432950130" />
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595610366111">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom" timestamp="1595803265221">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595610366111" />
-    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595610366111">
+    <state width="1897" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1595803265221" />
+    <state width="1897" height="277" key="GridCell.Tab.0.center" timestamp="1595803265220">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595610366111" />
-    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595610366111">
+    <state width="1897" height="277" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1595803265220" />
+    <state width="1897" height="277" key="GridCell.Tab.0.left" timestamp="1595803265219">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595610366111" />
-    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595610366111">
+    <state width="1897" height="277" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1595803265219" />
+    <state width="1897" height="277" key="GridCell.Tab.0.right" timestamp="1595803265221">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595610366111" />
+    <state width="1897" height="277" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1595803265221" />
     <state x="469" y="159" key="SettingsEditor" timestamp="1595610349210">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="469" y="159" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1595610349210" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595528409546">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595717439123">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595528409546" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595717439123" />
     <state x="666" y="96" width="587" height="855" key="find.popup" timestamp="1595498716920">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="666" y="96" width="587" height="855" key="find.popup/0.0.1920.1048@0.0.1920.1048" timestamp="1595498716920" />
+    <state x="754" y="427" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1595803262016">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state x="754" y="427" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1595803262016" />
   </component>
 </project>

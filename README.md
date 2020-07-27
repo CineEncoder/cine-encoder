@@ -25,13 +25,14 @@ To enable HDR mode, switch the "HDR signals" value to "Enable". By default, HDR 
 
 # Installation
 
-Supported operating system:
-  - Linux 64-bit
+Supported operating system: Linux x86_64
 
+##### - Arch Linux / Manjaro Linux:
+  - install [AUR package](https://aur.archlinux.org/packages/cine-encoder/) or *.pkg.tar.xz file from release
 
-```sh
-$ # This item is under development
-```
+##### - Other Linux systems:
+
+  - install  [BIN package](https://www.pling.com/p/1406740/) (temporary solution)
 
 
 # Licence
