@@ -1,4 +1,6 @@
-![](./images/Logo_.png)
+# Cine Encoder
+
+![](https://github.com/CineEncoder/cine-encoder/blob/master/images/Logo_.png)
 
 Cine Encoder for Linux is an application that allows you to convert media files while preserving HDR signals. NVENC hardware encoding for NVIDIA video cards is also supported for H265 and H264 modes. The following encoding modes are implemented:
 
@@ -13,25 +15,27 @@ Cine Encoder for Linux is an application that allows you to convert media files 
 
 # Review
 
-![View](./images/View.png)
+![View](https://github.com/CineEncoder/cine-encoder/blob/master/images/View.png)
 
 
 # HDR Settings
 
 To enable HDR mode, switch the "HDR signals" value to "Enable". By default, HDR mode is disabled.
 
-![HDR_settings](./images/HDR_settings.png)
+![HDR_settings](https://github.com/CineEncoder/cine-encoder/blob/master/images/HDR_settings.png)
 
 
 # Installation
 
-Supported operating system:
-  - Linux 64-bit
+Supported operating system: Linux x86_64
 
+##### - Arch Linux / Manjaro Linux:
 
-```sh
-$ # This item is under development
-```
+  - install [AUR package](https://aur.archlinux.org/packages/cine-encoder/) or *.pkg.tar.xz file from release
+
+##### - Other Linux systems:
+
+  - install  [BIN package](https://www.pling.com/p/1406740/) (temporary solution)
 
 
 # Licence
@@ -44,11 +48,11 @@ See [LICENSE.md](https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE)
 
 If you wish to support this project, you can make a donation for $0.5 or more via PayPal. Your contributions will help keep the project alive and support future development.
 
-[![PayPal](./images/PayPal.png)](https://paypal.me/KozhukharenkoOleg?locale.x=ru_RU)
+[![PayPal](https://github.com/CineEncoder/cine-encoder/blob/master/images/PayPal.png)](https://paypal.me/KozhukharenkoOleg?locale.x=ru_RU)
 
 ##### Bitcoin
 You can send bitcoins at this address or by scanning the QR code below:
 
-![Bitcoin](./images/Bitcoin.png)
+![Bitcoin](https://github.com/CineEncoder/cine-encoder/blob/master/images/Bitcoin.png)
 
 1PqFt976YQTJ9Js3xym5GjtPDfsjq98kN8
