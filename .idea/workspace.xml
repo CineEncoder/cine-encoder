@@ -25,8 +25,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Renew index.rst">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="e9efef1a-45cb-4de0-8af9-6c46c0e8ace2" name="Default Changelist" comment="Renew &quot;docs&quot;">
+      <change beforePath="$PROJECT_DIR$/docs/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs/conf.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +68,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CineEncoder-multithreads" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
@@ -309,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595880109945</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Renew &quot;docs&quot;">
+      <created>1596222949116</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1596222949116</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -362,7 +369,8 @@
     <MESSAGE value="Add file index.rst" />
     <MESSAGE value="Renew README.md" />
     <MESSAGE value="Renew index.rst" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renew index.rst" />
+    <MESSAGE value="Renew &quot;docs&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Renew &quot;docs&quot;" />
   </component>
   <component name="WindowStateProjectService">
     <state x="424" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595506101281">
@@ -401,10 +409,10 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="469" y="159" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1596018636901" />
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1595880120069">
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2" timestamp="1596222969778">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1595880120069" />
+    <state x="560" y="260" width="800" height="527" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1596222969778" />
     <state x="666" y="96" width="587" height="855" key="find.popup" timestamp="1595498716920">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
