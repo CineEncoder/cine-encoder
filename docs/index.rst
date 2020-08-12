@@ -14,7 +14,7 @@ Cine Encoder for Linux is an application that allows you to convert media files 
 
 .. image:: ./images/View.png
   :width: 600
-  :alt: Alternative text
+
 
 HDR Settings
 
@@ -22,13 +22,13 @@ The program provides the ability to change the parameters of HDR:
 
 .. image:: ./images/HDR_settings.png
   :width: 600
-  :alt: Alternative text
+
 
 You can also change the Master display parameters:
 
 .. image:: ./images/HDR_settings-2.png
   :width: 600
-  :alt: Alternative text
+
 
 Installation
 
@@ -49,7 +49,7 @@ If you wish to support this project, you can make a donation for $0.5 or more vi
 
 .. image:: ./images/PayPal.png
   :width: 80
-  :alt: Alternative text
+
 
 (https://paypal.me/KozhukharenkoOleg?locale.x=ru_RU)
 
@@ -59,6 +59,6 @@ You can send bitcoins at this address or by scanning the QR code below:
 
 .. image:: ./images/Bitcoin.png
   :width: 80
-  :alt: Alternative text
+
 
 1PqFt976YQTJ9Js3xym5GjtPDfsjq98kN8
