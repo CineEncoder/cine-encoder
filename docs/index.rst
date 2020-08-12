@@ -12,7 +12,7 @@ Cine Encoder for Linux is an application that allows you to convert media files 
   - ProRes HQ 4:2:2 (10 bit)
 
 
-.. image:: ./images/View.png
+.. image:: images/View.png
   :width: 600
 
 
@@ -20,13 +20,13 @@ HDR Settings
 
 The program provides the ability to change the parameters of HDR:
 
-.. image:: ./images/HDR_settings.png
+.. image:: images/HDR_settings.png
   :width: 600
 
 
 You can also change the Master display parameters:
 
-.. image:: ./images/HDR_settings-2.png
+.. image:: images/HDR_settings-2.png
   :width: 600
 
 
@@ -47,7 +47,7 @@ Donate
 
 If you wish to support this project, you can make a donation for $0.5 or more via PayPal. Your contributions will help keep the project alive and support future development.
 
-.. image:: ./images/PayPal.png
+.. image:: images/PayPal.png
   :width: 80
 
 
@@ -57,7 +57,7 @@ If you wish to support this project, you can make a donation for $0.5 or more vi
 Bitcoin
 You can send bitcoins at this address or by scanning the QR code below:
 
-.. image:: ./images/Bitcoin.png
+.. image:: images/Bitcoin.png
   :width: 80
 
 
