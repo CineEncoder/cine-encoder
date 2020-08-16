@@ -28,10 +28,13 @@ You can also change the Master display parameters:
 
 # Installation
 
-Supported operating system: Linux x86_64
+Supported operating system: Linux x86_64, Windows 10 x64
 
 ##### - Arch Linux / Manjaro Linux:
   - install [AUR package](https://aur.archlinux.org/packages/cine-encoder/) or *.pkg.tar.xz file from release
+  
+##### - Windows 10:
+  - unzip [Windows 10 package](https://github.com/CineEncoder/cine-encoder/releases/download/2.0/CineEncoder-v2.0_Win10_portable.zip) and run CineEncoder.exe
 
 # Licence
 
