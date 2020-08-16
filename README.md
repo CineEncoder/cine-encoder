@@ -30,6 +30,8 @@ You can also change the Master display parameters:
 
 Supported operating system: Linux x86_64, Windows10 x64
 
+Make sure that the NVIDIA drivers are installed in accordance with the following requirements: [Using FFMPEG with NVIDIA.](https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/index.html)
+
 ##### - Arch Linux / Manjaro Linux:
   - install [AUR package](https://aur.archlinux.org/packages/cine-encoder/) or *.pkg.tar.xz file from release
 
