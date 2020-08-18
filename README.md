@@ -41,12 +41,12 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
     - mediainfo
     - mkvtoolnix
 
-  - download and unzip file [Cine-encoder-(ver)_Other_Linux_x86_64.zip](https://github.com/CineEncoder/cine-encoder/releases/download/2.0/Cine-encoder-2.0_Other_Linux_x86_64.zip)
+  - download and unzip file [Cine-encoder-(ver)_Other_Linux_x86_64.zip](https://github.com/CineEncoder/cine-encoder/releases/download/2.0/CineEncoder-2.0_Other_Linux_x86_64.zip)
 
   - in folder "Cine-encoder-(ver)_Other_Linux_x86_64/App" run the executable file "CineEncoder.run" 
   
 ##### - Windows 10:
-  - unzip [Windows 10 package](https://github.com/CineEncoder/cine-encoder/releases/download/2.0/CineEncoder-v2.0_Win10_portable.zip) and run CineEncoder.exe
+  - unzip [Windows 10 package](https://github.com/CineEncoder/cine-encoder/releases/download/2.0/CineEncoder-2.0_Win10_x86_64_portable.zip) and run CineEncoder.exe
 
 # Licence
 
