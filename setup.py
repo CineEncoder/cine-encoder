@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="cine-encoder-helg1980", # Replace with your own username
-    version="2.0",
+    name="cine-encoder", # Replace with your own username
+    version="2.1",
     author="Oleg Kozhukharenko",
     author_email="depositmail@mail.ru",
     description="Encoder",

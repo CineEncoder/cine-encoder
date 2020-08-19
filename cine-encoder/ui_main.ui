@@ -736,6 +736,11 @@ QComboBox QAbstractItemView {
               <string>DNxHR HQX</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>From source</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>

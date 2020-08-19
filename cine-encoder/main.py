@@ -15,10 +15,9 @@ import webbrowser
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QProcess
 from pymediainfo import MediaInfo
-from numba import jit
+
 
 # -------------------------------------------- Main program ----------------------------------------------------------
-
 
 class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
     def __init__(self, parent=None):  # init ui_main
@@ -64,7 +63,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.stackedWidget_2.setCurrentIndex(3)
 
 # ----------------------------------------------- Dialogs -------------------------------------------------------------
-    #@jit(nopython=True)
+
     def open_file(self):
         global hdr1, hdr2, hdr3, hdr4, hdr5, hdr6, hdr7, hdr8, hdr9, hdr10, hdr11
         self.lineEdit_1.clear()
@@ -208,14 +207,12 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         except:
             pass
 
-    #@jit(nopython=True)
     def save_file(self):
         self.lineEdit_2.clear()  # Clear elements
         prefix = self.comboBox_2.currentText()
         file_name_save = QtWidgets.QFileDialog.getSaveFileName(self, "Save As", "Untitled." + prefix.lower(), "All Files (*.*)")
         self.lineEdit_2.setText(file_name_save[0])  # Output filename to listEdit_2
 
-    #@jit(nopython=True)
     def task_complete(self):
 
         self.task_complete_app = TaskCompleteApp()
@@ -224,7 +221,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         self.task_complete_app.textBrowser.append(message)
         self.task_complete_app.pushButton_4.clicked.connect(self.task_complete_app.close)
 
-    #@jit(nopython=True)
     def about(self):
         self.aboutapp = AboutApp()
         self.aboutapp.show()
@@ -234,7 +230,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         self.aboutapp.label_12.setText('<a href="https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE"> License: GNU Lesser General Public License Version 3 </a>')
         self.aboutapp.label_12.setOpenExternalLinks(True)
 
-    #@jit(nopython=True)
     def donate(self):
         self.donateapp = DonateApp()
         self.donateapp.show()
@@ -242,7 +237,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         self.donateapp.toolButton_8.clicked.connect(lambda: webbrowser.open('https://blockchain.com/btc/payment_request?address=14ukiWCK2f8vFNPP3qKbo2vfaSGRMN63qL&amount=0.00005448&message=Cine Encoder donation'))
 
 # -------------------------------------------- Settings menu ----------------------------------------------------------
-    #@jit(nopython=True)
+
     def settings_menu(self):
         self.comboBox_16.clear()
         self.comboBox_9.clear()
@@ -362,10 +357,27 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                 self.lineEdit_3.setText(hdr7)
                 self.lineEdit_4.setText(hdr8)
                 self.comboBox_15.addItems([hdr9, "Display P3", "DCI P3", "BT.2020", "BT.709"])
+
+            if self.comboBox_1.currentText() == "From source":
+                self.comboBox_2.addItems(["MKV"])
+                self.comboBox_3.addItems(["CPU"])
+                self.comboBox_4.addItems(["Auto"])
+                self.comboBox_12.addItems(["From source", "AAC", "AC3", "Vorbis", "Opus"])
+                self.comboBox_2.setEnabled(False)
+                self.comboBox_3.setEnabled(False)
+                self.comboBox_4.setEnabled(False)
+                self.comboBox_16.addItems([hdr1, "Limited", "Full"])
+                self.comboBox_9.addItems([hdr2])
+                self.comboBox_10.addItems([hdr3])
+                self.comboBox_11.addItems([hdr4])
+                self.lineEdit_5.setText(hdr5)
+                self.lineEdit_6.setText(hdr6)
+                self.lineEdit_3.setText(hdr7)
+                self.lineEdit_4.setText(hdr8)
+                self.comboBox_15.addItems([hdr9, "Display P3", "DCI P3", "BT.2020", "BT.709"])
         except:
             pass
 
-    #@jit(nopython=True)
     def settings_menu_mode(self):
         self.comboBox_5.setEnabled(True)
         self.comboBox_6.setEnabled(True)
@@ -401,7 +413,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.comboBox_6.hide()
             self.comboBox_5.addItems(["19", "30", "29", "28", "27", "26", "25", "24", "23", "22", "21", "20", "18", "17", "16", "15"])
 
-    #@jit(nopython=True)
     def settings_hdr(self):
         self.lineEdit_7.clear()
         self.lineEdit_8.clear()
@@ -424,7 +435,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.lineEdit_7.setText("0.640,0.330,0.30,0.60,0.150,0.060")
             self.lineEdit_8.setText("0.3127,0.3290")
 
-    #@jit(nopython=True)
     def settings_menu_audio(self):
         self.comboBox_13.setEnabled(True)
         self.comboBox_13.clear()
@@ -444,7 +454,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.comboBox_13.setEnabled(False)
 
 # ------------------------------------------------ Encode File ---------------------------------------------------------
-    #@jit(nopython=True)
+
     def make_preset(self):
         global preset_0, preset, preset_mkvmerge, loop_start
         loop_start = round(time.perf_counter())
@@ -645,7 +655,11 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             preset_0 = "-hide_banner "
             self.encode_mux_file()
 
-    #@jit(nopython=True)
+        if self.comboBox_1.currentText() == "From source": #-------------------------------------------------From source
+            preset = str(f'-c:v copy {apreset} -f matroska ')
+            preset_0 = "-hide_banner "
+            self.encode_mux_file()
+
     def encode_mux_file(self):
         global fr_count, message
         global output_file
@@ -693,7 +707,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                     message = "An error occured!\nPossible reasons for the error:\n - input or output file not defined,\n - codec may not be supported by program,\n - incorrect encoder settings."
                     self.task_complete()
 
-    #@jit(nopython=True)
+
     def mux(self):
         global message
         self.procedure_1.deleteLater()
@@ -711,7 +725,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             message = "An error occured!\nPossible reasons for the error:\n - input or output file not defined,\n - codec may not be supported by program,\n - incorrect encoder settings."
             self.task_complete()
 
-    #@jit(nopython=True)
     def complete_mux(self):
         global message
         self.procedure_2.deleteLater()
@@ -724,7 +737,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         #except:
         #    pass
 
-    #@jit(nopython=True)
     def encode_file(self):
         global fr_count, message
         self.procedure_1 = QProcess()
@@ -760,7 +772,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                 message = "An error occured!\nPossible reasons for the error:\n - input or output file not defined,\n - codec may not be supported by program,\n - incorrect encoder settings."
                 self.task_complete()
 
-    #@jit(nopython=True)
     def complete(self):
         global message
         self.procedure_1.deleteLater()
@@ -768,7 +779,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         message = "Task completed.\nCheck whether the resulting file matches the specified parameters."
         self.task_complete()
 
-    #@jit(nopython=True)
     def progress_1(self):
         line = str(self.procedure_1.readAllStandardOutput())
         line_mod6 = line.replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('= ', '=').replace("b'", "").replace("r'", "").replace("\\", "")
@@ -787,7 +797,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.progressBar.setProperty("value", percent)
             self.label_55.setText(str(h).rjust(2, '0') + ":" + str(m).rjust(2, '0') + ":" + str(s).rjust(2, '0'))
 
-    #@jit(nopython=True)
     def progress_2(self):
         line = str(self.procedure_2.readAllStandardOutput())
         line_mod5 = line.replace('   ', ' ').replace('.', '').replace("b'", "").replace("n'", "").replace('\\', '').replace("r'", "")
@@ -797,7 +806,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             percent = int(line_mod5[pos_st:pos_end])
             self.progressBar.setProperty("value", percent)
 
-    #@jit(nopython=True)
+
     def stop(self):
         global message
         try:
