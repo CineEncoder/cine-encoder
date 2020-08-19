@@ -388,7 +388,7 @@ QPushButton:pressed {
       <string notr="true">color: rgb(98, 103, 111);</string>
      </property>
      <property name="text">
-      <string>ver. 2.0</string>
+      <string>ver. 2.1</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_credits_17">

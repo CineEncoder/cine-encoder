@@ -341,7 +341,7 @@ class Ui_About(object):
         About.setWindowTitle(_translate("About", "About"))
         self.toolButton_6.setText(_translate("About", "Close"))
         self.label_credits_15.setText(_translate("About", "Cine Encoder 2020 Super Edition"))
-        self.label_credits_16.setText(_translate("About", "ver. 2.0"))
+        self.label_credits_16.setText(_translate("About", "ver. 2.1"))
         self.label_credits_17.setText(_translate("About", "Program for encoding HDR and SDR video."))
         self.label_11.setText(_translate("About", "https://github.com/CineEncoder/CineEncoder"))
         self.label_12.setText(_translate("About", "License: GNU Lesser General Public License Version 3"))
