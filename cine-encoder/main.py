@@ -583,9 +583,9 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
         if self.comboBox_1.currentText() == "H265  10 bit" and self.comboBox_3.currentText() == "NVENC": #-----H265 NVENC-10bit
             if self.comboBox_4.currentText() == "CQP":
-                preset = str(f'-b:v 0 -pix_fmt p010le -c:v hevc_nvenc -preset slow -rc vbr_hq -cq {quality} -qmin {quality} -qmax {quality} -rc-lookahead 32 -profile:v main10 {colorprim}{transfer}{colormatrix}{color_range}-flags -global_header -max_muxing_queue_size 1024 {apreset} -f matroska ')
+                preset = str(f'-b:v 0 -pix_fmt p010le -c:v hevc_nvenc -preset slow -rc vbr_hq -cq {quality} -qmin {quality} -qmax {quality} -rc-lookahead 32 -profile:v main10 {colorprim}{transfer}{colormatrix}{color_range}-max_muxing_queue_size 1024 {apreset} -f matroska ')
             if self.comboBox_4.currentText() == "VBR":
-                preset = str(f'-pix_fmt p010le -b:v {vbitrate} -maxrate:v {maxrate} -c:v hevc_nvenc -preset slow -rc vbr_hq -2pass 1 -rc-lookahead 32 -profile:v main10 {colorprim}{transfer}{colormatrix}{color_range}-flags -global_header -max_muxing_queue_size 1024 {apreset} -f matroska ')
+                preset = str(f'-pix_fmt p010le -b:v {vbitrate} -maxrate:v {maxrate} -c:v hevc_nvenc -preset slow -rc vbr_hq -2pass 1 -rc-lookahead 32 -profile:v main10 {colorprim}{transfer}{colormatrix}{color_range}-max_muxing_queue_size 1024 {apreset} -f matroska ')
             preset_0 = str(f'-hide_banner -threads:v {threads/2} -threads:a {threads} -hwaccel cuda ')
             self.encode_mux_file()
 
