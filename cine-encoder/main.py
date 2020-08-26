@@ -20,9 +20,18 @@ from pymediainfo import MediaInfo
 # -------------------------------------------- Main program ----------------------------------------------------------
 
 class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
-    def __init__(self, parent=None):  # init ui_main
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.setupUi(self)  # init design
+        self.procedure_1 = QProcess()
+        self.procedure_1.setProcessChannelMode(QProcess.MergedChannels)
+        self.procedure_1.readyRead.connect(self.progress_1)
+        self.procedure_2 = QProcess()
+        self.procedure_2.setProcessChannelMode(QProcess.MergedChannels)
+        self.procedure_2.readyRead.connect(self.progress_2)
+        self.procedure_3 = QProcess()
+        self.procedure_3.setProcessChannelMode(QProcess.MergedChannels)
+        self.procedure_3.readyRead.connect(self.progress_3)
+        self.setupUi(self)
 
 # ------------------------------------------- Main Menu Buttons ------------------------------------------------------
 
@@ -35,14 +44,14 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
 # ---------------------------------------- Status and Buttons ---------------------------------------------------------
 
-        #self.label_53.hide() # (add to ui_main)
-        #self.label_54.hide() # (add to ui_main)
-        #self.label_55.hide() # (add to ui_main)
-        #self.progressBar.hide() # (add to ui_main)
-        self.pushButton_1.clicked.connect(self.open_file)  # execute open_file
-        self.pushButton_2.clicked.connect(self.save_file)  # execute save_file
-        self.pushButton_3.clicked.connect(self.make_preset)  # make preset
-        self.pushButton_4.clicked.connect(self.stop)  # make preset
+        #self.label_53.hide() # (need add to ui_main)
+        #self.label_54.hide() # (need add to ui_main)
+        #self.label_55.hide() # (need add to ui_main)
+        #self.progressBar.hide() # (need add to ui_main)
+        self.pushButton_1.clicked.connect(self.open_file)
+        self.pushButton_2.clicked.connect(self.save_file)
+        self.pushButton_3.clicked.connect(self.make_preset)
+        self.pushButton_4.clicked.connect(self.stop)
         self.comboBox_1.currentTextChanged.connect(self.settings_menu)
         self.comboBox_4.currentTextChanged.connect(self.settings_menu_mode)
         self.comboBox_12.currentTextChanged.connect(self.settings_menu_audio)
@@ -248,8 +257,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         self.lineEdit_3.clear()
         self.lineEdit_4.clear()
         self.comboBox_15.clear()
-
-
         self.comboBox_2.setEnabled(True)
         self.comboBox_3.setEnabled(True)
         self.comboBox_4.setEnabled(True)
@@ -660,20 +667,23 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             preset_0 = "-hide_banner "
             self.encode_mux_file()
 
+
     def encode_mux_file(self):
         global fr_count, message
         global output_file
         global temp_folder
         global temp_file
-        self.procedure_1 = QProcess()
-        self.procedure_1.setProcessChannelMode(QProcess.MergedChannels)
-        self.procedure_1.readyRead.connect(self.progress_1)
-        self.procedure_1.finished.connect(self.mux)
-        self.pushButton_3.setEnabled(False)
+        self.procedure_1.finished.connect(self.error)
         input_file = self.lineEdit_1.text()
         output_file = self.lineEdit_2.text()
+        if input_file == "" or output_file == "":
+            self.pushButton_3.setEnabled(True)
+            message = "Select first input and output file!"
+            self.task_complete()
+            return
         temp_folder = output_file + "_temp"
         temp_file = temp_folder + "/temp.mkv"
+        self.pushButton_3.setEnabled(False)
         try:
             os.mkdir(temp_folder)
         except:
@@ -690,7 +700,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                 fr_count = round(dur_mod*fps_mod)
             except:
                 self.pushButton_3.setEnabled(True)
-                message = "Select first input and output file!"
+                message = "Select the correct input and output file!"
                 self.task_complete()
             else:
                 self.label_53.show()
@@ -704,17 +714,12 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                     self.procedure_1.start(cmd)
                 except:
                     self.pushButton_3.setEnabled(True)
-                    message = "An error occured!\nPossible reasons for the error:\n - input or output file not defined,\n - codec may not be supported by program,\n - incorrect encoder settings."
+                    message = "An unknown error occured!\n"
                     self.task_complete()
-
 
     def mux(self):
         global message
-        self.procedure_1.deleteLater()
-        self.procedure_2 = QProcess()
-        self.procedure_2.setProcessChannelMode(QProcess.MergedChannels)
-        self.procedure_2.readyRead.connect(self.progress_2)
-        self.procedure_2.finished.connect(self.complete_mux)
+        self.procedure_2.finished.connect(self.error)
         self.label_53.setText("Muxing:")
         self.progressBar.setProperty("value", 0)
         try:
@@ -722,30 +727,34 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.procedure_2.start(cmd)
         except:
             self.pushButton_3.setEnabled(True)
-            message = "An error occured!\nPossible reasons for the error:\n - input or output file not defined,\n - codec may not be supported by program,\n - incorrect encoder settings."
+            message = "An unknown error occured!\n"
             self.task_complete()
 
     def complete_mux(self):
         global message
-        self.procedure_2.deleteLater()
         self.pushButton_3.setEnabled(True)
-        message = "Task completed.\nCheck whether the resulting file matches the specified parameters.\nPlease delete temporary folder manually."
-        self.task_complete()
-        #try:
-        #    os.replace(temp_file)
-        #    os.rmdir(temp_folder)
-        #except:
-        #    pass
+        try:
+            os.remove(temp_file)
+            os.rmdir(temp_folder)
+        except:
+            message = "Task completed!\nPlease delete temporary folder manually."
+            self.task_complete()
+        else:
+            message = "Task completed!\n"
+            self.task_complete()
+
 
     def encode_file(self):
         global fr_count, message
-        self.procedure_1 = QProcess()
-        self.procedure_1.setProcessChannelMode(QProcess.MergedChannels)
-        self.procedure_1.readyRead.connect(self.progress_1)
-        self.procedure_1.finished.connect(self.complete)
-        self.pushButton_3.setEnabled(False)
+        self.procedure_3.finished.connect(self.error)
         input_file = self.lineEdit_1.text()
         output_file = self.lineEdit_2.text()
+        if input_file == "" or output_file == "":
+            self.pushButton_3.setEnabled(True)
+            message = "Select first input and output file!"
+            self.task_complete()
+            return
+        self.pushButton_3.setEnabled(False)
         try:
             media_info = MediaInfo.parse(input_file)
             dur = 0.001*float(media_info.tracks[0].duration)
@@ -755,7 +764,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             fr_count = round(dur_mod*fps_mod)
         except:
             self.pushButton_3.setEnabled(True)
-            message = "Select first input and output file!"
+            message = "Select the correct input and output file!"
             self.task_complete()
         else:
             self.label_53.show()
@@ -766,24 +775,24 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.progressBar.setProperty("value", 0)
             try:
                 cmd = f'ffmpeg {preset_0}-i "{input_file}" {preset} -y "{output_file}" '
-                self.procedure_1.start(cmd)
+                self.procedure_3.start(cmd)
             except:
                 self.pushButton_3.setEnabled(True)
-                message = "An error occured!\nPossible reasons for the error:\n - input or output file not defined,\n - codec may not be supported by program,\n - incorrect encoder settings."
+                message = "An unknown error occured!\n"
                 self.task_complete()
 
     def complete(self):
         global message
-        self.procedure_1.deleteLater()
         self.pushButton_3.setEnabled(True)
-        message = "Task completed.\nCheck whether the resulting file matches the specified parameters."
+        message = "Task completed!\n"
         self.task_complete()
+
 
     def progress_1(self):
         line = str(self.procedure_1.readAllStandardOutput())
         line_mod6 = line.replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('= ', '=').replace("b'", "").replace("r'", "").replace("\\", "")
         pos_st = line_mod6.find('frame=') + 6
-        if pos_st != 5:
+        if pos_st == 6:
             data = line_mod6.split(' ')
             frame = int(data[0].replace('frame=', ''))
             iter_start = round(time.perf_counter())
@@ -796,19 +805,56 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             percent = (frame*100)/fr_count
             self.progressBar.setProperty("value", percent)
             self.label_55.setText(str(h).rjust(2, '0') + ":" + str(m).rjust(2, '0') + ":" + str(s).rjust(2, '0'))
+            if percent > 98:
+                self.procedure_1.finished.connect(self.mux)
 
     def progress_2(self):
         line = str(self.procedure_2.readAllStandardOutput())
         line_mod5 = line.replace('   ', ' ').replace('.', '').replace("b'", "").replace("n'", "").replace('\\', '').replace("r'", "")
         pos_st = line_mod5.find('Progress: ') + 10
         pos_end = line_mod5.find('%')
-        if pos_st != 9:
+        if pos_st == 10:
             percent = int(line_mod5[pos_st:pos_end])
             self.progressBar.setProperty("value", percent)
+            if percent == 100:
+                self.procedure_2.finished.connect(self.complete_mux)
 
+    def progress_3(self):
+        line = str(self.procedure_3.readAllStandardOutput())
+        line_mod6 = line.replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('= ', '=').replace("b'", "").replace("r'", "").replace("\\", "")
+        pos_st = line_mod6.find('frame=') + 6
+        if pos_st == 6:
+            data = line_mod6.split(' ')
+            frame = int(data[0].replace('frame=', ''))
+            iter_start = round(time.perf_counter())
+            timer = iter_start - loop_start
+            full_time = round((timer*fr_count)/(frame+1))
+            rem_time = full_time - timer
+            h = math.trunc(rem_time / 3600)
+            m = math.trunc((rem_time - (h * 3600)) / 60)
+            s = math.trunc(rem_time - (h * 3600) - (m * 60))
+            percent = (frame*100)/fr_count
+            self.progressBar.setProperty("value", percent)
+            self.label_55.setText(str(h).rjust(2, '0') + ":" + str(m).rjust(2, '0') + ":" + str(s).rjust(2, '0'))
+            if percent > 98:
+                self.procedure_3.finished.connect(self.complete)
+
+    def error(self):
+        global message
+        self.pushButton_3.setEnabled(True)
+        message = "An error occured!\nPossible reasons:\n - incorrect encoder settings or error in the input file,\n - no enough space on the disk."
+        self.task_complete()
+
+    def cancel(self):
+        global message
+        self.pushButton_3.setEnabled(True)
+        message = "All processes are cancelled!\n"
+        self.task_complete()
 
     def stop(self):
-        global message
+        self.procedure_1.finished.connect(self.cancel)
+        self.procedure_2.finished.connect(self.cancel)
+        self.procedure_3.finished.connect(self.cancel)
         try:
             self.procedure_1.kill()
         except:
@@ -817,9 +863,10 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             self.procedure_2.kill()
         except:
             pass
-        self.pushButton_3.setEnabled(True)
-        message = "All processes are stopped."
-        self.task_complete()
+        try:
+            self.procedure_3.kill()
+        except:
+            pass
 
 # --------------------------------------------------------------------------------------------------------------------
 
