@@ -53,6 +53,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         self.pushButton_3.clicked.connect(self.make_preset)
         self.pushButton_4.clicked.connect(self.stop)
         self.comboBox_1.currentTextChanged.connect(self.settings_menu)
+        self.comboBox_2.currentTextChanged.connect(self.change_prefix)
         self.comboBox_4.currentTextChanged.connect(self.settings_menu_mode)
         self.comboBox_12.currentTextChanged.connect(self.settings_menu_audio)
         self.comboBox_15.currentTextChanged.connect(self.settings_hdr)
@@ -221,6 +222,21 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         prefix = self.comboBox_2.currentText()
         file_name_save = QtWidgets.QFileDialog.getSaveFileName(self, "Save As", "Untitled." + prefix.lower(), "All Files (*.*)")
         self.lineEdit_2.setText(file_name_save[0])  # Output filename to listEdit_2
+
+    def change_prefix(self):
+        prefix = self.comboBox_2.currentText()
+        if self.lineEdit_2.text() != "":
+            file_name_save = self.lineEdit_2.text()
+            pos_ext = file_name_save.rfind('.')
+            len_str = len(file_name_save)
+            print(len_str - pos_ext)
+            if pos_ext == -1:
+                self.lineEdit_2.setText(file_name_save + "." + prefix.lower())
+            else:
+                if (len_str - pos_ext) < 6:
+                    self.lineEdit_2.setText(file_name_save[:pos_ext+1] + prefix.lower())
+                else:
+                    self.lineEdit_2.setText(file_name_save + "." + prefix.lower())
 
     def task_complete(self):
 
