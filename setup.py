@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="cine-encoder", # Replace with your own username
-    version="2.1",
+    version="2.2",
     author="Oleg Kozhukharenko",
     author_email="depositmail@mail.ru",
     description="Encoder",
