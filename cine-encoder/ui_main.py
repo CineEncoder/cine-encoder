@@ -289,6 +289,7 @@ class Ui_MainWindow(object):
         self.pushButton_1.setObjectName("pushButton_1")
         self.gridLayout.addWidget(self.pushButton_1, 0, 2, 1, 1)
         self.lineEdit_1 = QtWidgets.QLineEdit(self.layoutWidget)
+        self.lineEdit_1.setEnabled(False)
         self.lineEdit_1.setMinimumSize(QtCore.QSize(0, 30))
         self.lineEdit_1.setStyleSheet("QLineEdit {\n"
 "    background-color: rgb(27, 29, 35);\n"
@@ -1694,6 +1695,7 @@ class Ui_MainWindow(object):
         self.label_credits_9.setObjectName("label_credits_9")
         self.horizontalLayout.addWidget(self.label_credits_9)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.layoutWidget5)
+        self.lineEdit_2.setEnabled(False)
         self.lineEdit_2.setMinimumSize(QtCore.QSize(0, 30))
         self.lineEdit_2.setStyleSheet("QLineEdit {\n"
 "    background-color: rgb(27, 29, 35);\n"
@@ -1953,10 +1955,10 @@ class Ui_MainWindow(object):
         self.turnRightStack_2.setToolTip(_translate("MainWindow", "Minimize"))
         self.turnRightStack_1.setToolTip(_translate("MainWindow", "Minimize"))
         self.turnLeftStack_1.setToolTip(_translate("MainWindow", "Minimize"))
-        self.label_53.hide() # (add to ui_main)
-        self.label_54.hide() # (add to ui_main)
-        self.label_55.hide() # (add to ui_main)
-        self.progressBar.hide() # (add to ui_main)
+        self.label_53.hide() # (need add to ui_main)
+        self.label_54.hide() # (need add to ui_main)
+        self.label_55.hide() # (need add to ui_main)
+        self.progressBar.hide() # (need add to ui_main)
 import files_rc
 
 

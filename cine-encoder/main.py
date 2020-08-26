@@ -239,7 +239,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                     self.lineEdit_2.setText(file_name_save + "." + prefix.lower())
 
     def task_complete(self):
-
         self.task_complete_app = TaskCompleteApp()
         self.task_complete_app.show()
         self.task_complete_app.textBrowser.clear()
@@ -699,10 +698,14 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             return
         temp_folder = output_file + "_temp"
         temp_file = temp_folder + "/temp.mkv"
+        self.pushButton_1.setEnabled(False)
+        self.pushButton_2.setEnabled(False)
         self.pushButton_3.setEnabled(False)
         try:
             os.mkdir(temp_folder)
         except:
+            self.pushButton_1.setEnabled(True)
+            self.pushButton_2.setEnabled(True)
             self.pushButton_3.setEnabled(True)
             message = "Please delete previous temporary folder or rename output file."
             self.task_complete()
@@ -715,6 +718,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                 fps_mod = round(fps, 2)
                 fr_count = round(dur_mod*fps_mod)
             except:
+                self.pushButton_1.setEnabled(True)
+                self.pushButton_2.setEnabled(True)
                 self.pushButton_3.setEnabled(True)
                 message = "Select the correct input and output file!"
                 self.task_complete()
@@ -729,6 +734,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                     cmd = f'ffmpeg {preset_0}-i "{input_file}" {preset} -y "{temp_file}" '
                     self.procedure_1.start(cmd)
                 except:
+                    self.pushButton_1.setEnabled(True)
+                    self.pushButton_2.setEnabled(True)
                     self.pushButton_3.setEnabled(True)
                     message = "An unknown error occured!\n"
                     self.task_complete()
@@ -742,12 +749,16 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             cmd = f'mkvmerge -o "{output_file}" {preset_mkvmerge} "{temp_file}" '
             self.procedure_2.start(cmd)
         except:
+            self.pushButton_1.setEnabled(True)
+            self.pushButton_2.setEnabled(True)
             self.pushButton_3.setEnabled(True)
             message = "An unknown error occured!\n"
             self.task_complete()
 
     def complete_mux(self):
         global message
+        self.pushButton_1.setEnabled(True)
+        self.pushButton_2.setEnabled(True)
         self.pushButton_3.setEnabled(True)
         try:
             os.remove(temp_file)
@@ -770,6 +781,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             message = "Select first input and output file!"
             self.task_complete()
             return
+        self.pushButton_1.setEnabled(False)
+        self.pushButton_2.setEnabled(False)
         self.pushButton_3.setEnabled(False)
         try:
             media_info = MediaInfo.parse(input_file)
@@ -779,6 +792,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             fps_mod = round(fps, 2)
             fr_count = round(dur_mod*fps_mod)
         except:
+            self.pushButton_1.setEnabled(True)
+            self.pushButton_2.setEnabled(True)
             self.pushButton_3.setEnabled(True)
             message = "Select the correct input and output file!"
             self.task_complete()
@@ -793,12 +808,16 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
                 cmd = f'ffmpeg {preset_0}-i "{input_file}" {preset} -y "{output_file}" '
                 self.procedure_3.start(cmd)
             except:
+                self.pushButton_1.setEnabled(True)
+                self.pushButton_2.setEnabled(True)
                 self.pushButton_3.setEnabled(True)
                 message = "An unknown error occured!\n"
                 self.task_complete()
 
     def complete(self):
         global message
+        self.pushButton_1.setEnabled(True)
+        self.pushButton_2.setEnabled(True)
         self.pushButton_3.setEnabled(True)
         message = "Task completed!\n"
         self.task_complete()
@@ -857,12 +876,16 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
     def error(self):
         global message
+        self.pushButton_1.setEnabled(True)
+        self.pushButton_2.setEnabled(True)
         self.pushButton_3.setEnabled(True)
         message = "An error occured!\nPossible reasons:\n - incorrect encoder settings or error in the input file,\n - no enough space on the disk."
         self.task_complete()
 
     def cancel(self):
         global message
+        self.pushButton_1.setEnabled(True)
+        self.pushButton_2.setEnabled(True)
         self.pushButton_3.setEnabled(True)
         message = "All processes are cancelled!\n"
         self.task_complete()
