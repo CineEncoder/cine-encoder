@@ -37,16 +37,17 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 
 ##### - Other Linux:
   - install utility on your system:
+    
     - ffmpeg
     - mediainfo
     - mkvtoolnix
 
-  - download and unzip file [Cine-encoder-(ver)_other_linux_x86_64.zip](https://github.com/CineEncoder/cine-encoder/releases/download/2.1/cine-encoder-2.1_other_linux_x86_64.zip)
+  - download and unzip file [cine-encoder-(ver)_other_linux_x86_64.zip](https://github.com/CineEncoder/cine-encoder/releases)
 
-  - in folder "Cine-encoder-(ver)_other_linux_x86_64/App" run the executable file "CineEncoder.run" 
+  - in folder "cine-encoder-(ver)_other_linux_x86_64/App" run the executable file "CineEncoder.run" 
   
 ##### - Windows 10:
-  - unzip [Windows 10 package](https://github.com/CineEncoder/cine-encoder/releases/download/2.0/CineEncoder-2.0_Win10_x86_64_portable.zip) and run CineEncoder.exe
+  - download and unzip file [cine-encoder-(ver)_win10_x86_64.zip](https://github.com/CineEncoder/cine-encoder/releases) and run CineEncoder.exe
 
 # Licence
 
