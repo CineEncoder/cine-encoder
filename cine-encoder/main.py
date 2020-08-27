@@ -229,7 +229,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             file_name_save = self.lineEdit_2.text()
             pos_ext = file_name_save.rfind('.')
             len_str = len(file_name_save)
-            print(len_str - pos_ext)
             if pos_ext == -1:
                 self.lineEdit_2.setText(file_name_save + "." + prefix.lower())
             else:
@@ -479,6 +478,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
     def make_preset(self):
         global preset_0, preset, preset_mkvmerge, loop_start
+        global calling_pr_1, calling_pr_2, calling_pr_3
+        calling_pr_1 = calling_pr_2 = calling_pr_3 = True
         loop_start = round(time.perf_counter())
         threads = int(multiprocessing.cpu_count())
         vbitrate = str(self.comboBox_5.currentText())
@@ -692,7 +693,6 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
         input_file = self.lineEdit_1.text()
         output_file = self.lineEdit_2.text()
         if input_file == "" or output_file == "":
-            self.pushButton_3.setEnabled(True)
             message = "Select first input and output file!"
             self.task_complete()
             return
@@ -742,6 +742,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
     def mux(self):
         global message
+        self.procedure_1.waitForFinished(2000)
         self.procedure_2.finished.connect(self.error)
         self.label_53.setText("Muxing:")
         self.progressBar.setProperty("value", 0)
@@ -757,6 +758,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
     def complete_mux(self):
         global message
+        self.procedure_2.waitForFinished(2000)
         self.pushButton_1.setEnabled(True)
         self.pushButton_2.setEnabled(True)
         self.pushButton_3.setEnabled(True)
@@ -764,7 +766,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             os.remove(temp_file)
             os.rmdir(temp_folder)
         except:
-            message = "Task completed!\nPlease delete temporary folder manually."
+            message = "Task completed!\n"
             self.task_complete()
         else:
             message = "Task completed!\n"
@@ -816,6 +818,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
     def complete(self):
         global message
+        self.procedure_3.waitForFinished(2000)
         self.pushButton_1.setEnabled(True)
         self.pushButton_2.setEnabled(True)
         self.pushButton_3.setEnabled(True)
@@ -824,6 +827,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
 
 
     def progress_1(self):
+        global calling_pr_1
         line = str(self.procedure_1.readAllStandardOutput())
         line_mod6 = line.replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('= ', '=').replace("b'", "").replace("r'", "").replace("\\", "")
         pos_st = line_mod6.find('frame=') + 6
@@ -832,7 +836,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             frame = int(data[0].replace('frame=', ''))
             iter_start = round(time.perf_counter())
             timer = iter_start - loop_start
-            full_time = round((timer*fr_count)/(frame+1))
+            full_time = round((timer*fr_count)/(frame+0.1))
             rem_time = full_time - timer
             h = math.trunc(rem_time / 3600)
             m = math.trunc((rem_time - (h * 3600)) / 60)
@@ -840,21 +844,26 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             percent = (frame*100)/fr_count
             self.progressBar.setProperty("value", percent)
             self.label_55.setText(str(h).rjust(2, '0') + ":" + str(m).rjust(2, '0') + ":" + str(s).rjust(2, '0'))
-            if percent > 98:
+            if (percent > 90) and (calling_pr_1 == True):
+                self.procedure_1.finished.disconnect(self.error)
                 self.procedure_1.finished.connect(self.mux)
+                calling_pr_1 = False
 
     def progress_2(self):
+        global calling_pr_2
         line = str(self.procedure_2.readAllStandardOutput())
         line_mod5 = line.replace('   ', ' ').replace('.', '').replace("b'", "").replace("n'", "").replace('\\', '').replace("r'", "")
         pos_st = line_mod5.find('Progress: ') + 10
-        pos_end = line_mod5.find('%')
-        if pos_st == 10:
-            percent = int(line_mod5[pos_st:pos_end])
+        if pos_st != 9:
+            percent = int(line_mod5.split('%')[0].replace('Progress: ', ''))
             self.progressBar.setProperty("value", percent)
-            if percent == 100:
+            if (percent > 90) and (calling_pr_2 == True):
+                self.procedure_2.finished.disconnect(self.error)
                 self.procedure_2.finished.connect(self.complete_mux)
+                calling_pr_2 = False
 
     def progress_3(self):
+        global calling_pr_3
         line = str(self.procedure_3.readAllStandardOutput())
         line_mod6 = line.replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('= ', '=').replace("b'", "").replace("r'", "").replace("\\", "")
         pos_st = line_mod6.find('frame=') + 6
@@ -863,7 +872,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             frame = int(data[0].replace('frame=', ''))
             iter_start = round(time.perf_counter())
             timer = iter_start - loop_start
-            full_time = round((timer*fr_count)/(frame+1))
+            full_time = round((timer*fr_count)/(frame+0.1))
             rem_time = full_time - timer
             h = math.trunc(rem_time / 3600)
             m = math.trunc((rem_time - (h * 3600)) / 60)
@@ -871,8 +880,10 @@ class ExampleApp(QtWidgets.QMainWindow, ui_main.Ui_MainWindow):
             percent = (frame*100)/fr_count
             self.progressBar.setProperty("value", percent)
             self.label_55.setText(str(h).rjust(2, '0') + ":" + str(m).rjust(2, '0') + ":" + str(s).rjust(2, '0'))
-            if percent > 98:
+            if (percent > 90) and (calling_pr_3 == True):
+                self.procedure_3.finished.disconnect(self.error)
                 self.procedure_3.finished.connect(self.complete)
+                calling_pr_3 = False
 
     def error(self):
         global message
