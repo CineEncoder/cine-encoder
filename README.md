@@ -66,7 +66,7 @@ make deb
 
 ## RPM
 
-Provide `rpmbuild` and `setuptools`, then execute:
+Provide `rpmbuild|rpm-build` and `setuptools`, then execute:
 
 ```sh
 make rpm
