@@ -14,7 +14,6 @@ Cine Encoder for Linux is an application that allows you to convert media files 
 
 ![View](./images/View.png)
 
-
 # HDR Settings
 
 The program provides the ability to change the parameters of HDR:
@@ -49,11 +48,36 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 ##### - Windows 10:
   - download and unzip file [cine-encoder-(ver)_win10_x86_64.zip](https://github.com/CineEncoder/cine-encoder/releases) and run CineEncoder.exe
 
+# Buid instructions
+
+## DEB
+
+Install buld dependencies:
+
+```sh
+sudo apt install debhelper dh-python fakeroot python3-all python3-setuptools python3-stdeb
+```
+
+Buld package:
+
+```sh
+make deb
+```
+
+## RPM
+
+Provide `rpmbuild` and `setuptools`, then execute:
+
+```sh
+make rpm
+```
+
+Note: in order to satisfy `ffmpeg` dependency Fedora users have to use [rpmfusion](https://rpmfusion.org/).
+
 # Licence
 
 GNU GPL v.3
 See [LICENSE.md](https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE)
-
 
 # Donate
 

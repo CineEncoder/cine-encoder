@@ -301,7 +301,9 @@ class Ui_TaskComplete(object):
         _translate = QtCore.QCoreApplication.translate
         TaskComplete.setWindowTitle(_translate("TaskComplete", "Task"))
         self.pushButton_4.setText(_translate("TaskComplete", "Ok"))
-import files_rc
+
+
+from cine_encoder import files_rc
 
 
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import ui_main
-import ui_taskcomplete
-import ui_donate
-import ui_about
-import files_rc
+from cine_encoder import ui_main
+from cine_encoder import ui_taskcomplete
+from cine_encoder import ui_donate
+from cine_encoder import ui_about
+from cine_encoder import files_rc
 
 import os
 import math

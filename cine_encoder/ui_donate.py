@@ -364,7 +364,9 @@ class Ui_Donate(object):
         self.label_credits_18.setText(_translate("Donate", "for more information."))
         self.label_credits_19.setText(_translate("Donate", "If you find this application useful, consider making a"))
         self.label_credits_20.setText(_translate("Donate", "donation to support the development. "))
-import files_rc
+
+
+from cine_encoder import files_rc
 
 
 if __name__ == "__main__":

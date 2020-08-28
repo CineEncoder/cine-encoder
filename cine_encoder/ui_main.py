@@ -1959,7 +1959,9 @@ class Ui_MainWindow(object):
         self.label_54.hide() # (need add to ui_main)
         self.label_55.hide() # (need add to ui_main)
         self.progressBar.hide() # (need add to ui_main)
-import files_rc
+
+
+from cine_encoder import files_rc
 
 
 if __name__ == "__main__":

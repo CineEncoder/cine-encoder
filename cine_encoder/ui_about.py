@@ -346,7 +346,9 @@ class Ui_About(object):
         self.label_11.setText(_translate("About", "https://github.com/CineEncoder/CineEncoder"))
         self.label_12.setText(_translate("About", "License: GNU Lesser General Public License Version 3"))
         self.label_credits_18.setText(_translate("About", "Copyright (C) 2020  Oleg Kozhukharenko"))
-import files_rc
+
+
+from cine_encoder import files_rc
 
 
 if __name__ == "__main__":
