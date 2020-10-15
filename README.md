@@ -41,6 +41,7 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 Install dependencies:
 
     - ffmpeg>=4.2
+    - mkvtoolnix>=49.0
     - libmediainfo>=20.03
     - qt5-base>=5.15
 
