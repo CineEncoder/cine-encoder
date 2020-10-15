@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SmartSettings</class>
+ <widget class="QDialog" name="SmartSettings">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>551</width>
+    <height>401</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>551</width>
+    <height>401</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>551</width>
+    <height>401</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Smartsettings</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="files.qrc">
+    <normaloff>:/20x20/icons/20x20/cil-chart-line.png</normaloff>:/20x20/icons/20x20/cil-chart-line.png</iconset>
+  </property>
+  <widget class="QFrame" name="frame_main">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>551</width>
+     <height>401</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>800</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QFrame{
+	background-color: rgb(0, 0, 0);
+}
+
+/* LINE EDIT */
+QLineEdit {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 1px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QLineEdit:disabled {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 1px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QLineEdit:hover {
+	border: 1px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 1px solid rgb(91, 101, 124);
+}
+
+
+/* SCROLL BARS */
+QScrollBar:horizontal {
+    border: none;
+    background: rgb(52, 59, 72);
+    height: 14px;
+    margin: 0px 21px 0 21px;
+	border-radius: 0px;
+}
+QScrollBar::handle:horizontal {
+    background: rgb(85, 170, 255);
+    min-width: 25px;
+	border-radius: 7px
+}
+QScrollBar::add-line:horizontal {
+    border: none;
+    background: rgb(55, 63, 77);
+    width: 20px;
+	border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+    border: none;
+    background: rgb(55, 63, 77);
+    width: 20px;
+	border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal
+{
+     background: none;
+}
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
+     background: none;
+}
+ QScrollBar:vertical {
+	border: none;
+    background: rgb(52, 59, 72);
+    width: 14px;
+    margin: 21px 0 21px 0;
+	border-radius: 0px;
+ }
+ QScrollBar::handle:vertical {	
+	background: rgb(85, 170, 255);
+    min-height: 25px;
+	border-radius: 7px
+ }
+ QScrollBar::add-line:vertical {
+     border: none;
+    background: rgb(55, 63, 77);
+     height: 20px;
+	border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+ QScrollBar::sub-line:vertical {
+	border: none;
+    background: rgb(55, 63, 77);
+     height: 20px;
+	border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+     subcontrol-position: top;
+     subcontrol-origin: margin;
+ }
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+     background: none;
+ }
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+     background: none;
+ }
+
+
+/* COMBOBOX */
+QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 1px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 1px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 1px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}
+
+/* SLIDERS */
+QSlider::groove:horizontal {
+    border-radius: 9px;
+    height: 18px;
+	margin: 0px;
+	background-color: rgb(52, 59, 72);
+}
+QSlider::groove:horizontal:hover {
+	background-color: rgb(55, 62, 76);
+}
+QSlider::handle:horizontal {
+    background-color: rgb(85, 170, 255);
+    border: none;
+    height: 18px;
+    width: 18px;
+    margin: 0px;
+	border-radius: 9px;
+}
+QSlider::handle:horizontal:hover {
+    background-color: rgb(105, 180, 255);
+}
+QSlider::handle:horizontal:pressed {
+    background-color: rgb(65, 130, 195);
+}
+
+QSlider::groove:vertical {
+    border-radius: 9px;
+    width: 18px;
+    margin: 0px;
+	background-color: rgb(52, 59, 72);
+}
+QSlider::groove:vertical:hover {
+	background-color: rgb(55, 62, 76);
+}
+QSlider::handle:vertical {
+    background-color: rgb(85, 170, 255);
+	border: none;
+    height: 18px;
+    width: 18px;
+    margin: 0px;
+	border-radius: 9px;
+}
+QSlider::handle:vertical:hover {
+    background-color: rgb(105, 180, 255);
+}
+QSlider::handle:vertical:pressed {
+    background-color: rgb(65, 130, 195);
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="pushButton_10">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>360</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>80</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: 1px solid rgba(52, 59, 72, 150);
+	border-radius: 5px;	
+	background-color: rgba(52, 59, 72, 150);
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 1px solid rgb(61, 70, 86);
+}
+QPushButton:pressed {	
+	background-color: rgb(35, 40, 49);
+	border: 1px solid rgb(43, 50, 61);
+}</string>
+    </property>
+    <property name="text">
+     <string>Continue</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_11">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>360</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>80</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: 1px solid rgba(52, 59, 72, 150);
+	border-radius: 5px;	
+	background-color: rgba(52, 59, 72, 150);
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 1px solid rgb(61, 70, 86);
+}
+QPushButton:pressed {	
+	background-color: rgb(35, 40, 49);
+	border: 1px solid rgb(43, 50, 61);
+}</string>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_9">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>19</y>
+      <width>491</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>As a result of video analysis, the following video parameters are determined.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_10">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>491</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>To continue, click Encode or select the parameters manually.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_11">
+    <property name="geometry">
+     <rect>
+      <x>43</x>
+      <y>120</y>
+      <width>141</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>Bits per pixel (source):</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_12">
+    <property name="geometry">
+     <rect>
+      <x>338</x>
+      <y>120</y>
+      <width>91</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>Bitrate (kbps):</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_13">
+    <property name="geometry">
+     <rect>
+      <x>329</x>
+      <y>160</y>
+      <width>101</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>Maxrate (kbps):</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_14">
+    <property name="geometry">
+     <rect>
+      <x>43</x>
+      <y>160</y>
+      <width>141</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>Bits per pixel (output):</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider">
+    <property name="geometry">
+     <rect>
+      <x>353</x>
+      <y>280</y>
+      <width>160</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-10</number>
+    </property>
+    <property name="maximum">
+     <number>10</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="sliderPosition">
+     <number>0</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>260</y>
+      <width>3</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>503</x>
+      <y>260</y>
+      <width>3</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_15">
+    <property name="geometry">
+     <rect>
+      <x>491</x>
+      <y>230</y>
+      <width>31</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>High</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_16">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>230</y>
+      <width>31</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>Low</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_BPP_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>160</y>
+      <width>71</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+QDoubleSpinBox {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QDoubleSpinBox:disabled {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QDoubleSpinBox:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QDoubleSpinBox::up-button { 
+	background-color: rgb(27, 29, 35);
+}
+QDoubleSpinBox::up-button { 
+	background-color: rgb(27, 29, 35);
+	background-image: url(:/16x16/icons/16x16/cil-arrow-top.png);
+
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+
+	background-position: center;
+	background-repeat: no-reperat;
+
+ }
+QDoubleSpinBox::down-button { 
+	background-color: rgb(27, 29, 35);
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+
+	subcontrol-origin: padding;
+	subcontrol-position: bottom right;
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+
+	background-position: center;
+	background-repeat: no-reperat;
+
+ }
+
+
+
+</string>
+    </property>
+    <property name="buttonSymbols">
+     <enum>QAbstractSpinBox::NoButtons</enum>
+    </property>
+    <property name="decimals">
+     <number>3</number>
+    </property>
+    <property name="minimum">
+     <double>0.001000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>5.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.010000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_BR">
+    <property name="geometry">
+     <rect>
+      <x>433</x>
+      <y>120</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+QDoubleSpinBox {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QDoubleSpinBox:disabled {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QDoubleSpinBox:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QDoubleSpinBox::up-button { 
+	background-color: rgb(27, 29, 35);
+}
+QDoubleSpinBox::up-button { 
+	background-color: rgb(27, 29, 35);
+	background-image: url(:/16x16/icons/16x16/cil-arrow-top.png);
+
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+
+	background-position: center;
+	background-repeat: no-reperat;
+
+ }
+QDoubleSpinBox::down-button { 
+	background-color: rgb(27, 29, 35);
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+
+	subcontrol-origin: padding;
+	subcontrol-position: bottom right;
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+
+	background-position: center;
+	background-repeat: no-reperat;
+
+ }
+
+
+
+</string>
+    </property>
+    <property name="buttonSymbols">
+     <enum>QAbstractSpinBox::NoButtons</enum>
+    </property>
+    <property name="decimals">
+     <number>0</number>
+    </property>
+    <property name="minimum">
+     <double>0.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>120000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>1000.000000000000000</double>
+    </property>
+    <property name="value">
+     <double>10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_MR">
+    <property name="geometry">
+     <rect>
+      <x>433</x>
+      <y>160</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+QDoubleSpinBox {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QDoubleSpinBox:disabled {
+	color: rgb(98, 103, 111);	
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QDoubleSpinBox:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QDoubleSpinBox::up-button { 
+	background-color: rgb(27, 29, 35);
+}
+QDoubleSpinBox::up-button { 
+	background-color: rgb(27, 29, 35);
+	background-image: url(:/16x16/icons/16x16/cil-arrow-top.png);
+
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+
+	background-position: center;
+	background-repeat: no-reperat;
+
+ }
+QDoubleSpinBox::down-button { 
+	background-color: rgb(27, 29, 35);
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+
+	subcontrol-origin: padding;
+	subcontrol-position: bottom right;
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+
+	background-position: center;
+	background-repeat: no-reperat;
+
+ }
+
+
+
+</string>
+    </property>
+    <property name="buttonSymbols">
+     <enum>QAbstractSpinBox::NoButtons</enum>
+    </property>
+    <property name="decimals">
+     <number>0</number>
+    </property>
+    <property name="minimum">
+     <double>0.000000000000000</double>
+    </property>
+    <property name="maximum">
+     <double>120000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>1000.000000000000000</double>
+    </property>
+    <property name="value">
+     <double>10000.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_18">
+    <property name="geometry">
+     <rect>
+      <x>43</x>
+      <y>270</y>
+      <width>141</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>Video stream size (MB):</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_5">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>270</y>
+      <width>71</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>None</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_BPP">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>120</y>
+      <width>71</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>None</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_credits_17">
+    <property name="geometry">
+     <rect>
+      <x>412</x>
+      <y>230</y>
+      <width>51</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(98, 103, 111);</string>
+    </property>
+    <property name="text">
+     <string>Quality</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>431</x>
+      <y>265</y>
+      <width>3</width>
+      <height>10</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="files.qrc"/>
+ </resources>
+ <connections/>
+</ui>
