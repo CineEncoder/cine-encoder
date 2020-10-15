@@ -1,28 +1,39 @@
-# Simplest Studio
+# Cine Encoder
 
-Simplest Studio is an application that allows you optimize and convert audio files. The following encoding modes are implemented:
+Cine Encoder for Linux is an application that allows you to convert media files while preserving HDR signals. NVENC hardware encoding for NVIDIA video cards is also supported for H265 and H264 modes. The following encoding modes are implemented:
 
-  - FLAC
-  - WAV
-  - DFF**
-  - MP3
+  - H265 NVENC (8, 10 bit)
+  - H265 (8, 10 bit)
+  - VP9 (10 bit)
+  - AV1 (10 bit)
+  - H264 NVENC (8 bit)
+  - H264 (8 bit)
+  - DNxHR HQX 4:2:2 (10 bit)
+  - ProRes HQ 4:2:2 (10 bit)
 
-** for use this format need to installed utility 'sacd-extract'.
-
-### View
 
 ![View](./images/View.png)
 
-### Smart quality detection
 
-![Smart](./images/Smart.png)
+### HDR Settings
+
+The program provides the ability to change the parameters of HDR:
+
+![HDR_settings](./images/HDR_settings.png)
+
+You can also change the Master display parameters:
+
+![HDR_settings](./images/HDR_settings-2.png)
+
 
 ### Installation
 
 Supported operating system: Linux x86_64
 
+Make sure that the NVIDIA drivers are installed in accordance with the following requirements: [Using FFMPEG with NVIDIA.](https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/index.html)
+
 ##### - Arch Linux / Manjaro Linux:
-  - install [AUR package](https://aur.archlinux.org/packages/simplest-studio/) or *.pkg.tar.xz file from release
+  - install [AUR package](https://aur.archlinux.org/packages/cine-encoder/) or *.pkg.tar.xz file from release
 
   
 ### Buid instructions
@@ -36,14 +47,14 @@ Install dependencies:
 Buld package:
 
 ```sh
-cd simplest-studio-(version)
+cd cine-encoder-(version)
 make
 ```
 
 ### Licence
 
 GNU GPL v.3
-See [LICENSE.md](https://github.com/SimplestStudio/simplest-studio/blob/master/LICENSE)
+See [LICENSE.md](https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE)
 
 
 ### Donate
