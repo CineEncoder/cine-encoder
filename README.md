@@ -15,6 +15,8 @@ Cine Encoder for Linux is an application that allows you to convert media files 
 
 ![View](./images/View.png)
 
+![View](./images/View_2.png)
+
 ### Installation
 
 Supported operating system: Linux x86_64
