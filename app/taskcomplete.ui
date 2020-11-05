@@ -32,6 +32,9 @@
    <iconset resource="files.qrc">
     <normaloff>:/20x20/icons/20x20/cil-comment-square.png</normaloff>:/20x20/icons/20x20/cil-comment-square.png</iconset>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <widget class="QFrame" name="frame_main">
    <property name="geometry">
     <rect>
@@ -55,10 +58,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">QFrame{
-	background-color: rgb(0, 0, 0);
+	background-color: rgb(5, 20, 28);
 }
 
-/* LINE EDIT */
 QLineEdit {
 	color: rgb(98, 103, 111);	
 	background-color: rgb(27, 29, 35);
@@ -73,8 +75,6 @@ QLineEdit:focus {
 	border: 2px solid rgb(91, 101, 124);
 }
 
-
-/* SCROLL BARS */
 QScrollBar:horizontal {
     border: none;
     background: rgb(52, 59, 72);
@@ -143,56 +143,15 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
      subcontrol-position: top;
      subcontrol-origin: margin;
  }
- QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
      background: none;
  }
 
- QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
      background: none;
  }
 
 
-/* COMBOBOX */
-QComboBox{
-	color: rgb(210, 210, 210);
-	background-color: rgb(27, 29, 35);
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding: 5px;
-	padding-left: 10px;
-}
-QComboBox:disabled{
-	color: rgb(98, 103, 111);
-	background-color: rgb(27, 29, 35);
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding: 5px;
-	padding-left: 10px;
-}
-QComboBox:hover{
-	border: 2px solid rgb(64, 71, 88);
-}
-QComboBox::drop-down {
-	subcontrol-origin: padding;
-	subcontrol-position: top right;
-	width: 25px; 
-	border-left-width: 3px;
-	border-left-color: rgba(39, 44, 54, 150);
-	border-left-style: solid;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;	
-	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
-	background-position: center;
-	background-repeat: no-reperat;
- }
-QComboBox QAbstractItemView {
-	color: rgb(85, 170, 255);	
-	background-color: rgb(27, 29, 35);
-	padding: 10px;
-	selection-background-color: rgb(39, 44, 54);
-}
-
-/* SLIDERS */
 QSlider::groove:horizontal {
     border-radius: 9px;
     height: 18px;
@@ -280,7 +239,7 @@ QSlider::handle:vertical:pressed {
      <string notr="true">QPushButton {
 	border: 1px solid rgba(52, 59, 72, 150);
 	border-radius: 5px;	
-	background-color: rgba(52, 59, 72, 150);
+	background-color: rgba(25, 59, 120, 150);
 }
 QPushButton:hover {
 	background-color: rgb(57, 65, 80);
@@ -322,14 +281,21 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true"/>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Sunken</enum>
     </property>
-    <property name="autoFormatting">
-     <set>QTextEdit::AutoNone</set>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="openLinks">
      <bool>true</bool>

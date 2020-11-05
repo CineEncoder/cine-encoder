@@ -10,6 +10,7 @@ Taskcomplete::Taskcomplete(QWidget *parent) :
 {
     ui_taskcomplete->setupUi(this);
     ui_taskcomplete->textBrowser->clear();
+    ui_taskcomplete->textBrowser->setAlignment(Qt::AlignCenter);
     ui_taskcomplete->textBrowser->append(_message);
 }
 

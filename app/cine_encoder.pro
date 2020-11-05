@@ -12,22 +12,25 @@ SOURCES += \
     about.cpp \
     main.cpp \
     mainwindow.cpp \
+    preset.cpp \
+    selectpreset.cpp \
     settings.cpp \
-    smartsettings.cpp \
     taskcomplete.cpp
 
 HEADERS += \
     about.h \
     mainwindow.h \
+    preset.h \
+    selectpreset.h \
     settings.h \
-    smartsettings.h \
     taskcomplete.h
 
 FORMS += \
     about.ui \
     mainwindow.ui \
+    preset.ui \
+    selectpreset.ui \
     settings.ui \
-    smartsettings.ui \
     taskcomplete.ui
 
 # Default rules for deployment.

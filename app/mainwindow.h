@@ -17,67 +17,54 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionSettings_clicked();
+
+    void closeEvent(QCloseEvent *event);
 
     void on_actionAbout_clicked();
 
-    void on_pushButton_1_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_3_clicked();
+    void on_actionSettings_clicked();
 
     void make_preset();
 
-    void on_turnRightStack_1_clicked();
-
-    void on_turnLeftStack_1_clicked();
-
-    void on_turnRightStack_2_clicked();
-
-    void on_turnLeftStack_2_clicked();
-
-    void on_comboBox_2_currentTextChanged();
-
-    void on_comboBox_1_currentTextChanged();
-
-    void on_comboBox_4_currentTextChanged();
-
-    void on_comboBox_15_currentTextChanged();
-
-    void on_comboBox_12_currentTextChanged();
-
-    void encode_mux_file();
+    void encode();
 
     void add_metadata();
 
-    void mux();
-
-    void complete_mux();
-
-    void encode_file();
-
     void complete();
 
-    void error_1();
+    void on_actionAdd_clicked();
 
-    void error_2();
+    void on_actionRemove_clicked();
 
-    void error_3();
+    void on_actionPreset_clicked();
 
-    void error_4();
+    void on_actionEncode_clicked();
+
+    void pause();
+
+    void resume();
+
+    void on_actionStop_clicked();
 
     void cancel();
 
-    void on_pushButton_4_clicked();
+    void error_1();
 
     void progress_1();
 
     void progress_2();
 
-    void progress_3();
+    void get_current_data();
 
-    void progress_4();
+    void get_output_filename();
+
+    void on_tableWidget_itemSelectionChanged();
+
+    void set_defaults();
+
+    void restore_initial_state();
+
+    void call_task_complete();
 
 private:
     Ui::MainWindow *ui;

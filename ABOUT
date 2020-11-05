@@ -13,8 +13,9 @@ The following encoding modes are implemented:
  - H264 (8 bit)
  - DNxHR HQX 4:2:2 (10 bit)
  - ProRes HQ 4:2:2 (10 bit)
+ - ProRes 4444 4:4:4 (10 bit)
 
-Supported operating system: Linux x86_64, Windows10 x64.
+Supported operating system: Linux x86_64
 
 Licence: GNU GPL v.3
 

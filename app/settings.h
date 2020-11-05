@@ -24,6 +24,12 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void on_checkBox_1_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void closeEvent(QCloseEvent *event);
+
 private:
     Ui::Settings *ui_settings;
 };

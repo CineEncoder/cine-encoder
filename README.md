@@ -10,21 +10,10 @@ Cine Encoder for Linux is an application that allows you to convert media files 
   - H264 (8 bit)
   - DNxHR HQX 4:2:2 (10 bit)
   - ProRes HQ 4:2:2 (10 bit)
+  - ProRes 4444 4:4:4 (10 bit)
 
 
 ![View](./images/View.png)
-
-
-### HDR Settings
-
-The program provides the ability to change the parameters of HDR:
-
-![HDR_settings](./images/HDR_settings.png)
-
-You can also change the Master display parameters:
-
-![HDR_settings](./images/HDR_settings-2.png)
-
 
 ### Installation
 
