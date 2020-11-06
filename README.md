@@ -46,9 +46,14 @@ Install dependencies:
 Buld package:
 
 ```sh
-cd cine-encoder-(version)
+mkdir build
+cd build
+git clone https://github.com/CineEncoder/cine-encoder.git
+mv cine-encoder cine-encoder-(ver)
+cd cine-encoder-(ver)
 make
 ```
+*ver - current version
 
 ### Licence
 
