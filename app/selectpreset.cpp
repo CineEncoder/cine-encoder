@@ -64,7 +64,7 @@ SelectPreset::SelectPreset(QWidget *parent) :
     menu->addAction(addsection);
     menu->addAction(addpreset);
     menu->setStyleSheet("QMenu {background-color: rgb(5, 20, 25);} "
-                        "QMenu::item {background-color: transparent;} "
+                        "QMenu::item {color: rgb(255, 255, 255); background-color: transparent;} "
                         "QMenu::item:selected {background-color: rgb(5, 40, 45);}");
 //    QIcon icon;
 //    icon.addFile(QString::fromUtf8(":/16x16/icons/16x16/cil-cloud-download.png"), QSize(), QIcon::Normal, QIcon::Off);

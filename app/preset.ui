@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>830</width>
-    <height>808</height>
+    <width>850</width>
+    <height>670</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -64,7 +64,7 @@
      </property>
      <property name="styleSheet">
       <string notr="true">QFrame{
-	background-color: rgb(0, 0, 0);
+	background-color: rgb(5, 20, 28);
 }
 
 QLineEdit {
@@ -282,6 +282,9 @@ QSlider::handle:vertical:pressed {
           <height>2160</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: transparent;</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
@@ -311,6 +314,9 @@ QSlider::handle:vertical:pressed {
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: transparent;</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
@@ -705,6 +711,9 @@ QSlider::handle:vertical:pressed {
           <height>2160</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: transparent;</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
@@ -736,7 +745,7 @@ QSlider::handle:vertical:pressed {
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true"/>
+            <string notr="true">background-color: transparent;</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
@@ -2484,7 +2493,8 @@ QSlider::handle:vertical:pressed {
          <item row="0" column="0">
           <widget class="QLabel" name="label_4">
            <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent;</string>
            </property>
            <property name="text">
             <string>Preset: </string>
@@ -2556,7 +2566,8 @@ QSlider::handle:vertical:pressed {
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent;</string>
            </property>
            <property name="text">
             <string>Video settings:</string>
@@ -2596,6 +2607,9 @@ QSlider::handle:vertical:pressed {
           <height>2160</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: transparent;</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
@@ -2625,6 +2639,9 @@ QSlider::handle:vertical:pressed {
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: transparent;</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
@@ -3666,8 +3683,9 @@ QSlider::handle:vertical:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(25, 59, 120, 150);
 }
 QPushButton:hover {
@@ -3694,7 +3712,7 @@ QPushButton:pressed {
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>5</width>
+               <width>3</width>
                <height>20</height>
               </size>
              </property>
@@ -3730,8 +3748,9 @@ QPushButton:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(25, 59, 120, 150);
 }
 QPushButton:hover {
@@ -3789,7 +3808,8 @@ QPushButton:pressed {
          <item row="0" column="0">
           <widget class="QLabel" name="label_2">
            <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent;</string>
            </property>
            <property name="text">
             <string>Audio settings:</string>
@@ -3870,7 +3890,8 @@ QPushButton:pressed {
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: transparent;</string>
            </property>
            <property name="text">
             <string>HDR metadata:</string>

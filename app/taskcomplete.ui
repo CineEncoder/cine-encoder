@@ -237,8 +237,9 @@ QSlider::handle:vertical:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(25, 59, 120, 150);
 }
 QPushButton:hover {
@@ -279,7 +280,7 @@ QPushButton:pressed {
      <bool>true</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="locale">
      <locale language="English" country="UnitedStates"/>

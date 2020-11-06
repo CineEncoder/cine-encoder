@@ -76,7 +76,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->label_55->hide();
     ui->progressBar->hide();
     ui->tableWidget->setColumnWidth(0, 250);
-    int i = 1;
+    ui->tableWidget->resizeColumnToContents(1);
+    ui->tableWidget->resizeColumnToContents(2);
+    ui->tableWidget->resizeColumnToContents(3);
+    ui->tableWidget->setColumnWidth(4, 70);
+    ui->tableWidget->setColumnWidth(5, 60);
+    int i = 6;
     while (i <= 35) {
         ui->tableWidget->resizeColumnToContents(i);
         i++;
@@ -1231,11 +1236,11 @@ void MainWindow::progress_1()   //*********************************** Progress 1
         int h = trunc(rem_time / 3600);
         int m = trunc((rem_time - (h * 3600)) / 60);
         int s = trunc(rem_time - (h * 3600) - (m * 60));
-        float percent = static_cast<float>(frame * 100) / _fr_count;
-        if (percent > 100) {
-            percent = 100;
+        float percent = 0.9 + static_cast<float>(frame * 100) / _fr_count;
+        if (percent > 100.f) {
+            percent = 100.f;
         };
-        ui->progressBar->setValue(int(percent));
+        ui->progressBar->setValue(int(round(percent)));
         QString hrs = QString::number(h);
         QString min = QString::number(m);
         QString sec = QString::number(s);

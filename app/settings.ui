@@ -191,6 +191,9 @@ QLineEdit:focus {
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(80, 80, 80);</string>
+           </property>
            <property name="locale">
             <locale language="English" country="UnitedStates"/>
            </property>
@@ -268,6 +271,9 @@ QLineEdit:focus {
          </item>
          <item row="5" column="1">
           <widget class="QCheckBox" name="checkBox_1">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
             <string>  Enable batch mode</string>
            </property>
@@ -283,6 +289,9 @@ QLineEdit:focus {
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(80, 80, 80);</string>
            </property>
            <property name="text">
             <string>  Show HDR info</string>
@@ -388,7 +397,7 @@ QLineEdit:focus {
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(98, 103, 111);</string>
+           <string notr="true">color: rgb(255, 255, 255);</string>
           </property>
           <property name="text">
            <string>Temp path:</string>
@@ -422,8 +431,9 @@ QLineEdit:focus {
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(52, 59, 72, 150);
 }
 QPushButton:hover {
@@ -543,8 +553,9 @@ QPushButton:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(25, 59, 120, 150);
 }
 QPushButton:hover {
@@ -571,7 +582,7 @@ QPushButton:pressed {
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>5</width>
+               <width>3</width>
                <height>20</height>
               </size>
              </property>
@@ -607,8 +618,9 @@ QPushButton:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(25, 59, 120, 150);
 }
 QPushButton:hover {
@@ -635,7 +647,7 @@ QPushButton:pressed {
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>5</width>
+               <width>3</width>
                <height>20</height>
               </size>
              </property>
@@ -671,8 +683,9 @@ QPushButton:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(25, 59, 120, 150);
 }
 QPushButton:hover {
@@ -708,7 +721,7 @@ QPushButton:pressed {
         <item row="0" column="1">
          <widget class="QLabel" name="label_credits_9">
           <property name="styleSheet">
-           <string notr="true">color: rgb(98, 103, 111);</string>
+           <string notr="true">color: rgb(255, 255, 255);</string>
           </property>
           <property name="text">
            <string>Output  path:</string>
@@ -758,8 +771,9 @@ QPushButton:pressed {
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
 	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 5px;	
+	border-radius: 4px;	
 	background-color: rgba(52, 59, 72, 150);
 }
 QPushButton:hover {
