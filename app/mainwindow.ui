@@ -104,6 +104,7 @@ color: rgb(210, 210, 210);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame{
+	/*background-color: rgb(39, 44, 54);*/
 	background-color: rgb(3, 3, 5);
 }
 
@@ -1243,31 +1244,22 @@ QPushButton:pressed {
                  <property name="spacing">
                   <number>3</number>
                  </property>
+                 <property name="leftMargin">
+                  <number>6</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>6</number>
+                 </property>
                  <item>
                   <widget class="QLabel" name="label_1">
                    <property name="styleSheet">
-                    <string notr="true">background-color: transparent;</string>
+                    <string notr="true">color: rgb(98, 103, 111);
+background-color: transparent;</string>
                    </property>
                    <property name="text">
                     <string>Source:</string>
                    </property>
                   </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>3</width>
-                     <height>18</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item>
                   <widget class="QLabel" name="label_source">
@@ -1310,7 +1302,7 @@ background-color: transparent;</string>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QTextBrowser {
-	color: rgb(98, 103, 111);
+	color: rgb(210, 210, 210);
 	background-color: transparent;
 	border: 1px solid rgba(27, 29, 35, 0);
 }</string>
@@ -1387,31 +1379,22 @@ background-color: transparent;</string>
                  <property name="spacing">
                   <number>3</number>
                  </property>
+                 <property name="leftMargin">
+                  <number>6</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>6</number>
+                 </property>
                  <item>
                   <widget class="QLabel" name="label_2">
                    <property name="styleSheet">
-                    <string notr="true">background-color: transparent;</string>
+                    <string notr="true">color: rgb(98, 103, 111);
+background-color: transparent;</string>
                    </property>
                    <property name="text">
                     <string>Output:</string>
                    </property>
                   </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_8">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>3</width>
-                     <height>18</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item>
                   <widget class="QLabel" name="label_output">
@@ -1454,7 +1437,7 @@ background-color: transparent;</string>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QTextBrowser {
-	color: rgb(98, 103, 111);
+	color: rgb(210, 210, 210);
 	background-color: transparent;
 	border: 1px solid rgba(27, 29, 35, 0);
 }</string>

@@ -1,20 +1,18 @@
 # Cine Encoder
 
-Cine Encoder for Linux is an application that allows you to convert media files while preserving HDR signals. NVENC hardware encoding for NVIDIA video cards is also supported for H265 and H264 modes. The following encoding modes are implemented:
+Cine Encoder for Linux is an application that allows you to convert media files while preserving HDR metadata. NVENC hardware encoding for NVIDIA video cards is also supported for H265 and H264 modes. The following encoding modes are implemented:
 
   - H265 NVENC (8, 10 bit)
   - H265 (8, 10 bit)
-  - VP9 (10 bit)
-  - AV1 (10 bit)
   - H264 NVENC (8 bit)
   - H264 (8 bit)
+  - VP9 (10 bit)
+  - AV1 (10 bit)
   - DNxHR HQX 4:2:2 (10 bit)
   - ProRes HQ 4:2:2 (10 bit)
   - ProRes 4444 4:4:4 (10 bit)
 
-
 ![View](./images/View.png)
-
 ![View](./images/View_2.png)
 
 ### Installation
@@ -26,9 +24,18 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 ##### - Arch Linux / Manjaro Linux:
   - install [AUR package](https://aur.archlinux.org/packages/cine-encoder/) or *.pkg.tar.xz file from release
 
+##### - Debian 10.6 / Ubuntu 20.04 / Linux Mint 20:
+  - install file cine-encoder-(ver)_amd64.deb from release
+
+##### - Fedora 32:
+  - to satisfy ffmpeg dependency Fedora users have to use rpmfusion (https://rpmfusion.org/)
+  - install file cine-encoder-(ver)_fedora_x86_64.rpm from release
+
+##### - CentOS 7.8:
+  - install ffmpeg
+  - install file cine-encoder-(ver)_centos7_x86_64.rpm from release
   
 ### Buid instructions
-
 Install dependencies:
 
     - ffmpeg>=4.2
