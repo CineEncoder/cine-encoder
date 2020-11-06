@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->label_54->hide();
     ui->label_55->hide();
     ui->progressBar->hide();
+    ui->tableWidget->setColumnWidth(0, 250);
     int i = 1;
     while (i <= 35) {
         ui->tableWidget->resizeColumnToContents(i);
