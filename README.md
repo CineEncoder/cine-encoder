@@ -49,8 +49,8 @@ Buld package:
 mkdir build
 cd build
 git clone https://github.com/CineEncoder/cine-encoder.git
-mv cine-encoder cine-encoder-(ver)
-cd cine-encoder-(ver)
+mv cine-encoder cine-encoder-(*ver)
+cd cine-encoder-(*ver)
 make
 ```
 *ver - current version
