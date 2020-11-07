@@ -82,7 +82,7 @@ void Settings::on_pushButton_6_clicked() // Save settings
         this->close();
     } else {
         _message = "Settings file not found!\n";
-        Taskcomplete taskcomplete;
+        Taskcomplete taskcomplete(this);
         taskcomplete.setModal(true);
         taskcomplete.exec();
     };

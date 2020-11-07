@@ -222,7 +222,7 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event) //************ Show prompt when close app ***********//
 {
     event->ignore();
-    QMessageBox msgBox;
+    QMessageBox msgBox(this);
     msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
     msgBox.setIcon(QMessageBox::Question);
     msgBox.setWindowTitle("Cine Encoder");
@@ -294,7 +294,7 @@ void MainWindow::on_actionAdd_clicked() //**************************** Add files
     } else {
         MediaInfo MI;
         int i = 1;
-        int sep = 0;
+        unsigned long sep = 0;
         int count = file_name_open.size();
         while (i <= count) {
             int numRows = ui->tableWidget->rowCount();
@@ -336,9 +336,9 @@ void MainWindow::on_actionAdd_clicked() //**************************** Add files
             }  catch (...) {
                 std::cout << "No duration info!" << std::endl;
             };
-            int h = trunc(dur_int / 3600);
-            int m = trunc((dur_int - (h * 3600)) / 60);
-            int s = trunc(dur_int - (h * 3600) - (m * 60));
+            int h = static_cast<int>(trunc(dur_int / 3600));
+            int m = static_cast<int>(trunc((dur_int - (h * 3600)) / 60));
+            int s = static_cast<int>(trunc(dur_int - (h * 3600) - (m * 60)));
             QString hrs = QString::number(h);
             QString min = QString::number(m);
             QString sec = QString::number(s);
@@ -449,8 +449,8 @@ void MainWindow::on_actionAdd_clicked() //**************************** Add files
             QString format;
             QString smplrt = "";
             while (j <= 8) {
-                format_wstr = MI.Get(Stream_Audio, j, L"Format");
-                smplrt_wstr = MI.Get(Stream_Audio, j, L"SamplingRate");
+                format_wstr = MI.Get(Stream_Audio, size_t(j), L"Format");
+                smplrt_wstr = MI.Get(Stream_Audio, size_t(j), L"SamplingRate");
                 format = QString::fromStdWString(format_wstr);
                 try {
                     smplrt_int = int(std::stoi(smplrt_wstr) / 1000);
@@ -1083,9 +1083,9 @@ void MainWindow::encode()   //***************************************** Encode *
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:0" << "-movflags" << "+write_colr"
                   << "-c:v" << "copy" << "-map" << "0:a" << "-c:a" << "copy" << "-y" << _output_file;
     } else {
-        int dur_mod = round(_dur);
+        int dur_mod = static_cast<int>(round(_dur));
         float fps_mod = _fps.toFloat();
-        _fr_count = round(dur_mod * fps_mod);
+        _fr_count = static_cast<int>(round(dur_mod * fps_mod));
         if (_fr_count == 0) {
             _status_encode_btn = "start";
             QIcon icon_start;
@@ -1106,7 +1106,7 @@ void MainWindow::encode()   //***************************************** Encode *
         ui->label_54->show();
         ui->label_55->show();
         ui->progressBar->show();
-        _loop_start = time (NULL);
+        _loop_start = time(nullptr);
         if (_flag_two_pass == false && _flag_hdr == false) {
             std::cout << "Encode non HDR..." << std::endl;  //  Debug info //
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _output_file;
@@ -1169,14 +1169,14 @@ void MainWindow::complete() //**************************************** Complete 
             make_preset();
         } else {
             restore_initial_state();
-            time_t end_t = time (NULL);;
+            time_t end_t = time(nullptr);
             int elps_t = static_cast<int>(end_t - _strt_t);
             if (elps_t < 0) {
                 elps_t = 0;
             };
-            int h = trunc(elps_t / 3600);
-            int m = trunc((elps_t - (h * 3600)) / 60);
-            int s = trunc(elps_t - (h * 3600) - (m * 60));
+            int h = static_cast<int>(trunc(elps_t / 3600));
+            int m = static_cast<int>(trunc((elps_t - (h * 3600)) / 60));
+            int s = static_cast<int>(trunc(elps_t - (h * 3600) - (m * 60)));
             QString hrs = QString::number(h);
             QString min = QString::number(m);
             QString sec = QString::number(s);
@@ -1190,14 +1190,14 @@ void MainWindow::complete() //**************************************** Complete 
         };
     } else {
         restore_initial_state();
-        time_t end_t = time (NULL);;
-        int elps_t = static_cast<long int>(end_t - _strt_t);
+        time_t end_t = time(nullptr);
+        int elps_t = static_cast<int>(end_t - _strt_t);
         if (elps_t < 0) {
             elps_t = 0;
         };
-        int h = trunc(elps_t / 3600);
-        int m = trunc((elps_t - (h * 3600)) / 60);
-        int s = trunc(elps_t - (h * 3600) - (m * 60));
+        int h = static_cast<int>(trunc(elps_t / 3600));
+        int m = static_cast<int>(trunc((elps_t - (h * 3600)) / 60));
+        int s = static_cast<int>(trunc(elps_t - (h * 3600) - (m * 60)));
         QString hrs = QString::number(h);
         QString min = QString::number(m);
         QString sec = QString::number(s);
@@ -1215,7 +1215,7 @@ void MainWindow::progress_1()   //*********************************** Progress 1
 {
     QString line = process_1->readAllStandardOutput();
     QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
-    //std::cout << line_mod6.toStdString() << std::endl;
+    std::cout << line_mod6.toStdString() << std::endl;
     int pos_err = line_mod6.indexOf("[error]:");
     if (pos_err != -1){
         QStringList error = line_mod6.split(":");
@@ -1226,17 +1226,17 @@ void MainWindow::progress_1()   //*********************************** Progress 1
         QStringList data = line_mod6.split(" ");
         QString frame_qstr = data[0].replace("frame=", "");
         int frame = frame_qstr.toInt();
-        time_t iter_start = time (NULL);
+        time_t iter_start = time(nullptr);
         int timer = static_cast<int>(iter_start - _loop_start);
         float full_time = static_cast<float>(timer * _fr_count) / frame;
         int rem_time = int(full_time) - timer;
         if (rem_time < 0) {
             rem_time = 0;
         };
-        int h = trunc(rem_time / 3600);
-        int m = trunc((rem_time - (h * 3600)) / 60);
-        int s = trunc(rem_time - (h * 3600) - (m * 60));
-        float percent = 0.9 + static_cast<float>(frame * 100) / _fr_count;
+        int h = static_cast<int>(trunc(rem_time / 3600));
+        int m = static_cast<int>(trunc((rem_time - (h * 3600)) / 60));
+        int s = static_cast<int>(trunc(rem_time - (h * 3600) - (m * 60)));
+        float percent = 0.9f + static_cast<float>(frame * 100) / _fr_count;
         if (percent > 100.f) {
             percent = 100.f;
         };
@@ -1284,7 +1284,7 @@ void MainWindow::progress_2()   //*********************************** Progress 2
         if ((percent == 100) && (_calling_pr_1 == true)) {
             disconnect(process_1, SIGNAL(finished(int)), this, SLOT(error_1()));
             _mux_mode = true;
-            _loop_start = time (NULL);
+            _loop_start = time(nullptr);
             _calling_pr_1 = false;
             connect(process_1, SIGNAL(finished(int)), this, SLOT(encode()));
         };
@@ -1293,7 +1293,7 @@ void MainWindow::progress_2()   //*********************************** Progress 2
 
 void MainWindow::on_actionPreset_clicked()  //******************* Call Preset Window ****************//
 {
-    SelectPreset select_preset;
+    SelectPreset select_preset(this);
     select_preset.setModal(true);
     select_preset.exec();  // ************************ Call preset window and wait for return ********//
     if (_row != -1) {
@@ -1321,7 +1321,7 @@ void MainWindow::on_actionEncode_clicked()  //********************* Encode butto
         icon_pause.addFile(QString::fromUtf8(":/16x16/icons/16x16/cil-media-pause.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->actionEncode->setIcon(icon_pause);
         ui->actionEncode->setToolTip("Pause");
-        _strt_t = time (NULL);
+        _strt_t = time(nullptr);
         make_preset();
         return;
     };
@@ -1350,33 +1350,33 @@ void MainWindow::on_actionEncode_clicked()  //********************* Encode butto
 void MainWindow::pause()    //***************************************** Pause ***********************//
 {
     short s1 = process_1->state();
-    qint64 p1 = process_1->processId();
-    std::cout << "State procedure_1: " << s1 << " PID: " << p1 << std::endl;
+    qint64 pr1 = process_1->processId();
+    std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
     if (s1 != 0) {
-        kill(process_1->processId(), SIGSTOP); // pause
+        kill(__pid_t(process_1->processId()), SIGSTOP); // pause
     };
 }
 
 void MainWindow::resume()   //**************************************** Resume ***********************//
 {
     short s1 = process_1->state();
-    qint64 p1 = process_1->processId();
-    std::cout << "State procedure_1: " << s1 << " PID: " << p1 << std::endl;
+    qint64 pr1 = process_1->processId();
+    std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
     if (s1 != 0) {
-        kill(process_1->processId(), SIGCONT); // pause
+        kill(__pid_t(process_1->processId()), SIGCONT); // pause
     };
 }
 
 void MainWindow::on_actionAbout_clicked()   //************************* About ***********************//
 {
-    About about;
+    About about(this);
     about.setModal(true);
     about.exec();
 }
 
 void MainWindow::on_actionSettings_clicked()    //******************** Settings *********************//
 {
-    Settings settings;
+    Settings settings(this);
     settings.setModal(true);
     settings.exec();
 }
@@ -1386,7 +1386,7 @@ void MainWindow::on_actionStop_clicked()    //************************** Stop **
     std::cout << "Call Stop ..." << std::endl;  //  Debug info //
     short s1 = process_1->state();
     if (s1 != 0) {
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
         msgBox.setIcon(QMessageBox::Question);
         msgBox.setWindowTitle("Cine Encoder");
@@ -1509,7 +1509,7 @@ void MainWindow::get_output_filename()  //************************ Get output da
     //QString ct_qstr = ct.toString();
     suffix = "_encoded_00" + QString::number(_row) + ".";
     std::wstring file_name_wstr = file_name.toStdWString();
-    int sep = file_name_wstr.rfind('.');
+    unsigned long sep = file_name_wstr.rfind('.');
     std::wstring file_name_without_ext_wstr = file_name_wstr.substr(0, sep);
     file_without_ext = QString::fromStdWString(file_name_without_ext_wstr);
     QString _output_file_name = file_without_ext + suffix + prefix;
@@ -1520,9 +1520,9 @@ void MainWindow::get_output_filename()  //************************ Get output da
         _output_file = _output_folder + "/" + _output_file_name;
     };
     if (_temp_folder == "") {
-        _temp_file = (ui->tableWidget->item(_row, 20)->text()) + "/_temp/temp.mkv";
+        _temp_file = (ui->tableWidget->item(_row, 20)->text()) + "/temp.mkv";
     } else {
-        _temp_file = _temp_folder + "/_temp/temp.mkv";
+        _temp_file = _temp_folder + "/temp.mkv";
     };
 }
 
@@ -1624,7 +1624,7 @@ void MainWindow::restore_initial_state()    //***************** Restore initial 
 
 void MainWindow::call_task_complete()   //********************** Call task complete *****************//
 {
-    Taskcomplete taskcomplete;
+    Taskcomplete taskcomplete(this);
     taskcomplete.setModal(true);
     taskcomplete.exec();
 }

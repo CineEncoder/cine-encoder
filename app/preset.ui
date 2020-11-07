@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>Preset</class>
  <widget class="QDialog" name="Preset">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -67,26 +70,7 @@
 	background-color: rgb(5, 20, 28);
 }
 
-QLineEdit {
-	color: rgb(220, 220, 220);	
-	background-color: rgba(27, 29, 35, 255);
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding-left: 10px;
-}
-QLineEdit:hover {
-	border: 2px solid rgb(64, 71, 88);
-}
-QLineEdit:focus {
-	border: 2px solid rgb(91, 101, 124);
-}
-QLineEdit:disabled{
-	color: rgb(98, 103, 111);
-	background-color: rgb(27, 29, 35);
-	border-radius: 5px;
-	border: 2px solid rgb(27, 29, 35);
-	padding-left: 10px;
-}
+
 
 QScrollBar:horizontal {
 	border: none;
@@ -163,44 +147,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 	background: none;
  }
 
-QComboBox{
-	color: rgb(210, 210, 210);
-	background-color: rgb(27, 29, 35);
-	border-radius: 3px;
-	border: 2px solid rgb(27, 29, 35);
-	padding: 3px;
-	padding-left: 10px;
-}
-QComboBox:disabled{
-	color: rgb(98, 103, 111);
-	background-color: rgb(27, 29, 35);
-	border-radius: 3px;
-	border: 2px solid rgb(27, 29, 35);
-	padding: 3px;
-	padding-left: 10px;
-}
-QComboBox:hover{
-	border: 2px solid rgb(64, 71, 88);
-}
-QComboBox::drop-down {
-	subcontrol-origin: padding;
-	subcontrol-position: top right;
-	width: 25px; 
-	border-left-width: 3px;
-	border-left-color: rgba(39, 44, 54, 150);
-	border-left-style: solid;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;	
-	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
-	background-position: center;
-	background-repeat: no-reperat;
- }
-QComboBox QAbstractItemView {
-	color: rgb(85, 170, 255);	
-	background-color: rgb(27, 29, 35);
-	padding: 10px;
-	selection-background-color: rgb(39, 44, 54);
-}
+
 
 QSlider::groove:horizontal {
     border-radius: 9px;
@@ -467,7 +414,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="maxCount">
                    <number>20</number>
@@ -527,7 +511,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>
@@ -575,7 +596,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>
@@ -910,7 +968,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="maxVisibleItems">
                    <number>15</number>
@@ -1018,7 +1113,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="currentIndex">
                    <number>2</number>
@@ -1091,7 +1223,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="currentIndex">
                    <number>2</number>
@@ -1281,7 +1450,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="maxCount">
                    <number>20</number>
@@ -1342,7 +1548,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="currentIndex">
                    <number>6</number>
@@ -1435,7 +1678,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>
@@ -1644,7 +1924,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>true</bool>
@@ -1740,7 +2057,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>true</bool>
@@ -1836,7 +2190,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>true</bool>
@@ -2103,7 +2494,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="inputMethodHints">
                    <set>Qt::ImhDigitsOnly</set>
@@ -2165,7 +2593,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="inputMethodHints">
                    <set>Qt::ImhDigitsOnly</set>
@@ -2323,7 +2788,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>
@@ -2379,7 +2881,44 @@ QSlider::handle:vertical:pressed {
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>
@@ -2508,6 +3047,28 @@ background-color: transparent;</string>
              <width>300</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+	color: rgb(220, 220, 220);	
+	background-color: rgba(27, 29, 35, 255);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QLineEdit:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 10px;
+}</string>
            </property>
           </widget>
          </item>
@@ -2747,7 +3308,44 @@ background-color: transparent;</string>
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="currentText">
                    <string>From source</string>
@@ -2876,7 +3474,26 @@ background-color: transparent;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true"/>
+                       <string notr="true">QLineEdit {
+	color: rgb(220, 220, 220);	
+	background-color: rgba(27, 29, 35, 255);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QLineEdit:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}</string>
                       </property>
                       <property name="text">
                        <string/>
@@ -2901,7 +3518,26 @@ background-color: transparent;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true"/>
+                       <string notr="true">QLineEdit {
+	color: rgb(220, 220, 220);	
+	background-color: rgba(27, 29, 35, 255);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QLineEdit:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}</string>
                       </property>
                       <property name="text">
                        <string/>
@@ -3007,7 +3643,26 @@ background-color: transparent;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true"/>
+                       <string notr="true">QLineEdit {
+	color: rgb(220, 220, 220);	
+	background-color: rgba(27, 29, 35, 255);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QLineEdit:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}</string>
                       </property>
                       <property name="text">
                        <string/>
@@ -3032,7 +3687,26 @@ background-color: transparent;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true"/>
+                       <string notr="true">QLineEdit {
+	color: rgb(220, 220, 220);	
+	background-color: rgba(27, 29, 35, 255);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QLineEdit:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}</string>
                       </property>
                       <property name="text">
                        <string/>
@@ -3137,7 +3811,44 @@ background-color: transparent;</string>
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>
@@ -3280,7 +3991,26 @@ background-color: transparent;</string>
                      </size>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true"/>
+                     <string notr="true">QLineEdit {
+	color: rgb(220, 220, 220);	
+	background-color: rgba(27, 29, 35, 255);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QLineEdit:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}</string>
                     </property>
                     <property name="text">
                      <string>From source</string>
@@ -3308,7 +4038,26 @@ background-color: transparent;</string>
                      </size>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true"/>
+                     <string notr="true">QLineEdit {
+	color: rgb(220, 220, 220);	
+	background-color: rgba(27, 29, 35, 255);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(91, 101, 124);
+}
+QLineEdit:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(27, 29, 35);
+	padding-left: 5px;
+}</string>
                     </property>
                     <property name="text">
                      <string>From source</string>
@@ -3459,7 +4208,44 @@ background-color: transparent;</string>
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="maxCount">
                    <number>20</number>
@@ -3504,7 +4290,44 @@ background-color: transparent;</string>
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>
@@ -3552,7 +4375,44 @@ background-color: transparent;</string>
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">QComboBox{
+	color: rgb(210, 210, 210);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:disabled{
+	color: rgb(98, 103, 111);
+	background-color: rgb(27, 29, 35);
+	border-radius: 3px;
+	border: 2px solid rgb(27, 29, 35);
+	padding: 3px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/16x16/icons/16x16/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(85, 170, 255);	
+	background-color: rgb(27, 29, 35);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
                   </property>
                   <property name="editable">
                    <bool>false</bool>

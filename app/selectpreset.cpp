@@ -135,7 +135,7 @@ void SelectPreset::on_actionRemove_preset_clicked()  //*********************** R
     QTreeWidgetItem *parentItem = item->parent();
     if (parentItem != nullptr) {
         // Item is child...
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
         msgBox.setIcon(QMessageBox::Question);
         msgBox.setWindowTitle("Preset");
@@ -158,7 +158,7 @@ void SelectPreset::on_actionRemove_preset_clicked()  //*********************** R
             Q_ASSERT(takenItem==item);
             delete takenItem;
         } else {
-            QMessageBox msgBox;
+            QMessageBox msgBox(this);
             msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
             msgBox.setIcon(QMessageBox::Information);
             msgBox.setWindowTitle("Preset");
@@ -174,7 +174,7 @@ void SelectPreset::on_actionEdit_preset_clicked()  //************************** 
     int index = ui_selectpreset->treeWidget->currentIndex().row();
     if (index < 0) {
         std::cout << "Negative index..." << std::endl;
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
         msgBox.setIcon(QMessageBox::Information);
         msgBox.setWindowTitle("Preset");
@@ -210,7 +210,7 @@ void SelectPreset::on_actionEdit_preset_clicked()  //************************** 
         p20 = item->text(20);
         p21 = (item->text(21)).toInt();
         p22 = (item->text(22)).toInt();
-        Preset preset;
+        Preset preset(this);
         preset.setModal(true);
         preset.exec();  //******************************** Go to Preset and wait for return ***************************//
         item->setText(0, _cur_preset_name);
@@ -239,7 +239,7 @@ void SelectPreset::on_actionEdit_preset_clicked()  //************************** 
 
     } else {
         // Item is parent...
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
         msgBox.setIcon(QMessageBox::Information);
         msgBox.setWindowTitle("Preset");
@@ -259,7 +259,7 @@ void SelectPreset::on_pushButton_6_clicked()  //****************************** A
     int index = ui_selectpreset->treeWidget->currentIndex().row();
     if (index < 0) {
         std::cout << "Negative index..." << std::endl;
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
         msgBox.setIcon(QMessageBox::Information);
         msgBox.setWindowTitle("Preset");
@@ -298,7 +298,7 @@ void SelectPreset::on_pushButton_6_clicked()  //****************************** A
 
     } else {
         // Item is parent...
-        QMessageBox msgBox;
+        QMessageBox msgBox(this);
         msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
         msgBox.setIcon(QMessageBox::Information);
         msgBox.setWindowTitle("Preset");
