@@ -8,21 +8,16 @@
 #include "taskcomplete.h"
 
 extern QFile _stn_file;
-extern QString _message;
 extern QString _output_folder;
 extern QString _temp_folder;
 extern bool _batch_mode;
-QString _curr_output_folder;
-QString _curr_temp_folder;
-bool _curr_batch_mode;
-bool _flag_save;
+
 
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
     ui_settings(new Ui::Settings)
 {
     ui_settings->setupUi(this);
-    //ui_settings->checkBox_2->hide();
     ui_settings->lineEdit_9->setText(_temp_folder);
     ui_settings->lineEdit_10->setText(_output_folder);
     if (_batch_mode == true) {
@@ -83,6 +78,7 @@ void Settings::on_pushButton_6_clicked() // Save settings
     } else {
         _message = "Settings file not found!\n";
         Taskcomplete taskcomplete(this);
+        taskcomplete.set_message(_message, false);
         taskcomplete.setModal(true);
         taskcomplete.exec();
     };

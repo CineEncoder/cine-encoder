@@ -1,13 +1,17 @@
-﻿#define _UNICODE
+﻿#ifndef UNICODE
+#define UNICODE
+#endif
+
 //#include <QDebug>
 //#include <QTime>
 //#include <QDate>
+//#include <libavcodec/avcodec.h>
+//#include <libde265/de265.h>
+//#include <x265.h>
+//#include <x264.h>
 #include <QCloseEvent>
-#include <QFileDialog>
 #include <QPixmap>
-#include <QProcess>
 #include <QMessageBox>
-//#include <vector>
 #include <signal.h>
 #include <iostream>
 #include <iomanip>
@@ -15,10 +19,6 @@
 #include <ctime>
 #include <math.h>
 #include <MediaInfo/MediaInfo.h>
-//#include <libavcodec/avcodec.h>
-//#include <libde265/de265.h>
-//#include <x265.h>
-//#include <x264.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "about.h"
@@ -28,49 +28,55 @@
 
 using namespace MediaInfoLib;
 
-QString _cur_preset_name = "";
-bool p7;
-int p1, p2, p3, p8, p11, p12, p13, p18, p21, p22, pos_top, pos_cld;
-QString p4, p5, p6, p9, p10, p14, p15, p16, p17, p19, p20;
 QVector <QVector <QString> > _preset_table(24, QVector<QString>(5, ""));
-QProcess *process_1 = new QProcess;
-QProcess *process_5 = new QProcess;
-QString _settings_path = QDir::homePath() + "/CineEncoder";
-QString _thumb_path = _settings_path + "/thumbnails";
-QString _settings_file = _settings_path + "/ce_settings";
-QString _preset_file = _settings_path + "/preset";
-QFile _stn_file, _prs_file;
-QString _preset_0, _preset_pass1, _preset, _preset_mkvmerge;
-QString _input_file = "";
-QString _output_folder = "";
-QString _output_file = "";
-QString _temp_folder = "";
-QString _temp_file = "";
-QString _message = "";
-QString _error_message = "";
-QString _fmt = "";
-QString _width = "";
-QString _height = "";
-QString _fps = "";
-QString _stream_size = "";
-QString _hdr1, _hdr2, _hdr3, _hdr4, _hdr5, _hdr6, _hdr7, _hdr8, _hdr9, _hdr10, _hdr11;
-QString _status_encode_btn = "start";
-float _dur = 0;
-int _row = -1;
-int _fr_count = 0;
-time_t _loop_start;
-time_t _strt_t;
-bool _calling_pr_1;
-bool _batch_mode = false;
-bool _flag_two_pass = false;
-bool _flag_hdr = false;
-bool _mux_mode = false;
+QFile _stn_file;
+QString _cur_param[23];
+QString  _output_folder, _temp_folder;
+int _pos_top, _pos_cld;
+bool _batch_mode;
+
+bool _protection = false;
+int _timer_interval = 40000;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    if (_protection == true) {
+        timer->setInterval(_timer_interval);
+        connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
+    } else {
+        timer->disconnect();
+    }
+//    set_theme(1);
+//    _preset_table.resize(24);
+//    for (int i = 0; i < 24; i++) {
+//      _preset_table[i].resize(5);
+//    };
+    _settings_path = QDir::homePath() + "/CineEncoder";
+    _thumb_path = _settings_path + "/thumbnails";
+    _settings_file = _settings_path + "/ce_settings";
+    _preset_file = _settings_path + "/preset";
+    _status_encode_btn = "start";
+    _input_file = "";
+    _output_folder = "";
+    _output_file = "";
+    _temp_folder = "";
+    _temp_file = "";
+    _error_message = "";
+    _fmt = "";
+    _width = "";
+    _height = "";
+    _fps = "";
+    _stream_size = "";
+    _row = -1;
+    _fr_count = 0;
+    _dur = 0;
+    _batch_mode = false;
+    _flag_two_pass = false;
+    _flag_hdr = false;
+    _mux_mode = false;
     ui->label_53->hide();
     ui->label_54->hide();
     ui->label_55->hide();
@@ -155,31 +161,11 @@ MainWindow::MainWindow(QWidget *parent) :
             if (line.size() > 2) {
                 QStringList cur_param = line[0].split("<%>");
                 if (cur_param.size() == 26) {
-                    _cur_preset_name = cur_param[0];
-                    p1 = cur_param[1].toInt();
-                    p2 = cur_param[2].toInt();
-                    p3 = cur_param[3].toInt();
-                    p4 = cur_param[4];
-                    p5 = cur_param[5];
-                    p6 = cur_param[6];
-                    p7 = bool(cur_param[7].toInt());
-                    p8 = cur_param[8].toInt();
-                    p9 = cur_param[9];
-                    p10 = cur_param[10];
-                    p11 = cur_param[11].toInt();
-                    p12 = cur_param[12].toInt();
-                    p13 = cur_param[13].toInt();
-                    p14 = cur_param[14];
-                    p15 = cur_param[15];
-                    p16 = cur_param[16];
-                    p17 = cur_param[17];
-                    p18 = cur_param[18].toInt();
-                    p19 = cur_param[19];
-                    p20 = cur_param[20];
-                    p21 = cur_param[21].toInt();
-                    p22 = cur_param[22].toInt();
-                    pos_top = cur_param[23].toInt();
-                    pos_cld = cur_param[24].toInt();
+                    for (int k = 0; k < 23; k++) {
+                        _cur_param[k] = cur_param[k];
+                    };
+                    _pos_top = cur_param[23].toInt();
+                    _pos_cld = cur_param[24].toInt();
                     int n = line.size() - 1;
                     for (int i = 0; i < 24; i++) {
                       _preset_table[i].resize(n);
@@ -223,7 +209,7 @@ void MainWindow::closeEvent(QCloseEvent *event) //************ Show prompt when 
 {
     event->ignore();
     QMessageBox msgBox(this);
-    msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
+    msgBox.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(5, 30, 35);");
     msgBox.setIcon(QMessageBox::Question);
     msgBox.setWindowTitle("Cine Encoder");
     msgBox.setText("Quit?");
@@ -237,17 +223,11 @@ void MainWindow::closeEvent(QCloseEvent *event) //************ Show prompt when 
             process_1->kill();
         };
         if (_prs_file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            QStringList list;
-            list << _cur_preset_name << QString::number(p1) << QString::number(p2) << QString::number(p3)
-                 << p4 << p5 << p6 << QString::number(p7) << QString::number(p8) << p9 << p10
-                 << QString::number(p11) << QString::number(p12) << QString::number(p13) << p14 << p15 << p16 << p17
-                 << QString::number(p18) << p19 << p20 << QString::number(p21) << QString::number(p22)
-                 << QString::number(pos_top) << QString::number(pos_cld);
             QString line = "";
-            for (int i = 0; i < list.size(); i++) {
-                line += list.at(i) + "<%>";
+            for (int i = 0; i < 23; i++) {
+                line += _cur_param[i] + "<%>";
             };
-            line += "\n";
+            line += QString::number(_pos_top) + "<%>" +  QString::number(_pos_cld) + "<%>" + "\n";
             _prs_file.write(line.toUtf8());
             int m = _preset_table.size();  // Column count
             int n =  _preset_table[0].size();  // Row count
@@ -286,7 +266,7 @@ void MainWindow::on_actionAdd_clicked() //**************************** Add files
                                                                                                      "*.mxf *.ts *.webm);;All files (*.*)"));
     }  catch (...) {
         _message = "One of files cannot be opened.";
-        call_task_complete();
+        call_task_complete(_message, false);
         return;
     };
     if (file_name_open.isEmpty()) {
@@ -503,17 +483,17 @@ void MainWindow::on_tableWidget_itemSelectionChanged()  //******* Item selection
         _height = "";
         _fmt = "";
         _fps = "";
-        _hdr1 = "";  // color range
-        _hdr2 = "";  // color primary
-        _hdr3 = ""; // color matrix
-        _hdr4 = "";  // transfer
-        _hdr5 = "";  // max lum
-        _hdr6 = "";  // min lum
-        _hdr7 = "";  // max cll
-        _hdr8 = "";  // max fall
-        _hdr9 = "";  // master display
-        _hdr10 = "";  // chr coord
-        _hdr11 = "";  // white coord
+        _hdr[0] = "";  // color range
+        _hdr[1] = "";  // color primary
+        _hdr[2] = ""; // color matrix
+        _hdr[3] = "";  // transfer
+        _hdr[4] = "";  // max lum
+        _hdr[5] = "";  // min lum
+        _hdr[6] = "";  // max cll
+        _hdr[7] = "";  // max fall
+        _hdr[8] = "";  // master display
+        _hdr[9] = "";  // chr coord
+        _hdr[10] = "";  // white coord
         _input_file = "";
     };
 }
@@ -521,30 +501,31 @@ void MainWindow::on_tableWidget_itemSelectionChanged()  //******* Item selection
 void MainWindow::make_preset()  //*********************************** Make preset *******************//
 {
     std::cout << "Make preset..." << std::endl; // Debug information //
-    //p1 - int codec
-    //p2 - int mode
-    //p4 - QString bitrate/quantizer/ratefactor
-    //p5 - QString maxrate
-    //p6 - QString bufsize
-    //p7 - bool checkBox_2 isEnabled
-    //p8 - int  checkBox_2 checkState
-    //p9 - QString width
-    //p10 - QString height
-    //p11 - int pass
-    //p12 - int preset
-    //p13 - int color_range
-    //p14 - QString min_lum
-    //p15 - QString max_lum
-    //p16 - QString max_cll
-    //p17 - QString max_fall
-    //p18 - int master_disp
-    //p19 - QString chroma_coord
-    //p20 - QString white_coord
-    //p21 - int acodec
-    //p22 - int abitrate
+    int p1 = _cur_param[1].toInt();         //p1 - int codec
+    int p2 = _cur_param[2].toInt();         //p2 - int mode
+    QString p4 = _cur_param[4];             //p4 - QString bitrate/quantizer/ratefactor
+    QString p5 = _cur_param[5];             //p5 - QString maxrate
+    QString p6 = _cur_param[6];             //p6 - QString bufsize
+    bool p7 = bool(_cur_param[7].toInt());  //p7 - bool checkBox_2 isEnabled
+    int p8 = _cur_param[8].toInt();         //p8 - int  checkBox_2 checkState
+    QString p9 = _cur_param[9];             //p9 - QString width
+    QString p10 = _cur_param[10];           //p10 - QString height
+    int p11 = _cur_param[11].toInt();       //p11 - int pass
+    int p12 = _cur_param[12].toInt();       //p12 - int preset
+    int p13 = _cur_param[13].toInt();       //p13 - int color_range
+    QString p14 = _cur_param[14];           //p14 - QString min_lum
+    QString p15 = _cur_param[15];           //p15 - QString max_lum
+    QString p16 = _cur_param[16];           //p16 - QString max_cll
+    QString p17 = _cur_param[17];           //p17 - QString max_fall
+    int p18 = _cur_param[18].toInt();       //p18 - int master_disp
+    QString p19 = _cur_param[19];           //p19 - QString chroma_coord
+    QString p20 = _cur_param[20];           //p20 - QString white_coord
+    int p21 = _cur_param[21].toInt();       //p21 - int acodec
+    int p22 = _cur_param[22].toInt();       //p22 - int abitrate
 
     QTableWidgetItem *newItem_status = new QTableWidgetItem("");
     ui->tableWidget->setItem(_row, 6, newItem_status);
+
     _mux_mode = false;
     _preset_0 = "";
     _preset_pass1 = "";
@@ -553,7 +534,7 @@ void MainWindow::make_preset()  //*********************************** Make prese
     _error_message = "";
 
     QString resize;
-    if (p7 == true && p8 == 2) {
+    if ((p7 == true) && (p8 == 2)) {
         if ((p9 != "") && (p10 != "") && (p9 != "Source") && (p10 != "Source")) {
             resize = QString("-vf scale=%1:%2 ").arg(p9).arg(p10);
         };
@@ -710,125 +691,125 @@ void MainWindow::make_preset()  //*********************************** Make prese
     };
 
     QString colorprim = "";                         // color primaries
-    if (_hdr2 == "BT709") {
+    if (_hdr[1] == "BT709") {
         colorprim = "-color_primaries bt709 ";
     };
-    if (_hdr2 == "BT2020") {
+    if (_hdr[1] == "BT2020") {
         colorprim = "-color_primaries bt2020 ";
     };
-    if (_hdr2 == "BT601 NTSC") {
+    if (_hdr[1] == "BT601 NTSC") {
         colorprim = "-color_primaries smpte170m ";
     };
-    if (_hdr2 == "BT601 PAL") {
+    if (_hdr[1] == "BT601 PAL") {
         colorprim = "-color_primaries bt470bg ";
     };
-    if (_hdr2 == "BT470 System M") {
+    if (_hdr[1] == "BT470 System M") {
         colorprim = "-color_primaries bt470m ";
     };
-    if (_hdr2 == "SMPTE 240M") {
+    if (_hdr[1] == "SMPTE 240M") {
         colorprim = "-color_primaries smpte240m ";
     };
-    if (_hdr2 == "Generic film") {
+    if (_hdr[1] == "Generic film") {
         colorprim = "-color_primaries film ";
     };
-    if (_hdr2 == "DCI P3") {
+    if (_hdr[1] == "DCI P3") {
         colorprim = "-color_primaries smpte431 ";
     };
-//    if (_hdr2 == "") {
+//    if (_hdr[1] == "") {
 //        colorprim = "-color_primaries smpte428 ";
 //    };
-//    if (_hdr2 == "Display P3") {
+//    if (_hdr[1] == "Display P3") {
 //        colorprim = "-color_primaries smpte432 ";
 //    };
 
     QString colormatrix = "";                       // color matrix
-    if (_hdr3 == "BT709") {
+    if (_hdr[2] == "BT709") {
         colormatrix = "-colorspace bt709 ";
     };
-    if (_hdr3 == "BT2020nc") {
+    if (_hdr[2] == "BT2020nc") {
         colormatrix = "-colorspace bt2020nc ";
     };
-    if (_hdr3 == "BT2020c") {
+    if (_hdr[2] == "BT2020c") {
         colormatrix = "-colorspace bt2020c ";
     };
-    if (_hdr3 == "FCC73682") {
+    if (_hdr[2] == "FCC73682") {
         colormatrix = "-colorspace fcc ";
     };
-    if (_hdr3 == "BT470SystemB/G") {
+    if (_hdr[2] == "BT470SystemB/G") {
         colormatrix = "-colorspace bt470bg ";
     };
-    if (_hdr3 == "SMPTE240M") {
+    if (_hdr[2] == "SMPTE240M") {
         colormatrix = "-colorspace smpte240m ";
     };
-    if (_hdr3 == "YCgCo") {
+    if (_hdr[2] == "YCgCo") {
         colormatrix = "-colorspace YCgCo ";
     };
-    if (_hdr3 == "Y'D'zD'x") {
+    if (_hdr[2] == "Y'D'zD'x") {
         colormatrix = "-colorspace smpte2085 ";
     };
-    if (_hdr3 == "Chromaticity-derivednc") {
+    if (_hdr[2] == "Chromaticity-derivednc") {
         colormatrix = "-colorspace chroma-derived-nc ";
     };
-    if (_hdr3 == "Chromaticity-derivedc") {
+    if (_hdr[2] == "Chromaticity-derivedc") {
         colormatrix = "-colorspace chroma-derived-c ";
     };
-    if (_hdr3 == "ICtCp") {
+    if (_hdr[2] == "ICtCp") {
         colormatrix = "-colorspace ICtCp ";
     };
-//    if (_hdr3 == "") {
+//    if (_hdr[2] == "") {
 //        colormatrix = "-colorspace smpte170m ";
 //    };
-//    if (_hdr3 == "") {
+//    if (_hdr[2] == "") {
 //        colormatrix = "-colorspace GBR ";
 //    };
 
     QString transfer = "";                          // transfer characteristics
-    if (_hdr4 == "BT709") {
+    if (_hdr[3] == "BT709") {
         transfer = "-color_trc bt709 ";
     };
-    if (_hdr4 == "PQ") {
+    if (_hdr[3] == "PQ") {
         transfer = "-color_trc smpte2084 ";
     };
-    if (_hdr4 == "HLG") {
+    if (_hdr[3] == "HLG") {
         transfer = "-color_trc arib-std-b67 ";
     };
-    if (_hdr4 == "BT2020 (10-bit)") {
+    if (_hdr[3] == "BT2020 (10-bit)") {
         transfer = "-color_trc bt2020-10 ";
     };
-    if (_hdr4 == "BT2020 (12-bit)") {
+    if (_hdr[3] == "BT2020 (12-bit)") {
         transfer = "-color_trc bt2020-12 ";
     };
-    if (_hdr4 == "BT470 System M") {
+    if (_hdr[3] == "BT470 System M") {
         transfer = "-color_trc bt470m ";
     };
-    if (_hdr4 == "BT470 System B/G") {
+    if (_hdr[3] == "BT470 System B/G") {
         transfer = "-color_trc bt470bg ";
     };
-    if (_hdr4 == "SMPTE 240M") {
+    if (_hdr[3] == "SMPTE 240M") {
         transfer = "-color_trc smpte240m ";
     };
-    if (_hdr4 == "Linear") {
+    if (_hdr[3] == "Linear") {
         transfer = "-color_trc linear ";
     };
-    if (_hdr4 == "Logarithmic (100:1)") {
+    if (_hdr[3] == "Logarithmic (100:1)") {
         transfer = "-color_trc log100 ";
     };
-    if (_hdr4 == "Logarithmic (31622777:1)") {
+    if (_hdr[3] == "Logarithmic (31622777:1)") {
         transfer = "-color_trc log316 ";
     };
-    if (_hdr4 == "xvYCC") {
+    if (_hdr[3] == "xvYCC") {
         transfer = "-color_trc iec61966-2-4 ";
     };
-    if (_hdr4 == "BT1361") {
+    if (_hdr[3] == "BT1361") {
         transfer = "-color_trc bt1361e ";
     };
-    if (_hdr4 == "sRGB/sYCC") {
+    if (_hdr[3] == "sRGB/sYCC") {
         transfer = "-color_trc iec61966-2-1 ";
     };
-    if (_hdr4 == "SMPTE 428M") {
+    if (_hdr[3] == "SMPTE 428M") {
         transfer = "-color_trc smpte428 ";
     };
-//    if (_hdr4 == "") {
+//    if (_hdr[3] == "") {
 //        transfer = "-color_trc smpte170m ";
 //    };
 
@@ -841,10 +822,10 @@ void MainWindow::make_preset()  //*********************************** Make prese
     QString white_coord = "";
     if (_flag_hdr == true) {
         if (p13 == 0) {                             // color range
-            if (_hdr1 == "Limited") {
+            if (_hdr[0] == "Limited") {
                 color_range = "-color_range tv ";
             };
-            if (_hdr1 == "Full") {
+            if (_hdr[0] == "Full") {
                 color_range = "-color_range pc ";
             };
         };
@@ -858,8 +839,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
         if (p15 != "") {                           // max lum
             max_lum = QString("-s max-luminance=%1 ").arg(p15);
         } else {
-            if (_hdr5 != "") {
-                max_lum = QString("-s max-luminance=%1 ").arg(_hdr5);
+            if (_hdr[4] != "") {
+                max_lum = QString("-s max-luminance=%1 ").arg(_hdr[4]);
             } else {
                 max_lum = "-d max-luminance ";
             };
@@ -868,8 +849,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
         if (p14 != "") {                           // min lum
             min_lum = QString("-s min-luminance=%1 ").arg(p14);
         } else {
-            if (_hdr6 != "") {
-                min_lum = QString("-s min-luminance=%1 ").arg(_hdr6);
+            if (_hdr[5] != "") {
+                min_lum = QString("-s min-luminance=%1 ").arg(_hdr[5]);
             } else {
                 min_lum = "-d min-luminance ";
             };
@@ -878,8 +859,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
         if (p16 != "") {                           // max cll
             max_cll = QString("-s max-content-light=%1 ").arg(p16);
         } else {
-            if (_hdr7 != "") {
-                max_cll = QString("-s max-content-light=%1 ").arg(_hdr7);
+            if (_hdr[6] != "") {
+                max_cll = QString("-s max-content-light=%1 ").arg(_hdr[6]);
             } else {
                 max_cll = "-d max-content-light ";
             };
@@ -888,8 +869,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
         if (p17 != "") {                           // max fall
             max_fall = QString("-s max-frame-light=%1 ").arg(p17);
         } else {
-            if (_hdr8 != "") {
-                max_fall = QString("-s max-frame-light=%1 ").arg(_hdr8);
+            if (_hdr[7] != "") {
+                max_fall = QString("-s max-frame-light=%1 ").arg(_hdr[7]);
             } else {
                 max_fall = "-d max-frame-light ";
             };
@@ -904,7 +885,7 @@ void MainWindow::make_preset()  //*********************************** Make prese
         QString white_coord_curr_x = "";
         QString white_coord_curr_y = "";
         if (p18 == 0) {     // From source
-            if (_hdr9 == "Display P3") {
+            if (_hdr[8] == "Display P3") {
                 chroma_coord_curr_red_x = "0.680";
                 chroma_coord_curr_red_y = "0.320";
                 chroma_coord_curr_green_x = "0.265";
@@ -914,7 +895,7 @@ void MainWindow::make_preset()  //*********************************** Make prese
                 white_coord_curr_x = "0.3127";
                 white_coord_curr_y = "0.3290";
             };
-            if (_hdr9 == "DCI P3") {
+            if (_hdr[8] == "DCI P3") {
                 chroma_coord_curr_red_x = "0.680";
                 chroma_coord_curr_red_y = "0.320";
                 chroma_coord_curr_green_x = "0.265";
@@ -924,7 +905,7 @@ void MainWindow::make_preset()  //*********************************** Make prese
                 white_coord_curr_x = "0.314";
                 white_coord_curr_y = "0.3510";
             };
-            if (_hdr9 == "BT.2020") {
+            if (_hdr[8] == "BT.2020") {
                 chroma_coord_curr_red_x = "0.708";
                 chroma_coord_curr_red_y = "0.292";
                 chroma_coord_curr_green_x = "0.170";
@@ -934,7 +915,7 @@ void MainWindow::make_preset()  //*********************************** Make prese
                 white_coord_curr_x = "0.3127";
                 white_coord_curr_y = "0.3290";
             };
-            if (_hdr9 == "BT.709") {
+            if (_hdr[8] == "BT.709") {
                 chroma_coord_curr_red_x = "0.640";
                 chroma_coord_curr_red_y = "0.330";
                 chroma_coord_curr_green_x = "0.30";
@@ -944,8 +925,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
                 white_coord_curr_x = "0.3127";
                 white_coord_curr_y = "0.3290";
             };
-            if (_hdr9 == "Undefined") {
-                QStringList chr = _hdr10.split(",");
+            if (_hdr[8] == "Undefined") {
+                QStringList chr = _hdr[9].split(",");
                 if (chr.size() == 6) {
                     chroma_coord_curr_red_x = chr[0];
                     chroma_coord_curr_red_y = chr[1];
@@ -955,16 +936,16 @@ void MainWindow::make_preset()  //*********************************** Make prese
                     chroma_coord_curr_blue_y = chr[5];
                 } else {
                     _message = "Incorrect master display chroma coordinates source parameters!";
-                    call_task_complete();
+                    call_task_complete(_message, false);
                     return;
                 };
-                QStringList wht = _hdr11.split(",");
+                QStringList wht = _hdr[10].split(",");
                 if (wht.size() == 2) {
                     white_coord_curr_x = wht[0];
                     white_coord_curr_y = wht[1];
                 } else {
                     _message = "Incorrect master display white point coordinates source parameters!";
-                    call_task_complete();
+                    call_task_complete(_message, false);
                     return;
                 };
             };
@@ -1093,7 +1074,7 @@ void MainWindow::encode()   //***************************************** Encode *
             ui->actionEncode->setIcon(icon_start);
             ui->actionEncode->setToolTip("Start");
             _message = "Select the correct input and output file!";
-            call_task_complete();
+            call_task_complete(_message, false);
             return;
         };
         ui->tableWidget->setEnabled(false);
@@ -1127,7 +1108,7 @@ void MainWindow::encode()   //***************************************** Encode *
         process_1->disconnect();
         restore_initial_state();
         _message = "An unknown error occurred!\n Possible FFMPEG not installed.\n";
-        call_task_complete();
+        call_task_complete(_message, false);
     };
 }
 
@@ -1148,7 +1129,7 @@ void MainWindow::add_metadata() //********************************** Add metedat
         process_1->disconnect();
         restore_initial_state();
         _message = "An unknown error occured!\n Possible mkvtoolnix not installed.\n";
-        call_task_complete();
+        call_task_complete(_message, false);
     };
 }
 
@@ -1185,8 +1166,11 @@ void MainWindow::complete() //**************************************** Complete 
                  << std::setw(2) << std::setfill('0') << min.toStdString() << ":"
                  << std::setw(2) << std::setfill('0') << sec.toStdString();
             std::string tm = sstr.str();
+            if (_protection == true) {
+                timer->stop();
+            }
             _message = "Task completed!\n\n Elapsed time: " + QString::fromStdString(tm);
-            call_task_complete();
+            call_task_complete(_message, false);
         };
     } else {
         restore_initial_state();
@@ -1206,8 +1190,11 @@ void MainWindow::complete() //**************************************** Complete 
              << std::setw(2) << std::setfill('0') << min.toStdString() << ":"
              << std::setw(2) << std::setfill('0') << sec.toStdString();
         std::string tm = sstr.str();
+        if (_protection == true) {
+            timer->stop();
+        }
         _message = "Task completed!\n\n Elapsed time: " + QString::fromStdString(tm);
-        call_task_complete();
+        call_task_complete(_message, false);
     };
 }
 
@@ -1308,12 +1295,12 @@ void MainWindow::on_actionEncode_clicked()  //********************* Encode butto
         int cnt = ui->tableWidget->rowCount();
         if (cnt == 0) {
             _message = "Select input file first!";
-            call_task_complete();
+            call_task_complete(_message, false);
             return;
         };
-        if (_cur_preset_name == "") {
+        if (_cur_param[0] == "") {
             _message = "Select preset first!";
-            call_task_complete();
+            call_task_complete(_message, false);
             return;
         };
         _status_encode_btn = "pause";
@@ -1322,6 +1309,9 @@ void MainWindow::on_actionEncode_clicked()  //********************* Encode butto
         ui->actionEncode->setIcon(icon_pause);
         ui->actionEncode->setToolTip("Pause");
         _strt_t = time(nullptr);
+        if (_protection == true) {
+            timer->start();
+        }
         make_preset();
         return;
     };
@@ -1349,6 +1339,9 @@ void MainWindow::on_actionEncode_clicked()  //********************* Encode butto
 
 void MainWindow::pause()    //***************************************** Pause ***********************//
 {
+    if (_protection == true) {
+        timer->stop();
+    }
     short s1 = process_1->state();
     qint64 pr1 = process_1->processId();
     std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
@@ -1359,6 +1352,9 @@ void MainWindow::pause()    //***************************************** Pause **
 
 void MainWindow::resume()   //**************************************** Resume ***********************//
 {
+    if (_protection == true) {
+        timer->start();
+    }
     short s1 = process_1->state();
     qint64 pr1 = process_1->processId();
     std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
@@ -1387,7 +1383,7 @@ void MainWindow::on_actionStop_clicked()    //************************** Stop **
     short s1 = process_1->state();
     if (s1 != 0) {
         QMessageBox msgBox(this);
-        msgBox.setStyleSheet("background-color: rgb(5, 30, 35);");
+        msgBox.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(5, 30, 35);");
         msgBox.setIcon(QMessageBox::Question);
         msgBox.setWindowTitle("Cine Encoder");
         msgBox.setText("Stop?");
@@ -1405,21 +1401,27 @@ void MainWindow::on_actionStop_clicked()    //************************** Stop **
 void MainWindow::cancel()   //************************************** Stop execute *******************//
 {
     std::cout << "Stop execute ..." << std::endl;  //  Debug info //
+    if (_protection == true) {
+        timer->stop();
+    }
     process_1->disconnect();
     restore_initial_state();
     _message = "The current encoding process has been canceled!\n";
-    call_task_complete();
+    call_task_complete(_message, false);
 }
 
 void MainWindow::error_1()  //***************************************** Error ***********************//
 {
     std::cout << "Error_1 ..." << std::endl;  //  Debug info //
+    if (_protection == true) {
+        timer->stop();
+    }
     process_1->disconnect();
     QTableWidgetItem *newItem_status = new QTableWidgetItem("Error!");
     ui->tableWidget->setItem(_row, 6, newItem_status);
     restore_initial_state();
     _message = "An error occured!\n" + _error_message;
-    call_task_complete();
+    call_task_complete(_message, false);
 }
 
 void MainWindow::get_current_data() //**************************** Get current data *****************//
@@ -1430,17 +1432,17 @@ void MainWindow::get_current_data() //**************************** Get current d
     _height = ui->tableWidget->item(_row, 26)->text();
     _fmt = ui->tableWidget->item(_row, 1)->text();
     _fps = ui->tableWidget->item(_row, 4)->text();
-    _hdr1 = ui->tableWidget->item(_row, 11)->text();  // color range
-    _hdr2 = ui->tableWidget->item(_row, 12)->text();  // color primary
-    _hdr3 = ui->tableWidget->item(_row, 13)->text(); // color matrix
-    _hdr4 = ui->tableWidget->item(_row, 14)->text();  // transfer
-    _hdr5 = ui->tableWidget->item(_row, 15)->text();  // max lum
-    _hdr6 = ui->tableWidget->item(_row, 16)->text();  // min lum
-    _hdr7 = ui->tableWidget->item(_row, 17)->text();  // max cll
-    _hdr8 = ui->tableWidget->item(_row, 18)->text();  // max fall
-    _hdr9 = ui->tableWidget->item(_row, 19)->text();  // master display
-    _hdr10 = ui->tableWidget->item(_row, 22)->text();  // chr coord
-    _hdr11 = ui->tableWidget->item(_row, 23)->text();  // white coord
+    _hdr[0] = ui->tableWidget->item(_row, 11)->text();  // color range
+    _hdr[1] = ui->tableWidget->item(_row, 12)->text();  // color primary
+    _hdr[2] = ui->tableWidget->item(_row, 13)->text(); // color matrix
+    _hdr[3] = ui->tableWidget->item(_row, 14)->text();  // transfer
+    _hdr[4] = ui->tableWidget->item(_row, 15)->text();  // max lum
+    _hdr[5] = ui->tableWidget->item(_row, 16)->text();  // min lum
+    _hdr[6] = ui->tableWidget->item(_row, 17)->text();  // max cll
+    _hdr[7] = ui->tableWidget->item(_row, 18)->text();  // max fall
+    _hdr[8] = ui->tableWidget->item(_row, 19)->text();  // master display
+    _hdr[9] = ui->tableWidget->item(_row, 22)->text();  // chr coord
+    _hdr[10] = ui->tableWidget->item(_row, 23)->text();  // white coord
     _input_file = (ui->tableWidget->item(_row, 20)->text()) + "/" + (ui->tableWidget->item(_row, 0)->text());
     QString tmb_name = (ui->tableWidget->item(_row, 0)->text()).replace(".", "_").replace(" ", "_");
     QString tmb_file = _thumb_path + "/" + tmb_name + ".jpg";
@@ -1485,7 +1487,7 @@ void MainWindow::get_current_data() //**************************** Get current d
 void MainWindow::get_output_filename()  //************************ Get output data ******************//
 {
     ui->textBrowser_2->clear();
-    ui->textBrowser_2->setText(_cur_preset_name);
+    ui->textBrowser_2->setText(_cur_param[0]);
     QString file_name = ui->tableWidget->item(_row, 0)->text();
     QString file_without_ext = "";
     QString prefix = "";
@@ -1504,7 +1506,7 @@ void MainWindow::get_output_filename()  //************************ Get output da
         {"MOV",  "",    "",    "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"}
     };
-    prefix = arr[p1][p3].toLower();
+    prefix = arr[_cur_param[1].toInt()][_cur_param[3].toInt()].toLower();
     //QTime ct = QTime::currentTime();
     //QString ct_qstr = ct.toString();
     suffix = "_encoded_00" + QString::number(_row) + ".";
@@ -1571,31 +1573,11 @@ void MainWindow::set_defaults() //****************************** Set default pre
          << "DNxHR HQX, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV<&>10<&>0<&>0<&>Auto<&>Auto<&>"
             "Auto<&>0<&>0<&>Source<&>Source<&>0<&>0<&>0<&><&><&><&><&>0<&>From source<&>From source<&>0<&>0<&>ChildItem<&>";
     QStringList cur_param = line[0].split("<%>");
-    _cur_preset_name = cur_param[0];
-    p1 = cur_param[1].toInt();
-    p2 = cur_param[2].toInt();
-    p3 = cur_param[3].toInt();
-    p4 = cur_param[4];
-    p5 = cur_param[5];
-    p6 = cur_param[6];
-    p7 = bool(cur_param[7].toInt());
-    p8 = cur_param[8].toInt();
-    p9 = cur_param[9];
-    p10 = cur_param[10];
-    p11 = cur_param[11].toInt();
-    p12 = cur_param[12].toInt();
-    p13 = cur_param[13].toInt();
-    p14 = cur_param[14];
-    p15 = cur_param[15];
-    p16 = cur_param[16];
-    p17 = cur_param[17];
-    p18 = cur_param[18].toInt();
-    p19 = cur_param[19];
-    p20 = cur_param[20];
-    p21 = cur_param[21].toInt();
-    p22 = cur_param[22].toInt();
-    pos_top = cur_param[23].toInt();
-    pos_cld = cur_param[24].toInt();
+    for (int k = 0; k < 23; k++) {
+        _cur_param[k] = cur_param[k];
+    };
+    _pos_top = cur_param[23].toInt();
+    _pos_cld = cur_param[24].toInt();
     int n = line.size() - 1;
     for (int i = 0; i < 24; i++) {
       _preset_table[i].resize(n);
@@ -1622,9 +1604,45 @@ void MainWindow::restore_initial_state()    //***************** Restore initial 
     ui->actionEncode->setToolTip("Start");
 }
 
-void MainWindow::call_task_complete()   //********************** Call task complete *****************//
+void MainWindow::call_task_complete(QString _message, bool timer_mode)   //********************** Call task complete *****************//
 {
     Taskcomplete taskcomplete(this);
+    taskcomplete.set_message(_message, timer_mode);
     taskcomplete.setModal(true);
     taskcomplete.exec();
+}
+
+void MainWindow::set_theme(int ind_theme)
+{
+    switch (ind_theme) {
+        case 1: {
+            ui->frame_main->setStyleSheet("QFrame {background-color: rgb(39, 44, 54);}");
+            ui->frame_1->setStyleSheet("QTableWidget {background-color: rgb(39, 44, 54); padding: 10px; border-radius: 5px; gridline-color: rgb(65, 72, 80);} "
+                                       "QTableWidget::item{border-color: rgb(44, 49, 60); padding-left: 5px; padding-right: 5px; gridline-color: rgb(44, 49, 60);} "
+                                       "QTableWidget::item:selected{background-color: rgba(80, 140, 170, 80);} "
+                                       "QTableWidget::horizontalHeader {background-color: rgb(81, 255, 0);} "
+                                       "QHeaderView::section:horizontal {border: 1px solid rgb(32, 34, 42); background-color: rgb(27, 29, 35); padding: 3px; border-top-left-radius: 4px; border-top-right-radius: 4px;} "
+                                       "QHeaderView::section:vertical {border: 1px solid rgb(32, 34, 42); background-color: rgb(27, 29, 35); padding: 3px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;} "
+                                       "QScrollBar:horizontal {border: none; background: rgb(52, 59, 72); height: 14px; margin: 0px 21px 0 21px; border-radius: 0px;} "
+                                       "QScrollBar:vertical {border: none; background: rgb(52, 59, 72); width: 14px; margin: 21px 0 21px 0; border-radius: 0px;} "
+                                       "QScrollBar::handle:horizontal {background: rgb(27, 29, 35); min-width: 25px; border-radius: 7px} "
+                                       "QScrollBar::handle:vertical {background: rgb(27, 29, 35); min-height: 25px; border-radius: 7px} "
+                                       "QScrollBar::add-line:horizontal {border: none; background: rgb(55, 63, 77); width: 20px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; subcontrol-position: right; subcontrol-origin: margin;} "
+                                       "QScrollBar::add-line:vertical {border: none; background: rgb(55, 63, 77); height: 20px; border-bottom-left-radius: 7px; border-bottom-right-radius: 7px; subcontrol-position: bottom; subcontrol-origin: margin;} "
+                                       "QScrollBar::sub-line:horizontal {border: none; background: rgb(55, 63, 77); width: 20px; border-top-left-radius: 7px; border-bottom-left-radius: 7px; subcontrol-position: left; subcontrol-origin: margin;} "
+                                       "QScrollBar::sub-line:vertical {border: none; background: rgb(55, 63, 77); height: 20px; border-top-left-radius: 7px; border-top-right-radius: 7px; subcontrol-position: top; subcontrol-origin: margin;} "
+                                       "QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {background: none;} "
+                                       "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {background: none;} "
+                                       "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {background: none;} "
+                                       "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}");
+        }; break;
+    }
+}
+
+void MainWindow::repeat_handler()
+{
+    std::cout<< "Call by timer..." << std::endl;
+    on_actionEncode_clicked();
+    call_task_complete("Pause", true);
+    on_actionEncode_clicked();
 }

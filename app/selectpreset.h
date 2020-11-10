@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+//#include"mainwindow.h"
+
 namespace Ui {
 class SelectPreset;
 }
@@ -12,8 +14,14 @@ class SelectPreset : public QDialog
     Q_OBJECT
 
 public:
+
     explicit SelectPreset(QWidget *parent = nullptr);
     ~SelectPreset();
+
+    //QVector <QVector <QString> > _preset_table;
+
+
+
 
 private slots:
 
@@ -30,6 +38,7 @@ private slots:
     void add_preset();
 
 private:
+
     Ui::SelectPreset *ui_selectpreset;
 };
 

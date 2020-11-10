@@ -3,17 +3,22 @@
 
 #include <QDialog>
 
+
 namespace Ui {
 class Preset;
 }
+
 
 class Preset : public QDialog
 {
     Q_OBJECT
 
 public:
+
     explicit Preset(QWidget *parent = nullptr);
     ~Preset();
+
+
 
 private slots:
 
@@ -52,7 +57,9 @@ private slots:
     void on_comboBox_preset_currentIndexChanged(int index);
 
 private:
+
     Ui::Preset *ui_preset;
+    int _repeat;
 };
 
 #endif // PRESET_H

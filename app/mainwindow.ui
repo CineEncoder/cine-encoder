@@ -103,44 +103,9 @@ color: rgb(210, 210, 210);</string>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">QFrame{
+       <string notr="true">QFrame {
 	/*background-color: rgb(39, 44, 54);*/
 	background-color: rgb(3, 3, 5);
-}
-
-QTableWidget {	
-	background-color: rgb(3, 3, 5);
-	padding: 10px;
-	border-radius: 5px;
-	gridline-color: rgb(44, 49, 60);
-}
-QTableWidget::item{
-	border-color: rgb(44, 49, 60);
-	padding-left: 5px;
-	padding-right: 5px;
-	gridline-color: rgb(44, 49, 60);
-}
-QTableWidget::item:selected{
-	background-color: rgba(80, 140, 170, 80);
-}
-QTableWidget::horizontalHeader {	
-	background-color: rgb(81, 255, 0);
-}
-QHeaderView::section:horizontal
-{
-	border: 1px solid rgb(32, 34, 42);
-	background-color: rgb(27, 29, 35);
-	padding: 3px;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-}
-QHeaderView::section:vertical
-{
-	border: 1px solid rgb(32, 34, 42);
-	background-color: rgb(27, 29, 35);
-	padding: 3px;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
 }
 
 QScrollBar:horizontal {
@@ -203,68 +168,18 @@ QScrollBar::sub-line:vertical {
 	subcontrol-position: top;
 	subcontrol-origin: margin;
  }
-QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal
-{
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
 	background: none;
 }
 QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
 	background: none;
  }
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
-{
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
 	background: none;
 }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 	background: none;
- }
-
-
-QSlider::groove:horizontal {
-	border-radius: 9px;
-	height: 18px;
-	margin: 0px;
-	background-color: rgb(52, 59, 72);
-}
-QSlider::groove:horizontal:hover {
-	background-color: rgb(55, 62, 76);
-}
-QSlider::handle:horizontal {
-	background-color: rgb(85, 170, 255);
-	border: none;
-	height: 18px;
-	width: 18px;
-	margin: 0px;
-	border-radius: 9px;
-}
-QSlider::handle:horizontal:hover {
-	background-color: rgb(105, 180, 255);
-}
-QSlider::handle:horizontal:pressed {
-	background-color: rgb(65, 130, 195);
-}
-QSlider::handle:vertical:pressed {
-	background-color: rgb(65, 130, 195);
-}
-QSlider::groove:vertical {
-	border-radius: 9px;
-	width: 18px;
-	margin: 0px;
-	background-color: rgb(52, 59, 72);
-}
-QSlider::groove:vertical:hover {
-	background-color: rgb(55, 62, 76);
-}
-QSlider::handle:vertical {
-	background-color: rgb(85, 170, 255);
-	border: none;
-	height: 18px;
-	width: 18px;
-	margin: 0px;
-	border-radius: 9px;
-}
-QSlider::handle:vertical:hover {
-	background-color: rgb(105, 180, 255);
-}</string>
+ }</string>
       </property>
       <property name="locale">
        <locale language="English" country="UnitedStates"/>
@@ -709,6 +624,43 @@ QPushButton:pressed {
            <width>3840</width>
            <height>2160</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QTableWidget {	
+	background-color: rgb(3, 3, 5);
+	padding: 10px;
+	border-radius: 5px;
+	gridline-color: rgb(44, 49, 60);
+}
+QTableWidget::item {
+	border-color: rgb(44, 49, 60);
+	padding-left: 5px;
+	padding-right: 5px;
+	gridline-color: rgb(44, 49, 60);
+}
+QTableWidget::item:selected {
+	background-color: rgba(80, 140, 170, 80);
+}
+QTableWidget::horizontalHeader {	
+	background-color: rgb(81, 255, 0);
+}
+
+QHeaderView::section:horizontal {
+	border: 1px solid rgb(32, 34, 42);
+	background-color: rgb(27, 29, 35);
+	padding: 3px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+QHeaderView::section:vertical {
+	border: 1px solid rgb(32, 34, 42);
+	background-color: rgb(27, 29, 35);
+	padding: 3px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>

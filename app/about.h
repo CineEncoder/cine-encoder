@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+
+
 namespace Ui {
 class About;
 }
@@ -24,7 +26,10 @@ private slots:
     void on_toolButton_8_clicked();
 
 private:
+
     Ui::About *ui_about;
+
+
 };
 
 #endif // ABOUT_H
