@@ -23,7 +23,7 @@ About::~About()
 
 void About::on_toolButton_6_clicked()
 {
-    close();
+    this->close();
 }
 
 void About::on_toolButton_7_clicked()

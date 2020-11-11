@@ -7,19 +7,28 @@
 #include "ui_selectpreset.h"
 
 
-
 extern QVector <QVector <QString> > _preset_table;
 extern QString _cur_param[23];
-extern int _pos_top, _pos_cld;
-
 
 SelectPreset::SelectPreset(QWidget *parent) :
     QDialog(parent),
     ui_selectpreset(new Ui::SelectPreset)
 {
     ui_selectpreset->setupUi(this);
+}
+
+SelectPreset::~SelectPreset()
+{
+    delete ui_selectpreset;
+}
+
+void SelectPreset::set_param(int *ptr_pos_top, int *ptr_pos_cld)
+{
+    _ptr_pos_top = ptr_pos_top;
+    _ptr_pos_cld = ptr_pos_cld;
+
     ui_selectpreset->treeWidget->clear();
-    int n =  _preset_table[0].size();
+    int n = _preset_table[0].size();
     int m = _preset_table.size();
     QString type;
     QColor color, color_child;
@@ -51,7 +60,7 @@ SelectPreset::SelectPreset(QWidget *parent) :
             item->addChild(child);
         };
     };
-    QTreeWidgetItem *item = ui_selectpreset->treeWidget->topLevelItem(_pos_top)->child(_pos_cld);
+    QTreeWidgetItem *item = ui_selectpreset->treeWidget->topLevelItem(*_ptr_pos_top)->child(*_ptr_pos_cld);
     ui_selectpreset->treeWidget->setCurrentItem(item);
     std::cout << n << " x " << m << std::endl; // Table size
     for (int i=1; i<=24; i++) {
@@ -71,11 +80,6 @@ SelectPreset::SelectPreset(QWidget *parent) :
 //    icon.addFile(QString::fromUtf8(":/16x16/icons/16x16/cil-cloud-download.png"), QSize(), QIcon::Normal, QIcon::Off);
 //    addpreset->setIcon(icon);
     ui_selectpreset->actionAdd_preset->setMenu(menu);
-}
-
-SelectPreset::~SelectPreset()
-{
-    delete ui_selectpreset;
 }
 
 void SelectPreset::add_section()  //******************************************* Add section *****************//
@@ -192,6 +196,7 @@ void SelectPreset::on_actionEdit_preset_clicked()  //************************** 
             _cur_param[k] = item->text(k);
         };
         Preset preset(this);
+        preset.set_param();
         preset.setModal(true);
         preset.exec();  //******************************** Go to Preset and wait for return ***************************//
         for (int k = 0; k < 23; k++) {
@@ -273,10 +278,10 @@ void SelectPreset::on_pushButton_6_clicked()  //****************************** A
         p++;
     };
     std::cout << _preset_table[0].size() << " x " << _preset_table.size() << std::endl; // Table size
-    _pos_top = ui_selectpreset->treeWidget->indexOfTopLevelItem(parentItem);
-    _pos_cld = parentItem->indexOfChild(item);
-    std::cout << "Pos_top: " << _pos_top << std::endl;  // Current section pos
-    std::cout << "Pos_cld: " << _pos_cld << std::endl;  // Current preset pos
+    *_ptr_pos_top = ui_selectpreset->treeWidget->indexOfTopLevelItem(parentItem);
+    *_ptr_pos_cld = parentItem->indexOfChild(item);
+    std::cout << "Pos_top: " << *_ptr_pos_top << std::endl;  // Current section pos
+    std::cout << "Pos_cld: " << *_ptr_pos_cld << std::endl;  // Current preset pos
     this->close();
 }
 

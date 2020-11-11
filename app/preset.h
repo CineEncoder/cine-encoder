@@ -18,7 +18,7 @@ public:
     explicit Preset(QWidget *parent = nullptr);
     ~Preset();
 
-
+    void set_param();
 
 private slots:
 
@@ -59,6 +59,7 @@ private slots:
 private:
 
     Ui::Preset *ui_preset;
+
     int _repeat;
 };
 

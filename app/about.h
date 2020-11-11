@@ -28,8 +28,6 @@ private slots:
 private:
 
     Ui::About *ui_about;
-
-
 };
 
 #endif // ABOUT_H

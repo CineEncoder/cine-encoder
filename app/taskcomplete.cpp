@@ -1,11 +1,10 @@
-#include "taskcomplete.h"
-#include "ui_taskcomplete.h"
 #include <math.h>
 #include <iomanip>
 #include <sstream>
+#include "taskcomplete.h"
+#include "ui_taskcomplete.h"
 //#include <iostream>
 
-//extern bool _protection;
 
 Taskcomplete::Taskcomplete(QWidget *parent) :
     QDialog(parent),
@@ -26,7 +25,7 @@ void Taskcomplete::on_pushButton_4_clicked()
     this->close();
 }
 
-void Taskcomplete::set_message(QString _message, bool timer_mode)
+void Taskcomplete::set_message(QString &_message, bool &timer_mode)
 {
     if (timer_mode == true) {
         show_message(_message);
@@ -37,13 +36,6 @@ void Taskcomplete::set_message(QString _message, bool timer_mode)
     } else {
         show_message(_message);
     }
-}
-
-void Taskcomplete::show_message(QString _message)
-{
-    ui_taskcomplete->textBrowser->clear();
-    ui_taskcomplete->textBrowser->setAlignment(Qt::AlignCenter);
-    ui_taskcomplete->textBrowser->append(_message);
 }
 
 void Taskcomplete::repeat_handler()
@@ -65,4 +57,11 @@ void Taskcomplete::repeat_handler()
     _message = "Pause\n\n Resume after: " + QString::fromStdString(tm);
     show_message(_message);
     elps_t--;
+}
+
+void Taskcomplete::show_message(QString _message)
+{
+    ui_taskcomplete->textBrowser->clear();
+    ui_taskcomplete->textBrowser->setAlignment(Qt::AlignCenter);
+    ui_taskcomplete->textBrowser->append(_message);
 }

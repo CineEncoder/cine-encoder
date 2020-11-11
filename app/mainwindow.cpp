@@ -28,55 +28,38 @@
 
 using namespace MediaInfoLib;
 
-QVector <QVector <QString> > _preset_table(24, QVector<QString>(5, ""));
-QFile _stn_file;
-QString _cur_param[23];
-QString  _output_folder, _temp_folder;
-int _pos_top, _pos_cld;
-bool _batch_mode;
 
-bool _protection = false;
-int _timer_interval = 40000;
+QVector <QVector <QString> > _preset_table;
+QString _cur_param[23];
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    if (_protection == true) {
-        timer->setInterval(_timer_interval);
-        connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
-    } else {
-        timer->disconnect();
-    }
-//    set_theme(1);
-//    _preset_table.resize(24);
-//    for (int i = 0; i < 24; i++) {
-//      _preset_table[i].resize(5);
-//    };
+    _preset_table.resize(24);
+    for (int i = 0; i < 24; i++) {
+      _preset_table[i].resize(5);
+    };
     _settings_path = QDir::homePath() + "/CineEncoder";
     _thumb_path = _settings_path + "/thumbnails";
     _settings_file = _settings_path + "/ce_settings";
     _preset_file = _settings_path + "/preset";
     _status_encode_btn = "start";
+    _timer_interval = 30;
     _input_file = "";
     _output_folder = "";
     _output_file = "";
     _temp_folder = "";
     _temp_file = "";
-    _error_message = "";
-    _fmt = "";
-    _width = "";
-    _height = "";
-    _fps = "";
-    _stream_size = "";
-    _row = -1;
-    _fr_count = 0;
-    _dur = 0;
+    _protection = false;
     _batch_mode = false;
-    _flag_two_pass = false;
-    _flag_hdr = false;
-    _mux_mode = false;
+    _row = -1;
+    connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
+
+    //set_theme(1);
+
     ui->label_53->hide();
     ui->label_54->hide();
     ui->label_55->hide();
@@ -131,18 +114,28 @@ MainWindow::MainWindow(QWidget *parent) :
                 line << _stn_file.readLine();
             };
             std::cout << "Number of lines in settings file: " << line.size() << std::endl; // Debug info //
-            if (line.size() == 3) {
+            if (line.size() == 5) {
                 _temp_folder = line[0].replace("temp_folder:", "").replace("\n", "");
                 _output_folder = line[1].replace("output_folder:", "").replace("\n", "");
                 if (line[2].indexOf("true") != -1) {
                     _batch_mode = true;
                 };
+                if (line[3].indexOf("true") != -1) {
+                    _protection = true;
+                };
+                _timer_interval = (line[4].replace("timer_interval:", "").replace("\n", "")).toInt();
+                if (_timer_interval < 15) {
+                    _timer_interval = 30;
+                }
+                timer->setInterval(_timer_interval*1000);
             } else {
                 std::cout << "Setting file error, not enough parameters!!! " << std::endl;  // Debug info //
             };
             std::cout << "Temp folder: " << _temp_folder.toStdString() << std::endl;  // Debug info //
             std::cout << "Output folder: " << _output_folder.toStdString() << std::endl;  // Debug info //
             std::cout << "Batch mode: " << _batch_mode << std::endl;  // Debug info //
+            std::cout << "Protection: " << _protection << std::endl;  // Debug info //
+            std::cout << "Timer interval: " << _timer_interval << std::endl;  // Debug info //
             _stn_file.close();
         } else {
             std::cout << "Setting file error (cannot be open)." << std::endl;  // Debug info //
@@ -526,12 +519,16 @@ void MainWindow::make_preset()  //*********************************** Make prese
     QTableWidgetItem *newItem_status = new QTableWidgetItem("");
     ui->tableWidget->setItem(_row, 6, newItem_status);
 
-    _mux_mode = false;
+
     _preset_0 = "";
     _preset_pass1 = "";
     _preset = "";
     _preset_mkvmerge = "";
     _error_message = "";
+    _flag_two_pass = false;
+    _flag_hdr = false;
+    _mux_mode = false;
+    _fr_count = 0;
 
     QString resize;
     if ((p7 == true) && (p8 == 2)) {
@@ -1029,6 +1026,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
     _preset_pass1 = resize  + codec + preset + mode + pass1 + color_range + colorprim + colormatrix + transfer + "-an -f null /dev/null";
     _preset = resize + codec + preset + mode + pass + color_range + colorprim + colormatrix + transfer + acodec;
     _preset_mkvmerge = QString("%1%2%3%4%5%6 ").arg(max_cll).arg(max_fall).arg(max_lum).arg(min_lum).arg(chroma_coord).arg(white_coord);
+    std::cout << "Flag two-pass: " << _flag_two_pass << std::endl;
+    std::cout << "Flag HDR: " << _flag_hdr << std::endl;
     std::cout << "preset_0: " << _preset_0.toStdString() << std::endl;
     if ((_flag_two_pass == true) && (_flag_hdr == true)) {
         std::cout << "preset_pass1: " << _preset_pass1.toStdString() << std::endl;
@@ -1278,17 +1277,18 @@ void MainWindow::progress_2()   //*********************************** Progress 2
     };
 }
 
-void MainWindow::on_actionPreset_clicked()  //******************* Call Preset Window ****************//
+void MainWindow::on_actionPreset_clicked()  // ******************* Call Preset Window **************** //
 {
     SelectPreset select_preset(this);
+    select_preset.set_param(&_pos_top, &_pos_cld);
     select_preset.setModal(true);
-    select_preset.exec();  // ************************ Call preset window and wait for return ********//
+    select_preset.exec();  // ************************ Call preset window and wait for return ******** //
     if (_row != -1) {
         get_output_filename();
     };
 }
 
-void MainWindow::on_actionEncode_clicked()  //********************* Encode button *******************//
+void MainWindow::on_actionEncode_clicked()  // ********************* Encode button ******************* //
 {
     if (_status_encode_btn == "start") {
         std::cout << "Status encode btn: start" << std::endl;  // Debug info //
@@ -1373,8 +1373,10 @@ void MainWindow::on_actionAbout_clicked()   //************************* About **
 void MainWindow::on_actionSettings_clicked()    //******************** Settings *********************//
 {
     Settings settings(this);
+    settings.set_param(&_batch_mode, &_stn_file, &_output_folder, &_temp_folder, &_protection, &_timer_interval);
     settings.setModal(true);
     settings.exec();
+    timer->setInterval(_timer_interval*1000);
 }
 
 void MainWindow::on_actionStop_clicked()    //************************** Stop ***********************//
@@ -1426,6 +1428,12 @@ void MainWindow::error_1()  //***************************************** Error **
 
 void MainWindow::get_current_data() //**************************** Get current data *****************//
 {
+    _dur = 0.0f;
+    _stream_size = "";
+    _width = "";
+    _height = "";
+    _fmt = "";
+    _fps = "";
     _dur = (ui->tableWidget->item(_row, 21)->text()).toFloat();
     _stream_size = ui->tableWidget->item(_row, 24)->text();
     _width = ui->tableWidget->item(_row, 25)->text();

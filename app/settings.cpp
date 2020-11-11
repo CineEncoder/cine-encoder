@@ -1,16 +1,8 @@
-#include <QFile>
-#include <QFileDialog>
-#include <QDir>
 #include <QCloseEvent>
 //#include <iostream>
 #include "settings.h"
 #include "ui_settings.h"
 #include "taskcomplete.h"
-
-extern QFile _stn_file;
-extern QString _output_folder;
-extern QString _temp_folder;
-extern bool _batch_mode;
 
 
 Settings::Settings(QWidget *parent) :
@@ -18,15 +10,6 @@ Settings::Settings(QWidget *parent) :
     ui_settings(new Ui::Settings)
 {
     ui_settings->setupUi(this);
-    ui_settings->lineEdit_9->setText(_temp_folder);
-    ui_settings->lineEdit_10->setText(_output_folder);
-    if (_batch_mode == true) {
-        ui_settings->checkBox_1->setChecked(true);
-    };
-    _curr_output_folder = _output_folder;
-    _curr_temp_folder = _temp_folder;
-    _curr_batch_mode = _batch_mode;
-    _flag_save = false;
 }
 
 Settings::~Settings()
@@ -34,20 +17,51 @@ Settings::~Settings()
     delete ui_settings;
 }
 
+void Settings::on_pushButton_7_clicked() // Close settings window
+{
+    this->close();
+}
+
 void Settings::closeEvent(QCloseEvent *close_settings)  // Show prompt when close app
 {
     close_settings->ignore();
     if (_flag_save == false) {
-        _output_folder = _curr_output_folder;
-        _temp_folder = _curr_temp_folder;
-        _batch_mode = _curr_batch_mode;
+        *_ptr_output_folder = _curr_output_folder;
+        *_ptr_temp_folder = _curr_temp_folder;
+        *_ptr_batch_mode = _curr_batch_mode;
+        *_ptr_protection = _curr_protection;
+        *_ptr_timer_interval = _curr_timer_interval;
     };
     close_settings->accept();
 }
 
-void Settings::on_pushButton_7_clicked() // Close settings window
+void Settings::set_param(bool *ptr_batch_mode, QFile *ptr_stn_file,
+                         QString *ptr_output_folder, QString *ptr_temp_folder,
+                         bool *ptr_protection, int *ptr_timer_interval)  // Set parameters
 {
-    this->close();
+    _ptr_batch_mode = ptr_batch_mode;
+    _ptr_stn_file = ptr_stn_file;
+    _ptr_output_folder = ptr_output_folder;
+    _ptr_temp_folder = ptr_temp_folder;
+    _ptr_protection = ptr_protection;
+    _ptr_timer_interval = ptr_timer_interval;
+
+    ui_settings->lineEdit_9->setText(*_ptr_temp_folder);
+    ui_settings->lineEdit_10->setText(*_ptr_output_folder);
+    ui_settings->spinBox_3->setValue(*_ptr_timer_interval);
+    if (*_ptr_batch_mode == true) {
+        ui_settings->checkBox_1->setChecked(true);
+    };
+    if (*_ptr_protection == true) {
+        ui_settings->checkBox_3->setChecked(true);
+        ui_settings->spinBox_3->setEnabled(true);
+    };
+    _curr_output_folder = *_ptr_output_folder;
+    _curr_temp_folder = *_ptr_temp_folder;
+    _curr_batch_mode = *_ptr_batch_mode;
+    _curr_protection = *_ptr_protection;
+    _curr_timer_interval = *_ptr_timer_interval;
+    _flag_save = false;
 }
 
 void Settings::on_pushButton_8_clicked() // Reset settings
@@ -55,32 +69,40 @@ void Settings::on_pushButton_8_clicked() // Reset settings
     ui_settings->lineEdit_9->clear();
     ui_settings->lineEdit_10->clear();
     ui_settings->checkBox_1->setChecked(false);
-    _temp_folder = "";
-    _output_folder = "";
-    _batch_mode = false;
+    ui_settings->checkBox_3->setChecked(false);
+    ui_settings->spinBox_3->setEnabled(false);
+    *_ptr_temp_folder = "";
+    *_ptr_output_folder = "";
+    *_ptr_protection = false;
+    *_ptr_batch_mode = false;
 }
 
 void Settings::on_pushButton_6_clicked() // Save settings
 {
-    if (_stn_file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QString line_0 = "temp_folder:" + _temp_folder + "\n";
-        _stn_file.write(line_0.toUtf8());
-        QString line_1 = "output_folder:" + _output_folder + "\n";
-        _stn_file.write(line_1.toUtf8());
-        if (_batch_mode == true) {
-            _stn_file.write("batch_mode:true\n");
+    if ((*_ptr_stn_file).open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QString line_0 = "temp_folder:" + *_ptr_temp_folder + "\n";
+        (*_ptr_stn_file).write(line_0.toUtf8());
+        QString line_1 = "output_folder:" + *_ptr_output_folder + "\n";
+        (*_ptr_stn_file).write(line_1.toUtf8());
+        if (*_ptr_batch_mode == true) {
+            (*_ptr_stn_file).write("batch_mode:true\n");
         } else {
-            _stn_file.write("batch_mode:false\n");
+            (*_ptr_stn_file).write("batch_mode:false\n");
         };
-        _stn_file.close();
+        if (*_ptr_protection == true) {
+            (*_ptr_stn_file).write("protection:true\n");
+        } else {
+            (*_ptr_stn_file).write("protection:false\n");
+        };
+        *_ptr_timer_interval = ui_settings->spinBox_3->value();
+        QString line_2 = "timer_interval:" + QString::number(*_ptr_timer_interval) + "\n";
+        (*_ptr_stn_file).write(line_2.toUtf8());
+        (*_ptr_stn_file).close();
         _flag_save = true;
         this->close();
     } else {
         _message = "Settings file not found!\n";
-        Taskcomplete taskcomplete(this);
-        taskcomplete.set_message(_message, false);
-        taskcomplete.setModal(true);
-        taskcomplete.exec();
+        call_task_complete(_message, false);
     };
 }
 
@@ -91,7 +113,7 @@ void Settings::on_pushButton_5_clicked() // Select temp folder
         return;
     };
     ui_settings->lineEdit_9->setText(temp_folder_name);
-    _temp_folder = temp_folder_name;
+    *_ptr_temp_folder = temp_folder_name;
 }
 
 void Settings::on_pushButton_4_clicked()  // Select output folder
@@ -101,16 +123,35 @@ void Settings::on_pushButton_4_clicked()  // Select output folder
         return;
     };
     ui_settings->lineEdit_10->setText(output_folder_name);
-    _output_folder = output_folder_name;
+    *_ptr_output_folder = output_folder_name;
 }
 
 void Settings::on_checkBox_1_clicked()  // Batch mode select
 {
     int stts_1 = ui_settings->checkBox_1->checkState();
     if (stts_1 == 2) {
-        _batch_mode = true;
+        *_ptr_batch_mode = true;
     } else {
-        _batch_mode = false;
+        *_ptr_batch_mode = false;
     };
 }
 
+void Settings::on_checkBox_3_clicked()  // Protection mode select
+{
+    int stts_3 = ui_settings->checkBox_3->checkState();
+    if (stts_3 == 2) {
+        *_ptr_protection = true;
+        ui_settings->spinBox_3->setEnabled(true);
+    } else {
+        *_ptr_protection = false;
+        ui_settings->spinBox_3->setEnabled(false);
+    };
+}
+
+void Settings::call_task_complete(QString _message, bool timer_mode)   // Call task complete
+{
+    Taskcomplete taskcomplete(this);
+    taskcomplete.set_message(_message, timer_mode);
+    taskcomplete.setModal(true);
+    taskcomplete.exec();
+}

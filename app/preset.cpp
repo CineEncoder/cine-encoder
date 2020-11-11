@@ -3,16 +3,22 @@
 #include "preset.h"
 #include "ui_preset.h"
 
-
 extern QString _cur_param[23];
-
-
 
 Preset::Preset(QWidget *parent) :
     QDialog(parent),
     ui_preset(new Ui::Preset)
 {
     ui_preset->setupUi(this);
+}
+
+Preset::~Preset()
+{
+    delete ui_preset;
+}
+
+void Preset::set_param()  // Set parameters
+{
     _repeat = 0;
     QTimer *timer = new QTimer(this);
     timer->setInterval(450);
@@ -44,12 +50,6 @@ Preset::Preset(QWidget *parent) :
         ui_preset->comboBox_audio_bitrate->setCurrentIndex(_cur_param[22].toInt());
     };
 }
-
-Preset::~Preset()
-{
-    delete ui_preset;
-}
-
 
 void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //************* Change current codec ***************//
 {
