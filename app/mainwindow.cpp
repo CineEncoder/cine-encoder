@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QTimer::singleShot(3, this, SLOT(setParameters()));
+    QTimer::singleShot(18, this, SLOT(setParameters()));
 }
 
 MainWindow::~MainWindow()
