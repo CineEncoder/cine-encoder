@@ -37,6 +37,8 @@ public:
 
 private slots:
 
+    void setParameters();
+
     void closeEvent(QCloseEvent *event);
 
     void on_actionAbout_clicked();

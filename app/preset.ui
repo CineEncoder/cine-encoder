@@ -230,7 +230,7 @@ QSlider::handle:vertical:pressed {
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: transparent;</string>
+         <string notr="true">background-color: rgb(5, 20, 28);</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -263,7 +263,7 @@ QSlider::handle:vertical:pressed {
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
+            <string notr="true">background-color: rgb(5, 20, 28);</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
@@ -770,7 +770,7 @@ QComboBox QAbstractItemView {
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: transparent;</string>
+         <string notr="true">background-color: rgb(5, 20, 28);</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -803,7 +803,7 @@ QComboBox QAbstractItemView {
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
+            <string notr="true">background-color: rgb(5, 20, 28);</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
@@ -3169,7 +3169,7 @@ background-color: transparent;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: transparent;</string>
+         <string notr="true">background-color: rgb(5, 20, 28);</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -3202,7 +3202,7 @@ background-color: transparent;</string>
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: transparent;</string>
+            <string notr="true">background-color: rgb(5, 20, 28);</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>

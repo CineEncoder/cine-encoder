@@ -500,9 +500,9 @@ QSpinBox QAbstractItemView {
           </widget>
          </item>
          <item row="0" column="6">
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="comboBox_1">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="minimumSize">
             <size>
@@ -559,6 +559,16 @@ QComboBox QAbstractItemView {
            <item>
             <property name="text">
              <string>Default</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Deep</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Wave</string>
             </property>
            </item>
           </widget>

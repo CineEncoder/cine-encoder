@@ -18,7 +18,7 @@ public:
     explicit Preset(QWidget *parent = nullptr);
     ~Preset();
 
-    void set_param();
+    void setParameters();
 
 private slots:
 

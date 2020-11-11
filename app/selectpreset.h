@@ -17,7 +17,7 @@ public:
     explicit SelectPreset(QWidget *parent = nullptr);
     ~SelectPreset();
 
-    void set_param(int *ptr_pos_top, int *ptr_pos_cld);
+    void setParameters(int *ptr_pos_top, int *ptr_pos_cld);
 
 private slots:
 

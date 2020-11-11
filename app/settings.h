@@ -18,9 +18,9 @@ public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
 
-    void set_param(bool *ptr_batch_mode, QFile *ptr_stn_file,
-                   QString *ptr_output_folder, QString *ptr_temp_folder,
-                   bool *ptr_protection, int *ptr_timer_interval);
+    void setParameters(bool *ptr_batch_mode, QFile *ptr_stn_file,
+                       QString *ptr_output_folder, QString *ptr_temp_folder,
+                       bool *ptr_protection, int *ptr_timer_interval);
 
 private slots:
 
@@ -50,6 +50,8 @@ private:
 
     QString _curr_temp_folder;
 
+    int _curr_theme;
+
     int _curr_timer_interval;
 
     bool _curr_batch_mode;
@@ -64,11 +66,11 @@ private:
 
     QString *_ptr_temp_folder;
 
+    int *_ptr_timer_interval;
+
     bool *_ptr_batch_mode;
 
     bool *_ptr_protection;
-
-    int *_ptr_timer_interval;
 
     void call_task_complete(QString _message, bool timer_mode);
 };

@@ -22,7 +22,7 @@ SelectPreset::~SelectPreset()
     delete ui_selectpreset;
 }
 
-void SelectPreset::set_param(int *ptr_pos_top, int *ptr_pos_cld)
+void SelectPreset::setParameters(int *ptr_pos_top, int *ptr_pos_cld)
 {
     _ptr_pos_top = ptr_pos_top;
     _ptr_pos_cld = ptr_pos_cld;
@@ -196,7 +196,7 @@ void SelectPreset::on_actionEdit_preset_clicked()  //************************** 
             _cur_param[k] = item->text(k);
         };
         Preset preset(this);
-        preset.set_param();
+        preset.setParameters();
         preset.setModal(true);
         preset.exec();  //******************************** Go to Preset and wait for return ***************************//
         for (int k = 0; k < 23; k++) {

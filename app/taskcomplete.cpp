@@ -25,7 +25,7 @@ void Taskcomplete::on_pushButton_4_clicked()
     this->close();
 }
 
-void Taskcomplete::set_message(QString &_message, bool &timer_mode)
+void Taskcomplete::setMessage(QString &_message, bool &timer_mode)
 {
     if (timer_mode == true) {
         show_message(_message);

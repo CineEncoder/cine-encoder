@@ -104,82 +104,13 @@ color: rgb(210, 210, 210);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame {
-	/*background-color: rgb(39, 44, 54);*/
-	background-color: rgb(3, 3, 5);
+	background-color: rgb(5, 20, 28);
+	/*background-color: rgb(3, 3, 5);*/
 }
 
-QScrollBar:horizontal {
-	border: none;
-	background: rgb(52, 59, 72);
-	height: 14px;
-	margin: 0px 21px 0 21px;
-	border-radius: 0px;
-}
-QScrollBar:vertical {
-	border: none;
-	background: rgb(52, 59, 72);
-	width: 14px;
-	margin: 21px 0 21px 0;
-	border-radius: 0px;
- }
-QScrollBar::handle:horizontal {
-	background: rgb(27, 29, 35);
-	min-width: 25px;
-	border-radius: 7px
-}
-QScrollBar::handle:vertical {	
-	background: rgb(27, 29, 35);
-	min-height: 25px;
-	border-radius: 7px
- }
-QScrollBar::add-line:horizontal {
-	border: none;
-	background: rgb(55, 63, 77);
-	width: 20px;
-	border-top-right-radius: 7px;
-	border-bottom-right-radius: 7px;
-	subcontrol-position: right;
-	subcontrol-origin: margin;
-}
-QScrollBar::add-line:vertical {
-	border: none;
-	background: rgb(55, 63, 77);
-	height: 20px;
-	border-bottom-left-radius: 7px;
-	border-bottom-right-radius: 7px;
-	subcontrol-position: bottom;
-	subcontrol-origin: margin;
- }
-QScrollBar::sub-line:horizontal {
-	border: none;
-	background: rgb(55, 63, 77);
-	width: 20px;
-	border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
-	subcontrol-position: left;
-	subcontrol-origin: margin;
-}
-QScrollBar::sub-line:vertical {
-	border: none;
-	background: rgb(55, 63, 77);
-	height: 20px;
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
-	subcontrol-position: top;
-	subcontrol-origin: margin;
- }
-QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
-	background: none;
-}
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-	background: none;
- }
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-	background: none;
-}
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-	background: none;
- }</string>
+
+
+</string>
       </property>
       <property name="locale">
        <locale language="English" country="UnitedStates"/>
@@ -626,40 +557,7 @@ QPushButton:pressed {
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">QTableWidget {	
-	background-color: rgb(3, 3, 5);
-	padding: 10px;
-	border-radius: 5px;
-	gridline-color: rgb(44, 49, 60);
-}
-QTableWidget::item {
-	border-color: rgb(44, 49, 60);
-	padding-left: 5px;
-	padding-right: 5px;
-	gridline-color: rgb(44, 49, 60);
-}
-QTableWidget::item:selected {
-	background-color: rgba(80, 140, 170, 80);
-}
-QTableWidget::horizontalHeader {	
-	background-color: rgb(81, 255, 0);
-}
-
-QHeaderView::section:horizontal {
-	border: 1px solid rgb(32, 34, 42);
-	background-color: rgb(27, 29, 35);
-	padding: 3px;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-}
-QHeaderView::section:vertical {
-	border: 1px solid rgb(32, 34, 42);
-	background-color: rgb(27, 29, 35);
-	padding: 3px;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
-
+          <string notr="true">
 </string>
          </property>
          <property name="frameShape">
@@ -714,7 +612,112 @@ QHeaderView::section:vertical {
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">QTableWidget {	
+	/*background-color: rgb(3, 3, 5);*/
+	padding: 10px;
+	border-radius: 5px;
+	gridline-color: rgb(44, 49, 60);
+}
+QTableWidget::item {
+	border-color: rgb(44, 49, 60);
+	padding-left: 5px;
+	padding-right: 5px;
+	gridline-color: rgb(44, 49, 60);
+}
+QTableWidget::item:selected {
+	background-color: rgba(80, 140, 170, 80);
+}
+QTableWidget::horizontalHeader {	
+	background-color: rgb(81, 255, 0);
+}
+
+QHeaderView::section:horizontal {
+	border: 1px solid rgb(32, 34, 42);
+	background-color: rgb(27, 29, 35);
+	padding: 3px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+QHeaderView::section:vertical {
+	border: 1px solid rgb(32, 34, 42);
+	background-color: rgb(27, 29, 35);
+	padding: 3px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+QScrollBar:horizontal {
+	border: none;
+	background: rgb(52, 59, 72);
+	height: 14px;
+	margin: 0px 21px 0 21px;
+	border-radius: 0px;
+}
+QScrollBar:vertical {
+	border: none;
+	background: rgb(52, 59, 72);
+	width: 14px;
+	margin: 21px 0 21px 0;
+	border-radius: 0px;
+ }
+QScrollBar::handle:horizontal {
+	background: rgb(27, 29, 35);
+	min-width: 25px;
+	border-radius: 7px
+}
+QScrollBar::handle:vertical {	
+	background: rgb(27, 29, 35);
+	min-height: 25px;
+	border-radius: 7px
+ }
+QScrollBar::add-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: right;
+	subcontrol-origin: margin;
+}
+QScrollBar::add-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+ }
+QScrollBar::sub-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	subcontrol-position: left;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+ }
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
+	background: none;
+}
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	background: none;
+ }
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+	background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+ }</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
@@ -1158,6 +1161,80 @@ QHeaderView::section:vertical {
            <height>88</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QScrollBar:horizontal {
+	border: none;
+	background: rgb(52, 59, 72);
+	height: 14px;
+	margin: 0px 21px 0 21px;
+	border-radius: 0px;
+}
+QScrollBar:vertical {
+	border: none;
+	background: rgb(52, 59, 72);
+	width: 14px;
+	margin: 21px 0 21px 0;
+	border-radius: 0px;
+ }
+QScrollBar::handle:horizontal {
+	background: rgb(27, 29, 35);
+	min-width: 25px;
+	border-radius: 7px
+}
+QScrollBar::handle:vertical {	
+	background: rgb(27, 29, 35);
+	min-height: 25px;
+	border-radius: 7px
+ }
+QScrollBar::add-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: right;
+	subcontrol-origin: margin;
+}
+QScrollBar::add-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+ }
+QScrollBar::sub-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	subcontrol-position: left;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+ }
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
+	background: none;
+}
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	background: none;
+ }
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+	background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+ }</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -1207,6 +1284,9 @@ QHeaderView::section:vertical {
                 <width>144</width>
                 <height>81</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgba(27, 29, 35, 150)</string>
               </property>
               <property name="locale">
                <locale language="English" country="UnitedStates"/>

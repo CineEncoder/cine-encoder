@@ -17,7 +17,7 @@ Preset::~Preset()
     delete ui_preset;
 }
 
-void Preset::set_param()  // Set parameters
+void Preset::setParameters()  // Set parameters
 {
     _repeat = 0;
     QTimer *timer = new QTimer(this);

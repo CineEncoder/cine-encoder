@@ -31,6 +31,7 @@ using namespace MediaInfoLib;
 
 QVector <QVector <QString> > _preset_table;
 QString _cur_param[23];
+int _theme;
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -38,6 +39,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QTimer::singleShot(3, this, SLOT(setParameters()));
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::setParameters()    // Set parameters
+{
+    connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
     _preset_table.resize(24);
     for (int i = 0; i < 24; i++) {
       _preset_table[i].resize(5);
@@ -56,17 +68,14 @@ MainWindow::MainWindow(QWidget *parent) :
     _protection = false;
     _batch_mode = false;
     _row = -1;
-    connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
-
-    //set_theme(1);
-
+    _theme = 0;
     ui->label_53->hide();
     ui->label_54->hide();
     ui->label_55->hide();
     ui->progressBar->hide();
     ui->tableWidget->setColumnWidth(0, 250);
-    ui->tableWidget->resizeColumnToContents(1);
-    ui->tableWidget->resizeColumnToContents(2);
+    ui->tableWidget->setColumnWidth(1, 80);
+    ui->tableWidget->setColumnWidth(2, 85);
     ui->tableWidget->resizeColumnToContents(3);
     ui->tableWidget->setColumnWidth(4, 70);
     ui->tableWidget->setColumnWidth(5, 60);
@@ -114,7 +123,7 @@ MainWindow::MainWindow(QWidget *parent) :
                 line << _stn_file.readLine();
             };
             std::cout << "Number of lines in settings file: " << line.size() << std::endl; // Debug info //
-            if (line.size() == 5) {
+            if (line.size() == 6) {
                 _temp_folder = line[0].replace("temp_folder:", "").replace("\n", "");
                 _output_folder = line[1].replace("output_folder:", "").replace("\n", "");
                 if (line[2].indexOf("true") != -1) {
@@ -128,6 +137,8 @@ MainWindow::MainWindow(QWidget *parent) :
                     _timer_interval = 30;
                 }
                 timer->setInterval(_timer_interval*1000);
+                _theme = (line[5].replace("theme:", "").replace("\n", "")).toInt();
+                set_theme(_theme);
             } else {
                 std::cout << "Setting file error, not enough parameters!!! " << std::endl;  // Debug info //
             };
@@ -191,11 +202,6 @@ MainWindow::MainWindow(QWidget *parent) :
         std::cout << "Preset file not exist ..." << std::endl;  // Debug info //
         set_defaults();
     };
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) //************ Show prompt when close app ***********//
@@ -1280,7 +1286,7 @@ void MainWindow::progress_2()   //*********************************** Progress 2
 void MainWindow::on_actionPreset_clicked()  // ******************* Call Preset Window **************** //
 {
     SelectPreset select_preset(this);
-    select_preset.set_param(&_pos_top, &_pos_cld);
+    select_preset.setParameters(&_pos_top, &_pos_cld);
     select_preset.setModal(true);
     select_preset.exec();  // ************************ Call preset window and wait for return ******** //
     if (_row != -1) {
@@ -1366,6 +1372,7 @@ void MainWindow::resume()   //**************************************** Resume **
 void MainWindow::on_actionAbout_clicked()   //************************* About ***********************//
 {
     About about(this);
+    about.setParameters();
     about.setModal(true);
     about.exec();
 }
@@ -1373,10 +1380,11 @@ void MainWindow::on_actionAbout_clicked()   //************************* About **
 void MainWindow::on_actionSettings_clicked()    //******************** Settings *********************//
 {
     Settings settings(this);
-    settings.set_param(&_batch_mode, &_stn_file, &_output_folder, &_temp_folder, &_protection, &_timer_interval);
+    settings.setParameters(&_batch_mode, &_stn_file, &_output_folder, &_temp_folder, &_protection, &_timer_interval);
     settings.setModal(true);
     settings.exec();
     timer->setInterval(_timer_interval*1000);
+    set_theme(_theme);
 }
 
 void MainWindow::on_actionStop_clicked()    //************************** Stop ***********************//
@@ -1598,7 +1606,7 @@ void MainWindow::set_defaults() //****************************** Set default pre
     };
 }
 
-void MainWindow::restore_initial_state()    //***************** Restore initial state ***************//
+void MainWindow::restore_initial_state()    // Restore initial state
 {
     ui->tableWidget->setEnabled(true);
     ui->actionAdd->setEnabled(true);
@@ -1612,42 +1620,30 @@ void MainWindow::restore_initial_state()    //***************** Restore initial 
     ui->actionEncode->setToolTip("Start");
 }
 
-void MainWindow::call_task_complete(QString _message, bool timer_mode)   //********************** Call task complete *****************//
+void MainWindow::call_task_complete(QString _message, bool timer_mode)  // Call task complete
 {
     Taskcomplete taskcomplete(this);
-    taskcomplete.set_message(_message, timer_mode);
+    taskcomplete.setMessage(_message, timer_mode);
     taskcomplete.setModal(true);
     taskcomplete.exec();
 }
 
-void MainWindow::set_theme(int ind_theme)
+void MainWindow::set_theme(int ind_theme)   // Set theme
 {
     switch (ind_theme) {
+        case 0: {
+            ui->frame_main->setStyleSheet("QFrame {background-color: rgb(5, 20, 28);}");
+        }; break;
         case 1: {
+            ui->frame_main->setStyleSheet("QFrame {background-color: rgb(3, 3, 5);}");
+        }; break;
+        case 2: {
             ui->frame_main->setStyleSheet("QFrame {background-color: rgb(39, 44, 54);}");
-            ui->frame_1->setStyleSheet("QTableWidget {background-color: rgb(39, 44, 54); padding: 10px; border-radius: 5px; gridline-color: rgb(65, 72, 80);} "
-                                       "QTableWidget::item{border-color: rgb(44, 49, 60); padding-left: 5px; padding-right: 5px; gridline-color: rgb(44, 49, 60);} "
-                                       "QTableWidget::item:selected{background-color: rgba(80, 140, 170, 80);} "
-                                       "QTableWidget::horizontalHeader {background-color: rgb(81, 255, 0);} "
-                                       "QHeaderView::section:horizontal {border: 1px solid rgb(32, 34, 42); background-color: rgb(27, 29, 35); padding: 3px; border-top-left-radius: 4px; border-top-right-radius: 4px;} "
-                                       "QHeaderView::section:vertical {border: 1px solid rgb(32, 34, 42); background-color: rgb(27, 29, 35); padding: 3px; border-top-left-radius: 4px; border-bottom-left-radius: 4px;} "
-                                       "QScrollBar:horizontal {border: none; background: rgb(52, 59, 72); height: 14px; margin: 0px 21px 0 21px; border-radius: 0px;} "
-                                       "QScrollBar:vertical {border: none; background: rgb(52, 59, 72); width: 14px; margin: 21px 0 21px 0; border-radius: 0px;} "
-                                       "QScrollBar::handle:horizontal {background: rgb(27, 29, 35); min-width: 25px; border-radius: 7px} "
-                                       "QScrollBar::handle:vertical {background: rgb(27, 29, 35); min-height: 25px; border-radius: 7px} "
-                                       "QScrollBar::add-line:horizontal {border: none; background: rgb(55, 63, 77); width: 20px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; subcontrol-position: right; subcontrol-origin: margin;} "
-                                       "QScrollBar::add-line:vertical {border: none; background: rgb(55, 63, 77); height: 20px; border-bottom-left-radius: 7px; border-bottom-right-radius: 7px; subcontrol-position: bottom; subcontrol-origin: margin;} "
-                                       "QScrollBar::sub-line:horizontal {border: none; background: rgb(55, 63, 77); width: 20px; border-top-left-radius: 7px; border-bottom-left-radius: 7px; subcontrol-position: left; subcontrol-origin: margin;} "
-                                       "QScrollBar::sub-line:vertical {border: none; background: rgb(55, 63, 77); height: 20px; border-top-left-radius: 7px; border-top-right-radius: 7px; subcontrol-position: top; subcontrol-origin: margin;} "
-                                       "QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {background: none;} "
-                                       "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {background: none;} "
-                                       "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {background: none;} "
-                                       "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}");
         }; break;
     }
 }
 
-void MainWindow::repeat_handler()
+void MainWindow::repeat_handler()   // Repeat handler
 {
     std::cout<< "Call by timer..." << std::endl;
     on_actionEncode_clicked();

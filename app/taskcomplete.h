@@ -20,7 +20,7 @@ public:
     explicit Taskcomplete(QWidget *parent = nullptr);
     ~Taskcomplete();
 
-    void set_message(QString &_message, bool &timer_mode);
+    void setMessage(QString &_message, bool &timer_mode);
 
 
 private slots:

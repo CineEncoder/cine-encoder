@@ -4,6 +4,7 @@
 #include "ui_settings.h"
 #include "taskcomplete.h"
 
+extern int _theme;
 
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
@@ -31,13 +32,14 @@ void Settings::closeEvent(QCloseEvent *close_settings)  // Show prompt when clos
         *_ptr_batch_mode = _curr_batch_mode;
         *_ptr_protection = _curr_protection;
         *_ptr_timer_interval = _curr_timer_interval;
+        _theme = _curr_theme;
     };
     close_settings->accept();
 }
 
-void Settings::set_param(bool *ptr_batch_mode, QFile *ptr_stn_file,
-                         QString *ptr_output_folder, QString *ptr_temp_folder,
-                         bool *ptr_protection, int *ptr_timer_interval)  // Set parameters
+void Settings::setParameters(bool *ptr_batch_mode, QFile *ptr_stn_file,
+                             QString *ptr_output_folder, QString *ptr_temp_folder,
+                             bool *ptr_protection, int *ptr_timer_interval)  // Set parameters
 {
     _ptr_batch_mode = ptr_batch_mode;
     _ptr_stn_file = ptr_stn_file;
@@ -56,11 +58,13 @@ void Settings::set_param(bool *ptr_batch_mode, QFile *ptr_stn_file,
         ui_settings->checkBox_3->setChecked(true);
         ui_settings->spinBox_3->setEnabled(true);
     };
+    ui_settings->comboBox_1->setCurrentIndex(_theme);
     _curr_output_folder = *_ptr_output_folder;
     _curr_temp_folder = *_ptr_temp_folder;
     _curr_batch_mode = *_ptr_batch_mode;
     _curr_protection = *_ptr_protection;
     _curr_timer_interval = *_ptr_timer_interval;
+    _curr_theme = _theme;
     _flag_save = false;
 }
 
@@ -71,10 +75,12 @@ void Settings::on_pushButton_8_clicked() // Reset settings
     ui_settings->checkBox_1->setChecked(false);
     ui_settings->checkBox_3->setChecked(false);
     ui_settings->spinBox_3->setEnabled(false);
+    ui_settings->comboBox_1->setCurrentIndex(0);
     *_ptr_temp_folder = "";
     *_ptr_output_folder = "";
     *_ptr_protection = false;
     *_ptr_batch_mode = false;
+    _theme = 0;
 }
 
 void Settings::on_pushButton_6_clicked() // Save settings
@@ -97,6 +103,9 @@ void Settings::on_pushButton_6_clicked() // Save settings
         *_ptr_timer_interval = ui_settings->spinBox_3->value();
         QString line_2 = "timer_interval:" + QString::number(*_ptr_timer_interval) + "\n";
         (*_ptr_stn_file).write(line_2.toUtf8());
+        _theme = ui_settings->comboBox_1->currentIndex();
+        QString line_3 = "theme:" + QString::number(_theme) + "\n";
+        (*_ptr_stn_file).write(line_3.toUtf8());
         (*_ptr_stn_file).close();
         _flag_save = true;
         this->close();
@@ -151,7 +160,7 @@ void Settings::on_checkBox_3_clicked()  // Protection mode select
 void Settings::call_task_complete(QString _message, bool timer_mode)   // Call task complete
 {
     Taskcomplete taskcomplete(this);
-    taskcomplete.set_message(_message, timer_mode);
+    taskcomplete.setMessage(_message, timer_mode);
     taskcomplete.setModal(true);
     taskcomplete.exec();
 }
