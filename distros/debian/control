@@ -13,9 +13,9 @@ Homepage: https://github.com/CineEncoder/cine-encoder
 Package: cine-encoder
 Architecture: any
 Depends:	${misc:Depends}, 
-            ${shlibs:Depends},
-            ffmpeg, 
-            mkvtoolnix
+          ${shlibs:Depends},
+          ffmpeg,
+          mkvtoolnix
 Description: Cine Encoder 2021 ver 3.1
  Cine Encoder is an application that allows you to convert media
  files while preserving HDR metadata. NVENC hardware encoding for 
