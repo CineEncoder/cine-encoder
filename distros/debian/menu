@@ -1,0 +1,4 @@
+?package(cine-encoder):needs="x11" \
+	section="Applications/Editors" \
+	title="Cine Encoder" \
+	command="/usr/bin/cine_encoder"

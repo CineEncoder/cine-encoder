@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cine Encoder &#8212; Cine Encoder 3.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Cine Encoder’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Cine Encoder’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Cine Encoder 3.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Cine Encoder</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cine-encoder">
+<h1>Cine Encoder<a class="headerlink" href="#cine-encoder" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<p>Cine Encoder for Linux is an application that allows you to convert media files while preserving HDR metadata. NVENC hardware encoding for NVIDIA video cards is also supported for H265 and H264 modes. The following encoding modes are implemented:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>H265 NVENC (8, 10 bit)</p></li>
+<li><p>H265 (8, 10 bit)</p></li>
+<li><p>H264 NVENC (8 bit)</p></li>
+<li><p>H264 (8 bit)</p></li>
+<li><p>VP9 (10 bit)</p></li>
+<li><p>AV1 (10 bit)</p></li>
+<li><p>DNxHR HQX 4:2:2 (10 bit)</p></li>
+<li><p>ProRes HQ 4:2:2 (10 bit)</p></li>
+<li><p>ProRes 4444 4:4:4 (10 bit)</p></li>
+</ul>
+</div></blockquote>
+<img alt="_images/View.png" src="_images/View.png" />
+<img alt="_images/View_2.png" src="_images/View_2.png" />
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Supported operating system: Linux x86_64</p>
+<p>Make sure that the NVIDIA drivers are installed in accordance with the following requirements: <a class="reference external" href="https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/index.html">Using FFMPEG with NVIDIA.</a></p>
+<ul class="simple">
+<li><p>Arch Linux / Manjaro Linux:</p>
+<ul>
+<li><p>install <a class="reference external" href="https://aur.archlinux.org/packages/cine-encoder/">AUR package</a> or cine-encoder-(ver)-arch_linux_x86_64.pkg.tar.xz file from <a class="reference external" href="https://github.com/CineEncoder/cine-encoder/releases">release</a></p></li>
+</ul>
+</li>
+<li><p>Debian 10.6 / Ubuntu 20.04 / Linux Mint 20:</p>
+<ul>
+<li><p>install file cine-encoder_(ver)_amd64.deb from <a class="reference external" href="https://github.com/CineEncoder/cine-encoder/releases">release</a></p></li>
+</ul>
+</li>
+<li><p>Fedora 32:</p>
+<ul>
+<li><p>to satisfy ffmpeg dependency Fedora users have to use <a class="reference external" href="https://rpmfusion.org/">rpmfusion</a></p></li>
+<li><p>install file cine-encoder-(ver).fedora32.x86_64.rpm from <a class="reference external" href="https://github.com/CineEncoder/cine-encoder/releases">release</a></p></li>
+</ul>
+</li>
+<li><p>CentOS 7.8:</p>
+<ul>
+<li><p>install ffmpeg</p></li>
+<li><p>install file cine-encoder-(ver).centos7.x86_64.rpm from <a class="reference external" href="https://github.com/CineEncoder/cine-encoder/releases">release</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="buid-instructions">
+<h2>Buid instructions<a class="headerlink" href="#buid-instructions" title="Permalink to this headline">¶</a></h2>
+<p>Install dependencies:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ffmpeg&gt;=4.2</p></li>
+<li><p>mkvtoolnix&gt;=49.0</p></li>
+<li><p>libmediainfo&gt;=20.03</p></li>
+<li><p>qt5-base&gt;=5.15</p></li>
+</ul>
+</div></blockquote>
+<p>Buld package:</p>
+<div class="highlight-INI notranslate"><div class="highlight"><pre><span></span><span class="na">mkdir build</span>
+
+<span class="na">cd build</span>
+
+<span class="na">git clone https://github.com/CineEncoder/cine-encoder.git</span>
+
+<span class="na">mv cine-encoder cine-encoder-(*ver)</span>
+
+<span class="na">cd cine-encoder-(*ver)</span>
+
+<span class="na">make</span>
+</pre></div>
+</div>
+<p>ver - current version</p>
+</div>
+<div class="section" id="licence">
+<h2>Licence<a class="headerlink" href="#licence" title="Permalink to this headline">¶</a></h2>
+<p>GNU GPL v.3
+See <a class="reference external" href="https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE">LICENSE.md</a></p>
+</div>
+<div class="section" id="donate">
+<h2>Donate<a class="headerlink" href="#donate" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="paypal">
+<h3>PayPal<a class="headerlink" href="#paypal" title="Permalink to this headline">¶</a></h3>
+<p>If you wish to support this project, you can make a donation for $0.5 or more via <a class="reference external" href="https://paypal.me/KozhukharenkoOleg?locale.x=ru_RU">PayPal</a>. Your contributions will help keep the project alive and support future development.</p>
+</div>
+<div class="section" id="bitcoin">
+<h3>Bitcoin<a class="headerlink" href="#bitcoin" title="Permalink to this headline">¶</a></h3>
+<p>You can send bitcoins at this address or by scanning the QR code below:</p>
+<img alt="_images/Bitcoin.png" src="_images/Bitcoin.png" />
+<p>1PqFt976YQTJ9Js3xym5GjtPDfsjq98kN8</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cine Encoder</a><ul>
+<li><a class="reference internal" href="#about">About</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#buid-instructions">Buid instructions</a></li>
+<li><a class="reference internal" href="#licence">Licence</a></li>
+<li><a class="reference internal" href="#donate">Donate</a><ul>
+<li><a class="reference internal" href="#paypal">PayPal</a></li>
+<li><a class="reference internal" href="#bitcoin">Bitcoin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Cine Encoder’s documentation!</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/readme.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Cine Encoder’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Cine Encoder 3.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Cine Encoder</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Oleg Kozhukharenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+    </div>
+  </body>
+</html>
