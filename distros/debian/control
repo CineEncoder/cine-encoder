@@ -3,10 +3,11 @@ Section: video
 Priority: optional
 Maintainer: Oleg Kozhukharenko <depositmail@rambler.ru>
 Build-Depends:	debhelper-compat (= 12), 
-                qtbase5-dev, 
+                qtbase5-dev,
+                qtmultimedia5-dev,
                 qtbase5-dev-tools, 
                 qt5-qmake, 
-                qtmultimedia5-dev
+                libmediainfo-dev
 Standards-Version: 4.5.0
 Homepage: https://github.com/CineEncoder/cine-encoder
 
