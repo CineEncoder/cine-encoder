@@ -35,8 +35,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+#ifdef Q_OS_WIN64
     this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint |
                          Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+#else
+    this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+#endif
     this->setMouseTracking(true);
     this->setAcceptDrops(true);
 }
