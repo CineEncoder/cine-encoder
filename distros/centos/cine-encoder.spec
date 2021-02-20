@@ -41,15 +41,6 @@ Licence: GNU GPL v.3
 qmake-qt5 -o Makefile app/cine_encoder.pro -spec linux-g++ \
   CONFIG+=qtquickcompiler
 
-# Modify the Makefile to use Fedora flags.  This would not be necessary if the
-# Makefile allowed overriding variable settings (e.g., with ?=).
-# sed -e 's|-pipe -O2 -Wall -Wextra|%{build_cflags}|' \
-#     -e 's|-pipe -O2 -std=gnu++11 -Wall -Wextra|%{build_cxxflags}|' \
-#    -e 's|-Wl,-O1|%{build_ldflags}|' \
-#    -e 's|= strip|=|' \
-#    -e 's|/opt/cine_encoder|%{_prefix}|' \
-#    -i Makefile
-
 %make_build
 
 %install
@@ -57,16 +48,16 @@ qmake-qt5 -o Makefile app/cine_encoder.pro -spec linux-g++ \
 mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
 mkdir -p %{buildroot}/%{_datadir}/applications
 mkdir -p %{buildroot}/%{_datadir}/sounds
-install -m 0644 %{name}.png %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
-install -m 0644 %{name}.desktop %{buildroot}/%{_datadir}/applications
-install -m 0644 %{name}.wav %{buildroot}/%{_datadir}/sounds
+install -m 0644 share/%{name}.desktop %{buildroot}/%{_datadir}/applications
+install -m 0644 share/%{name}.png %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
+install -m 0644 share/%{name}.wav %{buildroot}/%{_datadir}/sounds
 
 %files
 %doc ABOUT README.md
 %license LICENSE
 %{_bindir}/cine_encoder
-%{_datadir}/icons/hicolor/64x64/apps/cine-encoder.png
 %{_datadir}/applications/cine-encoder.desktop
+%{_datadir}/icons/hicolor/64x64/apps/cine-encoder.png
 %{_datadir}/sounds/cine-encoder.wav
 
 %changelog

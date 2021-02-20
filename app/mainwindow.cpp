@@ -35,7 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint |
+                         Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
     this->setMouseTracking(true);
     this->setAcceptDrops(true);
 }
@@ -802,18 +803,18 @@ void MainWindow::make_preset()  //*********************************** Make prese
     };
 
     QString arr_codec[12][2] = {
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        ""},
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt yuv420p -c:v libx265 -profile:v main ",              ""},
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt yuv420p -c:v libx264 -profile:v high ",              ""},
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda"},
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda"},
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda"},
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", ""},
-        {"-map_metadata -1 -map ?0:v:0 -pix_fmt yuv420p10le -c:v librav1e -strict -2 ",              ""},
-        {"-map ?0:v:0 -pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",                            ""},
-        {"-map ?0:v:0 -pix_fmt yuv444p10 -c:v prores_ks -profile:v 4 ",                              ""},
-        {"-map ?0:v:0 -pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",                        ""},
-        {"-map ?0:v:0 -movflags +write_colr -c:v copy ",                                             ""}
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv420p -c:v libx265 -profile:v main ",              ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv420p -c:v libx264 -profile:v high ",              ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda"},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda"},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda"},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv420p10le -c:v librav1e -strict -2 ",              ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv444p10 -c:v prores_ks -profile:v 4 ",             ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       ""},
+        {"-map 0:v:0? -map 0:a? -map 0:s? -map_metadata:g -1 -movflags +write_colr -c:v copy ",                            ""}
     };
     QString codec = arr_codec[p1][0];
     QString hwaccel = arr_codec[p1][1];
@@ -924,31 +925,31 @@ void MainWindow::make_preset()  //*********************************** Make prese
     };
     QString acodec = "";
     if (arr_acodec[p1][p21] == "AAC") {
-        acodec = QString("-map ?0:a -c:a aac -b:a %1").arg(arr_bitrate[0][p22]);
+        acodec = QString("-c:a aac -b:a %1").arg(arr_bitrate[0][p22]);
     };
     if (arr_acodec[p1][p21] == "AC3") {
-        acodec = QString("-map ?0:a -c:a ac3 -b:a %1").arg(arr_bitrate[1][p22]);
+        acodec = QString("-c:a ac3 -b:a %1").arg(arr_bitrate[1][p22]);
     };
     if (arr_acodec[p1][p21] == "DTS") {
-        acodec = QString("-map ?0:a -strict -2 -c:a dca -b:a %1 -ar 48000").arg(arr_bitrate[2][p22]);
+        acodec = QString("-strict -2 -c:a dca -b:a %1 -ar 48000").arg(arr_bitrate[2][p22]);
     };
     if (arr_acodec[p1][p21] == "Vorbis") {
-        acodec = QString("-map ?0:a -c:a libvorbis -b:a %1").arg(arr_bitrate[3][p22]);
+        acodec = QString("-c:a libvorbis -ac 2 -b:a %1").arg(arr_bitrate[3][p22]);
     };
     if (arr_acodec[p1][p21] == "Opus") {
-        acodec = QString("-map ?0:a -c:a libopus -b:a %1").arg(arr_bitrate[4][p22]);
+        acodec = QString("-c:a libopus -ac 2 -b:a %1").arg(arr_bitrate[4][p22]);
     };
     if (arr_acodec[p1][p21] == "PCM16") {
-        acodec = "-map ?0:a:0 -c:a pcm_s16le";
+        acodec = "-c:a pcm_s16le";
     };
     if (arr_acodec[p1][p21] == "PCM24") {
-        acodec = "-map ?0:a:0 -c:a pcm_s24le";
+        acodec = "-c:a pcm_s24le";
     };
     if (arr_acodec[p1][p21] == "PCM32") {
-        acodec = "-map ?0:a:0 -c:a pcm_s32le";
+        acodec = "-c:a pcm_s32le";
     };
     if (arr_acodec[p1][p21] == "Source") {
-        acodec = "-map ?0:a -c:a copy";
+        acodec = "-c:a copy";
     };
 
     QString colorprim = "";                         // color primaries
@@ -976,12 +977,12 @@ void MainWindow::make_preset()  //*********************************** Make prese
     if (_hdr[1] == "DCI P3") {
         colorprim = "-color_primaries smpte431 ";
     };
-//    if (_hdr[1] == "") {
-//        colorprim = "-color_primaries smpte428 ";
-//    };
-//    if (_hdr[1] == "Display P3") {
-//        colorprim = "-color_primaries smpte432 ";
-//    };
+    if (_hdr[1] == "XYZ") {
+        colorprim = "-color_primaries smpte428 ";
+    };
+    if (_hdr[1] == "Display P3") {
+        colorprim = "-color_primaries smpte432 ";
+    };
 
     QString colormatrix = "";                       // color matrix
     if (_hdr[2] == "BT709") {
@@ -1017,12 +1018,12 @@ void MainWindow::make_preset()  //*********************************** Make prese
     if (_hdr[2] == "ICtCp") {
         colormatrix = "-colorspace ICtCp ";
     };
-//    if (_hdr[2] == "") {
-//        colormatrix = "-colorspace smpte170m ";
-//    };
-//    if (_hdr[2] == "") {
-//        colormatrix = "-colorspace GBR ";
-//    };
+    if (_hdr[2] == "BT601") {
+        colormatrix = "-colorspace smpte170m ";
+    };
+    if (_hdr[2] == "Identity") {
+        colormatrix = "-colorspace GBR ";
+    };
 
     QString transfer = "";                          // transfer characteristics
     if (_hdr[3] == "BT709") {
@@ -1070,9 +1071,9 @@ void MainWindow::make_preset()  //*********************************** Make prese
     if (_hdr[3] == "SMPTE 428M") {
         transfer = "-color_trc smpte428 ";
     };
-//    if (_hdr[3] == "") {
-//        transfer = "-color_trc smpte170m ";
-//    };
+    if (_hdr[3] == "BT601") {
+        transfer = "-color_trc smpte170m ";
+    };
 
     QString color_range = "";
     QString max_lum = "";
@@ -1324,8 +1325,9 @@ void MainWindow::encode()   //***************************************** Encode *
     if (_mux_mode == true) {
         std::cout << "Muxing mode ..." << std::endl;  //  Debug info //
         ui->label_53->setText("Muxing:");
-        arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:0" << "-movflags" << "+write_colr"
-                  << "-c:v" << "copy" << "-map" << "?0:a" << "-c:a" << "copy" << "-y" << _output_file;
+        arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
+                  << "-map" << "0:s?" << "-movflags" << "+write_colr"
+                  << "-c:v" << "copy" << "-c:a" << "copy" << "-y" << _output_file;
     } else {
         int dur_mod = static_cast<int>(round(_dur));
         float fps_mod = _fps.toFloat();
@@ -1441,7 +1443,7 @@ void MainWindow::complete() //**************************************** Complete 
             }
             _message = "Task completed!\n\n Elapsed time: " + QString::fromStdString(tm);
             call_task_complete(_message, false);
-        };
+        }
     } else {
         restore_initial_state();
         time_t end_t = time(nullptr);
@@ -1476,12 +1478,21 @@ void MainWindow::progress_1()   //*********************************** Progress 1
 {
     QString line = process_1->readAllStandardOutput();
     QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
-    std::cout << line_mod6.toStdString() << std::endl;
-    int pos_err = line_mod6.indexOf("[error]:");
-    if (pos_err != -1){
+    //std::cout << line_mod6.toStdString() << std::endl;
+    int pos_err_1 = line_mod6.indexOf("[error]:");
+    int pos_err_2 = line_mod6.indexOf("Error");
+    int pos_err_3 = line_mod6.indexOf(" @ ");
+    if (pos_err_1 != -1) {
         QStringList error = line_mod6.split(":");
         _error_message = error[1];
-    };
+    }
+    if (pos_err_2 != -1) {
+        _error_message = line_mod6;
+    }
+    if (pos_err_3 != -1) {
+        QStringList error = line_mod6.split("]");
+        _error_message = error[1];
+    }
     int pos_st = line_mod6.indexOf("frame=");
     if (pos_st == 0) {
         QStringList data = line_mod6.split(" ");
@@ -1679,15 +1690,6 @@ void MainWindow::on_actionStop_clicked()    //************************** Stop **
     std::cout << "Call Stop ..." << std::endl;  //  Debug info //
     short s1 = process_1->state();
     if (s1 != 0) {
-        /*QMessageBox msgBox(this);
-        msgBox.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(5, 30, 35);");
-        msgBox.setIcon(QMessageBox::Question);
-        msgBox.setWindowTitle("Cine Encoder");
-        msgBox.setText("Stop?");
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-        msgBox.setDefaultButton(QMessageBox::Cancel);
-        int confirm = msgBox.exec();
-        if (confirm == QMessageBox::Yes) {*/
         _message = "Stop encoding?";
         bool confirm = call_dialog(_message);
         if (confirm == true) {
@@ -1724,7 +1726,7 @@ void MainWindow::error_1()  //***************************************** Error **
     newItem_status->setTextAlignment(Qt::AlignCenter);
     ui->tableWidget->setItem(_row, 6, newItem_status);
     restore_initial_state();
-    _message = "An error occured!\n" + _error_message;
+    _message = "An error occured! " + _error_message;
     call_task_complete(_message, false);
 }
 

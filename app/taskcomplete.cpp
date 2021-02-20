@@ -78,6 +78,9 @@ void Taskcomplete::show_message(QString _message)   // Show message
     ui_taskcomplete->textBrowser->clear();
     ui_taskcomplete->textBrowser->setAlignment(Qt::AlignCenter);
     ui_taskcomplete->textBrowser->append(_message);
+    QTextCursor textCursor = ui_taskcomplete->textBrowser->textCursor();
+    textCursor.movePosition(QTextCursor::Start);
+    ui_taskcomplete->textBrowser->setTextCursor(textCursor);
 }
 
 bool Taskcomplete::eventFilter(QObject *watched, QEvent *event)

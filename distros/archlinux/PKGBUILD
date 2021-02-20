@@ -20,15 +20,16 @@ package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   install -Dm755 cine_encoder "$pkgdir"/usr/bin/cine_encoder
   
-  # install documentation
-  install -Dm644 ABOUT -t "${pkgdir}/usr/share/doc/${pkgname}"
   # install license
   install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
-  # install icon
-  install -Dm644 cine-encoder.png -t "${pkgdir}/usr/share/icons/hicolor/64x64/apps/"
+  # install documentation
+  install -Dm644 share/ABOUT -t "${pkgdir}/usr/share/doc/${pkgname}"
+  
   # install .desktop
-  install -Dm644 cine-encoder.desktop -t "${pkgdir}/usr/share/applications/"
+  install -Dm644 share/cine-encoder.desktop -t "${pkgdir}/usr/share/applications/"
+  # install icon
+  install -Dm644 share/cine-encoder.png -t "${pkgdir}/usr/share/icons/hicolor/64x64/apps/"
   # install sound
-  install -Dm644 cine-encoder.wav -t "${pkgdir}/usr/share/sounds/"
+  install -Dm644 share/cine-encoder.wav -t "${pkgdir}/usr/share/sounds/"
 
 }
