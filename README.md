@@ -12,9 +12,9 @@ Cine Encoder is an application that allows to convert media files while preservi
 
 ![View](./images/View_1.png)
 
-By default, there are several categories of presets. You can change existing or add your own presets.
-
 ![View](./images/View_2.png)
+
+By default, there are several categories of presets. You can change existing or add your own presets.
 
 ![View](./images/View_3.png)
 
