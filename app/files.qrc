@@ -102,7 +102,6 @@
         <file>resources/icons/16x16/cil-map.png</file>
         <file>resources/icons/16x16/cil-media-eject.png</file>
         <file>resources/icons/16x16/cil-media-pause.png</file>
-        <file>resources/icons/16x16/cil-media-play.png</file>
         <file>resources/icons/16x16/cil-media-skip-backward.png</file>
         <file>resources/icons/16x16/cil-media-skip-forward.png</file>
         <file>resources/icons/16x16/cil-media-step-backward.png</file>
@@ -516,5 +515,19 @@
         <file>resources/icons/64x64/cine-encoder.png</file>
         <file>resources/images/logo.png</file>
         <file>resources/images/splash.png</file>
+        <file>resources/data/default_presets.txt</file>
+        <file>resources/icons/16x16/cil-file-add.png</file>
+        <file>resources/icons/16x16/cil-file-delete.png</file>
+        <file>resources/icons/16x16/cil-forward.png</file>
+        <file>resources/icons/16x16/cil-open-files.png</file>
+        <file>resources/icons/16x16/cil-pause.png</file>
+        <file>resources/icons/16x16/cil-play.png</file>
+        <file>resources/icons/16x16/cil-remove-file.png</file>
+        <file>resources/icons/16x16/cil-stop.png</file>
+        <file>resources/icons/16x16/cil-sort-ascending.png</file>
+        <file>resources/icons/16x16/cil-sort-descending.png</file>
+        <file>resources/icons/16x16/cil-select.png</file>
+        <file>resources/icons/16x16/cil-settings-2.png</file>
+        <file>resources/icons/Animated/cil-spinner-circle.gif</file>
     </qresource>
 </RCC>

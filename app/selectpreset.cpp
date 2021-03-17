@@ -104,6 +104,9 @@ void SelectPreset::setParameters(int *ptr_pos_top, int *ptr_pos_cld)    //***** 
     for (int i=1; i<=24; i++) {
         ui_selectpreset->treeWidget->hideColumn(i);
     }
+
+    // ***************************** Top menu actions ***********************************//
+
     QAction *addsection = new QAction(tr("Add section"), this);
     QAction *addpreset = new QAction(tr("Add new preset"), this);
     connect(addsection, &QAction::triggered, this, &SelectPreset::add_section);
@@ -111,12 +114,9 @@ void SelectPreset::setParameters(int *ptr_pos_top, int *ptr_pos_cld)    //***** 
     QMenu* menu = new QMenu(this);
     menu->addAction(addsection);
     menu->addAction(addpreset);
-    menu->setStyleSheet("QMenu {background-color: rgb(5, 20, 25);} "
-                        "QMenu::item {color: rgb(255, 255, 255); background-color: transparent;} "
-                        "QMenu::item:selected {background-color: rgb(5, 40, 45);}");
-//    QIcon icon;
-//    icon.addFile(QString::fromUtf8(":/16x16/icons/16x16/cil-cloud-download.png"), QSize(), QIcon::Normal, QIcon::Off);
-//    addpreset->setIcon(icon);
+    // QIcon icon;
+    // icon.addFile(QString::fromUtf8(":/16x16/icons/16x16/cil-cloud-download.png"), QSize(), QIcon::Normal, QIcon::Off);
+    // addpreset->setIcon(icon);
     ui_selectpreset->actionAdd_preset->setMenu(menu);
 }
 

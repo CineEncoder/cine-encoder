@@ -75,12 +75,12 @@ void Taskcomplete::repeat_handler() // Repeat handler
 
 void Taskcomplete::show_message(QString _message)   // Show message
 {
-    ui_taskcomplete->textBrowser->clear();
-    ui_taskcomplete->textBrowser->setAlignment(Qt::AlignCenter);
-    ui_taskcomplete->textBrowser->append(_message);
-    QTextCursor textCursor = ui_taskcomplete->textBrowser->textCursor();
+    ui_taskcomplete->textBrowser_task->clear();
+    ui_taskcomplete->textBrowser_task->setAlignment(Qt::AlignCenter);
+    ui_taskcomplete->textBrowser_task->append(_message);
+    QTextCursor textCursor = ui_taskcomplete->textBrowser_task->textCursor();
     textCursor.movePosition(QTextCursor::Start);
-    ui_taskcomplete->textBrowser->setTextCursor(textCursor);
+    ui_taskcomplete->textBrowser_task->setTextCursor(textCursor);
 }
 
 bool Taskcomplete::eventFilter(QObject *watched, QEvent *event)

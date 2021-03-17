@@ -57,35 +57,34 @@ void Preset::setParameters()  //************************************************
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
     _repeat = 0;
-    QTimer *timer = new QTimer(this);
     timer->setInterval(450);
     connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
     timer->start();
-    ui_preset->lineEdit_presetname->setText(_cur_param[0]);
-    if (_cur_param[0] != "New preset") {
-        ui_preset->comboBox_codec->setCurrentIndex(_cur_param[1].toInt());
-        ui_preset->comboBox_mode->setCurrentIndex(_cur_param[2].toInt());
-        ui_preset->comboBox_container->setCurrentIndex(_cur_param[3].toInt());
-        ui_preset->comboBox_bitrate->setCurrentText(_cur_param[4]);
-        ui_preset->comboBox_maxrate->setCurrentText(_cur_param[5]);
-        ui_preset->comboBox_bufsize->setCurrentText(_cur_param[6]);
-        ui_preset->checkBox_2->setEnabled(bool(_cur_param[7].toUShort()));
-        ui_preset->checkBox_2->setChecked(_cur_param[8].toInt());
-        ui_preset->comboBox_width->setCurrentText(_cur_param[9]);
-        ui_preset->comboBox_height->setCurrentText(_cur_param[10]);
-        ui_preset->comboBox_pass->setCurrentIndex(_cur_param[11].toInt());
-        ui_preset->comboBox_preset->setCurrentIndex(_cur_param[12].toInt());
-        ui_preset->comboBox_color_range->setCurrentIndex(_cur_param[13].toInt());
-        ui_preset->lineEdit_min_lum->setText(_cur_param[14]);
-        ui_preset->lineEdit_max_lum->setText(_cur_param[15]);
-        ui_preset->lineEdit_max_cll->setText(_cur_param[16]);
-        ui_preset->lineEdit_max_fall->setText(_cur_param[17]);
-        ui_preset->comboBox_master_disp->setCurrentIndex(_cur_param[18].toInt());
-        ui_preset->lineEdit_chroma_coord->setText(_cur_param[19]);
-        ui_preset->lineEdit_white_coord->setText(_cur_param[20]);
-        ui_preset->comboBox_audio_codec->setCurrentIndex(_cur_param[21].toInt());
-        ui_preset->comboBox_audio_bitrate->setCurrentIndex(_cur_param[22].toInt());
-    };
+    ui_preset->lineEdit_presetname->setText(_cur_param[PRESET_NAME]);
+    if (_cur_param[PRESET_NAME] != "New preset") {
+        ui_preset->comboBox_codec->setCurrentIndex(_cur_param[CODEC].toInt());
+        ui_preset->comboBox_mode->setCurrentIndex(_cur_param[MODE].toInt());
+        ui_preset->comboBox_container->setCurrentIndex(_cur_param[CONTAINER].toInt());
+        ui_preset->comboBox_bitrate->setCurrentText(_cur_param[BQR]);
+        ui_preset->comboBox_maxrate->setCurrentText(_cur_param[MAXRATE]);
+        ui_preset->comboBox_bufsize->setCurrentText(_cur_param[BUFSIZE]);
+        ui_preset->checkBox_2->setEnabled(bool(_cur_param[RESIZE_ENABLED].toUShort()));
+        ui_preset->checkBox_2->setChecked(_cur_param[RESIZE_CHECKSTATE].toInt());
+        ui_preset->comboBox_width->setCurrentText(_cur_param[WIDTH]);
+        ui_preset->comboBox_height->setCurrentText(_cur_param[HEIGHT]);
+        ui_preset->comboBox_pass->setCurrentIndex(_cur_param[PASS].toInt());
+        ui_preset->comboBox_preset->setCurrentIndex(_cur_param[PRESET].toInt());
+        ui_preset->comboBox_color_range->setCurrentIndex(_cur_param[COLOR_RANGE].toInt());
+        ui_preset->lineEdit_min_lum->setText(_cur_param[MIN_LUM]);
+        ui_preset->lineEdit_max_lum->setText(_cur_param[MAX_LUM]);
+        ui_preset->lineEdit_max_cll->setText(_cur_param[MAX_CLL]);
+        ui_preset->lineEdit_max_fall->setText(_cur_param[MAX_FALL]);
+        ui_preset->comboBox_master_disp->setCurrentIndex(_cur_param[MASTER_DISPLAY].toInt());
+        ui_preset->lineEdit_chroma_coord->setText(_cur_param[CHROMA_COORD]);
+        ui_preset->lineEdit_white_coord->setText(_cur_param[WHITE_COORD]);
+        ui_preset->comboBox_audio_codec->setCurrentIndex(_cur_param[AUDIO_CODEC].toInt());
+        ui_preset->comboBox_audio_bitrate->setCurrentIndex(_cur_param[AUDIO_BITRATE].toInt());
+    }
 }
 
 void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //************* Change current codec ***************//
@@ -107,26 +106,26 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
     ui_preset->comboBox_pass->clear();
     ui_preset->comboBox_preset->clear();
     ui_preset->comboBox_audio_codec->clear();
-    if (arg1 == "x265  10 bit") {
+    if (arg1 == "H.265/HEVC 4:2:0 10 bit") {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({"Constant Bitrate", "Average Bitrate", "Variable Bitrate", "Constant Rate Factor", "Constant QP"});
         ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
-        ui_preset->comboBox_profile->setCurrentIndex(2);
+        ui_preset->comboBox_profile->setCurrentIndex(MAIN10);
         ui_preset->comboBox_preset->addItems({"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"});
         ui_preset->comboBox_preset->setCurrentIndex(6);
-        ui_preset->comboBox_pixfmt->setCurrentIndex(2);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P10LE);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
-    };
-    if (arg1 == "x265  8 bit") {
+    }
+    if (arg1 == "H.265/HEVC 4:2:0 8 bit") {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({"Constant Bitrate", "Average Bitrate", "Variable Bitrate", "Constant Rate Factor", "Constant QP"});
         ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
-        ui_preset->comboBox_profile->setCurrentIndex(1);
+        ui_preset->comboBox_profile->setCurrentIndex(MAIN);
         ui_preset->comboBox_preset->addItems({"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"});
         ui_preset->comboBox_preset->setCurrentIndex(6);
-        ui_preset->comboBox_pixfmt->setCurrentIndex(3);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P);
         ui_preset->comboBox_color_range->setCurrentIndex(0);
         ui_preset->lineEdit_min_lum->clear();
         ui_preset->lineEdit_max_lum->clear();
@@ -140,16 +139,16 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
         ui_preset->lineEdit_max_fall->setEnabled(false);
         ui_preset->comboBox_master_disp->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
-    };
-    if (arg1 == "x264  8 bit") {
+    }
+    if (arg1 == "H.264/AVC 4:2:0 8 bit") {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({"Constant Bitrate", "Average Bitrate", "Variable Bitrate", "Constant Rate Factor", "Constant QP"});
         ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
-        ui_preset->comboBox_profile->setCurrentIndex(0);
+        ui_preset->comboBox_profile->setCurrentIndex(HIGH);
         ui_preset->comboBox_preset->addItems({"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"});
         ui_preset->comboBox_preset->setCurrentIndex(6);
-        ui_preset->comboBox_pixfmt->setCurrentIndex(3);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P);
         ui_preset->comboBox_color_range->setCurrentIndex(0);
         ui_preset->lineEdit_min_lum->clear();
         ui_preset->lineEdit_max_lum->clear();
@@ -163,30 +162,30 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
         ui_preset->lineEdit_max_fall->setEnabled(false);
         ui_preset->comboBox_master_disp->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
-    };
-    if (arg1 == "x265  NVENC 10 bit") {
+    }
+    if (arg1 == "NVENC H.265/HEVC 4:2:0 10 bit") {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
         ui_preset->comboBox_pass->addItems({"2 Pass Optimisation"});
-        ui_preset->comboBox_profile->setCurrentIndex(2);
+        ui_preset->comboBox_profile->setCurrentIndex(MAIN10);
         ui_preset->comboBox_preset->addItems({"Slow"});
         //ui_preset->comboBox_preset->setCurrentIndex(6);
-        ui_preset->comboBox_pixfmt->setCurrentIndex(4);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(P010LE);
         ui_preset->comboBox_preset->setEnabled(false);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
-    };
-    if (arg1 == "x265  NVENC 8 bit") {
+    }
+    if (arg1 == "NVENC H.265/HEVC 4:2:0 8 bit") {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
         ui_preset->comboBox_pass->addItems({"2 Pass Optimisation"});
-        ui_preset->comboBox_profile->setCurrentIndex(1);
+        ui_preset->comboBox_profile->setCurrentIndex(MAIN);
         ui_preset->comboBox_preset->addItems({"Slow"});
         //ui_preset->comboBox_preset->setCurrentIndex(6);
-        ui_preset->comboBox_pixfmt->setCurrentIndex(3);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P);
         ui_preset->comboBox_color_range->setCurrentIndex(0);
         ui_preset->lineEdit_min_lum->clear();
         ui_preset->lineEdit_max_lum->clear();
@@ -203,16 +202,16 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
         ui_preset->lineEdit_max_fall->setEnabled(false);
         ui_preset->comboBox_master_disp->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
-    };
-    if (arg1 == "x264  NVENC 8 bit") {
+    }
+    if (arg1 == "NVENC H.264/AVC 4:2:0 8 bit") {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
         ui_preset->comboBox_pass->addItems({"2 Pass Optimisation"});
-        ui_preset->comboBox_profile->setCurrentIndex(0);
+        ui_preset->comboBox_profile->setCurrentIndex(HIGH);
         ui_preset->comboBox_preset->addItems({"Slow"});
         //ui_preset->comboBox_preset->setCurrentIndex(6);
-        ui_preset->comboBox_pixfmt->setCurrentIndex(3);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P);
         ui_preset->comboBox_color_range->setCurrentIndex(0);
         ui_preset->lineEdit_min_lum->clear();
         ui_preset->lineEdit_max_lum->clear();
@@ -229,73 +228,218 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
         ui_preset->lineEdit_max_fall->setEnabled(false);
         ui_preset->comboBox_master_disp->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
-    };
-    if (arg1 == "VP9  10 bit") {
+    }
+    if (arg1 == "VP9 4:2:0 10 bit") {
         ui_preset->comboBox_container->addItems({"WebM", "MKV"});
         ui_preset->comboBox_mode->addItems({"Average Bitrate", "Constant Rate Factor"});
         ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
-        ui_preset->comboBox_profile->setCurrentIndex(3);
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_2);
         ui_preset->comboBox_preset->addItems({"Auto"});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(2);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", "From source"});
-    };
-    if (arg1 == "AV1  10 bit") {
+    }
+    if (arg1 == "VP9 4:2:0 8 bit") {
         ui_preset->comboBox_container->addItems({"WebM", "MKV"});
         ui_preset->comboBox_mode->addItems({"Average Bitrate", "Constant Rate Factor"});
-        ui_preset->comboBox_pass->addItems({"1 Pass"});
-        ui_preset->comboBox_profile->setCurrentIndex(7);
+        ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_1);
         ui_preset->comboBox_preset->addItems({"Auto"});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(5);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P);
         ui_preset->comboBox_preset->setEnabled(false);
-        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_color_range->setCurrentIndex(0);
+        ui_preset->lineEdit_min_lum->clear();
+        ui_preset->lineEdit_max_lum->clear();
+        ui_preset->lineEdit_max_cll->clear();
+        ui_preset->lineEdit_max_fall->clear();
+        ui_preset->comboBox_master_disp->setCurrentIndex(0);
+        ui_preset->comboBox_color_range->setEnabled(false);
+        ui_preset->lineEdit_min_lum->setEnabled(false);
+        ui_preset->lineEdit_max_lum->setEnabled(false);
+        ui_preset->lineEdit_max_cll->setEnabled(false);
+        ui_preset->lineEdit_max_fall->setEnabled(false);
+        ui_preset->comboBox_master_disp->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", "From source"});
-    };
+    }
+    if (arg1 == "ProRes Proxy") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_0);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422P10LE);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
+    if (arg1 == "ProRes LT") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_1);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422P10LE);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
+    if (arg1 == "ProRes Standard") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_2);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422P10LE);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
     if (arg1 == "ProRes HQ") {
-        ui_preset->checkBox_2->setChecked(false);
-        ui_preset->checkBox_2->setEnabled(false);
         ui_preset->comboBox_container->addItems({"MOV"});
         ui_preset->comboBox_mode->addItems({"Auto"});
         ui_preset->comboBox_pass->addItems({"Auto"});
-        ui_preset->comboBox_profile->setCurrentIndex(4);
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_3);
         ui_preset->comboBox_preset->addItems({"Auto"});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(1);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
         ui_preset->comboBox_container->setEnabled(false);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
-    };
+    }
     if (arg1 == "ProRes 4444") {
-        ui_preset->checkBox_2->setChecked(false);
-        ui_preset->checkBox_2->setEnabled(false);
         ui_preset->comboBox_container->addItems({"MOV"});
         ui_preset->comboBox_mode->addItems({"Auto"});
         ui_preset->comboBox_pass->addItems({"Auto"});
-        ui_preset->comboBox_profile->setCurrentIndex(5);
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_4);
         ui_preset->comboBox_preset->addItems({"Auto"});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(0);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV444P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
         ui_preset->comboBox_container->setEnabled(false);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
-    };
+    }
+    if (arg1 == "ProRes 4444 XQ") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_5);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV444P10LE);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
+    if (arg1 == "DNxHR LB") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(DNXHR_LB);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422p);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_color_range->setCurrentIndex(0);
+        ui_preset->lineEdit_min_lum->clear();
+        ui_preset->lineEdit_max_lum->clear();
+        ui_preset->lineEdit_max_cll->clear();
+        ui_preset->lineEdit_max_fall->clear();
+        ui_preset->comboBox_master_disp->setCurrentIndex(0);
+        ui_preset->comboBox_color_range->setEnabled(false);
+        ui_preset->lineEdit_min_lum->setEnabled(false);
+        ui_preset->lineEdit_max_lum->setEnabled(false);
+        ui_preset->lineEdit_max_cll->setEnabled(false);
+        ui_preset->lineEdit_max_fall->setEnabled(false);
+        ui_preset->comboBox_master_disp->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
+    if (arg1 == "DNxHR SQ") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(DNXHR_SQ);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422p);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_color_range->setCurrentIndex(0);
+        ui_preset->lineEdit_min_lum->clear();
+        ui_preset->lineEdit_max_lum->clear();
+        ui_preset->lineEdit_max_cll->clear();
+        ui_preset->lineEdit_max_fall->clear();
+        ui_preset->comboBox_master_disp->setCurrentIndex(0);
+        ui_preset->comboBox_color_range->setEnabled(false);
+        ui_preset->lineEdit_min_lum->setEnabled(false);
+        ui_preset->lineEdit_max_lum->setEnabled(false);
+        ui_preset->lineEdit_max_cll->setEnabled(false);
+        ui_preset->lineEdit_max_fall->setEnabled(false);
+        ui_preset->comboBox_master_disp->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
+    if (arg1 == "DNxHR HQ") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(DNXHR_HQ);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422p);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_color_range->setCurrentIndex(0);
+        ui_preset->lineEdit_min_lum->clear();
+        ui_preset->lineEdit_max_lum->clear();
+        ui_preset->lineEdit_max_cll->clear();
+        ui_preset->lineEdit_max_fall->clear();
+        ui_preset->comboBox_master_disp->setCurrentIndex(0);
+        ui_preset->comboBox_color_range->setEnabled(false);
+        ui_preset->lineEdit_min_lum->setEnabled(false);
+        ui_preset->lineEdit_max_lum->setEnabled(false);
+        ui_preset->lineEdit_max_cll->setEnabled(false);
+        ui_preset->lineEdit_max_fall->setEnabled(false);
+        ui_preset->comboBox_master_disp->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
     if (arg1 == "DNxHR HQX") {
-        ui_preset->checkBox_2->setChecked(false);
-        ui_preset->checkBox_2->setEnabled(false);
         ui_preset->comboBox_container->addItems({"MOV"});
         ui_preset->comboBox_mode->addItems({"Auto"});
         ui_preset->comboBox_pass->addItems({"Auto"});
-        ui_preset->comboBox_profile->setCurrentIndex(6);
+        ui_preset->comboBox_profile->setCurrentIndex(DNXHR_HQX);
         ui_preset->comboBox_preset->addItems({"Auto"});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(1);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV422P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
         ui_preset->comboBox_container->setEnabled(false);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
-    };
+    }
+    if (arg1 == "DNxHR 444") {
+        ui_preset->comboBox_container->addItems({"MOV"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(DNXHR_444);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(YUV444P10LE);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
+    }
     if (arg1 == "From source") {
         ui_preset->checkBox_2->setChecked(false);
         ui_preset->checkBox_2->setEnabled(false);
@@ -303,14 +447,14 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({"Auto"});
         ui_preset->comboBox_pass->addItems({"Auto"});
-        ui_preset->comboBox_profile->setCurrentIndex(7);
+        ui_preset->comboBox_profile->setCurrentIndex(PROFILE_AUTO);
         ui_preset->comboBox_preset->addItems({"Auto"});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(5);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(PIXFORMAT_AUTO);
         ui_preset->comboBox_preset->setEnabled(false);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Vorbis", "Opus", "From source"});
-    };
+    }
 }
 
 void Preset::on_checkBox_2_stateChanged(int arg1)  //************************************* Enable resize *******************//
@@ -507,29 +651,29 @@ void Preset::on_comboBox_master_disp_currentTextChanged(const QString &arg1)  //
 
 void Preset::on_pushButton_6_clicked()  //************************************************* Apply preset *******************//
 {
-    _cur_param[0] = ui_preset->lineEdit_presetname->text();
-    _cur_param[1] = QString::number(ui_preset->comboBox_codec->currentIndex());
-    _cur_param[2] = QString::number(ui_preset->comboBox_mode->currentIndex());
-    _cur_param[3] = QString::number(ui_preset->comboBox_container->currentIndex());
-    _cur_param[4] = ui_preset->comboBox_bitrate->currentText();
-    _cur_param[5] = ui_preset->comboBox_maxrate->currentText();
-    _cur_param[6] = ui_preset->comboBox_bufsize->currentText();
-    _cur_param[7] = QString::number(int(ui_preset->checkBox_2->isEnabled()));
-    _cur_param[8] = QString::number(ui_preset->checkBox_2->checkState());
-    _cur_param[9] = ui_preset->comboBox_width->currentText();
-    _cur_param[10] = ui_preset->comboBox_height->currentText();
-    _cur_param[11]= QString::number(ui_preset->comboBox_pass->currentIndex());
-    _cur_param[12] = QString::number(ui_preset->comboBox_preset->currentIndex());
-    _cur_param[13] = QString::number(ui_preset->comboBox_color_range->currentIndex());
-    _cur_param[14] = ui_preset->lineEdit_min_lum->text();
-    _cur_param[15] = ui_preset->lineEdit_max_lum->text();
-    _cur_param[16] = ui_preset->lineEdit_max_cll->text();
-    _cur_param[17] = ui_preset->lineEdit_max_fall->text();
-    _cur_param[18] = QString::number(ui_preset->comboBox_master_disp->currentIndex());
-    _cur_param[19] = ui_preset->lineEdit_chroma_coord->text();
-    _cur_param[20] = ui_preset->lineEdit_white_coord->text();
-    _cur_param[21] = QString::number(ui_preset->comboBox_audio_codec->currentIndex());
-    _cur_param[22] = QString::number(ui_preset->comboBox_audio_bitrate->currentIndex());
+    _cur_param[PRESET_NAME] = ui_preset->lineEdit_presetname->text();
+    _cur_param[CODEC] = QString::number(ui_preset->comboBox_codec->currentIndex());
+    _cur_param[MODE] = QString::number(ui_preset->comboBox_mode->currentIndex());
+    _cur_param[CONTAINER] = QString::number(ui_preset->comboBox_container->currentIndex());
+    _cur_param[BQR] = ui_preset->comboBox_bitrate->currentText();
+    _cur_param[MAXRATE] = ui_preset->comboBox_maxrate->currentText();
+    _cur_param[BUFSIZE] = ui_preset->comboBox_bufsize->currentText();
+    _cur_param[RESIZE_ENABLED] = QString::number(int(ui_preset->checkBox_2->isEnabled()));
+    _cur_param[RESIZE_CHECKSTATE] = QString::number(ui_preset->checkBox_2->checkState());
+    _cur_param[WIDTH] = ui_preset->comboBox_width->currentText();
+    _cur_param[HEIGHT] = ui_preset->comboBox_height->currentText();
+    _cur_param[PASS]= QString::number(ui_preset->comboBox_pass->currentIndex());
+    _cur_param[PRESET] = QString::number(ui_preset->comboBox_preset->currentIndex());
+    _cur_param[COLOR_RANGE] = QString::number(ui_preset->comboBox_color_range->currentIndex());
+    _cur_param[MIN_LUM] = ui_preset->lineEdit_min_lum->text();
+    _cur_param[MAX_LUM] = ui_preset->lineEdit_max_lum->text();
+    _cur_param[MAX_CLL] = ui_preset->lineEdit_max_cll->text();
+    _cur_param[MAX_FALL] = ui_preset->lineEdit_max_fall->text();
+    _cur_param[MASTER_DISPLAY] = QString::number(ui_preset->comboBox_master_disp->currentIndex());
+    _cur_param[CHROMA_COORD] = ui_preset->lineEdit_chroma_coord->text();
+    _cur_param[WHITE_COORD] = ui_preset->lineEdit_white_coord->text();
+    _cur_param[AUDIO_CODEC] = QString::number(ui_preset->comboBox_audio_codec->currentIndex());
+    _cur_param[AUDIO_BITRATE] = QString::number(ui_preset->comboBox_audio_bitrate->currentIndex());
     this->close();
 }
 
@@ -545,24 +689,38 @@ void Preset::change_preset_name()  //*******************************************
     QString w = ui_preset->comboBox_width->currentText();
     QString h = ui_preset->comboBox_height->currentText();
     QString container = ui_preset->comboBox_container->currentText();
-    QString codec, res, mode, clrspace,preset, pass, hdr, acodec, abitrate;
+    QString codec, res, mode, clrspace, preset, pass, hdr, acodec, abitrate;
     QString fps = "Fps: Source, ";
-    if ((c1 == -1) or (c2 == -1) or (c11 == -1) or (c12 == -1) or (c21 == -1) or (c22 == -1)) {
+    if ((c1 == -1) || (c2 == -1)) {
         return;
-    };
-    QString arr_codec[12][3] = {
-        {"HEVC, ",        "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"HEVC, ",        "YUV, 4:2:0, 8 bit, ",  ""},
-        {"AVC, ",         "YUV, 4:2:0, 8 bit, ",  ""},
-        {"HEVC, NVENC, ", "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"HEVC, NVENC, ", "YUV, 4:2:0, 8 bit, ",  ""},
-        {"AVC, NVENC,  ", "YUV, 4:2:0, 8 bit, ",  ""},
-        {"VP9, ",         "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"AV1, ",         "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"ProRes HQ, ",   "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes 4444, ", "YUV, 4:4:4, 10 bit, ", "HDR: "},
-        {"DNxHR HQX, ",   "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"From source, ", "",                     "HDR: "}
+    }
+    if ((c11 == -1) || (c12 == -1)) {
+        return;
+    }
+    if ((c21 == -1) || (c22 == -1)) {
+        return;
+    }
+    QString arr_codec[20][3] = {
+        {"HEVC, ",            "YUV, 4:2:0, 10 bit, ", "HDR: "},
+        {"HEVC, ",            "YUV, 4:2:0, 8 bit, ",  ""},
+        {"AVC, ",             "YUV, 4:2:0, 8 bit, ",  ""},
+        {"NVENC, HEVC, ",     "YUV, 4:2:0, 10 bit, ", "HDR: "},
+        {"NVENC, HEVC, ",     "YUV, 4:2:0, 8 bit, ",  ""},
+        {"NVENC, AVC, ",      "YUV, 4:2:0, 8 bit, ",  ""},
+        {"VP9, ",             "YUV, 4:2:0, 10 bit, ", "HDR: "},
+        {"VP9, ",             "YUV, 4:2:0, 8  bit, ", ""},
+        {"ProRes Proxy, ",    "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes LT, ",       "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes Standard, ", "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes HQ, ",       "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes 4444, ",     "YUV, 4:4:4, 10 bit, ", "HDR: "},
+        {"ProRes 4444XQ, ",   "YUV, 4:4:4, 10 bit, ", "HDR: "},
+        {"DNxHR LB, ",        "YUV, 4:2:2, 8 bit, ",  ""},
+        {"DNxHR SQ, ",        "YUV, 4:2:2, 8 bit, ",  ""},
+        {"DNxHR HQ, ",        "YUV, 4:2:2, 8 bit, ",  ""},
+        {"DNxHR HQX, ",       "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"DNxHR 444, ",       "YUV, 4:4:4, 10 bit, ", "HDR: "},
+        {"From source, ",     "",                     "HDR: "}
     };
     codec = arr_codec[c1][0];
     clrspace = arr_codec[c1][1];
@@ -572,8 +730,8 @@ void Preset::change_preset_name()  //*******************************************
         res = "Res: Source, ";
     } else if (w != "Source" && h != "Source") {
         res = "Res: " + w + "x" + h + ", ";
-    };
-    QString arr_mode[12][5] = {
+    }
+    QString arr_mode[20][5] = {
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
@@ -582,6 +740,14 @@ void Preset::change_preset_name()  //*******************************************
         {"VBR", "",    "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
+        {"",    "",    "",    "",    ""},
+        {"",    "",    "",    "",    ""},
+        {"",    "",    "",    "",    ""},
+        {"",    "",    "",    "",    ""},
+        {"",    "",    "",    "",    ""},
+        {"",    "",    "",    "",    ""},
+        {"",    "",    "",    "",    ""},
+        {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
@@ -589,14 +755,22 @@ void Preset::change_preset_name()  //*******************************************
     };
     if (arr_mode[c1][c2] != "") {
         mode = arr_mode[c1][c2] + " " + ui_preset->comboBox_bitrate->currentText() + ", ";
-    };
-    QString arr_preset[12][9] = {
+    }
+    QString arr_preset[20][9] = {
         {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
         {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
         {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
         {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
         {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
         {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
         {"",          "",          "",         "",       "",     "",       "",     "",       ""},
         {"",          "",          "",         "",       "",     "",       "",     "",       ""},
         {"",          "",          "",         "",       "",     "",       "",     "",       ""},
@@ -606,8 +780,8 @@ void Preset::change_preset_name()  //*******************************************
     };
     if (arr_preset[c1][c12] != "") {
         preset = "Preset: " + arr_preset[c1][c12] + ", ";
-    };
-    QString arr_pass[12][2] = {
+    }
+    QString arr_pass[20][2] = {
         {"1 Pass", "2 Pass"},
         {"1 Pass", "2 Pass"},
         {"1 Pass", "2 Pass"},
@@ -615,7 +789,15 @@ void Preset::change_preset_name()  //*******************************************
         {"2 Pass", ""},
         {"2 Pass", ""},
         {"1 Pass", "2 Pass"},
-        {"1 Pass", ""},
+        {"1 Pass", "2 Pass"},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
         {"",       ""},
         {"",       ""},
         {"",       ""},
@@ -623,11 +805,11 @@ void Preset::change_preset_name()  //*******************************************
     };
     if (arr_pass[c1][c11] != "") {
         pass = arr_pass[c1][c11] + ", ";
-    };
+    }
     if (arr_codec[c1][2] != "") {
         hdr = arr_codec[c1][2] + "Enabled, ";
-    };
-    QString arr_acodec[12][6] = {
+    }
+    QString arr_acodec[20][6] = {
         {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
         {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
         {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
@@ -636,6 +818,14 @@ void Preset::change_preset_name()  //*******************************************
         {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
         {"Opus",       "Vorbis",     "Source",     "",       "",     ""},
         {"Opus",       "Vorbis",     "Source",     "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
@@ -643,7 +833,7 @@ void Preset::change_preset_name()  //*******************************************
     };
     if (arr_acodec[c1][c21] != "") {
         acodec = "Audio: " + arr_acodec[c1][c21] + ", ";
-    };
+    }
     QString arr_bitrate[5][17] = {
         {"384k",  "320k",  "256k",  "192k",  "128k",  "96k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AAC
         {"640k",  "448k",  "384k",  "256k",  "",      "",      "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AC3
@@ -653,19 +843,19 @@ void Preset::change_preset_name()  //*******************************************
     };
     if (arr_acodec[c1][c21] == "AAC") {
         abitrate = arr_bitrate[0][c22] + ", ";
-    };
+    }
     if (arr_acodec[c1][c21] == "AC3") {
         abitrate = arr_bitrate[1][c22] + ", ";
-    };
+    }
     if (arr_acodec[c1][c21] == "DTS") {
         abitrate = arr_bitrate[2][c22] + ", ";
-    };
+    }
     if (arr_acodec[c1][c21] == "Vorbis") {
         abitrate = arr_bitrate[3][c22] + ", ";
-    };
+    }
     if (arr_acodec[c1][c21] == "Opus") {
         abitrate = arr_bitrate[4][c22] + ", ";
-    };
+    }
     QString cur_preset_name = codec + res + fps + clrspace + mode + preset + pass + hdr + acodec + abitrate + container;
     ui_preset->lineEdit_presetname->setText(cur_preset_name);
 }
@@ -718,8 +908,8 @@ void Preset::repeat_handler()  //***********************************************
     if (_repeat > 0) {
         _repeat = 0;
         change_preset_name();
-    };
-};
+    }
+}
 
 bool Preset::eventFilter(QObject *watched, QEvent *event)
 {

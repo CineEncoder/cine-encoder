@@ -6,17 +6,17 @@ Cine Encoder is an application that allows to convert media files while preservi
   - H265 (8, 10 bit)
   - H264 NVENC (8 bit)
   - H264 (8 bit)
-  - VP9 (10 bit)
-  - AV1 (10 bit)
-  - DNxHR HQX 4:2:2 (10 bit)
-  - ProRes HQ 4:2:2 (10 bit)
-  - ProRes 4444 4:4:4 (10 bit)
+  - VP9 (8, 10 bit)
+  - DNxHR (8, 10 bit)
+  - ProRes (10 bit)
 
-![View](./images/View.png)
+![View](./images/View_1.png)
 
 By default, there are several categories of presets. You can change existing or add your own presets.
 
 ![View](./images/View_2.png)
+
+![View](./images/View_3.png)
 
 ### Installation
 

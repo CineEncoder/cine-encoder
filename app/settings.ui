@@ -741,11 +741,6 @@ QPushButton:pressed {
             </item>
             <item row="0" column="2">
              <widget class="QLabel" name="label">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel {	
 	background-color: transparent;
@@ -940,7 +935,7 @@ QPushButton:pressed {
               </property>
               <property name="maximumSize">
                <size>
-                <width>170</width>
+                <width>600</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -971,7 +966,7 @@ QPushButton:pressed {
               </property>
               <property name="maximumSize">
                <size>
-                <width>170</width>
+                <width>600</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1137,6 +1132,12 @@ QPushButton:pressed {
             </item>
             <item row="0" column="1">
              <widget class="QCheckBox" name="checkBox_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>50</width>
@@ -1145,7 +1146,7 @@ QPushButton:pressed {
               </property>
               <property name="maximumSize">
                <size>
-                <width>230</width>
+                <width>600</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1161,7 +1162,7 @@ QPushButton:pressed {
              <widget class="QCheckBox" name="checkBox_1">
               <property name="maximumSize">
                <size>
-                <width>170</width>
+                <width>600</width>
                 <height>16777215</height>
                </size>
               </property>

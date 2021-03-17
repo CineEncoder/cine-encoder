@@ -132,9 +132,9 @@ void Settings::on_pushButton_6_clicked() // Save settings
 {
     if ((*_ptr_stn_file).open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        QString line_0 = "temp_folder:" + *_ptr_temp_folder + "\n";
+        QString line_0 = QString("temp_folder:") + *_ptr_temp_folder + QString("\n");
         (*_ptr_stn_file).write(line_0.toUtf8());
-        QString line_1 = "output_folder:" + *_ptr_output_folder + "\n";
+        QString line_1 = QString("output_folder:") + *_ptr_output_folder + QString("\n");
         (*_ptr_stn_file).write(line_1.toUtf8());
         if (*_ptr_batch_mode == true)
         {
@@ -161,10 +161,10 @@ void Settings::on_pushButton_6_clicked() // Save settings
             (*_ptr_stn_file).write("protection:false\n");
         }
         *_ptr_timer_interval = ui_settings->spinBox_3->value();
-        QString line_2 = "timer_interval:" + QString::number(*_ptr_timer_interval) + "\n";
+        QString line_2 = QString("timer_interval:") + QString::number(*_ptr_timer_interval) + QString("\n");
         (*_ptr_stn_file).write(line_2.toUtf8());
         *_ptr_theme = ui_settings->comboBox_1->currentIndex();
-        QString line_3 = "theme:" + QString::number(*_ptr_theme) + "\n";
+        QString line_3 = QString("theme:") + QString::number(*_ptr_theme) + QString("\n");
         (*_ptr_stn_file).write(line_3.toUtf8());
         (*_ptr_stn_file).close();
         _flag_save = true;
@@ -179,26 +179,8 @@ void Settings::on_pushButton_6_clicked() // Save settings
 
 void Settings::on_pushButton_5_clicked() // Select temp folder
 {
-    /*QFileDialog *selectFolderWindow = new QFileDialog(this);
-    selectFolderWindow->setOptions(QFileDialog::DontUseNativeDialog | QFileDialog::DontResolveSymlinks);
-    //selectFolderWindow->setOptions(QFileDialog::DontResolveSymlinks);
-    selectFolderWindow->setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    selectFolderWindow->setFileMode(QFileDialog::Directory);
-    selectFolderWindow->setDirectory(QDir::homePath());
-    selectFolderWindow->setMinimumWidth(600);
-    selectFolderWindow->setWindowTitle("Select temp folder");
-    selectFolderWindow->exec();
-    int res = selectFolderWindow->result();
-    QDir temp_folder_name_dir;
-    temp_folder_name_dir = selectFolderWindow->directory();
-    delete selectFolderWindow;
-    if (res == 0) {
-        return;
-    }
-    QString temp_folder_name = temp_folder_name_dir.dirName();*/
-    QString temp_folder_name = QFileDialog::getExistingDirectory(this, tr("Select temp folder"), QDir::currentPath());
-    if (temp_folder_name.isEmpty())
-    {
+    QString temp_folder_name = callFileDialog("Select temp folder");
+    if (temp_folder_name.isEmpty()) {
         return;
     }
     ui_settings->lineEdit_9->setText(temp_folder_name);
@@ -207,13 +189,46 @@ void Settings::on_pushButton_5_clicked() // Select temp folder
 
 void Settings::on_pushButton_4_clicked()  // Select output folder
 {
-    QString output_folder_name = QFileDialog::getExistingDirectory(this, tr("Select output folder"), QDir::currentPath());
+    QString output_folder_name = callFileDialog("Select output folder");
     if (output_folder_name.isEmpty())
     {
         return;
     }
     ui_settings->lineEdit_10->setText(output_folder_name);
     *_ptr_output_folder = output_folder_name;
+}
+
+QString Settings::callFileDialog(const QString title)  // Call file dialog
+{
+    QFileDialog *selectFolderWindow = new QFileDialog(this);
+    selectFolderWindow->setFileMode(QFileDialog::DirectoryOnly);
+#ifdef Q_OS_WIN
+    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
+                                   QFileDialog::ReadOnly);
+#else
+    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
+                                   QFileDialog::DontUseNativeDialog |
+                                   QFileDialog::ReadOnly);
+#endif
+    selectFolderWindow->setStyleSheet("QWidget {color: rgb(10, 10, 10); background-color: "
+                                      "rgb(120, 120, 120);} QHeaderView {color: rgb(10, 10, 10); "
+                                      "background-color: transparent;} QHeaderView::section:horizontal "
+                                      "{height: 20px; padding: 0px; border: 1px solid rgb(160, 160, 160); "
+                                      "border-top-left-radius: 0px; border-top-right-radius: 0px; "
+                                      "background-color: rgb(160, 160, 160);} QScrollBar {background-color: "
+                                      "rgb(160, 160, 160);}");
+    selectFolderWindow->setDirectory(QDir::homePath());
+    selectFolderWindow->setMinimumWidth(600);
+    selectFolderWindow->setWindowTitle(title);
+    selectFolderWindow->setWindowFlags(Qt::Dialog | Qt::SubWindow);
+    selectFolderWindow->exec();
+    if (selectFolderWindow->result() == 0) {
+        return QString("");
+    }
+    const QStringList folder_name_dir = selectFolderWindow->selectedFiles();
+    delete selectFolderWindow;
+    QString folder_name = folder_name_dir[0];
+    return folder_name;
 }
 
 void Settings::on_checkBox_1_clicked()  // Batch mode select

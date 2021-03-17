@@ -6,7 +6,30 @@
 #include <iostream>
 #include <QMouseEvent>
 
+
 extern QString _cur_param[23];
+enum Profile {
+    HIGH,           MAIN,           MAIN10,
+    PROFILE_0,      PROFILE_1,      PROFILE_2,
+    PROFILE_3,      PROFILE_4,      PROFILE_5,
+    DNXHR_LB,       DNXHR_SQ,       DNXHR_HQ,
+    DNXHR_HQX,      DNXHR_444,      PROFILE_AUTO
+};
+enum Pixformat {
+    YUV444P10LE,    YUV422P10LE,    YUV420P10LE,
+    YUV422p,        YUV420P,        P010LE,
+    PIXFORMAT_AUTO
+};
+enum curParamIndex {
+    PRESET_NAME,    CODEC,          MODE,
+    CONTAINER,      BQR,            MAXRATE,
+    BUFSIZE,        RESIZE_ENABLED, RESIZE_CHECKSTATE,
+    WIDTH,          HEIGHT,         PASS,
+    PRESET,         COLOR_RANGE,    MIN_LUM,
+    MAX_LUM,        MAX_CLL,        MAX_FALL,
+    MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
+    AUDIO_CODEC,    AUDIO_BITRATE
+};
 
 namespace Ui
 {
@@ -73,6 +96,8 @@ private slots:
 private:
 
     Ui::Preset *ui_preset;
+
+    QTimer *timer = new QTimer(this);
 
     int _repeat;
 

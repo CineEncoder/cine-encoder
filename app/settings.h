@@ -6,6 +6,7 @@
 #include <QCloseEvent>
 #include <QMouseEvent>
 //#include <iostream>
+//#include <QDebug>
 
 namespace Ui
 {
@@ -124,6 +125,8 @@ private:
     QPoint mouseClickCoordinate;
 
     void call_task_complete(const QString &_message, const bool &timer_mode);
+
+    QString callFileDialog(const QString title);
 };
 
 #endif // SETTINGS_H
