@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/css/style_0.css</file>
         <file>resources/css/style_1.css</file>
+        <file>resources/css/style_0.css</file>
         <file>resources/css/style_2.css</file>
         <file>resources/css/style_3.css</file>
         <file>resources/html/about.html</file>

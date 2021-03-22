@@ -5,6 +5,7 @@
 #include <QtGlobal>
 #include <QDesktopWidget>
 #include <QMouseEvent>
+#include <QHoverEvent>
 #include <QCloseEvent>
 #include <QShowEvent>
 #include <QDragEnterEvent>
@@ -13,6 +14,7 @@
 #include <QDropEvent>
 #include <QMimeDatabase>
 #include <QMimeData>
+#include <QTableWidgetItem>
 #include <QUrl>
 #include <QList>
 #include <QMenu>
@@ -29,7 +31,6 @@
 #include <math.h>
 #include <QMovie>
 //#include <QDebug>
-
 
 extern QString _cur_param[23];
 extern QVector <QVector <QString> > _preset_table;
@@ -100,17 +101,21 @@ public:
 
     QFile _stn_file;
 
-    QString _output_folder, _temp_folder;
+    QString _output_folder;
 
-    int _pos_top, _pos_cld;
+    QString _temp_folder;
+
+    int _pos_top;
+
+    int _pos_cld;
+
+    int _timer_interval;
 
     bool _batch_mode;
 
     bool _showHDR_mode;
 
     bool _protection;
-
-    int _timer_interval;
 
 private slots:
 
@@ -334,65 +339,82 @@ private:
 
     // ******************* Constants *****************************//
 
-    static const int AMOUNT_AUDIO_SRTEAMS = 9;
+    static const int AMOUNT_AUDIO_STREAMS = 9;
 
     static const int AMOUNT_SUBTITLES = 9;
 
-    const float MAXIMUM_ALLOWED_TIME = 359999.0f;
+    static const int NUMBER_PRESETS = 23;
+
+    static constexpr float MAXIMUM_ALLOWED_TIME = 359999.0f;
 
     // ******************** Top label ****************************//
 
-    QHBoxLayout *raiseLayout = new QHBoxLayout();
+    QHBoxLayout *raiseLayout;
 
-    QLabel *raiseThumb = new QLabel(this);
+    QLabel *raiseThumb;
 
     // **************** Progress animation ***********************//
 
-    QMovie *animation = new QMovie(this);
+    QMovie *animation;
 
     // ***************** Top menu actions ************************//
 
-    QAction *add_files = new QAction(tr("Add files"), this);
+    QAction *add_files;
 
-    QAction *remove_files = new QAction(tr("Remove files"), this);
+    QAction *remove_files;
 
-    QAction *close_prog = new QAction(tr("Close"), this);
-
-
-    QAction *select_preset = new QAction(tr("Select preset"), this);
-
-    QAction *encode_files = new QAction(tr("Encode/Pause"), this);
-
-    QAction *stop_encode = new QAction(tr("Stop"), this);
+    QAction *close_prog;
 
 
-    QAction *edit_metadata = new QAction(tr("Edit metadata"), this);
+    QAction *select_preset;
 
-    QAction *select_audio = new QAction(tr("Select audio streams"), this);
+    QAction *encode_files;
 
-    QAction *select_subtitles = new QAction(tr("Select subtitles"), this);
-
-    QAction *split_video = new QAction(tr("Split video"), this);
+    QAction *stop_encode;
 
 
-    QAction *settings = new QAction(tr("Settings"), this);
+    QAction *edit_metadata;
+
+    QAction *select_audio;
+
+    QAction *select_subtitles;
+
+    QAction *split_video;
 
 
-    QAction *about = new QAction(tr("About"), this);
+    QAction *settings;
 
-    QAction *donate = new QAction(tr("Donate"), this);
+
+    QAction *about;
+
+    QAction *donate;
+
+
+    QMenu* menuFiles;
+
+    QMenu* menuEdit;
+
+    QMenu* menuTools;
+
+    QMenu* menuPreferences;
+
+    QMenu* menuAbout;
+
+    // ***************** Table menu actions ************************//
+
+    QMenu* itemMenu;
 
     // ********************** Processes ****************************//
 
-    QProcess *process_1 = new QProcess(this);
+    QProcess *process_1;
 
-    QProcess *process_5 = new QProcess(this);
+    QProcess *process_5;
 
     // *********************** Timers ******************************//
 
-    QTimer *timer = new QTimer(this);
+    QTimer *timer;
 
-    QTimer *timerCallSetThumbnail = new QTimer(this);
+    QTimer *timerCallSetThumbnail;
 
     // ******************** Initialization *************************//
 
@@ -410,11 +432,11 @@ private:
 
     QString _videoMetadata[6];
 
-    int _audioStreamCheckState[AMOUNT_AUDIO_SRTEAMS];
+    int _audioStreamCheckState[AMOUNT_AUDIO_STREAMS];
 
-    QString _audioLang[AMOUNT_AUDIO_SRTEAMS];
+    QString _audioLang[AMOUNT_AUDIO_STREAMS];
 
-    QString _audioTitle[AMOUNT_AUDIO_SRTEAMS];
+    QString _audioTitle[AMOUNT_AUDIO_STREAMS];
 
     int _subtitleCheckState[AMOUNT_SUBTITLES];
 
@@ -424,29 +446,59 @@ private:
 
     // ************************* Encoding ***************************//
 
-    QString _message, _error_message;
+    QString _message;
+
+    QString _error_message;
+
 
     QString _curFilename;
 
     QString _curPath;
 
-    QString _temp_file, _input_file, _output_file;
+    QString _temp_file;
 
-    QString _settings_path, _thumb_path, _settings_file, _preset_file, _window_file;
+    QString _input_file;
 
-    QString _preset_0, _preset_pass1, _preset, _preset_mkvmerge;
+    QString _output_file;
 
-    QString _fmt, _width, _height, _fps, _stream_size;
+    QString _settings_path;
 
-    QString _status_encode_btn;
+    QString _thumb_path;
+
+    QString _settings_file;
+
+    QString _preset_file;
+
+    QString _window_file;
+
+
+    QString _preset_0;
+
+    QString _preset_pass1;
+
+    QString _preset;
+
+    QString _preset_mkvmerge;
+
+
+    QString _fmt;
+
+    QString _width;
+
+    QString _height;
+
+    QString _fps;
+
+    QString _stream_size;
+
+    double _dur;
+
+    int _fr_count;
+
 
     time_t _loop_start;
 
     time_t _strt_t;
-
-    int _row;
-
-    int _fr_count;
 
     double _curTime;
 
@@ -454,11 +506,18 @@ private:
 
     double _endTime;
 
-    double _dur;
 
-    bool _flag_two_pass, _flag_hdr;
+    int _row;
 
-    bool _calling_pr_1, _mux_mode;
+    QString _status_encode_btn;
+
+    bool _flag_two_pass;
+
+    bool _flag_hdr;
+
+    bool _calling_pr_1;
+
+    bool _mux_mode;
 
     // *********************** Geometry ***********************************//
 
@@ -485,6 +544,12 @@ private:
     bool clickPressed_Left_Bottom_ResizeFlag = false;
 
     QPoint mouseClickCoordinate;
+
+    QPoint mouseCoordinate;
+
+    int oldWidth;
+
+    int oldHeight;
 
     int curWidth;
 
@@ -515,6 +580,8 @@ private:
     QString timeConverter(float &time);
 
     void setThumbnail(QString curFilename, double time, QString quality);
+
+    void provideContextMenu(const QPoint &position);
 };
 
 #endif // MAINWINDOW_H

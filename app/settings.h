@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QCloseEvent>
 #include <QMouseEvent>
+#include <QHoverEvent>
 //#include <iostream>
 //#include <QDebug>
 
@@ -114,15 +115,17 @@ private:
 
     bool clickPressed_Left_Bottom_ResizeFlag = false;
 
-    int _posX;
-
-    int _posY;
-
-    int _width;
-
-    int _height;
-
     QPoint mouseClickCoordinate;
+
+    QPoint mouseCoordinate;
+
+    int oldWidth;
+
+    int oldHeight;
+
+    int curWidth;
+
+    int curHeight;
 
     void call_task_complete(const QString &_message, const bool &timer_mode);
 

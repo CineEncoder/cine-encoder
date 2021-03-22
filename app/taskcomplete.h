@@ -43,7 +43,7 @@ private:
 
     Ui::Taskcomplete *ui_taskcomplete;
 
-    QTimer *timer = new QTimer(this);
+    QTimer *timer;
 
     QString _message;
 

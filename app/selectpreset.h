@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QFile>
 #include <QMouseEvent>
+#include <QHoverEvent>
 #include <QtGlobal>
 #include <QMenu>
 #include <QMessageBox>
@@ -56,11 +57,23 @@ private:
 
     Ui::SelectPreset *ui_selectpreset;
 
+    // ***************************** Top menu actions ***********************************//
+
+    QAction *addsection;
+
+    QAction *addpreset;
+
+    QMenu* menu;
+
+    // *********************************************************************************//
+
     QString _message;
 
     int *_ptr_pos_top;
 
     int *_ptr_pos_cld;
+
+    // ******************************** Geometry ***************************************//
 
     bool _expandWindowsState = false;
 
@@ -82,15 +95,19 @@ private:
 
     bool clickPressed_Left_Bottom_ResizeFlag = false;
 
-    int _posX;
-
-    int _posY;
-
-    int _width;
-
-    int _height;
-
     QPoint mouseClickCoordinate;
+
+    QPoint mouseCoordinate;
+
+    int oldWidth;
+
+    int oldHeight;
+
+    int curWidth;
+
+    int curHeight;
+
+    // *********************************************************************************//
 
     bool call_dialog(const QString &_message);
 

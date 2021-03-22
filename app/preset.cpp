@@ -54,14 +54,16 @@ void Preset::setParameters()  //************************************************
 {
     ui_preset->frame_hint->installEventFilter(this);
     ui_preset->widget->installEventFilter(this);
+    ui_preset->widget->setAttribute(Qt::WA_Hover, true);
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
     _repeat = 0;
+    timer = new QTimer(this);
     timer->setInterval(450);
     connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
     timer->start();
-    ui_preset->lineEdit_presetname->setText(_cur_param[PRESET_NAME]);
-    if (_cur_param[PRESET_NAME] != "New preset") {
+    ui_preset->lineEdit_presetname->setText(_cur_param[curParamIndex::PRESET_NAME]);
+    if (_cur_param[curParamIndex::PRESET_NAME] != "New preset") {
         ui_preset->comboBox_codec->setCurrentIndex(_cur_param[CODEC].toInt());
         ui_preset->comboBox_mode->setCurrentIndex(_cur_param[MODE].toInt());
         ui_preset->comboBox_container->setCurrentIndex(_cur_param[CONTAINER].toInt());
@@ -149,6 +151,60 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
         ui_preset->comboBox_preset->addItems({"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"});
         ui_preset->comboBox_preset->setCurrentIndex(6);
         ui_preset->comboBox_pixfmt->setCurrentIndex(YUV420P);
+        ui_preset->comboBox_color_range->setCurrentIndex(0);
+        ui_preset->lineEdit_min_lum->clear();
+        ui_preset->lineEdit_max_lum->clear();
+        ui_preset->lineEdit_max_cll->clear();
+        ui_preset->lineEdit_max_fall->clear();
+        ui_preset->comboBox_master_disp->setCurrentIndex(0);
+        ui_preset->comboBox_color_range->setEnabled(false);
+        ui_preset->lineEdit_min_lum->setEnabled(false);
+        ui_preset->lineEdit_max_lum->setEnabled(false);
+        ui_preset->lineEdit_max_cll->setEnabled(false);
+        ui_preset->lineEdit_max_fall->setEnabled(false);
+        ui_preset->comboBox_master_disp->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
+    }
+    if (arg1 == "Intel QSV H.264/AVC 4:2:0 8 bit") {
+        ui_preset->checkBox_2->setChecked(false);
+        ui_preset->checkBox_2->setEnabled(false);
+        ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
+        ui_preset->comboBox_container->setCurrentIndex(2);
+        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::HIGH);
+        ui_preset->comboBox_preset->addItems({"Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"});
+        ui_preset->comboBox_preset->setCurrentIndex(4);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_color_range->setCurrentIndex(0);
+        ui_preset->lineEdit_min_lum->clear();
+        ui_preset->lineEdit_max_lum->clear();
+        ui_preset->lineEdit_max_cll->clear();
+        ui_preset->lineEdit_max_fall->clear();
+        ui_preset->comboBox_master_disp->setCurrentIndex(0);
+        ui_preset->comboBox_color_range->setEnabled(false);
+        ui_preset->lineEdit_min_lum->setEnabled(false);
+        ui_preset->lineEdit_max_lum->setEnabled(false);
+        ui_preset->lineEdit_max_cll->setEnabled(false);
+        ui_preset->lineEdit_max_fall->setEnabled(false);
+        ui_preset->comboBox_master_disp->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "From source"});
+    }
+    if (arg1 == "Intel QSV MPEG-2 4:2:0 8 bit") {
+        ui_preset->checkBox_2->setChecked(false);
+        ui_preset->checkBox_2->setEnabled(false);
+        ui_preset->comboBox_container->addItems({"MKV", "MPG", "AVI", "M2TS", "TS"});
+        ui_preset->comboBox_container->setCurrentIndex(3);
+        ui_preset->comboBox_mode->addItems({"Constant Bitrate"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::HIGH);
+        ui_preset->comboBox_preset->addItems({"Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"});
+        ui_preset->comboBox_preset->setCurrentIndex(4);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_color_range->setCurrentIndex(0);
         ui_preset->lineEdit_min_lum->clear();
         ui_preset->lineEdit_max_lum->clear();
@@ -440,6 +496,31 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  //******
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
     }
+    if (arg1 == "XDCAM HD422") {
+        ui_preset->comboBox_container->addItems({"MXF"});
+        ui_preset->comboBox_mode->addItems({"Auto"});
+        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_AUTO);
+        ui_preset->comboBox_preset->addItems({"Auto"});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422p);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_color_range->setCurrentIndex(0);
+        ui_preset->lineEdit_min_lum->clear();
+        ui_preset->lineEdit_max_lum->clear();
+        ui_preset->lineEdit_max_cll->clear();
+        ui_preset->lineEdit_max_fall->clear();
+        ui_preset->comboBox_master_disp->setCurrentIndex(0);
+        ui_preset->comboBox_color_range->setEnabled(false);
+        ui_preset->lineEdit_min_lum->setEnabled(false);
+        ui_preset->lineEdit_max_lum->setEnabled(false);
+        ui_preset->lineEdit_max_cll->setEnabled(false);
+        ui_preset->lineEdit_max_fall->setEnabled(false);
+        ui_preset->comboBox_master_disp->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit"});
+    }
     if (arg1 == "From source") {
         ui_preset->checkBox_2->setChecked(false);
         ui_preset->checkBox_2->setEnabled(false);
@@ -700,27 +781,30 @@ void Preset::change_preset_name()  //*******************************************
     if ((c21 == -1) || (c22 == -1)) {
         return;
     }
-    QString arr_codec[20][3] = {
-        {"HEVC, ",            "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"HEVC, ",            "YUV, 4:2:0, 8 bit, ",  ""},
-        {"AVC, ",             "YUV, 4:2:0, 8 bit, ",  ""},
-        {"NVENC, HEVC, ",     "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"NVENC, HEVC, ",     "YUV, 4:2:0, 8 bit, ",  ""},
-        {"NVENC, AVC, ",      "YUV, 4:2:0, 8 bit, ",  ""},
-        {"VP9, ",             "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"VP9, ",             "YUV, 4:2:0, 8  bit, ", ""},
-        {"ProRes Proxy, ",    "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes LT, ",       "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes Standard, ", "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes HQ, ",       "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes 4444, ",     "YUV, 4:4:4, 10 bit, ", "HDR: "},
-        {"ProRes 4444XQ, ",   "YUV, 4:4:4, 10 bit, ", "HDR: "},
-        {"DNxHR LB, ",        "YUV, 4:2:2, 8 bit, ",  ""},
-        {"DNxHR SQ, ",        "YUV, 4:2:2, 8 bit, ",  ""},
-        {"DNxHR HQ, ",        "YUV, 4:2:2, 8 bit, ",  ""},
-        {"DNxHR HQX, ",       "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"DNxHR 444, ",       "YUV, 4:4:4, 10 bit, ", "HDR: "},
-        {"From source, ",     "",                     "HDR: "}
+    QString arr_codec[NUMBER_PRESETS][3] = {
+        {"HEVC, ",             "YUV, 4:2:0, 10 bit, ", "HDR: "},
+        {"HEVC, ",             "YUV, 4:2:0, 8 bit, ",  ""},
+        {"AVC, ",              "YUV, 4:2:0, 8 bit, ",  ""},
+        {"Intel QSV, AVC, ",   "YUV, 4:2:0, 8 bit, ",  ""},
+        {"Intel QSV, MPEG-2, ","YUV, 4:2:0, 8 bit, ",  ""},
+        {"NVENC, HEVC, ",      "YUV, 4:2:0, 10 bit, ", "HDR: "},
+        {"NVENC, HEVC, ",      "YUV, 4:2:0, 8 bit, ",  ""},
+        {"NVENC, AVC, ",       "YUV, 4:2:0, 8 bit, ",  ""},
+        {"VP9, ",              "YUV, 4:2:0, 10 bit, ", "HDR: "},
+        {"VP9, ",              "YUV, 4:2:0, 8  bit, ", ""},
+        {"ProRes Proxy, ",     "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes LT, ",        "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes Standard, ",  "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes HQ, ",        "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"ProRes 4444, ",      "YUV, 4:4:4, 10 bit, ", "HDR: "},
+        {"ProRes 4444XQ, ",    "YUV, 4:4:4, 10 bit, ", "HDR: "},
+        {"DNxHR LB, ",         "YUV, 4:2:2, 8 bit, ",  ""},
+        {"DNxHR SQ, ",         "YUV, 4:2:2, 8 bit, ",  ""},
+        {"DNxHR HQ, ",         "YUV, 4:2:2, 8 bit, ",  ""},
+        {"DNxHR HQX, ",        "YUV, 4:2:2, 10 bit, ", "HDR: "},
+        {"DNxHR 444, ",        "YUV, 4:4:4, 10 bit, ", "HDR: "},
+        {"XDCAM HD422, ",      "YUV, 4:2:2, 8 bit, ",  ""},
+        {"From source, ",      "",                     "HDR: "}
     };
     codec = arr_codec[c1][0];
     clrspace = arr_codec[c1][1];
@@ -731,15 +815,18 @@ void Preset::change_preset_name()  //*******************************************
     } else if (w != "Source" && h != "Source") {
         res = "Res: " + w + "x" + h + ", ";
     }
-    QString arr_mode[20][5] = {
+    QString arr_mode[NUMBER_PRESETS][5] = {
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
+        {"VBR", "",    "",    "",    ""},
+        {"CBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
+        {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
@@ -756,35 +843,40 @@ void Preset::change_preset_name()  //*******************************************
     if (arr_mode[c1][c2] != "") {
         mode = arr_mode[c1][c2] + " " + ui_preset->comboBox_bitrate->currentText() + ", ";
     }
-    QString arr_preset[20][9] = {
-        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
-        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
-        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
-        {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
-        {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
-        {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""}
+    QString arr_preset[NUMBER_PRESETS][9] = {
+        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
+        {"Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
+        {"Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
+        {"Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
+        {"Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""}
     };
     if (arr_preset[c1][c12] != "") {
         preset = "Preset: " + arr_preset[c1][c12] + ", ";
     }
-    QString arr_pass[20][2] = {
+    QString arr_pass[NUMBER_PRESETS][2] = {
         {"1 Pass", "2 Pass"},
         {"1 Pass", "2 Pass"},
         {"1 Pass", "2 Pass"},
+        {"",       ""},
+        {"",       ""},
         {"2 Pass", ""},
         {"2 Pass", ""},
         {"2 Pass", ""},
@@ -809,7 +901,9 @@ void Preset::change_preset_name()  //*******************************************
     if (arr_codec[c1][2] != "") {
         hdr = arr_codec[c1][2] + "Enabled, ";
     }
-    QString arr_acodec[20][6] = {
+    QString arr_acodec[NUMBER_PRESETS][6] = {
+        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
+        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
         {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
         {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
         {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
@@ -829,6 +923,7 @@ void Preset::change_preset_name()  //*******************************************
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
+        {"PCM 16 bit", "",           "",           "",       "",     ""},
         {"AAC",        "AC3",        "DTS",        "Vorbis", "Opus", "Source"}
     };
     if (arr_acodec[c1][c21] != "") {
@@ -930,66 +1025,123 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
             clickPressed_Left_Bottom_ResizeFlag = false;
             return QDialog::eventFilter(watched, event);
         }
+        return QDialog::eventFilter(watched, event);
     }
 
     if (watched == ui_preset->widget) // *************** Resize window realisation ************************* //
     {
         if (!this->isMaximized())
         {
+            if (event->type() == QEvent::HoverLeave)
+            {
+                QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
+                return QDialog::eventFilter(watched, event);
+            }
+            if (event->type() == QEvent::HoverMove && !clickPressed_Left_ResizeFlag
+                     && !clickPressed_Left_Top_ResizeFlag && !clickPressed_Top_ResizeFlag
+                     && !clickPressed_Right_Top_ResizeFlag && !clickPressed_Right_ResizeFlag
+                     && !clickPressed_Right_Bottom_ResizeFlag && !clickPressed_Bottom_ResizeFlag
+                     && !clickPressed_Left_Bottom_ResizeFlag)
+            {
+                curWidth = this->width();
+                curHeight = this->height();
+                mouseCoordinate = ui_preset->widget->mapFromGlobal(QCursor::pos());
+                if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() > 62) && (mouseCoordinate.y() < (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() < 6))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > 6) && (mouseCoordinate.x() < (curWidth - 120)) && (mouseCoordinate.y() < 3))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() < 6))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() > 62) && (mouseCoordinate.y() < (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() > (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > 6) && (mouseCoordinate.x() < (curWidth - 6)) && (mouseCoordinate.y() > (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() > (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                    return QDialog::eventFilter(watched, event);
+                }
+                QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
+                return QDialog::eventFilter(watched, event);
+            }
             if (event->type() == QEvent::MouseButtonPress)
             {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->button() == Qt::LeftButton)
                 {
-                    _posX = this->pos().x();
-                    _posY = this->pos().y();
-                    _width = this->width();
-                    _height = this->height();
+                    oldWidth = this->width();
+                    oldHeight = this->height();
                     mouseClickCoordinate = mouse_event->pos();
-                    if ((mouseClickCoordinate.x() < 12) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (_height-12)))
+                    if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
                         clickPressed_Left_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() < 12) && (mouseClickCoordinate.y() < 12))
+                    if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() < 6))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
                         clickPressed_Left_Top_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > 12) && (mouseClickCoordinate.x() < (_width - 120)) && (mouseClickCoordinate.y() < 3))
+                    if ((mouseClickCoordinate.x() > 6) && (mouseClickCoordinate.x() < (oldWidth - 120)) && (mouseClickCoordinate.y() < 3))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
                         clickPressed_Top_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > (_width - 12)) && (mouseClickCoordinate.y() < 12))
+                    if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() < 6))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
                         clickPressed_Right_Top_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > (_width - 12)) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (_height-12)))
+                    if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
                         clickPressed_Right_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > (_width - 12)) && (mouseClickCoordinate.y() > (_height - 12)))
+                    if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
                         clickPressed_Right_Bottom_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > 12) && (mouseClickCoordinate.x() < (_width - 12)) && (mouseClickCoordinate.y() > (_height - 12)))
+                    if ((mouseClickCoordinate.x() > 6) && (mouseClickCoordinate.x() < (oldWidth - 6)) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
                         clickPressed_Bottom_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() < 12) && (mouseClickCoordinate.y() > (_height - 12)))
+                    if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
                         clickPressed_Left_Bottom_ResizeFlag = true;
+                        return QDialog::eventFilter(watched, event);
                     }
                     return QDialog::eventFilter(watched, event);
                 }
+                return QDialog::eventFilter(watched, event);
             }
-            else if (event->type() == QEvent::MouseMove)
+            if (event->type() == QEvent::MouseMove)
             {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->buttons() & Qt::LeftButton)
@@ -998,44 +1150,56 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
                     int deltaY = mouse_event->globalPos().y() - mouseClickCoordinate.y();
                     int deltaWidth = static_cast<int>(mouse_event->localPos().x()) - mouseClickCoordinate.x();
                     int deltaHeight = static_cast<int>(mouse_event->localPos().y()) - mouseClickCoordinate.y();
-                    if (clickPressed_Left_ResizeFlag == true)
+                    if (clickPressed_Left_ResizeFlag)
                     {
-                        this->setGeometry(deltaX, _posY, this->width() - deltaWidth, _height);
+                        this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, oldHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Left_Top_ResizeFlag == true)
+                    if (clickPressed_Left_Top_ResizeFlag)
                     {
                         this->setGeometry(deltaX, deltaY, this->width() - deltaWidth, this->height() - deltaHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Top_ResizeFlag == true)
+                    if (clickPressed_Top_ResizeFlag)
                     {
-                        this->setGeometry(_posX, deltaY, _width, this->height() - deltaHeight);
+                        this->setGeometry(this->pos().x(), deltaY, oldWidth, this->height() - deltaHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Right_Top_ResizeFlag == true)
+                    if (clickPressed_Right_Top_ResizeFlag)
                     {
-                        this->setGeometry(_posX, deltaY, _width + deltaWidth, this->height() - deltaHeight);
+                        this->setGeometry(this->pos().x(), deltaY, oldWidth + deltaWidth, this->height() - deltaHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Right_ResizeFlag == true)
+                    if (clickPressed_Right_ResizeFlag)
                     {
-                        this->setGeometry(_posX, _posY, _width + deltaWidth, _height);
+                        this->setGeometry(this->pos().x(), this->pos().y(), oldWidth + deltaWidth, oldHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Right_Bottom_ResizeFlag == true)
+                    if (clickPressed_Right_Bottom_ResizeFlag)
                     {
-                        this->setGeometry(_posX, _posY, _width + deltaWidth, _height + deltaHeight);
+                        this->setGeometry(this->pos().x(), this->pos().y(), oldWidth + deltaWidth, oldHeight + deltaHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Bottom_ResizeFlag == true)
+                    if (clickPressed_Bottom_ResizeFlag)
                     {
-                        this->setGeometry(_posX, _posY, _width, _height + deltaHeight);
+                        this->setGeometry(this->pos().x(), this->pos().y(), oldWidth, oldHeight + deltaHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Left_Bottom_ResizeFlag == true)
+                    if (clickPressed_Left_Bottom_ResizeFlag)
                     {
-                        this->setGeometry(deltaX, _posY, this->width() - deltaWidth, _height + deltaHeight);
+                        this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, oldHeight + deltaHeight);
+                        return QDialog::eventFilter(watched, event);
                     }
                     return QDialog::eventFilter(watched, event);
                 }
+                return QDialog::eventFilter(watched, event);
             }
+            return QDialog::eventFilter(watched, event);
         }
+        return QDialog::eventFilter(watched, event);
     }
-    else if (watched == ui_preset->frame_hint) // *************** Drag window realisation ************************* //
+
+    if (watched == ui_preset->frame_hint) // *************** Drag window realisation ************************* //
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -1046,8 +1210,9 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
                 clickPressedFlag = true;
                 return QDialog::eventFilter(watched, event);
             }
+            return QDialog::eventFilter(watched, event);
         }
-        else if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
+        if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
         {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton)
@@ -1059,8 +1224,9 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
                 this->move(mouse_event->globalPos() - mouseClickCoordinate);
                 return QDialog::eventFilter(watched, event);
             }
+            return QDialog::eventFilter(watched, event);
         }
-        else if (event->type() == QEvent::MouseButtonDblClick)
+        if (event->type() == QEvent::MouseButtonDblClick)
         {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton)
@@ -1068,7 +1234,9 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
                 on_expandWindow_2_clicked();
                 return QDialog::eventFilter(watched, event);
             }
+            return QDialog::eventFilter(watched, event);
         }
+        return QDialog::eventFilter(watched, event);
     }
     return QDialog::eventFilter(watched, event);
 }

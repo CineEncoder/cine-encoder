@@ -36,6 +36,7 @@ void Taskcomplete::setMessage(const QString &_message, const bool &_timer_mode) 
     {
         show_message(_message);
         elps_t = 25;
+        timer = new QTimer(this);
         timer->setInterval(1000);
         connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
         timer->start();
@@ -57,8 +58,8 @@ void Taskcomplete::repeat_handler() // Repeat handler
     {
         this->close();
     }
-    int h = static_cast<int>(trunc(elps_t / 3600));
-    int m = static_cast<int>(trunc((elps_t - (h * 3600)) / 60));
+    int h = static_cast<int>(trunc(float(elps_t) / 3600));
+    int m = static_cast<int>(trunc((float(elps_t) - float(h * 3600)) / 60));
     int s = static_cast<int>(trunc(elps_t - (h * 3600) - (m * 60)));
     QString hrs = QString::number(h);
     QString min = QString::number(m);

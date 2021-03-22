@@ -5,7 +5,7 @@
 #include <QTimer>
 #include <iostream>
 #include <QMouseEvent>
-
+#include <QHoverEvent>
 
 extern QString _cur_param[23];
 enum Profile {
@@ -97,7 +97,9 @@ private:
 
     Ui::Preset *ui_preset;
 
-    QTimer *timer = new QTimer(this);
+    static const int NUMBER_PRESETS = 23;
+
+    QTimer *timer;
 
     int _repeat;
 
@@ -121,15 +123,17 @@ private:
 
     bool clickPressed_Left_Bottom_ResizeFlag = false;
 
-    int _posX;
-
-    int _posY;
-
-    int _width;
-
-    int _height;
-
     QPoint mouseClickCoordinate;
+
+    QPoint mouseCoordinate;
+
+    int oldWidth;
+
+    int oldHeight;
+
+    int curWidth;
+
+    int curHeight;
 };
 
 #endif // PRESET_H

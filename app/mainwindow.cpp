@@ -65,6 +65,8 @@ void MainWindow::setParameters()    //***************************** Set paramete
 {
     // **************************** Set front label ***********************************//
 
+    raiseLayout = new QHBoxLayout();
+    raiseThumb = new QLabel(this);
     raiseThumb->setAlignment(Qt::AlignCenter);
     raiseThumb->setPixmap(QPixmap(":/resources/images/logo.png"));
     ui->tableWidget->setLayout(raiseLayout);
@@ -73,12 +75,18 @@ void MainWindow::setParameters()    //***************************** Set paramete
     // ***************************** Set parameters ***********************************//
 
     ui->frame_hint->installEventFilter(this);
+    //ui->frameBottomMiddle->installEventFilter(this);
+    //ui->frameBottomMiddle->setAttribute(Qt::WA_Hover, true);
     ui->centralwidget->installEventFilter(this);
+    ui->centralwidget->setAttribute(Qt::WA_Hover, true);
     raiseThumb->installEventFilter(this);
+
+    timer = new QTimer(this);
+    timerCallSetThumbnail = new QTimer(this);
     timerCallSetThumbnail->setSingleShot(true);
     timerCallSetThumbnail->setInterval(800);
-    connect(timerCallSetThumbnail, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_2()));
     connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
+    connect(timerCallSetThumbnail, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_2()));
     _preset_table.resize(24);
     for (int i = 0; i < 24; i++) {
       _preset_table[i].resize(5);
@@ -86,31 +94,52 @@ void MainWindow::setParameters()    //***************************** Set paramete
 
     // ***************************** Top menu actions ***********************************//
 
+    add_files = new QAction(tr("Add files"), this);
+    remove_files = new QAction(tr("Remove file"), this);
+    close_prog = new QAction(tr("Close"), this);
     connect(add_files, &QAction::triggered, this, &MainWindow::on_actionAdd_clicked);
     connect(remove_files, &QAction::triggered, this, &MainWindow::on_actionRemove_clicked);
     connect(close_prog, &QAction::triggered, this, &MainWindow::on_closeWindow_clicked);
-    QMenu* menuFiles = new QMenu(this);
+
+    select_preset = new QAction(tr("Select preset"), this);
+    encode_files = new QAction(tr("Encode/Pause"), this);
+    stop_encode = new QAction(tr("Stop"), this);
+    connect(select_preset, &QAction::triggered, this, &MainWindow::on_actionPreset_clicked);
+    connect(encode_files, &QAction::triggered, this, &MainWindow::on_actionEncode_clicked);
+    connect(stop_encode, &QAction::triggered, this, &MainWindow::on_actionStop_clicked);
+
+    edit_metadata = new QAction(tr("Edit metadata"), this);
+    select_audio = new QAction(tr("Select audio streams"), this);
+    select_subtitles = new QAction(tr("Select subtitles"), this);
+    split_video = new QAction(tr("Split video"), this);
+    connect(edit_metadata, &QAction::triggered, this, &MainWindow::showMetadataEditor);
+    connect(select_audio, &QAction::triggered, this, &MainWindow::showAudioStreamsSelection);
+    connect(select_subtitles, &QAction::triggered, this, &MainWindow::showSubtitlesSelection);
+    connect(split_video, &QAction::triggered, this, &MainWindow::showSplitVideo);
+
+    settings = new QAction(tr("Settings"), this);
+    connect(settings, &QAction::triggered, this, &MainWindow::on_actionSettings_clicked);
+
+    about = new QAction(tr("About"), this);
+    donate = new QAction(tr("Donate"), this);
+    connect(about, &QAction::triggered, this, &MainWindow::on_actionAbout_clicked);
+    connect(donate, &QAction::triggered, this, &MainWindow::on_actionDonate_clicked);
+
+    menuFiles = new QMenu(this);
     menuFiles->addAction(add_files);
     menuFiles->addAction(remove_files);
     menuFiles->addSeparator();
     menuFiles->addAction(close_prog);
     ui->menuFileButton->setMenu(menuFiles);
 
-    connect(select_preset, &QAction::triggered, this, &MainWindow::on_actionPreset_clicked);
-    connect(encode_files, &QAction::triggered, this, &MainWindow::on_actionEncode_clicked);
-    connect(stop_encode, &QAction::triggered, this, &MainWindow::on_actionStop_clicked);
-    QMenu* menuEdit = new QMenu(this);
+    menuEdit = new QMenu(this);
     menuEdit->addAction(select_preset);
     menuEdit->addSeparator();
     menuEdit->addAction(encode_files);
     menuEdit->addAction(stop_encode);
     ui->menuEditButton->setMenu(menuEdit);
 
-    connect(edit_metadata, &QAction::triggered, this, &MainWindow::showMetadataEditor);
-    connect(select_audio, &QAction::triggered, this, &MainWindow::showAudioStreamsSelection);
-    connect(select_subtitles, &QAction::triggered, this, &MainWindow::showSubtitlesSelection);
-    connect(split_video, &QAction::triggered, this, &MainWindow::showSplitVideo);
-    QMenu* menuTools = new QMenu(this);
+    menuTools = new QMenu(this);
     menuTools->addAction(edit_metadata);
     menuTools->addSeparator();
     menuTools->addAction(select_audio);
@@ -119,18 +148,31 @@ void MainWindow::setParameters()    //***************************** Set paramete
     menuTools->addAction(split_video);
     ui->menuToolsButton->setMenu(menuTools);
 
-    connect(settings, &QAction::triggered, this, &MainWindow::on_actionSettings_clicked);
-    QMenu* menuPreferences = new QMenu(this);
+    menuPreferences = new QMenu(this);
     menuPreferences->addAction(settings);
     ui->menuPreferencesButton->setMenu(menuPreferences);
 
-    connect(about, &QAction::triggered, this, &MainWindow::on_actionAbout_clicked);
-    connect(donate, &QAction::triggered, this, &MainWindow::on_actionDonate_clicked);
-    QMenu* menuAbout = new QMenu(this);
+    menuAbout = new QMenu(this);
     menuAbout->addAction(about);
     menuAbout->addSeparator();
     menuAbout->addAction(donate);
     ui->menuAboutButton->setMenu(menuAbout);
+
+    // ***************************** Table menu actions ***********************************//
+
+    ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    itemMenu = new QMenu(this);
+    itemMenu->addAction(remove_files);
+    itemMenu->addSeparator();
+    itemMenu->addAction(encode_files);
+    itemMenu->addSeparator();
+    itemMenu->addAction(edit_metadata);
+    itemMenu->addSeparator();
+    itemMenu->addAction(select_audio);
+    itemMenu->addAction(select_subtitles);
+    itemMenu->addSeparator();
+    itemMenu->addAction(split_video);
+    connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &MainWindow::provideContextMenu);
 
     // ****************************** Initialize variables ************************************//
 
@@ -148,7 +190,7 @@ void MainWindow::setParameters()    //***************************** Set paramete
     _settings_path = QDir::homePath() + QString("/CineEncoder");
     _thumb_path = _settings_path + QString("/thumbnails");
     _settings_file = _settings_path + QString("/ce_settings");
-    _preset_file = _settings_path + QString("/ce_preset");
+    _preset_file = _settings_path + QString("/ce_preset_v3_3");
     _window_file = _settings_path + QString("/ce_window");
     _status_encode_btn = "start";
     _timer_interval = 30;
@@ -165,9 +207,17 @@ void MainWindow::setParameters()    //***************************** Set paramete
     _showHDR_mode = false;
     _row = -1;
     _theme = 0;
-    ui->frameLeft->hide();
-    ui->buttonLeftWindow->hide();
+    animation = new QMovie(this);
     animation->setFileName(":/resources/icons/Animated/cil-spinner-circle.gif");
+    process_1 = new QProcess(this);
+    process_5 = new QProcess(this);
+    process_1->setProcessChannelMode(QProcess::MergedChannels);
+    process_1->setWorkingDirectory(QDir::homePath());
+
+    // ****************************** Setup widgets ************************************//
+
+    ui->buttonLeftWindow->hide();
+    ui->frameLeft->hide();
     ui->labelAnimation->setMovie(animation);
     ui->labelAnimation->hide();
     ui->label_53->hide();
@@ -196,9 +246,6 @@ void MainWindow::setParameters()    //***************************** Set paramete
     for (int i = columnIndex::T_DUR; i <= columnIndex::T_ENDTIME; i++) {
         ui->tableWidget->hideColumn(i);
     }
-
-    process_1->setProcessChannelMode(QProcess::MergedChannels);
-    process_1->setWorkingDirectory(QDir::homePath());
 
     // ****************************** Create folders ************************************//
 
@@ -467,20 +514,13 @@ void MainWindow::on_hideWindow_clicked()
 
 void MainWindow::on_actionAdd_clicked() //**************************** Add files ********************//
 {
-    QFileDialog *openFilesWindow = new QFileDialog(this);
+    QFileDialog *openFilesWindow = new QFileDialog(nullptr);
     openFilesWindow->setFileMode(QFileDialog::ExistingFiles);
 #ifdef Q_OS_WIN
     openFilesWindow->setOptions(QFileDialog::DontResolveSymlinks);
 #else
     openFilesWindow->setOptions(QFileDialog::DontUseNativeDialog | QFileDialog::DontResolveSymlinks);
 #endif
-    openFilesWindow->setStyleSheet("QWidget {color: rgb(10, 10, 10); background-color: "
-                                   "rgb(120, 120, 120);} QHeaderView {color: rgb(10, 10, 10); "
-                                   "background-color: transparent;} QHeaderView::section:horizontal "
-                                   "{height: 20px; padding: 0px; border: 1px solid rgb(160, 160, 160); "
-                                   "border-top-left-radius: 0px; border-top-right-radius: 0px; "
-                                   "background-color: rgb(160, 160, 160);} QScrollBar {background-color: "
-                                   "rgb(160, 160, 160);}");
     openFilesWindow->setDirectory(_openDir);
     openFilesWindow->setMinimumWidth(600);
     openFilesWindow->setWindowTitle("Open Files");
@@ -698,7 +738,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)
         QString smplrt("");
         QString smplrt_qstr("");
         QString audioCheckstate;
-        for (int j = 0; j < AMOUNT_AUDIO_SRTEAMS; j++) {
+        for (int j = 0; j < AMOUNT_AUDIO_STREAMS; j++) {
             audioFormat = QString::fromStdWString(MI.Get(Stream_Audio, size_t(j), L"Format"));
             audioLang = QString::fromStdWString(MI.Get(Stream_Audio, size_t(j), L"Language"));
             audioTitle = QString::fromStdWString(MI.Get(Stream_Audio, size_t(j), L"Title"));
@@ -729,7 +769,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)
         QString subtitleLang("");
         QString subtitleTitle("");
         QString subtitleCheckstate;
-        for (int j = 0; j < AMOUNT_AUDIO_SRTEAMS; j++) {
+        for (int j = 0; j < AMOUNT_SUBTITLES; j++) {
             subtitleFormat = QString::fromStdWString(MI.Get(Stream_Text, size_t(j), L"Format"));
             subtitleLang = QString::fromStdWString(MI.Get(Stream_Text, size_t(j), L"Language"));
             subtitleTitle = QString::fromStdWString(MI.Get(Stream_Text, size_t(j), L"Title"));
@@ -959,7 +999,7 @@ void MainWindow::on_tableWidget_itemSelectionChanged()  //******* Item selection
         _videoMetadata[VIDEO_MOVIENAME] = "";
 
         // **************************** Reset audio variables ***********************************//
-        for (int i = 0; i < AMOUNT_AUDIO_SRTEAMS; i++) {
+        for (int i = 0; i < AMOUNT_AUDIO_STREAMS; i++) {
             _audioStreamCheckState[i] = 0;
             _audioLang[i] = "";
             _audioTitle[i] = "";
@@ -1009,12 +1049,16 @@ void MainWindow::make_preset()  //*********************************** Make prese
     _mux_mode = false;
     _fr_count = 0;
 
+    /****************************************** Resize ****************************************/
+
     QString resize;
     if ((_RESIZE_ENABLED == true) && (_RESIZE_CHECKSTATE == 2)) {
         if ((_WIDTH != "") && (_HEIGHT != "") && (_WIDTH != "Source") && (_HEIGHT != "Source")) {
             resize = QString("-vf scale=%1:%2 ").arg(_WIDTH, _HEIGHT);
         }
     }
+
+    /****************************************** Split ****************************************/
 
     QString _splitStartParam = "";
     QString _splitParam = "";
@@ -1032,6 +1076,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
         _fr_count = static_cast<int>(round(_dur * fps_double));
     }
 
+    /************************************** Video metadata ************************************/
+
     QString videoMetadata[6] = {"", "", "", "", "", ""};
     QString _videoMetadataParam = "";
     QString globalTitle = ui->lineEditGlobalTitle->text();
@@ -1040,38 +1086,45 @@ void MainWindow::make_preset()  //*********************************** Make prese
         videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(globalTitle.replace(" ", "\u00A0"));
     } else {
         if (_videoMetadata[VIDEO_TITLE] != "") {
-            videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(_videoMetadata[VIDEO_TITLE].replace(" ", "\u00A0"));
+            videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(_videoMetadata[VIDEO_TITLE]
+                                                                        .replace(" ", "\u00A0"));
         } else {
             videoMetadata[0] = QString("-map_metadata:s:v:0 -1 ");
         }
     }
     if (_videoMetadata[VIDEO_MOVIENAME] != "") {
-        videoMetadata[1] = QString("-metadata title=%1 ").arg(_videoMetadata[VIDEO_MOVIENAME].replace(" ", "\u00A0"));
+        videoMetadata[1] = QString("-metadata title=%1 ").arg(_videoMetadata[VIDEO_MOVIENAME]
+                                                              .replace(" ", "\u00A0"));
     }
     if (_videoMetadata[VIDEO_AUTHOR] != "") {
-        videoMetadata[2] = QString("-metadata author=%1 ").arg(_videoMetadata[VIDEO_AUTHOR].replace(" ", "\u00A0"));
+        videoMetadata[2] = QString("-metadata author=%1 ").arg(_videoMetadata[VIDEO_AUTHOR]
+                                                               .replace(" ", "\u00A0"));
     }
     if (_videoMetadata[VIDEO_DESCRIPTION] != "") {
-        videoMetadata[3] = QString("-metadata description=%1 ").arg(_videoMetadata[VIDEO_DESCRIPTION].replace(" ", "\u00A0"));
+        videoMetadata[3] = QString("-metadata description=%1 ").arg(_videoMetadata[VIDEO_DESCRIPTION]
+                                                                    .replace(" ", "\u00A0"));
     }
     if (_videoMetadata[VIDEO_YEAR] != "") {
         videoMetadata[4] = QString("-metadata year=%1 ").arg(_videoMetadata[VIDEO_YEAR].replace(" ", ""));
     }
     if (_videoMetadata[VIDEO_PERFORMER] != "") {
-        videoMetadata[5] = QString("-metadata author=%1 ").arg(_videoMetadata[VIDEO_PERFORMER].replace(" ", "\u00A0"));
+        videoMetadata[5] = QString("-metadata author=%1 ").arg(_videoMetadata[VIDEO_PERFORMER]
+                                                               .replace(" ", "\u00A0"));
     }
     for (int i = 0; i < 6; i++) {
         _videoMetadataParam += videoMetadata[i];
     }
 
-    QString audioLang[AMOUNT_AUDIO_SRTEAMS] = {"", "", "", "", "", "", "", "", ""};
-    QString audioTitle[AMOUNT_AUDIO_SRTEAMS] = {"", "", "", "", "", "", "", "", ""};
-    QString audioMap[AMOUNT_AUDIO_SRTEAMS] = {"", "", "", "", "", "", "", "", ""};
+    /************************************** Audio streams ************************************/
+
+    QString audioLang[AMOUNT_AUDIO_STREAMS] = {"", "", "", "", "", "", "", "", ""};
+    QString audioTitle[AMOUNT_AUDIO_STREAMS] = {"", "", "", "", "", "", "", "", ""};
+    QString audioMap[AMOUNT_AUDIO_STREAMS] = {"", "", "", "", "", "", "", "", ""};
     QString _audioMapParam = "";
     QString _audioMetadataParam = "";
     int countDestAudioStream = 0;
 
-    for (int k = 0; k < AMOUNT_AUDIO_SRTEAMS; k++) {
+    for (int k = 0; k < AMOUNT_AUDIO_STREAMS; k++) {
         if (_audioStreamCheckState[k] == 1) {
             audioMap[k] = QString("-map 0:a:%1? ").arg(QString::number(k));
             audioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
@@ -1083,6 +1136,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
         _audioMapParam += audioMap[k];
         _audioMetadataParam += audioLang[k] + audioTitle[k];
     }
+
+    /**************************************** Subtitles **************************************/
 
     QString subtitleLang[AMOUNT_SUBTITLES] = {"", "", "", "", "", "", "", "", ""};
     QString subtitleTitle[AMOUNT_SUBTITLES] = {"", "", "", "", "", "", "", "", ""};
@@ -1104,11 +1159,34 @@ void MainWindow::make_preset()  //*********************************** Make prese
         _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k];
     }
 
+    /*********************************** Intel QSV presets ************************************/
 
-    QString arr_codec[20][3] = {
+    QString intelQSV_H264_preset = "-vf hwmap=derive_device=qsv,format=qsv -c:v h264_qsv -profile:v high "
+                                   "-low_power false ";
+    QString intelQSV_Mpeg2_preset = "-vf hwmap=derive_device=qsv,format=qsv -c:v mpeg2_qsv -profile:v high "
+                                    "-low_power false ";
+#ifdef Q_OS_WIN64
+    QString intelQSVhwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
+#endif
+
+#ifdef Q_OS_LINUX
+    QString intelQSVhwaccel = " -hwaccel vaapi -hwaccel_output_format vaapi";
+#endif
+
+    /************************************* XDCAM presets **************************************/
+
+    QString xdcam_preset = "-pix_fmt yuv422p -c:v mpeg2video -profile:v 0 -level:v 2 -b:v 50000k -maxrate "
+                           "50000k -bufsize 3835k -minrate 50000k -r 25 -flags ilme -top 1 -metadata "
+                           "creation_time=now -vtag xd5c -timecode 01:00:00:00 ";
+
+    /************************************* Codec module ***************************************/
+
+    QString arr_codec[NUMBER_PRESETS][3] = {
         {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",               "1"},
         {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",               "0"},
         {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",               "0"},
+        {intelQSV_H264_preset,                                          intelQSVhwaccel,  "0"},
+        {intelQSV_Mpeg2_preset,                                         intelQSVhwaccel,  "0"},
         {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda", "1"},
         {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda", "0"},
         {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda", "0"},
@@ -1125,6 +1203,7 @@ void MainWindow::make_preset()  //*********************************** Make prese
         {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",               "0"},
         {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",               "1"},
         {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",               "1"},
+        {xdcam_preset,                                                  "",               "0"},
         {"-movflags +write_colr -c:v copy ",                            "",               "1"}
     };
     QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
@@ -1134,15 +1213,18 @@ void MainWindow::make_preset()  //*********************************** Make prese
     QString hwaccel = arr_codec[_CODEC][1];
     _flag_hdr = static_cast<bool>(arr_codec[_CODEC][2].toInt());
 
-    QString arr_mode[20][5] = {
+    QString arr_mode[NUMBER_PRESETS][5] = {
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
+        {"VBR", "",    "",    "",    ""},
+        {"CBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
+        {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
@@ -1164,8 +1246,8 @@ void MainWindow::make_preset()  //*********************************** Make prese
         mode = QString("-b:v %1 ").arg(_BQR);
     }
     if (arr_mode[_CODEC][_MODE] == "VBR") {
-        if ((_CODEC >= 3) && (_CODEC <= 5)) {
-            mode = QString("-b:v %1 -maxrate %2 -bufsize %3 -rc vbr_hq -rc-lookahead:v 32 ").arg(_BQR, _MAXRATE, _BUFSIZE);
+        if ((_CODEC >= 5) && (_CODEC <= 7)) {
+            mode = QString("-b:v %1 -maxrate %2 -bufsize %3 -rc vbr_hq ").arg(_BQR, _MAXRATE, _BUFSIZE);
         } else {
             mode = QString("-b:v %1 -maxrate %2 -bufsize %3 ").arg(_BQR, _MAXRATE, _BUFSIZE);
         }
@@ -1177,42 +1259,48 @@ void MainWindow::make_preset()  //*********************************** Make prese
         mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
     }
 
-    QString arr_preset[20][9] = {
-        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
-        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
-        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow", "Slower", "Veryslow"},
-        {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
-        {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
-        {"Slow",      "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""},
-        {"",          "",          "",         "",       "",     "",       "",     "",       ""}
+    QString arr_preset[NUMBER_PRESETS][9] = {
+        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
+        {"Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
+        {"Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
+        {"Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
+        {"Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",          "",          "",         "",       "",     "",       "",         "",       ""}
     };
     QString preset = "";
     if (arr_preset[_CODEC][_PRESET] != "") {
         preset = "-preset " + arr_preset[_CODEC][_PRESET].toLower() + " ";
     }
 
-    QString arr_pass[20][2] = {
+    QString arr_pass[NUMBER_PRESETS][2] = {
         {"",                     "-x265-params pass=2 "},
         {"",                     "-x265-params pass=2 "},
         {"",                     "-pass 2 "},
+        {"",                     ""},
+        {"",                     ""},
         {"-2pass 1 ",            ""},
         {"-2pass 1 ",            ""},
         {"-2pass 1 ",            ""},
         {"",                     "-pass 2 "},
         {"",                     "-pass 2 "},
+        {"",                     ""},
         {"",                     ""},
         {"",                     ""},
         {"",                     ""},
@@ -1237,7 +1325,9 @@ void MainWindow::make_preset()  //*********************************** Make prese
         _flag_two_pass = true;
     }
 
-    QString arr_acodec[20][6] = {
+    QString arr_acodec[NUMBER_PRESETS][6] = {
+        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
+        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
@@ -1257,6 +1347,7 @@ void MainWindow::make_preset()  //*********************************** Make prese
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
+        {"PCM16", "",       "",       "",       "",     ""},
         {"AAC",   "AC3",    "DTS",    "Vorbis", "Opus", "Source"}
     };
 
@@ -2150,7 +2241,7 @@ void MainWindow::get_current_data() //**************************** Get current d
     _videoMetadata[VIDEO_DESCRIPTION] = ui->tableWidget->item(_row, columnIndex::T_VIDEODESCR)->text();
     _videoMetadata[VIDEO_MOVIENAME] = ui->tableWidget->item(_row, columnIndex::T_VIDEOMOVIENAME)->text();
 
-    for (int p = 0; p < AMOUNT_AUDIO_SRTEAMS; p++) {
+    for (int p = 0; p < AMOUNT_AUDIO_STREAMS; p++) {
         _audioStreamCheckState[p] = (ui->tableWidget->item(_row, p + columnIndex::T_AUDIOCHECK_1)->text()).toInt();
         _audioLang[p] = ui->tableWidget->item(_row, p + columnIndex::T_AUDIOLANG_1)->text();
         _audioTitle[p] = ui->tableWidget->item(_row, p + columnIndex::T_AUDIOTITLE_1)->text();
@@ -2194,7 +2285,7 @@ void MainWindow::get_current_data() //**************************** Get current d
 
     int countAudioStreams = 0;
     QString curAudioStream("");
-    while (countAudioStreams < AMOUNT_AUDIO_SRTEAMS) {
+    while (countAudioStreams < AMOUNT_AUDIO_STREAMS) {
         curAudioStream = ui->tableWidget->item(_row, countAudioStreams + columnIndex::T_AUDIO_1)->text();
         if (curAudioStream == "") {
             break;
@@ -2285,7 +2376,7 @@ void MainWindow::get_current_data() //**************************** Get current d
     lineEditTitleAudio.append(ui->lineEditTitleAudio_8);
     lineEditTitleAudio.append(ui->lineEditTitleAudio_9);
 
-    for (int q = 0; q < AMOUNT_AUDIO_SRTEAMS; q++) {
+    for (int q = 0; q < AMOUNT_AUDIO_STREAMS; q++) {
         checkBoxAudio.at(q)->setChecked(bool(_audioStreamCheckState[q]));
         lineEditLangAudio.at(q)->setText(_audioLang[q]);
         lineEditLangAudio.at(q)->setCursorPosition(0);
@@ -2356,10 +2447,12 @@ void MainWindow::get_output_filename()  //************************ Get output da
     QString file_without_ext("");
     QString prefix("");
     QString suffix("");
-    QString arr[20][5] = {
+    QString arr[NUMBER_PRESETS][5] = {
         {"MKV",  "MOV", "MP4", "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
+        {"MKV",  "MOV", "MP4", "",     ""},
+        {"MKV",  "MPG", "AVI", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
@@ -2376,6 +2469,7 @@ void MainWindow::get_output_filename()  //************************ Get output da
         {"MOV",  "",    "",    "",     ""},
         {"MOV",  "",    "",    "",     ""},
         {"MOV",  "",    "",    "",     ""},
+        {"MXF",  "",    "",    "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"}
     };
     prefix = arr[_cur_param[CODEC].toInt()][_cur_param[CONTAINER].toInt()].toLower();
@@ -2509,64 +2603,126 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
             clickPressed_Left_Bottom_ResizeFlag = false;
             return QMainWindow::eventFilter(watched, event);
         }
+        return QMainWindow::eventFilter(watched, event);
     }
 
     if (watched == ui->centralwidget) // *************** Resize window realisation ************************* //
     {
+        //ui->centralwidget->setAttribute(Qt::WA_Hover, true);
+        //ui->frameBottomMiddle->setAttribute(Qt::WA_Hover, false);
+        //std::cout << "CENTRAL WIDGET >>>>>>>> " << QCursor::pos().x() << " : " << QCursor::pos().y() << std::endl;
         if (!this->isMaximized())
         {
+            if (event->type() == QEvent::HoverLeave)
+            {
+                QGuiApplication::restoreOverrideCursor();
+                return QMainWindow::eventFilter(watched, event);
+            }
+            if (event->type() == QEvent::HoverMove && !clickPressed_Left_ResizeFlag
+                     && !clickPressed_Left_Top_ResizeFlag && !clickPressed_Top_ResizeFlag
+                     && !clickPressed_Right_Top_ResizeFlag && !clickPressed_Right_ResizeFlag
+                     && !clickPressed_Right_Bottom_ResizeFlag && !clickPressed_Bottom_ResizeFlag
+                     && !clickPressed_Left_Bottom_ResizeFlag)
+            {
+                curWidth = this->width();
+                curHeight = this->height();
+                mouseCoordinate = ui->centralwidget->mapFromGlobal(QCursor::pos());
+                if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() > 62) && (mouseCoordinate.y() < (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() < 6))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > 6) && (mouseCoordinate.x() < (curWidth - 120)) && (mouseCoordinate.y() < 3))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() < 6))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() > 62) && (mouseCoordinate.y() < (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() > (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() > 6) && (mouseCoordinate.x() < (curWidth - 6)) && (mouseCoordinate.y() > (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() > (curHeight - 6)))
+                {
+                    QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
+                return QMainWindow::eventFilter(watched, event);
+            }
             if (event->type() == QEvent::MouseButtonPress)
             {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->button() == Qt::LeftButton)
                 {
-                    curWidth = this->width();
-                    curHeight = this->height();
+                    oldWidth = this->width();
+                    oldHeight = this->height();
                     mouseClickCoordinate = mouse_event->pos();
-                    if ((mouseClickCoordinate.x() < 12) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (curHeight-12)))
+                    if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
                         clickPressed_Left_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() < 12) && (mouseClickCoordinate.y() < 12))
+                    if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() < 6))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
                         clickPressed_Left_Top_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > 12) && (mouseClickCoordinate.x() < (curWidth - 120)) && (mouseClickCoordinate.y() < 3))
+                    if ((mouseClickCoordinate.x() > 6) && (mouseClickCoordinate.x() < (oldWidth - 120)) && (mouseClickCoordinate.y() < 3))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
                         clickPressed_Top_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > (curWidth - 12)) && (mouseClickCoordinate.y() < 12))
+                    if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() < 6))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
                         clickPressed_Right_Top_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > (curWidth - 12)) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (curHeight-12)))
+                    if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
                         clickPressed_Right_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > (curWidth - 12)) && (mouseClickCoordinate.y() > (curHeight - 12)))
+                    if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
                         clickPressed_Right_Bottom_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() > 12) && (mouseClickCoordinate.x() < (curWidth - 12)) && (mouseClickCoordinate.y() > (curHeight - 12)))
+                    if ((mouseClickCoordinate.x() > 6) && (mouseClickCoordinate.x() < (oldWidth - 6)) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
                         clickPressed_Bottom_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if ((mouseClickCoordinate.x() < 12) && (mouseClickCoordinate.y() > (curHeight - 12)))
+                    if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
                         clickPressed_Left_Bottom_ResizeFlag = true;
+                        return QMainWindow::eventFilter(watched, event);
                     }
                     return QMainWindow::eventFilter(watched, event);
                 }
+                return QMainWindow::eventFilter(watched, event);
             }
-            else if (event->type() == QEvent::MouseMove)
+            if (event->type() == QEvent::MouseMove)
             {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->buttons() & Qt::LeftButton)
@@ -2575,44 +2731,88 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
                     int deltaY = mouse_event->globalPos().y() - mouseClickCoordinate.y();
                     int deltaWidth = static_cast<int>(mouse_event->localPos().x()) - mouseClickCoordinate.x();
                     int deltaHeight = static_cast<int>(mouse_event->localPos().y()) - mouseClickCoordinate.y();
-                    if (clickPressed_Left_ResizeFlag == true)
+                    if (clickPressed_Left_ResizeFlag)
                     {
-                        this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, curHeight);
+                        this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, oldHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Left_Top_ResizeFlag == true)
+                    if (clickPressed_Left_Top_ResizeFlag)
                     {
                         this->setGeometry(deltaX, deltaY, this->width() - deltaWidth, this->height() - deltaHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Top_ResizeFlag == true)
+                    if (clickPressed_Top_ResizeFlag)
                     {
-                        this->setGeometry(this->pos().x(), deltaY, curWidth, this->height() - deltaHeight);
+                        this->setGeometry(this->pos().x(), deltaY, oldWidth, this->height() - deltaHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Right_Top_ResizeFlag == true)
+                    if (clickPressed_Right_Top_ResizeFlag)
                     {
-                        this->setGeometry(this->pos().x(), deltaY, curWidth + deltaWidth, this->height() - deltaHeight);
+                        this->setGeometry(this->pos().x(), deltaY, oldWidth + deltaWidth, this->height() - deltaHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Right_ResizeFlag == true)
+                    if (clickPressed_Right_ResizeFlag)
                     {
-                        this->setGeometry(this->pos().x(), this->pos().y(), curWidth + deltaWidth, curHeight);
+                        this->setGeometry(this->pos().x(), this->pos().y(), oldWidth + deltaWidth, oldHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Right_Bottom_ResizeFlag == true)
+                    if (clickPressed_Right_Bottom_ResizeFlag)
                     {
-                        this->setGeometry(this->pos().x(), this->pos().y(), curWidth + deltaWidth, curHeight + deltaHeight);
+                        this->setGeometry(this->pos().x(), this->pos().y(), oldWidth + deltaWidth, oldHeight + deltaHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Bottom_ResizeFlag == true)
+                    if (clickPressed_Bottom_ResizeFlag)
                     {
-                        this->setGeometry(this->pos().x(), this->pos().y(), curWidth, curHeight + deltaHeight);
+                        this->setGeometry(this->pos().x(), this->pos().y(), oldWidth, oldHeight + deltaHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
-                    else if (clickPressed_Left_Bottom_ResizeFlag == true)
+                    if (clickPressed_Left_Bottom_ResizeFlag)
                     {
-                        this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, curHeight + deltaHeight);
+                        this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, oldHeight + deltaHeight);
+                        return QMainWindow::eventFilter(watched, event);
                     }
                     return QMainWindow::eventFilter(watched, event);
                 }
+                return QMainWindow::eventFilter(watched, event);
             }
+            return QMainWindow::eventFilter(watched, event);
         }
+        return QMainWindow::eventFilter(watched, event);
     }
-    else if (watched == ui->frame_hint) // *************** Drag window realisation ************************* //
+
+    if (watched == ui->frameBottomMiddle) // ******** Resize right frame realisation ********************** //
+    {
+        //ui->centralwidget->setAttribute(Qt::WA_Hover, false);
+        //ui->frameBottomMiddle->setAttribute(Qt::WA_Hover, true);
+        //std::cout << "FRAME MIDDLE >>>>>>>> " << QCursor::pos().x() << " : " << QCursor::pos().y() << std::endl;
+        /*if (!(ui->frameBottomMiddle->isHidden()))
+        {
+            if (event->type() == QEvent::HoverLeave)
+            {
+                QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
+                return QMainWindow::eventFilter(watched, event);
+            }
+            if (event->type() == QEvent::HoverMove && !clickPressedFlag)
+            {
+                QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                return QMainWindow::eventFilter(watched, event);
+            }
+            if (event->type() == QEvent::MouseButtonPress)
+            {
+                QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
+                if (mouse_event->button() == Qt::LeftButton)
+                {
+                    clickPressedFlag = true;
+                    return QMainWindow::eventFilter(watched, event);
+                }
+                return QMainWindow::eventFilter(watched, event);
+            }
+            return QMainWindow::eventFilter(watched, event);
+        }*/
+        return QMainWindow::eventFilter(watched, event);
+    }
+
+    if (watched == ui->frame_hint) // *************** Drag window realisation ************************* //
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -2623,8 +2823,9 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
                 clickPressedFlag = true;
                 return QMainWindow::eventFilter(watched, event);
             }
+            return QMainWindow::eventFilter(watched, event);
         }
-        else if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
+        if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
         {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton)
@@ -2636,8 +2837,9 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
                 this->move(mouse_event->globalPos() - mouseClickCoordinate);
                 return QMainWindow::eventFilter(watched, event);
             }
+            return QMainWindow::eventFilter(watched, event);
         }
-        else if (event->type() == QEvent::MouseButtonDblClick)
+        if (event->type() == QEvent::MouseButtonDblClick)
         {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton)
@@ -2645,9 +2847,12 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
                 on_expandWindow_clicked();
                 return QMainWindow::eventFilter(watched, event);
             }
+            return QMainWindow::eventFilter(watched, event);
         }
+        return QMainWindow::eventFilter(watched, event);
     }
-    else if (watched == raiseThumb) // ************** Click thumb realisation ************** //
+
+    if (watched == raiseThumb) // ************** Click thumb realisation ************** //
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -2657,7 +2862,9 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
                 on_actionAdd_clicked();
                 return QMainWindow::eventFilter(watched, event);
             }
+            return QMainWindow::eventFilter(watched, event);
         }
+        return QMainWindow::eventFilter(watched, event);
     }
     return QMainWindow::eventFilter(watched, event);
 }
@@ -2720,7 +2927,7 @@ void MainWindow::setTheme(int &ind_theme)   //*********** Set theme ***********/
     }
     file.open(QFile::ReadOnly);
     QString list = QString::fromUtf8(file.readAll());
-    qApp->setStyleSheet(styleCreator(list));
+    this->setStyleSheet(styleCreator(list));
     int i = 11;
     if (!_showHDR_mode)
     {
@@ -3526,7 +3733,7 @@ void MainWindow::on_buttonFrameNext_clicked()
 void MainWindow::on_buttonSetStartTime_clicked()
 {
     _startTime = _curTime;
-    if (_startTime > _endTime && _endTime != 0)
+    if (_startTime > _endTime && _endTime != 0.0)
     {
         _startTime = _endTime;
     }
@@ -3620,7 +3827,7 @@ QString MainWindow::timeConverter(float &time)
 
 void MainWindow::setThumbnail(QString curFilename, double time, QString quality)
 {
-    QString qualityParam = "-vf scale=144:-1";
+    QString qualityParam = "-vf scale=144:-1 -compression_level 10 -pix_fmt rgb24";
     if (quality == "low")
     {
         qualityParam = "-vf scale=144:-1,format=pal8,dctdnoiz=4.5";
@@ -3634,7 +3841,7 @@ void MainWindow::setThumbnail(QString curFilename, double time, QString quality)
         std::cout<< "Thumbnail file not exist and created..." << std::endl;
         QStringList cmd;
         cmd << "-hide_banner" << "-ss" << time_qstr << "-i" << _input_file
-            << qualityParam.split(" ") << "-vframes" << "1" << "-q:v" << "3" << "-y" << tmb_file;
+            << qualityParam.split(" ") << "-vframes" << "1" << "-y" << tmb_file;
         process_5->start("ffmpeg", cmd);
         process_5->waitForFinished();
     }
@@ -3646,5 +3853,13 @@ void MainWindow::repeatHandler_Type_2()  //************* Repeat handler ********
     std::cout << "Call by timer... " << std::endl;
     if (_row != -1) {
         setThumbnail(_curFilename, _curTime, "high");
+    }
+}
+
+void MainWindow::provideContextMenu(const QPoint &position)
+{
+    QTableWidgetItem *item = ui->tableWidget->itemAt(0, position.y());
+    if (item != nullptr) {
+        itemMenu->exec(ui->tableWidget->mapToGlobal(QPoint(position.x(), position.y() + 35)));
     }
 }

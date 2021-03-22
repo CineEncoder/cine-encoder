@@ -51,7 +51,7 @@ install -m 0644 share/%{name}.png %{buildroot}/%{_datadir}/icons/hicolor/64x64/a
 install -m 0644 share/%{name}.wav %{buildroot}/%{_datadir}/sounds
 
 %files
-%doc ABOUT README.md
+%doc share/ABOUT
 %license LICENSE
 %{_bindir}/cine_encoder
 %{_datadir}/applications/cine-encoder.desktop

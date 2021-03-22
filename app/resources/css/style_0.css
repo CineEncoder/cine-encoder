@@ -1,12 +1,41 @@
+
+@mainBackground = #2C2C34;
+
+@tableBackground = #16181F;
+@tableRowSelectedBackground = #1C252F;
+@tableTextColor = #B4B4B4;
+@tableTextSelected = #D2D2D2;
+@tableGrid = #373C47;
+
+@frameCornerBackground = #27272C;
+@frameCornerBorder = #222B2E;
+@frameEdgeBackground = #1C1E26;
+@frameLeftRightBackground = #292930;
+@frameLeftRightBorder = #32363F;
+@frameSourceOutputBackground = #292930;
+@frameSourceOutputText = #A0A5AA;
+@frameSourceOutputBorder = #32363F;
+@frameHintBackground = #202A30;
+@frameBottomBackground = #202A30;
+
+@scrollBackground = #171920;
+@scrollHandle = #1C1E26;
+@scrollAddLineSubLine = #191B22;
+
+@headerTextColor = #A0A5AA;
+@headerBackground = #1C2026;
+@headerBorder = #1E2229;
+
+
 /**************************************************************************
 **  QMainWindow
 **************************************************************************/
 
 QMainWindow {
-    background: rgb(23, 92, 127);
+    background: #175C7F;
 }
 QDialog {
-    background: rgb(0, 50, 250);
+    background: #0032FA;
 }
 
 
@@ -16,47 +45,51 @@ QDialog {
 
 QFrame {
     border: none;
-    background-color: rgb(5, 20, 28);
+    background-color: @mainBackground;
 }
 QFrame#frameTopLeft {
-    border-bottom: 1px solid rgba(35, 37, 45, 50);
-    background-color: rgb(8, 32, 40);
-}
-QFrame#frameBottomLeft {
-    border-right: 1px solid rgba(35, 37, 45, 50);
-    background-color: rgba(27, 29, 35, 50);
-}
-QFrame#frameTableBottom {
-    border-top: 1px solid rgba(35, 37, 45, 50);
-    background-color: rgba(27, 29, 35, 50);
+    border-bottom: 1px solid @frameCornerBorder;
+    background-color: @frameCornerBackground;
 }
 QFrame#frameTopMiddle {
-    border-bottom: 1px solid rgba(35, 37, 45, 50);
-    background-color: rgb(8, 32, 40);
+    border-bottom: 1px solid @frameCornerBorder;
+    background-color: @frameCornerBackground;
+}
+QFrame#frameBottomLeft {
+    border-right: 1px solid @frameCornerBorder;
+    background-color: @frameEdgeBackground;
+}
+QFrame#frameTableBottom {
+    border-top: 1px solid @frameCornerBorder;
+    background-color: @frameEdgeBackground;
 }
 QFrame#frameBottomMiddle {
-    border-left: 1px solid rgba(35, 37, 45, 50);
-    background-color: rgba(27, 29, 35, 50);
+    border-left: 1px solid @frameCornerBorder;
+    background-color: @frameEdgeBackground;
 }
 QFrame#frameLeft, QFrame#frameRight {
-    border: 1px solid rgb(24, 36, 56);
-    background-color: rgba(27, 29, 35, 50);
+    border: 1px solid @frameLeftRightBorder;
+    background-color: @frameLeftRightBackground;
 }
 QFrame#frame_source, QFrame#frame_output {
     padding-left: 5px;
-    border-left: 1px solid rgba(100, 100, 168, 50);
-    background-color: rgba(27, 29, 35, 50);
+    border-left: 1px solid @frameSourceOutputBorder;
+    background-color: @frameSourceOutputBackground;
 }
-QFrame#frame_hint, QFrame#frame_bottom {
+QFrame#frame_hint {
     border: none;
-    background-color: rgba(27, 29, 35, 150);
+    background-color: @frameHintBackground;
+}
+QFrame#frame_bottom {
+    border: none;
+    background-color: @frameBottomBackground;
 }
 QFrame#frame_top {
     border: none;
-    background-color: qlineargradient(x1:0 y1:0, x2:1 y2:0, stop:0 rgba(27, 29, 35, 150), stop:1 rgb(5, 20, 28));
+    background-color: qlineargradient(x1:0 y1:0, x2:1 y2:0, stop:0 @frameHintBackground, stop:1 @mainBackground);
 }
 QFrame#frameTab_1, QFrame#frameTab_2, QFrame#frameTab_3, QFrame#frameTab_4 {
-    background-color: rgba(27, 29, 35, 50);
+    background-color: @frameLeftRightBackground;
 }
 
 
@@ -100,31 +133,31 @@ QScrollBar:horizontal {
     margin: 0px 21px 0 21px;
     border: none;
     border-radius: 0px;
-    background: rgb(8, 32, 40);
+    background: @scrollBackground;
 }
 QScrollBar:vertical {
     width: 10px;
     margin: 21px 0 21px 0;
     border: none;
     border-radius: 0px;
-    background: rgb(8, 32, 40);
+    background: @scrollBackground;
 }
 QScrollBar::handle:horizontal {
     min-width: 25px;
     border-radius: 4px;
-    background: rgba(35, 37, 45, 250);
+    background: @scrollHandle;
 }
 QScrollBar::handle:vertical {
     min-height: 25px;
     border-radius: 4px;
-    background: rgba(35, 37, 45, 250);
+    background: @scrollHandle;
 }
 QScrollBar::add-line:horizontal {
     width: 20px;
     border: none;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
-    background: rgb(8, 32, 40);
+    background: @scrollAddLineSubLine;
     subcontrol-position: right;
     subcontrol-origin: margin;
     image: url(:/resources/icons/16x16/cil-arrow-right-.png);
@@ -134,7 +167,7 @@ QScrollBar::add-line:vertical {
     border: none;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
-    background: rgb(8, 32, 40);
+    background: @scrollAddLineSubLine;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
 }
@@ -143,7 +176,7 @@ QScrollBar::sub-line:horizontal {
     border: none;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
-    background: rgb(8, 32, 40);
+    background: @scrollAddLineSubLine;
     subcontrol-position: left;
     subcontrol-origin: margin;
     image: url(:/resources/icons/16x16/cil-arrow-left-.png);
@@ -153,7 +186,7 @@ QScrollBar::sub-line:vertical {
     border: none;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    background: rgb(8, 32, 40);
+    background: @scrollAddLineSubLine;
     subcontrol-position: top;
     subcontrol-origin: margin;
 }
@@ -180,21 +213,22 @@ QScrollBar::sub-page:vertical {
 **************************************************************************/
 
 QHeaderView {
-    color: rgb(98, 103, 111);
+    color: @headerTextColor;
     background-color: transparent;
 }
 QHeaderView::section:horizontal {
     height: 32px;
-    border: 1px solid rgba(27, 29, 35, 50);
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    background-color: rgba(27, 29, 35, 150);
+    border-top: 1px solid @headerBorder;
+    border-bottom: 1px solid @headerBorder;
+    border-right: 1px solid @headerBorder;
+    border-radius: 0px;
+    background-color: @headerBackground;
 }
 QHeaderView::section:vertical {
-    border: 1px solid rgba(27, 29, 35, 50);
+    border: 1px solid @headerBorder;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    background-color: rgba(27, 29, 35, 150);
+    background-color: @headerBackground;
 }
 QHeaderView::up-arrow {
     width: 13px;
@@ -217,21 +251,21 @@ QHeaderView::down-arrow {
 QTableWidget {
     padding-bottom: 0px;
     border-radius: 0px;
-    color: rgb(180, 180, 180);
-    background-color: rgb(5, 20, 28);
+    color: @tableTextColor;
+    background-color: @tableBackground;
     selection-background-color: rgba(80, 140, 170, 30);
-    gridline-color: rgb(44, 49, 60);
+    gridline-color: @tableGrid;
 }
 QTableWidget::item {
     margin-left: 0px;
     margin-right: 0px;
-    border-color: rgb(44, 49, 60);
-    gridline-color: rgb(44, 49, 60);
+    /*border-color: rgb(55, 60, 71);
+    gridline-color: @tableGrid;*/
 }
 QTableWidget::item:selected {
     margin: 0px;
-    color: rgb(210, 210, 210);
-    background-color: rgba(80, 140, 170, 30);
+    color: @tableTextSelected;
+    background-color: @tableRowSelectedBackground;
 }
 
 
@@ -240,11 +274,11 @@ QTableWidget::item:selected {
 **************************************************************************/
 
 QTreeWidget {
-    padding: 4px;
-    border-radius: 3px;
-    color: rgb(210, 210, 210);
-    background-color: rgb(5, 20, 28);
-    gridline-color: rgb(44, 49, 60);
+    padding: 6px;
+    border-radius: 0px;
+    color: @tableTextSelected;
+    background-color: @tableBackground;
+    gridline-color: @tableGrid;
 }
 QTreeWidget::item {
     margin-top: 2px 0;
@@ -252,7 +286,7 @@ QTreeWidget::item {
     margin-left: 4px 0;
     margin-right: 8px 0;
     border-color: rgb(44, 49, 60);
-    gridline-color: rgb(44, 49, 60);
+    gridline-color: @tableGrid;
 }
 QTreeWidget::item:selected {
     margin: 0px;
@@ -275,28 +309,28 @@ QTreeWidget::item:selected:!active {
 
 
 QTreeView::branch {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 QTreeView::branch:has-siblings:!adjoins-item {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 QTreeView::branch:has-siblings:adjoins-item {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 QTreeView::branch:!has-children:!has-siblings:adjoins-item {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 QTreeView::branch:closed:has-children:has-siblings {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 QTreeView::branch:has-children:!has-siblings:closed {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 QTreeView::branch:open:has-children:has-siblings {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 QTreeView::branch:open:has-children:!has-siblings {
-    background: rgb(5, 20, 28);
+    background: @tableBackground;
 }
 
 
@@ -341,16 +375,17 @@ QTreeWidget::branch:open:has-children:has-siblings {
 **************************************************************************/
 
 QTabWidget {
-    color: rgb(98, 103, 111);
-    background-color: rgb(9, 22, 30);
+    color: @frameSourceOutputText;
+    background-color: @frameSourceOutputBackground;
 }
 QTabWidget::tab-bar {
-    alignment: left;
+    background-color: @frameSourceOutputBackground;
+alignment: left;
 }
 QTabWidget::pane {
     top:-1px;
-    border: 1px solid rgba(100, 100, 168, 30);
-    background-color: rgb(9, 22, 30);
+    border: 1px solid @frameLeftRightBorder;
+    background-color: @frameSourceOutputBackground;
 }
 QTabBar::tab {
     min-width: 48px;
@@ -358,8 +393,8 @@ QTabBar::tab {
     padding-bottom: 3px;
     padding-left: 10px;
     padding-right: 10px;
-    border-bottom: 1px solid rgba(100, 100, 168, 30);
-    background-color: rgb(9, 22, 30);
+    border-bottom: 1px solid @frameLeftRightBorder;
+    background-color: @frameSourceOutputBackground;
 }
 QTabBar::tab:selected {
     padding-top: 3px;
@@ -367,8 +402,8 @@ QTabBar::tab:selected {
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: -1px;
-    border: 1px solid rgba(100, 100, 168, 30);
-    background-color: rgb(9, 22, 30);
+    border: 1px solid @frameLeftRightBorder;
+    background-color: @frameSourceOutputBackground;
 }
 
 
@@ -383,7 +418,7 @@ QTextBrowser {
 }
 QTextBrowser#textBrowser_task {
     color: rgb(210, 210, 210);
-    background-color: rgb(5, 20, 28);
+    background-color: @mainBackground;
     border: 1px solid transparent;
 }
 
@@ -425,7 +460,7 @@ QCheckBox {
 }
 QCheckBox:disabled {
     spacing: 12px;
-    color: rgb(98, 103, 111);
+    color: rgb(160, 165, 170);
     background-color: transparent;
 }
 QCheckBox::indicator {
@@ -437,7 +472,7 @@ QCheckBox::indicator {
 QCheckBox::indicator:disabled {
     width: 12px;
     height: 12px;
-    border: 2px solid rgb(30, 30, 35);
+    border: 2px solid #3C3C3C;
     background: none;
 }
 QCheckBox::indicator:checked {
@@ -450,7 +485,7 @@ QCheckBox::indicator:checked {
 QCheckBox::indicator:checked:disabled {
     width: 12px;
     height: 12px;
-    border: 2px solid rgb(30, 30, 35);
+    border: 2px solid #3C3C3C;
     background: none;
     image: url(:/resources/icons/16x16/cil-check-alt.png);
 }
@@ -566,15 +601,15 @@ QLabel {
     background-color: transparent;
 }
 QLabel:disabled {
-    color: rgb(98, 103, 111);
+    color: @frameSourceOutputText;
     background-color: transparent;
 }
 QLabel#labelThumb {
-    color: rgb(98, 103, 111);
-    background-color: rgba(27, 29, 35, 50);
+    color: @frameSourceOutputText;
+    background-color: @frameSourceOutputBackground;
 }
 QLabel#label_1, QLabel#label_2, QLabel#label_source, QLabel#label_output {
-    color: rgb(98, 103, 111);
+    color: @frameSourceOutputText;
     background-color: transparent;
 }
 
@@ -600,7 +635,7 @@ QLineEdit:disabled {
     padding-left: 5px;
     border-radius: 0px;
     border: 2px solid rgb(27, 29, 35);
-    color: rgb(98, 103, 111);
+    color: rgb(105, 110, 120);
     background-color: rgb(27, 29, 35);
 }
 
@@ -634,7 +669,7 @@ QPushButton#buttonFrameNext,
 QPushButton#buttonSetStartTime,
 QPushButton#buttonSetEndTime
 {
-    border: 1px solid rgb(24, 36, 56);
+    border: 1px solid rgb(55, 60, 70);
     color: rgb(210, 210, 210);
     background-color: transparent;
 }
@@ -643,7 +678,7 @@ QPushButton:disabled#buttonFrameNext,
 QPushButton:disabled#buttonSetStartTime,
 QPushButton:disabled#buttonSetEndTime
 {
-    border: 1px solid rgb(24, 36, 56);
+    border: 1px solid rgb(55, 60, 70);
     color: rgb(98, 103, 111);
     background-color: transparent;
 }
