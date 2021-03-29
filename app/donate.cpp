@@ -36,6 +36,7 @@ void Donate::setParameters()
     file.setFileName(":/resources/html/donate.html");
     file.open(QFile::ReadOnly);
     QString text = file.readAll();
+    file.close();
     ui_donate->textBrowser->setHtml(text);
     ui_donate->textBrowser->setOpenExternalLinks(true);
 }
