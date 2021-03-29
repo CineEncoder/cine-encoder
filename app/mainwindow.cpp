@@ -2927,6 +2927,7 @@ void MainWindow::setTheme(int &ind_theme)   //*********** Set theme ***********/
     }
     file.open(QFile::ReadOnly);
     QString list = QString::fromUtf8(file.readAll());
+    file.close();
     this->setStyleSheet(styleCreator(list));
     int i = 11;
     if (!_showHDR_mode)
