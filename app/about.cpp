@@ -36,6 +36,7 @@ void About::setParameters() // Set parameters
     file.setFileName(":/resources/html/about.html");
     file.open(QFile::ReadOnly);
     QString text = file.readAll();
+    file.close();
     ui_about->textBrowser->setHtml(text);
     ui_about->textBrowser->setOpenExternalLinks(true);
 }
