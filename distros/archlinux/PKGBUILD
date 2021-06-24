@@ -12,6 +12,8 @@ source=("https://github.com/CineEncoder/cine-encoder/archive/3.3.tar.gz")
 md5sums=('7cf171b03b9baf47b7c0a977f718f9bc')
 
 build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ CONFIG+=qtquickcompiler
   cd "${srcdir}/${pkgname}-${pkgver}/builddir"
   make
 }

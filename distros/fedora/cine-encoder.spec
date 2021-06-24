@@ -36,7 +36,7 @@ Licence: GNU GPL v.3
 
 %build
 # Regenerate the Makefile with the Fedora qmake name
-qmake-qt5 -o Makefile app/cine_encoder.pro -spec linux-g++ \
+qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ \
   CONFIG+=qtquickcompiler
 
 # Modify the Makefile to use Fedora flags.  This would not be necessary if the
