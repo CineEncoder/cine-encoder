@@ -1,18 +1,20 @@
 #include <QApplication>
+#include <QCoreApplication>
 #include <QSplashScreen>
 #include <QElapsedTimer>
 #include "mainwindow.h"
-
-
-QString _cur_param[23];
-QVector <QVector <QString> > _preset_table;
 
 
 int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");
     QApplication app(argc, argv);
+    QCoreApplication::setOrganizationName("CineEncoder");
+    QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
+    QFont font = app.font();
+    font.setPointSize(8);
+    app.setFont(font);
 
     QPixmap pixmap(":/resources/images/splash.png");
     QSplashScreen *splash = new QSplashScreen(pixmap);
@@ -21,12 +23,12 @@ int main(int argc, char *argv[])
 
     QElapsedTimer time;
     time.start();
-    while (time.elapsed() < 1200)
+    while (time.elapsed() < 1000)
     {
         app.processEvents();
     }
 
-    MainWindow window;
+    Widget window;
     window.show();
     splash->finish(&window);
     delete splash;

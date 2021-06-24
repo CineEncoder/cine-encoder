@@ -16,8 +16,6 @@ By default, there are several categories of presets. You can change existing or 
 
 ![View](./images/View_2.png)
 
-![View](./images/View_3.png)
-
 ### Installation
 
 Supported operating system: Linux x86_64, Windows 8.1/10 x86_64
@@ -37,7 +35,7 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 ##### - CentOS 7.8:
   - to satisfy ffmpeg dependency CentOS users have to use rpmfusion (https://rpmfusion.org/)
   - install file cine-encoder-(ver)_centos7_x86_64.rpm from [release](https://github.com/CineEncoder/cine-encoder/releases)
-  
+
 ### Buid instructions
 Install dependencies:
 
@@ -55,7 +53,7 @@ mkdir build
 cd build
 git clone https://github.com/CineEncoder/cine-encoder.git
 mv cine-encoder cine-encoder-(*ver)
-cd cine-encoder-(*ver)
+cd cine-encoder-(*ver)/builddir
 make
 ```
 *ver - current version

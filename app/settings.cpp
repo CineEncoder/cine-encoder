@@ -1,16 +1,26 @@
 #include "settings.h"
 #include "ui_settings.h"
 #include "taskcomplete.h"
+#ifdef Q_OS_LINUX
+    //#define GNOME_DESKTOP
+    #define KDE_DESKTOP
+#endif
 
 
-
-Settings::Settings(QWidget *parent) :
-    QDialog(parent),
-    ui_settings(new Ui::Settings)
+Settings::Settings(QWidget *parent): QDialog(parent), ui_settings(new Ui::Settings)
 {
     ui_settings->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
     this->setMouseTracking(true);
+
+    ui_settings->widget_main->installEventFilter(this);
+    ui_settings->widget_main->setAttribute(Qt::WA_Hover, true);
+
+    ui_settings->frame_main->installEventFilter(this);
+    ui_settings->frame_main->setAttribute(Qt::WA_Hover, true);
+    ui_settings->frame_main->setAttribute(Qt::WA_NoMousePropagation, true);
+
+    ui_settings->frame_top->installEventFilter(this);
 }
 
 Settings::~Settings()
@@ -18,65 +28,38 @@ Settings::~Settings()
     delete ui_settings;
 }
 
-void Settings::on_closeWindow_clicked() // Close settings window
-{
-    this->close();
-}
-
-void Settings::on_pushButton_7_clicked() // Close settings window
-{
-    this->close();
-}
-
-void Settings::on_expandWindow_clicked()
-{
-    if (_expandWindowsState == false)
-    {
-        this->showMaximized();
-        _expandWindowsState = true;
-        QIcon iconShowMax;
-        iconShowMax.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-clone.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui_settings->expandWindow->setIcon(iconShowMax);
-    } else {
-        this->showNormal();
-        _expandWindowsState = false;
-        QIcon iconShowNorm;
-        iconShowNorm.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-media-stop.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui_settings->expandWindow->setIcon(iconShowNorm);
-    }
-}
-
-void Settings::on_hideWindow_clicked()
-{
-    this->showMinimized();
-}
-
-void Settings::closeEvent(QCloseEvent *close_settings)  // Show prompt when close app
+void Settings::closeEvent(QCloseEvent *close_settings)  /*** Show prompt when close app ***/
 {
     close_settings->ignore();
+    *_ptr_settingsWindowGeometry = this->saveGeometry();
     if (_flag_save == false)
     {
         *_ptr_output_folder = _curr_output_folder;
         *_ptr_temp_folder = _curr_temp_folder;
-        *_ptr_batch_mode = _curr_batch_mode;
         *_ptr_showHDR_mode = _curr_showHDR_mode;
         *_ptr_protection = _curr_protection;
         *_ptr_timer_interval = _curr_timer_interval;
         *_ptr_theme = _curr_theme;
+        *_ptr_prefixName = _curr_prefixName;
+        *_ptr_suffixName = _curr_suffixName;
+        *_ptr_prefxType = _curr_prefxType;
+        *_ptr_suffixType = _curr_suffixType;
     }
     close_settings->accept();
 }
 
-void Settings::setParameters(bool *ptr_batch_mode, QFile *ptr_stn_file,
+void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_stn_file,
                              QString *ptr_output_folder, QString *ptr_temp_folder,
-                             bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval, int *ptr_theme)  // Set parameters
+                             bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
+                             int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
+                             int *ptr_prefxType, int *ptr_suffixType)  /*** Set parameters ***/
 {
-    ui_settings->frame_hint->installEventFilter(this);
-    ui_settings->widget->installEventFilter(this);
-    ui_settings->widget->setAttribute(Qt::WA_Hover, true);
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
-    _ptr_batch_mode = ptr_batch_mode;
+    QFont font;
+    font.setPointSize(10);
+    ui_settings->label_title->setFont(font);
+    _ptr_settingsWindowGeometry = ptr_settingsWindowGeometry;
     _ptr_showHDR_mode = ptr_showHDR_mode;
     _ptr_stn_file = ptr_stn_file;
     _ptr_output_folder = ptr_output_folder;
@@ -84,14 +67,21 @@ void Settings::setParameters(bool *ptr_batch_mode, QFile *ptr_stn_file,
     _ptr_protection = ptr_protection;
     _ptr_timer_interval = ptr_timer_interval;
     _ptr_theme = ptr_theme;
+    _ptr_prefixName = ptr_prefixName;
+    _ptr_suffixName = ptr_suffixName;
+    _ptr_prefxType = ptr_prefxType;
+    _ptr_suffixType = ptr_suffixType;
 
+    if (*_ptr_settingsWindowGeometry != "default") {
+        this->restoreGeometry(*_ptr_settingsWindowGeometry);
+        if (this->isMaximized()) {
+            _expandWindowsState = true;
+        }
+    }
     ui_settings->lineEdit_9->setText(*_ptr_temp_folder);
     ui_settings->lineEdit_10->setText(*_ptr_output_folder);
     ui_settings->spinBox_3->setValue(*_ptr_timer_interval);
-    if (*_ptr_batch_mode == true)
-    {
-        ui_settings->checkBox_1->setChecked(true);
-    }
+
     if (*_ptr_showHDR_mode == true)
     {
         ui_settings->checkBox_2->setChecked(true);
@@ -102,71 +92,110 @@ void Settings::setParameters(bool *ptr_batch_mode, QFile *ptr_stn_file,
         ui_settings->spinBox_3->setEnabled(true);
     }
     ui_settings->comboBox_1->setCurrentIndex(*_ptr_theme);
+    ui_settings->comboBoxPrefixType->setCurrentIndex(*_ptr_prefxType);
+    ui_settings->comboBoxSuffixType->setCurrentIndex(*_ptr_suffixType);
+    if (*_ptr_suffixType == 0) {
+        ui_settings->lineEditSuffix->setText(*_ptr_suffixName);
+    }
+
     _curr_output_folder = *_ptr_output_folder;
     _curr_temp_folder = *_ptr_temp_folder;
-    _curr_batch_mode = *_ptr_batch_mode;
     _curr_showHDR_mode = *_ptr_showHDR_mode;
     _curr_protection = *_ptr_protection;
     _curr_timer_interval = *_ptr_timer_interval;
     _curr_theme = *_ptr_theme;
+    _curr_prefixName = *_ptr_prefixName;
+    _curr_suffixName = *_ptr_suffixName;
+    _curr_prefxType = *_ptr_prefxType;
+    _curr_suffixType = *_ptr_suffixType;
     _flag_save = false;
+
+    QListView *comboboxThemeListView = new QListView(ui_settings->comboBox_1);
+    QListView *comboboxPrefixTypeListView = new QListView(ui_settings->comboBoxPrefixType);
+    QListView *comboboxSuffixTypeListView = new QListView(ui_settings->comboBoxSuffixType);
+    ui_settings->comboBox_1->setView(comboboxThemeListView);
+    ui_settings->comboBoxPrefixType->setView(comboboxPrefixTypeListView);
+    ui_settings->comboBoxSuffixType->setView(comboboxSuffixTypeListView);
 }
 
-void Settings::on_buttonReset_clicked() // Reset settings
+void Settings::on_closeWindow_clicked() /*** Close settings window ***/
 {
-    ui_settings->lineEdit_9->clear();
-    ui_settings->lineEdit_10->clear();
-    ui_settings->checkBox_1->setChecked(false);
-    ui_settings->checkBox_2->setChecked(false);
-    ui_settings->checkBox_3->setChecked(false);
-    ui_settings->spinBox_3->setEnabled(false);
-    ui_settings->comboBox_1->setCurrentIndex(0);
-    *_ptr_temp_folder = "";
-    *_ptr_output_folder = "";
-    *_ptr_protection = false;
-    *_ptr_showHDR_mode = false;
-    *_ptr_batch_mode = false;
-    *_ptr_theme = 0;
+    this->close();
 }
 
-void Settings::on_pushButton_6_clicked() // Save settings
+void Settings::on_expandWindow_clicked()
+{
+    if (_expandWindowsState == false)
+    {
+        this->showMaximized();
+        _expandWindowsState = true;
+    } else {
+        this->showNormal();
+        _expandWindowsState = false;
+    }
+}
+
+void Settings::on_buttonCancel_clicked() /*** Close settings window ***/
+{
+    this->close();
+}
+
+void Settings::on_buttonApply_clicked() /*** Save settings ***/
 {
     if ((*_ptr_stn_file).open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QString line_0 = QString("temp_folder:") + *_ptr_temp_folder + QString("\n");
         (*_ptr_stn_file).write(line_0.toUtf8());
+
         QString line_1 = QString("output_folder:") + *_ptr_output_folder + QString("\n");
         (*_ptr_stn_file).write(line_1.toUtf8());
-        if (*_ptr_batch_mode == true)
-        {
-            (*_ptr_stn_file).write("batch_mode:true\n");
-        }
-        else
-        {
-            (*_ptr_stn_file).write("batch_mode:false\n");
-        }
-        if (*_ptr_showHDR_mode == true)
-        {
+
+        if (*_ptr_showHDR_mode == true) {
             (*_ptr_stn_file).write("show_hdr:true\n");
-        }
-        else
-        {
+        } else {
             (*_ptr_stn_file).write("show_hdr:false\n");
         }
-        if (*_ptr_protection == true)
-        {
+
+        if (*_ptr_protection == true) {
             (*_ptr_stn_file).write("protection:true\n");
-        }
-        else
-        {
+        } else {
             (*_ptr_stn_file).write("protection:false\n");
         }
+
         *_ptr_timer_interval = ui_settings->spinBox_3->value();
         QString line_2 = QString("timer_interval:") + QString::number(*_ptr_timer_interval) + QString("\n");
         (*_ptr_stn_file).write(line_2.toUtf8());
+
         *_ptr_theme = ui_settings->comboBox_1->currentIndex();
         QString line_3 = QString("theme:") + QString::number(*_ptr_theme) + QString("\n");
         (*_ptr_stn_file).write(line_3.toUtf8());
+
+        *_ptr_prefxType = ui_settings->comboBoxPrefixType->currentIndex();
+        QString line_4 = QString("prefix_type:") + QString::number(*_ptr_prefxType) + QString("\n");
+        (*_ptr_stn_file).write(line_4.toUtf8());
+
+        *_ptr_suffixType = ui_settings->comboBoxSuffixType->currentIndex();
+        QString line_5 = QString("suffix_type:") + QString::number(*_ptr_suffixType) + QString("\n");
+        (*_ptr_stn_file).write(line_5.toUtf8());
+
+        if (*_ptr_prefxType != 0) {
+            *_ptr_prefixName = ui_settings->lineEditPrefix->text();
+        }
+        QString line_6 = QString("prefix_name:") + (*_ptr_prefixName).replace("\\", "").replace("/", "")
+                        .replace(":", "").replace("*", "").replace("?", "").replace("\"", "").replace("<", "")
+                        .replace(">", "").replace("|", "").replace("+", "").replace("%", "").replace("!", "")
+                        .replace("@", "")+ QString("\n");
+        (*_ptr_stn_file).write(line_6.toUtf8());
+
+        if (*_ptr_suffixType == 0) {
+            *_ptr_suffixName = ui_settings->lineEditSuffix->text();
+        }
+        QString line_7 = QString("suffix_name:") + (*_ptr_suffixName).replace("\\", "").replace("/", "")
+                        .replace(":", "").replace("*", "").replace("?", "").replace("\"", "").replace("<", "")
+                        .replace(">", "").replace("|", "").replace("+", "").replace("%", "").replace("!", "")
+                        .replace("@", "")+ QString("\n");
+        (*_ptr_stn_file).write(line_7.toUtf8());
+
         (*_ptr_stn_file).close();
         _flag_save = true;
         this->close();
@@ -178,7 +207,37 @@ void Settings::on_pushButton_6_clicked() // Save settings
     };
 }
 
-void Settings::on_pushButton_5_clicked() // Select temp folder
+void Settings::on_buttonReset_clicked() /*** Reset settings ***/
+{
+    ui_settings->lineEdit_9->clear();
+    ui_settings->lineEdit_10->clear();
+    ui_settings->checkBox_2->setChecked(false);
+    ui_settings->checkBox_3->setChecked(false);
+    ui_settings->spinBox_3->setEnabled(false);
+    ui_settings->comboBox_1->setCurrentIndex(0);
+    ui_settings->comboBoxPrefixType->setCurrentIndex(0);
+    ui_settings->comboBoxSuffixType->setCurrentIndex(0);
+    ui_settings->lineEditSuffix->setText("_encoded_");
+    *_ptr_prefixName = "output";
+    *_ptr_suffixName = "_encoded_";
+    *_ptr_temp_folder = "";
+    *_ptr_output_folder = "";
+    *_ptr_protection = false;
+    *_ptr_showHDR_mode = false;
+    *_ptr_theme = 0;
+}
+
+void Settings::on_buttonOutputPath_clicked()  /*** Select output folder ***/
+{
+    QString output_folder_name = callFileDialog("Select output folder");
+    if (output_folder_name.isEmpty()) {
+        return;
+    }
+    ui_settings->lineEdit_10->setText(output_folder_name);
+    *_ptr_output_folder = output_folder_name;
+}
+
+void Settings::on_buttonTempPath_clicked() /*** Select temp folder ***/
 {
     QString temp_folder_name = callFileDialog("Select temp folder");
     if (temp_folder_name.isEmpty()) {
@@ -188,27 +247,43 @@ void Settings::on_pushButton_5_clicked() // Select temp folder
     *_ptr_temp_folder = temp_folder_name;
 }
 
-void Settings::on_pushButton_4_clicked()  // Select output folder
+void Settings::on_checkBox_2_clicked()  /*** Show HDR info select ***/
 {
-    QString output_folder_name = callFileDialog("Select output folder");
-    if (output_folder_name.isEmpty())
-    {
-        return;
+    int stts_2 = ui_settings->checkBox_2->checkState();
+    if (stts_2 == 2) {
+        *_ptr_showHDR_mode = true;
+    } else {
+        *_ptr_showHDR_mode = false;
     }
-    ui_settings->lineEdit_10->setText(output_folder_name);
-    *_ptr_output_folder = output_folder_name;
 }
 
-QString Settings::callFileDialog(const QString title)  // Call file dialog
+void Settings::on_checkBox_3_clicked()  /*** Protection mode select ***/
+{
+    int stts_3 = ui_settings->checkBox_3->checkState();
+    if (stts_3 == 2) {
+        *_ptr_protection = true;
+        ui_settings->spinBox_3->setEnabled(true);
+    } else {
+        *_ptr_protection = false;
+        ui_settings->spinBox_3->setEnabled(false);
+    };
+}
+
+QString Settings::callFileDialog(const QString title)  /*** Call file dialog ***/
 {
     QFileDialog *selectFolderWindow = new QFileDialog(nullptr);
     selectFolderWindow->setFileMode(QFileDialog::DirectoryOnly);
 #ifdef Q_OS_WIN
     selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
                                    QFileDialog::ReadOnly);
-#else
+#endif
+#ifdef GNOME_DESKTOP
     selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
                                    QFileDialog::DontUseNativeDialog |
+                                   QFileDialog::ReadOnly);
+#endif
+#ifdef KDE_DESKTOP
+    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
                                    QFileDialog::ReadOnly);
 #endif
     selectFolderWindow->setDirectory(QDir::homePath());
@@ -225,48 +300,7 @@ QString Settings::callFileDialog(const QString title)  // Call file dialog
     return folder_name;
 }
 
-void Settings::on_checkBox_1_clicked()  // Batch mode select
-{
-    int stts_1 = ui_settings->checkBox_1->checkState();
-    if (stts_1 == 2)
-    {
-        *_ptr_batch_mode = true;
-    }
-    else
-    {
-        *_ptr_batch_mode = false;
-    }
-}
-
-void Settings::on_checkBox_2_clicked()  // Show HDR info select
-{
-    int stts_2 = ui_settings->checkBox_2->checkState();
-    if (stts_2 == 2)
-    {
-        *_ptr_showHDR_mode = true;
-    }
-    else
-    {
-        *_ptr_showHDR_mode = false;
-    }
-}
-
-void Settings::on_checkBox_3_clicked()  // Protection mode select
-{
-    int stts_3 = ui_settings->checkBox_3->checkState();
-    if (stts_3 == 2)
-    {
-        *_ptr_protection = true;
-        ui_settings->spinBox_3->setEnabled(true);
-    }
-    else
-    {
-        *_ptr_protection = false;
-        ui_settings->spinBox_3->setEnabled(false);
-    };
-}
-
-void Settings::call_task_complete(const QString &_message, const bool &_timer_mode)   // Call task complete
+void Settings::call_task_complete(const QString &_message, const bool &_timer_mode)   /*** Call task complete ***/
 {
     Taskcomplete taskcomplete(this);
     taskcomplete.setMessage(_message, _timer_mode);
@@ -291,19 +325,19 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
             clickPressed_Right_Bottom_ResizeFlag = false;
             clickPressed_Bottom_ResizeFlag = false;
             clickPressed_Left_Bottom_ResizeFlag = false;
-            return QDialog::eventFilter(watched, event);
+            return true;
         }
-        return QDialog::eventFilter(watched, event);
+        return false;
     }
 
-    if (watched == ui_settings->widget) // *************** Resize window realisation ************************* //
+    if (watched == ui_settings->widget_main) // *************** Resize window realisation ************************* //
     {
         if (!this->isMaximized())
         {
             if (event->type() == QEvent::HoverLeave)
             {
-                QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
-                return QDialog::eventFilter(watched, event);
+                QGuiApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
+                return true;
             }
             if (event->type() == QEvent::HoverMove && !clickPressed_Left_ResizeFlag
                      && !clickPressed_Left_Top_ResizeFlag && !clickPressed_Top_ResizeFlag
@@ -313,49 +347,49 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
             {
                 curWidth = this->width();
                 curHeight = this->height();
-                mouseCoordinate = ui_settings->widget->mapFromGlobal(QCursor::pos());
+                mouseCoordinate = ui_settings->widget_main->mapFromGlobal(QCursor::pos());
                 if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() > 62) && (mouseCoordinate.y() < (curHeight - 6)))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
                 if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() < 6))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
                 if ((mouseCoordinate.x() > 6) && (mouseCoordinate.x() < (curWidth - 120)) && (mouseCoordinate.y() < 3))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
                 if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() < 6))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
                 if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() > 62) && (mouseCoordinate.y() < (curHeight - 6)))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
                 if ((mouseCoordinate.x() > (curWidth - 6)) && (mouseCoordinate.y() > (curHeight - 6)))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
                 if ((mouseCoordinate.x() > 6) && (mouseCoordinate.x() < (curWidth - 6)) && (mouseCoordinate.y() > (curHeight - 6)))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
                 if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() > (curHeight - 6)))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
-                    return QDialog::eventFilter(watched, event);
+                    return true;
                 }
-                QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
-                return QDialog::eventFilter(watched, event);
+                QGuiApplication::restoreOverrideCursor();
+                return false;
             }
             if (event->type() == QEvent::MouseButtonPress)
             {
@@ -368,46 +402,46 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
                     if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (oldHeight - 6)))
                     {
                         clickPressed_Left_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() < 6))
                     {
                         clickPressed_Left_Top_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if ((mouseClickCoordinate.x() > 6) && (mouseClickCoordinate.x() < (oldWidth - 120)) && (mouseClickCoordinate.y() < 3))
                     {
                         clickPressed_Top_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() < 6))
                     {
                         clickPressed_Right_Top_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() > 62) && (mouseClickCoordinate.y() < (oldHeight - 6)))
                     {
                         clickPressed_Right_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if ((mouseClickCoordinate.x() > (oldWidth - 6)) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
                         clickPressed_Right_Bottom_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if ((mouseClickCoordinate.x() > 6) && (mouseClickCoordinate.x() < (oldWidth - 6)) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
                         clickPressed_Bottom_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if ((mouseClickCoordinate.x() < 6) && (mouseClickCoordinate.y() > (oldHeight - 6)))
                     {
                         clickPressed_Left_Bottom_ResizeFlag = true;
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
-                    return QDialog::eventFilter(watched, event);
+                    return false;
                 }
-                return QDialog::eventFilter(watched, event);
+                return false;
             }
             if (event->type() == QEvent::MouseMove)
             {
@@ -421,53 +455,63 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
                     if (clickPressed_Left_ResizeFlag)
                     {
                         this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, oldHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if (clickPressed_Left_Top_ResizeFlag)
                     {
                         this->setGeometry(deltaX, deltaY, this->width() - deltaWidth, this->height() - deltaHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if (clickPressed_Top_ResizeFlag)
                     {
                         this->setGeometry(this->pos().x(), deltaY, oldWidth, this->height() - deltaHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if (clickPressed_Right_Top_ResizeFlag)
                     {
                         this->setGeometry(this->pos().x(), deltaY, oldWidth + deltaWidth, this->height() - deltaHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if (clickPressed_Right_ResizeFlag)
                     {
                         this->setGeometry(this->pos().x(), this->pos().y(), oldWidth + deltaWidth, oldHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if (clickPressed_Right_Bottom_ResizeFlag)
                     {
                         this->setGeometry(this->pos().x(), this->pos().y(), oldWidth + deltaWidth, oldHeight + deltaHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if (clickPressed_Bottom_ResizeFlag)
                     {
                         this->setGeometry(this->pos().x(), this->pos().y(), oldWidth, oldHeight + deltaHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
                     if (clickPressed_Left_Bottom_ResizeFlag)
                     {
                         this->setGeometry(deltaX, this->pos().y(), this->width() - deltaWidth, oldHeight + deltaHeight);
-                        return QDialog::eventFilter(watched, event);
+                        return true;
                     }
-                    return QDialog::eventFilter(watched, event);
+                    return false;
                 }
-                return QDialog::eventFilter(watched, event);
+                return false;
             }
-            return QDialog::eventFilter(watched, event);
+            return false;
         }
-        return QDialog::eventFilter(watched, event);
+        return false;
     }
 
-    if (watched == ui_settings->frame_hint) // *************** Drag window realisation ************************* //
+    if (watched == ui_settings->frame_main) // ******** Resize right frame realisation ********************** //
+    {
+        if (event->type() == QEvent::HoverMove)
+        {
+            QGuiApplication::restoreOverrideCursor();
+            return true;
+        }
+        return false;
+    }
+
+    if (watched == ui_settings->frame_top) // *************** Drag window realisation ************************* //
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -476,9 +520,9 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
             {
                 mouseClickCoordinate = mouse_event->pos();
                 clickPressedFlag = true;
-                return QDialog::eventFilter(watched, event);
+                return true;
             }
-            return QDialog::eventFilter(watched, event);
+            return false;
         }
         if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
         {
@@ -490,9 +534,9 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
                     on_expandWindow_clicked();
                 }
                 this->move(mouse_event->globalPos() - mouseClickCoordinate);
-                return QDialog::eventFilter(watched, event);
+                return true;
             }
-            return QDialog::eventFilter(watched, event);
+            return false;
         }
         if (event->type() == QEvent::MouseButtonDblClick)
         {
@@ -500,12 +544,47 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
             if (mouse_event->buttons() & Qt::LeftButton)
             {
                 on_expandWindow_clicked();
-                return QDialog::eventFilter(watched, event);
+                return true;
             }
-            return QDialog::eventFilter(watched, event);
+            return false;
         }
-        return QDialog::eventFilter(watched, event);
+        return false;
     }
     return QDialog::eventFilter(watched, event);
 }
 
+void Settings::on_comboBoxPrefixType_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        ui_settings->lineEditPrefix->setEnabled(false);
+        ui_settings->lineEditPrefix->setText("None");
+    } else {
+        ui_settings->lineEditPrefix->setEnabled(true);
+        ui_settings->lineEditPrefix->setText(*_ptr_prefixName);
+    }
+}
+
+void Settings::on_comboBoxSuffixType_currentIndexChanged(int index)
+{
+    if (index == 0) {
+        ui_settings->lineEditSuffix->setEnabled(true);
+        ui_settings->lineEditSuffix->setText(*_ptr_suffixName);
+    } else {
+        ui_settings->lineEditSuffix->setEnabled(false);
+        ui_settings->lineEditSuffix->setText("_hhmmss_MMddyyyy");
+    }
+}
+
+void Settings::on_buttonTab_1_clicked()
+{
+    ui_settings->buttonTab_1->setEnabled(false);
+    ui_settings->buttonTab_2->setEnabled(true);
+    ui_settings->tabWidgetSettings->setCurrentIndex(0);
+}
+
+void Settings::on_buttonTab_2_clicked()
+{
+    ui_settings->buttonTab_1->setEnabled(true);
+    ui_settings->buttonTab_2->setEnabled(false);
+    ui_settings->tabWidgetSettings->setCurrentIndex(1);
+}

@@ -2,7 +2,6 @@
 #define ABOUT_H
 
 #include <QDialog>
-//#include <QShowEvent>
 #include <QMouseEvent>
 #include <QDesktopServices>
 #include <QUrl>
@@ -28,11 +27,11 @@ public:
 
 private slots:
 
-    bool eventFilter(QObject *watched, QEvent *event);
-
-    void on_toolButton_6_clicked();
+    void on_buttonCancel_clicked();
 
     void on_closeWindow_clicked();
+
+    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
 

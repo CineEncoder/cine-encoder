@@ -1,4 +1,4 @@
-cine_encoder usr/bin
+builddir/cine_encoder usr/bin
 share/cine-encoder.desktop usr/share/applications
 share/cine-encoder.wav usr/share/sounds
 share/cine-encoder.png usr/share/icons/hicolor/64x64/apps

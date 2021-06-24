@@ -25,13 +25,13 @@ public:
 
 private slots:
 
-    bool eventFilter(QObject *watched, QEvent *event);
+    void on_buttonApply_clicked();
 
-    void on_pushButton_4_clicked();
-
-    void on_pushButton_5_clicked();
+    void on_buttonCancel_clicked();
 
     void on_closeWindow_clicked();
+
+    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
 

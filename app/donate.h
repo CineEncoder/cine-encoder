@@ -26,15 +26,15 @@ public:
 
 private slots:
 
-    bool eventFilter(QObject *watched, QEvent *event);
+    void on_buttonCancel_clicked();
 
-    void on_toolButton_6_clicked();
+    void on_buttonPayPal_clicked();
 
-    void on_toolButton_7_clicked();
-
-    void on_toolButton_8_clicked();
+    void on_buttonBitcoin_clicked();
 
     void on_closeWindow_clicked();
+
+    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
 

@@ -52,7 +52,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="widget_main" native="true">
      <layout class="QGridLayout" name="gridLayout_3">
       <property name="leftMargin">
        <number>1</number>
@@ -103,7 +103,7 @@
           <number>0</number>
          </property>
          <item row="0" column="0" colspan="2">
-          <widget class="QFrame" name="frame_hint">
+          <widget class="QFrame" name="frame_top">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -246,7 +246,7 @@ QPushButton:pressed {
              </spacer>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="label_title">
               <property name="styleSheet">
                <string notr="true">QLabel {	
 	background-color: transparent;
@@ -292,7 +292,7 @@ QPushButton:pressed {
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <widget class="QPushButton" name="toolButton_7">
+           <widget class="QPushButton" name="buttonPayPal">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -316,32 +316,17 @@ QPushButton:pressed {
               <height>30</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	color: rgb(255, 255, 255);
-	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 0px;	
-	background-color: rgba(25, 59, 120, 50);
-}
-QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 1px solid rgb(61, 70, 86);
-}
-QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 1px solid rgb(43, 50, 61);
-}</string>
-            </property>
             <property name="text">
              <string>PayPal</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
            </widget>
-           <widget class="QPushButton" name="toolButton_8">
+           <widget class="QPushButton" name="buttonBitcoin">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -365,32 +350,17 @@ QPushButton:pressed {
               <height>30</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	color: rgb(255, 255, 255);
-	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 0px;	
-	background-color: rgba(25, 59, 120, 50);
-}
-QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 1px solid rgb(61, 70, 86);
-}
-QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 1px solid rgb(43, 50, 61);
-}</string>
-            </property>
             <property name="text">
              <string>Bitcoin</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
            </widget>
-           <widget class="QPushButton" name="toolButton_6">
+           <widget class="QPushButton" name="buttonCancel">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -414,29 +384,14 @@ QPushButton:pressed {
               <height>30</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	color: rgb(255, 255, 255);
-	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 0px;	
-	background-color: rgba(25, 59, 120, 50);
-}
-QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 1px solid rgb(61, 70, 86);
-}
-QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 1px solid rgb(43, 50, 61);
-}</string>
-            </property>
             <property name="text">
              <string>Close</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
            <widget class="QTextBrowser" name="textBrowser">

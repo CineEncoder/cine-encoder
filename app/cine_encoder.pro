@@ -5,14 +5,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
-unix:!macx {
-    LIBS += -lmediainfo
-}
-
 # Default rules for deployment.
 
 TARGET = cine_encoder
 TEMPLATE = app
+# QMAKE_LFLAGS += /MANIFESTUAC:$$quote(\"level=\'requireAdministrator\' uiAccess=\'false\'\")
 
 #OBJECTS_DIR = ../builddir/obj
 #MOC_DIR = ../builddir/moc
@@ -31,6 +28,8 @@ TEMPLATE = app
 #RCC_DIR = $${RES_DIR}/rcc
 #OUT_PWD = $${RES_DIR}
 
+DEFINES += QT_DEPRECATED_X
+
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
@@ -42,7 +41,6 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     preset.cpp \
-    selectpreset.cpp \
     settings.cpp \
     taskcomplete.cpp
 
@@ -52,7 +50,6 @@ HEADERS += \
     donate.h \
     mainwindow.h \
     preset.h \
-    selectpreset.h \
     settings.h \
     taskcomplete.h
 
@@ -62,12 +59,16 @@ FORMS += \
     donate.ui \
     mainwindow.ui \
     preset.ui \
-    selectpreset.ui \
     settings.ui \
     taskcomplete.ui
 
 RESOURCES += \
     files.qrc
+
+
+unix:!macx {
+    LIBS += -lmediainfo
+}
 
 win32 {
     RC_FILE = icon.rc

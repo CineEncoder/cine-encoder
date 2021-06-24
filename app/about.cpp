@@ -3,13 +3,13 @@
 
 
 
-About::About(QWidget *parent) :
-    QDialog(parent),
-    ui_about(new Ui::About)
+About::About(QWidget *parent): QDialog(parent), ui_about(new Ui::About)
 {
     ui_about->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
     this->setMouseTracking(true);
+
+    ui_about->frame_top->installEventFilter(this);
 }
 
 About::~About()
@@ -17,31 +17,34 @@ About::~About()
     delete ui_about;
 }
 
-void About::on_toolButton_6_clicked()   // Close window
+void About::setParameters() /*** Set parameters ***/
 {
-    this->close();
-}
-
-void About::on_closeWindow_clicked()   // Close window
-{
-    this->close();
-}
-
-void About::setParameters() // Set parameters
-{
-    ui_about->frame_hint->installEventFilter(this);
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
-    QFile file;
-    file.setFileName(":/resources/html/about.html");
-    file.open(QFile::ReadOnly);
-    QString text = file.readAll();
-    file.close();
+    QFont font;
+    font.setPointSize(10);
+    ui_about->label_title->setFont(font);
+    QString text("");
+    QFile file(":/resources/html/about.html");
+    if (file.open(QFile::ReadOnly)) {
+        text = file.readAll();
+        file.close();
+    }
     ui_about->textBrowser->setHtml(text);
     ui_about->textBrowser->setOpenExternalLinks(true);
 }
 
-bool About::eventFilter(QObject *watched, QEvent *event)    // Drag window
+void About::on_buttonCancel_clicked()   /*** Close window ***/
+{
+    this->close();
+}
+
+void About::on_closeWindow_clicked()   /*** Close window ***/
+{
+    this->close();
+}
+
+bool About::eventFilter(QObject *watched, QEvent *event)    /*** Drag window ***/
 {
     if (event->type() == QEvent::MouseButtonRelease)
     {
@@ -49,11 +52,12 @@ bool About::eventFilter(QObject *watched, QEvent *event)    // Drag window
         if (mouse_event->button() == Qt::LeftButton)
         {
             clickPressedFlag = false;
-            return QDialog::eventFilter(watched, event);
+            return true;
         }
+        return false;
     }
 
-    if (watched == ui_about->frame_hint)
+    if (watched == ui_about->frame_top)
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -62,18 +66,22 @@ bool About::eventFilter(QObject *watched, QEvent *event)    // Drag window
             {
                 mouseClickCoordinate = mouse_event->pos();
                 clickPressedFlag = true;
-                return QDialog::eventFilter(watched, event);
+                return true;
             }
+            return false;
         }
-        else if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
+
+        if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
         {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton)
             {
                 this->move(mouse_event->globalPos() - mouseClickCoordinate);
-                return QDialog::eventFilter(watched, event);
+                return true;
             }
+            return false;
         }
+        return false;
     }
     return QDialog::eventFilter(watched, event);
 }

@@ -1,8 +1,8 @@
-Cine Encoder 2021 v3.2
+Cine Encoder 2021 v3.3
 
 Cine Encoder is an application that allows you to convert media
-files while preserving HDR metadata. NVENC hardware encoding for 
-NVIDIA video cards is also supported for H265 and H264 modes. 
+files while preserving HDR metadata. NVENC hardware encoding for
+NVIDIA video cards is also supported for H265 and H264 modes.
 The following encoding modes are implemented:
 
  - H265 NVENC (8, 10 bit)
@@ -16,6 +16,3 @@ The following encoding modes are implemented:
 Supported operating system: Linux x86_64
 
 Licence: GNU GPL v.3
-
-
-

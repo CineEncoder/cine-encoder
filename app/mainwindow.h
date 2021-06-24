@@ -1,9 +1,11 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef WIDGET_H
+#define WIDGET_H
 
+#include <QWidget>
 #include <QMainWindow>
 #include <QtGlobal>
 #include <QDesktopWidget>
+#include <QPaintEvent>
 #include <QMouseEvent>
 #include <QHoverEvent>
 #include <QCloseEvent>
@@ -15,14 +17,17 @@
 #include <QMimeDatabase>
 #include <QMimeData>
 #include <QTableWidgetItem>
+#include <QListView>
 #include <QUrl>
 #include <QList>
 #include <QMenu>
 #include <QProcess>
 #include <QTimer>
+#include <QDate>
 #include <QFileDialog>
 #include <QPixmap>
 #include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLabel>
 #include <iostream>
 #include <iomanip>
@@ -30,10 +35,17 @@
 #include <ctime>
 #include <math.h>
 #include <QMovie>
-//#include <QDebug>
+#include <QDockWidget>
+#include <QFile>
+#include <QTreeWidgetItem>
+#include <QSizePolicy>
+#include <QSettings>
 
-extern QString _cur_param[23];
-extern QVector <QVector <QString> > _preset_table;
+/*#include <QVariant>
+#include <QDebug>
+
+Q_DECLARE_METATYPE(QList<int>)*/
+
 enum columnIndex {
     FILENAME,       FORMAT,         RESOLUTION,     DURATION,           FPS,
     AR,             STATUS,         BITRATE,        SUBSAMPLING,        BITDEPTH,
@@ -61,12 +73,14 @@ enum columnIndex {
 enum curParamIndex {
     PRESET_NAME,    CODEC,          MODE,
     CONTAINER,      BQR,            MAXRATE,
-    BUFSIZE,        RESIZE_ENABLED, RESIZE_CHECKSTATE,
+    BUFSIZE,        FRAME_RATE,     BLENDING,
     WIDTH,          HEIGHT,         PASS,
     PRESET,         COLOR_RANGE,    MIN_LUM,
     MAX_LUM,        MAX_CLL,        MAX_FALL,
     MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
-    AUDIO_CODEC,    AUDIO_BITRATE
+    AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
+    LEVEL,          ASAMPLE_RATE,   ACHANNELS,
+    MATRIX,         PRIMARY,        TRC
 };
 enum curHDRIndex {
     CUR_COLOR_RANGE,    CUR_COLOR_PRIMARY,  CUR_COLOR_MATRIX,
@@ -79,31 +93,48 @@ enum videoMetadataIndex {
     VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME
 };
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class MainWindow;
+    class Widget;
 }
 QT_END_NAMESPACE
 
 
-class MainWindow : public QMainWindow
+class Widget : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    MainWindow(QWidget *parent = nullptr);
+    Widget(QWidget *parent = nullptr);
 
-    ~MainWindow();
+    ~Widget();
+
+    static const int PARAMETERS_COUNT = 30;
 
     // ******************** Settings *************************//
 
+    QString _new_param[PARAMETERS_COUNT];
+
     QFile _stn_file;
+
+    QByteArray _settingsWindowGeometry;
+
+    QByteArray _presetWindowGeometry;
 
     QString _output_folder;
 
     QString _temp_folder;
+
+    QString _prefixName;
+
+    QString _suffixName;
+
+    int _prefxType;
+
+    int _suffixType;
 
     int _pos_top;
 
@@ -119,23 +150,11 @@ public:
 
 private slots:
 
-    void setParameters();
+    void on_closeWindow_clicked();
 
-    void dragEnterEvent(QDragEnterEvent* event);
+    void on_hideWindow_clicked();
 
-    void dragMoveEvent(QDragMoveEvent* event);
-
-    void dragLeaveEvent(QDragLeaveEvent* event);
-
-    void dropEvent(QDropEvent* event);
-
-    void showEvent(QShowEvent *event);
-
-    bool eventFilter(QObject *watched, QEvent *event);
-
-    void closeEvent(QCloseEvent *event);
-
-    void on_actionAbout_clicked();
+    void on_expandWindow_clicked();
 
     void on_actionSettings_clicked();
 
@@ -143,15 +162,35 @@ private slots:
 
     void on_actionRemove_clicked();
 
-    void on_actionPreset_clicked();
-
     void on_actionEncode_clicked();
 
     void on_actionStop_clicked();
 
-    void repeat_handler();
+    void on_buttonSortDown_clicked();
+
+    void on_buttonSortUp_clicked();
+
+    void setParameters();
+
+    void setDocksParameters();
+
+    void showEvent(QShowEvent *event);
+
+    void closeEvent(QCloseEvent *event);
+
+    bool eventFilter(QObject *watched, QEvent *event);
+
+    void dragEnterEvent(QDragEnterEvent* event);
+
+    void dragMoveEvent(QDragMoveEvent* event);
+
+    void dragLeaveEvent(QDragLeaveEvent* event);
+
+    void dropEvent(QDropEvent* event);   
 
     void on_tableWidget_itemSelectionChanged();
+
+    QString callFileDialog(const QString title);
 
     void make_preset();
 
@@ -169,29 +208,9 @@ private slots:
 
     void cancel();
 
-    void error_1();
+    void error();
 
     void encode();
-
-    void on_actionDonate_clicked();
-
-    void on_closeWindow_clicked();
-
-    void on_hideWindow_clicked();
-
-    void on_expandWindow_clicked();
-
-    void on_buttonSortDown_clicked();
-
-    void on_buttonSortUp_clicked();
-
-    void on_buttonRightWindow_clicked();
-
-    void on_buttonLeftWindow_clicked();
-
-    void on_buttonCloseRightWindow_clicked();
-
-    void on_buttonCloseLeftWindow_clicked();
 
     void on_lineEditTitleVideo_editingFinished();
 
@@ -329,23 +348,71 @@ private slots:
 
     void showSubtitlesSelection();
 
-    void showSplitVideo();
+    void showVideoSplitter();
+
+    void repeatHandler_Type_1();
 
     void repeatHandler_Type_2();
 
+    void on_buttonApplyPreset_clicked();
+
+    void on_actionRemove_preset_clicked();
+
+    void on_actionEdit_preset_clicked();
+
+    void add_section();
+
+    void add_preset();
+
+    void on_treeWidget_itemCollapsed(QTreeWidgetItem *item);
+
+    void on_treeWidget_itemExpanded(QTreeWidgetItem *item);
+
+    void on_buttonHotInputFile_clicked();
+
+    void on_buttonHotOutputFile_clicked();
+
+    void on_buttonCloseTaskWindow_clicked();
+
+    void paintEvent(QPaintEvent *event);
+
+    void on_treeWidget_itemChanged(QTreeWidgetItem *item, int column);
+
+    void on_comboBoxMode_currentIndexChanged(int index);
+
 private:
 
-    Ui::MainWindow *ui;
+    Ui::Widget *ui;
+
+    QString _cur_param[PARAMETERS_COUNT];
+
+    QVector <QVector <QString> > _preset_table;
 
     // ******************* Constants *****************************//
+
+    static const int NUMBER_PRESETS = 23;
 
     static const int AMOUNT_AUDIO_STREAMS = 9;
 
     static const int AMOUNT_SUBTITLES = 9;
 
-    static const int NUMBER_PRESETS = 23;
-
     static constexpr float MAXIMUM_ALLOWED_TIME = 359999.0f;
+
+    // ******************** Dock area ****************************//
+
+    QMainWindow *window;
+
+    QWidget *centralWidget;
+
+    QDockWidget *dock1;
+
+    QDockWidget *dock2;
+
+    QDockWidget *dock3;
+
+    QDockWidget *dock4;
+
+    QDockWidget *dock5;
 
     // ******************** Top label ****************************//
 
@@ -396,6 +463,8 @@ private:
 
     QMenu* menuTools;
 
+    QMenu* menuView;
+
     QMenu* menuPreferences;
 
     QMenu* menuAbout;
@@ -403,6 +472,14 @@ private:
     // ***************** Table menu actions ************************//
 
     QMenu* itemMenu;
+
+    // ***************** Preset menu actions ***********************//
+
+    QAction *addsection;
+
+    QAction *addpreset;
+
+    QMenu* menu;
 
     // ********************** Processes ****************************//
 
@@ -451,6 +528,8 @@ private:
     QString _error_message;
 
 
+    QSettings *_settings;
+
     QString _curFilename;
 
     QString _curPath;
@@ -468,8 +547,6 @@ private:
     QString _settings_file;
 
     QString _preset_file;
-
-    QString _window_file;
 
 
     QString _preset_0;
@@ -511,6 +588,8 @@ private:
 
     QString _status_encode_btn;
 
+    bool _flagResizeLocked;
+
     bool _flag_two_pass;
 
     bool _flag_hdr;
@@ -523,25 +602,25 @@ private:
 
     bool _windowActivated = false;
 
-    bool _expandWindowsState = false;
+    bool _expandWindowsState;
 
-    bool clickPressedFlag = false;
+    bool clickPressedFlag;
 
-    bool clickPressed_Left_ResizeFlag = false;
+    bool clickPressed_Left_ResizeFlag;
 
-    bool clickPressed_Left_Top_ResizeFlag = false;
+    bool clickPressed_Left_Top_ResizeFlag;
 
-    bool clickPressed_Top_ResizeFlag = false;
+    bool clickPressed_Top_ResizeFlag;
 
-    bool clickPressed_Right_Top_ResizeFlag = false;
+    bool clickPressed_Right_Top_ResizeFlag;
 
-    bool clickPressed_Right_ResizeFlag = false;
+    bool clickPressed_Right_ResizeFlag;
 
-    bool clickPressed_Right_Bottom_ResizeFlag = false;
+    bool clickPressed_Right_Bottom_ResizeFlag;
 
-    bool clickPressed_Bottom_ResizeFlag = false;
+    bool clickPressed_Bottom_ResizeFlag;
 
-    bool clickPressed_Left_Bottom_ResizeFlag = false;
+    bool clickPressed_Left_Bottom_ResizeFlag;
 
     QPoint mouseClickCoordinate;
 
@@ -557,6 +636,10 @@ private:
 
     // ****************************************************************************//
 
+    void on_actionAbout_clicked();
+
+    void on_actionDonate_clicked();
+
     void openFiles(const QStringList &file_name_open);
 
     void get_current_data();
@@ -564,8 +647,6 @@ private:
     void get_output_filename();
 
     void restore_initial_state();
-
-    void set_defaults();
 
     void call_task_complete(const QString &_message, const bool &_timer_mode);
 
@@ -582,6 +663,32 @@ private:
     void setThumbnail(QString curFilename, double time, QString quality);
 
     void provideContextMenu(const QPoint &position);
+
+    /************************* Preset Window ******************************/
+
+    void set_defaults();
+
+    void setItemStyle(QTreeWidgetItem *item);
+
+    void updateCurPresetPos(int &index_top, int &index_child);
+
+    void updateInfoFields(QString &codec_qstr, QString &mode_qstr, QString &container_qstr,
+                          QString &bqr_qstr, QString &pass_qstr, QString &preset_qstr,
+                          QString &acodec_qstr, QTreeWidgetItem *item);
+
+    void updatePresetTable();
+
+    QString updateFieldCodec(int &codec);
+
+    QString updateFieldMode(int &codec, int &mode);
+
+    QString updateFieldPreset(int &codec, int &preset);
+
+    QString updateFieldPass(int &codec, int &pass);
+
+    QString updateFieldAcodec(int &codec, int &acodec);
+
+    QString updateFieldContainer(int &codec, int &container);
 };
 
-#endif // MAINWINDOW_H
+#endif // WIDGET_H

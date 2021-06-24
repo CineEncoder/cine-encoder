@@ -1,6 +1,6 @@
 Summary:    Video encoder
 Name:       cine-encoder
-Version:    3.2
+Version:    3.3
 Release:    1%{?dist}
 License:    GPLv3
 URL:        https://github.com/CineEncoder/%{name}
@@ -14,8 +14,8 @@ Requires: ffmpeg, mkvtoolnix
 
 %description
 Cine Encoder is an application that allows you to convert media
-files while preserving HDR metadata.NVENC hardware encoding for 
-NVIDIA video cards is also supported for H265 and H264 modes. 
+files while preserving HDR metadata.NVENC hardware encoding for
+NVIDIA video cards is also supported for H265 and H264 modes.
 The following encoding modes are implemented:
 
  - H265 NVENC (8, 10 bit)
@@ -62,11 +62,11 @@ install -m 0644 share/%{name}.wav %{buildroot}/%{_datadir}/sounds
 %files
 %doc share/ABOUT
 %license LICENSE
-%{_bindir}/cine_encoder
+%{_bindir}/builddir/cine_encoder
 %{_datadir}/applications/cine-encoder.desktop
 %{_datadir}/icons/hicolor/64x64/apps/cine-encoder.png
 %{_datadir}/sounds/cine-encoder.wav
 
 %changelog
-* Wed Mar 17 2021 Cine Encoder <depositmail@rambler.ru>
+* Wed Jun 23 2021 Cine Encoder <depositmail@rambler.ru>
 - Initial package for Fedora.

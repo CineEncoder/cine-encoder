@@ -46,7 +46,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="widget_main" native="true">
      <layout class="QGridLayout" name="gridLayout_3">
       <property name="leftMargin">
        <number>1</number>
@@ -100,7 +100,7 @@
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QFrame" name="frame_hint">
+          <widget class="QFrame" name="frame_top">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -237,7 +237,7 @@ QPushButton:pressed {
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="label_title">
               <property name="styleSheet">
                <string notr="true">QLabel {	
 	background-color: transparent;
@@ -283,15 +283,15 @@ QPushButton:pressed {
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="buttonApply">
             <property name="enabled">
              <bool>true</bool>
             </property>
             <property name="geometry">
              <rect>
-              <x>40</x>
-              <y>100</y>
-              <width>80</width>
+              <x>25</x>
+              <y>97</y>
+              <width>90</width>
               <height>30</height>
              </rect>
             </property>
@@ -307,29 +307,14 @@ QPushButton:pressed {
               <height>30</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	color: rgb(255, 255, 255);
-	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 0px;	
-	background-color: rgba(25, 59, 120, 50);
-}
-QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 1px solid rgb(61, 70, 86);
-}
-QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 1px solid rgb(43, 50, 61);
-}</string>
-            </property>
             <property name="text">
              <string>Ok</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
             </property>
            </widget>
            <widget class="QTextBrowser" name="textBrowser">
@@ -379,15 +364,15 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="buttonCancel">
             <property name="enabled">
              <bool>true</bool>
             </property>
             <property name="geometry">
              <rect>
-              <x>160</x>
-              <y>100</y>
-              <width>80</width>
+              <x>166</x>
+              <y>97</y>
+              <width>90</width>
               <height>30</height>
              </rect>
             </property>
@@ -403,29 +388,14 @@ p, li { white-space: pre-wrap; }
               <height>30</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	color: rgb(255, 255, 255);
-	border: 1px solid rgba(52, 59, 72, 150);
-	border-radius: 0px;	
-	background-color: rgba(25, 59, 120, 50);
-}
-QPushButton:hover {
-	background-color: rgb(57, 65, 80);
-	border: 1px solid rgb(61, 70, 86);
-}
-QPushButton:pressed {	
-	background-color: rgb(35, 40, 49);
-	border: 1px solid rgb(43, 50, 61);
-}</string>
-            </property>
             <property name="text">
              <string>Cancel</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
             </property>
            </widget>
           </widget>

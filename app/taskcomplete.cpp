@@ -3,13 +3,13 @@
 
 
 
-Taskcomplete::Taskcomplete(QWidget *parent) :
-    QDialog(parent),
-    ui_taskcomplete(new Ui::Taskcomplete)
+Taskcomplete::Taskcomplete(QWidget *parent): QDialog(parent), ui_taskcomplete(new Ui::Taskcomplete)
 {
     ui_taskcomplete->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
     this->setMouseTracking(true);
+
+    ui_taskcomplete->frame_top->installEventFilter(this);
 }
 
 Taskcomplete::~Taskcomplete()
@@ -17,28 +17,20 @@ Taskcomplete::~Taskcomplete()
     delete ui_taskcomplete;
 }
 
-void Taskcomplete::on_pushButton_4_clicked() // Close window
+void Taskcomplete::setMessage(const QString &_message, const bool &_timer_mode)   /*** Set parameters ***/
 {
-    this->close();
-}
-
-void Taskcomplete::on_closeWindow_clicked() // Close window
-{
-    this->close();
-}
-
-void Taskcomplete::setMessage(const QString &_message, const bool &_timer_mode)   // Set parameters
-{
-    ui_taskcomplete->frame_hint->installEventFilter(this);
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
+    QFont font;
+    font.setPointSize(10);
+    ui_taskcomplete->label_title->setFont(font);
     if (_timer_mode == true)
     {
         show_message(_message);
         elps_t = 25;
         timer = new QTimer(this);
         timer->setInterval(1000);
-        connect(timer, SIGNAL(timeout()), this, SLOT(repeat_handler()));
+        connect(timer, SIGNAL(timeout()), this, SLOT(repeatHandler()));
         timer->start();
     }
     else
@@ -52,7 +44,27 @@ void Taskcomplete::setMessage(const QString &_message, const bool &_timer_mode) 
     }
 }
 
-void Taskcomplete::repeat_handler() // Repeat handler
+void Taskcomplete::on_closeWindow_clicked() /*** Close window ***/
+{
+    this->close();
+}
+
+void Taskcomplete::on_buttonCancel_clicked() /*** Close window ***/
+{
+    this->close();
+}
+
+void Taskcomplete::show_message(QString _message)   /*** Show message ***/
+{
+    ui_taskcomplete->textBrowser_task->clear();
+    ui_taskcomplete->textBrowser_task->setAlignment(Qt::AlignCenter);
+    ui_taskcomplete->textBrowser_task->append(_message);
+    QTextCursor textCursor = ui_taskcomplete->textBrowser_task->textCursor();
+    textCursor.movePosition(QTextCursor::Start);
+    ui_taskcomplete->textBrowser_task->setTextCursor(textCursor);
+}
+
+void Taskcomplete::repeatHandler() /*** Repeat handler ***/
 {
     if (elps_t == 0)
     {
@@ -60,7 +72,7 @@ void Taskcomplete::repeat_handler() // Repeat handler
     }
     int h = static_cast<int>(trunc(float(elps_t) / 3600));
     int m = static_cast<int>(trunc((float(elps_t) - float(h * 3600)) / 60));
-    int s = static_cast<int>(trunc(elps_t - (h * 3600) - (m * 60)));
+    int s = elps_t - (h * 3600) - (m * 60);
     QString hrs = QString::number(h);
     QString min = QString::number(m);
     QString sec = QString::number(s);
@@ -74,16 +86,6 @@ void Taskcomplete::repeat_handler() // Repeat handler
     elps_t--;
 }
 
-void Taskcomplete::show_message(QString _message)   // Show message
-{
-    ui_taskcomplete->textBrowser_task->clear();
-    ui_taskcomplete->textBrowser_task->setAlignment(Qt::AlignCenter);
-    ui_taskcomplete->textBrowser_task->append(_message);
-    QTextCursor textCursor = ui_taskcomplete->textBrowser_task->textCursor();
-    textCursor.movePosition(QTextCursor::Start);
-    ui_taskcomplete->textBrowser_task->setTextCursor(textCursor);
-}
-
 bool Taskcomplete::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::MouseButtonRelease)
@@ -92,11 +94,12 @@ bool Taskcomplete::eventFilter(QObject *watched, QEvent *event)
         if (mouse_event->button() == Qt::LeftButton)
         {
             clickPressedFlag = false;
-            return QDialog::eventFilter(watched, event);
+            return true;
         }
+        return false;
     }
 
-    if (watched == ui_taskcomplete->frame_hint)
+    if (watched == ui_taskcomplete->frame_top)
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -105,18 +108,22 @@ bool Taskcomplete::eventFilter(QObject *watched, QEvent *event)
             {
                 mouseClickCoordinate = mouse_event->pos();
                 clickPressedFlag = true;
-                return QDialog::eventFilter(watched, event);
+                return true;
             }
+            return false;
         }
-        else if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
+
+        if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
         {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton)
             {
                 this->move(mouse_event->globalPos() - mouseClickCoordinate);
-                return QDialog::eventFilter(watched, event);
+                return true;
             }
+            return false;
         }
+        return false;
     }
     return QDialog::eventFilter(watched, event);
 }
