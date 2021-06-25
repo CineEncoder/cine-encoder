@@ -69,4 +69,4 @@ You can send bitcoins at this address or by scanning the QR code below:
 
 ![Bitcoin](./images/Bitcoin.png)
 
-1PqFt976YQTJ9Js3xym5GjtPDfsjq98kN8
+bc1ql0f3xpj57szcnn3gzr8cwajwxj880k8j4m22qv
