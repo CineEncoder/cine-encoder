@@ -9,7 +9,7 @@ url="https://github.com/CineEncoder/cine-encoder.git"
 license=('GPL3')
 depends=('qt5-base>=5.15' 'mkvtoolnix-cli>=49.0' 'ffmpeg>=4.2' 'libmediainfo>=20.03')
 source=("https://github.com/CineEncoder/cine-encoder/archive/3.3.tar.gz")
-md5sums=('7cf171b03b9baf47b7c0a977f718f9bc')
+md5sums=('b438ac083e0c881deae5db226990c24b')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"

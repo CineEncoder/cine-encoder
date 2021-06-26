@@ -1,17 +1,27 @@
 #!/usr/bin/make -f
+APPNAME := cine_encoder
+builddir:
+	mkdir -p builddir
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE = 1
+builddir/Makefile: builddir
+	cd builddir && /usr/lib/qt5/bin/qmake -o Makefile ../app/$(APPNAME).pro -spec linux-g++
 
-build:
-	$(MAKE)
-	#docbook-to-man debian/packagename.sgml > packagename.1
+build: build-stamp
+
+
+
+build-stamp: builddir/Makefile
+	dh_testdir
+	# Add here commands to compile the package.
+	cd builddir && $(MAKE)
+	touch $@
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp
-	$(MAKE) clean
+	rm -f build-stamp
+	# Add here commands to clean up after the build process.
+	rm -rf builddir
 	dh_clean
 
 install: build
@@ -20,10 +30,10 @@ install: build
 	dh_prep
 	dh_installdirs
 	# Add here commands to install the package into debian/package
-	# $(MAKE) DESTDIR=$(CURDIR)/debian/cine-encoder/usr/bin install
+	cd builddir && $(MAKE) INSTALL_ROOT=$(CURDIR)/debian/$(APPNAME) install
 
 # Build architecture -independent files here.
-# binary-indep: build install
+binary-indep: build install
 
 # Build architecture -dependent files here.
 binary-arch: build install
@@ -32,7 +42,7 @@ binary-arch: build install
 	dh_installchangelogs
 	dh_installdocs
 	dh_installexamples
-	dh_install
+	dh_install	
 	dh_installman
 	dh_link
 	dh_strip

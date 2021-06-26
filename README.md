@@ -46,7 +46,7 @@ cd build
 git clone https://github.com/CineEncoder/cine-encoder.git
 mv cine-encoder cine-encoder-(*ver)
 cd cine-encoder-(*ver)
-qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ CONFIG+=qtquickcompiler
+qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ CONFIG+=qtquickcompiler (or for Debian:  /usr/lib/qt5/bin/qmake -o builddir/Makefile app/cine_encoder.pro -spec linux-g++)
 cd cine-encoder-(*ver)/builddir
 make
 ```
