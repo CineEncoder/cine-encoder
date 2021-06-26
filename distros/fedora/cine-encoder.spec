@@ -13,23 +13,13 @@ BuildRequires: qt5-qtmultimedia-devel
 Requires: ffmpeg, mkvtoolnix
 
 %description
-Cine Encoder is an application that allows you to convert media
-files while preserving HDR metadata.NVENC hardware encoding for
-NVIDIA video cards is also supported for H265 and H264 modes.
-The following encoding modes are implemented:
-
- - H265 NVENC (8, 10 bit)
- - H265 (8, 10 bit)
- - VP9 (8, 10 bit)
- - H264 NVENC (8 bit)
- - H264 (8 bit)
- - DNxHR (8, 10 bit)
- - ProRes (10 bit)
-
-Supported operating system: Linux x86_64
-
+Cine Encoder is an application, uses the FFmpeg, MKVToolNix and MediaInfo
+utilities, that allows to convert media files while preserving HDR metadata.
+Supported hardware encoding NVENC for codecs H265, H264 and Intel QSV
+(for Windows and experimental for Linux) for codecs H264, MPEG-2.
+The following encoding modes are implemented: H265, H264, VP9, MPEG-2,
+XDCAM, DNxHR, ProRes.
 Licence: GNU GPL v.3
-
 
 %prep
 %autosetup
