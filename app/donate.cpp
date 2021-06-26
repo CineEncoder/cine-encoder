@@ -51,7 +51,7 @@ void Donate::on_buttonPayPal_clicked()   /*** Open browser PayPal ***/
 
 void Donate::on_buttonBitcoin_clicked()   /*** Open browser Bitcoin ***/
 {
-    QDesktopServices::openUrl(QUrl("https://blockchain.com/btc/payment_request?address=14ukiWCK2f8vFNPP3qKbo2vfaSGRMN63qL&amount=0.00005448&message=Cine Encoder donation", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://github.com/CineEncoder/cine-encoder", QUrl::TolerantMode));
 }
 
 bool Donate::eventFilter(QObject *watched, QEvent *event)
@@ -95,4 +95,3 @@ bool Donate::eventFilter(QObject *watched, QEvent *event)
     }
     return QDialog::eventFilter(watched, event);
 }
-

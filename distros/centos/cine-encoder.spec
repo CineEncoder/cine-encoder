@@ -38,11 +38,14 @@ Licence: GNU GPL v.3
 # Regenerate the Makefile with the Fedora qmake name
 qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ \
   CONFIG+=qtquickcompiler
+cd builddir
 
 %make_build
 
 %install
+cd builddir
 %make_install INSTALL_ROOT=%{buildroot}
+cd -
 mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
 mkdir -p %{buildroot}/%{_datadir}/applications
 mkdir -p %{buildroot}/%{_datadir}/sounds
@@ -53,7 +56,7 @@ install -m 0644 share/%{name}.wav %{buildroot}/%{_datadir}/sounds
 %files
 %doc share/ABOUT
 %license LICENSE
-%{_bindir}/builddir/cine_encoder
+%{_bindir}/cine_encoder
 %{_datadir}/applications/cine-encoder.desktop
 %{_datadir}/icons/hicolor/64x64/apps/cine-encoder.png
 %{_datadir}/sounds/cine-encoder.wav
