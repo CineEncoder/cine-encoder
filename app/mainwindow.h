@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QtGlobal>
+#include <QSystemTrayIcon>
 #include <QDesktopWidget>
 #include <QPaintEvent>
 #include <QMouseEvent>
@@ -150,7 +151,15 @@ public:
 
 private slots:
 
+    void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+
+    void setTrayIconActions();
+
+    void showTrayIcon();
+
     void on_closeWindow_clicked();
+
+    void setExpandIcon();
 
     void on_hideWindow_clicked();
 
@@ -414,6 +423,8 @@ private:
 
     QDockWidget *dock5;
 
+    QDockWidget *dock6;
+
     // ******************** Top label ****************************//
 
     QHBoxLayout *raiseLayout;
@@ -423,6 +434,18 @@ private:
     // **************** Progress animation ***********************//
 
     QMovie *animation;
+
+    // ***************** Tray menu actions ************************//
+
+    QSystemTrayIcon *trayIcon;
+
+    QMenu *trayIconMenu;
+
+    QAction *minimizeAction;
+
+    QAction *restoreAction;
+
+    QAction *quitAction;
 
     // ***************** Top menu actions ************************//
 
@@ -588,8 +611,6 @@ private:
 
     QString _status_encode_btn;
 
-    bool _flagResizeLocked;
-
     bool _flag_two_pass;
 
     bool _flag_hdr;
@@ -603,6 +624,8 @@ private:
     bool _windowActivated = false;
 
     bool _expandWindowsState;
+
+    bool _hideInTrayFlag;
 
     bool clickPressedFlag;
 

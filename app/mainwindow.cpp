@@ -110,6 +110,12 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     dock5->setWidget(ui->frameRight);
     window->addDockWidget(Qt::RightDockWidgetArea, dock5);
 
+    dock6 = new QDockWidget(tr("Log"), this);
+    dock6->setObjectName("Dock_log");
+    dock6->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+    dock6->setWidget(ui->frameLog);
+    window->addDockWidget(Qt::RightDockWidgetArea, dock6);
+
     // **************************** Set Event Filters ***********************************//
 
     ui->centralwidget->installEventFilter(this);
@@ -245,10 +251,48 @@ void Widget::paintEvent(QPaintEvent *event) /*** Disable QTab draw base ***/
     }
 }
 
+void Widget::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason)
+    {
+        case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::DoubleClick:
+            this->showNormal();
+            break;
+        default:
+            break;
+    }
+}
+
+void Widget::setTrayIconActions()
+{
+    minimizeAction = new QAction("Hide", this);
+    restoreAction = new QAction("Show", this);
+    quitAction = new QAction("Exit", this);
+
+    connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addAction(quitAction);
+}
+
+void Widget::showTrayIcon()
+{
+    trayIcon->setIcon(QIcon(":/resources/icons/64x64/cine-encoder.png"));
+    trayIcon->setContextMenu(trayIconMenu);
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+    trayIcon->show();
+}
+
 void Widget::setParameters()    /*** Set parameters ***/
 {
     // ***************************** Set parameters ***********************************//
 
+    trayIcon = new QSystemTrayIcon(this);
     timer = new QTimer(this);
     timerCallSetThumbnail = new QTimer(this);
     timerCallSetThumbnail->setSingleShot(true);
@@ -318,7 +362,10 @@ void Widget::setParameters()    /*** Set parameters ***/
     menuView->addAction(dock3->toggleViewAction());
     menuView->addAction(dock4->toggleViewAction());
     menuView->addAction(dock5->toggleViewAction());
+    menuView->addAction(dock6->toggleViewAction());
     ui->menuViewButton->setMenu(menuView);
+    dock6->toggleViewAction()->setChecked(false);
+    dock6->setVisible(false);
 
     menuPreferences = new QMenu(this);
     menuPreferences->addAction(settings);
@@ -381,8 +428,8 @@ void Widget::setParameters()    /*** Set parameters ***/
     _suffixType = 0;
     _pos_top = -1;
     _pos_cld = -1;
-    _flagResizeLocked = true;
     _expandWindowsState = false;
+    _hideInTrayFlag = true;
     clickPressedFlag = false;
     clickPressed_Left_ResizeFlag = false;
     clickPressed_Left_Top_ResizeFlag = false;
@@ -698,13 +745,18 @@ void Widget::setParameters()    /*** Set parameters ***/
 
     if (this->isMaximized()) {
         _expandWindowsState = true;
-        ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
+        //setExpandIcon();
     }
 
     if (_batch_mode) {
         ui->comboBoxMode->blockSignals(true);
         ui->comboBoxMode->setCurrentIndex(1);
         ui->comboBoxMode->blockSignals(false);
+    }
+
+    if (_hideInTrayFlag) {
+        setTrayIconActions();
+        showTrayIcon();
     }
     setTheme(_theme);
 }
@@ -737,23 +789,47 @@ void Widget::on_closeWindow_clicked()    /*** Close window signal ***/
     this->close();
 }
 
+void Widget::setExpandIcon()
+{
+    switch (_theme)
+    {
+        case 0:
+        case 1:
+        case 2:
+            if (_expandWindowsState) {
+                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
+            } else {
+                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));}
+            break;
+        case 3:
+            if (_expandWindowsState) {
+                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone_black.png"));
+            } else {
+                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop_black.png"));}
+            break;
+    }
+}
+
 void Widget::on_expandWindow_clicked()    /*** Expand window ***/
 {
     if (_expandWindowsState == false)
     {
         this->showMaximized();
         _expandWindowsState = true;
-        ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
     } else {
         this->showNormal();
         _expandWindowsState = false;
-        ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));
     }
+    setExpandIcon();
 }
 
 void Widget::on_hideWindow_clicked()    /*** Hide window ***/
 {
-    this->showMinimized();
+    if (_hideInTrayFlag) {
+        this->hide();
+    } else {
+        this->showMinimized();
+    }
 }
 
 void Widget::on_actionAbout_clicked()   /*** About ***/
@@ -1073,18 +1149,22 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
     QString list("");
     switch (ind_theme)
     {
-        case 0: {
+        case 0:
             file.setFileName(":/resources/css/style_0.css");
-        }; break;
-        case 1: {
+            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+            break;
+        case 1:
             file.setFileName(":/resources/css/style_1.css");
-        }; break;
-        case 2: {
+            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+            break;
+        case 2:
             file.setFileName(":/resources/css/style_2.css");
-        }; break;
-        case 3: {
+            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+            break;
+        case 3:
             file.setFileName(":/resources/css/style_3.css");
-        }; break;
+            raiseThumb->setStyleSheet("color: #E3E3E3; font: 64pt; font-style: oblique;");
+            break;
     }
     if (file.open(QFile::ReadOnly)) {
         list = QString::fromUtf8(file.readAll());
@@ -1104,6 +1184,7 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
             i++;
         }
     }
+    setExpandIcon();
 }
 
 QString Widget::styleCreator(const QString &list)    /*** Parsing CSS ***/
@@ -1478,6 +1559,7 @@ void Widget::make_preset()  /*** Make preset ***/
     _flag_hdr = false;
     _mux_mode = false;
     _fr_count = 0;
+    ui->textBrowser_log->clear();
 
     /****************************************** Resize ****************************************/
 
@@ -1763,10 +1845,10 @@ void Widget::make_preset()  /*** Make preset ***/
         {"",       "",    "",    "",    ""}
     };
     QString mode = "";
-    QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 3);
-    QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 3);
-    QString maxrate = QString::number(1000000.0*_MAXRATE.toDouble(), 'f', 3);
-    QString bufsize = QString::number(1000000.0*_BUFSIZE.toDouble(), 'f', 3);
+    QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 0);
+    QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 0);
+    QString maxrate = QString::number(1000000.0*_MAXRATE.toDouble(), 'f', 0);
+    QString bufsize = QString::number(1000000.0*_BUFSIZE.toDouble(), 'f', 0);
     QString selected_mode = arr_mode[_CODEC][_MODE];
 
     if (selected_mode == "CBR") {
@@ -2356,17 +2438,31 @@ void Widget::make_preset()  /*** Make preset ***/
         std::cout << "preset_pass1: " << _preset_pass1.toStdString() << std::endl;
         std::cout << "preset: " << _preset.toStdString() << std::endl;
         std::cout << "preset_mkvpropedit: " << _preset_mkvmerge.toStdString() << std::endl;
+        ui->textBrowser_log->append(QString("Preset pass 1: ") + _preset_0 + QString(" -i <input file> ") +
+                                    _preset_pass1 + QString("\n"));
+        ui->textBrowser_log->append(QString("Preset pass 2: ") + _preset_0 + QString(" -i <input file> ") +
+                                    _preset  + QString(" -y <output file>\n"));
+        ui->textBrowser_log->append(QString("Preset mkvpropedit: ") + _preset_mkvmerge  + QString("\n"));
     }
-    if ((_flag_two_pass == true) && (_flag_hdr == false)) {
+    else if ((_flag_two_pass == true) && (_flag_hdr == false)) {
         std::cout << "preset_pass1: " << _preset_pass1.toStdString() << std::endl;
         std::cout << "preset: " << _preset.toStdString() << std::endl;
+        ui->textBrowser_log->append(QString("Preset pass 1: ") + _preset_0 + QString(" -i <input file> ") +
+                                    _preset_pass1 + QString("\n"));
+        ui->textBrowser_log->append(QString("Preset pass 2: ") + _preset_0 + QString(" -i <input file> ") +
+                                    _preset  + QString(" -y <output file>\n"));
     }
-    if ((_flag_two_pass == false) && (_flag_hdr == true)) {
+    else if ((_flag_two_pass == false) && (_flag_hdr == true)) {
         std::cout << "preset: " << _preset.toStdString() << std::endl;
         std::cout << "preset_mkvpropedit: " << _preset_mkvmerge.toStdString() << std::endl;
+        ui->textBrowser_log->append(QString("Preset: ") + _preset_0 + QString(" -i <input file> ") +
+                                    _preset  + QString(" -y <output file>\n"));
+        ui->textBrowser_log->append(QString("Preset mkvpropedit: ") + _preset_mkvmerge  + QString("\n"));
     }
-    if ((_flag_two_pass == false) && (_flag_hdr == false)) {
+    else if ((_flag_two_pass == false) && (_flag_hdr == false)) {
         std::cout << "preset: " << _preset.toStdString() << std::endl;
+        ui->textBrowser_log->append(QString("Preset: ") + _preset_0 + QString(" -i <input file> ") +
+                                    _preset  + QString(" -y <output file>\n"));
     }
     encode();
 }

@@ -152,10 +152,6 @@
               <property name="autoFillBackground">
                <bool>false</bool>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(98, 103, 111);
-background-color: transparent;</string>
-              </property>
               <property name="text">
                <string>Progress:</string>
               </property>
@@ -287,10 +283,6 @@ background-color: transparent;</string>
               <property name="autoFillBackground">
                <bool>false</bool>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(98, 103, 111);
-background-color: transparent;</string>
-              </property>
               <property name="text">
                <string>Remaining:</string>
               </property>
@@ -303,10 +295,6 @@ background-color: transparent;</string>
               </property>
               <property name="autoFillBackground">
                <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(98, 103, 111);
-background-color: transparent;</string>
               </property>
               <property name="text">
                <string>00:00:00</string>
@@ -358,24 +346,8 @@ background-color: transparent;</string>
               <property name="toolTip">
                <string>Settings</string>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="files.qrc">
-                <normaloff>:/resources/icons/16x16/cil-settings.png</normaloff>:/resources/icons/16x16/cil-settings.png</iconset>
               </property>
              </widget>
             </item>
@@ -1166,7 +1138,7 @@ QPushButton:pressed {
               <x>640</x>
               <y>10</y>
               <width>301</width>
-              <height>481</height>
+              <height>281</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -1371,8 +1343,8 @@ QPushButton:pressed {
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>287</width>
-                        <height>392</height>
+                        <width>273</width>
+                        <height>371</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_21">
@@ -1804,8 +1776,8 @@ QPushButton:pressed {
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>287</width>
-                        <height>392</height>
+                        <width>273</width>
+                        <height>371</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_11">
@@ -2528,8 +2500,8 @@ QPushButton:pressed {
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>287</width>
-                        <height>392</height>
+                        <width>273</width>
+                        <height>371</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_14">
@@ -3255,8 +3227,8 @@ QPushButton:pressed {
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>287</width>
-                        <height>392</height>
+                        <width>280</width>
+                        <height>371</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_29">
@@ -3883,24 +3855,8 @@ QPushButton:pressed {
                <property name="toolTip">
                 <string>Add files</string>
                </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-               </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="files.qrc">
-                 <normaloff>:/resources/icons/12x12/cil-input.png</normaloff>:/resources/icons/12x12/cil-input.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -4035,24 +3991,8 @@ QPushButton:pressed {
                <property name="toolTip">
                 <string>Output folder</string>
                </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-               </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="files.qrc">
-                 <normaloff>:/resources/icons/12x12/cil-output.png</normaloff>:/resources/icons/12x12/cil-output.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -5708,6 +5648,143 @@ QPushButton:pressed {
              </item>
             </layout>
            </widget>
+           <widget class="QFrame" name="frameLog">
+            <property name="geometry">
+             <rect>
+              <x>640</x>
+              <y>300</y>
+              <width>301</width>
+              <height>191</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>3840</width>
+              <height>2160</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <property name="lineWidth">
+             <number>0</number>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QGridLayout" name="gridLayout_30">
+               <property name="topMargin">
+                <number>3</number>
+               </property>
+               <property name="bottomMargin">
+                <number>3</number>
+               </property>
+               <property name="horizontalSpacing">
+                <number>0</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>3</number>
+               </property>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_37">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="2">
+                <spacer name="verticalSpacer_13">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>9</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="3">
+                <spacer name="horizontalSpacer_33">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="1">
+                <spacer name="verticalSpacer_16">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>23</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QTextBrowser" name="textBrowser_log"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
          <item row="0" column="0">
@@ -5858,24 +5935,8 @@ QPushButton:pressed {
               <property name="toolTip">
                <string>Hide</string>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="files.qrc">
-                <normaloff>:/resources/icons/16x16/cil-window-minimize.png</normaloff>:/resources/icons/16x16/cil-window-minimize.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -5927,24 +5988,8 @@ QPushButton:pressed {
               <property name="toolTip">
                <string>Close</string>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="files.qrc">
-                <normaloff>:/resources/icons/16x16/cil-x.png</normaloff>:/resources/icons/16x16/cil-x.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -6007,24 +6052,8 @@ QPushButton:pressed {
               <property name="toolTip">
                <string>Expand</string>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="files.qrc">
-                <normaloff>:/resources/icons/16x16/cil-media-stop.png</normaloff>:/resources/icons/16x16/cil-media-stop.png</iconset>
               </property>
               <property name="iconSize">
                <size>
