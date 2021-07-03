@@ -788,7 +788,7 @@ QPushButton {
 }
 QPushButton:hover {
         border: none;
-        color: #55AAFF;
+        color: #0000FF;
         background-color: transparent;
 }
 QPushButton:pressed {
@@ -839,20 +839,29 @@ QPushButton#closeWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton#buttonCloseTaskWindow {
+        border: none;
+        padding: 5px;
+        image: url(:/resources/icons/16x16/cil-x_black.png);
+        color: @elementsTextColor;
+        background-color: transparent;
+}
 QPushButton:hover#buttonHotInputFile,
 QPushButton:hover#buttonHotOutputFile,
 QPushButton:hover#actionSettings,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
-QPushButton:hover#closeWindow {
-        background-color: #343B48;
+QPushButton:hover#closeWindow,
+QPushButton:hover#buttonCloseTaskWindow {
+        background-color: #D9D9D9;
 }
 QPushButton:pressed#buttonHotInputFile,
 QPushButton:pressed#buttonHotOutputFile,
 QPushButton:pressed#actionSettings,
 QPushButton:pressed#hideWindow,
 QPushButton:pressed#expandWindow,
-QPushButton:pressed#closeWindow {
+QPushButton:pressed#closeWindow,
+QPushButton:pressed#buttonCloseTaskWindow {
         background-color: #55AAFF;
 }
 
@@ -1148,7 +1157,7 @@ QDockWidget::float-button {
 }
 QDockWidget::close-button:hover,
 QDockWidget::float-button:hover {
-    background: #343B48;
+    background: #D9D9D9;
 }
 QDockWidget::close-button:pressed,
 QDockWidget::float-button:pressed {

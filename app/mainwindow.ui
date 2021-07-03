@@ -5365,24 +5365,8 @@ QPushButton:pressed {
                       <height>20</height>
                      </size>
                     </property>
-                    <property name="styleSheet">
-                     <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-                    </property>
                     <property name="text">
                      <string/>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="files.qrc">
-                      <normaloff>:/resources/icons/16x16/cil-x.png</normaloff>:/resources/icons/16x16/cil-x.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>

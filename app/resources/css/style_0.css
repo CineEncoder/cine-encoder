@@ -857,12 +857,20 @@ QPushButton#closeWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton#buttonCloseTaskWindow {
+        border: none;
+        padding: 5px;
+        image: url(:/resources/icons/16x16/cil-x.png);
+        color: @elementsTextColor;
+        background-color: transparent;
+}
 QPushButton:hover#buttonHotInputFile,
 QPushButton:hover#buttonHotOutputFile,
 QPushButton:hover#actionSettings,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
-QPushButton:hover#closeWindow {
+QPushButton:hover#closeWindow,
+QPushButton:hover#buttonCloseTaskWindow {
         background-color: #343B48;
 }
 QPushButton:pressed#buttonHotInputFile,
@@ -870,7 +878,8 @@ QPushButton:pressed#buttonHotOutputFile,
 QPushButton:pressed#actionSettings,
 QPushButton:pressed#hideWindow,
 QPushButton:pressed#expandWindow,
-QPushButton:pressed#closeWindow {
+QPushButton:pressed#closeWindow,
+QPushButton:pressed#buttonCloseTaskWindow {
         background-color: #55AAFF;
 }
 
