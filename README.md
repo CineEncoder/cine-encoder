@@ -28,6 +28,8 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
   - to satisfy ffmpeg dependency CentOS users have to use rpmfusion (https://rpmfusion.org/)
   - install file cine-encoder-(ver)_centos7_x86_64.rpm from [release](https://github.com/CineEncoder/cine-encoder/releases)
 
+*ver - current version
+
 ### Buid instructions
 Install dependencies:
 
@@ -44,13 +46,17 @@ Buld package:
 mkdir build
 cd build
 git clone https://github.com/CineEncoder/cine-encoder.git
-mv cine-encoder cine-encoder-(*ver)
-cd cine-encoder-(*ver)
+cd cine-encoder
 qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ CONFIG+=qtquickcompiler (or for Debian:  /usr/lib/qt5/bin/qmake -o builddir/Makefile app/cine_encoder.pro -spec linux-g++)
-cd cine-encoder-(*ver)/builddir
+cd builddir
 make
 ```
-*ver - current version
+
+
+### Tracking project changes
+
+To tracking project changes see [Project page](https://github.com/CineEncoder/cine-encoder/projects/1?fullscreen=true)
+
 
 ### Licence
 
