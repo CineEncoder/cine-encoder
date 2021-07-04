@@ -125,6 +125,8 @@ public:
 
     QByteArray _presetWindowGeometry;
 
+    bool _hideInTrayFlag;
+
     QString _output_folder;
 
     QString _temp_folder;
@@ -624,8 +626,6 @@ private:
     bool _windowActivated = false;
 
     bool _expandWindowsState;
-
-    bool _hideInTrayFlag;
 
     bool clickPressedFlag;
 

@@ -44,6 +44,7 @@ void Settings::closeEvent(QCloseEvent *close_settings)  /*** Show prompt when cl
         *_ptr_suffixName = _curr_suffixName;
         *_ptr_prefxType = _curr_prefxType;
         *_ptr_suffixType = _curr_suffixType;
+        *_ptr_hideInTrayFlag = _curr_hideInTrayFlag;
     }
     close_settings->accept();
 }
@@ -52,7 +53,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
                              QString *ptr_output_folder, QString *ptr_temp_folder,
                              bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                              int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
-                             int *ptr_prefxType, int *ptr_suffixType)  /*** Set parameters ***/
+                             int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag)  /*** Set parameters ***/
 {
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
@@ -71,6 +72,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _ptr_suffixName = ptr_suffixName;
     _ptr_prefxType = ptr_prefxType;
     _ptr_suffixType = ptr_suffixType;
+    _ptr_hideInTrayFlag = ptr_hideInTrayFlag;
 
     if (*_ptr_settingsWindowGeometry != "default") {
         this->restoreGeometry(*_ptr_settingsWindowGeometry);
@@ -85,6 +87,10 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     if (*_ptr_showHDR_mode == true)
     {
         ui_settings->checkBox_2->setChecked(true);
+    }
+    if (*_ptr_hideInTrayFlag == true)
+    {
+        ui_settings->checkBox_tray->setChecked(true);
     }
     if (*_ptr_protection == true)
     {
@@ -108,6 +114,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _curr_suffixName = *_ptr_suffixName;
     _curr_prefxType = *_ptr_prefxType;
     _curr_suffixType = *_ptr_suffixType;
+    _curr_hideInTrayFlag = *_ptr_hideInTrayFlag;
     _flag_save = false;
 
     QListView *comboboxThemeListView = new QListView(ui_settings->comboBox_1);
@@ -267,6 +274,16 @@ void Settings::on_checkBox_3_clicked()  /*** Protection mode select ***/
         *_ptr_protection = false;
         ui_settings->spinBox_3->setEnabled(false);
     };
+}
+
+void Settings::on_checkBox_tray_clicked()
+{
+    int stts_tray = ui_settings->checkBox_tray->checkState();
+    if (stts_tray == 2) {
+        *_ptr_hideInTrayFlag = true;
+    } else {
+        *_ptr_hideInTrayFlag = false;
+    }
 }
 
 QString Settings::callFileDialog(const QString title)  /*** Call file dialog ***/

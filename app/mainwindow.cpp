@@ -150,6 +150,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
     if (confirm == true)
     {
         std::cout << "Exit confirmed!" << std::endl;  // Debug info //
+        trayIcon->hide();
         short s1 = process_1->state();
         short s2 = process_5->state();
 
@@ -212,7 +213,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->beginGroup("Settings");
         _settings->setValue("Settings/open_dir", _openDir);
         _settings->setValue("Settings/batch_mode", _batch_mode);
-
+        _settings->setValue("Settings/tray", _hideInTrayFlag);
         /*
         _settings->beginWriteArray("Settings/cur_param");
         for (int i = 0; i < PARAMETERS_COUNT; i++)
@@ -285,7 +286,7 @@ void Widget::showTrayIcon()
     trayIcon->setIcon(QIcon(":/resources/icons/64x64/cine-encoder.png"));
     trayIcon->setContextMenu(trayIconMenu);
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-    trayIcon->show();
+    //trayIcon->show();
 }
 
 void Widget::setParameters()    /*** Set parameters ***/
@@ -429,7 +430,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _pos_top = -1;
     _pos_cld = -1;
     _expandWindowsState = false;
-    _hideInTrayFlag = true;
+    _hideInTrayFlag = false;
     clickPressedFlag = false;
     clickPressed_Left_ResizeFlag = false;
     clickPressed_Left_Top_ResizeFlag = false;
@@ -721,7 +722,7 @@ void Widget::setParameters()    /*** Set parameters ***/
         _settings->beginGroup("Settings");
         _openDir = _settings->value("Settings/open_dir").toString();
         _batch_mode = _settings->value("Settings/batch_mode").toBool();
-
+        _hideInTrayFlag = _settings->value("Settings/tray").toBool();
         /*int arraySize = _settings->beginReadArray("Settings/cur_param");
         for (int i = 0; i < arraySize; i++)
         {
@@ -753,10 +754,10 @@ void Widget::setParameters()    /*** Set parameters ***/
         ui->comboBoxMode->setCurrentIndex(1);
         ui->comboBoxMode->blockSignals(false);
     }
-
+    setTrayIconActions();
+    showTrayIcon();
     if (_hideInTrayFlag) {
-        setTrayIconActions();
-        showTrayIcon();
+        trayIcon->show();
     }
     setTheme(_theme);
 }
@@ -853,11 +854,16 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     Settings settings(this);
     settings.setParameters(&_settingsWindowGeometry, &_stn_file, &_output_folder,
                            &_temp_folder, &_protection, &_showHDR_mode, &_timer_interval, &_theme,
-                           &_prefixName, &_suffixName, &_prefxType, &_suffixType);
+                           &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag);
     settings.setModal(true);
     settings.exec();
     timer->setInterval(_timer_interval*1000);
     setTheme(_theme);
+    if (_hideInTrayFlag) {
+        trayIcon->show();
+    } else {
+        trayIcon->hide();
+    }
     if (_row != -1) {
         get_output_filename();
     }

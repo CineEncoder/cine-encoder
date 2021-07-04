@@ -30,7 +30,7 @@ public:
                        QString *ptr_output_folder, QString *ptr_temp_folder,
                        bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                        int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
-                       int *ptr_prefxType, int *ptr_suffixType);
+                       int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag);
 
 private slots:
 
@@ -49,6 +49,8 @@ private slots:
     void on_checkBox_2_clicked();
 
     void on_checkBox_3_clicked();
+
+    void on_checkBox_tray_clicked();
 
     void on_comboBoxPrefixType_currentIndexChanged(int index);
 
@@ -88,6 +90,8 @@ private:
 
     bool _curr_protection;
 
+    bool _curr_hideInTrayFlag;
+
     bool _flag_save;
 
     QFile *_ptr_stn_file;
@@ -111,6 +115,8 @@ private:
     bool *_ptr_showHDR_mode;
 
     bool *_ptr_protection;
+
+    bool *_ptr_hideInTrayFlag;
 
     /**************** Geometry **************************/
 
