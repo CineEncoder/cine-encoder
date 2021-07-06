@@ -525,5 +525,7 @@
         <file>resources/icons/16x16/cil-clone_black.png</file>
         <file>resources/icons/16x16/cil-arrow-left_black.png</file>
         <file>resources/icons/16x16/cil-arrow-right_black.png</file>
+        <file>resources/icons/16x16/cil-folder_light.png</file>
+        <file>resources/icons/16x16/cil-folder-open_light.png</file>
     </qresource>
 </RCC>

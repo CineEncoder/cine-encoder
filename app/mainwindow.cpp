@@ -4858,21 +4858,42 @@ QString Widget::updateFieldContainer(int &codec, int &container)
     return arr_container[codec][container];
 }
 
+void Widget::setPresetIcon(QTreeWidgetItem *item, bool collapsed)
+{
+    QIcon sectionIcon;
+    QString path;
+    switch (_theme)
+    {
+        case 0:
+        case 1:
+        case 2:
+            if (collapsed) {
+                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder.png");
+            } else {
+                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png");}
+            break;
+        case 3:
+            if (collapsed) {
+                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder_light.png");
+            } else {
+                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open_light.png");}
+            break;
+    }
+    sectionIcon.addFile(path, QSize(), QIcon::Normal, QIcon::Off);
+    item->setIcon(0, sectionIcon);
+}
+
 void Widget::on_treeWidget_itemCollapsed(QTreeWidgetItem *item)
 {
     if (item != nullptr) {
-        QIcon sectionIcon;
-        sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder.png"), QSize(), QIcon::Normal, QIcon::Off);
-        item->setIcon(0, sectionIcon);
+        setPresetIcon(item, true);
     }
 }
 
 void Widget::on_treeWidget_itemExpanded(QTreeWidgetItem *item)
 {
     if (item != nullptr) {
-        QIcon sectionIcon;
-        sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png"), QSize(), QIcon::Normal, QIcon::Off);
-        item->setIcon(0, sectionIcon);
+        setPresetIcon(item, false);
     }
 }
 
@@ -4899,6 +4920,9 @@ bool Widget::call_dialog(const QString &_message)  /*** Call dialog ***/
 
 void Widget::call_task_complete(const QString &_message, const bool &_timer_mode)  /*** Call task complete ***/
 {
+    if (_hideInTrayFlag) {
+        this->show();
+    }
     Taskcomplete taskcomplete(this);
     taskcomplete.setMessage(_message, _timer_mode);
     taskcomplete.setModal(true);

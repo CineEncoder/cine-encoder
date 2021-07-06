@@ -375,6 +375,8 @@ private slots:
 
     void add_preset();
 
+    void setPresetIcon(QTreeWidgetItem *item, bool collapsed);
+
     void on_treeWidget_itemCollapsed(QTreeWidgetItem *item);
 
     void on_treeWidget_itemExpanded(QTreeWidgetItem *item);
