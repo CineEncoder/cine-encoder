@@ -150,7 +150,6 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
     if (confirm == true)
     {
         std::cout << "Exit confirmed!" << std::endl;  // Debug info //
-        trayIcon->hide();
         short s1 = process_1->state();
         short s2 = process_5->state();
 
@@ -236,6 +235,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
 
         _settings->endGroup();
 
+        //trayIcon->deleteLater();
         event->accept();
     }
 }
@@ -283,6 +283,7 @@ void Widget::setTrayIconActions()
 
 void Widget::showTrayIcon()
 {
+    trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(QIcon(":/resources/icons/64x64/cine-encoder.png"));
     trayIcon->setContextMenu(trayIconMenu);
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -4920,12 +4921,22 @@ bool Widget::call_dialog(const QString &_message)  /*** Call dialog ***/
 
 void Widget::call_task_complete(const QString &_message, const bool &_timer_mode)  /*** Call task complete ***/
 {
-    if (_hideInTrayFlag) {
-        this->show();
+    if (this->isHidden()) {
+        if (_hideInTrayFlag && !_timer_mode) {
+            trayIcon->showMessage(_message, "Task", QSystemTrayIcon::Information, 151000);
+        }
+        else if (_timer_mode) {
+            this->show();
+            Taskcomplete taskcomplete(this);
+            taskcomplete.setMessage(_message, _timer_mode);
+            taskcomplete.setModal(true);
+            taskcomplete.exec();
+        }
+    } else {
+        Taskcomplete taskcomplete(this);
+        taskcomplete.setMessage(_message, _timer_mode);
+        taskcomplete.setModal(true);
+        taskcomplete.exec();
     }
-    Taskcomplete taskcomplete(this);
-    taskcomplete.setMessage(_message, _timer_mode);
-    taskcomplete.setModal(true);
-    taskcomplete.exec();
 }
 
