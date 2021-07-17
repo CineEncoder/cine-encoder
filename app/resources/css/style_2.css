@@ -852,6 +852,15 @@ QPushButton#buttonCloseTaskWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton:hover#actionAdd_preset,
+QPushButton:hover#actionRemove_preset,
+QPushButton:hover#actionEdit_preset,
+QPushButton:hover#actionAdd,
+QPushButton:hover#actionRemove,
+QPushButton:hover#buttonSortUp,
+QPushButton:hover#buttonSortDown,
+QPushButton:hover#actionStop,
+QPushButton:hover#actionEncode,
 QPushButton:hover#buttonReset,
 QPushButton:hover#buttonHotInputFile,
 QPushButton:hover#buttonHotOutputFile,
@@ -862,6 +871,15 @@ QPushButton:hover#closeWindow,
 QPushButton:hover#buttonCloseTaskWindow {
         background-color: #343B48;
 }
+QPushButton:pressed#actionAdd_preset,
+QPushButton:pressed#actionRemove_preset,
+QPushButton:pressed#actionEdit_preset,
+QPushButton:pressed#actionAdd,
+QPushButton:pressed#actionRemove,
+QPushButton:pressed#buttonSortUp,
+QPushButton:pressed#buttonSortDown,
+QPushButton:pressed#actionStop,
+QPushButton:pressed#actionEncode,
 QPushButton:pressed#buttonReset,
 QPushButton:pressed#buttonHotInputFile,
 QPushButton:pressed#buttonHotOutputFile,

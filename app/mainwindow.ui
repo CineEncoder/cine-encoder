@@ -506,18 +506,6 @@
                  <property name="toolTip">
                   <string>Edit</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -578,23 +566,6 @@ QPushButton:pressed {
                  <property name="autoFillBackground">
                   <bool>false</bool>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}
-QPushButton::menu-indicator {	
-	height: 0px;
-	background-color: transparent;
-}
-</string>
-                 </property>
                  <property name="locale">
                   <locale language="English" country="UnitedStates"/>
                  </property>
@@ -635,18 +606,6 @@ QPushButton::menu-indicator {
                  </property>
                  <property name="toolTip">
                   <string>Remove</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -4070,18 +4029,6 @@ QPushButton:pressed {
                  <property name="toolTip">
                   <string>Sort Z-A</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -5026,18 +4973,6 @@ QPushButton:pressed {
                  <property name="toolTip">
                   <string>Add files</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-                 </property>
                  <property name="locale">
                   <locale language="English" country="UnitedStates"/>
                  </property>
@@ -5075,18 +5010,6 @@ QPushButton:pressed {
                  </property>
                  <property name="toolTip">
                   <string>Encode</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -5449,18 +5372,6 @@ QPushButton:pressed {
                  <property name="toolTip">
                   <string>Remove from the list</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -5515,18 +5426,6 @@ QPushButton:pressed {
                  <property name="toolTip">
                   <string>Stop</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -5574,18 +5473,6 @@ QPushButton:pressed {
                  </property>
                  <property name="toolTip">
                   <string>Sort A-Z</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
                  </property>
                  <property name="text">
                   <string/>

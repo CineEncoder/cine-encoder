@@ -3121,20 +3121,27 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         ui->tableWidget->setItem(numRows, columnIndex::T_STARTTIME, newItem_startTime);
         ui->tableWidget->setItem(numRows, columnIndex::T_ENDTIME, newItem_endTime);
 
+        QString icons[4][5] = {
+            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
+            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
+            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
+            {"cil-hdr_black", "cil-camera-roll_black", "cil-hd_black", "cil-4k_black", "cil-file_black"}
+        };
+
         if (mastering_display_color_primaries != "") {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/cil-hdr.png"));
+            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][0] + ".png"));
         }
         else if (height_qstr.toInt() >=1 && height_qstr.toInt() < 720) {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/cil-camera-roll.png"));
+            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][1] + ".png"));
         }
         else if (height_qstr.toInt() >= 720 && height_qstr.toInt() < 2160) {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/cil-hd.png"));
+            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][2] + ".png"));
         }
         else if (height_qstr.toInt() >= 2160) {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/cil-4k.png"));
+            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][3] + ".png"));
         }
         else {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/cil-file.png"));
+            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][4] + ".png"));
         }
 
         int smplrt_int;

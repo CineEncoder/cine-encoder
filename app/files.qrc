@@ -300,5 +300,10 @@
         <file>resources/icons/16x16/cil-chevron-right_black.png</file>
         <file>resources/icons/16x16/cil-options-horizontal_black.png</file>
         <file>resources/icons/16x16/cil-history_black.png</file>
+        <file>resources/icons/16x16/cil-4k_black.png</file>
+        <file>resources/icons/16x16/cil-camera-roll_black.png</file>
+        <file>resources/icons/16x16/cil-file_black.png</file>
+        <file>resources/icons/16x16/cil-hd_black.png</file>
+        <file>resources/icons/16x16/cil-hdr_black.png</file>
     </qresource>
 </RCC>
