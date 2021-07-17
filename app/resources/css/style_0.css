@@ -821,6 +821,12 @@ QPushButton::menu-indicator {
 
 /*********************************************/
 
+QPushButton#buttonReset {
+        border: none;
+        image: url(:/resources/icons/16x16/cil-history.png);
+        color: @elementsTextColor;
+        background-color: transparent;
+}
 QPushButton#buttonHotInputFile {
         border: none;
         image: url(:/resources/icons/12x12/cil-input.png);
@@ -864,6 +870,7 @@ QPushButton#buttonCloseTaskWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton:hover#buttonReset,
 QPushButton:hover#buttonHotInputFile,
 QPushButton:hover#buttonHotOutputFile,
 QPushButton:hover#actionSettings,
@@ -873,6 +880,7 @@ QPushButton:hover#closeWindow,
 QPushButton:hover#buttonCloseTaskWindow {
         background-color: #343B48;
 }
+QPushButton:pressed#buttonReset,
 QPushButton:pressed#buttonHotInputFile,
 QPushButton:pressed#buttonHotOutputFile,
 QPushButton:pressed#actionSettings,
@@ -919,13 +927,37 @@ QPushButton:pressed#buttonTab_4 {
 
 /*********************************************/
 
-QPushButton#buttonFramePrevious,
-QPushButton#buttonFrameNext,
-QPushButton#buttonSetStartTime,
-QPushButton#buttonSetEndTime,
-QPushButton#buttonConfigure,
+QPushButton#buttonFramePrevious {
+    padding-left: 12px;
+    padding-right: 16px;
+    text-align: right center;
+    border: 1px solid #373C46;
+    color: #D2D2D2;
+    background-color: transparent;
+    image: url(:/resources/icons/16x16/cil-chevron-left.png);
+    image-position: left;
+}
+QPushButton#buttonFrameNext {
+    padding-left: 16px;
+    padding-right: 12px;
+    text-align: left center;
+    border: 1px solid #373C46;
+    color: #D2D2D2;
+    background-color: transparent;
+    image: url(:/resources/icons/16x16/cil-chevron-right.png);
+    image-position: right;
+}
 QPushButton#buttonTempPath,
 QPushButton#buttonOutputPath {
+    border: 1px solid #373C46;
+    color: #D2D2D2;
+    background-color: transparent;
+    image: url(:/resources/icons/16x16/cil-options-horizontal.png);
+    image-position: center;
+}
+QPushButton#buttonSetStartTime,
+QPushButton#buttonSetEndTime,
+QPushButton#buttonConfigure {
     border: 1px solid #373C46;
     color: #D2D2D2;
     background-color: transparent;

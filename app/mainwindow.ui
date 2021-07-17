@@ -3315,21 +3315,8 @@ QPushButton:pressed {
                                 <height>31</height>
                                </size>
                               </property>
-                              <property name="layoutDirection">
-                               <enum>Qt::RightToLeft</enum>
-                              </property>
                               <property name="text">
                                <string>Next Frame  </string>
-                              </property>
-                              <property name="icon">
-                               <iconset resource="files.qrc">
-                                <normaloff>:/resources/icons/16x16/cil-chevron-right.png</normaloff>:/resources/icons/16x16/cil-chevron-right.png</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>12</width>
-                                <height>12</height>
-                               </size>
                               </property>
                               <property name="flat">
                                <bool>true</bool>
@@ -3456,16 +3443,6 @@ QPushButton:pressed {
                               </property>
                               <property name="text">
                                <string>  Prev Frame</string>
-                              </property>
-                              <property name="icon">
-                               <iconset resource="files.qrc">
-                                <normaloff>:/resources/icons/16x16/cil-chevron-left.png</normaloff>:/resources/icons/16x16/cil-chevron-left.png</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>12</width>
-                                <height>12</height>
-                               </size>
                               </property>
                               <property name="flat">
                                <bool>true</bool>

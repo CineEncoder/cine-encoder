@@ -643,8 +643,8 @@ void Widget::setParameters()    /*** Set parameters ***/
     QString type;
     QFont parentFont;
     parentFont.setBold(true);
-    QIcon sectionIcon;
-    sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder.png"), QSize(), QIcon::Normal, QIcon::Off);
+    //QIcon sectionIcon;
+    //sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder.png"), QSize(), QIcon::Normal, QIcon::Off);
     for (int i = 0; i < NUM_ROWS; i++) {
         type = _preset_table[PARAMETERS_COUNT][i];
         if (type == "TopLewelItem") {
@@ -652,7 +652,8 @@ void Widget::setParameters()    /*** Set parameters ***/
             root->setText(0, _preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
             root->setFont(0, parentFont);
-            root->setIcon(0, sectionIcon);
+            //root->setIcon(0, sectionIcon);
+            setPresetIcon(root, true);
             ui->treeWidget->addTopLevelItem(root);
             ui->treeWidget->setCurrentItem(root);
             root->setFirstColumnSpanned(true);
@@ -4540,13 +4541,14 @@ void Widget::add_section()  /*** Add section ***/
 {
     QFont parentFont;
     parentFont.setBold(true);
-    QIcon sectionIcon;
-    sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder.png"), QSize(), QIcon::Normal, QIcon::Off);
+    //QIcon sectionIcon;
+    //sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder.png"), QSize(), QIcon::Normal, QIcon::Off);
     QTreeWidgetItem *root = new QTreeWidgetItem();
     root->setText(0, "New section");
     root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
     root->setFont(0, parentFont);
-    root->setIcon(0, sectionIcon);
+    //root->setIcon(0, sectionIcon);
+    setPresetIcon(root, true);
     ui->treeWidget->addTopLevelItem(root);
     ui->treeWidget->setCurrentItem(root);
     root->setFirstColumnSpanned(true);
@@ -4604,7 +4606,17 @@ void Widget::add_preset()  /*** Add preset ***/
 void Widget::setItemStyle(QTreeWidgetItem *item)
 {
     QColor foregroundChildColor;
-    foregroundChildColor.setRgb(qRgb(50, 100, 157));
+    switch (_theme)
+    {
+        case 0:
+        case 1:
+        case 2:
+            foregroundChildColor.setRgb(qRgb(50, 100, 157));
+            break;
+        case 3:
+            foregroundChildColor.setRgb(qRgb(0, 0, 200));
+            break;
+    }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
     item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
     item->setForeground(0, foregroundChildColor);

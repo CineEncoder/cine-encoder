@@ -204,24 +204,8 @@
               <property name="toolTip">
                <string>Close</string>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="files.qrc">
-                <normaloff>:/resources/icons/16x16/cil-x.png</normaloff>:/resources/icons/16x16/cil-x.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -246,12 +230,6 @@ QPushButton:pressed {
             </item>
             <item row="0" column="2">
              <widget class="QLabel" name="label_title">
-              <property name="styleSheet">
-               <string notr="true">QLabel {	
-	background-color: transparent;
-	color: rgb(220, 220, 220);
-}</string>
-              </property>
               <property name="text">
                <string>Edit preset</string>
               </property>
@@ -503,7 +481,7 @@ QPushButton:pressed {
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>594</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_27">
@@ -1736,7 +1714,7 @@ QPushButton:pressed {
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>594</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
@@ -1999,11 +1977,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2360,11 +2338,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2421,11 +2399,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2607,11 +2585,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2737,11 +2715,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2865,11 +2843,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3046,11 +3024,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3127,11 +3105,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3304,7 +3282,7 @@ QPushButton:pressed {
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>594</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_32">
@@ -3408,11 +3386,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3575,11 +3553,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3657,11 +3635,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3834,7 +3812,7 @@ QPushButton:pressed {
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>594</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_33">
@@ -3960,11 +3938,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -4633,11 +4611,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -4737,11 +4715,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -4801,11 +4779,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -4914,11 +4892,11 @@ QPushButton:pressed {
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">

@@ -209,24 +209,8 @@
               <property name="toolTip">
                <string>Close</string>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="files.qrc">
-                <normaloff>:/resources/icons/16x16/cil-x.png</normaloff>:/resources/icons/16x16/cil-x.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -238,13 +222,6 @@ QPushButton:pressed {
             </item>
             <item row="0" column="2">
              <widget class="QLabel" name="label_title">
-              <property name="styleSheet">
-               <string notr="true">QLabel {	
-	background-color: transparent;
-	color: rgb(220, 220, 220);
-}
-</string>
-              </property>
               <property name="text">
                <string>Cine Encoder</string>
               </property>

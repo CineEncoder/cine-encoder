@@ -724,10 +724,6 @@
                           <property name="text">
                            <string/>
                           </property>
-                          <property name="icon">
-                           <iconset resource="files.qrc">
-                            <normaloff>:/resources/icons/16x16/cil-options-horizontal.png</normaloff>:/resources/icons/16x16/cil-options-horizontal.png</iconset>
-                          </property>
                          </widget>
                         </item>
                         <item row="0" column="2">
@@ -791,10 +787,6 @@
                           </property>
                           <property name="text">
                            <string/>
-                          </property>
-                          <property name="icon">
-                           <iconset resource="files.qrc">
-                            <normaloff>:/resources/icons/16x16/cil-options-horizontal.png</normaloff>:/resources/icons/16x16/cil-options-horizontal.png</iconset>
                           </property>
                          </widget>
                         </item>
@@ -1038,9 +1030,12 @@
                           <property name="styleSheet">
                            <string notr="true"/>
                           </property>
+                          <property name="currentIndex">
+                           <number>3</number>
+                          </property>
                           <item>
                            <property name="text">
-                            <string>Default</string>
+                            <string>Gray</string>
                            </property>
                           </item>
                           <item>
@@ -1055,7 +1050,7 @@
                           </item>
                           <item>
                            <property name="text">
-                            <string>Light</string>
+                            <string>Default</string>
                            </property>
                           </item>
                          </widget>
@@ -1410,24 +1405,8 @@
               <property name="toolTip">
                <string>Close</string>
               </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="files.qrc">
-                <normaloff>:/resources/icons/16x16/cil-x.png</normaloff>:/resources/icons/16x16/cil-x.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1439,12 +1418,6 @@ QPushButton:pressed {
             </item>
             <item row="0" column="2">
              <widget class="QLabel" name="label_title">
-              <property name="styleSheet">
-               <string notr="true">QLabel {	
-	background-color: transparent;
-	color: rgb(220, 220, 220);
-}</string>
-              </property>
               <property name="text">
                <string>Settings</string>
               </property>
@@ -1521,24 +1494,8 @@ QPushButton:pressed {
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {	
-	border: none;
-	background-color: transparent;
-}
-QPushButton:hover {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton:pressed {	
-	background-color: rgb(85, 170, 255);
-}</string>
-                </property>
                 <property name="text">
                  <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="files.qrc">
-                  <normaloff>:/resources/icons/16x16/cil-history.png</normaloff>:/resources/icons/16x16/cil-history.png</iconset>
                 </property>
                </widget>
               </item>
@@ -1636,8 +1593,6 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="files.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
