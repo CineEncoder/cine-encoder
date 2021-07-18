@@ -395,6 +395,39 @@ void Widget::setParameters()    /*** Set parameters ***/
     itemMenu->addAction(split_video);
     connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, &Widget::provideContextMenu);
 
+    // ***************************** Tree menu actions ***********************************//
+
+    ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    QAction* add_section = new QAction(tr("Add section"), this);
+    QAction* add_preset = new QAction(tr("Add preset"), this);
+    QAction* rename_section_preset = new QAction(tr("Rename"), this);
+    QAction* remove_section_preset = new QAction(tr("Remove"), this);
+    connect(add_section, &QAction::triggered, this, &Widget::add_section);
+    connect(add_preset, &QAction::triggered, this, &Widget::add_preset);
+    connect(rename_section_preset, &QAction::triggered, this, &Widget::renameSectionPreset);
+    connect(remove_section_preset, &QAction::triggered, this, &Widget::on_actionRemove_preset_clicked);
+
+    QAction* apply_preset = new QAction(tr("Apply"), this);
+    QAction* edit_preset = new QAction(tr("Edit"), this);
+    connect(apply_preset, &QAction::triggered, this, &Widget::on_buttonApplyPreset_clicked);
+    connect(edit_preset, &QAction::triggered, this, &Widget::on_actionEdit_preset_clicked);
+
+    sectionMenu = new QMenu(this);
+    sectionMenu->addAction(add_section);
+    sectionMenu->addAction(add_preset);
+    sectionMenu->addAction(rename_section_preset);
+    sectionMenu->addAction(remove_section_preset);
+
+    presetMenu = new QMenu(this);
+    presetMenu->addAction(add_section);
+    presetMenu->addAction(add_preset);
+    presetMenu->addAction(rename_section_preset);
+    presetMenu->addAction(remove_section_preset);
+    presetMenu->addSeparator();
+    presetMenu->addAction(apply_preset);
+    presetMenu->addAction(edit_preset);
+    connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &Widget::providePresetContextMenu);
+
     // ****************************** Initialize variables ************************************//
 
     QDesktopWidget *screenSize = QApplication::desktop();
@@ -4425,7 +4458,6 @@ void Widget::on_buttonApplyPreset_clicked()  /*** Apply preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        std::cout << "Negative index..." << std::endl;
         _message = "Select preset first!\n";
         call_task_complete(_message, false);
         return;
@@ -4457,7 +4489,6 @@ void Widget::on_actionRemove_preset_clicked()  /*** Remove preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        std::cout << "Negative index..." << std::endl;
         return;
     }
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
@@ -4502,7 +4533,6 @@ void Widget::on_actionEdit_preset_clicked()  /*** Edit preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        std::cout << "Negative index..." << std::endl;
         _message = "Select preset first!\n";
         call_task_complete(_message, false);
         return;
@@ -4566,7 +4596,6 @@ void Widget::add_preset()  /*** Add preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        std::cout << "Negative index..." << std::endl;
         return;
     }
 
@@ -4608,6 +4637,19 @@ void Widget::add_preset()  /*** Add preset ***/
     }
 
     updatePresetTable();
+}
+
+void Widget::renameSectionPreset()
+{
+    QTreeWidgetItem *item = ui->treeWidget->currentItem();
+    QTreeWidgetItem *parentItem = item->parent();
+    if (parentItem != nullptr) {
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+        ui->treeWidget->editItem(item, 0);
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    } else {
+        ui->treeWidget->editItem(item, 0);
+    }
 }
 
 void Widget::setItemStyle(QTreeWidgetItem *item)
@@ -4921,6 +4963,28 @@ void Widget::on_treeWidget_itemChanged(QTreeWidgetItem *item, int column)
 {
     if (item->isSelected() && column == 0) {
         updatePresetTable();
+    }
+}
+
+void Widget::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    QTreeWidgetItem *parentItem = item->parent();
+    if (parentItem != nullptr) {
+        on_buttonApplyPreset_clicked();
+        std::cout << "Double clicked column: " << column << std::endl;
+    }
+}
+
+void Widget::providePresetContextMenu(const QPoint &position)     /*** Call tree items menu  ***/
+{
+    QTreeWidgetItem *item = ui->treeWidget->itemAt(position);
+    if (item != nullptr) {
+        QTreeWidgetItem *parentItem = item->parent();
+        if (parentItem != nullptr) {
+            presetMenu->exec(ui->treeWidget->mapToGlobal(QPoint(position.x(), position.y() + 35)));
+        } else {
+            sectionMenu->exec(ui->treeWidget->mapToGlobal(QPoint(position.x(), position.y() + 35)));
+        }
     }
 }
 

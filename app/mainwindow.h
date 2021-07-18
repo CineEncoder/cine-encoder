@@ -375,6 +375,8 @@ private slots:
 
     void add_preset();
 
+    void renameSectionPreset();
+
     void setPresetIcon(QTreeWidgetItem *item, bool collapsed);
 
     void on_treeWidget_itemCollapsed(QTreeWidgetItem *item);
@@ -392,6 +394,8 @@ private slots:
     void on_treeWidget_itemChanged(QTreeWidgetItem *item, int column);
 
     void on_comboBoxMode_currentIndexChanged(int index);
+
+    void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
 private:
 
@@ -499,6 +503,12 @@ private:
     // ***************** Table menu actions ************************//
 
     QMenu* itemMenu;
+
+    // ****************** Tree menu actions ************************//
+
+    QMenu* sectionMenu;
+
+    QMenu* presetMenu;
 
     // ***************** Preset menu actions ***********************//
 
@@ -688,6 +698,8 @@ private:
     void setThumbnail(QString curFilename, double time, QString quality);
 
     void provideContextMenu(const QPoint &position);
+
+    void providePresetContextMenu(const QPoint &position);
 
     /************************* Preset Window ******************************/
 
