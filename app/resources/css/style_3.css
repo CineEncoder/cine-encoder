@@ -26,7 +26,7 @@
 @headerBorder = #B6B6B6;
 
 @elementsTextColor = #000000;
-@elementsTextDisabled = #101010;
+@elementsTextDisabled = #707070;
 @elementsTextAbstractItem = #000000;
 @elementsBackgroundColor = #DDDDDD;
 @elementsBackgroundAbstractItem = #EEEEEE;
@@ -703,7 +703,7 @@ QLineEdit:disabled {
     padding-left: 3px;
     border-radius: 0px;
     border: 2px solid @elementsBorderColor;
-    color: #101010;
+    color: @elementsTextDisabled;
     background-color: @elementsBackgroundColor;
 }
 

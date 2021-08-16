@@ -23,7 +23,7 @@ enum Pixformat {
     PIXFORMAT_AUTO
 };
 enum Parameters {
-    _PRESET_NAME,    _CODEC,          _MODE,
+    _OUTPUT_PARAM,   _CODEC,          _MODE,
     _CONTAINER,      _BQR,            _MAXRATE,
     _BUFSIZE,        _FRAME_RATE,     _BLENDING,
     _WIDTH,          _HEIGHT,         _PASS,
@@ -32,7 +32,8 @@ enum Parameters {
     _MASTER_DISPLAY, _CHROMA_COORD,   _WHITE_COORD,
     _AUDIO_CODEC,    _AUDIO_BITRATE,  _MINRATE,
     _LEVEL,          _ASAMPLE_RATE,   _ACHANNELS,
-    _MATRIX,         _PRIMARY,        _TRC
+    _MATRIX,         _PRIMARY,        _TRC,
+    _PRESET_NAME
 };
 
 namespace Ui

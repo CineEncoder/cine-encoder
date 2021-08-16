@@ -768,7 +768,7 @@
                   <bool>false</bool>
                  </property>
                  <property name="columnCount">
-                  <number>30</number>
+                  <number>31</number>
                  </property>
                  <attribute name="headerVisible">
                   <bool>false</bool>
@@ -882,7 +882,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string notr="true">ID 0 - TECHNICAL INFO: Preset Name</string>
+                   <string notr="true">ID 0 - TECHNICAL INFO: Output Parameters</string>
                   </property>
                  </column>
                  <column>
@@ -993,6 +993,11 @@
                  <column>
                   <property name="text">
                    <string notr="true">ID 22 - TECHNICAL INFO: Audio Bitrate</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 23 - TECHNICAL INFO: Preset Name</string>
                   </property>
                  </column>
                 </widget>
@@ -1783,7 +1788,7 @@
                            <number>18</number>
                           </property>
                           <item row="0" column="0">
-                           <layout class="QGridLayout" name="gridLayout_13">
+                           <layout class="QGridLayout" name="gridLayoutAudio">
                             <property name="sizeConstraint">
                              <enum>QLayout::SetDefaultConstraint</enum>
                             </property>
@@ -3561,7 +3566,7 @@
             <property name="minimumSize">
              <size>
               <width>146</width>
-              <height>83</height>
+              <height>82</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -3583,7 +3588,10 @@
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>0</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
              <property name="leftMargin">
@@ -3650,6 +3658,9 @@
                  <property name="frameShape">
                   <enum>QFrame::NoFrame</enum>
                  </property>
+                 <property name="lineWidth">
+                  <number>0</number>
+                 </property>
                  <property name="text">
                   <string>Preview</string>
                  </property>
@@ -3692,7 +3703,7 @@
             <property name="minimumSize">
              <size>
               <width>150</width>
-              <height>83</height>
+              <height>82</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -3828,7 +3839,7 @@
             <property name="minimumSize">
              <size>
               <width>150</width>
-              <height>83</height>
+              <height>82</height>
              </size>
             </property>
             <property name="maximumSize">

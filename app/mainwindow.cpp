@@ -159,15 +159,15 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         if (s2 != 0) {
             process_5->kill();
         }
-
+        const QString SEP = "\\";
         if (_prs_file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QString line = "";
             for (int i = 0; i < PARAMETERS_COUNT; i++)
             {
-                line += _cur_param[i] + QString("<%>");
+                line += _cur_param[i] + SEP;
             }
-            line += QString::number(_pos_top) + QString("<%>") +  QString::number(_pos_cld) + QString("<%>\n");
+            line += QString::number(_pos_top) + SEP +  QString::number(_pos_cld) + SEP + QString("\n");
             _prs_file.write(line.toUtf8());
             int column = _preset_table.size();  // Column count
             int row =  _preset_table[0].size();  // Row count
@@ -178,9 +178,9 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
                     line = "";
                     for (int j = 0; j < column; j++)
                     {
-                        line += _preset_table[j][i] + QString("<&>");
+                        line += _preset_table[j][i] + SEP;
                     }
-                    line += "\n";
+                    line += QString("\n");
                     _prs_file.write(line.toUtf8());
                 }
             }
@@ -213,29 +213,17 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->setValue("Settings/open_dir", _openDir);
         _settings->setValue("Settings/batch_mode", _batch_mode);
         _settings->setValue("Settings/tray", _hideInTrayFlag);
-        /*
-        _settings->beginWriteArray("Settings/cur_param");
-        for (int i = 0; i < PARAMETERS_COUNT; i++)
-        {
+        _settings->endGroup();
+
+        /*_settings->beginWriteArray("Settings/cur_param");
+        for (int i = 0; i < PARAMETERS_COUNT; i++) {
             _settings->setArrayIndex(i);
             _settings->setValue("parameter", _cur_param[i]);
         }
         _settings->endArray();
         _settings->setValue("Settings/preset/pos_top", _pos_top);
-        _settings->setValue("Settings/preset/pos_cld", _pos_cld);
-        */
+        _settings->setValue("Settings/preset/pos_cld", _pos_cld);*/
 
-        /*qRegisterMetaTypeStreamOperators<QList<int>>("QList<int>");
-        QList<int> myList;
-        for (int i = 0; i < PARAMETERS_COUNT; i++)
-        {
-            myList.append(i);
-        }
-        _settings->setValue("foo", QVariant::fromValue(myList));*/
-
-        _settings->endGroup();
-
-        //trayIcon->deleteLater();
         event->accept();
     }
 }
@@ -243,10 +231,10 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
 void Widget::paintEvent(QPaintEvent *event) /*** Disable QTab draw base ***/
 {
     if (event->type() == QEvent::Paint) {
-        QList<QTabBar *> tabBars = findChildren<QTabBar *>("", Qt::FindChildrenRecursively);
-        for (int var = 0; var < tabBars.size(); var++) {
-            if (tabBars.at(var)->drawBase()) {
-                 tabBars.at(var)->setDrawBase(false);
+        QList<QTabBar *> tabBars = window->findChildren<QTabBar *>();
+        foreach (QTabBar * tabBar, tabBars) {
+            if (tabBar->drawBase()) {
+                 tabBar->setDrawBase(false);
             }
         }
     }
@@ -445,7 +433,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _settings_path = QDir::homePath() + QString("/CineEncoder");
     _thumb_path = _settings_path + QString("/thumbnails");
     _settings_file = _settings_path + QString("/ce_settings");
-    _preset_file = _settings_path + QString("/ce_preset_v3_3");
+    _preset_file = _settings_path + QString("/ce_preset34.ini");
     _settings = new QSettings(_settings_path + QString("/ce_window.ini"), QSettings::IniFormat, this);
     _status_encode_btn = "start";
     _timer_interval = 30;
@@ -501,7 +489,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     ui->label_53->hide();
     ui->label_54->hide();
     ui->label_55->hide();
-    ui->progressBar->hide();
+    ui->progressBar->hide();   
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->horizontalHeader()->setVisible(true);
     ui->tableWidget->setAlternatingRowColors(true);
@@ -614,11 +602,11 @@ void Widget::setParameters()    /*** Set parameters ***/
             while(!_prs_file.atEnd()) {
                 line << _prs_file.readLine();
             }
-
+            const QString SEP = "\\";
             std::cout << "Number of lines in preset file: " << line.size() << std::endl; // Debug info //
             if (line.size() > 0)
             {
-                QStringList cur_param = line[0].split("<%>");
+                QStringList cur_param = line[0].split(SEP);
                 if (cur_param.size() == PARAMETERS_COUNT+3)
                 {
                     for (int k = 0; k < PARAMETERS_COUNT; k++) {
@@ -631,7 +619,7 @@ void Widget::setParameters()    /*** Set parameters ***/
                       _preset_table[i].resize(n);
                     }
                     for (int j = 1; j <= n; j++) {
-                        cur_param = line[j].split("<&>");
+                        cur_param = line[j].split(SEP);
                         if (cur_param.size() == PARAMETERS_COUNT+2) {
                             for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
                                 _preset_table[m][j-1] = cur_param[m];
@@ -676,8 +664,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     QString type;
     QFont parentFont;
     parentFont.setBold(true);
-    //QIcon sectionIcon;
-    //sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder.png"), QSize(), QIcon::Normal, QIcon::Off);
     for (int i = 0; i < NUM_ROWS; i++) {
         type = _preset_table[PARAMETERS_COUNT][i];
         if (type == "TopLewelItem") {
@@ -685,7 +671,6 @@ void Widget::setParameters()    /*** Set parameters ***/
             root->setText(0, _preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
             root->setFont(0, parentFont);
-            //root->setIcon(0, sectionIcon);
             setPresetIcon(root, true);
             ui->treeWidget->addTopLevelItem(root);
             ui->treeWidget->setCurrentItem(root);
@@ -731,8 +716,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     // ************************** Set theme and geometry ******************************//
 
     if (_settings->childGroups().contains("MainWidget", Qt::CaseInsensitive)) {
-        std::cout << "Key exists" << std::endl;
-
         // Restore Main Widget
         _settings->beginGroup("MainWidget");
         this->restoreGeometry(_settings->value("MainWidget/geometry").toByteArray());
@@ -758,6 +741,8 @@ void Widget::setParameters()    /*** Set parameters ***/
         _openDir = _settings->value("Settings/open_dir").toString();
         _batch_mode = _settings->value("Settings/batch_mode").toBool();
         _hideInTrayFlag = _settings->value("Settings/tray").toBool();
+        _settings->endGroup();
+
         /*int arraySize = _settings->beginReadArray("Settings/cur_param");
         for (int i = 0; i < arraySize; i++)
         {
@@ -768,20 +753,13 @@ void Widget::setParameters()    /*** Set parameters ***/
         _pos_top = _settings->value("Settings/preset/pos_top").toInt;
         _pos_cld = _settings->value("Settings/preset/pos_cld").toInt;*/
 
-        /*QList<int> myList = _settings->value("foo").value<QList<int>>();
-        qDebug() << myList;*/
-
-        _settings->endGroup();
-
     } else {
-        std::cout << "Key doesn't exist" << std::endl;
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
         setDocksParameters();
     }
 
     if (this->isMaximized()) {
         _expandWindowsState = true;
-        //setExpandIcon();
     }
 
     if (_batch_mode) {
@@ -1064,12 +1042,10 @@ void Widget::get_current_data() /*** Get current data ***/
 
     //******************************** Set video widgets *****************************//
 
-    ui->lineEditTitleVideo->setEnabled(true);
-    ui->lineEditAuthorVideo->setEnabled(true);
-    ui->lineEditYearVideo->setEnabled(true);
-    ui->lineEditPerfVideo->setEnabled(true);
-    ui->lineEditDescriptionVideo->setEnabled(true);
-    ui->lineEditMovieNameVideo->setEnabled(true);
+    QList<QLineEdit *> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit *>();
+    foreach (QLineEdit *lineEdit, linesEditMetadata) {
+        lineEdit->setEnabled(true);
+    }
 
     ui->lineEditTitleVideo->setText(_videoMetadata[VIDEO_TITLE]);
     ui->lineEditAuthorVideo->setText(_videoMetadata[VIDEO_AUTHOR]);
@@ -1078,109 +1054,50 @@ void Widget::get_current_data() /*** Get current data ***/
     ui->lineEditDescriptionVideo->setText(_videoMetadata[VIDEO_DESCRIPTION]);
     ui->lineEditMovieNameVideo->setText(_videoMetadata[VIDEO_MOVIENAME]);
 
-    ui->lineEditTitleVideo->setCursorPosition(0);
-    ui->lineEditAuthorVideo->setCursorPosition(0);
-    ui->lineEditYearVideo->setCursorPosition(0);
-    ui->lineEditPerfVideo->setCursorPosition(0);
-    ui->lineEditDescriptionVideo->setCursorPosition(0);
-    ui->lineEditMovieNameVideo->setCursorPosition(0);
+    foreach (QLineEdit *lineEdit, linesEditMetadata) {
+        lineEdit->setCursorPosition(0);
+    }
 
     //******************************** Set audio widgets *****************************//
 
-    QList <QCheckBox *> checkBoxAudio;
-    checkBoxAudio.append(ui->checkBoxAudio_1);
-    checkBoxAudio.append(ui->checkBoxAudio_2);
-    checkBoxAudio.append(ui->checkBoxAudio_3);
-    checkBoxAudio.append(ui->checkBoxAudio_4);
-    checkBoxAudio.append(ui->checkBoxAudio_5);
-    checkBoxAudio.append(ui->checkBoxAudio_6);
-    checkBoxAudio.append(ui->checkBoxAudio_7);
-    checkBoxAudio.append(ui->checkBoxAudio_8);
-    checkBoxAudio.append(ui->checkBoxAudio_9);
-
-    QList <QLineEdit *> lineEditLangAudio;
-    lineEditLangAudio.append(ui->lineEditLangAudio_1);
-    lineEditLangAudio.append(ui->lineEditLangAudio_2);
-    lineEditLangAudio.append(ui->lineEditLangAudio_3);
-    lineEditLangAudio.append(ui->lineEditLangAudio_4);
-    lineEditLangAudio.append(ui->lineEditLangAudio_5);
-    lineEditLangAudio.append(ui->lineEditLangAudio_6);
-    lineEditLangAudio.append(ui->lineEditLangAudio_7);
-    lineEditLangAudio.append(ui->lineEditLangAudio_8);
-    lineEditLangAudio.append(ui->lineEditLangAudio_9);
-
-    QList <QLineEdit *> lineEditTitleAudio;
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_1);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_2);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_3);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_4);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_5);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_6);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_7);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_8);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_9);
-
     for (int q = 0; q < AMOUNT_AUDIO_STREAMS; q++) {
-        checkBoxAudio.at(q)->setChecked(bool(_audioStreamCheckState[q]));
-        lineEditLangAudio.at(q)->setText(_audioLang[q]);
-        lineEditLangAudio.at(q)->setCursorPosition(0);
-        lineEditTitleAudio.at(q)->setText(_audioTitle[q]);
-        lineEditTitleAudio.at(q)->setCursorPosition(0);
-    }
-
-    for (int q = 0; q < countAudioStreams; q++) {
-        checkBoxAudio.at(q)->setEnabled(true);
-        lineEditLangAudio.at(q)->setEnabled(true);
-        lineEditTitleAudio.at(q)->setEnabled(true);
+        QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
+        checkBoxAudio->setChecked(bool(_audioStreamCheckState[q]));
+        QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
+        lineEditLangAudio->setText(_audioLang[q]);
+        lineEditLangAudio->setCursorPosition(0);
+        QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
+        lineEditTitleAudio->setText(_audioTitle[q]);
+        lineEditTitleAudio->setCursorPosition(0);
+        if (q < countAudioStreams) {
+            checkBoxAudio->setEnabled(true);
+            lineEditLangAudio->setEnabled(true);
+            lineEditTitleAudio->setEnabled(true);
+        }
     }
 
     //******************************** Set subtitle widgets *****************************//
 
-    QList <QCheckBox *> checkBoxSubtitle;
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_1);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_2);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_3);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_4);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_5);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_6);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_7);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_8);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_9);
-
-    QList <QLineEdit *> lineEditLangSubtitle;
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_1);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_2);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_3);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_4);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_5);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_6);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_7);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_8);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_9);
-
-    QList <QLineEdit *> lineEditTitleSubtitle;
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_1);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_2);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_3);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_4);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_5);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_6);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_7);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_8);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_9);
-
     for (int q = 0; q < AMOUNT_SUBTITLES; q++) {
-        checkBoxSubtitle.at(q)->setChecked(bool(_subtitleCheckState[q]));
-        lineEditLangSubtitle.at(q)->setText(_subtitleLang[q]);
-        lineEditLangSubtitle.at(q)->setCursorPosition(0);
-        lineEditTitleSubtitle.at(q)->setText(_subtitleTitle[q]);
-        lineEditTitleSubtitle.at(q)->setCursorPosition(0);
-    }
-
-    for (int q = 0; q < countSubtitles; q++) {
-        checkBoxSubtitle.at(q)->setEnabled(true);
-        lineEditLangSubtitle.at(q)->setEnabled(true);
-        lineEditTitleSubtitle.at(q)->setEnabled(true);
+        QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
+        checkBoxSubtitle->setChecked(bool(_subtitleCheckState[q]));
+        QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
+        lineEditLangSubtitle->setText(_subtitleLang[q]);
+        lineEditLangSubtitle->setCursorPosition(0);
+        QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
+        lineEditTitleSubtitle->setText(_subtitleTitle[q]);
+        lineEditTitleSubtitle->setCursorPosition(0);
+        if (q < countSubtitles) {
+            checkBoxSubtitle->setEnabled(true);
+            lineEditLangSubtitle->setEnabled(true);
+            lineEditTitleSubtitle->setEnabled(true);
+        }
     }
 }
 
@@ -2682,6 +2599,7 @@ void Widget::progress_1()   /*** Progress 1 ***/
     QString line = process_1->readAllStandardOutput();
     QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
     //std::cout << line_mod6.toStdString() << std::endl;
+    ui->textBrowser_log->append(line_mod6);
     int pos_err_1 = line_mod6.indexOf("[error]:");
     int pos_err_2 = line_mod6.indexOf("Error");
     int pos_err_3 = line_mod6.indexOf(" @ ");
@@ -2689,18 +2607,15 @@ void Widget::progress_1()   /*** Progress 1 ***/
         QStringList error = line_mod6.split(":");
         if (error.size() >= 2) {
             _error_message = error[1];
-            //std::cout << _error_message.toStdString() << std::endl;
         }
     }
     if (pos_err_2 != -1) {
         _error_message = line_mod6;
-        //std::cout << _error_message.toStdString() << std::endl;
     }
     if (pos_err_3 != -1) {
         QStringList error = line_mod6.split("]");
         if (error.size() >= 2) {
             _error_message = error[1];
-            //std::cout << _error_message.toStdString() << std::endl;
         }
     }
     int pos_st = line_mod6.indexOf("frame=");
@@ -2756,6 +2671,7 @@ void Widget::progress_1()   /*** Progress 1 ***/
 void Widget::progress_2()   /*** Progress 2 ***/
 {
     QString line = process_1->readAllStandardOutput();
+    ui->textBrowser_log->append(line);
     int pos_st = line.indexOf("Done.");
     int pos_nf = line.indexOf("Nothing to do.");
     if ((pos_st != -1) or (pos_nf != -1)) {
@@ -3248,83 +3164,23 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
     ui->progressBar->hide();
 
     // **************************** Disable audio widgets ***********************************//
-    QList <QCheckBox *> checkBoxAudio;
-    checkBoxAudio.append(ui->checkBoxAudio_1);
-    checkBoxAudio.append(ui->checkBoxAudio_2);
-    checkBoxAudio.append(ui->checkBoxAudio_3);
-    checkBoxAudio.append(ui->checkBoxAudio_4);
-    checkBoxAudio.append(ui->checkBoxAudio_5);
-    checkBoxAudio.append(ui->checkBoxAudio_6);
-    checkBoxAudio.append(ui->checkBoxAudio_7);
-    checkBoxAudio.append(ui->checkBoxAudio_8);
-    checkBoxAudio.append(ui->checkBoxAudio_9);
-
-    QList <QLineEdit *> lineEditLangAudio;
-    lineEditLangAudio.append(ui->lineEditLangAudio_1);
-    lineEditLangAudio.append(ui->lineEditLangAudio_2);
-    lineEditLangAudio.append(ui->lineEditLangAudio_3);
-    lineEditLangAudio.append(ui->lineEditLangAudio_4);
-    lineEditLangAudio.append(ui->lineEditLangAudio_5);
-    lineEditLangAudio.append(ui->lineEditLangAudio_6);
-    lineEditLangAudio.append(ui->lineEditLangAudio_7);
-    lineEditLangAudio.append(ui->lineEditLangAudio_8);
-    lineEditLangAudio.append(ui->lineEditLangAudio_9);
-
-    QList <QLineEdit *> lineEditTitleAudio;
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_1);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_2);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_3);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_4);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_5);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_6);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_7);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_8);
-    lineEditTitleAudio.append(ui->lineEditTitleAudio_9);
-
-    for (int q = 0; q < AMOUNT_AUDIO_STREAMS; q++) {
-        checkBoxAudio.at(q)->setEnabled(false);
-        lineEditLangAudio.at(q)->setEnabled(false);
-        lineEditTitleAudio.at(q)->setEnabled(false);
+    QList <QCheckBox *> checkBoxAudio = ui->frameTab_2->findChildren<QCheckBox *>();
+    QList <QLineEdit *> lineEditAudio = ui->frameTab_2->findChildren<QLineEdit *>();
+    foreach (QCheckBox *checkBox, checkBoxAudio) {
+        checkBox->setEnabled(false);
+    }
+    foreach (QLineEdit *lineEdit, lineEditAudio) {
+        lineEdit->setEnabled(false);
     }
 
     // **************************** Disable subtitle widgets ***********************************//
-    QList <QCheckBox *> checkBoxSubtitle;
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_1);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_2);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_3);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_4);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_5);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_6);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_7);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_8);
-    checkBoxSubtitle.append(ui->checkBoxSubtitle_9);
-
-    QList <QLineEdit *> lineEditLangSubtitle;
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_1);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_2);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_3);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_4);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_5);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_6);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_7);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_8);
-    lineEditLangSubtitle.append(ui->lineEditLangSubtitle_9);
-
-    QList <QLineEdit *> lineEditTitleSubtitle;
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_1);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_2);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_3);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_4);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_5);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_6);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_7);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_8);
-    lineEditTitleSubtitle.append(ui->lineEditTitleSubtitle_9);
-
-    for (int q = 0; q < AMOUNT_SUBTITLES; q++) {
-        checkBoxSubtitle.at(q)->setEnabled(false);
-        lineEditLangSubtitle.at(q)->setEnabled(false);
-        lineEditTitleSubtitle.at(q)->setEnabled(false);
+    QList <QCheckBox *> checkBoxSubtitle = ui->frameTab_3->findChildren<QCheckBox *>();
+    QList <QLineEdit *> lineEditSubtitle = ui->frameTab_3->findChildren<QLineEdit *>();
+    foreach (QCheckBox *checkBox, checkBoxSubtitle) {
+        checkBox->setEnabled(false);
+    }
+    foreach (QLineEdit *lineEdit, lineEditSubtitle) {
+        lineEdit->setEnabled(false);
     }
 
     _row = ui->tableWidget->currentRow();
@@ -3346,32 +3202,26 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
         ui->lineEditEndTime->clear();
 
         // **************************** Reset metadata widgets ***********************************//
-        ui->lineEditTitleVideo->clear();
-        ui->lineEditAuthorVideo->clear();
-        ui->lineEditYearVideo->clear();
-        ui->lineEditPerfVideo->clear();
-        ui->lineEditDescriptionVideo->clear();
-        ui->lineEditMovieNameVideo->clear();
-
-        ui->lineEditTitleVideo->setEnabled(false);
-        ui->lineEditAuthorVideo->setEnabled(false);
-        ui->lineEditYearVideo->setEnabled(false);
-        ui->lineEditPerfVideo->setEnabled(false);
-        ui->lineEditDescriptionVideo->setEnabled(false);
-        ui->lineEditMovieNameVideo->setEnabled(false);
+        QList<QLineEdit *> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit *>();
+        foreach (QLineEdit *lineEdit, linesEditMetadata) {
+            lineEdit->clear();
+            lineEdit->setEnabled(false);
+        }
 
         // **************************** Reset audio widgets ***********************************//
-        for (int q = 0; q < AMOUNT_AUDIO_STREAMS; q++) {
-            lineEditLangAudio.at(q)->clear();
-            lineEditTitleAudio.at(q)->clear();
-            checkBoxAudio.at(q)->setChecked(false);
+        foreach (QLineEdit *lineEdit, lineEditAudio) {
+            lineEdit->clear();
+        }
+        foreach (QCheckBox *checkBox, checkBoxAudio) {
+            checkBox->setChecked(false);
         }
 
         // **************************** Reset subtitle widgets ***********************************//
-        for (int q = 0; q < AMOUNT_SUBTITLES; q++) {
-            lineEditLangSubtitle.at(q)->clear();
-            lineEditTitleSubtitle.at(q)->clear();
-            checkBoxSubtitle.at(q)->setChecked(false);
+        foreach (QLineEdit *lineEdit, lineEditSubtitle) {
+            lineEdit->clear();
+        }
+        foreach (QCheckBox *checkBox, checkBoxSubtitle) {
+            checkBox->setChecked(false);
         }
 
         // **************************** Reset video variables ***********************************//
@@ -3545,7 +3395,7 @@ void Widget::on_buttonHotInputFile_clicked()
 void Widget::get_output_filename()  /*** Get output data ***/
 {
     ui->textBrowser_2->clear();
-    ui->textBrowser_2->setText(_cur_param[curParamIndex::PRESET_NAME]);
+    ui->textBrowser_2->setText(_cur_param[curParamIndex::OUTPUT_PARAM]);
     QString file_without_ext("");
     QString extension("");
     QString suffix("");
@@ -4436,7 +4286,8 @@ void Widget::set_defaults() /*** Set default presets ***/
     while(!file.atEnd()) {
         line << file.readLine();
     }
-    QStringList cur_param = line[0].split("<%>");
+    const QString SEP = "\\";
+    QStringList cur_param = line[0].split(SEP);
     for (int k = 0; k < PARAMETERS_COUNT; k++) {
         _cur_param[k] = cur_param[k];
     }
@@ -4447,7 +4298,7 @@ void Widget::set_defaults() /*** Set default presets ***/
       _preset_table[i].resize(n);
     }
     for (int j = 1; j <= n; j++) {
-        cur_param = line[j].split("<&>");
+        cur_param = line[j].split(SEP);
         for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
             _preset_table[m][j-1] = cur_param[m];
         }
@@ -4578,13 +4429,10 @@ void Widget::add_section()  /*** Add section ***/
 {
     QFont parentFont;
     parentFont.setBold(true);
-    //QIcon sectionIcon;
-    //sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/cil-folder.png"), QSize(), QIcon::Normal, QIcon::Off);
     QTreeWidgetItem *root = new QTreeWidgetItem();
     root->setText(0, "New section");
     root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
     root->setFont(0, parentFont);
-    //root->setIcon(0, sectionIcon);
     setPresetIcon(root, true);
     ui->treeWidget->addTopLevelItem(root);
     ui->treeWidget->setCurrentItem(root);
@@ -4610,11 +4458,11 @@ void Widget::add_preset()  /*** Add preset ***/
     while(!file.atEnd()) {
         line << file.readLine();
     }
-    QStringList cur_param = line[0].split("<%>");
+    const QString SEP = "\\";
+    QStringList cur_param = line[0].split(SEP);
     for (int k = 0; k < PARAMETERS_COUNT; k++) {
         child->setText(k + 7, cur_param[k]);
     }
-    //child->setText(0 + 7, "New preset");
 
     updateInfoFields(cur_param[1], cur_param[2], cur_param[3], cur_param[4],
                           cur_param[11], cur_param[12], cur_param[21], child);
@@ -4681,8 +4529,9 @@ void Widget::updateCurPresetPos(int &index_top, int &index_child)
     std::cout << "Pos top: " << _pos_top << " Pos child: " << _pos_cld
               << " >>>>>> Index top: " << index_top << " Index child: " << index_child << std::endl;
     //if (index_child == _pos_cld) {
+    _pos_top = -1;
     _pos_cld = -1;
-    _cur_param[curParamIndex::PRESET_NAME] = "Preset not selected";
+    _cur_param[curParamIndex::OUTPUT_PARAM] = "Preset not selected";
     if (_row != -1) {
         get_output_filename();
     }

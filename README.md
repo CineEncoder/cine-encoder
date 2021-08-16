@@ -55,7 +55,7 @@ make
 
 ### Tracking the development of the project
 
-Next release version: 3.4. Estimated release date: Aug 15 2021.
+Next release version: 3.4. Estimated release date: Aug 15 2021 (postponed until Sep 1 2021).
 To tracking the development of the project see [Project page](https://github.com/CineEncoder/cine-encoder/projects/1?fullscreen=true)
 
 

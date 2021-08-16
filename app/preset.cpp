@@ -358,7 +358,7 @@ void Preset::setParameters(QByteArray *ptr_presetWindowGeometry, QString *_old_p
 //    ui_preset->lineEdit_max_cll->setValidator(intValidator);
 //    ui_preset->lineEdit_max_fall->setValidator(intValidator);
 
-    ui_preset->textBrowser_presetname->setText(_new_param[Parameters::_PRESET_NAME]);
+    ui_preset->textBrowser_presetname->setText(_new_param[Parameters::_OUTPUT_PARAM]);
     ui_preset->comboBox_codec->setCurrentIndex(_new_param[Parameters::_CODEC].toInt());
     ui_preset->comboBox_mode->setCurrentIndex(_new_param[Parameters::_MODE].toInt());
     ui_preset->comboBox_container->setCurrentIndex(_new_param[Parameters::_CONTAINER].toInt());
@@ -414,7 +414,7 @@ void Preset::on_buttonCancel_clicked()  /*** Close preset window ***/
 
 void Preset::on_buttonApply_clicked()  /*** Apply preset ***/
 {
-    _new_param[Parameters::_PRESET_NAME] = ui_preset->textBrowser_presetname->toPlainText();
+    _new_param[Parameters::_OUTPUT_PARAM] = ui_preset->textBrowser_presetname->toPlainText();
     _new_param[Parameters::_CODEC] = QString::number(ui_preset->comboBox_codec->currentIndex());
     _new_param[Parameters::_MODE] = QString::number(ui_preset->comboBox_mode->currentIndex());
     _new_param[Parameters::_CONTAINER] = QString::number(ui_preset->comboBox_container->currentIndex());

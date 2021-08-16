@@ -42,10 +42,8 @@
 #include <QSizePolicy>
 #include <QSettings>
 
-/*#include <QVariant>
+#include <algorithm>
 #include <QDebug>
-
-Q_DECLARE_METATYPE(QList<int>)*/
 
 enum columnIndex {
     FILENAME,       FORMAT,         RESOLUTION,     DURATION,           FPS,
@@ -72,7 +70,7 @@ enum columnIndex {
     T_STARTTIME,    T_ENDTIME
 };
 enum curParamIndex {
-    PRESET_NAME,    CODEC,          MODE,
+    OUTPUT_PARAM,   CODEC,          MODE,
     CONTAINER,      BQR,            MAXRATE,
     BUFSIZE,        FRAME_RATE,     BLENDING,
     WIDTH,          HEIGHT,         PASS,
@@ -81,7 +79,8 @@ enum curParamIndex {
     MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
     AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
     LEVEL,          ASAMPLE_RATE,   ACHANNELS,
-    MATRIX,         PRIMARY,        TRC
+    MATRIX,         PRIMARY,        TRC,
+    PRESET_NAME
 };
 enum curHDRIndex {
     CUR_COLOR_RANGE,    CUR_COLOR_PRIMARY,  CUR_COLOR_MATRIX,
@@ -113,7 +112,7 @@ public:
 
     ~Widget();
 
-    static const int PARAMETERS_COUNT = 30;
+    static const int PARAMETERS_COUNT = 31;
 
     // ******************** Settings *************************//
 
