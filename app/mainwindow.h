@@ -710,7 +710,7 @@ private:
 
     void updateInfoFields(QString &codec_qstr, QString &mode_qstr, QString &container_qstr,
                           QString &bqr_qstr, QString &pass_qstr, QString &preset_qstr,
-                          QString &acodec_qstr, QTreeWidgetItem *item);
+                          QString &acodec_qstr, QTreeWidgetItem *item, bool defaultNameFlag);
 
     void updatePresetTable();
 

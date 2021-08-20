@@ -768,7 +768,7 @@
                   <bool>false</bool>
                  </property>
                  <property name="columnCount">
-                  <number>31</number>
+                  <number>38</number>
                  </property>
                  <attribute name="headerVisible">
                   <bool>false</bool>
@@ -917,12 +917,12 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string notr="true">ID 7 - TECHNICAL INFO: Resize Enabled</string>
+                   <string notr="true">ID 7 - TECHNICAL INFO: Frame Rate</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string notr="true">ID 8 - TECHNICAL INFO: Resize Checkstate</string>
+                   <string notr="true">ID 8 - TECHNICAL INFO: Blending</string>
                   </property>
                  </column>
                  <column>
@@ -997,7 +997,42 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 23 - TECHNICAL INFO: Preset Name</string>
+                   <string>ID 23 - TECHNICAL INFO: Minrate</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 24 - TECHNICAL INFO: Level</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 25 - TECHNICAL INFO: Asample Rate</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 26 - TECHNICAL INFO: Achannels</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 27 - TECHNICAL INFO: Matrix</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 28 - TECHNICAL INFO: Primary</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 29 - TECHNICAL INFO: TRC</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 30 - TECHNICAL INFO: Preset Name</string>
                   </property>
                  </column>
                 </widget>
@@ -1307,7 +1342,7 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>273</width>
+                        <width>268</width>
                         <height>371</height>
                        </rect>
                       </property>
@@ -1740,7 +1775,7 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>273</width>
+                        <width>268</width>
                         <height>371</height>
                        </rect>
                       </property>
@@ -2464,7 +2499,7 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>273</width>
+                        <width>268</width>
                         <height>371</height>
                        </rect>
                       </property>

@@ -159,7 +159,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         if (s2 != 0) {
             process_5->kill();
         }
-        const QString SEP = "\\";
+        const QString SEP = "<&>";
         if (_prs_file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QString line = "";
@@ -602,7 +602,7 @@ void Widget::setParameters()    /*** Set parameters ***/
             while(!_prs_file.atEnd()) {
                 line << _prs_file.readLine();
             }
-            const QString SEP = "\\";
+            const QString SEP = "<&>";
             std::cout << "Number of lines in preset file: " << line.size() << std::endl; // Debug info //
             if (line.size() > 0)
             {
@@ -682,9 +682,11 @@ void Widget::setParameters()    /*** Set parameters ***/
             for (int j = 0; j < PARAMETERS_COUNT; j++) {
                 child->setText(j + 7, _preset_table[j][i]);
             }
-            updateInfoFields(_preset_table[1][i], _preset_table[2][i], _preset_table[3][i],
-                                  _preset_table[4][i], _preset_table[11][i], _preset_table[12][i],
-                                  _preset_table[21][i], child);
+            QString savedPresetName = child->text(30 + 7);
+            child->setText(0, savedPresetName);
+            updateInfoFields(_preset_table[30][i], _preset_table[2][i], _preset_table[3][i],
+                             _preset_table[4][i], _preset_table[11][i], _preset_table[12][i],
+                             _preset_table[21][i], child, false);
             setItemStyle(child);
             item->addChild(child);
         }
@@ -4286,7 +4288,7 @@ void Widget::set_defaults() /*** Set default presets ***/
     while(!file.atEnd()) {
         line << file.readLine();
     }
-    const QString SEP = "\\";
+    const QString SEP = "<&>";
     QStringList cur_param = line[0].split(SEP);
     for (int k = 0; k < PARAMETERS_COUNT; k++) {
         _cur_param[k] = cur_param[k];
@@ -4402,10 +4404,8 @@ void Widget::on_actionEdit_preset_clicked()  /*** Edit preset ***/
         for (int k = 0; k < PARAMETERS_COUNT; k++) {
             item->setText(k+7, _new_param[k]);
         }
-
         updateInfoFields(_new_param[1], _new_param[2], _new_param[3], _new_param[4],
-                              _new_param[11], _new_param[12], _new_param[21], item);
-
+                         _new_param[11], _new_param[12], _new_param[21], item, true);
         int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
         int index_child = parentItem->indexOfChild(item);
         if (_pos_top == index_top && _pos_cld == index_child) {
@@ -4458,14 +4458,13 @@ void Widget::add_preset()  /*** Add preset ***/
     while(!file.atEnd()) {
         line << file.readLine();
     }
-    const QString SEP = "\\";
+    const QString SEP = "<&>";
     QStringList cur_param = line[0].split(SEP);
     for (int k = 0; k < PARAMETERS_COUNT; k++) {
         child->setText(k + 7, cur_param[k]);
     }
-
     updateInfoFields(cur_param[1], cur_param[2], cur_param[3], cur_param[4],
-                          cur_param[11], cur_param[12], cur_param[21], child);
+                     cur_param[11], cur_param[12], cur_param[21], child, true);
     setItemStyle(child);
     if (parentItem != nullptr) {
         // Item is child...
@@ -4540,7 +4539,7 @@ void Widget::updateCurPresetPos(int &index_top, int &index_child)
 
 void Widget::updateInfoFields(QString &codec_qstr, QString &mode_qstr, QString &container_qstr,
                               QString &bqr_qstr, QString &pass_qstr, QString &preset_qstr,
-                              QString &acodec_qstr, QTreeWidgetItem *item)
+                              QString &acodec_qstr, QTreeWidgetItem *item, bool defaultNameFlag)
 {
     int codec = codec_qstr.toInt();
     int mode = mode_qstr.toInt();
@@ -4548,7 +4547,11 @@ void Widget::updateInfoFields(QString &codec_qstr, QString &mode_qstr, QString &
     int pass = pass_qstr.toInt();
     int acodec = acodec_qstr.toInt();
     int container = container_qstr.toInt();
-    item->setText(0, updateFieldCodec(codec));
+    if (defaultNameFlag) {
+        item->setText(0, updateFieldCodec(codec));
+        QString newPresetName = item->text(0);
+        item->setText(30 + 7, newPresetName);
+    }
     item->setText(1, updateFieldMode(codec, mode));
     item->setText(2, bqr_qstr);
     item->setText(3, updateFieldPreset(codec, preset));
@@ -4811,6 +4814,11 @@ void Widget::on_treeWidget_itemExpanded(QTreeWidgetItem *item)
 void Widget::on_treeWidget_itemChanged(QTreeWidgetItem *item, int column)
 {
     if (item->isSelected() && column == 0) {
+        QTreeWidgetItem *parentItem = item->parent();
+        if (parentItem != nullptr) {
+            QString newPresetName = item->text(0);
+            item->setText(30 + 7, newPresetName);
+        }
         updatePresetTable();
     }
 }
