@@ -466,7 +466,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _batch_mode = false;
     _showHDR_mode = false;
     _row = -1;
-    _theme = 0;
+    _theme = 3;
     QListView *comboboxPresetListView = new QListView(ui->comboBoxPreset);
     QListView *comboboxModeListView = new QListView(ui->comboBoxMode);
     QListView *comboboxViewListView = new QListView(ui->comboBoxView);
@@ -684,7 +684,7 @@ void Widget::setParameters()    /*** Set parameters ***/
             }
             QString savedPresetName = child->text(30 + 7);
             child->setText(0, savedPresetName);
-            updateInfoFields(_preset_table[30][i], _preset_table[2][i], _preset_table[3][i],
+            updateInfoFields(_preset_table[1][i], _preset_table[2][i], _preset_table[3][i],
                              _preset_table[4][i], _preset_table[11][i], _preset_table[12][i],
                              _preset_table[21][i], child, false);
             setItemStyle(child);
@@ -696,7 +696,7 @@ void Widget::setParameters()    /*** Set parameters ***/
         ui->treeWidget->setCurrentItem(item);
     }
     std::cout << NUM_ROWS << " x " << NUM_COLUMNS << std::endl; // Table size
-    for (int i = 7; i <= 29; i++) {
+    for (int i = 7; i <= 40; i++) {
         ui->treeWidget->hideColumn(i);
     }
 
@@ -1175,16 +1175,19 @@ QString Widget::styleCreator(const QString &list)    /*** Parsing CSS ***/
     return style;
 }
 
+void Widget::setStatus(QString status)
+{
+    QTableWidgetItem *newItem_status = new QTableWidgetItem(status);
+    newItem_status->setTextAlignment(Qt::AlignCenter);
+    ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
+}
+
 void Widget::restore_initial_state()    /*** Restore initial state ***/
 {
+    ui->treeWidget->setEnabled(true);
     animation->stop();
     add_files->setEnabled(true);
     remove_files->setEnabled(true);
-    //select_preset->setEnabled(true);
-    /*edit_metadata->setEnabled(true);
-    select_audio->setEnabled(true);
-    select_subtitles->setEnabled(true);
-    split_video->setEnabled(true);*/
     settings->setEnabled(true);
     ui->lineEditCurTime->setEnabled(true);
     ui->lineEditStartTime->setEnabled(true);
@@ -1481,34 +1484,37 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
 void Widget::make_preset()  /*** Make preset ***/
 {
     std::cout << "Make preset..." << std::endl;                       // Debug information //
-    int _CODEC = _cur_param[curParamIndex::CODEC].toInt();                           //p1 - int codec
-    int _MODE = _cur_param[curParamIndex::MODE].toInt();                             //p2 - int mode
-    QString _BQR = _cur_param[curParamIndex::BQR];                                   //p4 - QString bitrate/quantizer/ratefactor
-    QString _MINRATE = _cur_param[curParamIndex::MINRATE];                           //p5-1 - QString minrate
-    QString _MAXRATE = _cur_param[curParamIndex::MAXRATE];                           //p5 - QString maxrate
-    QString _BUFSIZE = _cur_param[curParamIndex::BUFSIZE];                           //p6 - QString bufsize
+    int _CODEC = _cur_param[curParamIndex::CODEC].toInt();
+    int _MODE = _cur_param[curParamIndex::MODE].toInt();
+    QString _BQR = _cur_param[curParamIndex::BQR];
+    QString _MINRATE = _cur_param[curParamIndex::MINRATE];
+    QString _MAXRATE = _cur_param[curParamIndex::MAXRATE];
+    QString _BUFSIZE = _cur_param[curParamIndex::BUFSIZE];
     int _LEVEL = _cur_param[curParamIndex::LEVEL].toInt();
-    int _FRAME_RATE = _cur_param[curParamIndex::FRAME_RATE].toInt();                 //p7 - int fps
-    int _BLENDING = _cur_param[curParamIndex::BLENDING].toInt();                     //p8 - int blending
-    int _WIDTH = _cur_param[curParamIndex::WIDTH].toInt();                           //p9 - int width
-    int _HEIGHT = _cur_param[curParamIndex::HEIGHT].toInt();                         //p10 - int height
-    int _PASS = _cur_param[curParamIndex::PASS].toInt();                             //p11 - int pass
-    int _PRESET = _cur_param[curParamIndex::PRESET].toInt();                         //p12 - int preset
-    int _COLOR_RANGE = _cur_param[curParamIndex::COLOR_RANGE].toInt();               //p13 - int color_range
+    int _FRAME_RATE = _cur_param[curParamIndex::FRAME_RATE].toInt();
+    int _BLENDING = _cur_param[curParamIndex::BLENDING].toInt();
+    int _WIDTH = _cur_param[curParamIndex::WIDTH].toInt();
+    int _HEIGHT = _cur_param[curParamIndex::HEIGHT].toInt();
+    int _PASS = _cur_param[curParamIndex::PASS].toInt();
+    int _PRESET = _cur_param[curParamIndex::PRESET].toInt();
+    int _COLOR_RANGE = _cur_param[curParamIndex::COLOR_RANGE].toInt();
     int _MATRIX = _cur_param[curParamIndex::MATRIX].toInt();
     int _PRIMARY = _cur_param[curParamIndex::PRIMARY].toInt();
     int _TRC = _cur_param[curParamIndex::TRC].toInt();
-    QString _MIN_LUM = _cur_param[curParamIndex::MIN_LUM];                           //p14 - QString min_lum
-    QString _MAX_LUM = _cur_param[curParamIndex::MAX_LUM];                           //p15 - QString max_lum
-    QString _MAX_CLL = _cur_param[curParamIndex::MAX_CLL];                           //p16 - QString max_cll
-    QString _MAX_FALL = _cur_param[curParamIndex::MAX_FALL];                         //p17 - QString max_fall
-    int _MASTER_DISPLAY = _cur_param[curParamIndex::MASTER_DISPLAY].toInt();         //p18 - int master_disp
-    QString _CHROMA_COORD = _cur_param[curParamIndex::CHROMA_COORD];                 //p19 - QString chroma_coord
-    QString _WHITE_COORD = _cur_param[curParamIndex::WHITE_COORD];                   //p20 - QString white_coord
-    int _AUDIO_CODEC = _cur_param[curParamIndex::AUDIO_CODEC].toInt();               //p21 - int acodec
-    int _AUDIO_BITRATE = _cur_param[curParamIndex::AUDIO_BITRATE].toInt();           //p22 - int abitrate
+    QString _MIN_LUM = _cur_param[curParamIndex::MIN_LUM].replace(",", ".");
+    QString _MAX_LUM = _cur_param[curParamIndex::MAX_LUM].replace(",", ".");
+    QString _MAX_CLL = _cur_param[curParamIndex::MAX_CLL].replace(",", ".");
+    QString _MAX_FALL = _cur_param[curParamIndex::MAX_FALL].replace(",", ".");
+    int _MASTER_DISPLAY = _cur_param[curParamIndex::MASTER_DISPLAY].toInt();
+    QString _CHROMA_COORD = _cur_param[curParamIndex::CHROMA_COORD];
+    QString _WHITE_COORD = _cur_param[curParamIndex::WHITE_COORD];
+    int _AUDIO_CODEC = _cur_param[curParamIndex::AUDIO_CODEC].toInt();
+    int _AUDIO_BITRATE = _cur_param[curParamIndex::AUDIO_BITRATE].toInt();
     int _AUDIO_SAMPLING = _cur_param[curParamIndex::ASAMPLE_RATE].toInt();
     int _AUDIO_CHANNELS = _cur_param[curParamIndex::ACHANNELS].toInt();
+    int _REP_PRIM = _cur_param[curParamIndex::REP_PRIM].toInt();
+    int _REP_MATRIX = _cur_param[curParamIndex::REP_MATRIX].toInt();
+    int _REP_TRC = _cur_param[curParamIndex::REP_TRC].toInt();
 
     _preset_0 = "";
     _preset_pass1 = "";
@@ -1577,17 +1583,6 @@ void Widget::make_preset()  /*** Make preset ***/
         }
     } else {
         fps_dest = _fps.toDouble();
-    }
-
-    QString transform = "";
-    if (resize_vf != "" && fps_vf != "") {
-        transform = QString("-vf ") + fps_vf + "," + resize_vf + QString(" ");
-    }
-    else if (resize_vf != "" && fps_vf == "") {
-        transform = QString("-vf ") + resize_vf + QString(" ");
-    }
-    else if (resize_vf == "" && fps_vf != "") {
-        transform = QString("-vf ") + fps_vf + QString(" ");
     }
 
     /****************************************** Split ****************************************/
@@ -1692,10 +1687,13 @@ void Widget::make_preset()  /*** Make preset ***/
 
     /*********************************** Intel QSV presets ************************************/
 
-    QString intelQSV_H264_preset = "-vf hwmap=derive_device=qsv,format=qsv -c:v h264_qsv -profile:v high "
-                                   "-low_power false ";
-    QString intelQSV_Mpeg2_preset = "-vf hwmap=derive_device=qsv,format=qsv -c:v mpeg2_qsv -profile:v high "
-                                    "-low_power false ";
+    QString intelQSV_filter = "hwmap=derive_device=qsv,format=qsv";
+    //QString intelQSV_H265_10_preset = "-c:v hevc_qsv -profile:v main10 ";
+    //QString intelQSV_H265_preset = "-c:v hevc_qsv -profile:v main ";
+    QString intelQSV_H264_preset = "-c:v h264_qsv -profile:v high ";
+    QString intelQSV_MPEG2_preset = "-c:v mpeg2_qsv -profile:v high ";
+    //QString intelQSV_VP9_10_preset = "-c:v vp9_qsv -profile:v 2 ";
+    //QString intelQSV_VP9_preset = "-c:v vp9_qsv ";
 #ifdef Q_OS_WIN64
     QString intelQSVhwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
 #endif
@@ -1711,36 +1709,34 @@ void Widget::make_preset()  /*** Make preset ***/
 
     /************************************* Codec module ***************************************/
 
-    QString arr_codec[NUMBER_PRESETS][3] = {
-        {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",               "1"},
-        {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",               "0"},
-        {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",               "0"},
-        {intelQSV_H264_preset,                                          intelQSVhwaccel,  "0"},
-        {intelQSV_Mpeg2_preset,                                         intelQSVhwaccel,  "0"},
-        {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda", "1"},
-        {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda", "0"},
-        {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda", "0"},
-        {"-pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", "",               "1"},
-        {"-pix_fmt yuv420p -c:v libvpx-vp9 -speed 4 ",                  "",               "0"},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 0 ",           "",               "1"},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 1 ",           "",               "1"},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 2 ",           "",               "1"},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           "",               "1"},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 4 ",           "",               "1"},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 5 ",           "",               "1"},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_lb ",            "",               "0"},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_sq ",            "",               "0"},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",               "0"},
-        {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",               "1"},
-        {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",               "1"},
-        {xdcam_preset,                                                  "",               "0"},
-        {"-movflags +write_colr -c:v copy ",                            "",               "1"}
+    QString arr_codec[NUMBER_PRESETS][4] = {
+        {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",               "1", ""},
+        {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",               "0", ""},
+        {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",               "0", ""},
+        {intelQSV_H264_preset,                                          intelQSVhwaccel,  "0", intelQSV_filter},
+        {intelQSV_MPEG2_preset,                                         intelQSVhwaccel,  "0", intelQSV_filter},
+        {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda", "1", ""},
+        {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda", "0", ""},
+        {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda", "0", ""},
+        {"-pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", "",               "1", ""},
+        {"-pix_fmt yuv420p -c:v libvpx-vp9 -speed 4 ",                  "",               "0", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 0 ",           "",               "1", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 1 ",           "",               "1", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 2 ",           "",               "1", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           "",               "1", ""},
+        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 4 ",           "",               "1", ""},
+        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 5 ",           "",               "1", ""},
+        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_lb ",            "",               "0", ""},
+        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_sq ",            "",               "0", ""},
+        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",               "0", ""},
+        {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",               "1", ""},
+        {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",               "1", ""},
+        {xdcam_preset,                                                  "",               "0", ""},
+        {"-movflags +write_colr -c:v copy ",                            "",               "1", ""}
     };
-    QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
-                    QString("-map_metadata -1 ") + _videoMetadataParam + _audioMetadataParam +
-                    _subtitleMetadataParam + arr_codec[_CODEC][0];
 
     QString hwaccel = arr_codec[_CODEC][1];
+    QString hwaccel_filter_vf = arr_codec[_CODEC][3];
     _flag_hdr = static_cast<bool>(arr_codec[_CODEC][2].toInt());
 
     /************************************* Level module **************************************/
@@ -1784,7 +1780,7 @@ void Widget::make_preset()  /*** Make preset ***/
         {"CBR",    "ABR", "VBR", "CRF", "CQP"},
         {"CBR",    "ABR", "VBR", "CRF", "CQP"},
         {"VBR",    "",    "",    "",    ""},
-        {"CBR",    "",    "",    "",    ""},
+        {"VBR",    "",    "",    "",    ""},
         {"VBR_NV", "",    "",    "",    ""},
         {"VBR_NV", "",    "",    "",    ""},
         {"VBR_NV", "",    "",    "",    ""},
@@ -2005,43 +2001,41 @@ void Widget::make_preset()  /*** Make preset ***/
         "Source",    "bt470m",   "bt470bg",  "bt709",    "bt2020", "smpte170m",
         "smpte240m", "smpte428", "smpte431", "smpte432", "film"
     };
+    QMap<QString, QString> curr_colorprim = {
+        {"BT709",           "bt709"},
+        {"BT2020",          "bt2020"},
+        {"BT601 NTSC",      "smpte170m"},
+        {"BT601 PAL",       "bt470bg"},
+        {"BT470 System M",  "bt470m"},
+        {"SMPTE 240M",      "smpte240m"},
+        {"Generic film",    "film"},
+        {"DCI P3",          "smpte431"},
+        {"XYZ",             "smpte428"},
+        {"Display P3",      "smpte432"},
+        {"",                ""}
+    };
 
     QString colorprim = "";
+    QString colorprim_vf = "";
     QString selected_colorprim = arr_colorprim[_PRIMARY];
+    if (!curr_colorprim.contains(_hdr[CUR_COLOR_PRIMARY])) {
+        restore_initial_state();
+        _message = QString("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
+        call_task_complete(_message, false);
+        return;
+    }
     if (selected_colorprim == "Source") {
-        if (_hdr[CUR_COLOR_PRIMARY] == "BT709") {
-            colorprim = "-color_primaries bt709 ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "BT2020") {
-            colorprim = "-color_primaries bt2020 ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "BT601 NTSC") {
-            colorprim = "-color_primaries smpte170m ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "BT601 PAL") {
-            colorprim = "-color_primaries bt470bg ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "BT470 System M") {
-            colorprim = "-color_primaries bt470m ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "SMPTE 240M") {
-            colorprim = "-color_primaries smpte240m ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "Generic film") {
-            colorprim = "-color_primaries film ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "DCI P3") {
-            colorprim = "-color_primaries smpte431 ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "XYZ") {
-            colorprim = "-color_primaries smpte428 ";
-        }
-        else if (_hdr[CUR_COLOR_PRIMARY] == "Display P3") {
-            colorprim = "-color_primaries smpte432 ";
+        if (_hdr[CUR_COLOR_PRIMARY] != "") {
+            colorprim = QString("-color_primaries %1 ").arg(curr_colorprim[_hdr[CUR_COLOR_PRIMARY]]);
         }
     }
     else {
         colorprim = QString("-color_primaries %1 ").arg(selected_colorprim);
+        if (_REP_PRIM == 2) {
+            colorprim_vf = QString("zscale=p=%1").arg(selected_colorprim);
+        } else {
+
+        }
     }
 
     // color matrix
@@ -2050,52 +2044,44 @@ void Widget::make_preset()  /*** Make preset ***/
         "Source", "bt470bg", "bt709", "bt2020nc", "bt2020c", "smpte170m", "smpte240m",
         "smpte2085", "chroma-derived-nc", "chroma-derived-c", "fcc", "GBR", "ICtCp", "YCgCo"
     };
+    QMap<QString, QString> curr_colormatrix = {
+        {"BT709",                   "bt709"},
+        {"BT2020nc",                "bt2020nc"},
+        {"BT2020c",                 "bt2020c"},
+        {"FCC73682",                "fcc"},
+        {"BT470SystemB/G",          "bt470bg"},
+        {"SMPTE240M",               "smpte240m"},
+        {"YCgCo",                   "YCgCo"},
+        {"Y'D'zD'x",                "smpte2085"},
+        {"Chromaticity-derivednc",  "chroma-derived-nc"},
+        {"Chromaticity-derivedc",   "chroma-derived-c"},
+        {"ICtCp",                   "ICtCp"},
+        {"BT601",                   "smpte170m"},
+        {"Identity",                "GBR"},
+        {"",                        ""}
+    };
 
     QString colormatrix = "";
+    QString colormatrix_vf = "";
     QString selected_colormatrix = arr_colormatrix[_MATRIX];
+    if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
+        restore_initial_state();
+        _message = QString("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
+        call_task_complete(_message, false);
+        return;
+    }
     if (selected_colormatrix == "Source") {
-        if (_hdr[CUR_COLOR_MATRIX] == "BT709") {
-            colormatrix = "-colorspace bt709 ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "BT2020nc") {
-            colormatrix = "-colorspace bt2020nc ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "BT2020c") {
-            colormatrix = "-colorspace bt2020c ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "FCC73682") {
-            colormatrix = "-colorspace fcc ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "BT470SystemB/G") {
-            colormatrix = "-colorspace bt470bg ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "SMPTE240M") {
-            colormatrix = "-colorspace smpte240m ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "YCgCo") {
-            colormatrix = "-colorspace YCgCo ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "Y'D'zD'x") {
-            colormatrix = "-colorspace smpte2085 ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "Chromaticity-derivednc") {
-            colormatrix = "-colorspace chroma-derived-nc ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "Chromaticity-derivedc") {
-            colormatrix = "-colorspace chroma-derived-c ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "ICtCp") {
-            colormatrix = "-colorspace ICtCp ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "BT601") {
-            colormatrix = "-colorspace smpte170m ";
-        }
-        else if (_hdr[CUR_COLOR_MATRIX] == "Identity") {
-            colormatrix = "-colorspace GBR ";
+        if (_hdr[CUR_COLOR_MATRIX] != "") {
+            colormatrix = QString("-colorspace %1 ").arg(curr_colormatrix[_hdr[CUR_COLOR_MATRIX]]);
         }
     }
     else {
         colormatrix = QString("-colorspace %1 ").arg(selected_colormatrix);
+        if (_REP_MATRIX == 2) {
+            colormatrix_vf = QString("zscale=m=%1").arg(selected_colormatrix);
+        } else {
+
+        }
     }
 
     // transfer characteristics
@@ -2105,62 +2091,80 @@ void Widget::make_preset()  /*** Make preset ***/
         "smpte240m", "smpte428", "smpte2084", "arib-std-b67", "linear", "log100", "log316",
         "iec61966-2-1", "iec61966-2-4"
     };
+    QMap<QString, QString> curr_transfer = {
+        {"BT709",                    "bt709"},
+        {"PQ",                       "smpte2084"},
+        {"HLG",                      "arib-std-b67"},
+        {"BT2020 (10-bit)",          "bt2020-10"},
+        {"BT2020 (12-bit)",          "bt2020-12"},
+        {"BT470 System M",           "bt470m"},
+        {"BT470 System B/G",         "bt470bg"},
+        {"SMPTE 240M",               "smpte240m"},
+        {"Linear",                   "linear"},
+        {"Logarithmic (100:1)",      "log100"},
+        {"Logarithmic (31622777:1)", "log316"},
+        {"xvYCC",                    "iec61966-2-4"},
+        {"BT1361",                   "bt1361e"},
+        {"sRGB/sYCC",                "iec61966-2-1"},
+        {"SMPTE 428M",               "smpte428"},
+        {"BT601",                    "smpte170m"},
+        {"",                         ""}
+    };
 
     QString transfer = "";
+    QString transfer_vf = "";
     QString selected_transfer = arr_trc[_TRC];
+    if (!curr_transfer.contains(_hdr[CUR_TRANSFER])) {
+        restore_initial_state();
+        _message = QString("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
+        call_task_complete(_message, false);
+        return;
+    }
     if (selected_transfer == "Source") {
-        if (_hdr[CUR_TRANSFER] == "BT709") {
-            transfer = "-color_trc bt709 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "PQ") {
-            transfer = "-color_trc smpte2084 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "HLG") {
-            transfer = "-color_trc arib-std-b67 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "BT2020 (10-bit)") {
-            transfer = "-color_trc bt2020-10 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "BT2020 (12-bit)") {
-            transfer = "-color_trc bt2020-12 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "BT470 System M") {
-            transfer = "-color_trc bt470m ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "BT470 System B/G") {
-            transfer = "-color_trc bt470bg ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "SMPTE 240M") {
-            transfer = "-color_trc smpte240m ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "Linear") {
-            transfer = "-color_trc linear ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "Logarithmic (100:1)") {
-            transfer = "-color_trc log100 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "Logarithmic (31622777:1)") {
-            transfer = "-color_trc log316 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "xvYCC") {
-            transfer = "-color_trc iec61966-2-4 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "BT1361") {
-            transfer = "-color_trc bt1361e ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "sRGB/sYCC") {
-            transfer = "-color_trc iec61966-2-1 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "SMPTE 428M") {
-            transfer = "-color_trc smpte428 ";
-        }
-        else if (_hdr[CUR_TRANSFER] == "BT601") {
-            transfer = "-color_trc smpte170m ";
+        if (_hdr[CUR_TRANSFER] != "") {
+            transfer = QString("-color_trc %1 ").arg(curr_transfer[_hdr[CUR_TRANSFER]]);
         }
     }
     else {
         transfer = QString("-color_trc %1 ").arg(selected_transfer);
+        if (_REP_TRC == 2) {
+            transfer_vf = QString("zscale=t=%1").arg(selected_transfer);
+        } else {
+
+        }
     }
+
+    const int vf_size = 6;
+    QString vf_transform_arr[vf_size] = {
+        hwaccel_filter_vf,
+        fps_vf,
+        resize_vf,
+        colorprim_vf,
+        colormatrix_vf,
+        transfer_vf,
+    };
+
+    QString vf = "";
+    int pos = 0;
+    for (int n = 0; n < vf_size; n ++) {
+        if (vf_transform_arr[n] != "") {
+            pos++;
+            if (pos == 1) {
+                vf += vf_transform_arr[n];
+            } else {
+                vf += "," + vf_transform_arr[n];
+            }
+        }
+    }
+
+    QString transform = "";
+    if (vf != "") {
+        transform = QString("-vf %1 ").arg(vf);
+    }
+
+    QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
+                    QString("-map_metadata -1 ") + _videoMetadataParam + _audioMetadataParam +
+                    _subtitleMetadataParam + transform + arr_codec[_CODEC][0];
 
     /************************************* HDR module ***************************************/
 
@@ -2293,6 +2297,7 @@ void Widget::make_preset()  /*** Make preset ***/
                     chroma_coord_curr_blue_x = chr[4];
                     chroma_coord_curr_blue_y = chr[5];
                 } else {
+                    restore_initial_state();
                     _message = "Incorrect master display chroma coordinates source parameters!";
                     call_task_complete(_message, false);
                     return;
@@ -2302,6 +2307,7 @@ void Widget::make_preset()  /*** Make preset ***/
                     white_coord_curr_x = wht[0];
                     white_coord_curr_y = wht[1];
                 } else {
+                    restore_initial_state();
                     _message = "Incorrect master display white point coordinates source parameters!";
                     call_task_complete(_message, false);
                     return;
@@ -2386,9 +2392,9 @@ void Widget::make_preset()  /*** Make preset ***/
     /************************************* Result module ***************************************/
 
     _preset_0 = "-hide_banner" + hwaccel + _splitStartParam;
-    _preset_pass1 = _splitParam + transform + codec + level + preset + mode + pass1 + color_range
+    _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
             + colorprim + colormatrix + transfer + "-an -f null /dev/null";
-    _preset = _splitParam + transform + codec + level + preset + mode + pass + color_range
+    _preset = _splitParam + codec + level + preset + mode + pass + color_range
             + colorprim + colormatrix + transfer + audio_param;
     _preset_mkvmerge = QString("%1%2%3%4%5%6 ").arg(max_cll, max_fall, max_lum, min_lum, chroma_coord, white_coord);
     std::cout << "Flag two-pass: " << _flag_two_pass << std::endl;
@@ -2451,18 +2457,10 @@ void Widget::encode()   /*** Encode ***/
             call_task_complete(_message, false);
             return;
         }
-
-        QTableWidgetItem *newItem_status = new QTableWidgetItem("Encoding");
-        newItem_status->setTextAlignment(Qt::AlignCenter);
-        ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
-
+        setStatus("Encoding");
+        ui->treeWidget->setEnabled(false);
         add_files->setEnabled(false);
         remove_files->setEnabled(false);
-        //select_preset->setEnabled(false);
-        /*edit_metadata->setEnabled(false);
-        select_audio->setEnabled(false);
-        select_subtitles->setEnabled(false);
-        split_video->setEnabled(false);*/
         settings->setEnabled(false);
         ui->lineEditCurTime->setEnabled(false);
         ui->lineEditStartTime->setEnabled(false);
@@ -2493,6 +2491,8 @@ void Widget::encode()   /*** Encode ***/
         ui->label_54->show();
         ui->label_55->show();
         ui->progressBar->show();
+
+
         _loop_start = time(nullptr);
         if (_flag_two_pass == false && _flag_hdr == false) {
             std::cout << "Encode non HDR..." << std::endl;  //  Debug info //
@@ -2546,9 +2546,7 @@ void Widget::complete() /*** Complete ***/
 {
     std::cout << "Complete ..." << std::endl;  //  Debug info //
     process_1->disconnect();
-    QTableWidgetItem *newItem_status = new QTableWidgetItem("Done!");
-    newItem_status->setTextAlignment(Qt::AlignCenter);
-    ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
+    setStatus("Done!");
     animation->stop();
     ui->label_53->hide();
     ui->label_54->hide();
@@ -2740,9 +2738,7 @@ void Widget::cancel()   /*** Stop execute ***/
         timer->stop();
     }
     process_1->disconnect();
-    QTableWidgetItem *newItem_status = new QTableWidgetItem("Stop");
-    newItem_status->setTextAlignment(Qt::AlignCenter);
-    ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
+    setStatus("Stop");
     ui->label_53->hide();
     ui->label_54->hide();
     ui->label_55->hide();
@@ -2760,9 +2756,7 @@ void Widget::error()  /*** Error ***/
         timer->stop();
     }
     process_1->disconnect();
-    QTableWidgetItem *newItem_status = new QTableWidgetItem("Error!");
-    newItem_status->setTextAlignment(Qt::AlignCenter);
-    ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
+    setStatus("Error!");
     restore_initial_state();
     if (_error_message != "") {
         _message = "An error occurred: " + _error_message;
@@ -4629,7 +4623,7 @@ QString Widget::updateFieldMode(int &codec, int &mode)
         {"CBR",  "ABR", "VBR", "CRF", "CQP"},
         {"CBR",  "ABR", "VBR", "CRF", "CQP"},
         {"VBR",  "",    "",    "",    ""},
-        {"CBR",  "",    "",    "",    ""},
+        {"VBR",  "",    "",    "",    ""},
         {"VBR",  "",    "",    "",    ""},
         {"VBR",  "",    "",    "",    ""},
         {"VBR",  "",    "",    "",    ""},

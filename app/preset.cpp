@@ -33,6 +33,18 @@ void Preset::closeEvent(QCloseEvent *close_preset)  /*** Show prompt when close 
 
 bool Preset::eventFilter(QObject *watched, QEvent *event)
 {
+    if (event->type() == QEvent::KeyPress)
+    {
+        std::cout << "Key pressed\n";
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
+        {
+            ui_preset->frame_middle->setFocus();
+            return true;
+        }
+        return false;
+    }
+
     if (event->type() == QEvent::MouseButtonRelease) // *************** Reset ************************* //
     {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
@@ -387,7 +399,10 @@ void Preset::setParameters(QByteArray *ptr_presetWindowGeometry, QString *_old_p
     ui_preset->comboBox_audio_codec->setCurrentIndex(_new_param[Parameters::_AUDIO_CODEC].toInt());
     ui_preset->comboBox_audio_bitrate->setCurrentIndex(_new_param[Parameters::_AUDIO_BITRATE].toInt());
     ui_preset->comboBox_audio_sampling->setCurrentIndex(_new_param[Parameters::_ASAMPLE_RATE].toInt());
-    ui_preset->comboBox_audio_channels->setCurrentIndex(_new_param[Parameters::_ACHANNELS].toInt());
+    ui_preset->comboBox_audio_channels->setCurrentIndex(_new_param[Parameters::_ACHANNELS].toInt()); 
+    ui_preset->checkBox_primaries->setCheckState((Qt::CheckState)_new_param[Parameters::_REP_PRIM].toInt());
+    ui_preset->checkBox_matrix->setCheckState((Qt::CheckState)_new_param[Parameters::_REP_MATRIX].toInt());
+    ui_preset->checkBox_transfer->setCheckState((Qt::CheckState)_new_param[Parameters::_REP_TRC].toInt());
 }
 
 void Preset::on_closeWindow_clicked()
@@ -444,6 +459,9 @@ void Preset::on_buttonApply_clicked()  /*** Apply preset ***/
     _new_param[Parameters::_AUDIO_BITRATE] = QString::number(ui_preset->comboBox_audio_bitrate->currentIndex());
     _new_param[Parameters::_ASAMPLE_RATE] = QString::number(ui_preset->comboBox_audio_sampling->currentIndex());
     _new_param[Parameters::_ACHANNELS] = QString::number(ui_preset->comboBox_audio_channels->currentIndex());
+    _new_param[Parameters::_REP_PRIM] = QString::number(ui_preset->checkBox_primaries->checkState());
+    _new_param[Parameters::_REP_MATRIX] = QString::number(ui_preset->checkBox_matrix->checkState());
+    _new_param[Parameters::_REP_TRC] = QString::number(ui_preset->checkBox_transfer->checkState());
     this->close();
 }
 
@@ -578,7 +596,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"VBR", "",    "",    "",    ""},
-        {"CBR", "",    "",    "",    ""},
+        {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
@@ -1134,7 +1152,7 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBoxFrameRate->setEnabled(false);
         ui_preset->comboBox_container->addItems({"MKV", "MPG", "AVI", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(3);
-        ui_preset->comboBox_mode->addItems({"Constant Bitrate"});
+        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
         ui_preset->comboBox_pass->addItems({"Auto"});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::HIGH);
         ui_preset->comboBox_preset->addItems(presetsMPEG2QSV);
@@ -1701,4 +1719,3 @@ void Preset::on_comboBox_master_disp_currentTextChanged(const QString &arg1)  /*
     }
     lockSignals(false);
 }
-

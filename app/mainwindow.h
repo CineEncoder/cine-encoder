@@ -41,9 +41,10 @@
 #include <QTreeWidgetItem>
 #include <QSizePolicy>
 #include <QSettings>
+#include <QMap>
 
-#include <algorithm>
-#include <QDebug>
+//#include <algorithm>
+//#include <QDebug>
 
 enum columnIndex {
     FILENAME,       FORMAT,         RESOLUTION,     DURATION,           FPS,
@@ -80,7 +81,8 @@ enum curParamIndex {
     AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
     LEVEL,          ASAMPLE_RATE,   ACHANNELS,
     MATRIX,         PRIMARY,        TRC,
-    PRESET_NAME
+    PRESET_NAME,    REP_PRIM,       REP_MATRIX,
+    REP_TRC
 };
 enum curHDRIndex {
     CUR_COLOR_RANGE,    CUR_COLOR_PRIMARY,  CUR_COLOR_MATRIX,
@@ -112,7 +114,7 @@ public:
 
     ~Widget();
 
-    static const int PARAMETERS_COUNT = 31;
+    static const int PARAMETERS_COUNT = 34;
 
     // ******************** Settings *************************//
 
@@ -679,6 +681,8 @@ private:
     void get_current_data();
 
     void get_output_filename();
+
+    void setStatus(QString status);
 
     void restore_initial_state();
 

@@ -1,6 +1,6 @@
 Summary:    Video encoder
 Name:       cine-encoder
-Version:    3.3
+Version:    3.4
 Release:    1%{?dist}
 License:    GPLv3
 URL:        https://github.com/CineEncoder/%{name}
@@ -61,5 +61,5 @@ install -m 0644 share/%{name}.wav %{buildroot}/%{_datadir}/sounds
 %{_datadir}/sounds/cine-encoder.wav
 
 %changelog
-* Wed Jun 23 2021 Cine Encoder <depositmail@rambler.ru>
+* Mon Aug 23 2021 Cine Encoder <depositmail@rambler.ru>
 - Initial package for Fedora.

@@ -1,6 +1,5 @@
-cine-encoder (3.3.0) groovy; urgency=medium
+cine-encoder (3.4.0) groovy; urgency=medium
 
   * Initial release
 
- -- Oleg Kozhukharenko <depositmail@rambler.ru>  Wed, 23 Jun 2021 09:20:07 +0530
-
+ -- Oleg Kozhukharenko <depositmail@rambler.ru>  Mon, 23 Aug 2021 20:00:00 +0530

@@ -768,7 +768,7 @@
                   <bool>false</bool>
                  </property>
                  <property name="columnCount">
-                  <number>38</number>
+                  <number>41</number>
                  </property>
                  <attribute name="headerVisible">
                   <bool>false</bool>
@@ -1033,6 +1033,21 @@
                  <column>
                   <property name="text">
                    <string>ID 30 - TECHNICAL INFO: Preset Name</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 31 - TECHNICAL INFO: REP_Primary</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 32 - TECHNICAL INFO: REP_Matrix</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ID 33 - TECHNICAL INFO: REP_TRC</string>
                   </property>
                  </column>
                 </widget>
@@ -1342,7 +1357,7 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>268</width>
+                        <width>273</width>
                         <height>371</height>
                        </rect>
                       </property>
@@ -1775,7 +1790,7 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>268</width>
+                        <width>273</width>
                         <height>371</height>
                        </rect>
                       </property>
@@ -2499,7 +2514,7 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>268</width>
+                        <width>273</width>
                         <height>371</height>
                        </rect>
                       </property>

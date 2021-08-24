@@ -16,7 +16,7 @@ Depends:	${misc:Depends},
             ${shlibs:Depends},
             ffmpeg,
             mkvtoolnix
-Description: Cine Encoder 2021 ver 3.3
+Description: Cine Encoder 2021 ver 3.4
  Cine Encoder is an application, uses the FFmpeg, MKVToolNix and MediaInfo
  utilities, that allows to convert media files while preserving HDR metadata.
  Supported hardware encoding NVENC for codecs H265, H264 and Intel QSV

@@ -33,7 +33,8 @@ enum Parameters {
     _AUDIO_CODEC,    _AUDIO_BITRATE,  _MINRATE,
     _LEVEL,          _ASAMPLE_RATE,   _ACHANNELS,
     _MATRIX,         _PRIMARY,        _TRC,
-    _PRESET_NAME
+    _PRESET_NAME,    _REP_PRIM,       _REP_MATRIX,
+    _REP_TRC
 };
 
 namespace Ui
