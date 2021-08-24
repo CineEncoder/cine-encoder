@@ -223,6 +223,9 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->endArray();
         _settings->setValue("Settings/preset/pos_top", _pos_top);
         _settings->setValue("Settings/preset/pos_cld", _pos_cld);*/
+        if (_hideInTrayFlag) {
+            trayIcon->hide();
+        }
 
         event->accept();
     }
