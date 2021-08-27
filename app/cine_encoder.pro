@@ -40,6 +40,7 @@ SOURCES += \
     donate.cpp \
     main.cpp \
     mainwindow.cpp \
+    openingfiles.cpp \
     preset.cpp \
     settings.cpp \
     taskcomplete.cpp
@@ -49,6 +50,7 @@ HEADERS += \
     dialog.h \
     donate.h \
     mainwindow.h \
+    openingfiles.h \
     preset.h \
     settings.h \
     taskcomplete.h
@@ -58,6 +60,7 @@ FORMS += \
     dialog.ui \
     donate.ui \
     mainwindow.ui \
+    openingfiles.ui \
     preset.ui \
     settings.ui \
     taskcomplete.ui

@@ -42,8 +42,7 @@
 #include <QSizePolicy>
 #include <QSettings>
 #include <QMap>
-
-//#include <algorithm>
+#include "openingfiles.h"
 //#include <QDebug>
 
 enum columnIndex {
@@ -406,6 +405,8 @@ private:
 
     QVector <QVector <QString> > _preset_table;
 
+    OpeningFiles openingFiles;
+
     // ******************* Constants *****************************//
 
     static const int NUMBER_PRESETS = 23;
@@ -675,6 +676,12 @@ private:
     void on_actionAbout_clicked();
 
     void on_actionDonate_clicked();
+
+    void showOpeningFiles(bool status);
+
+    void showOpeningFiles(QString text);
+
+    void showOpeningFiles(int percent);
 
     void openFiles(const QStringList &file_name_open);
 

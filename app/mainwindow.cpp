@@ -9,6 +9,7 @@
 
 
 
+
 #ifdef Q_OS_LINUX
     //#define GNOME_DESKTOP
     #define KDE_DESKTOP
@@ -285,6 +286,8 @@ void Widget::setParameters()    /*** Set parameters ***/
 {
     // ***************************** Set parameters ***********************************//
 
+    openingFiles.setParent(this);
+    openingFiles.setModal(true);
     trayIcon = new QSystemTrayIcon(this);
     timer = new QTimer(this);
     timerCallSetThumbnail = new QTimer(this);
@@ -885,6 +888,28 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     if (_row != -1) {
         get_output_filename();
     }
+}
+
+void Widget::showOpeningFiles(bool status)
+{
+    QPoint position;
+    QPoint posMainWindow = this->rect().topLeft();
+    QSize sizeMainWindow = this->size();
+    int x_pos = posMainWindow.x() + static_cast<int>(round(static_cast<float>(sizeMainWindow.width())/2));
+    int y_pos = posMainWindow.y() + static_cast<int>(round(static_cast<float>(sizeMainWindow.height())/2));
+    position.setX(x_pos);
+    position.setY(y_pos);
+    openingFiles.setParameters(status, position);
+}
+
+void Widget::showOpeningFiles(QString text)
+{
+    openingFiles.setText(text);
+}
+
+void Widget::showOpeningFiles(int percent)
+{
+    openingFiles.setPercent(percent);
 }
 
 void Widget::showMetadataEditor()
@@ -2895,6 +2920,7 @@ void Widget::on_actionStop_clicked()    /*** Stop ***/
 
 void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
 {
+    showOpeningFiles(true);
     ui->labelAnimation->hide();
     ui->label_53->hide();
     ui->label_54->hide();
@@ -2916,6 +2942,9 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         ui->tableWidget->setRowCount(numRows + 1);
         QString inputFile = QString::fromStdWString(filePath_wstr.substr(separator + 1));
         QString inputFolder = QString::fromStdWString(filePath_wstr.substr(0, separator));
+        showOpeningFiles(inputFile);
+        showOpeningFiles(0);
+        QApplication::processEvents();
         if (i == 1) {
             _openDir = inputFolder;
         }
@@ -3149,9 +3178,16 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
             ui->tableWidget->setItem(numRows, j + columnIndex::T_SUBCHECK_1, newItem_checkstate);
         }
         MI.Close();
+        showOpeningFiles(50);
+        QApplication::processEvents();
+        ui->tableWidget->selectRow(ui->tableWidget->rowCount() - 1);
+        QApplication::processEvents();
+        showOpeningFiles(100);
+        QApplication::processEvents();
+        Sleep(50);
         i++;
     }
-    ui->tableWidget->selectRow(ui->tableWidget->rowCount() - 1);
+    showOpeningFiles(false);
 }
 
 void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed ***/
