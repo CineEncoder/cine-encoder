@@ -444,6 +444,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _status_encode_btn = "start";
     _timer_interval = 30;
     _curTime = 0;
+    _language = "en";
     _curFilename = "";
     _curPath = "";
     _input_file = "";
@@ -781,6 +782,9 @@ void Widget::setParameters()    /*** Set parameters ***/
         trayIcon->show();
     }
     setTheme(_theme);
+    if (qtTranslator.load(":/resources/translation/translation_zh.qm")) {
+        //qApp->installTranslator(&qtTranslator);
+    }
 }
 
 void Widget::setDocksParameters()

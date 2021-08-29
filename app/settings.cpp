@@ -117,9 +117,11 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _curr_hideInTrayFlag = *_ptr_hideInTrayFlag;
     _flag_save = false;
 
+    QListView *comboboxLangListView = new QListView(ui_settings->comboBox_lang);
     QListView *comboboxThemeListView = new QListView(ui_settings->comboBox_1);
     QListView *comboboxPrefixTypeListView = new QListView(ui_settings->comboBoxPrefixType);
     QListView *comboboxSuffixTypeListView = new QListView(ui_settings->comboBoxSuffixType);
+    ui_settings->comboBox_lang->setView(comboboxLangListView);
     ui_settings->comboBox_1->setView(comboboxThemeListView);
     ui_settings->comboBoxPrefixType->setView(comboboxPrefixTypeListView);
     ui_settings->comboBoxSuffixType->setView(comboboxSuffixTypeListView);
@@ -327,6 +329,15 @@ void Settings::call_task_complete(const QString &_message, const bool &_timer_mo
 
 bool Settings::eventFilter(QObject *watched, QEvent *event)
 {
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
+            ui_settings->frame_middle->setFocus();
+            return true;
+        }
+        return false;
+    }
+
     if (event->type() == QEvent::MouseButtonRelease) // *************** Reset ************************* //
     {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);

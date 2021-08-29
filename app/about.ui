@@ -35,7 +35,7 @@
    <string>About</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="files.qrc">
+   <iconset>
     <normaloff>:/resources/icons/24x24/cil-comment-square.png</normaloff>:/resources/icons/24x24/cil-comment-square.png</iconset>
   </property>
   <property name="locale">
@@ -170,7 +170,11 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Cantarell'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:120%;&quot;&gt;Cine Encoder 2021 ver. 3.4&lt;br /&gt;Program for encoding HDR and SDR video.&lt;br /&gt;&lt;br /&gt;This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.&lt;br /&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/CineEncoder/cine-encoder&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;License: GNU General Public License Version 3&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Copyright (C) 2020-2021 Oleg Kozhukharenko&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="acceptRichText">
+             <bool>true</bool>
             </property>
            </widget>
           </widget>
@@ -330,8 +334,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="files.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

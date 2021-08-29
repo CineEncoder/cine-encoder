@@ -912,26 +912,36 @@
                         <property name="rightMargin">
                          <number>0</number>
                         </property>
-                        <item row="0" column="1" alignment="Qt::AlignRight">
-                         <widget class="QLabel" name="label_theme">
-                          <property name="enabled">
-                           <bool>false</bool>
+                        <item row="5" column="2">
+                         <spacer name="verticalSpacer_8">
+                          <property name="orientation">
+                           <enum>Qt::Vertical</enum>
                           </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
+                          <property name="sizeType">
+                           <enum>QSizePolicy::Fixed</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>20</width>
+                            <height>18</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="6" column="2" alignment="Qt::AlignLeft">
+                         <widget class="QCheckBox" name="checkBox_tray">
+                          <property name="maximumSize">
+                           <size>
+                            <width>600</width>
+                            <height>30</height>
+                           </size>
                           </property>
                           <property name="text">
-                           <string>  Theme</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                           <string>  Minimize in tray</string>
                           </property>
                          </widget>
                         </item>
-                        <item row="1" column="2">
+                        <item row="3" column="2">
                          <spacer name="verticalSpacer_6">
                           <property name="orientation">
                            <enum>Qt::Vertical</enum>
@@ -947,20 +957,7 @@
                           </property>
                          </spacer>
                         </item>
-                        <item row="0" column="3">
-                         <spacer name="horizontalSpacer_9">
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="sizeHint" stdset="0">
-                           <size>
-                            <width>40</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                         </spacer>
-                        </item>
-                        <item row="2" column="2">
+                        <item row="4" column="2">
                          <widget class="QCheckBox" name="checkBox_2">
                           <property name="enabled">
                            <bool>true</bool>
@@ -991,20 +988,26 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="4" column="2" alignment="Qt::AlignLeft">
-                         <widget class="QCheckBox" name="checkBox_tray">
-                          <property name="maximumSize">
-                           <size>
-                            <width>600</width>
-                            <height>30</height>
-                           </size>
+                        <item row="2" column="1" alignment="Qt::AlignRight">
+                         <widget class="QLabel" name="label_theme">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
                           </property>
                           <property name="text">
-                           <string>  Minimize in tray</string>
+                           <string>   Theme</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
-                        <item row="0" column="2">
+                        <item row="2" column="2">
                          <widget class="QComboBox" name="comboBox_1">
                           <property name="enabled">
                            <bool>true</bool>
@@ -1055,7 +1058,7 @@
                           </item>
                          </widget>
                         </item>
-                        <item row="0" column="0">
+                        <item row="2" column="0">
                          <spacer name="horizontalSpacer_11">
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
@@ -1071,8 +1074,31 @@
                           </property>
                          </spacer>
                         </item>
-                        <item row="3" column="2">
-                         <spacer name="verticalSpacer_8">
+                        <item row="2" column="3">
+                         <spacer name="horizontalSpacer_9">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="0" column="1" alignment="Qt::AlignRight">
+                         <widget class="QLabel" name="label">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="text">
+                           <string>Language</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="2">
+                         <spacer name="verticalSpacer_15">
                           <property name="orientation">
                            <enum>Qt::Vertical</enum>
                           </property>
@@ -1086,6 +1112,42 @@
                            </size>
                           </property>
                          </spacer>
+                        </item>
+                        <item row="0" column="2">
+                         <widget class="QComboBox" name="comboBox_lang">
+                          <property name="minimumSize">
+                           <size>
+                            <width>246</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>246</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                          <item>
+                           <property name="text">
+                            <string>English</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Chinese</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>German</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Russian</string>
+                           </property>
+                          </item>
+                         </widget>
                         </item>
                        </layout>
                       </item>
@@ -1206,7 +1268,7 @@
                            </sizepolicy>
                           </property>
                           <property name="text">
-                           <string>  Every</string>
+                           <string>      Every</string>
                           </property>
                          </widget>
                         </item>

@@ -85,3 +85,11 @@ else: unix:!android {
 
 # BIN     = $(DESTDIR)/usr/bin
 # ICONS   = $(DESTDIR)/usr/share/icons/hicolor/64x64/apps
+
+#linguist
+
+TRANSLATIONS += translation_de.ts \
+                translation_ru.ts \
+                translation_zh.ts
+
+CODECFORSRC     = UTF-8

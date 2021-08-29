@@ -305,5 +305,8 @@
         <file>resources/icons/16x16/cil-file_black.png</file>
         <file>resources/icons/16x16/cil-hd_black.png</file>
         <file>resources/icons/16x16/cil-hdr_black.png</file>
+        <file>resources/translation/translation_ru.qm</file>
+        <file>resources/translation/translation_de.qm</file>
+        <file>resources/translation/translation_zh.qm</file>
     </qresource>
 </RCC>

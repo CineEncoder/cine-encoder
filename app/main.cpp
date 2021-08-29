@@ -9,9 +9,11 @@ int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");
     QApplication app(argc, argv);
+
     QCoreApplication::setOrganizationName("CineEncoder");
     QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
+
     QFont font = app.font();
     font.setPointSize(8);
     app.setFont(font);
@@ -23,8 +25,7 @@ int main(int argc, char *argv[])
 
     QElapsedTimer time;
     time.start();
-    while (time.elapsed() < 1000)
-    {
+    while (time.elapsed() < 1000) {
         app.processEvents();
     }
 

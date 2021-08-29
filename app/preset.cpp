@@ -33,12 +33,9 @@ void Preset::closeEvent(QCloseEvent *close_preset)  /*** Show prompt when close 
 
 bool Preset::eventFilter(QObject *watched, QEvent *event)
 {
-    if (event->type() == QEvent::KeyPress)
-    {
-        std::cout << "Key pressed\n";
+    if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
-        {
+        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
             ui_preset->frame_middle->setFocus();
             return true;
         }

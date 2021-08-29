@@ -42,6 +42,7 @@
 #include <QSizePolicy>
 #include <QSettings>
 #include <QMap>
+#include <QTranslator>
 #include "openingfiles.h"
 //#include <QDebug>
 
@@ -126,6 +127,8 @@ public:
     QByteArray _presetWindowGeometry;
 
     bool _hideInTrayFlag;
+
+    QString _language;
 
     QString _output_folder;
 
@@ -400,6 +403,8 @@ private slots:
 private:
 
     Ui::Widget *ui;
+
+    QTranslator qtTranslator;
 
     QString _cur_param[PARAMETERS_COUNT];
 
