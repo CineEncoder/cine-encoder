@@ -34,6 +34,7 @@
 @elementsBorderColor = #1B1D23;
 @elementsBorderHover = #404758;
 @elementsBorderDropDown = #22262E;
+@elementsBorderRadius = 5px;
 
 
 /**************************************************************************
@@ -1069,19 +1070,39 @@ QPushButton:pressed#buttonBitcoin {
 
 QProgressBar {
     width: 15px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-left-radius: @elementsBorderRadius;
+    border-top-right-radius: @elementsBorderRadius;
+    border-bottom-left-radius: @elementsBorderRadius;
+    border-bottom-right-radius: @elementsBorderRadius;
     text-align: center;
     color: #D2D2D2;
     background: #0B101A;
 }
 QProgressBar::chunk {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-top-left-radius: @elementsBorderRadius;
+    border-top-right-radius: @elementsBorderRadius;
+    border-bottom-left-radius: @elementsBorderRadius;
+    border-bottom-right-radius: @elementsBorderRadius;
+    background: #133685;
+}
+
+/*********************************************/
+
+QProgressBar#progressBar_opening {
+    width: 15px;
+    border-top-left-radius: @elementsBorderRadius;
+    border-top-right-radius: @elementsBorderRadius;
+    border-bottom-left-radius: @elementsBorderRadius;
+    border-bottom-right-radius: @elementsBorderRadius;
+    text-align: center;
+    color: #D2D2D2;
+    background: #0B101A;
+}
+QProgressBar::chunk#progressBar_opening {
+    border-top-left-radius: @elementsBorderRadius;
+    border-top-right-radius: @elementsBorderRadius;
+    border-bottom-left-radius: @elementsBorderRadius;
+    border-bottom-right-radius: @elementsBorderRadius;
     background: #133685;
 }
 
