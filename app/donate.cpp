@@ -30,7 +30,12 @@ void Donate::setParameters()
         text = file.readAll();
         file.close();
     }
-    ui_donate->textBrowser->setHtml(text);
+    QString text1 = text.arg(tr("This software is free for personal and commercial use. "
+                                "It is distributed in the hope that it is useful but without "
+                                "any warranty. See the GNU General Public Licence v3 for more "
+                                "information."), tr("If you find this application useful, "
+                                "consider making a donation to support the development."));
+    ui_donate->textBrowser->setHtml(text1);
     ui_donate->textBrowser->setOpenExternalLinks(true);
 }
 

@@ -5,13 +5,13 @@
     <name>About</name>
     <message>
         <location filename="about.ui" line="35"/>
-        <location filename="about.ui" line="306"/>
+        <location filename="about.ui" line="305"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
         <location filename="about.ui" line="150"/>
-        <location filename="about.ui" line="264"/>
+        <location filename="about.ui" line="263"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -21,9 +21,14 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:120%;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Cine Encoder 2021 ver. 3.4&lt;br /&gt;Program for encoding HDR and SDR video.&lt;br /&gt;&lt;br /&gt;This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/CineEncoder/cine-encoder&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;License: GNU General Public License Version 3&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;br /&gt;Copyright (C) 2020-2021 Oleg Kozhukharenko&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:120%;&quot;&gt;Cine Encoder 2021 ver. 3.4&lt;br /&gt;Program for encoding HDR and SDR video.&lt;br /&gt;&lt;br /&gt;This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.&lt;br /&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/CineEncoder/cine-encoder&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;License: GNU General Public License Version 3&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Copyright (C) 2020-2021 Oleg Kozhukharenko&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;License: GNU General Public License Version 3&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Copyright (C) 2020-2021 Oleg Kozhukharenko&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -56,6 +61,16 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
 
 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </translation>
+    </message>
+    <message>
+        <location filename="about.cpp" line="33"/>
+        <source>Program for encoding HDR and SDR video.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="about.cpp" line="33"/>
+        <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -150,6 +165,16 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
 
 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </translation>
+    </message>
+    <message>
+        <location filename="donate.cpp" line="33"/>
+        <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="donate.cpp" line="36"/>
+        <source>If you find this application useful, consider making a donation to support the development.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -276,7 +301,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.ui" line="4913"/>
         <location filename="preset.ui" line="5015"/>
         <source>Source</source>
-        <translation>Исходн.</translation>
+        <translation type="unfinished">Исходн.</translation>
     </message>
     <message>
         <location filename="preset.ui" line="899"/>
@@ -1676,12 +1701,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="settings.ui" line="502"/>
         <source>By name and index</source>
-        <translation></translation>
+        <translation>По имени и индексу</translation>
     </message>
     <message>
         <location filename="settings.ui" line="507"/>
         <source>By time and date</source>
-        <translation></translation>
+        <translation>По времени и дате</translation>
     </message>
     <message>
         <location filename="settings.ui" line="584"/>
@@ -1792,12 +1817,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="settings.ui" line="1281"/>
         <source>sec</source>
-        <translation></translation>
+        <translation>сек</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1309"/>
         <source>Enable overheating protection (for 25 sec)</source>
-        <translation>Включить защиту отперегрева</translation>
+        <translation>Включить защиту от перегрева</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1468"/>
@@ -1823,7 +1848,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="settings.cpp" line="228"/>
         <source>Settings file not found!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Файл настроек не найден!</translation>
     </message>
 </context>
 <context>
@@ -1862,7 +1887,9 @@ p, li { white-space: pre-wrap; }
         <source>Pause
 
  Resume after: </source>
-        <translation type="unfinished"></translation>
+        <translation>Пауза
+
+Продолжение через: </translation>
     </message>
 </context>
 <context>
@@ -2807,12 +2834,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="5144"/>
         <source>Single Mode</source>
-        <translation>Одиноч. режим</translation>
+        <translation>Одиночный</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="5149"/>
         <source>Batch Mode</source>
-        <translation>Пакетный режим</translation>
+        <translation>Пакетный</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="5371"/>
@@ -2915,7 +2942,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="149"/>
         <source>Quit program?</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти из программы?</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="313"/>
@@ -2971,52 +2998,57 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="910"/>
         <source>You need to restart the program for the settings to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вам необходимо перезапустить программу, чтобы настройки вступили в силу.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2073"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удается найти основные цвета %1 на исходной карте.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2119"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удается найти цветовую матрицу %1 на исходной карте.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2169"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удается найти характеристики переноса %1 на исходной карте.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2351"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверные параметры источника координат цветности главного дисплея!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2361"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверное отображение основных параметров источника координат белой точки!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2506"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не содержит информации о FPS!
+Выберите правильный входной файл!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2569"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла неизвестная ошибка!
+Возможно, FFMPEG не установлен.
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2590"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла неизвестная ошибка!
+Возможно, mkvtoolnix не установлен.
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2625"/>
@@ -3024,23 +3056,26 @@ Select the correct input file!</source>
         <source>Task completed!
 
  Elapsed time: </source>
-        <translation type="unfinished"></translation>
+        <translation>Задание выполнено!
+
+Затраченное время: </translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2798"/>
         <source>The current encoding process has been canceled!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий процесс кодирования отменен!
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2812"/>
         <source>An error occurred: </source>
-        <translation type="unfinished"></translation>
+        <translation>Обнаружена ошибка: </translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2814"/>
         <source>Unexpected error occurred!</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла непредвиденная ошибка!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2847"/>
@@ -3050,22 +3085,22 @@ Select the correct input file!</source>
     <message>
         <location filename="mainwindow.cpp" line="2891"/>
         <source>Select input file first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Сначала выберите исходный файл!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2896"/>
         <source>Select preset first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Сначала выберите пресет!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2933"/>
         <source>Stop encoding?</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить кодирование?</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2960"/>
         <source>Unexpected error while trying to perform file name detection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Непредвиденная ошибка при попытке выполнить обнаружение имени файла.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4369"/>
@@ -3074,23 +3109,25 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4478"/>
         <source>Select preset first!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Сначала выберите пресеты!
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4406"/>
         <source>Delete?</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить?</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4434"/>
         <source>Delete presets first!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Сначала удалите пресеты!
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4921"/>
         <source>Task</source>
-        <translation type="unfinished">Задача</translation>
+        <translation>Задача</translation>
     </message>
 </context>
 </TS>

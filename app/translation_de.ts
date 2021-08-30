@@ -5,13 +5,13 @@
     <name>About</name>
     <message>
         <location filename="about.ui" line="35"/>
-        <location filename="about.ui" line="306"/>
+        <location filename="about.ui" line="305"/>
         <source>About</source>
         <translation>Über das Programm</translation>
     </message>
     <message>
         <location filename="about.ui" line="150"/>
-        <location filename="about.ui" line="264"/>
+        <location filename="about.ui" line="263"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
@@ -21,8 +21,13 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:120%;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Cine Encoder 2021 ver. 3.4&lt;br /&gt;Program for encoding HDR and SDR video.&lt;br /&gt;&lt;br /&gt;This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/CineEncoder/cine-encoder&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;License: GNU General Public License Version 3&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;br /&gt;Copyright (C) 2020-2021 Oleg Kozhukharenko&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:120%;&quot;&gt;Cine Encoder 2021 ver. 3.4&lt;br /&gt;Program for encoding HDR and SDR video.&lt;br /&gt;&lt;br /&gt;This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.&lt;br /&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/CineEncoder/cine-encoder&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;License: GNU General Public License Version 3&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Copyright (C) 2020-2021 Oleg Kozhukharenko&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;a href=&quot;https://github.com/CineEncoder/cine-encoder/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;License: GNU General Public License Version 3&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Copyright (C) 2020-2021 Oleg Kozhukharenko&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -56,6 +61,16 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
 
 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </translation>
+    </message>
+    <message>
+        <location filename="about.cpp" line="33"/>
+        <source>Program for encoding HDR and SDR video.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="about.cpp" line="33"/>
+        <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -127,6 +142,16 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Cantarell&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="donate.cpp" line="33"/>
+        <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="donate.cpp" line="36"/>
+        <source>If you find this application useful, consider making a donation to support the development.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
