@@ -81,7 +81,7 @@ void Taskcomplete::repeatHandler() /*** Repeat handler ***/
          << std::setw(2) << std::setfill('0') << min.toStdString() << ":"
          << std::setw(2) << std::setfill('0') << sec.toStdString();
     std::string tm = sstr.str();
-    _message = "Pause\n\n Resume after: " + QString::fromStdString(tm);
+    _message = tr("Pause\n\n Resume after: ") + QString::fromStdString(tm);
     show_message(_message);
     elps_t--;
 }

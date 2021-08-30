@@ -31,7 +31,8 @@ public:
                        QString *ptr_output_folder, QString *ptr_temp_folder,
                        bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                        int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
-                       int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag, QString *ptr_language);
+                       int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
+                       QString *ptr_language, bool *ptr_aceptFlag);
 
 private slots:
 
@@ -124,6 +125,8 @@ private:
     bool *_ptr_protection;
 
     bool *_ptr_hideInTrayFlag;
+
+    bool *_ptr_acceptFlag;
 
     /**************** Geometry **************************/
 

@@ -146,7 +146,7 @@ void Widget::showEvent(QShowEvent *event)   /*** Call set parameters ***/
 void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
 {
     event->ignore();
-    _message = "Quit program?";
+    _message = tr("Quit program?");
     bool confirm = call_dialog(_message);
     if (confirm == true)
     {
@@ -784,11 +784,11 @@ void Widget::setParameters()    /*** Set parameters ***/
         trayIcon->show();
     }
     setTheme(_theme);
-    if (_language != "en") {
-        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
-            qApp->installTranslator(&qtTranslator);
-        }
-    }
+//    if (_language != "en") {
+//        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
+//            qApp->installTranslator(&qtTranslator);
+//        }
+//    }
 }
 
 void Widget::setDocksParameters()
@@ -880,10 +880,12 @@ void Widget::on_actionDonate_clicked()   /*** Donate ***/
 
 void Widget::on_actionSettings_clicked()    /*** Settings ***/
 {
+    bool acceptFlag = false;
     Settings settings(this);
     settings.setParameters(&_settingsWindowGeometry, &_stn_file, &_output_folder,
                            &_temp_folder, &_protection, &_showHDR_mode, &_timer_interval, &_theme,
-                           &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag, &_language);
+                           &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag,
+                           &_language, &acceptFlag);
     settings.setModal(true);
     settings.exec();
     timer->setInterval(_timer_interval*1000);
@@ -896,13 +898,17 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     if (_row != -1) {
         get_output_filename();
     }
-    if (_language != "en") {
-        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
-            qApp->installTranslator(&qtTranslator);
-        }
-    }
-    else {
-        qApp->removeTranslator(&qtTranslator);
+//    if (_language != "en") {
+//        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
+//            qApp->installTranslator(&qtTranslator);
+//        }
+//    }
+//    else {
+//        qApp->removeTranslator(&qtTranslator);
+//    }
+    if (acceptFlag) {
+        _message = tr("You need to restart the program for the settings to take effect.");
+        call_task_complete(_message, false);
     }
 }
 
@@ -2064,7 +2070,7 @@ void Widget::make_preset()  /*** Make preset ***/
     QString selected_colorprim = arr_colorprim[_PRIMARY];
     if (!curr_colorprim.contains(_hdr[CUR_COLOR_PRIMARY])) {
         restore_initial_state();
-        _message = QString("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
+        _message = tr("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
         call_task_complete(_message, false);
         return;
     }
@@ -2110,7 +2116,7 @@ void Widget::make_preset()  /*** Make preset ***/
     QString selected_colormatrix = arr_colormatrix[_MATRIX];
     if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
         restore_initial_state();
-        _message = QString("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
+        _message = tr("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
         call_task_complete(_message, false);
         return;
     }
@@ -2160,7 +2166,7 @@ void Widget::make_preset()  /*** Make preset ***/
     QString selected_transfer = arr_trc[_TRC];
     if (!curr_transfer.contains(_hdr[CUR_TRANSFER])) {
         restore_initial_state();
-        _message = QString("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
+        _message = tr("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
         call_task_complete(_message, false);
         return;
     }
@@ -2342,7 +2348,7 @@ void Widget::make_preset()  /*** Make preset ***/
                     chroma_coord_curr_blue_y = chr[5];
                 } else {
                     restore_initial_state();
-                    _message = "Incorrect master display chroma coordinates source parameters!";
+                    _message = tr("Incorrect master display chroma coordinates source parameters!");
                     call_task_complete(_message, false);
                     return;
                 }
@@ -2352,7 +2358,7 @@ void Widget::make_preset()  /*** Make preset ***/
                     white_coord_curr_y = wht[1];
                 } else {
                     restore_initial_state();
-                    _message = "Incorrect master display white point coordinates source parameters!";
+                    _message = tr("Incorrect master display white point coordinates source parameters!");
                     call_task_complete(_message, false);
                     return;
                 }
@@ -2497,7 +2503,7 @@ void Widget::encode()   /*** Encode ***/
             _status_encode_btn = "start";
             ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
             ui->actionEncode->setToolTip("Encode");
-            _message = "The file does not contain FPS information!\nSelect the correct input file!";
+            _message = tr("The file does not contain FPS information!\nSelect the correct input file!");
             call_task_complete(_message, false);
             return;
         }
@@ -2560,7 +2566,7 @@ void Widget::encode()   /*** Encode ***/
         std::cout << "cmd command not found!!!" << std::endl;
         process_1->disconnect();
         restore_initial_state();
-        _message = "An unknown error occurred!\n Possible FFMPEG not installed.\n";
+        _message = tr("An unknown error occurred!\n Possible FFMPEG not installed.\n");
         call_task_complete(_message, false);
     }
 }
@@ -2581,7 +2587,7 @@ void Widget::add_metadata() /*** Add metedata ***/
         std::cout << "cmd command not found!!!" << std::endl;
         process_1->disconnect();
         restore_initial_state();
-        _message = "An unknown error occured!\n Possible mkvtoolnix not installed.\n";
+        _message = tr("An unknown error occured!\n Possible mkvtoolnix not installed.\n");
         call_task_complete(_message, false);
     };
 }
@@ -2616,7 +2622,7 @@ void Widget::complete() /*** Complete ***/
             if (_protection == true) {
                 timer->stop();
             }
-            _message = QString("Task completed!\n\n Elapsed time: ") + timeConverter(elps_t);
+            _message = tr("Task completed!\n\n Elapsed time: ") + timeConverter(elps_t);
             call_task_complete(_message, false);
         }
     } else {
@@ -2629,7 +2635,7 @@ void Widget::complete() /*** Complete ***/
         if (_protection == true) {
             timer->stop();
         }
-        _message = QString("Task completed!\n\n Elapsed time: ") + timeConverter(elps_t);
+        _message = tr("Task completed!\n\n Elapsed time: ") + timeConverter(elps_t);
         call_task_complete(_message, false);
     }
     QDir().remove(QDir::homePath() + QString("/ffmpeg2pass-0.log"));
@@ -2789,7 +2795,7 @@ void Widget::cancel()   /*** Stop execute ***/
     ui->labelAnimation->hide();
     ui->progressBar->hide();
     restore_initial_state();
-    _message = "The current encoding process has been canceled!\n";
+    _message = tr("The current encoding process has been canceled!\n");
     call_task_complete(_message, false);
 }
 
@@ -2803,9 +2809,9 @@ void Widget::error()  /*** Error ***/
     setStatus("Error!");
     restore_initial_state();
     if (_error_message != "") {
-        _message = "An error occurred: " + _error_message;
+        _message = tr("An error occurred: ") + _error_message;
     } else {
-        _message = "Unexpected error occurred!";
+        _message = tr("Unexpected error occurred!");
     }
     call_task_complete(_message, false);
 }
@@ -2882,12 +2888,12 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
         std::cout << "Status encode btn: start" << std::endl;  // Debug info //
         int cnt = ui->tableWidget->rowCount();
         if (cnt == 0) {
-            _message = "Select input file first!";
+            _message = tr("Select input file first!");
             call_task_complete(_message, false);
             return;
         }
         if (_pos_cld == -1) {
-            _message = "Select preset first!";
+            _message = tr("Select preset first!");
             call_task_complete(_message, false);
             return;
         }
@@ -2924,7 +2930,7 @@ void Widget::on_actionStop_clicked()    /*** Stop ***/
     std::cout << "Call Stop ..." << std::endl;  //  Debug info //
     short s1 = process_1->state();
     if (s1 != 0) {
-        _message = "Stop encoding?";
+        _message = tr("Stop encoding?");
         bool confirm = call_dialog(_message);
         if (confirm == true) {
             process_1->disconnect();
@@ -2951,7 +2957,7 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         std::wstring filePath_wstr = openFileNames.at(i-1).toStdWString();
         std::wstring::size_type separator = filePath_wstr.rfind('/');
         if (separator == std::wstring::npos) {
-            _message = "Unexpected error while trying to perform file name detection.";
+            _message = tr("Unexpected error while trying to perform file name detection.");
             call_task_complete(_message, false);
             return;
         }
@@ -4360,7 +4366,7 @@ void Widget::on_buttonApplyPreset_clicked()  /*** Apply preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        _message = "Select preset first!\n";
+        _message = tr("Select preset first!\n");
         call_task_complete(_message, false);
         return;
     }
@@ -4374,7 +4380,7 @@ void Widget::on_buttonApplyPreset_clicked()  /*** Apply preset ***/
 
     } else {
         // Item is parent...
-        _message = "Select preset first!\n";
+        _message = tr("Select preset first!\n");
         call_task_complete(_message, false);
         return;
     }
@@ -4397,7 +4403,7 @@ void Widget::on_actionRemove_preset_clicked()  /*** Remove preset ***/
     QTreeWidgetItem *parentItem = item->parent();
     if (parentItem != nullptr) {
         // Item is child...
-        _message = "Delete?";
+        _message = tr("Delete?");
         bool confirm = call_dialog(_message);
         if (confirm == true)
         {
@@ -4425,7 +4431,7 @@ void Widget::on_actionRemove_preset_clicked()  /*** Remove preset ***/
             updatePresetTable();
 
         } else {
-            _message = "Delete presets first!\n";
+            _message = tr("Delete presets first!\n");
             call_task_complete(_message, false);
         }
     }
@@ -4435,7 +4441,7 @@ void Widget::on_actionEdit_preset_clicked()  /*** Edit preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        _message = "Select preset first!\n";
+        _message = tr("Select preset first!\n");
         call_task_complete(_message, false);
         return;
     }
@@ -4469,7 +4475,7 @@ void Widget::on_actionEdit_preset_clicked()  /*** Edit preset ***/
 
     } else {
         // Item is parent...
-        _message = "Select preset first!\n";
+        _message = tr("Select preset first!\n");
         call_task_complete(_message, false);
     }
 }
@@ -4912,7 +4918,7 @@ void Widget::call_task_complete(const QString &_message, const bool &_timer_mode
 {
     if (this->isHidden()) {
         if (_hideInTrayFlag && !_timer_mode) {
-            trayIcon->showMessage(_message, "Task", QSystemTrayIcon::Information, 151000);
+            trayIcon->showMessage(_message, tr("Task"), QSystemTrayIcon::Information, 151000);
         }
         else if (_timer_mode) {
             this->show();

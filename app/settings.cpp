@@ -55,7 +55,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
                              bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                              int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
                              int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
-                             QString *ptr_language)  /*** Set parameters ***/
+                             QString *ptr_language, bool *ptr_aceptFlag)  /*** Set parameters ***/
 {
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
@@ -76,6 +76,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _ptr_suffixType = ptr_suffixType;
     _ptr_hideInTrayFlag = ptr_hideInTrayFlag;
     _ptr_language = ptr_language;
+    _ptr_acceptFlag = ptr_aceptFlag;
 
     if (*_ptr_settingsWindowGeometry != "default") {
         this->restoreGeometry(*_ptr_settingsWindowGeometry);
@@ -103,7 +104,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     QMap<QString, int> langIndex;
     langIndex["en"] = 0;
     langIndex["zh"] = 1;
-    langIndex["ge"] = 2;
+    langIndex["de"] = 2;
     langIndex["ru"] = 3;
     if (langIndex.contains(*_ptr_language)) {
         ui_settings->comboBox_lang->setCurrentIndex(langIndex.value(*_ptr_language));
@@ -219,11 +220,12 @@ void Settings::on_buttonApply_clicked() /*** Save settings ***/
 
         (*_ptr_stn_file).close();
         _flag_save = true;
+        *_ptr_acceptFlag = true;
         this->close();
     }
     else
     {
-        _message = "Settings file not found!\n";
+        _message = tr("Settings file not found!\n");
         call_task_complete(_message, false);
     };
 }
@@ -620,7 +622,7 @@ void Settings::on_comboBoxSuffixType_currentIndexChanged(int index)
 void Settings::on_comboBox_lang_currentIndexChanged(int index)
 {
     QString arrLang[4] = {
-        "en", "zh", "ge", "ru"
+        "en", "zh", "de", "ru"
     };
     *_ptr_language = arrLang[index];
 }
