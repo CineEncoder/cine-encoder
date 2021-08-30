@@ -214,6 +214,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->setValue("Settings/open_dir", _openDir);
         _settings->setValue("Settings/batch_mode", _batch_mode);
         _settings->setValue("Settings/tray", _hideInTrayFlag);
+        _settings->setValue("Settings/language", _language);
         _settings->endGroup();
 
         /*_settings->beginWriteArray("Settings/cur_param");
@@ -750,6 +751,7 @@ void Widget::setParameters()    /*** Set parameters ***/
         _openDir = _settings->value("Settings/open_dir").toString();
         _batch_mode = _settings->value("Settings/batch_mode").toBool();
         _hideInTrayFlag = _settings->value("Settings/tray").toBool();
+        _language = _settings->value("Settings/language").toString();
         _settings->endGroup();
 
         /*int arraySize = _settings->beginReadArray("Settings/cur_param");
@@ -782,8 +784,10 @@ void Widget::setParameters()    /*** Set parameters ***/
         trayIcon->show();
     }
     setTheme(_theme);
-    if (qtTranslator.load(":/resources/translation/translation_zh.qm")) {
-        //qApp->installTranslator(&qtTranslator);
+    if (_language != "en") {
+        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
+            qApp->installTranslator(&qtTranslator);
+        }
     }
 }
 
@@ -879,7 +883,7 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     Settings settings(this);
     settings.setParameters(&_settingsWindowGeometry, &_stn_file, &_output_folder,
                            &_temp_folder, &_protection, &_showHDR_mode, &_timer_interval, &_theme,
-                           &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag);
+                           &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag, &_language);
     settings.setModal(true);
     settings.exec();
     timer->setInterval(_timer_interval*1000);
@@ -891,6 +895,14 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     }
     if (_row != -1) {
         get_output_filename();
+    }
+    if (_language != "en") {
+        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
+            qApp->installTranslator(&qtTranslator);
+        }
+    }
+    else {
+        qApp->removeTranslator(&qtTranslator);
     }
 }
 

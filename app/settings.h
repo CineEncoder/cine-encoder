@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <QHoverEvent>
 #include <QListView>
+#include <QMap>
 //#include <iostream>
 //#include <QDebug>
 
@@ -30,7 +31,7 @@ public:
                        QString *ptr_output_folder, QString *ptr_temp_folder,
                        bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                        int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
-                       int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag);
+                       int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag, QString *ptr_language);
 
 private slots:
 
@@ -56,6 +57,8 @@ private slots:
 
     void on_comboBoxSuffixType_currentIndexChanged(int index);
 
+    void on_comboBox_lang_currentIndexChanged(int index);
+
     void closeEvent(QCloseEvent *event);
 
     bool eventFilter(QObject *watched, QEvent *event);
@@ -77,6 +80,8 @@ private:
     QString _curr_prefixName;
 
     QString _curr_suffixName;
+
+    QString _curr_language;
 
     int _curr_prefxType;
 
@@ -103,6 +108,8 @@ private:
     QString *_ptr_prefixName;
 
     QString *_ptr_suffixName;
+
+    QString *_ptr_language;
 
     int *_ptr_prefxType;
 

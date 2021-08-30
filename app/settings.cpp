@@ -45,6 +45,7 @@ void Settings::closeEvent(QCloseEvent *close_settings)  /*** Show prompt when cl
         *_ptr_prefxType = _curr_prefxType;
         *_ptr_suffixType = _curr_suffixType;
         *_ptr_hideInTrayFlag = _curr_hideInTrayFlag;
+        *_ptr_language = _curr_language;
     }
     close_settings->accept();
 }
@@ -53,7 +54,8 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
                              QString *ptr_output_folder, QString *ptr_temp_folder,
                              bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                              int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
-                             int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag)  /*** Set parameters ***/
+                             int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
+                             QString *ptr_language)  /*** Set parameters ***/
 {
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
@@ -73,6 +75,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _ptr_prefxType = ptr_prefxType;
     _ptr_suffixType = ptr_suffixType;
     _ptr_hideInTrayFlag = ptr_hideInTrayFlag;
+    _ptr_language = ptr_language;
 
     if (*_ptr_settingsWindowGeometry != "default") {
         this->restoreGeometry(*_ptr_settingsWindowGeometry);
@@ -97,6 +100,14 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
         ui_settings->checkBox_3->setChecked(true);
         ui_settings->spinBox_3->setEnabled(true);
     }
+    QMap<QString, int> langIndex;
+    langIndex["en"] = 0;
+    langIndex["zh"] = 1;
+    langIndex["ge"] = 2;
+    langIndex["ru"] = 3;
+    if (langIndex.contains(*_ptr_language)) {
+        ui_settings->comboBox_lang->setCurrentIndex(langIndex.value(*_ptr_language));
+    }
     ui_settings->comboBox_1->setCurrentIndex(*_ptr_theme);
     ui_settings->comboBoxPrefixType->setCurrentIndex(*_ptr_prefxType);
     ui_settings->comboBoxSuffixType->setCurrentIndex(*_ptr_suffixType);
@@ -115,6 +126,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _curr_prefxType = *_ptr_prefxType;
     _curr_suffixType = *_ptr_suffixType;
     _curr_hideInTrayFlag = *_ptr_hideInTrayFlag;
+    _curr_language = *_ptr_language;
     _flag_save = false;
 
     QListView *comboboxLangListView = new QListView(ui_settings->comboBox_lang);
@@ -223,9 +235,10 @@ void Settings::on_buttonReset_clicked() /*** Reset settings ***/
     ui_settings->checkBox_2->setChecked(false);
     ui_settings->checkBox_3->setChecked(false);
     ui_settings->spinBox_3->setEnabled(false);
-    ui_settings->comboBox_1->setCurrentIndex(0);
+    ui_settings->comboBox_1->setCurrentIndex(3);
     ui_settings->comboBoxPrefixType->setCurrentIndex(0);
     ui_settings->comboBoxSuffixType->setCurrentIndex(0);
+    ui_settings->comboBox_lang->setCurrentIndex(0);
     ui_settings->lineEditSuffix->setText("_encoded_");
     *_ptr_prefixName = "output";
     *_ptr_suffixName = "_encoded_";
@@ -233,7 +246,8 @@ void Settings::on_buttonReset_clicked() /*** Reset settings ***/
     *_ptr_output_folder = "";
     *_ptr_protection = false;
     *_ptr_showHDR_mode = false;
-    *_ptr_theme = 0;
+    *_ptr_theme = 3;
+    *_ptr_language = "en";
 }
 
 void Settings::on_buttonOutputPath_clicked()  /*** Select output folder ***/
@@ -603,6 +617,14 @@ void Settings::on_comboBoxSuffixType_currentIndexChanged(int index)
     }
 }
 
+void Settings::on_comboBox_lang_currentIndexChanged(int index)
+{
+    QString arrLang[4] = {
+        "en", "zh", "ge", "ru"
+    };
+    *_ptr_language = arrLang[index];
+}
+
 void Settings::on_buttonTab_1_clicked()
 {
     ui_settings->buttonTab_1->setEnabled(false);
@@ -616,3 +638,4 @@ void Settings::on_buttonTab_2_clicked()
     ui_settings->buttonTab_2->setEnabled(false);
     ui_settings->tabWidgetSettings->setCurrentIndex(1);
 }
+
