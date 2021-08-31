@@ -63,12 +63,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
 </translation>
     </message>
     <message>
-        <location filename="about.cpp" line="33"/>
+        <location filename="about.cpp" line="32"/>
         <source>Program for encoding HDR and SDR video.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="about.cpp" line="33"/>
+        <location filename="about.cpp" line="32"/>
         <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -301,7 +301,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.ui" line="4913"/>
         <location filename="preset.ui" line="5015"/>
         <source>Source</source>
-        <translation type="unfinished">Исходн.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="preset.ui" line="899"/>
