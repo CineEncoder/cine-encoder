@@ -538,29 +538,29 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
     /************************************* Codec module ***************************************/
 
     QString arr_codec[NUMBER_PRESETS][3] = {
-        {"HEVC, ",             "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"HEVC, ",             "YUV, 4:2:0, 8 bit, ",  ""},
-        {"AVC, ",              "YUV, 4:2:0, 8 bit, ",  ""},
-        {"Intel QSV, AVC, ",   "YUV, 4:2:0, 8 bit, ",  ""},
-        {"Intel QSV, MPEG-2, ","YUV, 4:2:0, 8 bit, ",  ""},
-        {"NVENC, HEVC, ",      "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"NVENC, HEVC, ",      "YUV, 4:2:0, 8 bit, ",  ""},
-        {"NVENC, AVC, ",       "YUV, 4:2:0, 8 bit, ",  ""},
-        {"VP9, ",              "YUV, 4:2:0, 10 bit, ", "HDR: "},
-        {"VP9, ",              "YUV, 4:2:0, 8  bit, ", ""},
-        {"ProRes Proxy, ",     "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes LT, ",        "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes Standard, ",  "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes HQ, ",        "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"ProRes 4444, ",      "YUV, 4:4:4, 10 bit, ", "HDR: "},
-        {"ProRes 4444XQ, ",    "YUV, 4:4:4, 10 bit, ", "HDR: "},
-        {"DNxHR LB, ",         "YUV, 4:2:2, 8 bit, ",  ""},
-        {"DNxHR SQ, ",         "YUV, 4:2:2, 8 bit, ",  ""},
-        {"DNxHR HQ, ",         "YUV, 4:2:2, 8 bit, ",  ""},
-        {"DNxHR HQX, ",        "YUV, 4:2:2, 10 bit, ", "HDR: "},
-        {"DNxHR 444, ",        "YUV, 4:4:4, 10 bit, ", "HDR: "},
-        {"XDCAM HD422, ",      "YUV, 4:2:2, 8 bit, ",  ""},
-        {"From source, ",      "",                     "HDR: "}
+        {"HEVC, ",                tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
+        {"HEVC, ",                tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"AVC, ",                 tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"Intel QSV, AVC, ",      tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"Intel QSV, MPEG-2, ",   tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
+        {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"NVENC, AVC, ",          tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"VP9, ",                 tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
+        {"VP9, ",                 tr("YUV, 4:2:0, 8  bit, "), ""},
+        {tr("ProRes Proxy, "),    tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
+        {"ProRes LT, ",           tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
+        {tr("ProRes Standard, "), tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
+        {"ProRes HQ, ",           tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
+        {"ProRes 4444, ",         tr("YUV, 4:4:4, 10 bit, "), "HDR: "},
+        {"ProRes 4444XQ, ",       tr("YUV, 4:4:4, 10 bit, "), "HDR: "},
+        {"DNxHR LB, ",            tr("YUV, 4:2:2, 8 bit, "),  ""},
+        {"DNxHR SQ, ",            tr("YUV, 4:2:2, 8 bit, "),  ""},
+        {"DNxHR HQ, ",            tr("YUV, 4:2:2, 8 bit, "),  ""},
+        {"DNxHR HQX, ",           tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
+        {"DNxHR 444, ",           tr("YUV, 4:4:4, 10 bit, "), "HDR: "},
+        {"XDCAM HD422, ",         tr("YUV, 4:2:2, 8 bit, "),  ""},
+        {tr("From source, "),     "",                         "HDR: "}
     };
     codec = arr_codec[c1][0];
     clrspace = arr_codec[c1][1];
@@ -569,19 +569,19 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
     QString w = ui_preset->comboBox_width->currentText();
     QString h = ui_preset->comboBox_height->currentText();
-    if (w != "Source" && h != "Source") {
+    if (w != tr("Source") && h != tr("Source")) {
         res = w + "x" + h + ", ";
-    } else if (w == "Source" && h == "Source") {
-        res = "Res: Source, ";
+    } else if (w == tr("Source") && h == tr("Source")) {
+        res = QString("Res: %1, ").arg(tr("Source"));
     } else {
-        res = "Res: Custom, ";
+        res = QString("Res: %1, ").arg(tr("Custom"));
     }
 
     /************************************* FPS module ***************************************/
 
     QString f = ui_preset->comboBoxFrameRate->currentText();
-    if (f == "Source") {
-        fps = "Fps: Source, ";
+    if (f == tr("Source")) {
+        fps = QString("Fps: %1, ").arg(tr("Source"));
     } else {
         fps = f + " fps, ";
     }
@@ -618,20 +618,20 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         mode = selected_mode + " " + ui_preset->lineEdit_bitrate->text() + ", ";
     }
     else if (selected_mode != "" && (selected_mode != "CRF" && selected_mode != "CQP")) {
-        mode = selected_mode + " " + ui_preset->lineEdit_bitrate->text() + " MBps, ";
+        mode = selected_mode + " " + ui_preset->lineEdit_bitrate->text() + tr(" MBps, ");
     }
 
     /************************************* Preset module ***************************************/
 
     QString arr_preset[NUMBER_PRESETS][10] = {
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
+        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
+        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
+        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",       ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",       ""},
+        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
+        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
+        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
@@ -649,23 +649,23 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}
     };
     QString p = arr_preset[c1][c12];
-    if (p != "" && p != "None") {
-        preset = "Preset: " + p + ", ";
+    if (p != "" && p != tr("None")) {
+        preset = tr("Preset: ") + p + ", ";
     }
 
     /************************************* Pass module ***************************************/
 
     QString arr_pass[NUMBER_PRESETS][2] = {
-        {"1 Pass", "2 Pass"},
-        {"1 Pass", "2 Pass"},
-        {"1 Pass", "2 Pass"},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
         {"",       ""},
         {"",       ""},
-        {"2 Pass", ""},
-        {"2 Pass", ""},
-        {"2 Pass", ""},
-        {"1 Pass", "2 Pass"},
-        {"1 Pass", "2 Pass"},
+        {tr("2 Pass"), ""},
+        {tr("2 Pass"), ""},
+        {tr("2 Pass"), ""},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
         {"",       ""},
         {"",       ""},
         {"",       ""},
@@ -683,22 +683,22 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         pass = arr_pass[c1][c11] + ", ";
     }
     if (arr_codec[c1][2] != "") {
-        hdr = arr_codec[c1][2] + "Enabled, ";
+        hdr = arr_codec[c1][2] + tr("Enabled, ");
     }
 
     /************************************* Audio module ***************************************/
 
     QString arr_acodec[NUMBER_PRESETS][6] = {
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Source", "",     ""},
-        {"Opus",       "Vorbis",     "Source",     "",       "",     ""},
-        {"Opus",       "Vorbis",     "Source",     "",       "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"),     "",       "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"),     "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
@@ -711,10 +711,10 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
         {"PCM 16 bit", "",           "",           "",       "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Vorbis", "Opus", "Source"}
+        {"AAC",        "AC3",        "DTS",        "Vorbis", "Opus", tr("Source")}
     };
     if (arr_acodec[c1][c21] != "") {
-        acodec = "Audio: " + arr_acodec[c1][c21] + ", ";
+        acodec = tr("Audio: ") + arr_acodec[c1][c21] + ", ";
     }
     QString arr_bitrate[5][17] = {
         {"384k",  "320k",  "256k",  "192k",  "128k",  "96k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AAC
@@ -751,7 +751,7 @@ void Preset::on_comboBoxAspectRatio_currentIndexChanged(int index)
     //lockSignals(true);
 
     QString aspect_ratio[34][2] = {
-        {"Source", "Source"}, // Source
+        {tr("Source"), tr("Source")}, // Source
         {"640",    "480"},    // 640x480
         {"720",    "480"},    // 720x480
         {"720",    "576"},    // 720x576
@@ -784,7 +784,7 @@ void Preset::on_comboBoxAspectRatio_currentIndexChanged(int index)
         {"3840",   "2160"},   // 3840x2160
         {"4520",   "2540"},   // 4520x2540
         {"7680",   "4320"},   // 7680x4320
-        {"Custom", "Custom"}  // Custom
+        {tr("Custom"), tr("Custom")}  // Custom
     };
 
     QString width = aspect_ratio[index][0];
@@ -820,7 +820,7 @@ void Preset::on_comboBox_width_currentTextChanged(const QString &arg1)
     lockSignals(true);
 
     QString aspect_ratio[34][2] = {
-        {"Source", "Source"}, // Source
+        {tr("Source"), tr("Source")}, // Source
         {"640",    "480"},    // 640x480
         {"720",    "480"},    // 720x480
         {"720",    "576"},    // 720x576
@@ -853,7 +853,7 @@ void Preset::on_comboBox_width_currentTextChanged(const QString &arg1)
         {"3840",   "2160"},   // 3840x2160
         {"4520",   "2540"},   // 4520x2540
         {"7680",   "4320"},   // 7680x4320
-        {"Custom", "Custom"}  // Custom
+        {tr("Custom"), tr("Custom")}  // Custom
     };
 
     QString height = ui_preset->comboBox_height->currentText();
@@ -876,7 +876,7 @@ void Preset::on_comboBox_height_currentTextChanged(const QString &arg1)
     lockSignals(true);
 
     QString aspect_ratio[34][2] = {
-        {"Source", "Source"}, // Source
+        {tr("Source"), tr("Source")}, // Source
         {"640",    "480"},    // 640x480
         {"720",    "480"},    // 720x480
         {"720",    "576"},    // 720x576
@@ -909,7 +909,7 @@ void Preset::on_comboBox_height_currentTextChanged(const QString &arg1)
         {"3840",   "2160"},   // 3840x2160
         {"4520",   "2540"},   // 4520x2540
         {"7680",   "4320"},   // 7680x4320
-        {"Custom", "Custom"}  // Custom
+        {tr("Custom"), tr("Custom")}  // Custom
     };
 
     QString width = ui_preset->comboBox_width->currentText();
@@ -940,16 +940,16 @@ void Preset::on_comboBoxFrameRate_currentIndexChanged(int index)
 
 void Preset::calculateDAR(QString width, QString height)
 {
-    if (width == "Source" && height == "Source") {
-        ui_preset->lineEdit_DAR->setText("Source");
+    if (width == tr("Source") && height == tr("Source")) {
+        ui_preset->lineEdit_DAR->setText(tr("Source"));
     }
-    else if (width == "Source" && height != "Source") {
-        ui_preset->lineEdit_DAR->setText("Undef");
+    else if (width == tr("Source") && height != tr("Source")) {
+        ui_preset->lineEdit_DAR->setText(tr("Undef"));
     }
-    else if (width != "Source" && height == "Source") {
-        ui_preset->lineEdit_DAR->setText("Undef");
+    else if (width != tr("Source") && height == tr("Source")) {
+        ui_preset->lineEdit_DAR->setText(tr("Undef"));
     }
-    else if (width != "Source" && height != "Source") {
+    else if (width != tr("Source") && height != tr("Source")) {
         int width_int = width.toInt();
         int height_int = height.toInt();
 
@@ -1034,18 +1034,18 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 {
     lockSignals(true);
     std::cout << "Change current codec..." << std::endl;
-    const QStringList levelsH264 = {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3", "3.1",
+    const QStringList levelsH264 = {tr("Auto"), "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3", "3.1",
                               "3.2", "4", "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"};
-    const QStringList levelsH265 = {"Auto", "1", "2", "2.1", "3", "3.1", "4", "4.1",
+    const QStringList levelsH265 = {tr("Auto"), "1", "2", "2.1", "3", "3.1", "4", "4.1",
                               "5", "5.1", "5.2", "6", "6.1", "6.2"};
-    const QStringList presetsH264 = {"None", "Ultrafast", "Superfast", "Veryfast", "Faster",
-                              "Fast", "Medium", "Slow", "Slower", "Veryslow"};
-    const QStringList presetsH265 = {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast",
-                              "Medium", "Slow", "Slower", "Veryslow"};
-    const QStringList presetsH264QSV = {"None", "Veryfast", "Faster", "Fast", "Medium", "Slow",
-                              "Slower", "Veryslow"};
-    const QStringList presetsMPEG2QSV = {"None", "Veryfast", "Faster", "Fast", "Medium", "Slow",
-                              "Slower", "Veryslow"};
+    const QStringList presetsH264 = {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"),
+                              tr("Fast"), tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow")};
+    const QStringList presetsH265 = {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"),
+                              tr("Fast"), tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow")};
+    const QStringList presetsH264QSV = {tr("None"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"),
+                              tr("Slow"), tr("Slower"), tr("Veryslow")};
+    const QStringList presetsMPEG2QSV = {tr("None"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"),
+                              tr("Slow"), tr("Slower"), tr("Veryslow")};
     ui_preset->comboBoxAspectRatio->setEnabled(true);
     ui_preset->comboBox_width->setEnabled(true);
     ui_preset->comboBox_height->setEnabled(true);
@@ -1072,54 +1072,54 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
     ui_preset->comboBox_level->clear();
     ui_preset->comboBox_audio_codec->clear();
 
-    if (arg1 == "H.265/HEVC 4:2:0 10 bit") {
+    if (arg1 == tr("H.265/HEVC 4:2:0 10 bit")) {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Constant Bitrate", "Average Bitrate", "Variable Bitrate",
-                                            "Constant Rate Factor", "Constant QP"});
-        ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
+        ui_preset->comboBox_mode->addItems({tr("Constant Bitrate"), tr("Average Bitrate"), tr("Variable Bitrate"),
+                                            tr("Constant Rate Factor"), tr("Constant QP")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::MAIN10);
         ui_preset->comboBox_preset->addItems(presetsH265);
         ui_preset->comboBox_preset->setCurrentIndex(6);
         ui_preset->comboBox_level->addItems(levelsH265);
         ui_preset->comboBox_level->setCurrentIndex(0);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P10LE);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
     }
 
-    else if (arg1 == "H.265/HEVC 4:2:0 8 bit") {
+    else if (arg1 == tr("H.265/HEVC 4:2:0 8 bit")) {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Constant Bitrate", "Average Bitrate", "Variable Bitrate",
-                                            "Constant Rate Factor", "Constant QP"});
-        ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
+        ui_preset->comboBox_mode->addItems({tr("Constant Bitrate"), tr("Average Bitrate"), tr("Variable Bitrate"),
+                                            tr("Constant Rate Factor"), tr("Constant QP")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::MAIN);
         ui_preset->comboBox_preset->addItems(presetsH265);
         ui_preset->comboBox_preset->setCurrentIndex(6);
         ui_preset->comboBox_level->addItems(levelsH265);
         ui_preset->comboBox_level->setCurrentIndex(0);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }
 
-    else if (arg1 == "H.264/AVC 4:2:0 8 bit") {
+    else if (arg1 == tr("H.264/AVC 4:2:0 8 bit")) {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Constant Bitrate", "Average Bitrate", "Variable Bitrate",
-                                            "Constant Rate Factor", "Constant QP"});
-        ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
+        ui_preset->comboBox_mode->addItems({tr("Constant Bitrate"), tr("Average Bitrate"), tr("Variable Bitrate"),
+                                            tr("Constant Rate Factor"), tr("Constant QP")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::HIGH);
         ui_preset->comboBox_preset->addItems(presetsH264);
         ui_preset->comboBox_preset->setCurrentIndex(6);
         ui_preset->comboBox_level->addItems(levelsH264);
         ui_preset->comboBox_level->setCurrentIndex(0);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }
 
-    else if (arg1 == "Intel QSV H.264/AVC 4:2:0 8 bit") {
+    else if (arg1 == tr("Intel QSV H.264/AVC 4:2:0 8 bit")) {
         ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
         ui_preset->comboBoxAspectRatio->setEnabled(false);
         ui_preset->comboBox_width->setEnabled(false);
@@ -1127,8 +1127,8 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBoxFrameRate->setEnabled(false);
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::HIGH);
         ui_preset->comboBox_preset->addItems(presetsH264QSV);
         ui_preset->comboBox_preset->setCurrentIndex(4);
@@ -1137,11 +1137,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }
 
-    else if (arg1 == "Intel QSV MPEG-2 4:2:0 8 bit") {
+    else if (arg1 == tr("Intel QSV MPEG-2 4:2:0 8 bit")) {
         ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
         ui_preset->comboBoxAspectRatio->setEnabled(false);
         ui_preset->comboBox_width->setEnabled(false);
@@ -1149,104 +1149,104 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBoxFrameRate->setEnabled(false);
         ui_preset->comboBox_container->addItems({"MKV", "MPG", "AVI", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(3);
-        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::HIGH);
         ui_preset->comboBox_preset->addItems(presetsMPEG2QSV);
         ui_preset->comboBox_preset->setCurrentIndex(4);
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_level->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }
 
-    else if (arg1 == "NVENC H.265/HEVC 4:2:0 10 bit") {
+    else if (arg1 == tr("NVENC H.265/HEVC 4:2:0 10 bit")) {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
-        ui_preset->comboBox_pass->addItems({"2 Pass Optimisation"});
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("2 Pass Optimisation")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::MAIN10);
-        ui_preset->comboBox_preset->addItems({"None", "Slow"});
+        ui_preset->comboBox_preset->addItems({tr("None"), tr("Slow")});
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::P010LE);
         ui_preset->comboBox_preset->setCurrentIndex(1);
         ui_preset->comboBox_level->addItems(levelsH265);
         ui_preset->comboBox_level->setCurrentIndex(0);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
     }
 
-    else if (arg1 == "NVENC H.265/HEVC 4:2:0 8 bit") {
+    else if (arg1 == tr("NVENC H.265/HEVC 4:2:0 8 bit")) {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
-        ui_preset->comboBox_pass->addItems({"2 Pass Optimisation"});
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("2 Pass Optimisation")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::MAIN);
-        ui_preset->comboBox_preset->addItems({"None", "Slow"});
+        ui_preset->comboBox_preset->addItems({tr("None"), tr("Slow")});
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
         ui_preset->comboBox_preset->setCurrentIndex(1);
         ui_preset->comboBox_level->addItems(levelsH265);
         ui_preset->comboBox_level->setCurrentIndex(0);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }
 
-    else if (arg1 == "NVENC H.264/AVC 4:2:0 8 bit") {
+    else if (arg1 == tr("NVENC H.264/AVC 4:2:0 8 bit")) {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
-        ui_preset->comboBox_pass->addItems({"2 Pass Optimisation"});
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("2 Pass Optimisation")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::HIGH);
-        ui_preset->comboBox_preset->addItems({"None", "Slow"});
+        ui_preset->comboBox_preset->addItems({tr("None"), tr("Slow")});
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
         ui_preset->comboBox_preset->setCurrentIndex(1);
         ui_preset->comboBox_level->addItems(levelsH264);
         ui_preset->comboBox_level->setCurrentIndex(0);
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }
 
-    else if (arg1 == "VP9 4:2:0 10 bit") {
+    else if (arg1 == tr("VP9 4:2:0 10 bit")) {
         ui_preset->comboBox_container->addItems({"WebM", "MKV"});
-        ui_preset->comboBox_mode->addItems({"Average Bitrate", "Constant Rate Factor"});
-        ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
+        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_2);
-        ui_preset->comboBox_preset->addItems({"None"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
     }
 
-    else if (arg1 == "VP9 4:2:0 8 bit") {
+    else if (arg1 == tr("VP9 4:2:0 8 bit")) {
         ui_preset->comboBox_container->addItems({"WebM", "MKV"});
-        ui_preset->comboBox_mode->addItems({"Average Bitrate", "Constant Rate Factor"});
-        ui_preset->comboBox_pass->addItems({"1 Pass", "2 Pass"});
+        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_1);
-        ui_preset->comboBox_preset->addItems({"None"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
         ui_preset->comboBox_preset->setEnabled(false);
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
         disableHDR();
     }
 
-    else if (arg1 == "ProRes Proxy") {
+    else if (arg1 == tr("ProRes Proxy")) {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_0);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1258,11 +1258,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "ProRes LT") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_1);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1272,13 +1272,13 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
     }
 
-    else if (arg1 == "ProRes Standard") {
+    else if (arg1 == tr("ProRes Standard")) {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_2);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1290,11 +1290,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "ProRes HQ") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_3);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1306,11 +1306,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "ProRes 4444") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_4);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV444P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1322,11 +1322,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "ProRes 4444 XQ") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_5);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV444P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1338,11 +1338,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "DNxHR LB") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::DNXHR_LB);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422p);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1355,11 +1355,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "DNxHR SQ") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::DNXHR_SQ);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422p);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1372,11 +1372,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "DNxHR HQ") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::DNXHR_HQ);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422p);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1389,11 +1389,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "DNxHR HQX") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::DNXHR_HQX);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1405,11 +1405,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == "DNxHR 444") {
         ui_preset->comboBox_container->addItems({"MOV"});
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::DNXHR_444);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV444P10LE);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1422,10 +1422,10 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
     else if (arg1 == "XDCAM HD422") {
         ui_preset->comboBoxFrameRate->setCurrentIndex(8);
         ui_preset->comboBox_container->addItems({"MXF"});
-        ui_preset->comboBox_mode->addItems({"Variable Bitrate"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_0);
-        ui_preset->comboBox_preset->addItems({"None"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
         ui_preset->comboBox_level->addItems({"2"});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422p);
@@ -1437,7 +1437,7 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         disableHDR();
     }
 
-    else if (arg1 == "Source") {
+    else if (arg1 == tr("Source")) {
         ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
         ui_preset->comboBoxAspectRatio->setEnabled(false);
         ui_preset->comboBox_width->setEnabled(false);
@@ -1446,11 +1446,11 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBoxFrameRate->setEnabled(false);
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4", "M2TS", "TS"});
         ui_preset->comboBox_container->setCurrentIndex(2);
-        ui_preset->comboBox_mode->addItems({"Auto"});
-        ui_preset->comboBox_pass->addItems({"Auto"});
+        ui_preset->comboBox_mode->addItems({tr("Auto")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
         ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_AUTO);
-        ui_preset->comboBox_preset->addItems({"None"});
-        ui_preset->comboBox_level->addItems({"Auto"});
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
         ui_preset->comboBox_level->setEnabled(false);
         ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
         ui_preset->comboBox_preset->setEnabled(false);
@@ -1462,7 +1462,7 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBox_color_prim->setCurrentIndex(0);
         ui_preset->comboBox_color_matrix->setCurrentIndex(0);
         ui_preset->comboBox_transfer->setCurrentIndex(0);
-        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Vorbis", "Opus", "Source"});
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", "Vorbis", "Opus", tr("Source")});
     }
     lockSignals(false);
 }
@@ -1479,30 +1479,30 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
     ui_preset->lineEdit_minrate->setEnabled(true);
     ui_preset->lineEdit_maxrate->setEnabled(true);
     ui_preset->lineEdit_bufsize->setEnabled(true);
-    if (arg1 == "Auto") {
-        ui_preset->label_bitrate->setText("Bitrate");
+    if (arg1 == tr("Auto")) {
+        ui_preset->label_bitrate->setText(tr("Bitrate"));
         ui_preset->label_minrate->show();
         ui_preset->label_maxrate->show();
         ui_preset->label_bufsize->show();
-        ui_preset->label_bitrate_prefix->setText("MBps");
+        ui_preset->label_bitrate_prefix->setText(tr("MBps"));
         ui_preset->label_minrate_prefix->show();
         ui_preset->label_maxrate_prefix->show();
         ui_preset->label_bufsize_prefix->show();
         ui_preset->lineEdit_minrate->show();
         ui_preset->lineEdit_maxrate->show();
         ui_preset->lineEdit_bufsize->show();
-        ui_preset->lineEdit_bitrate->setText("Auto");
-        ui_preset->lineEdit_minrate->setText("Auto");
-        ui_preset->lineEdit_maxrate->setText("Auto");
-        ui_preset->lineEdit_bufsize->setText("Auto");
+        ui_preset->lineEdit_bitrate->setText(tr("Auto"));
+        ui_preset->lineEdit_minrate->setText(tr("Auto"));
+        ui_preset->lineEdit_maxrate->setText(tr("Auto"));
+        ui_preset->lineEdit_bufsize->setText(tr("Auto"));
         ui_preset->lineEdit_bitrate->setEnabled(false);
         ui_preset->lineEdit_minrate->setEnabled(false);
         ui_preset->lineEdit_maxrate->setEnabled(false);
         ui_preset->lineEdit_bufsize->setEnabled(false);
     }
-    if (arg1 == "Constant Bitrate") {
-        ui_preset->label_bitrate->setText("Bitrate");
-        ui_preset->label_bitrate_prefix->setText("MBps");
+    if (arg1 == tr("Constant Bitrate")) {
+        ui_preset->label_bitrate->setText(tr("Bitrate"));
+        ui_preset->label_bitrate_prefix->setText(tr("MBps"));
         ui_preset->label_minrate->hide();
         ui_preset->label_maxrate->hide();
         ui_preset->label_bufsize->show();
@@ -1515,12 +1515,12 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_bitrate->setText("50");
         ui_preset->lineEdit_bufsize->setText("50");
     }
-    if (arg1 == "Average Bitrate") {
-        ui_preset->label_bitrate->setText("Bitrate");
+    if (arg1 == tr("Average Bitrate")) {
+        ui_preset->label_bitrate->setText(tr("Bitrate"));
         ui_preset->label_minrate->hide();
         ui_preset->label_maxrate->hide();
         ui_preset->label_bufsize->hide();
-        ui_preset->label_bitrate_prefix->setText("MBps");
+        ui_preset->label_bitrate_prefix->setText(tr("MBps"));
         ui_preset->label_minrate_prefix->hide();
         ui_preset->label_maxrate_prefix->hide();
         ui_preset->label_bufsize_prefix->hide();
@@ -1529,9 +1529,9 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_bufsize->hide();
         ui_preset->lineEdit_bitrate->setText("50");
     }
-    if (arg1 == "Variable Bitrate") {
-        ui_preset->label_bitrate->setText("Bitrate");
-        ui_preset->label_bitrate_prefix->setText("MBps");
+    if (arg1 == tr("Variable Bitrate")) {
+        ui_preset->label_bitrate->setText(tr("Bitrate"));
+        ui_preset->label_bitrate_prefix->setText(tr("MBps"));
         ui_preset->label_minrate->show();
         ui_preset->label_maxrate->show();
         ui_preset->label_bufsize->show();
@@ -1546,8 +1546,8 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_maxrate->setText("50");
         ui_preset->lineEdit_bufsize->setText("50");
     }
-    if (arg1 == "Constant Rate Factor") {
-        ui_preset->label_bitrate->setText("Rate factor");
+    if (arg1 == tr("Constant Rate Factor")) {
+        ui_preset->label_bitrate->setText(tr("Rate factor"));
         ui_preset->label_minrate->hide();
         ui_preset->label_maxrate->hide();
         ui_preset->label_bufsize->hide();
@@ -1560,8 +1560,8 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_bufsize->hide();
         ui_preset->lineEdit_bitrate->setText("19");
     }
-    if (arg1 == "Constant QP") {
-        ui_preset->label_bitrate->setText("Quantizer");
+    if (arg1 == tr("Constant QP")) {
+        ui_preset->label_bitrate->setText(tr("Quantizer"));
         ui_preset->label_minrate->hide();
         ui_preset->label_maxrate->hide();
         ui_preset->label_bufsize->hide();
@@ -1612,8 +1612,8 @@ void Preset::on_comboBox_audio_codec_currentTextChanged(const QString &arg1) /**
     ui_preset->comboBox_audio_bitrate->clear();
     ui_preset->comboBox_audio_sampling->setEnabled(true);
     ui_preset->comboBox_audio_channels->setEnabled(true);
-    if (arg1 == "Source") {
-        ui_preset->comboBox_audio_bitrate->addItems({"Source"});
+    if (arg1 == tr("Source")) {
+        ui_preset->comboBox_audio_bitrate->addItems({tr("Source")});
         ui_preset->comboBox_audio_bitrate->setEnabled(false);
         ui_preset->comboBox_audio_sampling->setCurrentIndex(0);
         ui_preset->comboBox_audio_sampling->setEnabled(false);
@@ -1642,15 +1642,15 @@ void Preset::on_comboBox_audio_codec_currentTextChanged(const QString &arg1) /**
         ui_preset->comboBox_audio_bitrate->setCurrentIndex(2);
     }
     if (arg1 == "PCM 16 bit") {
-        ui_preset->comboBox_audio_bitrate->addItems({"Auto"});
+        ui_preset->comboBox_audio_bitrate->addItems({tr("Auto")});
         ui_preset->comboBox_audio_bitrate->setEnabled(false);
     }
     if (arg1 == "PCM 24 bit") {
-        ui_preset->comboBox_audio_bitrate->addItems({"Auto"});
+        ui_preset->comboBox_audio_bitrate->addItems({tr("Auto")});
         ui_preset->comboBox_audio_bitrate->setEnabled(false);
     }
     if (arg1 == "PCM 32 bit") {
-        ui_preset->comboBox_audio_bitrate->addItems({"Auto"});
+        ui_preset->comboBox_audio_bitrate->addItems({tr("Auto")});
         ui_preset->comboBox_audio_bitrate->setEnabled(false);
     }
     _repeat++;
@@ -1674,29 +1674,29 @@ void Preset::on_comboBox_master_disp_currentTextChanged(const QString &arg1)  /*
     ui_preset->lineEdit_white_coord->clear();
     ui_preset->lineEdit_chroma_coord->setEnabled(true);
     ui_preset->lineEdit_white_coord->setEnabled(true);
-    if (arg1 == "Unsprt") {
-        ui_preset->lineEdit_chroma_coord->setText("Unsprt");
-        ui_preset->lineEdit_white_coord->setText("Unsprt");
+    if (arg1 == tr("Unsprt")) {
+        ui_preset->lineEdit_chroma_coord->setText(tr("Unsprt"));
+        ui_preset->lineEdit_white_coord->setText(tr("Unsprt"));
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == "Source") {
-        ui_preset->lineEdit_chroma_coord->setText("Source");
-        ui_preset->lineEdit_white_coord->setText("Source");
+    if (arg1 == tr("Source")) {
+        ui_preset->lineEdit_chroma_coord->setText(tr("Source"));
+        ui_preset->lineEdit_white_coord->setText(tr("Source"));
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == "Custom") {
+    if (arg1 == tr("Custom")) {
         ui_preset->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui_preset->lineEdit_white_coord->setText("0.3127,0.3290");
     }
-    if (arg1 == "Display P3") {
+    if (arg1 == tr("Display P3")) {
         ui_preset->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui_preset->lineEdit_white_coord->setText("0.3127,0.3290");
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == "DCI P3") {
+    if (arg1 == tr("DCI P3")) {
         ui_preset->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui_preset->lineEdit_white_coord->setText("0.314,0.3510");
         ui_preset->lineEdit_chroma_coord->setEnabled(false);

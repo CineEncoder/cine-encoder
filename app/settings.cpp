@@ -601,7 +601,7 @@ void Settings::on_comboBoxPrefixType_currentIndexChanged(int index)
 {
     if (index == 0) {
         ui_settings->lineEditPrefix->setEnabled(false);
-        ui_settings->lineEditPrefix->setText("None");
+        ui_settings->lineEditPrefix->setText(tr("None"));
     } else {
         ui_settings->lineEditPrefix->setEnabled(true);
         ui_settings->lineEditPrefix->setText(*_ptr_prefixName);

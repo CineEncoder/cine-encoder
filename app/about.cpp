@@ -32,7 +32,8 @@ void About::setParameters() /*** Set parameters ***/
     QString text1 = text.arg(tr("Program for encoding HDR and SDR video."), tr("This software is free "
                                 "for personal and commercial use. It is distributed in the hope that it"
                                 " is useful but without any warranty. See the GNU General Public Licence"
-                                " v3 for more information."));
+                                " v3 for more information."), tr("License: GNU General Public License "
+                                "Version 3"), tr("Copyright"));
 
     ui_about->textBrowser->setHtml(text1);
     ui_about->textBrowser->setOpenExternalLinks(true);
