@@ -7,13 +7,13 @@
         <location filename="about.ui" line="35"/>
         <location filename="about.ui" line="305"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Über das Programm</translation>
     </message>
     <message>
         <location filename="about.ui" line="150"/>
         <location filename="about.ui" line="263"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="about.ui" line="169"/>
@@ -65,22 +65,22 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="about.cpp" line="32"/>
         <source>Program for encoding HDR and SDR video.</source>
-        <translation type="unfinished"></translation>
+        <translation>Programm zum Kodieren von HDR - und SDR-Videos.</translation>
     </message>
     <message>
         <location filename="about.cpp" line="32"/>
         <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Software ist für den persönlichen und kommerziellen Gebrauch kostenlos. Es wird in der Hoffnung verteilt, dass es nützlich ist, aber ohne Garantie. Weitere Informationen finden Sie in der GNU General Public License v3.</translation>
     </message>
     <message>
         <location filename="about.cpp" line="35"/>
         <source>License: GNU General Public License Version 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Lizenz: GNU General Public License, Version 3</translation>
     </message>
     <message>
         <location filename="about.cpp" line="36"/>
         <source>Copyright</source>
-        <translation type="unfinished"></translation>
+        <translation>Urheberrecht</translation>
     </message>
 </context>
 <context>
@@ -93,7 +93,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="dialog.ui" line="210"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="dialog.ui" line="226"/>
@@ -103,7 +103,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="dialog.ui" line="288"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ок</translation>
     </message>
     <message>
         <location filename="dialog.ui" line="334"/>
@@ -117,7 +117,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="dialog.ui" line="369"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annullierung</translation>
     </message>
 </context>
 <context>
@@ -126,13 +126,13 @@ p, li { white-space: pre-wrap; }
         <location filename="donate.ui" line="32"/>
         <location filename="donate.ui" line="235"/>
         <source>Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>Donat</translation>
     </message>
     <message>
         <location filename="donate.ui" line="206"/>
         <location filename="donate.ui" line="365"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="donate.ui" line="297"/>
@@ -179,12 +179,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="donate.cpp" line="33"/>
         <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Software ist für den persönlichen und kommerziellen Gebrauch kostenlos. Es wird in der Hoffnung verteilt, dass es nützlich ist, aber ohne Garantie. Weitere Informationen finden Sie in der GNU General Public License v3.</translation>
     </message>
     <message>
         <location filename="donate.cpp" line="36"/>
         <source>If you find this application useful, consider making a donation to support the development.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie diese Anwendung nützlich finden, erwägen Sie, eine Spende zu machen, um die Entwicklung zu unterstützen.</translation>
     </message>
 </context>
 <context>
@@ -197,12 +197,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="openingfiles.ui" line="152"/>
         <source>Opening Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateien öffnen</translation>
     </message>
     <message>
         <location filename="openingfiles.ui" line="244"/>
         <source>Filename:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateinamen:</translation>
     </message>
 </context>
 <context>
@@ -212,27 +212,27 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.ui" line="670"/>
         <location filename="preset.ui" line="3021"/>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Preset</translation>
     </message>
     <message>
         <location filename="preset.ui" line="205"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="preset.ui" line="234"/>
         <source>Edit preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit preset</translation>
     </message>
     <message>
         <location filename="preset.ui" line="345"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annullierung</translation>
     </message>
     <message>
         <location filename="preset.ui" line="379"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelten</translation>
     </message>
     <message>
         <location filename="preset.ui" line="465"/>
@@ -352,7 +352,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1684"/>
         <location filename="preset.cpp" line="1685"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelle</translation>
     </message>
     <message>
         <location filename="preset.ui" line="899"/>
@@ -1325,7 +1325,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1428"/>
         <location filename="preset.cpp" line="1452"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2964"/>
@@ -1455,7 +1455,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="3036"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Erweiterte</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3087"/>
@@ -2044,106 +2044,106 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="settings.ui" line="35"/>
         <location filename="settings.ui" line="1484"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellung</translation>
     </message>
     <message>
         <location filename="settings.ui" line="179"/>
         <source>Paths and Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfade und Dateien</translation>
     </message>
     <message>
         <location filename="settings.ui" line="201"/>
         <location filename="settings.ui" line="850"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte</translation>
     </message>
     <message>
         <location filename="settings.ui" line="236"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemein</translation>
     </message>
     <message>
         <location filename="settings.ui" line="281"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="settings.ui" line="320"/>
         <source>  Prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>  Präfix</translation>
     </message>
     <message>
         <location filename="settings.ui" line="343"/>
         <source>Current filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktueller Dateiname</translation>
     </message>
     <message>
         <location filename="settings.ui" line="348"/>
         <location filename="settings.ui" line="401"/>
         <source>Custom filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutz. Dateiname</translation>
     </message>
     <message>
         <location filename="settings.ui" line="359"/>
         <source>  Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateinamen</translation>
     </message>
     <message>
         <location filename="settings.ui" line="414"/>
         <source>Custom prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutz. Präfix</translation>
     </message>
     <message>
         <location filename="settings.ui" line="451"/>
         <source>  Overwrite existing files</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorhandene Dateien überschreiben</translation>
     </message>
     <message>
         <location filename="settings.ui" line="479"/>
         <location filename="settings.cpp" line="604"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein</translation>
     </message>
     <message>
         <location filename="settings.ui" line="502"/>
         <source>By name and index</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Name und Index</translation>
     </message>
     <message>
         <location filename="settings.ui" line="507"/>
         <source>By time and date</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Uhrzeit und Datum</translation>
     </message>
     <message>
         <location filename="settings.ui" line="584"/>
         <source>Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfad</translation>
     </message>
     <message>
         <location filename="settings.ui" line="641"/>
         <location filename="settings.ui" line="753"/>
         <source>Default (In the same folder as the file)</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard (Im selben Ordner)</translation>
     </message>
     <message>
         <location filename="settings.ui" line="673"/>
         <source>  Temporary path</source>
-        <translation type="unfinished"></translation>
+        <translation>  Temporärer Pfad</translation>
     </message>
     <message>
         <location filename="settings.ui" line="686"/>
         <source>  Output  path</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabepfad</translation>
     </message>
     <message>
         <location filename="settings.ui" line="722"/>
         <source>Select temp folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie temp-Ordner</translation>
     </message>
     <message>
         <location filename="settings.ui" line="786"/>
         <source>Select output folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabeordner auswählen</translation>
     </message>
     <message>
         <location filename="settings.ui" line="895"/>
@@ -2208,53 +2208,53 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="settings.ui" line="1147"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Russisch</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1189"/>
         <source>Overheating protection</source>
-        <translation type="unfinished"></translation>
+        <translation>Überhitzungsschutz</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1271"/>
         <source>      Every</source>
-        <translation type="unfinished"></translation>
+        <translation>         Jeder</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1281"/>
         <source>sec</source>
-        <translation type="unfinished"></translation>
+        <translation>sek.</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1309"/>
         <source>Enable overheating protection (for 25 sec)</source>
-        <translation type="unfinished"></translation>
+        <translation>Überhitzungsschutz aktivieren (für 25 sek.)</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1468"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1557"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1601"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annullierung</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1635"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelten</translation>
     </message>
     <message>
         <location filename="settings.cpp" line="228"/>
         <source>Settings file not found!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungsdatei nicht gefunden!</translation>
     </message>
 </context>
 <context>
@@ -2267,7 +2267,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="taskcomplete.ui" line="196"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="taskcomplete.ui" line="238"/>
@@ -2277,7 +2277,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="taskcomplete.ui" line="300"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="taskcomplete.ui" line="346"/>
@@ -2293,7 +2293,9 @@ p, li { white-space: pre-wrap; }
         <source>Pause
 
  Resume after: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pause
+
+Fortsetzen nach:</translation>
     </message>
 </context>
 <context>
@@ -2327,13 +2329,13 @@ p, li { white-space: pre-wrap; }
         <location filename="mainwindow.ui" line="347"/>
         <location filename="mainwindow.cpp" line="327"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Einstellung</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="476"/>
         <location filename="mainwindow.cpp" line="405"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelten</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="507"/>
@@ -2393,7 +2395,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="829"/>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preset</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="843"/>
@@ -2675,6 +2677,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="3715"/>
         <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="3237"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2773,12 +2776,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="4400"/>
         <source>Max lum</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Max lum</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4408"/>
         <source>Min lum</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Min lum</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4416"/>
@@ -3232,6 +3235,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="5073"/>
+        <location filename="mainwindow.cpp" line="1254"/>
+        <location filename="mainwindow.cpp" line="2492"/>
         <source>Encode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3259,6 +3264,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="5488"/>
         <location filename="mainwindow.cpp" line="314"/>
+        <location filename="mainwindow.cpp" line="2774"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3275,6 +3281,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="5845"/>
+        <location filename="mainwindow.cpp" line="263"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3282,7 +3289,7 @@ p, li { white-space: pre-wrap; }
         <location filename="mainwindow.ui" line="5898"/>
         <location filename="mainwindow.cpp" line="308"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="5940"/>
@@ -3310,12 +3317,17 @@ p, li { white-space: pre-wrap; }
         <location filename="mainwindow.ui" line="6051"/>
         <location filename="mainwindow.cpp" line="330"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Über</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="6140"/>
         <location filename="mainwindow.ui" line="6143"/>
         <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="55"/>
+        <source>No media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3325,19 +3337,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.cpp" line="96"/>
-        <location filename="mainwindow.cpp" line="4773"/>
-        <location filename="mainwindow.cpp" line="4774"/>
-        <location filename="mainwindow.cpp" line="4775"/>
-        <location filename="mainwindow.cpp" line="4776"/>
-        <location filename="mainwindow.cpp" line="4777"/>
+        <location filename="mainwindow.cpp" line="4756"/>
+        <location filename="mainwindow.cpp" line="4757"/>
+        <location filename="mainwindow.cpp" line="4758"/>
+        <location filename="mainwindow.cpp" line="4759"/>
+        <location filename="mainwindow.cpp" line="4760"/>
+        <location filename="mainwindow.cpp" line="4761"/>
+        <location filename="mainwindow.cpp" line="4762"/>
+        <location filename="mainwindow.cpp" line="4763"/>
+        <location filename="mainwindow.cpp" line="4764"/>
+        <location filename="mainwindow.cpp" line="4765"/>
         <location filename="mainwindow.cpp" line="4778"/>
-        <location filename="mainwindow.cpp" line="4779"/>
-        <location filename="mainwindow.cpp" line="4780"/>
-        <location filename="mainwindow.cpp" line="4781"/>
-        <location filename="mainwindow.cpp" line="4782"/>
-        <location filename="mainwindow.cpp" line="4795"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelle</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="102"/>
@@ -3357,6 +3369,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="149"/>
         <source>Quit program?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="264"/>
+        <source>Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="265"/>
+        <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3387,7 +3409,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.cpp" line="331"/>
         <source>Donate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donat</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="396"/>
@@ -3411,193 +3433,301 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="910"/>
+        <location filename="mainwindow.cpp" line="897"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2073"/>
+        <location filename="mainwindow.cpp" line="1040"/>
+        <source> bit, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1043"/>
+        <source> kbps; </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1055"/>
+        <source>Audio #</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1070"/>
+        <source>Undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2060"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2119"/>
+        <location filename="mainwindow.cpp" line="2106"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2169"/>
+        <location filename="mainwindow.cpp" line="2156"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2351"/>
+        <location filename="mainwindow.cpp" line="2338"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2361"/>
+        <location filename="mainwindow.cpp" line="2348"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2506"/>
+        <location filename="mainwindow.cpp" line="2484"/>
+        <source>Muxing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2493"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2569"/>
+        <location filename="mainwindow.cpp" line="2497"/>
+        <location filename="mainwindow.cpp" line="2756"/>
+        <source>Encoding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2536"/>
+        <location filename="mainwindow.cpp" line="2541"/>
+        <source>Encoding:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2546"/>
+        <source>1-st pass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2556"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2590"/>
+        <location filename="mainwindow.cpp" line="2568"/>
+        <source>Add data:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2577"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="2586"/>
+        <source>Done!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2612"/>
         <location filename="mainwindow.cpp" line="2625"/>
-        <location filename="mainwindow.cpp" line="2638"/>
         <source>Task completed!
 
  Elapsed time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2798"/>
+        <location filename="mainwindow.cpp" line="2736"/>
+        <location filename="mainwindow.cpp" line="2806"/>
+        <location filename="mainwindow.cpp" line="2885"/>
+        <location filename="mainwindow.cpp" line="2906"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2781"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2812"/>
+        <location filename="mainwindow.cpp" line="2792"/>
+        <source>Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2795"/>
         <source>An error occurred: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2814"/>
+        <location filename="mainwindow.cpp" line="2797"/>
         <source>Unexpected error occurred!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2847"/>
+        <location filename="mainwindow.cpp" line="2830"/>
         <source>Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2891"/>
+        <location filename="mainwindow.cpp" line="2874"/>
         <source>Select input file first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2896"/>
+        <location filename="mainwindow.cpp" line="2879"/>
         <source>Select preset first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2933"/>
+        <location filename="mainwindow.cpp" line="2898"/>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2916"/>
         <source>Stop encoding?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2960"/>
+        <location filename="mainwindow.cpp" line="2943"/>
         <source>Unexpected error while trying to perform file name detection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4369"/>
-        <location filename="mainwindow.cpp" line="4383"/>
-        <location filename="mainwindow.cpp" line="4444"/>
-        <location filename="mainwindow.cpp" line="4478"/>
+        <location filename="mainwindow.cpp" line="3513"/>
+        <source>Select output folder</source>
+        <translation type="unfinished">Ausgabeordner auswählen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4352"/>
+        <location filename="mainwindow.cpp" line="4366"/>
+        <location filename="mainwindow.cpp" line="4427"/>
+        <location filename="mainwindow.cpp" line="4461"/>
         <source>Select preset first!
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4406"/>
+        <location filename="mainwindow.cpp" line="4389"/>
         <source>Delete?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4434"/>
+        <location filename="mainwindow.cpp" line="4417"/>
         <source>Delete presets first!
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4653"/>
+        <location filename="mainwindow.cpp" line="4571"/>
+        <source>Preset not selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4636"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4654"/>
+        <location filename="mainwindow.cpp" line="4637"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4655"/>
+        <location filename="mainwindow.cpp" line="4638"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4656"/>
+        <location filename="mainwindow.cpp" line="4639"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4657"/>
+        <location filename="mainwindow.cpp" line="4640"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4658"/>
+        <location filename="mainwindow.cpp" line="4641"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4659"/>
+        <location filename="mainwindow.cpp" line="4642"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4660"/>
+        <location filename="mainwindow.cpp" line="4643"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4661"/>
+        <location filename="mainwindow.cpp" line="4644"/>
         <source>VP9 4:2:0 10 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4662"/>
+        <location filename="mainwindow.cpp" line="4645"/>
         <source>VP9 4:2:0 8 bit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4663"/>
+        <location filename="mainwindow.cpp" line="4646"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4665"/>
+        <location filename="mainwindow.cpp" line="4648"/>
         <source>ProRes Standard</source>
         <translation>ProRes Standard</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4658"/>
         <source>From source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4693"/>
-        <location filename="mainwindow.cpp" line="4694"/>
-        <location filename="mainwindow.cpp" line="4695"/>
+        <location filename="mainwindow.cpp" line="4676"/>
+        <location filename="mainwindow.cpp" line="4677"/>
+        <location filename="mainwindow.cpp" line="4678"/>
+        <location filename="mainwindow.cpp" line="4679"/>
+        <location filename="mainwindow.cpp" line="4680"/>
+        <location filename="mainwindow.cpp" line="4681"/>
+        <location filename="mainwindow.cpp" line="4682"/>
+        <location filename="mainwindow.cpp" line="4683"/>
+        <location filename="mainwindow.cpp" line="4684"/>
+        <location filename="mainwindow.cpp" line="4685"/>
+        <location filename="mainwindow.cpp" line="4686"/>
+        <location filename="mainwindow.cpp" line="4688"/>
+        <location filename="mainwindow.cpp" line="4729"/>
+        <location filename="mainwindow.cpp" line="4730"/>
+        <location filename="mainwindow.cpp" line="4736"/>
+        <location filename="mainwindow.cpp" line="4737"/>
+        <location filename="mainwindow.cpp" line="4738"/>
+        <location filename="mainwindow.cpp" line="4739"/>
+        <location filename="mainwindow.cpp" line="4740"/>
+        <location filename="mainwindow.cpp" line="4741"/>
+        <location filename="mainwindow.cpp" line="4742"/>
+        <location filename="mainwindow.cpp" line="4743"/>
+        <location filename="mainwindow.cpp" line="4744"/>
+        <location filename="mainwindow.cpp" line="4745"/>
+        <location filename="mainwindow.cpp" line="4746"/>
+        <location filename="mainwindow.cpp" line="4747"/>
+        <location filename="mainwindow.cpp" line="4748"/>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="4696"/>
         <location filename="mainwindow.cpp" line="4697"/>
         <location filename="mainwindow.cpp" line="4698"/>
@@ -3606,157 +3736,129 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4701"/>
         <location filename="mainwindow.cpp" line="4702"/>
         <location filename="mainwindow.cpp" line="4703"/>
+        <location filename="mainwindow.cpp" line="4704"/>
         <location filename="mainwindow.cpp" line="4705"/>
-        <location filename="mainwindow.cpp" line="4746"/>
-        <location filename="mainwindow.cpp" line="4747"/>
-        <location filename="mainwindow.cpp" line="4753"/>
-        <location filename="mainwindow.cpp" line="4754"/>
-        <location filename="mainwindow.cpp" line="4755"/>
-        <location filename="mainwindow.cpp" line="4756"/>
-        <location filename="mainwindow.cpp" line="4757"/>
-        <location filename="mainwindow.cpp" line="4758"/>
-        <location filename="mainwindow.cpp" line="4759"/>
-        <location filename="mainwindow.cpp" line="4760"/>
-        <location filename="mainwindow.cpp" line="4761"/>
-        <location filename="mainwindow.cpp" line="4762"/>
-        <location filename="mainwindow.cpp" line="4763"/>
-        <location filename="mainwindow.cpp" line="4764"/>
-        <location filename="mainwindow.cpp" line="4765"/>
-        <source>Auto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="mainwindow.cpp" line="4706"/>
+        <location filename="mainwindow.cpp" line="4707"/>
+        <location filename="mainwindow.cpp" line="4708"/>
+        <location filename="mainwindow.cpp" line="4709"/>
+        <location filename="mainwindow.cpp" line="4710"/>
+        <location filename="mainwindow.cpp" line="4711"/>
+        <location filename="mainwindow.cpp" line="4712"/>
         <location filename="mainwindow.cpp" line="4713"/>
         <location filename="mainwindow.cpp" line="4714"/>
         <location filename="mainwindow.cpp" line="4715"/>
         <location filename="mainwindow.cpp" line="4716"/>
         <location filename="mainwindow.cpp" line="4717"/>
         <location filename="mainwindow.cpp" line="4718"/>
-        <location filename="mainwindow.cpp" line="4719"/>
-        <location filename="mainwindow.cpp" line="4720"/>
-        <location filename="mainwindow.cpp" line="4721"/>
-        <location filename="mainwindow.cpp" line="4722"/>
-        <location filename="mainwindow.cpp" line="4723"/>
-        <location filename="mainwindow.cpp" line="4724"/>
-        <location filename="mainwindow.cpp" line="4725"/>
+        <source>None</source>
+        <translation>Kein</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <source>Ultrafast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <source>Superfast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Veryfast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Faster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Fast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4701"/>
+        <location filename="mainwindow.cpp" line="4702"/>
+        <location filename="mainwindow.cpp" line="4703"/>
+        <source>Slow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Slower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Veryslow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="4726"/>
         <location filename="mainwindow.cpp" line="4727"/>
         <location filename="mainwindow.cpp" line="4728"/>
-        <location filename="mainwindow.cpp" line="4729"/>
-        <location filename="mainwindow.cpp" line="4730"/>
+        <location filename="mainwindow.cpp" line="4734"/>
+        <location filename="mainwindow.cpp" line="4735"/>
+        <source>1 Pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4726"/>
+        <location filename="mainwindow.cpp" line="4727"/>
+        <location filename="mainwindow.cpp" line="4728"/>
         <location filename="mainwindow.cpp" line="4731"/>
         <location filename="mainwindow.cpp" line="4732"/>
         <location filename="mainwindow.cpp" line="4733"/>
         <location filename="mainwindow.cpp" line="4734"/>
         <location filename="mainwindow.cpp" line="4735"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <source>Ultrafast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <source>Superfast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Veryfast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Faster</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Fast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Medium</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <location filename="mainwindow.cpp" line="4718"/>
-        <location filename="mainwindow.cpp" line="4719"/>
-        <location filename="mainwindow.cpp" line="4720"/>
-        <source>Slow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Slower</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Veryslow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4743"/>
-        <location filename="mainwindow.cpp" line="4744"/>
-        <location filename="mainwindow.cpp" line="4745"/>
-        <location filename="mainwindow.cpp" line="4751"/>
-        <location filename="mainwindow.cpp" line="4752"/>
-        <source>1 Pass</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4743"/>
-        <location filename="mainwindow.cpp" line="4744"/>
-        <location filename="mainwindow.cpp" line="4745"/>
-        <location filename="mainwindow.cpp" line="4748"/>
-        <location filename="mainwindow.cpp" line="4749"/>
-        <location filename="mainwindow.cpp" line="4750"/>
-        <location filename="mainwindow.cpp" line="4751"/>
-        <location filename="mainwindow.cpp" line="4752"/>
         <source>2 Pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4921"/>
+        <location filename="mainwindow.cpp" line="4904"/>
         <source>Task</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Task</translation>
     </message>
 </context>
 </TS>

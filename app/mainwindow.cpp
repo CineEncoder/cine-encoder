@@ -52,7 +52,7 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     raiseLayout = new QHBoxLayout(this);
     raiseThumb = new QLabel(this);
     raiseThumb->setAlignment(Qt::AlignCenter);
-    raiseThumb->setText("No media");
+    raiseThumb->setText(tr("No media"));
     raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
     ui->tableWidget->setLayout(raiseLayout);
     raiseLayout->addWidget(raiseThumb);
@@ -260,9 +260,9 @@ void Widget::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void Widget::setTrayIconActions()
 {
-    minimizeAction = new QAction("Hide", this);
-    restoreAction = new QAction("Show", this);
-    quitAction = new QAction("Exit", this);
+    minimizeAction = new QAction(tr("Hide"), this);
+    restoreAction = new QAction(tr("Show"), this);
+    quitAction = new QAction(tr("Exit"), this);
 
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
@@ -784,11 +784,6 @@ void Widget::setParameters()    /*** Set parameters ***/
         trayIcon->show();
     }
     setTheme(_theme);
-//    if (_language != "en") {
-//        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
-//            qApp->installTranslator(&qtTranslator);
-//        }
-//    }
 }
 
 void Widget::setDocksParameters()
@@ -898,14 +893,6 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     if (_row != -1) {
         get_output_filename();
     }
-//    if (_language != "en") {
-//        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
-//            qApp->installTranslator(&qtTranslator);
-//        }
-//    }
-//    else {
-//        qApp->removeTranslator(&qtTranslator);
-//    }
     if (acceptFlag) {
         _message = tr("You need to restart the program for the settings to take effect.");
         call_task_complete(_message, false);
@@ -1050,10 +1037,10 @@ void Widget::get_current_data() /*** Get current data ***/
         curColorSampling += ", ";
     }
     if (curDepth != "") {
-        curDepth += " bit, ";
+        curDepth += tr(" bit, ");
     }
     if (curBitrate != "") {
-        curBitrate += " kbps; ";
+        curBitrate += tr(" kbps; ");
     }
     QString sourceParam = curCodec + curRes + curFps + curAr + curSpace + curColorSampling + curDepth + curBitrate;
 
@@ -1065,7 +1052,7 @@ void Widget::get_current_data() /*** Get current data ***/
             break;
         }
         countAudioStreams++;
-        sourceParam += QString("Audio #") + QString::number(countAudioStreams) + QString(": ") + curAudioStream + QString("; ");
+        sourceParam += tr("Audio #") + QString::number(countAudioStreams) + QString(": ") + curAudioStream + QString("; ");
     }
 
     int countSubtitles = 0;
@@ -1080,7 +1067,7 @@ void Widget::get_current_data() /*** Get current data ***/
 
 
     if (curCodec == "Undef, ") {
-        sourceParam = "Undefined";
+        sourceParam = tr("Undefined");
     }
     ui->textBrowser_1->clear();
     ui->textBrowser_1->setText(sourceParam);
@@ -1264,7 +1251,7 @@ void Widget::restore_initial_state()    /*** Restore initial state ***/
     ui->actionSettings->setEnabled(true);
     _status_encode_btn = "start";
     ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
-    ui->actionEncode->setToolTip("Encode");
+    ui->actionEncode->setToolTip(tr("Encode"));
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and move window ***/
@@ -2494,7 +2481,7 @@ void Widget::encode()   /*** Encode ***/
     ui->progressBar->setValue(0);
     if (_mux_mode == true) {
         std::cout << "Muxing mode ..." << std::endl;  //  Debug info //
-        ui->label_53->setText("Muxing:");
+        ui->label_53->setText(tr("Muxing:"));
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
                   << "-map" << "0:s?" << "-movflags" << "+write_colr"
                   << "-c:v" << "copy" << "-c:a" << "copy" << "-y" << _output_file;
@@ -2502,12 +2489,12 @@ void Widget::encode()   /*** Encode ***/
         if (_fr_count == 0) {
             _status_encode_btn = "start";
             ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
-            ui->actionEncode->setToolTip("Encode");
+            ui->actionEncode->setToolTip(tr("Encode"));
             _message = tr("The file does not contain FPS information!\nSelect the correct input file!");
             call_task_complete(_message, false);
             return;
         }
-        setStatus("Encoding");
+        setStatus(tr("Encoding"));
         ui->treeWidget->setEnabled(false);
         add_files->setEnabled(false);
         remove_files->setEnabled(false);
@@ -2546,17 +2533,17 @@ void Widget::encode()   /*** Encode ***/
         _loop_start = time(nullptr);
         if (_flag_two_pass == false && _flag_hdr == false) {
             std::cout << "Encode non HDR..." << std::endl;  //  Debug info //
-            ui->label_53->setText("Encoding:");
+            ui->label_53->setText(tr("Encoding:"));
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _output_file;
         }
         if (_flag_two_pass == false && _flag_hdr == true) {
             std::cout << "Encode HDR..." << std::endl;  //  Debug info //
-            ui->label_53->setText("Encoding:");
+            ui->label_53->setText(tr("Encoding:"));
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _temp_file;
         }
         if (_flag_two_pass == true) {
             std::cout << "Encode 1-st pass..." << std::endl;  //  Debug info //
-            ui->label_53->setText("1-st pass:");
+            ui->label_53->setText(tr("1-st pass:"));
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file << _preset_pass1.split(" ");
         }
     }
@@ -2578,7 +2565,7 @@ void Widget::add_metadata() /*** Add metedata ***/
     process_1->disconnect();
     connect(process_1, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_2()));
     connect(process_1, SIGNAL(finished(int)), this, SLOT(error()));
-    ui->label_53->setText("Add data:");
+    ui->label_53->setText(tr("Add data:"));
     ui->progressBar->setValue(0);
     QStringList arguments;
     arguments << "--edit" << "track:1" << _preset_mkvmerge.split(" ") << _temp_file;
@@ -2596,7 +2583,7 @@ void Widget::complete() /*** Complete ***/
 {
     std::cout << "Complete ..." << std::endl;  //  Debug info //
     process_1->disconnect();
-    setStatus("Done!");
+    setStatus(tr("Done!"));
     animation->stop();
     ui->label_53->hide();
     ui->label_54->hide();
@@ -2746,9 +2733,7 @@ void Widget::pause()    /*** Pause ***/
     qint64 pr1 = process_1->processId();
     std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
     if (s1 != 0) {
-        QTableWidgetItem *newItem_status = new QTableWidgetItem("Pause");
-        newItem_status->setTextAlignment(Qt::AlignCenter);
-        ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
+        setStatus(tr("Pause"));
         animation->stop();
 #ifdef Q_OS_WIN
         _PROCESS_INFORMATION *pi = process_1->pid();  // pause for Windows
@@ -2768,9 +2753,7 @@ void Widget::resume()   /*** Resume ***/
     qint64 pr1 = process_1->processId();
     std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
     if (s1 != 0) {
-        QTableWidgetItem *newItem_status = new QTableWidgetItem("Encoding");
-        newItem_status->setTextAlignment(Qt::AlignCenter);
-        ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
+        setStatus(tr("Encoding"));
         animation->start();
 #ifdef Q_OS_WIN
         _PROCESS_INFORMATION *pi = process_1->pid();  // pause for Windows
@@ -2788,7 +2771,7 @@ void Widget::cancel()   /*** Stop execute ***/
         timer->stop();
     }
     process_1->disconnect();
-    setStatus("Stop");
+    setStatus(tr("Stop"));
     ui->label_53->hide();
     ui->label_54->hide();
     ui->label_55->hide();
@@ -2806,7 +2789,7 @@ void Widget::error()  /*** Error ***/
         timer->stop();
     }
     process_1->disconnect();
-    setStatus("Error!");
+    setStatus(tr("Error!"));
     restore_initial_state();
     if (_error_message != "") {
         _message = tr("An error occurred: ") + _error_message;
@@ -2820,7 +2803,7 @@ void Widget::repeatHandler_Type_1()  /*** Repeat handler ***/
 {
     std::cout<< "Call by timer..." << std::endl;
     on_actionEncode_clicked();
-    call_task_complete("Pause", true);
+    call_task_complete(tr("Pause"), true);
     on_actionEncode_clicked();
 }
 
@@ -2899,7 +2882,7 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
         }
         _status_encode_btn = "pause";
         ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-pause.png"));
-        ui->actionEncode->setToolTip("Pause");
+        ui->actionEncode->setToolTip(tr("Pause"));
         _strt_t = time(nullptr);
         if (_protection == true) {
             timer->start();
@@ -2912,7 +2895,7 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
         pause();
         _status_encode_btn = "resume";
         ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-forward.png"));
-        ui->actionEncode->setToolTip("Resume");
+        ui->actionEncode->setToolTip(tr("Resume"));
         return;
     }
     if (_status_encode_btn == "resume") {
@@ -2920,7 +2903,7 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
         resume();
         _status_encode_btn = "pause";
         ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-pause.png"));
-        ui->actionEncode->setToolTip("Pause");
+        ui->actionEncode->setToolTip(tr("Pause"));
         return;
     }
 }
@@ -3251,7 +3234,7 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
         ui->labelThumb->clear();
         ui->textBrowser_1->clear();
         ui->textBrowser_2->clear();
-        ui->labelThumb->setText("Preview");
+        ui->labelThumb->setText(tr("Preview"));
         ui->label_source->setText("");
         ui->label_output->setText("");
 
@@ -3527,7 +3510,7 @@ void Widget::get_output_filename()  /*** Get output data ***/
 
 void Widget::on_buttonHotOutputFile_clicked()
 {
-    QString output_folder_name = callFileDialog("Select output folder");
+    QString output_folder_name = callFileDialog(tr("Select output folder"));
     if (output_folder_name.isEmpty()) {
         return;
     }
@@ -4585,7 +4568,7 @@ void Widget::updateCurPresetPos(int &index_top, int &index_child)
     //if (index_child == _pos_cld) {
     _pos_top = -1;
     _pos_cld = -1;
-    _cur_param[curParamIndex::OUTPUT_PARAM] = "Preset not selected";
+    _cur_param[curParamIndex::OUTPUT_PARAM] = tr("Preset not selected");
     if (_row != -1) {
         get_output_filename();
     }

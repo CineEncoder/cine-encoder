@@ -2654,6 +2654,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="3715"/>
         <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="3237"/>
         <source>Preview</source>
         <translation>预览</translation>
     </message>
@@ -3211,6 +3212,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="5073"/>
+        <location filename="mainwindow.cpp" line="1254"/>
+        <location filename="mainwindow.cpp" line="2492"/>
         <source>Encode</source>
         <translation>编码</translation>
     </message>
@@ -3238,6 +3241,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="5488"/>
         <location filename="mainwindow.cpp" line="314"/>
+        <location filename="mainwindow.cpp" line="2774"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -3254,6 +3258,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="5845"/>
+        <location filename="mainwindow.cpp" line="263"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
@@ -3298,23 +3303,28 @@ p, li { white-space: pre-wrap; }
         <translation>文件</translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="55"/>
+        <source>No media</source>
+        <translation>没有媒体</translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="84"/>
         <source>Presets</source>
         <translation>预设</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="96"/>
-        <location filename="mainwindow.cpp" line="4773"/>
-        <location filename="mainwindow.cpp" line="4774"/>
-        <location filename="mainwindow.cpp" line="4775"/>
-        <location filename="mainwindow.cpp" line="4776"/>
-        <location filename="mainwindow.cpp" line="4777"/>
+        <location filename="mainwindow.cpp" line="4756"/>
+        <location filename="mainwindow.cpp" line="4757"/>
+        <location filename="mainwindow.cpp" line="4758"/>
+        <location filename="mainwindow.cpp" line="4759"/>
+        <location filename="mainwindow.cpp" line="4760"/>
+        <location filename="mainwindow.cpp" line="4761"/>
+        <location filename="mainwindow.cpp" line="4762"/>
+        <location filename="mainwindow.cpp" line="4763"/>
+        <location filename="mainwindow.cpp" line="4764"/>
+        <location filename="mainwindow.cpp" line="4765"/>
         <location filename="mainwindow.cpp" line="4778"/>
-        <location filename="mainwindow.cpp" line="4779"/>
-        <location filename="mainwindow.cpp" line="4780"/>
-        <location filename="mainwindow.cpp" line="4781"/>
-        <location filename="mainwindow.cpp" line="4782"/>
-        <location filename="mainwindow.cpp" line="4795"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
@@ -3337,6 +3347,16 @@ p, li { white-space: pre-wrap; }
         <location filename="mainwindow.cpp" line="149"/>
         <source>Quit program?</source>
         <translation>退出程序？</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="264"/>
+        <source>Show</source>
+        <translation>显示</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="265"/>
+        <source>Exit</source>
+        <translation>退出</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="313"/>
@@ -3390,44 +3410,86 @@ p, li { white-space: pre-wrap; }
         <translation>添加新预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="910"/>
+        <location filename="mainwindow.cpp" line="897"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>您需要重新启动程序才能使设置生效。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2073"/>
+        <location filename="mainwindow.cpp" line="1040"/>
+        <source> bit, </source>
+        <translation> 位, </translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1043"/>
+        <source> kbps; </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1055"/>
+        <source>Audio #</source>
+        <translation>音频 #</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1070"/>
+        <source>Undefined</source>
+        <translation>未定义</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2060"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
         <translation>在源图中找不到颜色原色%1。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2119"/>
+        <location filename="mainwindow.cpp" line="2106"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
         <translation>在源映射中找不到颜色矩阵%1。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2169"/>
+        <location filename="mainwindow.cpp" line="2156"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
         <translation>在源映射中找不到传输特性%1。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2351"/>
+        <location filename="mainwindow.cpp" line="2338"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
         <translation>主显示色度坐标源参数不正确！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2361"/>
+        <location filename="mainwindow.cpp" line="2348"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
         <translation>错误的主显示白点坐标源参数！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2506"/>
+        <location filename="mainwindow.cpp" line="2484"/>
+        <source>Muxing:</source>
+        <translation>混合:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2493"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
         <translation>该文件不包含FPS信息！
 选择正确的输入文件！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2569"/>
+        <location filename="mainwindow.cpp" line="2497"/>
+        <location filename="mainwindow.cpp" line="2756"/>
+        <source>Encoding</source>
+        <translation>编码</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2536"/>
+        <location filename="mainwindow.cpp" line="2541"/>
+        <source>Encoding:</source>
+        <translation>编码:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2546"/>
+        <source>1-st pass:</source>
+        <translation>第一通过:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2556"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
@@ -3435,7 +3497,12 @@ Select the correct input file!</source>
 可能没有安装FFMPEG。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2590"/>
+        <location filename="mainwindow.cpp" line="2568"/>
+        <source>Add data:</source>
+        <translation>添加数据:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2577"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
@@ -3443,8 +3510,13 @@ Select the correct input file!</source>
 可能没有安装mkvtoolnix。</translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="2586"/>
+        <source>Done!</source>
+        <translation>完成！</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2612"/>
         <location filename="mainwindow.cpp" line="2625"/>
-        <location filename="mainwindow.cpp" line="2638"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -3453,136 +3525,192 @@ Select the correct input file!</source>
 经过时间:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2798"/>
+        <location filename="mainwindow.cpp" line="2736"/>
+        <location filename="mainwindow.cpp" line="2806"/>
+        <location filename="mainwindow.cpp" line="2885"/>
+        <location filename="mainwindow.cpp" line="2906"/>
+        <source>Pause</source>
+        <translation>暂停</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2781"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>当前的编码过程已被取消！
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2812"/>
+        <location filename="mainwindow.cpp" line="2792"/>
+        <source>Error!</source>
+        <translation>错误！</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2795"/>
         <source>An error occurred: </source>
         <translation>发生了一个错误: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2814"/>
+        <location filename="mainwindow.cpp" line="2797"/>
         <source>Unexpected error occurred!</source>
         <translation>发生意外错误！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2847"/>
+        <location filename="mainwindow.cpp" line="2830"/>
         <source>Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)</source>
         <translation>视频文件: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2891"/>
+        <location filename="mainwindow.cpp" line="2874"/>
         <source>Select input file first!</source>
         <translation>首先选择输入文件！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2896"/>
+        <location filename="mainwindow.cpp" line="2879"/>
         <source>Select preset first!</source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2933"/>
+        <location filename="mainwindow.cpp" line="2898"/>
+        <source>Resume</source>
+        <translation>简历</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2916"/>
         <source>Stop encoding?</source>
         <translation>停止编码？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2960"/>
+        <location filename="mainwindow.cpp" line="2943"/>
         <source>Unexpected error while trying to perform file name detection.</source>
         <translation>尝试执行文件名检测时出现意外错误。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4369"/>
-        <location filename="mainwindow.cpp" line="4383"/>
-        <location filename="mainwindow.cpp" line="4444"/>
-        <location filename="mainwindow.cpp" line="4478"/>
+        <location filename="mainwindow.cpp" line="3513"/>
+        <source>Select output folder</source>
+        <translation>选择输出文件夹</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4352"/>
+        <location filename="mainwindow.cpp" line="4366"/>
+        <location filename="mainwindow.cpp" line="4427"/>
+        <location filename="mainwindow.cpp" line="4461"/>
         <source>Select preset first!
 </source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4406"/>
+        <location filename="mainwindow.cpp" line="4389"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4434"/>
+        <location filename="mainwindow.cpp" line="4417"/>
         <source>Delete presets first!
 </source>
         <translation>先删除预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4653"/>
+        <location filename="mainwindow.cpp" line="4571"/>
+        <source>Preset not selected</source>
+        <translation>未选择预设</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4636"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
         <translation>H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4654"/>
+        <location filename="mainwindow.cpp" line="4637"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
         <translation>H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4655"/>
+        <location filename="mainwindow.cpp" line="4638"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
         <translation>H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4656"/>
+        <location filename="mainwindow.cpp" line="4639"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4657"/>
+        <location filename="mainwindow.cpp" line="4640"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
         <translation>Intel QSV MPEG-2 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4658"/>
+        <location filename="mainwindow.cpp" line="4641"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4659"/>
+        <location filename="mainwindow.cpp" line="4642"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4660"/>
+        <location filename="mainwindow.cpp" line="4643"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation>NVENC H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4661"/>
+        <location filename="mainwindow.cpp" line="4644"/>
         <source>VP9 4:2:0 10 bit</source>
         <translation>VP9 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4662"/>
+        <location filename="mainwindow.cpp" line="4645"/>
         <source>VP9 4:2:0 8 bit</source>
         <translation>VP9 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4663"/>
+        <location filename="mainwindow.cpp" line="4646"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4665"/>
+        <location filename="mainwindow.cpp" line="4648"/>
         <source>ProRes Standard</source>
         <translation>ProRes Standard</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4658"/>
         <source>From source</source>
         <translation>来源</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4693"/>
-        <location filename="mainwindow.cpp" line="4694"/>
-        <location filename="mainwindow.cpp" line="4695"/>
+        <location filename="mainwindow.cpp" line="4676"/>
+        <location filename="mainwindow.cpp" line="4677"/>
+        <location filename="mainwindow.cpp" line="4678"/>
+        <location filename="mainwindow.cpp" line="4679"/>
+        <location filename="mainwindow.cpp" line="4680"/>
+        <location filename="mainwindow.cpp" line="4681"/>
+        <location filename="mainwindow.cpp" line="4682"/>
+        <location filename="mainwindow.cpp" line="4683"/>
+        <location filename="mainwindow.cpp" line="4684"/>
+        <location filename="mainwindow.cpp" line="4685"/>
+        <location filename="mainwindow.cpp" line="4686"/>
+        <location filename="mainwindow.cpp" line="4688"/>
+        <location filename="mainwindow.cpp" line="4729"/>
+        <location filename="mainwindow.cpp" line="4730"/>
+        <location filename="mainwindow.cpp" line="4736"/>
+        <location filename="mainwindow.cpp" line="4737"/>
+        <location filename="mainwindow.cpp" line="4738"/>
+        <location filename="mainwindow.cpp" line="4739"/>
+        <location filename="mainwindow.cpp" line="4740"/>
+        <location filename="mainwindow.cpp" line="4741"/>
+        <location filename="mainwindow.cpp" line="4742"/>
+        <location filename="mainwindow.cpp" line="4743"/>
+        <location filename="mainwindow.cpp" line="4744"/>
+        <location filename="mainwindow.cpp" line="4745"/>
+        <location filename="mainwindow.cpp" line="4746"/>
+        <location filename="mainwindow.cpp" line="4747"/>
+        <location filename="mainwindow.cpp" line="4748"/>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="4696"/>
         <location filename="mainwindow.cpp" line="4697"/>
         <location filename="mainwindow.cpp" line="4698"/>
@@ -3591,155 +3719,127 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4701"/>
         <location filename="mainwindow.cpp" line="4702"/>
         <location filename="mainwindow.cpp" line="4703"/>
+        <location filename="mainwindow.cpp" line="4704"/>
         <location filename="mainwindow.cpp" line="4705"/>
-        <location filename="mainwindow.cpp" line="4746"/>
-        <location filename="mainwindow.cpp" line="4747"/>
-        <location filename="mainwindow.cpp" line="4753"/>
-        <location filename="mainwindow.cpp" line="4754"/>
-        <location filename="mainwindow.cpp" line="4755"/>
-        <location filename="mainwindow.cpp" line="4756"/>
-        <location filename="mainwindow.cpp" line="4757"/>
-        <location filename="mainwindow.cpp" line="4758"/>
-        <location filename="mainwindow.cpp" line="4759"/>
-        <location filename="mainwindow.cpp" line="4760"/>
-        <location filename="mainwindow.cpp" line="4761"/>
-        <location filename="mainwindow.cpp" line="4762"/>
-        <location filename="mainwindow.cpp" line="4763"/>
-        <location filename="mainwindow.cpp" line="4764"/>
-        <location filename="mainwindow.cpp" line="4765"/>
-        <source>Auto</source>
-        <translation>自动</translation>
-    </message>
-    <message>
+        <location filename="mainwindow.cpp" line="4706"/>
+        <location filename="mainwindow.cpp" line="4707"/>
+        <location filename="mainwindow.cpp" line="4708"/>
+        <location filename="mainwindow.cpp" line="4709"/>
+        <location filename="mainwindow.cpp" line="4710"/>
+        <location filename="mainwindow.cpp" line="4711"/>
+        <location filename="mainwindow.cpp" line="4712"/>
         <location filename="mainwindow.cpp" line="4713"/>
         <location filename="mainwindow.cpp" line="4714"/>
         <location filename="mainwindow.cpp" line="4715"/>
         <location filename="mainwindow.cpp" line="4716"/>
         <location filename="mainwindow.cpp" line="4717"/>
         <location filename="mainwindow.cpp" line="4718"/>
-        <location filename="mainwindow.cpp" line="4719"/>
-        <location filename="mainwindow.cpp" line="4720"/>
-        <location filename="mainwindow.cpp" line="4721"/>
-        <location filename="mainwindow.cpp" line="4722"/>
-        <location filename="mainwindow.cpp" line="4723"/>
-        <location filename="mainwindow.cpp" line="4724"/>
-        <location filename="mainwindow.cpp" line="4725"/>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <source>Ultrafast</source>
+        <translation>超级快</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <source>Superfast</source>
+        <translation>超快</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Veryfast</source>
+        <translation>非常快</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Faster</source>
+        <translation>快速</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Fast</source>
+        <translation>快</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Medium</source>
+        <translation>中等</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4701"/>
+        <location filename="mainwindow.cpp" line="4702"/>
+        <location filename="mainwindow.cpp" line="4703"/>
+        <source>Slow</source>
+        <translation>慢</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Slower</source>
+        <translation>较慢</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4696"/>
+        <location filename="mainwindow.cpp" line="4697"/>
+        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4699"/>
+        <location filename="mainwindow.cpp" line="4700"/>
+        <source>Veryslow</source>
+        <translation>很慢</translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="4726"/>
         <location filename="mainwindow.cpp" line="4727"/>
         <location filename="mainwindow.cpp" line="4728"/>
-        <location filename="mainwindow.cpp" line="4729"/>
-        <location filename="mainwindow.cpp" line="4730"/>
+        <location filename="mainwindow.cpp" line="4734"/>
+        <location filename="mainwindow.cpp" line="4735"/>
+        <source>1 Pass</source>
+        <translation>1 遍</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="4726"/>
+        <location filename="mainwindow.cpp" line="4727"/>
+        <location filename="mainwindow.cpp" line="4728"/>
         <location filename="mainwindow.cpp" line="4731"/>
         <location filename="mainwindow.cpp" line="4732"/>
         <location filename="mainwindow.cpp" line="4733"/>
         <location filename="mainwindow.cpp" line="4734"/>
         <location filename="mainwindow.cpp" line="4735"/>
-        <source>None</source>
-        <translation>无</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <source>Ultrafast</source>
-        <translation>超级快</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <source>Superfast</source>
-        <translation>超快</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Veryfast</source>
-        <translation>非常快</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Faster</source>
-        <translation>快速</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Fast</source>
-        <translation>快</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Medium</source>
-        <translation>中等</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <location filename="mainwindow.cpp" line="4718"/>
-        <location filename="mainwindow.cpp" line="4719"/>
-        <location filename="mainwindow.cpp" line="4720"/>
-        <source>Slow</source>
-        <translation>慢</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Slower</source>
-        <translation>较慢</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <source>Veryslow</source>
-        <translation>很慢</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4743"/>
-        <location filename="mainwindow.cpp" line="4744"/>
-        <location filename="mainwindow.cpp" line="4745"/>
-        <location filename="mainwindow.cpp" line="4751"/>
-        <location filename="mainwindow.cpp" line="4752"/>
-        <source>1 Pass</source>
-        <translation>1 遍</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="4743"/>
-        <location filename="mainwindow.cpp" line="4744"/>
-        <location filename="mainwindow.cpp" line="4745"/>
-        <location filename="mainwindow.cpp" line="4748"/>
-        <location filename="mainwindow.cpp" line="4749"/>
-        <location filename="mainwindow.cpp" line="4750"/>
-        <location filename="mainwindow.cpp" line="4751"/>
-        <location filename="mainwindow.cpp" line="4752"/>
         <source>2 Pass</source>
         <translation>2 遍</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4921"/>
+        <location filename="mainwindow.cpp" line="4904"/>
         <source>Task</source>
         <translation>任务</translation>
     </message>
