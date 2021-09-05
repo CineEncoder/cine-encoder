@@ -1287,7 +1287,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="2909"/>
         <source>   Profile</source>
-        <translation>Профиль</translation>
+        <translation>Проф.</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2959"/>

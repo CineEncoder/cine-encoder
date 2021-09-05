@@ -238,45 +238,45 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.ui" line="465"/>
         <location filename="preset.ui" line="560"/>
         <source>Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwandeln</translation>
     </message>
     <message>
         <location filename="preset.ui" line="484"/>
         <location filename="preset.ui" line="1793"/>
         <source>Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="preset.ui" line="503"/>
         <location filename="preset.ui" line="3361"/>
         <location filename="preset.ui" line="3442"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audiodateien</translation>
     </message>
     <message>
         <location filename="preset.ui" line="522"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadaten</translation>
     </message>
     <message>
         <location filename="preset.ui" line="719"/>
         <source>          Result </source>
-        <translation type="unfinished"></translation>
+        <translation>         Ergebnis </translation>
     </message>
     <message>
         <location filename="preset.ui" line="778"/>
         <source>Frame Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="817"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfach</translation>
     </message>
     <message>
         <location filename="preset.ui" line="822"/>
         <source>Interpolated</source>
-        <translation type="unfinished"></translation>
+        <translation>Interpolieren</translation>
     </message>
     <message>
         <location filename="preset.ui" line="827"/>
@@ -426,17 +426,17 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="982"/>
         <source>   Frame rate  </source>
-        <translation type="unfinished"></translation>
+        <translation>        Bildrate  </translation>
     </message>
     <message>
         <location filename="preset.ui" line="1001"/>
         <source>Mode  </source>
-        <translation type="unfinished"></translation>
+        <translation>Modus  </translation>
     </message>
     <message>
         <location filename="preset.ui" line="1032"/>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Auflösung</translation>
     </message>
     <message>
         <location filename="preset.ui" line="1088"/>
@@ -523,12 +523,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="1232"/>
         <source>   Aspect ratio  </source>
-        <translation type="unfinished"></translation>
+        <translation>Seitenverhältnis  </translation>
     </message>
     <message>
         <location filename="preset.ui" line="1273"/>
         <source>   Width  </source>
-        <translation type="unfinished"></translation>
+        <translation>   Breite  </translation>
     </message>
     <message>
         <location filename="preset.ui" line="1316"/>
@@ -678,7 +678,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="1502"/>
         <source>   Height  </source>
-        <translation type="unfinished"></translation>
+        <translation>  Höhe  </translation>
     </message>
     <message>
         <location filename="preset.ui" line="1539"/>
@@ -849,7 +849,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="912"/>
         <location filename="preset.cpp" line="1689"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefinierte</translation>
     </message>
     <message>
         <location filename="preset.ui" line="1722"/>
@@ -870,12 +870,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1519"/>
         <location filename="preset.cpp" line="1533"/>
         <source>Bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="1953"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modus</translation>
     </message>
     <message>
         <location filename="preset.ui" line="1988"/>
@@ -886,12 +886,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1523"/>
         <location filename="preset.cpp" line="1534"/>
         <source>MBps</source>
-        <translation type="unfinished"></translation>
+        <translation>MBps</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2046"/>
         <source>MB</source>
-        <translation type="unfinished"></translation>
+        <translation>MB</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2093"/>
@@ -900,7 +900,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1109"/>
         <location filename="preset.cpp" line="1503"/>
         <source>Constant Bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Konstante Bitrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2098"/>
@@ -911,7 +911,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1231"/>
         <location filename="preset.cpp" line="1518"/>
         <source>Average Bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchschnittliche Bitrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2103"/>
@@ -926,7 +926,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1425"/>
         <location filename="preset.cpp" line="1532"/>
         <source>Variable Bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable Bitrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2108"/>
@@ -937,7 +937,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1231"/>
         <location filename="preset.cpp" line="1549"/>
         <source>Constant Rate Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor mit konstanter Rate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2113"/>
@@ -946,34 +946,34 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1110"/>
         <location filename="preset.cpp" line="1563"/>
         <source>Constant QP</source>
-        <translation type="unfinished"></translation>
+        <translation>Konstante QP</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2232"/>
         <source>Maxrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Maxrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2257"/>
         <source>Bufsize</source>
-        <translation type="unfinished"></translation>
+        <translation>Puffergr</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2282"/>
         <source>Minrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Minrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2313"/>
         <location filename="preset.ui" line="2884"/>
         <location filename="preset.ui" line="3609"/>
         <source>Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Codec</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2372"/>
         <source>Container</source>
-        <translation type="unfinished"></translation>
+        <translation>Container</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2454"/>
@@ -994,61 +994,61 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.ui" line="2515"/>
         <location filename="preset.cpp" line="1075"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2520"/>
         <location filename="preset.cpp" line="1090"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>H.265/HEVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2525"/>
         <location filename="preset.cpp" line="1106"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2530"/>
         <location filename="preset.cpp" line="1122"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>Intel QSV H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2535"/>
         <location filename="preset.cpp" line="1144"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>Intel QSV MPEG-2 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2540"/>
         <location filename="preset.cpp" line="1166"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>NVENC H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2545"/>
         <location filename="preset.cpp" line="1182"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>NVENC H.265/HEVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2550"/>
         <location filename="preset.cpp" line="1199"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>NVENC H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2555"/>
         <location filename="preset.cpp" line="1216"/>
         <source>VP9 4:2:0 10 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>VP9 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2560"/>
         <location filename="preset.cpp" line="1229"/>
         <source>VP9 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>VP9 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2565"/>
@@ -1115,7 +1115,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="2648"/>
         <source>   Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchtr</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2701"/>
@@ -1249,7 +1249,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1649"/>
         <location filename="preset.cpp" line="1653"/>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2831"/>
@@ -1264,7 +1264,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1219"/>
         <location filename="preset.cpp" line="1232"/>
         <source>1 Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>1 Übergeben</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2836"/>
@@ -1282,12 +1282,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1219"/>
         <location filename="preset.cpp" line="1232"/>
         <source>2 Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Übergeben</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2909"/>
         <source>   Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>   Profile</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2959"/>
@@ -1335,7 +1335,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1041"/>
         <location filename="preset.cpp" line="1043"/>
         <source>Ultrafast</source>
-        <translation type="unfinished"></translation>
+        <translation>Ultraschnell</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2969"/>
@@ -1345,7 +1345,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1041"/>
         <location filename="preset.cpp" line="1043"/>
         <source>Superfast</source>
-        <translation type="unfinished"></translation>
+        <translation>Superschnell</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2974"/>
@@ -1359,7 +1359,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1045"/>
         <location filename="preset.cpp" line="1047"/>
         <source>Veryfast</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehrschnell</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2979"/>
@@ -1373,7 +1373,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1045"/>
         <location filename="preset.cpp" line="1047"/>
         <source>Faster</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneller</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2984"/>
@@ -1387,7 +1387,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1045"/>
         <location filename="preset.cpp" line="1047"/>
         <source>Fast</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnell</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2989"/>
@@ -1401,7 +1401,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1045"/>
         <location filename="preset.cpp" line="1047"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Medium</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2994"/>
@@ -1421,7 +1421,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1188"/>
         <location filename="preset.cpp" line="1205"/>
         <source>Slow</source>
-        <translation type="unfinished"></translation>
+        <translation>Langsam</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2999"/>
@@ -1435,7 +1435,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1046"/>
         <location filename="preset.cpp" line="1048"/>
         <source>Slower</source>
-        <translation type="unfinished"></translation>
+        <translation>Langsamer</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3004"/>
@@ -1450,12 +1450,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="1048"/>
         <source>Veryslow</source>
         <oldsource>Very slow</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Sehrlangsam</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3036"/>
         <source>Advanced</source>
-        <translation type="unfinished">Erweiterte</translation>
+        <translation>Erweiterte</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3087"/>
@@ -1535,7 +1535,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="3309"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3507"/>
@@ -1610,7 +1610,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="3701"/>
         <source>Channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3751"/>
@@ -1645,27 +1645,27 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="3799"/>
         <source>Sample rate</source>
-        <translation type="unfinished"></translation>
+        <translation> Abtastrate</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3852"/>
         <source>trim to 1 ch</source>
-        <translation type="unfinished"></translation>
+        <translation>trimmen auf 1</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3857"/>
         <source>trim to 2 ch</source>
-        <translation type="unfinished"></translation>
+        <translation>trimmen auf 2</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3891"/>
         <source>HDR Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR Metadaten</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3972"/>
         <source>Master Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Master-Anzeige</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4059"/>
@@ -1692,22 +1692,22 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="4149"/>
         <source>Chroma</source>
-        <translation type="unfinished"></translation>
+        <translation>Chrominanz</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4183"/>
         <source>White</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiß</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4208"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Display</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4252"/>
         <source>Luminance</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminanz</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4312"/>
@@ -1732,12 +1732,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="4538"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbig</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4573"/>
         <source>Matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Matrix</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4634"/>
@@ -1817,12 +1817,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.ui" line="5103"/>
         <location filename="preset.ui" line="5110"/>
         <source>Convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertier</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4724"/>
         <source>Primaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Primär</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4776"/>
@@ -1859,7 +1859,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="4857"/>
         <source>Range</source>
-        <translation type="unfinished"></translation>
+        <translation>Palette</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4918"/>
@@ -1874,7 +1874,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.ui" line="4965"/>
         <source>Transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>     Transfer</translation>
     </message>
     <message>
         <location filename="preset.ui" line="5035"/>
@@ -1939,34 +1939,34 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="preset.cpp" line="563"/>
         <source>From source, </source>
-        <translation type="unfinished"></translation>
+        <translation>Von der Quelle, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="621"/>
         <source> MBps, </source>
-        <translation type="unfinished"></translation>
+        <translation> MBps, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="653"/>
         <source>Preset: </source>
-        <translation type="unfinished"></translation>
+        <translation>Preset: </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="686"/>
         <source>Enabled, </source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="717"/>
         <source>Audio: </source>
-        <translation type="unfinished"></translation>
+        <translation>Audio: </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="541"/>
         <location filename="preset.cpp" line="546"/>
         <location filename="preset.cpp" line="549"/>
         <source>YUV, 4:2:0, 10 bit, </source>
-        <translation type="unfinished"></translation>
+        <translation>YUV, 4:2:0, 10 bit, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="542"/>
@@ -1976,12 +1976,12 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="547"/>
         <location filename="preset.cpp" line="548"/>
         <source>YUV, 4:2:0, 8 bit, </source>
-        <translation type="unfinished"></translation>
+        <translation>YUV, 4:2:0, 8 bit, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="550"/>
         <source>YUV, 4:2:0, 8  bit, </source>
-        <translation type="unfinished"></translation>
+        <translation>YUV, 4:2:0, 8  bit, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="551"/>
@@ -1990,14 +1990,14 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="554"/>
         <location filename="preset.cpp" line="560"/>
         <source>YUV, 4:2:2, 10 bit, </source>
-        <translation type="unfinished"></translation>
+        <translation>YUV, 4:2:2, 10 bit, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="555"/>
         <location filename="preset.cpp" line="556"/>
         <location filename="preset.cpp" line="561"/>
         <source>YUV, 4:4:4, 10 bit, </source>
-        <translation type="unfinished"></translation>
+        <translation>YUV, 4:4:4, 10 bit, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="557"/>
@@ -2005,37 +2005,37 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <location filename="preset.cpp" line="559"/>
         <location filename="preset.cpp" line="562"/>
         <source>YUV, 4:2:2, 8 bit, </source>
-        <translation type="unfinished"></translation>
+        <translation>YUV, 4:2:2, 8 bit, </translation>
     </message>
     <message>
         <location filename="preset.cpp" line="947"/>
         <location filename="preset.cpp" line="950"/>
         <source>Undef</source>
-        <translation type="unfinished"></translation>
+        <translation>Undef</translation>
     </message>
     <message>
         <location filename="preset.cpp" line="1170"/>
         <location filename="preset.cpp" line="1186"/>
         <location filename="preset.cpp" line="1203"/>
         <source>2 Pass Optimisation</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Über Optimierung</translation>
     </message>
     <message>
         <location filename="preset.cpp" line="1550"/>
         <source>Rate factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Rate faktor</translation>
     </message>
     <message>
         <location filename="preset.cpp" line="1564"/>
         <source>Quantizer</source>
-        <translation type="unfinished"></translation>
+        <translation>Quantisierer</translation>
     </message>
     <message>
         <location filename="preset.cpp" line="1677"/>
         <location filename="preset.cpp" line="1678"/>
         <location filename="preset.cpp" line="1679"/>
         <source>Unsprt</source>
-        <translation type="unfinished"></translation>
+        <translation>Unsprt</translation>
     </message>
 </context>
 <context>
@@ -2148,62 +2148,62 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="settings.ui" line="895"/>
         <source>View and theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht und Gestaltung</translation>
     </message>
     <message>
         <location filename="settings.ui" line="981"/>
         <source>  Show HDR info</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeigen Sie HDR-info</translation>
     </message>
     <message>
         <location filename="settings.ui" line="940"/>
         <source>  Minimize in tray</source>
-        <translation type="unfinished"></translation>
+        <translation> Im Fach minimieren</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1003"/>
         <source>   Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestaltung</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1041"/>
         <source>Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Gray</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1046"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Dark</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1051"/>
         <source>Wave</source>
-        <translation type="unfinished"></translation>
+        <translation>Wave</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1056"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1096"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprachlich</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1132"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Englischsprachig</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1137"/>
         <source>Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinesisch</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1142"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1147"/>

@@ -1092,7 +1092,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="preset.ui" line="2648"/>
         <source>   Pass</source>
-        <translation>   通过</translation>
+        <translation>  通过</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2701"/>
@@ -1264,7 +1264,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="preset.ui" line="2909"/>
         <source>   Profile</source>
-        <translation>   配置文件</translation>
+        <translation>侧写</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2959"/>
