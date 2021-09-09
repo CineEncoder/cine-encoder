@@ -1,6 +1,6 @@
 Summary:    Video encoder
 Name:       cine-encoder
-Version:    3.4
+Version:    3.5
 Release:    1%{?dist}
 License:    GPLv3
 URL:        https://github.com/CineEncoder/%{name}
@@ -52,5 +52,5 @@ install -m 0644 share/%{name}.wav %{buildroot}/%{_datadir}/sounds
 %{_datadir}/sounds/cine-encoder.wav
 
 %changelog
-* Mon Aug 23 2021 Cine Encoder <depositmail@rambler.ru>
+* Thu Sep 09 2021 Cine Encoder <depositmail@rambler.ru>
 - Initial package for CentOS.
