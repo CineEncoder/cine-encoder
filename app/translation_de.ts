@@ -2301,9 +2301,13 @@ Fortsetzen nach:</translation>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="mainwindow.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="14"/>
+        <source>Cine Encoder</source>
+        <translation>Cine Encoder</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="156"/>
@@ -3455,84 +3459,89 @@ Fortsetzen nach:</translation>
     <message>
         <location filename="mainwindow.cpp" line="1070"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Undefiniert</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2060"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbvorwahlen %1 können in der Quellkarte nicht gefunden werden.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2106"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Farbmatrix %1 kann in der Quellkarte nicht gefunden werden.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2156"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragungsmerkmale %1 können in der Quellzuordnung nicht gefunden werden.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2338"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
-        <translation type="unfinished"></translation>
+        <translation>Falsche master display chroma koordinaten quelle parameter!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2348"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
-        <translation type="unfinished"></translation>
+        <translation>Falsche master display weiß punkt koordinaten quelle parameter!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2484"/>
         <source>Muxing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Muxen:</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2493"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei enthält keine FPS-Informationen!
+Wählen Sie die richtige Eingabedatei!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2497"/>
         <location filename="mainwindow.cpp" line="2756"/>
         <source>Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Encoding</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2536"/>
         <location filename="mainwindow.cpp" line="2541"/>
         <source>Encoding:</source>
-        <translation type="unfinished"></translation>
+        <translation>Encoding:</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2546"/>
         <source>1-st pass:</source>
-        <translation type="unfinished"></translation>
+        <translation>1-st übergeben:</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2556"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ein unbekannter Fehler ist aufgetreten!
+Möglich FFMPEG nicht installiert.
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2568"/>
         <source>Add data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Daten hinzufügen:</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2577"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ein unbekannter Fehler ist aufgetreten!
+Mögliche mkvtoolnix nicht installiert.
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2586"/>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2612"/>
@@ -3540,7 +3549,9 @@ Select the correct input file!</source>
         <source>Task completed!
 
  Elapsed time: </source>
-        <translation type="unfinished"></translation>
+        <translation>Aufgabe abgeschlossen!
+
+Verstrichene Zeit:</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2736"/>
@@ -3565,42 +3576,42 @@ Select the correct input file!</source>
     <message>
         <location filename="mainwindow.cpp" line="2795"/>
         <source>An error occurred: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist aufgetreten: </translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2797"/>
         <source>Unexpected error occurred!</source>
-        <translation type="unfinished"></translation>
+        <translation>Unerwarteter Fehler aufgetreten!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2830"/>
         <source>Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Videodateien: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;Alle Dateien (*.*)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2874"/>
         <source>Select input file first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie zuerst Eingabedatei!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2879"/>
         <source>Select preset first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie voreingestellte erste!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2898"/>
         <source>Resume</source>
-        <translation type="unfinished"></translation>
+        <translation>Lebenslauf</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2916"/>
         <source>Stop encoding?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hör auf zu kodieren?</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2943"/>
         <source>Unexpected error while trying to perform file name detection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unerwarteter Fehler beim Versuch, die Dateinamenerfassung durchzuführen.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="3513"/>
@@ -3762,14 +3773,14 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4697"/>
         <location filename="mainwindow.cpp" line="4698"/>
         <source>Ultrafast</source>
-        <translation type="unfinished"></translation>
+        <translation>Ultraschnell</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
         <location filename="mainwindow.cpp" line="4697"/>
         <location filename="mainwindow.cpp" line="4698"/>
         <source>Superfast</source>
-        <translation type="unfinished"></translation>
+        <translation>Superschnell</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
@@ -3778,7 +3789,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4699"/>
         <location filename="mainwindow.cpp" line="4700"/>
         <source>Veryfast</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehrschnell</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
@@ -3787,7 +3798,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4699"/>
         <location filename="mainwindow.cpp" line="4700"/>
         <source>Faster</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneller</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
@@ -3796,7 +3807,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4699"/>
         <location filename="mainwindow.cpp" line="4700"/>
         <source>Fast</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnell</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
@@ -3805,7 +3816,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4699"/>
         <location filename="mainwindow.cpp" line="4700"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Medium</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
@@ -3817,7 +3828,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4702"/>
         <location filename="mainwindow.cpp" line="4703"/>
         <source>Slow</source>
-        <translation type="unfinished"></translation>
+        <translation>Langsam</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
@@ -3826,7 +3837,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4699"/>
         <location filename="mainwindow.cpp" line="4700"/>
         <source>Slower</source>
-        <translation type="unfinished"></translation>
+        <translation>Langsamer</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4696"/>
@@ -3835,7 +3846,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4699"/>
         <location filename="mainwindow.cpp" line="4700"/>
         <source>Veryslow</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehrlangsam</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4726"/>
@@ -3844,7 +3855,7 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4734"/>
         <location filename="mainwindow.cpp" line="4735"/>
         <source>1 Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>1 Übergeben</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4726"/>
@@ -3856,12 +3867,12 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4734"/>
         <location filename="mainwindow.cpp" line="4735"/>
         <source>2 Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Übergeben</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4904"/>
         <source>Task</source>
-        <translation type="unfinished">Task</translation>
+        <translation>Aufgabe</translation>
     </message>
 </context>
 </TS>

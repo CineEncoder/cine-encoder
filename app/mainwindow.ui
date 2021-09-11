@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Cine Encoder</string>
   </property>
   <property name="windowIcon">
    <iconset resource="files.qrc">

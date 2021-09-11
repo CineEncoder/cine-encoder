@@ -2278,9 +2278,13 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Widget</name>
     <message>
-        <location filename="mainwindow.ui" line="14"/>
         <source>Form</source>
-        <translation>从</translation>
+        <translation type="vanished">从</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="14"/>
+        <source>Cine Encoder</source>
+        <translation>Cine Encoder</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="156"/>
