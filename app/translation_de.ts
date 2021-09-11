@@ -3379,63 +3379,63 @@ Fortsetzen nach:</translation>
     <message>
         <location filename="mainwindow.cpp" line="265"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausfahrt</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="313"/>
         <source>Encode/Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodieren/Pause</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="318"/>
         <source>Edit metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadaten bearbeiten</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="319"/>
         <source>Select audio streams</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie audio-streams</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="320"/>
         <source>Select subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Untertitel auswählen</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="321"/>
         <source>Split video</source>
-        <translation type="unfinished"></translation>
+        <translation>Split video</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="331"/>
         <source>Donate</source>
-        <translation type="unfinished">Donat</translation>
+        <translation>Donat</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="396"/>
         <location filename="mainwindow.cpp" line="713"/>
         <source>Add section</source>
-        <translation type="unfinished"></translation>
+        <translation>Abschnitt hinzufügen</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="397"/>
         <source>Add preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Voreinstellung hinzufügen</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="398"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Umbenennen</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="714"/>
         <source>Add new preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Preset hinzufügen</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="897"/>
         <source>You need to restart the program for the settings to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen das Programm neu starten, damit die Einstellungen wirksam werden.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1040"/>
@@ -3554,7 +3554,8 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="2781"/>
         <source>The current encoding process has been canceled!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Der aktuelle Kodierungsprozess wurde abgebrochen!
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2792"/>
@@ -3604,7 +3605,7 @@ Select the correct input file!</source>
     <message>
         <location filename="mainwindow.cpp" line="3513"/>
         <source>Select output folder</source>
-        <translation type="unfinished">Ausgabeordner auswählen</translation>
+        <translation>Ausgabeordner auswählen</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4352"/>
@@ -3613,23 +3614,25 @@ Select the correct input file!</source>
         <location filename="mainwindow.cpp" line="4461"/>
         <source>Select preset first!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie voreingestellte erste!
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4389"/>
         <source>Delete?</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen?</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4417"/>
         <source>Delete presets first!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen Sie Presets zuerst!
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4571"/>
         <source>Preset not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Preset nicht aktiviert</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="4636"/>
