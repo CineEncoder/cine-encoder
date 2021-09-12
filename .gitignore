@@ -1,0 +1,5 @@
+# Hide builddir
+/builddir
+
+# Hide *.user
+/app/*.user

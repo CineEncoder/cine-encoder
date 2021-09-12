@@ -1,6 +1,10 @@
+/****************************************************************
+OPENINGFILES.CPP
+****************************************************************/
+
 #include "openingfiles.h"
 #include "ui_openingfiles.h"
-#include <math.h>
+
 
 OpeningFiles::OpeningFiles(QWidget *parent): QDialog(parent), ui(new Ui::OpeningFiles)
 {

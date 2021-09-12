@@ -2,6 +2,7 @@
 #define OPENINGFILES_H
 
 #include <QDialog>
+#include <math.h>
 
 namespace Ui
 {

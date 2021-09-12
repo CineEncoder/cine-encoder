@@ -1,3 +1,7 @@
+/****************************************************************
+MAIN.CPP
+****************************************************************/
+
 #include <QApplication>
 #include <QCoreApplication>
 #include <QSplashScreen>

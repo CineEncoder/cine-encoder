@@ -1,4 +1,8 @@
-﻿#include "mainwindow.h"
+﻿/****************************************************************
+MAINWINDOW.CPP
+****************************************************************/
+
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "about.h"
 #include "donate.h"
@@ -8,9 +12,7 @@
 #include "dialog.h"
 
 
-
-
-#ifdef Q_OS_LINUX
+#if defined (Q_OS_UNIX)
     //#define GNOME_DESKTOP
     #define KDE_DESKTOP
     #ifndef UNICODE
@@ -20,9 +22,7 @@
     #include <signal.h>
     #include <MediaInfo/MediaInfo.h>
     using namespace MediaInfoLib;
-#endif
-
-#ifdef Q_OS_WIN64
+#elif defined(Q_OS_WIN64)
     #ifdef __MINGW64__
         #ifdef _UNICODE
             #define _itot _itow
@@ -1733,11 +1733,9 @@ void Widget::make_preset()  /*** Make preset ***/
     QString intelQSV_MPEG2_preset = "-c:v mpeg2_qsv -profile:v high ";
     //QString intelQSV_VP9_10_preset = "-c:v vp9_qsv -profile:v 2 ";
     //QString intelQSV_VP9_preset = "-c:v vp9_qsv ";
-#ifdef Q_OS_WIN64
+#if defined (Q_OS_WIN64)
     QString intelQSVhwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
-#endif
-
-#ifdef Q_OS_LINUX
+#elif defined (Q_OS_UNIX)
     QString intelQSVhwaccel = " -hwaccel vaapi -hwaccel_output_format vaapi";
 #endif
 
@@ -3191,10 +3189,9 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         QApplication::processEvents();
         showOpeningFiles(100);
         QApplication::processEvents();
-#ifdef Q_OS_LINUX
+#if defined (Q_OS_UNIX)
         usleep(50000);
-#endif
-#ifdef Q_OS_WIN64
+#elif defined (Q_OS_WIN64)
         Sleep(50);
 #endif
         i++;

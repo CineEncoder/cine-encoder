@@ -1,7 +1,12 @@
+/****************************************************************
+SETTINGS.CPP
+****************************************************************/
+
 #include "settings.h"
 #include "ui_settings.h"
 #include "taskcomplete.h"
-#ifdef Q_OS_LINUX
+
+#if defined (Q_OS_UNIX)
     //#define GNOME_DESKTOP
     #define KDE_DESKTOP
 #endif
