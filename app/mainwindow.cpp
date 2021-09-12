@@ -16,6 +16,7 @@
     #ifndef UNICODE
         #define UNICODE
     #endif
+    #include <unistd.h>
     #include <signal.h>
     #include <MediaInfo/MediaInfo.h>
     using namespace MediaInfoLib;
@@ -29,6 +30,7 @@
             #define _itot itoa
         #endif
     #endif
+    #include <windows.h>
     #include "MediaInfoDLL/MediaInfoDLL.h"
     using namespace MediaInfoDLL;
 #endif
@@ -3189,7 +3191,12 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         QApplication::processEvents();
         showOpeningFiles(100);
         QApplication::processEvents();
+#ifdef Q_OS_LINUX
+        usleep(50000);
+#endif
+#ifdef Q_OS_WIN64
         Sleep(50);
+#endif
         i++;
     }
     showOpeningFiles(false);
