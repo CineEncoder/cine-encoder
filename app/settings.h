@@ -8,8 +8,7 @@
 #include <QHoverEvent>
 #include <QListView>
 #include <QMap>
-//#include <iostream>
-//#include <QDebug>
+
 
 namespace Ui
 {
@@ -32,7 +31,7 @@ public:
                        bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                        int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
                        int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
-                       QString *ptr_language, bool *ptr_aceptFlag);
+                       QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv);
 
 private slots:
 
@@ -71,6 +70,8 @@ private slots:
 private:
 
     Ui::Settings *ui_settings;
+
+    QString desktopEnv;
 
     QString _message;
 

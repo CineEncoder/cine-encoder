@@ -128,6 +128,8 @@ public:
 
     bool _hideInTrayFlag;
 
+    QString _desktopEnv;
+
     QString _language;
 
     QString _output_folder;
@@ -399,6 +401,8 @@ private slots:
     void on_comboBoxMode_currentIndexChanged(int index);
 
     void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+    void desktopEnvDetection();
 
 private:
 

@@ -13,8 +13,6 @@ MAINWINDOW.CPP
 
 
 #if defined (Q_OS_UNIX)
-    //#define GNOME_DESKTOP
-    #define KDE_DESKTOP
     #ifndef UNICODE
         #define UNICODE
     #endif
@@ -217,16 +215,9 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->setValue("Settings/batch_mode", _batch_mode);
         _settings->setValue("Settings/tray", _hideInTrayFlag);
         _settings->setValue("Settings/language", _language);
+        _settings->setValue("Settings/enviroment", _desktopEnv);
         _settings->endGroup();
 
-        /*_settings->beginWriteArray("Settings/cur_param");
-        for (int i = 0; i < PARAMETERS_COUNT; i++) {
-            _settings->setArrayIndex(i);
-            _settings->setValue("parameter", _cur_param[i]);
-        }
-        _settings->endArray();
-        _settings->setValue("Settings/preset/pos_top", _pos_top);
-        _settings->setValue("Settings/preset/pos_cld", _pos_cld);*/
         if (_hideInTrayFlag) {
             trayIcon->hide();
         }
@@ -282,7 +273,30 @@ void Widget::showTrayIcon()
     trayIcon->setIcon(QIcon(":/resources/icons/64x64/cine-encoder.png"));
     trayIcon->setContextMenu(trayIconMenu);
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-    //trayIcon->show();
+}
+
+void Widget::desktopEnvDetection()
+{
+#if defined (Q_OS_UNIX)
+    QProcess process_env;
+    process_env.setProcessChannelMode(QProcess::MergedChannels);
+    QStringList arguments;
+    arguments << "XDG_CURRENT_DESKTOP";
+    process_env.start("printenv", arguments);
+    if (process_env.waitForFinished()) {
+        QString line = process_env.readAllStandardOutput();
+        if (line.indexOf("GNOME") != -1) {
+            _desktopEnv = "gnome";
+        } else {
+            _desktopEnv = "other";
+        }
+    } else {
+        std::cout << "printenv not found" << std::endl;
+        _desktopEnv = "other";
+    }
+#else
+    _desktopEnv = "other";
+#endif
 }
 
 void Widget::setParameters()    /*** Set parameters ***/
@@ -434,6 +448,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     int heightMainWindow = 650;
     int x_pos = static_cast<int>(round(static_cast<float>(screenWidth - widthMainWindow)/2));
     int y_pos = static_cast<int>(round(static_cast<float>(screenHeight - heightMainWindow)/2));
+    _desktopEnv = "default";
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
     _settingsWindowGeometry = "default";
@@ -754,22 +769,19 @@ void Widget::setParameters()    /*** Set parameters ***/
         _batch_mode = _settings->value("Settings/batch_mode").toBool();
         _hideInTrayFlag = _settings->value("Settings/tray").toBool();
         _language = _settings->value("Settings/language").toString();
+        _desktopEnv = _settings->value("Settings/enviroment").toString();
         _settings->endGroup();
-
-        /*int arraySize = _settings->beginReadArray("Settings/cur_param");
-        for (int i = 0; i < arraySize; i++)
-        {
-            _settings->setArrayIndex(i);
-            _cur_param[i] = _settings->value("parameter").toString();
-        }
-        _settings->endArray();
-        _pos_top = _settings->value("Settings/preset/pos_top").toInt;
-        _pos_cld = _settings->value("Settings/preset/pos_cld").toInt;*/
 
     } else {
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
         setDocksParameters();
     }
+
+    if (_desktopEnv == "") {
+        std::cout << "Detect desktop env. ..." << std::endl;
+        desktopEnvDetection();
+    }
+    std::cout << "Desktop env.: " << _desktopEnv.toStdString() << std::endl;
 
     if (this->isMaximized()) {
         _expandWindowsState = true;
@@ -882,7 +894,7 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     settings.setParameters(&_settingsWindowGeometry, &_stn_file, &_output_folder,
                            &_temp_folder, &_protection, &_showHDR_mode, &_timer_interval, &_theme,
                            &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag,
-                           &_language, &acceptFlag);
+                           &_language, &acceptFlag, _desktopEnv);
     settings.setModal(true);
     settings.exec();
     timer->setInterval(_timer_interval*1000);
@@ -2818,12 +2830,11 @@ void Widget::on_actionAdd_clicked() /*** Add files ***/
 #ifdef Q_OS_WIN
     openFilesWindow->setOptions(QFileDialog::DontResolveSymlinks);
 #endif
-#ifdef GNOME_DESKTOP
-    openFilesWindow->setOptions(QFileDialog::DontUseNativeDialog | QFileDialog::DontResolveSymlinks);
-#endif
-#ifdef KDE_DESKTOP
-    openFilesWindow->setOptions(QFileDialog::DontResolveSymlinks);
-#endif
+    if (_desktopEnv == "gnome") {
+        openFilesWindow->setOptions(QFileDialog::DontUseNativeDialog | QFileDialog::DontResolveSymlinks);
+    } else {
+        openFilesWindow->setOptions(QFileDialog::DontResolveSymlinks);
+    }
     openFilesWindow->setDirectory(_openDir);
     openFilesWindow->setMinimumWidth(600);
     openFilesWindow->setWindowTitle("Open Files");
@@ -3532,15 +3543,14 @@ QString Widget::callFileDialog(const QString title)  /*** Call file dialog ***/
     selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
                                    QFileDialog::ReadOnly);
 #endif
-#ifdef GNOME_DESKTOP
-    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                   QFileDialog::DontUseNativeDialog |
-                                   QFileDialog::ReadOnly);
-#endif
-#ifdef KDE_DESKTOP
-    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                   QFileDialog::ReadOnly);
-#endif
+    if (_desktopEnv == "gnome") {
+        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
+                                       QFileDialog::DontUseNativeDialog |
+                                       QFileDialog::ReadOnly);
+    } else {
+        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
+                                       QFileDialog::ReadOnly);
+    }
     QString directory = QDir::homePath();
     if (_output_folder != "") {
         directory = _output_folder;

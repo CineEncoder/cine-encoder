@@ -6,11 +6,6 @@ SETTINGS.CPP
 #include "ui_settings.h"
 #include "taskcomplete.h"
 
-#if defined (Q_OS_UNIX)
-    //#define GNOME_DESKTOP
-    #define KDE_DESKTOP
-#endif
-
 
 Settings::Settings(QWidget *parent): QDialog(parent), ui_settings(new Ui::Settings)
 {
@@ -60,12 +55,13 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
                              bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                              int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
                              int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
-                             QString *ptr_language, bool *ptr_aceptFlag)  /*** Set parameters ***/
+                             QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv)  /*** Set parameters ***/
 {
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
     QFont font;
     font.setPointSize(10);
+    desktopEnv = _desktopEnv;
     ui_settings->label_title->setFont(font);
     _ptr_settingsWindowGeometry = ptr_settingsWindowGeometry;
     _ptr_showHDR_mode = ptr_showHDR_mode;
@@ -317,15 +313,14 @@ QString Settings::callFileDialog(const QString title)  /*** Call file dialog ***
     selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
                                    QFileDialog::ReadOnly);
 #endif
-#ifdef GNOME_DESKTOP
-    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                   QFileDialog::DontUseNativeDialog |
-                                   QFileDialog::ReadOnly);
-#endif
-#ifdef KDE_DESKTOP
-    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                   QFileDialog::ReadOnly);
-#endif
+    if (desktopEnv == "gnome") {
+        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
+                                       QFileDialog::DontUseNativeDialog |
+                                       QFileDialog::ReadOnly);
+    } else {
+        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
+                                       QFileDialog::ReadOnly);
+    }
     selectFolderWindow->setDirectory(QDir::homePath());
     selectFolderWindow->setMinimumWidth(600);
     selectFolderWindow->setWindowTitle(title);
