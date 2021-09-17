@@ -23,14 +23,34 @@ int main(int argc, char *argv[])
     app.setFont(font);
 
     /******************* Set Translate ****************************/
+    QString _language = "";
+    QLocale locale = QLocale::system();
+    if (locale.language() == QLocale::English) {
+        _language = "en";
+    }
+    else if (locale.language() == QLocale::Chinese) {
+        _language = "zh";
+    }
+    else if (locale.language() == QLocale::German) {
+        _language = "de";
+    }
+    else if (locale.language() == QLocale::Russian) {
+        _language = "ru";
+    }
+
     QString _settings_path = QDir::homePath() + QString("/CineEncoder");
     QSettings *_settings = new QSettings(_settings_path + QString("/ce_window.ini"), QSettings::IniFormat, nullptr);
     _settings->beginGroup("Settings");
-    QString _language = _settings->value("Settings/language").toString();
+    QString language = _settings->value("Settings/language").toString();
     _settings->endGroup();
     QTranslator qtTranslator;
-    if (_language != "en") {
+    if (language == "" && _language != "") {
         if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
+            app.installTranslator(&qtTranslator);
+        }
+    }
+    else if (language != "") {
+        if (qtTranslator.load(":/resources/translation/translation_" + language + ".qm")) {
             app.installTranslator(&qtTranslator);
         }
     }
