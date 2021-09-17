@@ -462,7 +462,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _status_encode_btn = "start";
     _timer_interval = 30;
     _curTime = 0;
-    _language = "en";
+    _language = "";
     _curFilename = "";
     _curPath = "";
     _input_file = "";
@@ -775,6 +775,22 @@ void Widget::setParameters()    /*** Set parameters ***/
     } else {
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
         setDocksParameters();
+    }
+
+    if (_language == "") {
+        QLocale locale = QLocale::system();
+        if (locale.language() == QLocale::Chinese) {
+            _language = "zh";
+        }
+        else if (locale.language() == QLocale::German) {
+            _language = "de";
+        }
+        else if (locale.language() == QLocale::Russian) {
+            _language = "ru";
+        }
+        else {
+            _language = "en";
+        }
     }
 
     if (_desktopEnv == "") {

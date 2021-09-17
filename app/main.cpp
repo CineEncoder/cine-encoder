@@ -25,10 +25,7 @@ int main(int argc, char *argv[])
     /******************* Set Translate ****************************/
     QString _language = "";
     QLocale locale = QLocale::system();
-    if (locale.language() == QLocale::English) {
-        _language = "en";
-    }
-    else if (locale.language() == QLocale::Chinese) {
+    if (locale.language() == QLocale::Chinese) {
         _language = "zh";
     }
     else if (locale.language() == QLocale::German) {
@@ -49,7 +46,7 @@ int main(int argc, char *argv[])
             app.installTranslator(&qtTranslator);
         }
     }
-    else if (language != "") {
+    else if (language != "" && language != "en") {
         if (qtTranslator.load(":/resources/translation/translation_" + language + ".qm")) {
             app.installTranslator(&qtTranslator);
         }
