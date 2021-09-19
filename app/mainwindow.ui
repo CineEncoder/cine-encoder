@@ -2273,12 +2273,6 @@
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>80</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
                               <property name="text">
                                <string>Audio #1:</string>
                               </property>
@@ -2999,12 +2993,6 @@
                              <widget class="QCheckBox" name="checkBoxSubtitle_1">
                               <property name="enabled">
                                <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>90</width>
-                                <height>16777215</height>
-                               </size>
                               </property>
                               <property name="text">
                                <string>Subtitle #1:</string>
@@ -5927,14 +5915,6 @@
                 <width>170</width>
                 <height>24</height>
                </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>10</pointsize>
-                <italic>true</italic>
-                <kerning>true</kerning>
-               </font>
               </property>
               <property name="toolTip">
                <string>Add title for all files</string>

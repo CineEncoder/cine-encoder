@@ -229,8 +229,8 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
 void Widget::paintEvent(QPaintEvent *event) /*** Disable QTab draw base ***/
 {
     if (event->type() == QEvent::Paint) {
-        QList<QTabBar *> tabBars = window->findChildren<QTabBar *>();
-        foreach (QTabBar * tabBar, tabBars) {
+        QList<QTabBar*> tabBars = window->findChildren<QTabBar*>();
+        foreach (QTabBar *tabBar, tabBars) {
             if (tabBar->drawBase()) {
                  tabBar->setDrawBase(false);
             }
@@ -4578,7 +4578,7 @@ void Widget::setItemStyle(QTreeWidgetItem *item)
             foregroundChildColor.setRgb(qRgb(50, 100, 157));
             break;
         case 3:
-            foregroundChildColor.setRgb(qRgb(0, 0, 200));
+            foregroundChildColor.setRgb(qRgb(45, 50, 67));
             break;
     }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
