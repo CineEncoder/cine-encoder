@@ -1130,12 +1130,12 @@ QSlider::handle:horizontal:disabled {
 /*********************************************/
 
 QSlider#horizontalSlider_resize {
-    padding-left: 20px;
+    padding-left: 22px;
     padding-right: 5px;
     border: 1px dotted #CCCCCC;
     background-color: transparent;
 
-    background-image: url(:/resources/icons/16x16/cil-zoom-in_black.png);
+    background-image: url(:/resources/icons/16x16/cil-screen-desktop_black.png);
     background-repeat: no-repeat;
     background-position: left;
 }

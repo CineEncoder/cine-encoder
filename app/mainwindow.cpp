@@ -4625,6 +4625,8 @@ void Widget::renameSectionPreset()
 
 void Widget::setItemStyle(QTreeWidgetItem *item)
 {
+    QFont font = qApp->font();
+    font.setItalic(true);
     QColor foregroundChildColor;
     switch (_theme)
     {
@@ -4634,16 +4636,17 @@ void Widget::setItemStyle(QTreeWidgetItem *item)
             foregroundChildColor.setRgb(qRgb(50, 100, 157));
             break;
         case 3:
-            foregroundChildColor.setRgb(qRgb(45, 50, 67));
+            foregroundChildColor.setRgb(qRgb(50, 100, 157));
             break;
     }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
     item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
     item->setForeground(0, foregroundChildColor);
-    for (int column = 1; column < 7; column++)
-    {
+    item->setFont(0, font);
+    for (int column = 1; column < 7; column++) {
         item->setTextAlignment(column, Qt::AlignCenter);
         item->setForeground(column, foregroundChildColor);
+        item->setFont(column, font);
     }
 }
 
