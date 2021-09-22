@@ -400,6 +400,8 @@ private slots:
 
     void on_comboBoxMode_currentIndexChanged(int index);
 
+    void on_horizontalSlider_resize_valueChanged(int value);
+
     void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
     void desktopEnvDetection();
@@ -646,6 +648,8 @@ private:
 
     // *********************** Geometry ***********************************//
 
+    int _rowSize;
+
     bool _windowActivated = false;
 
     bool _expandWindowsState;
@@ -714,11 +718,13 @@ private:
 
     QString timeConverter(float &time);
 
-    void setThumbnail(QString curFilename, double time, QString quality);
+    QString setThumbnail(QString curFilename, double time, QString quality);
 
     void provideContextMenu(const QPoint &position);
 
     void providePresetContextMenu(const QPoint &position);
+
+    void resizeTableRows(int rows_height);
 
     /************************* Preset Window ******************************/
 

@@ -216,6 +216,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->setValue("Settings/tray", _hideInTrayFlag);
         _settings->setValue("Settings/language", _language);
         _settings->setValue("Settings/enviroment", _desktopEnv);
+        _settings->setValue("Settings/row_size", _rowSize);
         _settings->endGroup();
 
         if (_hideInTrayFlag) {
@@ -476,6 +477,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _suffixType = 0;
     _pos_top = -1;
     _pos_cld = -1;
+    _rowSize = 25;
     _expandWindowsState = false;
     _hideInTrayFlag = false;
     clickPressedFlag = false;
@@ -526,6 +528,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     ui->tableWidget->setColumnWidth(columnIndex::FPS, 70);
     ui->tableWidget->setColumnWidth(columnIndex::AR, 60);
     ui->tableWidget->setColumnWidth(columnIndex::STATUS, 80);
+    ui->tableWidget->setIconSize(QSize(16, 16));
 
     for (int i = columnIndex::COLORRANGE; i <= columnIndex::MAXFALL; i++) {
         ui->tableWidget->setColumnWidth(i, 82);
@@ -770,11 +773,16 @@ void Widget::setParameters()    /*** Set parameters ***/
         _hideInTrayFlag = _settings->value("Settings/tray").toBool();
         _language = _settings->value("Settings/language").toString();
         _desktopEnv = _settings->value("Settings/enviroment").toString();
+        _rowSize = _settings->value("Settings/row_size").toInt();
         _settings->endGroup();
 
     } else {
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
         setDocksParameters();
+    }
+
+    if (_rowSize != 0) {
+        ui->horizontalSlider_resize->setValue(_rowSize);
     }
 
     if (_language == "") {
@@ -1044,9 +1052,44 @@ void Widget::get_current_data() /*** Get current data ***/
         _subtitleTitle[p] = ui->tableWidget->item(_row, p + columnIndex::T_TITLESUB_1)->text();
     }
 
+    //******************************** Set icons *****************************//
+
     double halfTime = _dur/2;
-    setThumbnail(_curFilename, halfTime, "high");
-    ui->label_source->setText(ui->tableWidget->item(_row, columnIndex::FILENAME)->text());
+    QString tmb_file = setThumbnail(_curFilename, halfTime, "high");
+
+    QSize imageSize = QSize(85, 48);
+    if (_rowSize == 25) {
+        QString icons[4][5] = {
+            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
+            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
+            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
+            {"cil-hdr_black", "cil-camera-roll_black", "cil-hd_black", "cil-4k_black", "cil-file_black"}
+        };
+
+        if (_hdr[CUR_MASTER_DISPLAY] != "") {
+            tmb_file = ":/resources/icons/16x16/" + icons[_theme][0] + ".png";
+        }
+        else if (_height.toInt() >=1 && _height.toInt() < 720) {
+            tmb_file = ":/resources/icons/16x16/" + icons[_theme][1] + ".png";
+        }
+        else if (_height.toInt() >= 720 && _height.toInt() < 2160) {
+            tmb_file = ":/resources/icons/16x16/" + icons[_theme][2] + ".png";
+        }
+        else if (_height.toInt() >= 2160) {
+            tmb_file = ":/resources/icons/16x16/" + icons[_theme][3] + ".png";
+        }
+        else {
+            tmb_file = ":/resources/icons/16x16/" + icons[_theme][4] + ".png";
+        }
+        imageSize = QSize(16, 16);
+    }
+    QPixmap pxmp(tmb_file);
+    QPixmap scaled = pxmp.scaled(imageSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    ui->tableWidget->item(_row, columnIndex::FILENAME)->setIcon(QIcon(scaled));
+
+    //******************************** Set description *****************************//
+
+    ui->label_source->setText(_curFilename);
 
     if (curCodec != "") {
         curCodec += ", ";
@@ -1277,6 +1320,7 @@ void Widget::restore_initial_state()    /*** Restore initial state ***/
     ui->comboBoxMode->setEnabled(true);
     ui->buttonHotInputFile->setEnabled(true);
     ui->buttonHotOutputFile->setEnabled(true);
+    ui->horizontalSlider_resize->setEnabled(true);
 
     ui->actionSettings->setEnabled(true);
     _status_encode_btn = "start";
@@ -2548,6 +2592,7 @@ void Widget::encode()   /*** Encode ***/
         ui->comboBoxMode->setEnabled(false);
         ui->buttonHotInputFile->setEnabled(false);
         ui->buttonHotOutputFile->setEnabled(false);
+        ui->horizontalSlider_resize->setEnabled(false);
 
         ui->actionSettings->setEnabled(false);
         ui->labelAnimation->show();
@@ -3130,29 +3175,6 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         ui->tableWidget->setItem(numRows, columnIndex::T_STARTTIME, newItem_startTime);
         ui->tableWidget->setItem(numRows, columnIndex::T_ENDTIME, newItem_endTime);
 
-        QString icons[4][5] = {
-            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
-            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
-            {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
-            {"cil-hdr_black", "cil-camera-roll_black", "cil-hd_black", "cil-4k_black", "cil-file_black"}
-        };
-
-        if (mastering_display_color_primaries != "") {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][0] + ".png"));
-        }
-        else if (height_qstr.toInt() >=1 && height_qstr.toInt() < 720) {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][1] + ".png"));
-        }
-        else if (height_qstr.toInt() >= 720 && height_qstr.toInt() < 2160) {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][2] + ".png"));
-        }
-        else if (height_qstr.toInt() >= 2160) {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][3] + ".png"));
-        }
-        else {
-            newItem_file->setIcon(QIcon(":/resources/icons/16x16/" + icons[_theme][4] + ".png"));
-        }
-
         int smplrt_int;
         QString audioFormat("");
         QString audioLang("");
@@ -3343,6 +3365,30 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
     }
 }
 
+void Widget::resizeTableRows(int rows_height)
+{
+    QHeaderView *verticalHeader = ui->tableWidget->verticalHeader();
+    verticalHeader->setSectionResizeMode(QHeaderView::Fixed);
+    verticalHeader->setDefaultSectionSize(rows_height);
+    if (rows_height == 25) {
+        ui->tableWidget->setIconSize(QSize(16, 16));
+    } else {
+        int rows_width = static_cast<int>(round(1.777f*rows_height));
+        ui->tableWidget->setIconSize(QSize(rows_width, rows_height));
+    }
+    int numRows = ui->tableWidget->rowCount();
+    if (numRows > 0) {
+        int row = ui->tableWidget->currentRow();
+        ui->tableWidget->clearSelection();
+        if (numRows > 1) {
+            for (int i = 0; i < numRows; i++) {
+                ui->tableWidget->selectRow(i);
+            }
+        }
+        ui->tableWidget->selectRow(row);
+    }
+}
+
 void Widget::provideContextMenu(const QPoint &position)     /*** Call table items menu  ***/
 {
     QTableWidgetItem *item = ui->tableWidget->itemAt(0, position.y());
@@ -3415,11 +3461,17 @@ void Widget::on_comboBoxMode_currentIndexChanged(int index)
     }
 }
 
+void Widget::on_horizontalSlider_resize_valueChanged(int value)
+{
+    _rowSize = value;
+    resizeTableRows(value);
+}
+
 /************************************************
 ** Preview Window
 ************************************************/
 
-void Widget::setThumbnail(QString curFilename, double time, QString quality)     /*** Thumbnail ***/
+QString Widget::setThumbnail(QString curFilename, double time, QString quality)     /*** Thumbnail ***/
 {
     QString qualityParam = "-vf scale=144:-1 -compression_level 10 -pix_fmt rgb24";
     if (quality == "low")
@@ -3428,18 +3480,22 @@ void Widget::setThumbnail(QString curFilename, double time, QString quality)    
     }
     const QString time_qstr = QString::number(time, 'f', 3);
     const QString tmb_name = curFilename.replace(".", "_").replace(" ", "_") + time_qstr;
-    const QString tmb_file = _thumb_path + QString("/") + tmb_name + QString(".png");
+    QString tmb_file = _thumb_path + QString("/") + tmb_name + QString(".png");
     QFile tmb(tmb_file);
     if (!tmb.exists()) {
-        //std::cout<< "Thumbnail file not exist and created..." << std::endl;
         QStringList cmd;
         cmd << "-hide_banner" << "-ss" << time_qstr << "-i" << _input_file
             << qualityParam.split(" ") << "-vframes" << "1" << "-y" << tmb_file;
         process_5->start("ffmpeg", cmd);
         process_5->waitForFinished();
     }
-    ui->labelThumb->setPixmap(QPixmap(tmb_file).scaled(ui->labelThumb->size(),
-                              Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    if (!tmb.exists()) {
+        tmb_file = ":/resources/images/no_preview.png";
+    }
+    QPixmap pix(tmb_file);
+    QPixmap pix_scaled = pix.scaled(ui->frame_preview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    ui->labelThumb->setPixmap(pix_scaled);
+    return tmb_file;
 }
 
 void Widget::repeatHandler_Type_2()  /*** Repeat handler ***/
@@ -4947,4 +5003,3 @@ void Widget::call_task_complete(const QString &_message, const bool &_timer_mode
         taskcomplete.exec();
     }
 }
-

@@ -33,7 +33,16 @@ void OpeningFiles::setParameters(bool &show, QPoint &position)
 
 void OpeningFiles::setText(QString &text)
 {
-    ui->label_filename->setText(text);
+    QString elidedText;
+    QFontMetrics fm = ui->label_filename->fontMetrics();
+    int fwidth = fm.horizontalAdvance(text);
+    int width = ui->label_filename->width();
+    if (fwidth > width) {
+        elidedText = fm.elidedText(text, Qt::ElideMiddle, width, 0);
+    } else {
+        elidedText = text;
+    }
+    ui->label_filename->setText(elidedText);
 }
 
 void OpeningFiles::setPercent(int &percent)

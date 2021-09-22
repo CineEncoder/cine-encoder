@@ -308,5 +308,6 @@
         <file>resources/translation/translation_ru.qm</file>
         <file>resources/translation/translation_de.qm</file>
         <file>resources/translation/translation_zh.qm</file>
+        <file>resources/images/no_preview.png</file>
     </qresource>
 </RCC>

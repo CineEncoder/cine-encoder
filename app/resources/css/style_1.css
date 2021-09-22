@@ -1095,6 +1095,9 @@ QProgressBar::chunk#progressBar_opening {
 **  QSlider
 **************************************************************************/
 
+QSlider {
+    background-color: transparent;
+}
 QSlider::groove:horizontal {
     height: 6px;
     padding-left: 8px;
@@ -1125,6 +1128,47 @@ QSlider::handle:horizontal:disabled {
     margin: -6px;
     border: 1px solid #22252D;
     border-radius: 2px;
+    background-color: #22252D;
+}
+
+/*********************************************/
+
+QSlider#horizontalSlider_resize {
+    padding-left: 2px;
+    padding-right: 2px;
+    border: 1px dotted #082028;
+    background-color: transparent;
+}
+QSlider::groove:horizontal#horizontalSlider_resize {
+    height: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: 1px solid #082028;
+    border-radius: 2px;
+    background-color: #082028;
+}
+QSlider::sub-page:horizontal#horizontalSlider_resize {
+    border: 1px solid #08283C;
+    border-radius: 2px;
+    background-color: #08283C;
+}
+QSlider::handle:horizontal#horizontalSlider_resize {
+    width: 8px;
+    margin: -4px;
+    border: 1px solid #175C7F;
+    border-radius: 4px;
+    background-color: #175C7F;
+}
+QSlider::sub-page:horizontal:disabled#horizontalSlider_resize {
+    border: 1px solid #082028;
+    border-radius: 2px;
+    background-color: #082028;
+}
+QSlider::handle:horizontal:disabled#horizontalSlider_resize {
+    width: 8px;
+    margin: -4px;
+    border: 1px solid #22252D;
+    border-radius: 4px;
     background-color: #22252D;
 }
 

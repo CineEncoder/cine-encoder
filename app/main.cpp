@@ -16,15 +16,15 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("CineEncoder");
     QCoreApplication::setApplicationName("CineEncoder");
-    //QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
+    QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
 
     /********************* Set Fonts ******************************/
-//    QFontDatabase database;
-//    QFontDatabase::WritingSystem values = QFontDatabase::WritingSystem::Latin;
-//    const QStringList fontFamilies = database.families(values);
-//    for (const QString &family : fontFamilies) {
-//        std::cout << "Style: " << family.toStdString() << std::endl;
-//    }
+    //QFontDatabase database;
+    //QFontDatabase::WritingSystem values = QFontDatabase::WritingSystem::Latin;
+    //const QStringList fontFamilies = database.families(values);
+    //for (const QString &family : fontFamilies) {
+    //  std::cout << "Style: " << family.toStdString() << std::endl;
+    //}
 
     QFont font = app.font();
     //std::cout << "Style: " << font.family().toStdString() << " Size: " << font.pointSize() << std::endl;

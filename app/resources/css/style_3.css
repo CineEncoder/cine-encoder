@@ -1091,6 +1091,9 @@ QProgressBar::chunk#progressBar_opening {
 **  QSlider
 **************************************************************************/
 
+QSlider {
+    background-color: transparent;
+}
 QSlider::groove:horizontal {
     height: 6px;
     padding-left: 8px;
@@ -1122,6 +1125,47 @@ QSlider::handle:horizontal:disabled {
     border: 1px solid #175C7F;
     border-radius: 2px;
     background-color: #175C7F;
+}
+
+/*********************************************/
+
+QSlider#horizontalSlider_resize {
+    padding-left: 2px;
+    padding-right: 2px;
+    border: 1px dotted #CCCCCC;
+    background-color: transparent;
+}
+QSlider::groove:horizontal#horizontalSlider_resize {
+    height: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    background-color: #DDDDDD;
+}
+QSlider::sub-page:horizontal#horizontalSlider_resize {
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    background-color: #DDDDDD;
+}
+QSlider::handle:horizontal#horizontalSlider_resize {
+    width: 8px;
+    margin: -4px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    background-color: #CCCCCC;
+}
+QSlider::sub-page:horizontal:disabled#horizontalSlider_resize {
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    background-color: #DDDDDD;
+}
+QSlider::handle:horizontal:disabled#horizontalSlider_resize {
+    width: 8px;
+    margin: -4px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    background-color: #CCCCCC;
 }
 
 
