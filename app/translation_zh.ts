@@ -63,22 +63,22 @@ Cine Encoder 2021 ver. 3.4
 </translation>
     </message>
     <message>
-        <location filename="about.cpp" line="32"/>
+        <location filename="about.cpp" line="36"/>
         <source>Program for encoding HDR and SDR video.</source>
         <translation>用于编码 HDR 和 SDR 视频的程序。</translation>
     </message>
     <message>
-        <location filename="about.cpp" line="32"/>
+        <location filename="about.cpp" line="36"/>
         <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
         <translation>该软件可免费用于个人和商业用途。 它被分发，希望它将是有用的，但没有任何保证。 有关更多信息，请参阅 GNU 通用公共许可证 v3。</translation>
     </message>
     <message>
-        <location filename="about.cpp" line="35"/>
+        <location filename="about.cpp" line="39"/>
         <source>License: GNU General Public License Version 3</source>
         <translation>许可证：GNU 通用公共许可证第 3 版</translation>
     </message>
     <message>
-        <location filename="about.cpp" line="36"/>
+        <location filename="about.cpp" line="40"/>
         <source>Copyright</source>
         <translation>版权所有</translation>
     </message>
@@ -154,12 +154,12 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="donate.cpp" line="33"/>
+        <location filename="donate.cpp" line="37"/>
         <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
         <translation>该软件可免费用于个人和商业用途。 它被分发，希望它将是有用的，但没有任何保证。 有关更多信息，请参阅 GNU 通用公共许可证 v3。</translation>
     </message>
     <message>
-        <location filename="donate.cpp" line="36"/>
+        <location filename="donate.cpp" line="40"/>
         <source>If you find this application useful, consider making a donation to support the development.</source>
         <translation>如果您发现此应用程序有用，请考虑捐款以支持开发。</translation>
     </message>
@@ -177,7 +177,7 @@ p, li { white-space: pre-wrap; }
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="openingfiles.ui" line="244"/>
+        <location filename="openingfiles.ui" line="246"/>
         <source>Filename:</source>
         <translation>文件名：</translation>
     </message>
@@ -287,47 +287,47 @@ p, li { white-space: pre-wrap; }
         <location filename="preset.ui" line="4894"/>
         <location filename="preset.ui" line="4913"/>
         <location filename="preset.ui" line="5015"/>
-        <location filename="preset.cpp" line="572"/>
-        <location filename="preset.cpp" line="574"/>
-        <location filename="preset.cpp" line="575"/>
-        <location filename="preset.cpp" line="583"/>
-        <location filename="preset.cpp" line="584"/>
-        <location filename="preset.cpp" line="692"/>
-        <location filename="preset.cpp" line="693"/>
-        <location filename="preset.cpp" line="694"/>
-        <location filename="preset.cpp" line="695"/>
+        <location filename="preset.cpp" line="576"/>
+        <location filename="preset.cpp" line="578"/>
+        <location filename="preset.cpp" line="579"/>
+        <location filename="preset.cpp" line="587"/>
+        <location filename="preset.cpp" line="588"/>
         <location filename="preset.cpp" line="696"/>
         <location filename="preset.cpp" line="697"/>
         <location filename="preset.cpp" line="698"/>
         <location filename="preset.cpp" line="699"/>
         <location filename="preset.cpp" line="700"/>
         <location filename="preset.cpp" line="701"/>
-        <location filename="preset.cpp" line="714"/>
-        <location filename="preset.cpp" line="754"/>
-        <location filename="preset.cpp" line="823"/>
-        <location filename="preset.cpp" line="879"/>
-        <location filename="preset.cpp" line="943"/>
-        <location filename="preset.cpp" line="944"/>
-        <location filename="preset.cpp" line="946"/>
-        <location filename="preset.cpp" line="949"/>
-        <location filename="preset.cpp" line="952"/>
-        <location filename="preset.cpp" line="1087"/>
-        <location filename="preset.cpp" line="1102"/>
-        <location filename="preset.cpp" line="1118"/>
-        <location filename="preset.cpp" line="1140"/>
-        <location filename="preset.cpp" line="1162"/>
-        <location filename="preset.cpp" line="1179"/>
-        <location filename="preset.cpp" line="1195"/>
-        <location filename="preset.cpp" line="1212"/>
-        <location filename="preset.cpp" line="1226"/>
-        <location filename="preset.cpp" line="1239"/>
-        <location filename="preset.cpp" line="1440"/>
-        <location filename="preset.cpp" line="1465"/>
-        <location filename="preset.cpp" line="1615"/>
-        <location filename="preset.cpp" line="1616"/>
-        <location filename="preset.cpp" line="1683"/>
-        <location filename="preset.cpp" line="1684"/>
-        <location filename="preset.cpp" line="1685"/>
+        <location filename="preset.cpp" line="702"/>
+        <location filename="preset.cpp" line="703"/>
+        <location filename="preset.cpp" line="704"/>
+        <location filename="preset.cpp" line="705"/>
+        <location filename="preset.cpp" line="718"/>
+        <location filename="preset.cpp" line="758"/>
+        <location filename="preset.cpp" line="827"/>
+        <location filename="preset.cpp" line="883"/>
+        <location filename="preset.cpp" line="947"/>
+        <location filename="preset.cpp" line="948"/>
+        <location filename="preset.cpp" line="950"/>
+        <location filename="preset.cpp" line="953"/>
+        <location filename="preset.cpp" line="956"/>
+        <location filename="preset.cpp" line="1091"/>
+        <location filename="preset.cpp" line="1106"/>
+        <location filename="preset.cpp" line="1122"/>
+        <location filename="preset.cpp" line="1144"/>
+        <location filename="preset.cpp" line="1166"/>
+        <location filename="preset.cpp" line="1183"/>
+        <location filename="preset.cpp" line="1199"/>
+        <location filename="preset.cpp" line="1216"/>
+        <location filename="preset.cpp" line="1230"/>
+        <location filename="preset.cpp" line="1243"/>
+        <location filename="preset.cpp" line="1444"/>
+        <location filename="preset.cpp" line="1469"/>
+        <location filename="preset.cpp" line="1619"/>
+        <location filename="preset.cpp" line="1620"/>
+        <location filename="preset.cpp" line="1687"/>
+        <location filename="preset.cpp" line="1688"/>
+        <location filename="preset.cpp" line="1689"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
@@ -820,11 +820,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="preset.ui" line="1699"/>
         <location filename="preset.ui" line="4079"/>
-        <location filename="preset.cpp" line="577"/>
-        <location filename="preset.cpp" line="787"/>
-        <location filename="preset.cpp" line="856"/>
-        <location filename="preset.cpp" line="912"/>
-        <location filename="preset.cpp" line="1689"/>
+        <location filename="preset.cpp" line="581"/>
+        <location filename="preset.cpp" line="791"/>
+        <location filename="preset.cpp" line="860"/>
+        <location filename="preset.cpp" line="916"/>
+        <location filename="preset.cpp" line="1693"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
@@ -842,10 +842,10 @@ p, li { white-space: pre-wrap; }
         <location filename="preset.ui" line="1906"/>
         <location filename="preset.ui" line="2207"/>
         <location filename="preset.ui" line="3824"/>
-        <location filename="preset.cpp" line="1483"/>
-        <location filename="preset.cpp" line="1504"/>
-        <location filename="preset.cpp" line="1519"/>
-        <location filename="preset.cpp" line="1533"/>
+        <location filename="preset.cpp" line="1487"/>
+        <location filename="preset.cpp" line="1508"/>
+        <location filename="preset.cpp" line="1523"/>
+        <location filename="preset.cpp" line="1537"/>
         <source>Bitrate</source>
         <translation>比特率</translation>
     </message>
@@ -858,10 +858,10 @@ p, li { white-space: pre-wrap; }
         <location filename="preset.ui" line="1988"/>
         <location filename="preset.ui" line="2004"/>
         <location filename="preset.ui" line="2156"/>
-        <location filename="preset.cpp" line="1487"/>
-        <location filename="preset.cpp" line="1505"/>
-        <location filename="preset.cpp" line="1523"/>
-        <location filename="preset.cpp" line="1534"/>
+        <location filename="preset.cpp" line="1491"/>
+        <location filename="preset.cpp" line="1509"/>
+        <location filename="preset.cpp" line="1527"/>
+        <location filename="preset.cpp" line="1538"/>
         <source>MBps</source>
         <translation>MBps</translation>
     </message>
@@ -872,56 +872,56 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="preset.ui" line="2093"/>
-        <location filename="preset.cpp" line="1078"/>
-        <location filename="preset.cpp" line="1093"/>
-        <location filename="preset.cpp" line="1109"/>
-        <location filename="preset.cpp" line="1503"/>
+        <location filename="preset.cpp" line="1082"/>
+        <location filename="preset.cpp" line="1097"/>
+        <location filename="preset.cpp" line="1113"/>
+        <location filename="preset.cpp" line="1507"/>
         <source>Constant Bitrate</source>
         <translation>恒定比特率</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2098"/>
-        <location filename="preset.cpp" line="1078"/>
-        <location filename="preset.cpp" line="1093"/>
-        <location filename="preset.cpp" line="1109"/>
-        <location filename="preset.cpp" line="1218"/>
-        <location filename="preset.cpp" line="1231"/>
-        <location filename="preset.cpp" line="1518"/>
+        <location filename="preset.cpp" line="1082"/>
+        <location filename="preset.cpp" line="1097"/>
+        <location filename="preset.cpp" line="1113"/>
+        <location filename="preset.cpp" line="1222"/>
+        <location filename="preset.cpp" line="1235"/>
+        <location filename="preset.cpp" line="1522"/>
         <source>Average Bitrate</source>
         <translation>平均比特率</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2103"/>
-        <location filename="preset.cpp" line="1078"/>
-        <location filename="preset.cpp" line="1093"/>
-        <location filename="preset.cpp" line="1109"/>
-        <location filename="preset.cpp" line="1130"/>
-        <location filename="preset.cpp" line="1152"/>
-        <location filename="preset.cpp" line="1169"/>
-        <location filename="preset.cpp" line="1185"/>
-        <location filename="preset.cpp" line="1202"/>
-        <location filename="preset.cpp" line="1425"/>
-        <location filename="preset.cpp" line="1532"/>
+        <location filename="preset.cpp" line="1082"/>
+        <location filename="preset.cpp" line="1097"/>
+        <location filename="preset.cpp" line="1113"/>
+        <location filename="preset.cpp" line="1134"/>
+        <location filename="preset.cpp" line="1156"/>
+        <location filename="preset.cpp" line="1173"/>
+        <location filename="preset.cpp" line="1189"/>
+        <location filename="preset.cpp" line="1206"/>
+        <location filename="preset.cpp" line="1429"/>
+        <location filename="preset.cpp" line="1536"/>
         <source>Variable Bitrate</source>
         <translation>可变比特率</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2108"/>
-        <location filename="preset.cpp" line="1079"/>
-        <location filename="preset.cpp" line="1094"/>
-        <location filename="preset.cpp" line="1110"/>
-        <location filename="preset.cpp" line="1218"/>
-        <location filename="preset.cpp" line="1231"/>
-        <location filename="preset.cpp" line="1549"/>
+        <location filename="preset.cpp" line="1083"/>
+        <location filename="preset.cpp" line="1098"/>
+        <location filename="preset.cpp" line="1114"/>
+        <location filename="preset.cpp" line="1222"/>
+        <location filename="preset.cpp" line="1235"/>
+        <location filename="preset.cpp" line="1553"/>
         <source>Constant Rate Factor</source>
         <translation>恒定速率因子</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2113"/>
-        <location filename="preset.cpp" line="1079"/>
-        <location filename="preset.cpp" line="1094"/>
-        <location filename="preset.cpp" line="1110"/>
-        <location filename="preset.cpp" line="1563"/>
+        <location filename="preset.cpp" line="1083"/>
+        <location filename="preset.cpp" line="1098"/>
+        <location filename="preset.cpp" line="1114"/>
+        <location filename="preset.cpp" line="1567"/>
         <source>Constant QP</source>
         <translation>恒定 QP</translation>
     </message>
@@ -969,67 +969,67 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="preset.ui" line="2515"/>
-        <location filename="preset.cpp" line="1075"/>
+        <location filename="preset.cpp" line="1079"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
         <translation>H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2520"/>
-        <location filename="preset.cpp" line="1090"/>
+        <location filename="preset.cpp" line="1094"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
         <translation>H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2525"/>
-        <location filename="preset.cpp" line="1106"/>
+        <location filename="preset.cpp" line="1110"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
         <translation>H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2530"/>
-        <location filename="preset.cpp" line="1122"/>
+        <location filename="preset.cpp" line="1126"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2535"/>
-        <location filename="preset.cpp" line="1144"/>
+        <location filename="preset.cpp" line="1148"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
         <translation>Intel QSV MPEG-2 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2540"/>
-        <location filename="preset.cpp" line="1166"/>
+        <location filename="preset.cpp" line="1170"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2545"/>
-        <location filename="preset.cpp" line="1182"/>
+        <location filename="preset.cpp" line="1186"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2550"/>
-        <location filename="preset.cpp" line="1199"/>
+        <location filename="preset.cpp" line="1203"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation>NVENC H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2555"/>
-        <location filename="preset.cpp" line="1216"/>
+        <location filename="preset.cpp" line="1220"/>
         <source>VP9 4:2:0 10 bit</source>
         <translation>VP9 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2560"/>
-        <location filename="preset.cpp" line="1229"/>
+        <location filename="preset.cpp" line="1233"/>
         <source>VP9 4:2:0 8 bit</source>
         <translation>VP9 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2565"/>
-        <location filename="preset.cpp" line="1243"/>
+        <location filename="preset.cpp" line="1247"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
     </message>
@@ -1040,7 +1040,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="preset.ui" line="2575"/>
-        <location filename="preset.cpp" line="1275"/>
+        <location filename="preset.cpp" line="1279"/>
         <source>ProRes Standard</source>
         <translation>ProRes Standard</translation>
     </message>
@@ -1173,91 +1173,91 @@ p, li { white-space: pre-wrap; }
         <location filename="preset.ui" line="2771"/>
         <location filename="preset.ui" line="3170"/>
         <location filename="preset.ui" line="3221"/>
-        <location filename="preset.cpp" line="1037"/>
-        <location filename="preset.cpp" line="1039"/>
-        <location filename="preset.cpp" line="1131"/>
-        <location filename="preset.cpp" line="1153"/>
+        <location filename="preset.cpp" line="1041"/>
+        <location filename="preset.cpp" line="1043"/>
+        <location filename="preset.cpp" line="1135"/>
         <location filename="preset.cpp" line="1157"/>
-        <location filename="preset.cpp" line="1224"/>
-        <location filename="preset.cpp" line="1237"/>
-        <location filename="preset.cpp" line="1245"/>
-        <location filename="preset.cpp" line="1246"/>
+        <location filename="preset.cpp" line="1161"/>
+        <location filename="preset.cpp" line="1228"/>
+        <location filename="preset.cpp" line="1241"/>
         <location filename="preset.cpp" line="1249"/>
-        <location filename="preset.cpp" line="1261"/>
-        <location filename="preset.cpp" line="1262"/>
+        <location filename="preset.cpp" line="1250"/>
+        <location filename="preset.cpp" line="1253"/>
         <location filename="preset.cpp" line="1265"/>
-        <location filename="preset.cpp" line="1277"/>
-        <location filename="preset.cpp" line="1278"/>
+        <location filename="preset.cpp" line="1266"/>
+        <location filename="preset.cpp" line="1269"/>
         <location filename="preset.cpp" line="1281"/>
-        <location filename="preset.cpp" line="1293"/>
-        <location filename="preset.cpp" line="1294"/>
+        <location filename="preset.cpp" line="1282"/>
+        <location filename="preset.cpp" line="1285"/>
         <location filename="preset.cpp" line="1297"/>
-        <location filename="preset.cpp" line="1309"/>
-        <location filename="preset.cpp" line="1310"/>
+        <location filename="preset.cpp" line="1298"/>
+        <location filename="preset.cpp" line="1301"/>
         <location filename="preset.cpp" line="1313"/>
-        <location filename="preset.cpp" line="1325"/>
-        <location filename="preset.cpp" line="1326"/>
+        <location filename="preset.cpp" line="1314"/>
+        <location filename="preset.cpp" line="1317"/>
         <location filename="preset.cpp" line="1329"/>
-        <location filename="preset.cpp" line="1341"/>
-        <location filename="preset.cpp" line="1342"/>
+        <location filename="preset.cpp" line="1330"/>
+        <location filename="preset.cpp" line="1333"/>
         <location filename="preset.cpp" line="1345"/>
-        <location filename="preset.cpp" line="1358"/>
-        <location filename="preset.cpp" line="1359"/>
+        <location filename="preset.cpp" line="1346"/>
+        <location filename="preset.cpp" line="1349"/>
         <location filename="preset.cpp" line="1362"/>
-        <location filename="preset.cpp" line="1375"/>
-        <location filename="preset.cpp" line="1376"/>
+        <location filename="preset.cpp" line="1363"/>
+        <location filename="preset.cpp" line="1366"/>
         <location filename="preset.cpp" line="1379"/>
-        <location filename="preset.cpp" line="1392"/>
-        <location filename="preset.cpp" line="1393"/>
+        <location filename="preset.cpp" line="1380"/>
+        <location filename="preset.cpp" line="1383"/>
         <location filename="preset.cpp" line="1396"/>
-        <location filename="preset.cpp" line="1408"/>
-        <location filename="preset.cpp" line="1409"/>
+        <location filename="preset.cpp" line="1397"/>
+        <location filename="preset.cpp" line="1400"/>
         <location filename="preset.cpp" line="1412"/>
-        <location filename="preset.cpp" line="1426"/>
-        <location filename="preset.cpp" line="1449"/>
-        <location filename="preset.cpp" line="1450"/>
+        <location filename="preset.cpp" line="1413"/>
+        <location filename="preset.cpp" line="1416"/>
+        <location filename="preset.cpp" line="1430"/>
         <location filename="preset.cpp" line="1453"/>
-        <location filename="preset.cpp" line="1482"/>
-        <location filename="preset.cpp" line="1494"/>
-        <location filename="preset.cpp" line="1495"/>
-        <location filename="preset.cpp" line="1496"/>
-        <location filename="preset.cpp" line="1497"/>
-        <location filename="preset.cpp" line="1645"/>
+        <location filename="preset.cpp" line="1454"/>
+        <location filename="preset.cpp" line="1457"/>
+        <location filename="preset.cpp" line="1486"/>
+        <location filename="preset.cpp" line="1498"/>
+        <location filename="preset.cpp" line="1499"/>
+        <location filename="preset.cpp" line="1500"/>
+        <location filename="preset.cpp" line="1501"/>
         <location filename="preset.cpp" line="1649"/>
         <location filename="preset.cpp" line="1653"/>
+        <location filename="preset.cpp" line="1657"/>
         <source>Auto</source>
         <translation>自动</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2831"/>
-        <location filename="preset.cpp" line="659"/>
-        <location filename="preset.cpp" line="660"/>
-        <location filename="preset.cpp" line="661"/>
-        <location filename="preset.cpp" line="667"/>
-        <location filename="preset.cpp" line="668"/>
-        <location filename="preset.cpp" line="1080"/>
-        <location filename="preset.cpp" line="1095"/>
-        <location filename="preset.cpp" line="1111"/>
-        <location filename="preset.cpp" line="1219"/>
-        <location filename="preset.cpp" line="1232"/>
+        <location filename="preset.cpp" line="663"/>
+        <location filename="preset.cpp" line="664"/>
+        <location filename="preset.cpp" line="665"/>
+        <location filename="preset.cpp" line="671"/>
+        <location filename="preset.cpp" line="672"/>
+        <location filename="preset.cpp" line="1084"/>
+        <location filename="preset.cpp" line="1099"/>
+        <location filename="preset.cpp" line="1115"/>
+        <location filename="preset.cpp" line="1223"/>
+        <location filename="preset.cpp" line="1236"/>
         <source>1 Pass</source>
         <translation>1 遍</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2836"/>
-        <location filename="preset.cpp" line="659"/>
-        <location filename="preset.cpp" line="660"/>
-        <location filename="preset.cpp" line="661"/>
+        <location filename="preset.cpp" line="663"/>
         <location filename="preset.cpp" line="664"/>
         <location filename="preset.cpp" line="665"/>
-        <location filename="preset.cpp" line="666"/>
-        <location filename="preset.cpp" line="667"/>
         <location filename="preset.cpp" line="668"/>
-        <location filename="preset.cpp" line="1080"/>
-        <location filename="preset.cpp" line="1095"/>
-        <location filename="preset.cpp" line="1111"/>
-        <location filename="preset.cpp" line="1219"/>
-        <location filename="preset.cpp" line="1232"/>
+        <location filename="preset.cpp" line="669"/>
+        <location filename="preset.cpp" line="670"/>
+        <location filename="preset.cpp" line="671"/>
+        <location filename="preset.cpp" line="672"/>
+        <location filename="preset.cpp" line="1084"/>
+        <location filename="preset.cpp" line="1099"/>
+        <location filename="preset.cpp" line="1115"/>
+        <location filename="preset.cpp" line="1223"/>
+        <location filename="preset.cpp" line="1236"/>
         <source>2 Pass</source>
         <translation>2 遍</translation>
     </message>
@@ -1270,161 +1270,161 @@ p, li { white-space: pre-wrap; }
         <location filename="preset.ui" line="2959"/>
         <location filename="preset.ui" line="4010"/>
         <location filename="preset.ui" line="4118"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
         <location filename="preset.cpp" line="632"/>
         <location filename="preset.cpp" line="633"/>
         <location filename="preset.cpp" line="634"/>
-        <location filename="preset.cpp" line="652"/>
-        <location filename="preset.cpp" line="1041"/>
-        <location filename="preset.cpp" line="1043"/>
+        <location filename="preset.cpp" line="635"/>
+        <location filename="preset.cpp" line="636"/>
+        <location filename="preset.cpp" line="637"/>
+        <location filename="preset.cpp" line="638"/>
+        <location filename="preset.cpp" line="656"/>
         <location filename="preset.cpp" line="1045"/>
         <location filename="preset.cpp" line="1047"/>
-        <location filename="preset.cpp" line="1172"/>
-        <location filename="preset.cpp" line="1188"/>
-        <location filename="preset.cpp" line="1205"/>
-        <location filename="preset.cpp" line="1221"/>
-        <location filename="preset.cpp" line="1234"/>
-        <location filename="preset.cpp" line="1248"/>
-        <location filename="preset.cpp" line="1264"/>
-        <location filename="preset.cpp" line="1280"/>
-        <location filename="preset.cpp" line="1296"/>
-        <location filename="preset.cpp" line="1312"/>
-        <location filename="preset.cpp" line="1328"/>
-        <location filename="preset.cpp" line="1344"/>
-        <location filename="preset.cpp" line="1361"/>
-        <location filename="preset.cpp" line="1378"/>
-        <location filename="preset.cpp" line="1395"/>
-        <location filename="preset.cpp" line="1411"/>
-        <location filename="preset.cpp" line="1428"/>
-        <location filename="preset.cpp" line="1452"/>
+        <location filename="preset.cpp" line="1049"/>
+        <location filename="preset.cpp" line="1051"/>
+        <location filename="preset.cpp" line="1176"/>
+        <location filename="preset.cpp" line="1192"/>
+        <location filename="preset.cpp" line="1209"/>
+        <location filename="preset.cpp" line="1225"/>
+        <location filename="preset.cpp" line="1238"/>
+        <location filename="preset.cpp" line="1252"/>
+        <location filename="preset.cpp" line="1268"/>
+        <location filename="preset.cpp" line="1284"/>
+        <location filename="preset.cpp" line="1300"/>
+        <location filename="preset.cpp" line="1316"/>
+        <location filename="preset.cpp" line="1332"/>
+        <location filename="preset.cpp" line="1348"/>
+        <location filename="preset.cpp" line="1365"/>
+        <location filename="preset.cpp" line="1382"/>
+        <location filename="preset.cpp" line="1399"/>
+        <location filename="preset.cpp" line="1415"/>
+        <location filename="preset.cpp" line="1432"/>
+        <location filename="preset.cpp" line="1456"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2964"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="1041"/>
-        <location filename="preset.cpp" line="1043"/>
+        <location filename="preset.cpp" line="631"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="1045"/>
+        <location filename="preset.cpp" line="1047"/>
         <source>Ultrafast</source>
         <translation>超级快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2969"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="1041"/>
-        <location filename="preset.cpp" line="1043"/>
+        <location filename="preset.cpp" line="631"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="1045"/>
+        <location filename="preset.cpp" line="1047"/>
         <source>Superfast</source>
         <translation>超快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2974"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
-        <location filename="preset.cpp" line="1041"/>
-        <location filename="preset.cpp" line="1043"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="634"/>
+        <location filename="preset.cpp" line="635"/>
         <location filename="preset.cpp" line="1045"/>
         <location filename="preset.cpp" line="1047"/>
+        <location filename="preset.cpp" line="1049"/>
+        <location filename="preset.cpp" line="1051"/>
         <source>Veryfast</source>
         <translation>非常快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2979"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
-        <location filename="preset.cpp" line="1041"/>
-        <location filename="preset.cpp" line="1043"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="634"/>
+        <location filename="preset.cpp" line="635"/>
         <location filename="preset.cpp" line="1045"/>
         <location filename="preset.cpp" line="1047"/>
+        <location filename="preset.cpp" line="1049"/>
+        <location filename="preset.cpp" line="1051"/>
         <source>Faster</source>
         <translation>快速</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2984"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
-        <location filename="preset.cpp" line="1042"/>
-        <location filename="preset.cpp" line="1044"/>
-        <location filename="preset.cpp" line="1045"/>
-        <location filename="preset.cpp" line="1047"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="634"/>
+        <location filename="preset.cpp" line="635"/>
+        <location filename="preset.cpp" line="1046"/>
+        <location filename="preset.cpp" line="1048"/>
+        <location filename="preset.cpp" line="1049"/>
+        <location filename="preset.cpp" line="1051"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2989"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
-        <location filename="preset.cpp" line="1042"/>
-        <location filename="preset.cpp" line="1044"/>
-        <location filename="preset.cpp" line="1045"/>
-        <location filename="preset.cpp" line="1047"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="634"/>
+        <location filename="preset.cpp" line="635"/>
+        <location filename="preset.cpp" line="1046"/>
+        <location filename="preset.cpp" line="1048"/>
+        <location filename="preset.cpp" line="1049"/>
+        <location filename="preset.cpp" line="1051"/>
         <source>Medium</source>
         <translation>中等</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2994"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
         <location filename="preset.cpp" line="632"/>
         <location filename="preset.cpp" line="633"/>
         <location filename="preset.cpp" line="634"/>
-        <location filename="preset.cpp" line="1042"/>
-        <location filename="preset.cpp" line="1044"/>
+        <location filename="preset.cpp" line="635"/>
+        <location filename="preset.cpp" line="636"/>
+        <location filename="preset.cpp" line="637"/>
+        <location filename="preset.cpp" line="638"/>
         <location filename="preset.cpp" line="1046"/>
         <location filename="preset.cpp" line="1048"/>
-        <location filename="preset.cpp" line="1172"/>
-        <location filename="preset.cpp" line="1188"/>
-        <location filename="preset.cpp" line="1205"/>
+        <location filename="preset.cpp" line="1050"/>
+        <location filename="preset.cpp" line="1052"/>
+        <location filename="preset.cpp" line="1176"/>
+        <location filename="preset.cpp" line="1192"/>
+        <location filename="preset.cpp" line="1209"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2999"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
-        <location filename="preset.cpp" line="1042"/>
-        <location filename="preset.cpp" line="1044"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="634"/>
+        <location filename="preset.cpp" line="635"/>
         <location filename="preset.cpp" line="1046"/>
         <location filename="preset.cpp" line="1048"/>
+        <location filename="preset.cpp" line="1050"/>
+        <location filename="preset.cpp" line="1052"/>
         <source>Slower</source>
         <translation>较慢</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3004"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
-        <location filename="preset.cpp" line="629"/>
-        <location filename="preset.cpp" line="630"/>
         <location filename="preset.cpp" line="631"/>
-        <location filename="preset.cpp" line="1042"/>
-        <location filename="preset.cpp" line="1044"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="634"/>
+        <location filename="preset.cpp" line="635"/>
         <location filename="preset.cpp" line="1046"/>
         <location filename="preset.cpp" line="1048"/>
+        <location filename="preset.cpp" line="1050"/>
+        <location filename="preset.cpp" line="1052"/>
         <source>Veryslow</source>
         <oldsource>Very slow</oldsource>
         <translation>非常慢</translation>
@@ -1646,13 +1646,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="preset.ui" line="4059"/>
-        <location filename="preset.cpp" line="1693"/>
+        <location filename="preset.cpp" line="1697"/>
         <source>Display P3</source>
         <translation>显示 P3</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4064"/>
-        <location filename="preset.cpp" line="1699"/>
+        <location filename="preset.cpp" line="1703"/>
         <source>DCI P3</source>
         <translation>DCI P3</translation>
     </message>
@@ -1904,113 +1904,113 @@ p, li { white-space: pre-wrap; }
         <translation>iec61966-2-4</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="551"/>
+        <location filename="preset.cpp" line="555"/>
         <source>ProRes Proxy, </source>
         <translation>ProRes Proxy, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="553"/>
+        <location filename="preset.cpp" line="557"/>
         <source>ProRes Standard, </source>
         <translation>ProRes Standard, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="563"/>
+        <location filename="preset.cpp" line="567"/>
         <source>From source, </source>
         <translation>来源,</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="621"/>
+        <location filename="preset.cpp" line="625"/>
         <source> MBps, </source>
         <translation> MBps, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="653"/>
+        <location filename="preset.cpp" line="657"/>
         <source>Preset: </source>
         <translation>预设:</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="686"/>
+        <location filename="preset.cpp" line="690"/>
         <source>Enabled, </source>
         <translation>已启用,</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="717"/>
+        <location filename="preset.cpp" line="721"/>
         <source>Audio: </source>
         <translation>音频:</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="541"/>
-        <location filename="preset.cpp" line="546"/>
-        <location filename="preset.cpp" line="549"/>
+        <location filename="preset.cpp" line="545"/>
+        <location filename="preset.cpp" line="550"/>
+        <location filename="preset.cpp" line="553"/>
         <source>YUV, 4:2:0, 10 bit, </source>
         <translation>YUV, 4:2:0, 10 位, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="542"/>
-        <location filename="preset.cpp" line="543"/>
-        <location filename="preset.cpp" line="544"/>
-        <location filename="preset.cpp" line="545"/>
+        <location filename="preset.cpp" line="546"/>
         <location filename="preset.cpp" line="547"/>
         <location filename="preset.cpp" line="548"/>
+        <location filename="preset.cpp" line="549"/>
+        <location filename="preset.cpp" line="551"/>
+        <location filename="preset.cpp" line="552"/>
         <source>YUV, 4:2:0, 8 bit, </source>
         <translation>YUV, 4:2:0, 8 位, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="550"/>
+        <location filename="preset.cpp" line="554"/>
         <source>YUV, 4:2:0, 8  bit, </source>
         <translation>YUV, 4:2:0, 8  位, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="551"/>
-        <location filename="preset.cpp" line="552"/>
-        <location filename="preset.cpp" line="553"/>
-        <location filename="preset.cpp" line="554"/>
-        <location filename="preset.cpp" line="560"/>
+        <location filename="preset.cpp" line="555"/>
+        <location filename="preset.cpp" line="556"/>
+        <location filename="preset.cpp" line="557"/>
+        <location filename="preset.cpp" line="558"/>
+        <location filename="preset.cpp" line="564"/>
         <source>YUV, 4:2:2, 10 bit, </source>
         <translation>YUV, 4:2:2, 10 位, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="555"/>
-        <location filename="preset.cpp" line="556"/>
-        <location filename="preset.cpp" line="561"/>
+        <location filename="preset.cpp" line="559"/>
+        <location filename="preset.cpp" line="560"/>
+        <location filename="preset.cpp" line="565"/>
         <source>YUV, 4:4:4, 10 bit, </source>
         <translation>YUV, 4:4:4, 10 位, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="557"/>
-        <location filename="preset.cpp" line="558"/>
-        <location filename="preset.cpp" line="559"/>
+        <location filename="preset.cpp" line="561"/>
         <location filename="preset.cpp" line="562"/>
+        <location filename="preset.cpp" line="563"/>
+        <location filename="preset.cpp" line="566"/>
         <source>YUV, 4:2:2, 8 bit, </source>
         <translation>YUV, 4:2:2, 8 位, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="947"/>
-        <location filename="preset.cpp" line="950"/>
+        <location filename="preset.cpp" line="951"/>
+        <location filename="preset.cpp" line="954"/>
         <source>Undef</source>
         <translation>未定义</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1170"/>
-        <location filename="preset.cpp" line="1186"/>
-        <location filename="preset.cpp" line="1203"/>
+        <location filename="preset.cpp" line="1174"/>
+        <location filename="preset.cpp" line="1190"/>
+        <location filename="preset.cpp" line="1207"/>
         <source>2 Pass Optimisation</source>
         <translation>2道次优化</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1550"/>
+        <location filename="preset.cpp" line="1554"/>
         <source>Rate factor</source>
         <translation>率因子</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1564"/>
+        <location filename="preset.cpp" line="1568"/>
         <source>Quantizer</source>
         <translation>量化器</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1677"/>
-        <location filename="preset.cpp" line="1678"/>
-        <location filename="preset.cpp" line="1679"/>
+        <location filename="preset.cpp" line="1681"/>
+        <location filename="preset.cpp" line="1682"/>
+        <location filename="preset.cpp" line="1683"/>
         <source>Unsprt</source>
         <translation>不支持</translation>
     </message>
@@ -2228,7 +2228,7 @@ p, li { white-space: pre-wrap; }
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="settings.cpp" line="228"/>
+        <location filename="settings.cpp" line="229"/>
         <source>Settings file not found!
 </source>
         <translation>设置文件未找到！</translation>
@@ -2266,7 +2266,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="taskcomplete.cpp" line="84"/>
+        <location filename="taskcomplete.cpp" line="87"/>
         <source>Pause
 
  Resume after: </source>
@@ -2308,21 +2308,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="347"/>
-        <location filename="mainwindow.cpp" line="327"/>
+        <location filename="mainwindow.cpp" line="344"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="476"/>
-        <location filename="mainwindow.cpp" line="405"/>
+        <location filename="mainwindow.cpp" line="422"/>
         <source>Apply</source>
         <translation>应用</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="507"/>
-        <location filename="mainwindow.ui" line="6102"/>
-        <location filename="mainwindow.ui" line="6108"/>
-        <location filename="mainwindow.cpp" line="406"/>
+        <location filename="mainwindow.ui" line="6113"/>
+        <location filename="mainwindow.ui" line="6119"/>
+        <location filename="mainwindow.cpp" line="423"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -2333,7 +2333,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="608"/>
-        <location filename="mainwindow.cpp" line="399"/>
+        <location filename="mainwindow.cpp" line="416"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
@@ -2364,7 +2364,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="801"/>
-        <location filename="mainwindow.ui" line="5140"/>
+        <location filename="mainwindow.ui" line="5511"/>
         <source>Mode</source>
         <translation>模式</translation>
     </message>
@@ -2451,8 +2451,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="1262"/>
-        <location filename="mainwindow.ui" line="5820"/>
-        <location filename="mainwindow.ui" line="5823"/>
+        <location filename="mainwindow.ui" line="5839"/>
+        <location filename="mainwindow.ui" line="5842"/>
         <source>View</source>
         <translation>视图</translation>
     </message>
@@ -2519,17 +2519,17 @@ p, li { white-space: pre-wrap; }
         <location filename="mainwindow.ui" line="2120"/>
         <location filename="mainwindow.ui" line="2187"/>
         <location filename="mainwindow.ui" line="2267"/>
-        <location filename="mainwindow.ui" line="2379"/>
-        <location filename="mainwindow.ui" line="2446"/>
-        <location filename="mainwindow.ui" line="2683"/>
-        <location filename="mainwindow.ui" line="2763"/>
-        <location filename="mainwindow.ui" line="2791"/>
-        <location filename="mainwindow.ui" line="2819"/>
-        <location filename="mainwindow.ui" line="2847"/>
-        <location filename="mainwindow.ui" line="2914"/>
-        <location filename="mainwindow.ui" line="2994"/>
-        <location filename="mainwindow.ui" line="3106"/>
-        <location filename="mainwindow.ui" line="3173"/>
+        <location filename="mainwindow.ui" line="2373"/>
+        <location filename="mainwindow.ui" line="2440"/>
+        <location filename="mainwindow.ui" line="2677"/>
+        <location filename="mainwindow.ui" line="2757"/>
+        <location filename="mainwindow.ui" line="2785"/>
+        <location filename="mainwindow.ui" line="2813"/>
+        <location filename="mainwindow.ui" line="2841"/>
+        <location filename="mainwindow.ui" line="2908"/>
+        <location filename="mainwindow.ui" line="2988"/>
+        <location filename="mainwindow.ui" line="3094"/>
+        <location filename="mainwindow.ui" line="3161"/>
         <source>Title:</source>
         <translation>标题：</translation>
     </message>
@@ -2554,755 +2554,760 @@ p, li { white-space: pre-wrap; }
         <translation>音频 #6：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2283"/>
+        <location filename="mainwindow.ui" line="2277"/>
         <source>Audio #1:</source>
         <translation>音频 #1：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2309"/>
+        <location filename="mainwindow.ui" line="2303"/>
         <source>Audio #5:</source>
         <translation>音频 #5：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2322"/>
+        <location filename="mainwindow.ui" line="2316"/>
         <source>Audio #8:</source>
         <translation>音频 #8：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2489"/>
+        <location filename="mainwindow.ui" line="2483"/>
         <source>Subtitles</source>
         <translation>字幕</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2600"/>
+        <location filename="mainwindow.ui" line="2594"/>
         <source>Subtitle #7:</source>
         <translation>字幕 #7：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2639"/>
+        <location filename="mainwindow.ui" line="2633"/>
         <source>Subtitle #3:</source>
         <translation>字幕 #3：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2719"/>
+        <location filename="mainwindow.ui" line="2713"/>
         <source>Subtitle #9:</source>
         <translation>字幕 #9：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2732"/>
+        <location filename="mainwindow.ui" line="2726"/>
         <source>Subtitle #2:</source>
         <translation>字幕 #2：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2937"/>
+        <location filename="mainwindow.ui" line="2931"/>
         <source>Subtitle #4:</source>
         <translation>字幕 #4：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2950"/>
+        <location filename="mainwindow.ui" line="2944"/>
         <source>Subtitle #6:</source>
         <translation>字幕 #6：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3010"/>
+        <location filename="mainwindow.ui" line="2998"/>
         <source>Subtitle #1:</source>
         <translation>字幕 #1：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3036"/>
+        <location filename="mainwindow.ui" line="3024"/>
         <source>Subtitle #5:</source>
         <translation>字幕 #5：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3049"/>
+        <location filename="mainwindow.ui" line="3037"/>
         <source>Subtitle #8:</source>
         <translation>字幕 #8：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3216"/>
+        <location filename="mainwindow.ui" line="3204"/>
         <source>Split</source>
         <translation>分割</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3333"/>
+        <location filename="mainwindow.ui" line="3321"/>
         <source>Next Frame  </source>
         <translation>下一帧  </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3361"/>
-        <location filename="mainwindow.ui" line="3386"/>
-        <location filename="mainwindow.ui" line="3509"/>
+        <location filename="mainwindow.ui" line="3349"/>
+        <location filename="mainwindow.ui" line="3374"/>
+        <location filename="mainwindow.ui" line="3497"/>
         <source>00:00:00.000</source>
         <translation>00:00:00.000</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3437"/>
+        <location filename="mainwindow.ui" line="3425"/>
         <source>Set end time</source>
         <translation>设置结束时间</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3459"/>
+        <location filename="mainwindow.ui" line="3447"/>
         <source>  Prev Frame</source>
         <translation>  上一帧</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3481"/>
+        <location filename="mainwindow.ui" line="3469"/>
         <source>Set start time</source>
         <translation>设置开始时间</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3535"/>
+        <location filename="mainwindow.ui" line="3523"/>
         <source>Current time:</source>
         <translation>当前时间：</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3715"/>
+        <location filename="mainwindow.ui" line="3703"/>
         <location filename="mainwindow.cpp" line="90"/>
-        <location filename="mainwindow.cpp" line="3237"/>
+        <location filename="mainwindow.cpp" line="3290"/>
         <source>Preview</source>
         <translation>预览</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3853"/>
-        <location filename="mainwindow.ui" line="5035"/>
-        <location filename="mainwindow.cpp" line="306"/>
+        <location filename="mainwindow.ui" line="3838"/>
+        <location filename="mainwindow.ui" line="5349"/>
+        <location filename="mainwindow.cpp" line="323"/>
         <source>Add files</source>
         <translation>添加文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3989"/>
+        <location filename="mainwindow.ui" line="3974"/>
         <source>Output folder</source>
         <translation>输出文件夹</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4091"/>
+        <location filename="mainwindow.ui" line="5244"/>
         <source>Sort Z-A</source>
         <translation>排序 Z-A</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4280"/>
+        <location filename="mainwindow.ui" line="4416"/>
         <source>File name</source>
         <translation>文件名</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4288"/>
+        <location filename="mainwindow.ui" line="4424"/>
         <source>Format</source>
         <translation>格式</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4296"/>
+        <location filename="mainwindow.ui" line="4432"/>
         <source>Resolution</source>
         <translation>分辨率</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4304"/>
+        <location filename="mainwindow.ui" line="4440"/>
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4312"/>
+        <location filename="mainwindow.ui" line="4448"/>
         <source>FPS</source>
         <translation>FPS</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4320"/>
+        <location filename="mainwindow.ui" line="4456"/>
         <source>AR</source>
         <translation>AR</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4328"/>
+        <location filename="mainwindow.ui" line="4464"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4336"/>
+        <location filename="mainwindow.ui" line="4472"/>
         <source>Bitrate</source>
         <translation>比特率</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4344"/>
+        <location filename="mainwindow.ui" line="4480"/>
         <source>Subsampling</source>
         <translation>二次采样</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4352"/>
+        <location filename="mainwindow.ui" line="4488"/>
         <source>Bit depth</source>
         <translation>位深</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4360"/>
+        <location filename="mainwindow.ui" line="4496"/>
         <source>Color space</source>
         <translation>色彩空间</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4368"/>
+        <location filename="mainwindow.ui" line="4504"/>
         <source>Color range</source>
         <translation>色彩范围</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4376"/>
+        <location filename="mainwindow.ui" line="4512"/>
         <source>Color prim</source>
         <translation>色彩原始</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4384"/>
+        <location filename="mainwindow.ui" line="4520"/>
         <source>Color mtrx</source>
         <translation>颜色矩阵</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4392"/>
+        <location filename="mainwindow.ui" line="4528"/>
         <source>Transfer</source>
         <translation>传输</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4400"/>
+        <location filename="mainwindow.ui" line="4536"/>
         <source>Max lum</source>
         <translation>最大 LUM</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4408"/>
+        <location filename="mainwindow.ui" line="4544"/>
         <source>Min lum</source>
         <translation>最小 LUM</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4416"/>
+        <location filename="mainwindow.ui" line="4552"/>
         <source>Max CLL</source>
         <translation>最大 CLL</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4424"/>
+        <location filename="mainwindow.ui" line="4560"/>
         <source>Max Fall</source>
         <translation>最大下降</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4432"/>
+        <location filename="mainwindow.ui" line="4568"/>
         <source>Master display</source>
         <translation>主显示</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4440"/>
+        <location filename="mainwindow.ui" line="4576"/>
         <source>Path</source>
         <translation>路径</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4448"/>
+        <location filename="mainwindow.ui" line="4584"/>
         <source>ID 21 - TECHNICAL INFO: Duration</source>
         <translation>ID 21 - 技术信息：持续时间</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4456"/>
+        <location filename="mainwindow.ui" line="4592"/>
         <source>ID 22 - TECHNICAL INFO: Chroma coord</source>
         <translation>ID 22 - 技术信息：色度坐标</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4464"/>
+        <location filename="mainwindow.ui" line="4600"/>
         <source>ID 23 - TECHNICAL INFO: White coord</source>
         <translation>ID 23 - 技术信息：白色坐标</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4472"/>
+        <location filename="mainwindow.ui" line="4608"/>
         <source>ID 24 - TECHNICAL INFO: Stream size</source>
         <translation>ID 24 - 技术信息：流大小</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4480"/>
+        <location filename="mainwindow.ui" line="4616"/>
         <source>ID 25 - TECHNICAL INFO: Width</source>
         <translation>ID 25 - 技术信息：宽度</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4488"/>
+        <location filename="mainwindow.ui" line="4624"/>
         <source>ID 26 - TECHNICAL INFO: Height</source>
         <translation>ID 26 - 技术信息：高度</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4496"/>
+        <location filename="mainwindow.ui" line="4632"/>
         <source>ID 27 - TECHNICAL INFO: VideoTitle</source>
         <translation>ID 27 - 技术信息：视频标题</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4504"/>
+        <location filename="mainwindow.ui" line="4640"/>
         <source>ID 28 - TECHNICAL INFO: Video Movie Name</source>
         <translation>ID 28 - 技术信息：视频名称</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4512"/>
+        <location filename="mainwindow.ui" line="4648"/>
         <source>ID 29 - TECHNICAL INFO: Video Year</source>
         <translation>ID 29 - 技术信息：视频年份</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4520"/>
+        <location filename="mainwindow.ui" line="4656"/>
         <source>ID 30 - TECHNICAL INFO: Video Author</source>
         <translation>ID 30 - 技术信息：视频作者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4528"/>
+        <location filename="mainwindow.ui" line="4664"/>
         <source>ID 31 - TECHNICAL INFO: Video Performer</source>
         <translation>ID 31 - 技术信息：视频表演者</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4536"/>
+        <location filename="mainwindow.ui" line="4672"/>
         <source>ID 32 - TECHNICAL INFO: Video Description</source>
         <translation>ID 32 - 技术信息：视频描述</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4544"/>
+        <location filename="mainwindow.ui" line="4680"/>
         <source>ID 33 - TECHNICAL INFO: Audio #1</source>
         <translation>ID 33 - 技术信息：音频 #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4552"/>
+        <location filename="mainwindow.ui" line="4688"/>
         <source>ID 34 - TECHNICAL INFO: Audio #2</source>
         <translation>ID 34 - 技术信息：音频 #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4560"/>
+        <location filename="mainwindow.ui" line="4696"/>
         <source>ID 35 - TECHNICAL INFO: Audio #3</source>
         <translation>ID 35 - 技术信息：音频 #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4568"/>
+        <location filename="mainwindow.ui" line="4704"/>
         <source>ID 36 - TECHNICAL INFO: Audio #4</source>
         <translation>ID 36 - 技术信息：音频 #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4576"/>
+        <location filename="mainwindow.ui" line="4712"/>
         <source>ID 37 - TECHNICAL INFO: Audio #5</source>
         <translation>ID 37 - 技术信息：音频 #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4584"/>
+        <location filename="mainwindow.ui" line="4720"/>
         <source>ID 38 - TECHNICAL INFO: Audio #6</source>
         <translation>ID 38 - 技术信息：音频 #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4592"/>
+        <location filename="mainwindow.ui" line="4728"/>
         <source>ID 39 - TECHNICAL INFO: Audio #7</source>
         <translation>ID 39 - 技术信息：音频 #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4600"/>
+        <location filename="mainwindow.ui" line="4736"/>
         <source>ID 40 - TECHNICAL INFO: Audio #8</source>
         <translation>ID 40 - 技术信息：音频 #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4608"/>
+        <location filename="mainwindow.ui" line="4744"/>
         <source>ID 41 - TECHNICAL INFO: Audio #9</source>
         <translation>ID 41 - 技术信息：音频 #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4616"/>
+        <location filename="mainwindow.ui" line="4752"/>
         <source>ID 42 - TECHNICAL INFO: Audio Lang #1</source>
         <translation>ID 42 - 技术信息：音频语言 #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4624"/>
+        <location filename="mainwindow.ui" line="4760"/>
         <source>ID 43 - TECHNICAL INFO: Audio Lang #2</source>
         <translation>ID 43 - 技术信息：音频语言 #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4632"/>
+        <location filename="mainwindow.ui" line="4768"/>
         <source>ID 44 - TECHNICAL INFO: Audio Lang #3</source>
         <translation>ID 44 - 技术信息：音频语言 #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4640"/>
+        <location filename="mainwindow.ui" line="4776"/>
         <source>ID 45 - TECHNICAL INFO: Audio Lang #4</source>
         <translation>ID 45 - 技术信息：音频语言 #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4648"/>
+        <location filename="mainwindow.ui" line="4784"/>
         <source>ID 46 - TECHNICAL INFO: Audio Lang #5</source>
         <translation>ID 46 - 技术信息：音频语言 #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4656"/>
+        <location filename="mainwindow.ui" line="4792"/>
         <source>ID 47 - TECHNICAL INFO: Audio Lang #6</source>
         <translation>ID 47 - 技术信息：音频语言 #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4664"/>
+        <location filename="mainwindow.ui" line="4800"/>
         <source>ID 48 - TECHNICAL INFO: Audio Lang #7</source>
         <translation>ID 48 - 技术信息：音频语言 #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4672"/>
+        <location filename="mainwindow.ui" line="4808"/>
         <source>ID 49 - TECHNICAL INFO: Audio Lang #8</source>
         <translation>ID 49 - 技术信息：音频语言 #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4680"/>
+        <location filename="mainwindow.ui" line="4816"/>
         <source>ID 50 - TECHNICAL INFO: Audio Lang #9</source>
         <translation>ID 50 - 技术信息：音频语言 #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4688"/>
+        <location filename="mainwindow.ui" line="4824"/>
         <source>ID 51 - TECHNICAL INFO: Audio Title #1</source>
         <translation>ID 51 - 技术信息：音频标题 #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4696"/>
+        <location filename="mainwindow.ui" line="4832"/>
         <source>ID 52 - TECHNICAL INFO: Audio Title #2</source>
         <translation>ID 52 - 技术信息：音频标题 #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4704"/>
+        <location filename="mainwindow.ui" line="4840"/>
         <source>ID 53 - TECHNICAL INFO: Audio Title #3</source>
         <translation>ID 53 - 技术信息：音频标题 #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4712"/>
+        <location filename="mainwindow.ui" line="4848"/>
         <source>ID 54 - TECHNICAL INFO: Audio Title #4</source>
         <translation>ID 54 - 技术信息：音频标题 #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4720"/>
+        <location filename="mainwindow.ui" line="4856"/>
         <source>ID 55 - TECHNICAL INFO: Audio Title #5</source>
         <translation>ID 55 - 技术信息：音频标题 #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4728"/>
+        <location filename="mainwindow.ui" line="4864"/>
         <source>ID 56 - TECHNICAL INFO: Audio Title #6</source>
         <translation>ID 56 - 技术信息：音频标题 #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4736"/>
+        <location filename="mainwindow.ui" line="4872"/>
         <source>ID 57 - TECHNICAL INFO: Audio Title #7</source>
         <translation>ID 57 - 技术信息：音频标题 #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4744"/>
+        <location filename="mainwindow.ui" line="4880"/>
         <source>ID 58 - TECHNICAL INFO: Audio Title #8</source>
         <translation>ID 58 - 技术信息：音频标题 #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4752"/>
+        <location filename="mainwindow.ui" line="4888"/>
         <source>ID 59 - TECHNICAL INFO: Audio Title #9</source>
         <translation>ID 59 - 技术信息：音频标题 #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4760"/>
+        <location filename="mainwindow.ui" line="4896"/>
         <source>ID 60 - TECHNICAL INFO: Audio #1 Check State</source>
         <translation>ID 60 - 技术信息：音频 #1 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4765"/>
+        <location filename="mainwindow.ui" line="4901"/>
         <source>ID 61 - TECHNICAL INFO: Audio #2 Check State</source>
         <translation>ID 61 - 技术信息：音频 #2 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4770"/>
+        <location filename="mainwindow.ui" line="4906"/>
         <source>ID 62 - TECHNICAL INFO: Audio #3 Check State</source>
         <translation>ID 62 - 技术信息：音频 #3 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4775"/>
+        <location filename="mainwindow.ui" line="4911"/>
         <source>ID 63 - TECHNICAL INFO: Audio #4 Check State</source>
         <translation>ID 63 - 技术信息：音频 #4 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4780"/>
+        <location filename="mainwindow.ui" line="4916"/>
         <source>ID 64 - TECHNICAL INFO: Audio #5 Check State</source>
         <translation>ID 64 - 技术信息：音频 #5 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4785"/>
+        <location filename="mainwindow.ui" line="4921"/>
         <source>ID 65 - TECHNICAL INFO: Audio #6 Check State</source>
         <translation>ID 65 - 技术信息：音频 #6 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4790"/>
+        <location filename="mainwindow.ui" line="4926"/>
         <source>ID 66 - TECHNICAL INFO: Audio #7 Check State</source>
         <translation>ID 66 - 技术信息：音频 #7 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4795"/>
+        <location filename="mainwindow.ui" line="4931"/>
         <source>ID 67 - TECHNICAL INFO: Audio #8 Check State</source>
         <translation>ID 67 - 技术信息：音频 #8 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4800"/>
+        <location filename="mainwindow.ui" line="4936"/>
         <source>ID 68 - TECHNICAL INFO: Audio #9 Check State</source>
         <translation>ID 68 - 技术信息：音频 #9 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4805"/>
+        <location filename="mainwindow.ui" line="4941"/>
         <source>ID 69 - TECHNICAL INFO: Subtitle #1</source>
         <translation>ID 69 - 技术信息：字幕 #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4810"/>
+        <location filename="mainwindow.ui" line="4946"/>
         <source>ID 70 - TECHNICAL INFO: Subtitle #2</source>
         <translation>ID 70 - 技术信息：字幕 #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4815"/>
+        <location filename="mainwindow.ui" line="4951"/>
         <source>ID 71 - TECHNICAL INFO: Subtitle #3</source>
         <translation>ID 71 - 技术信息：字幕 #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4820"/>
+        <location filename="mainwindow.ui" line="4956"/>
         <source>ID 72 - TECHNICAL INFO: Subtitle #4</source>
         <translation>ID 72 - 技术信息：字幕 #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4825"/>
+        <location filename="mainwindow.ui" line="4961"/>
         <source>ID 73 - TECHNICAL INFO: Subtitle #5</source>
         <translation>ID 73 - 技术信息：字幕 #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4830"/>
+        <location filename="mainwindow.ui" line="4966"/>
         <source>ID 74 - TECHNICAL INFO: Subtitle #6</source>
         <translation>ID 74 - 技术信息：字幕 #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4835"/>
+        <location filename="mainwindow.ui" line="4971"/>
         <source>ID 75 - TECHNICAL INFO: Subtitle #7</source>
         <translation>ID 75 - 技术信息：字幕 #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4840"/>
+        <location filename="mainwindow.ui" line="4976"/>
         <source>ID 76 - TECHNICAL INFO: Subtitle #8</source>
         <translation>ID 76 - 技术信息：字幕 #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4845"/>
+        <location filename="mainwindow.ui" line="4981"/>
         <source>ID 77 - TECHNICAL INFO: Subtitle #9</source>
         <translation>ID 77 - 技术信息：字幕 #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4850"/>
+        <location filename="mainwindow.ui" line="4986"/>
         <source>ID 78 - TECHNICAL INFO: Subtitle Lang #1</source>
         <translation>ID 78 - 技术信息：字幕语言 #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4855"/>
+        <location filename="mainwindow.ui" line="4991"/>
         <source>ID 79 - TECHNICAL INFO: Subtitle Lang #2</source>
         <translation>ID 79 - 技术信息：字幕语言 #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4860"/>
+        <location filename="mainwindow.ui" line="4996"/>
         <source>ID 80 - TECHNICAL INFO: Subtitle Lang #3</source>
         <translation>ID 80 - 技术信息：字幕语言 #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4865"/>
+        <location filename="mainwindow.ui" line="5001"/>
         <source>ID 81 - TECHNICAL INFO: Subtitle Lang #4</source>
         <translation>ID 81 - 技术信息：字幕语言 #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4870"/>
+        <location filename="mainwindow.ui" line="5006"/>
         <source>ID 82 - TECHNICAL INFO: Subtitle Lang #5</source>
         <translation>ID 82 - 技术信息：字幕语言 #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4875"/>
+        <location filename="mainwindow.ui" line="5011"/>
         <source>ID 83 - TECHNICAL INFO: Subtitle Lang #6</source>
         <translation>ID 83 - 技术信息：字幕语言 #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4880"/>
+        <location filename="mainwindow.ui" line="5016"/>
         <source>ID 84 - TECHNICAL INFO: Subtitle Lang #7</source>
         <translation>ID 84 - 技术信息：字幕语言 #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4885"/>
+        <location filename="mainwindow.ui" line="5021"/>
         <source>ID 85 - TECHNICAL INFO: Subtitle Lang #8</source>
         <translation>ID 85 - 技术信息：字幕语言 #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4890"/>
+        <location filename="mainwindow.ui" line="5026"/>
         <source>ID 86 - TECHNICAL INFO: Subtitle Lang #9</source>
         <translation>ID 86 - 技术信息：字幕语言 #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4895"/>
+        <location filename="mainwindow.ui" line="5031"/>
         <source>ID 87 - TECHNICAL INFO: Subtitle Title #1</source>
         <translation>ID 87 - 技术信息：字幕标题 #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4900"/>
+        <location filename="mainwindow.ui" line="5036"/>
         <source>ID 88 - TECHNICAL INFO: Subtitle Title #2</source>
         <translation>ID 88 - 技术信息：字幕标题 #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4905"/>
+        <location filename="mainwindow.ui" line="5041"/>
         <source>ID 89 - TECHNICAL INFO: Subtitle Title #3</source>
         <translation>ID 89 - 技术信息：字幕标题 #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4910"/>
+        <location filename="mainwindow.ui" line="5046"/>
         <source>ID 90 - TECHNICAL INFO: Subtitle Title #4</source>
         <translation>ID 90 - 技术信息：字幕标题 #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4915"/>
+        <location filename="mainwindow.ui" line="5051"/>
         <source>ID 91 - TECHNICAL INFO: Subtitle Title #5</source>
         <translation>ID 91 - 技术信息：字幕标题 #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4920"/>
+        <location filename="mainwindow.ui" line="5056"/>
         <source>ID 92 - TECHNICAL INFO: Subtitle Title #6</source>
         <translation>ID 92 - 技术信息：字幕标题 #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4925"/>
+        <location filename="mainwindow.ui" line="5061"/>
         <source>ID 93 - TECHNICAL INFO: Subtitle Title #7</source>
         <translation>ID 93 - 技术信息：字幕标题 #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4930"/>
+        <location filename="mainwindow.ui" line="5066"/>
         <source>ID 94 - TECHNICAL INFO: Subtitle Title #8</source>
         <translation>ID 94 - 技术信息：字幕标题 #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4935"/>
+        <location filename="mainwindow.ui" line="5071"/>
         <source>ID 95 - TECHNICAL INFO: Subtitle Title #9</source>
         <translation>ID 95 - 技术信息：字幕标题 #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4940"/>
+        <location filename="mainwindow.ui" line="5076"/>
         <source>ID 96 - TECHNICAL INFO: Subtitle #1 Check State</source>
         <translation>ID 96 - 技术信息：字幕 #1 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4945"/>
+        <location filename="mainwindow.ui" line="5081"/>
         <source>ID 97 - TECHNICAL INFO: Subtitle #2 Check State</source>
         <translation>ID 97 - 技术信息：字幕 #2 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4950"/>
+        <location filename="mainwindow.ui" line="5086"/>
         <source>ID 98 - TECHNICAL INFO: Subtitle #3 Check State</source>
         <translation>ID 98 - 技术信息：字幕 #3 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4955"/>
+        <location filename="mainwindow.ui" line="5091"/>
         <source>ID 99 - TECHNICAL INFO: Subtitle #4 Check State</source>
         <translation>ID 99 - 技术信息：字幕 #4 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4960"/>
+        <location filename="mainwindow.ui" line="5096"/>
         <source>ID 100 - TECHNICAL INFO: Subtitle #5 Check State</source>
         <translation>ID 100 - 技术信息：字幕 #5 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4965"/>
+        <location filename="mainwindow.ui" line="5101"/>
         <source>ID 101 - TECHNICAL INFO: Subtitle #6 Check State</source>
         <translation>ID 101 - 技术信息：字幕 #6 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4970"/>
+        <location filename="mainwindow.ui" line="5106"/>
         <source>ID 102 - TECHNICAL INFO: Subtitle #7 Check State</source>
         <translation>ID 102 - 技术信息：字幕 #7 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4975"/>
+        <location filename="mainwindow.ui" line="5111"/>
         <source>ID 103 - TECHNICAL INFO: Subtitle #8 Check State</source>
         <translation>ID 103 - 技术信息：字幕 #8 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4980"/>
+        <location filename="mainwindow.ui" line="5116"/>
         <source>ID 104 - TECHNICAL INFO: Subtitle #9 Check State</source>
         <translation>ID 104 - 技术信息：字幕 #9 检查状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4985"/>
+        <location filename="mainwindow.ui" line="5121"/>
         <source>ID 105 - TECHNICAL INFO: Start Time</source>
         <translation>ID 105 - 技术信息：开始时间</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4990"/>
+        <location filename="mainwindow.ui" line="5126"/>
         <source>ID 106 - TECHNICAL INFO: End Time</source>
         <translation>ID 106 - 技术信息：结束时间</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5073"/>
-        <location filename="mainwindow.cpp" line="1254"/>
-        <location filename="mainwindow.cpp" line="2492"/>
+        <location filename="mainwindow.ui" line="5473"/>
+        <location filename="mainwindow.cpp" line="1328"/>
+        <location filename="mainwindow.cpp" line="2564"/>
         <source>Encode</source>
         <translation>编码</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5144"/>
+        <location filename="mainwindow.ui" line="5515"/>
         <source>Single Mode</source>
         <translation>单个模式</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5149"/>
+        <location filename="mainwindow.ui" line="5520"/>
         <source>Batch Mode</source>
         <translation>批量模式</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5371"/>
+        <location filename="mainwindow.ui" line="4160"/>
         <source>Tasks</source>
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5434"/>
-        <location filename="mainwindow.cpp" line="307"/>
+        <location filename="mainwindow.ui" line="5155"/>
+        <location filename="mainwindow.cpp" line="324"/>
         <source>Remove from the list</source>
         <translation>从列表中删除</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5488"/>
-        <location filename="mainwindow.cpp" line="314"/>
-        <location filename="mainwindow.cpp" line="2774"/>
+        <location filename="mainwindow.ui" line="5196"/>
+        <location filename="mainwindow.cpp" line="331"/>
+        <location filename="mainwindow.cpp" line="2847"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5536"/>
+        <location filename="mainwindow.ui" line="5429"/>
         <source>Sort A-Z</source>
         <translation>排序 A-Z</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5785"/>
-        <location filename="mainwindow.ui" line="5788"/>
+        <location filename="mainwindow.ui" line="5556"/>
+        <source>Scale</source>
+        <translation>规模</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="5804"/>
+        <location filename="mainwindow.ui" line="5807"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5845"/>
-        <location filename="mainwindow.cpp" line="263"/>
+        <location filename="mainwindow.ui" line="5864"/>
+        <location filename="mainwindow.cpp" line="257"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5898"/>
-        <location filename="mainwindow.cpp" line="308"/>
+        <location filename="mainwindow.ui" line="5917"/>
+        <location filename="mainwindow.cpp" line="325"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5940"/>
+        <location filename="mainwindow.ui" line="5951"/>
         <source>Add title for all files</source>
         <translation>为所有文件添加标题</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5943"/>
+        <location filename="mainwindow.ui" line="5954"/>
         <source>Title  (global)</source>
         <translation>标题  （全局）</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5962"/>
+        <location filename="mainwindow.ui" line="5973"/>
         <source>Expand</source>
         <translation>扩展</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6000"/>
-        <location filename="mainwindow.ui" line="6003"/>
+        <location filename="mainwindow.ui" line="6011"/>
+        <location filename="mainwindow.ui" line="6014"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6048"/>
-        <location filename="mainwindow.ui" line="6051"/>
-        <location filename="mainwindow.cpp" line="330"/>
+        <location filename="mainwindow.ui" line="6059"/>
+        <location filename="mainwindow.ui" line="6062"/>
+        <location filename="mainwindow.cpp" line="347"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6140"/>
-        <location filename="mainwindow.ui" line="6143"/>
+        <location filename="mainwindow.ui" line="6151"/>
+        <location filename="mainwindow.ui" line="6154"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
@@ -3318,17 +3323,17 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.cpp" line="96"/>
-        <location filename="mainwindow.cpp" line="4756"/>
-        <location filename="mainwindow.cpp" line="4757"/>
-        <location filename="mainwindow.cpp" line="4758"/>
-        <location filename="mainwindow.cpp" line="4759"/>
-        <location filename="mainwindow.cpp" line="4760"/>
-        <location filename="mainwindow.cpp" line="4761"/>
-        <location filename="mainwindow.cpp" line="4762"/>
-        <location filename="mainwindow.cpp" line="4763"/>
-        <location filename="mainwindow.cpp" line="4764"/>
-        <location filename="mainwindow.cpp" line="4765"/>
-        <location filename="mainwindow.cpp" line="4778"/>
+        <location filename="mainwindow.cpp" line="4842"/>
+        <location filename="mainwindow.cpp" line="4843"/>
+        <location filename="mainwindow.cpp" line="4844"/>
+        <location filename="mainwindow.cpp" line="4845"/>
+        <location filename="mainwindow.cpp" line="4846"/>
+        <location filename="mainwindow.cpp" line="4847"/>
+        <location filename="mainwindow.cpp" line="4848"/>
+        <location filename="mainwindow.cpp" line="4849"/>
+        <location filename="mainwindow.cpp" line="4850"/>
+        <location filename="mainwindow.cpp" line="4851"/>
+        <location filename="mainwindow.cpp" line="4864"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
@@ -3353,147 +3358,147 @@ p, li { white-space: pre-wrap; }
         <translation>退出程序？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="264"/>
+        <location filename="mainwindow.cpp" line="258"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="265"/>
+        <location filename="mainwindow.cpp" line="259"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="313"/>
+        <location filename="mainwindow.cpp" line="330"/>
         <source>Encode/Pause</source>
         <translation>编码/暂停</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="318"/>
+        <location filename="mainwindow.cpp" line="335"/>
         <source>Edit metadata</source>
         <translation>编辑元数据</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="319"/>
+        <location filename="mainwindow.cpp" line="336"/>
         <source>Select audio streams</source>
         <translation>选择音频流</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="320"/>
+        <location filename="mainwindow.cpp" line="337"/>
         <source>Select subtitles</source>
         <translation>选择字幕</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="321"/>
+        <location filename="mainwindow.cpp" line="338"/>
         <source>Split video</source>
         <translation>分割视频</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="331"/>
+        <location filename="mainwindow.cpp" line="348"/>
         <source>Donate</source>
         <translation>捐赠</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="396"/>
-        <location filename="mainwindow.cpp" line="713"/>
+        <location filename="mainwindow.cpp" line="413"/>
+        <location filename="mainwindow.cpp" line="733"/>
         <source>Add section</source>
         <translation>添加部分</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="397"/>
+        <location filename="mainwindow.cpp" line="414"/>
         <source>Add preset</source>
         <translation>添加预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="398"/>
+        <location filename="mainwindow.cpp" line="415"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="714"/>
+        <location filename="mainwindow.cpp" line="734"/>
         <source>Add new preset</source>
         <translation>添加新预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="897"/>
+        <location filename="mainwindow.cpp" line="935"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>您需要重新启动程序才能使设置生效。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1040"/>
+        <location filename="mainwindow.cpp" line="1113"/>
         <source> bit, </source>
         <translation> 位, </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1043"/>
+        <location filename="mainwindow.cpp" line="1116"/>
         <source> kbps; </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1055"/>
+        <location filename="mainwindow.cpp" line="1128"/>
         <source>Audio #</source>
         <translation>音频 #</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1070"/>
+        <location filename="mainwindow.cpp" line="1143"/>
         <source>Undefined</source>
         <translation>未定义</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2060"/>
+        <location filename="mainwindow.cpp" line="2132"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
         <translation>在源图中找不到颜色原色%1。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2106"/>
+        <location filename="mainwindow.cpp" line="2178"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
         <translation>在源映射中找不到颜色矩阵%1。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2156"/>
+        <location filename="mainwindow.cpp" line="2228"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
         <translation>在源映射中找不到传输特性%1。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2338"/>
+        <location filename="mainwindow.cpp" line="2410"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
         <translation>主显示色度坐标源参数不正确！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2348"/>
+        <location filename="mainwindow.cpp" line="2420"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
         <translation>错误的主显示白点坐标源参数！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2484"/>
+        <location filename="mainwindow.cpp" line="2556"/>
         <source>Muxing:</source>
         <translation>混合:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2493"/>
+        <location filename="mainwindow.cpp" line="2565"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
         <translation>该文件不包含FPS信息！
 选择正确的输入文件！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2497"/>
-        <location filename="mainwindow.cpp" line="2756"/>
+        <location filename="mainwindow.cpp" line="2569"/>
+        <location filename="mainwindow.cpp" line="2829"/>
         <source>Encoding</source>
         <translation>编码</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2536"/>
-        <location filename="mainwindow.cpp" line="2541"/>
+        <location filename="mainwindow.cpp" line="2609"/>
+        <location filename="mainwindow.cpp" line="2614"/>
         <source>Encoding:</source>
         <translation>编码:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2546"/>
+        <location filename="mainwindow.cpp" line="2619"/>
         <source>1-st pass:</source>
         <translation>第一通过:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2556"/>
+        <location filename="mainwindow.cpp" line="2629"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
@@ -3501,12 +3506,12 @@ Select the correct input file!</source>
 可能没有安装FFMPEG。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2568"/>
+        <location filename="mainwindow.cpp" line="2641"/>
         <source>Add data:</source>
         <translation>添加数据:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2577"/>
+        <location filename="mainwindow.cpp" line="2650"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
@@ -3514,13 +3519,13 @@ Select the correct input file!</source>
 可能没有安装mkvtoolnix。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2586"/>
+        <location filename="mainwindow.cpp" line="2659"/>
         <source>Done!</source>
         <translation>完成！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2612"/>
-        <location filename="mainwindow.cpp" line="2625"/>
+        <location filename="mainwindow.cpp" line="2685"/>
+        <location filename="mainwindow.cpp" line="2698"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -3529,321 +3534,321 @@ Select the correct input file!</source>
 经过时间:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2736"/>
-        <location filename="mainwindow.cpp" line="2806"/>
-        <location filename="mainwindow.cpp" line="2885"/>
-        <location filename="mainwindow.cpp" line="2906"/>
+        <location filename="mainwindow.cpp" line="2809"/>
+        <location filename="mainwindow.cpp" line="2879"/>
+        <location filename="mainwindow.cpp" line="2957"/>
+        <location filename="mainwindow.cpp" line="2978"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2781"/>
+        <location filename="mainwindow.cpp" line="2854"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>当前的编码过程已被取消！
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2792"/>
+        <location filename="mainwindow.cpp" line="2865"/>
         <source>Error!</source>
         <translation>错误！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2795"/>
+        <location filename="mainwindow.cpp" line="2868"/>
         <source>An error occurred: </source>
         <translation>发生了一个错误: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2797"/>
+        <location filename="mainwindow.cpp" line="2870"/>
         <source>Unexpected error occurred!</source>
         <translation>发生意外错误！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2830"/>
+        <location filename="mainwindow.cpp" line="2902"/>
         <source>Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)</source>
         <translation>视频文件: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2874"/>
+        <location filename="mainwindow.cpp" line="2946"/>
         <source>Select input file first!</source>
         <translation>首先选择输入文件！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2879"/>
+        <location filename="mainwindow.cpp" line="2951"/>
         <source>Select preset first!</source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2898"/>
+        <location filename="mainwindow.cpp" line="2970"/>
         <source>Resume</source>
         <translation>简历</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2916"/>
+        <location filename="mainwindow.cpp" line="2988"/>
         <source>Stop encoding?</source>
         <translation>停止编码？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2943"/>
+        <location filename="mainwindow.cpp" line="3015"/>
         <source>Unexpected error while trying to perform file name detection.</source>
         <translation>尝试执行文件名检测时出现意外错误。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3513"/>
+        <location filename="mainwindow.cpp" line="3600"/>
         <source>Select output folder</source>
         <translation>选择输出文件夹</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4352"/>
-        <location filename="mainwindow.cpp" line="4366"/>
-        <location filename="mainwindow.cpp" line="4427"/>
-        <location filename="mainwindow.cpp" line="4461"/>
+        <location filename="mainwindow.cpp" line="4438"/>
+        <location filename="mainwindow.cpp" line="4452"/>
+        <location filename="mainwindow.cpp" line="4513"/>
+        <location filename="mainwindow.cpp" line="4547"/>
         <source>Select preset first!
 </source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4389"/>
+        <location filename="mainwindow.cpp" line="4475"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4417"/>
+        <location filename="mainwindow.cpp" line="4503"/>
         <source>Delete presets first!
 </source>
         <translation>先删除预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4571"/>
+        <location filename="mainwindow.cpp" line="4657"/>
         <source>Preset not selected</source>
         <translation>未选择预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4636"/>
+        <location filename="mainwindow.cpp" line="4722"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
         <translation>H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4637"/>
+        <location filename="mainwindow.cpp" line="4723"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
         <translation>H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4638"/>
+        <location filename="mainwindow.cpp" line="4724"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
         <translation>H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4639"/>
+        <location filename="mainwindow.cpp" line="4725"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4640"/>
+        <location filename="mainwindow.cpp" line="4726"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
         <translation>Intel QSV MPEG-2 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4641"/>
+        <location filename="mainwindow.cpp" line="4727"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4642"/>
+        <location filename="mainwindow.cpp" line="4728"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4643"/>
+        <location filename="mainwindow.cpp" line="4729"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation>NVENC H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4644"/>
+        <location filename="mainwindow.cpp" line="4730"/>
         <source>VP9 4:2:0 10 bit</source>
         <translation>VP9 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4645"/>
+        <location filename="mainwindow.cpp" line="4731"/>
         <source>VP9 4:2:0 8 bit</source>
         <translation>VP9 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4646"/>
+        <location filename="mainwindow.cpp" line="4732"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4648"/>
+        <location filename="mainwindow.cpp" line="4734"/>
         <source>ProRes Standard</source>
         <translation>ProRes Standard</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4658"/>
+        <location filename="mainwindow.cpp" line="4744"/>
         <source>From source</source>
         <translation>来源</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4676"/>
-        <location filename="mainwindow.cpp" line="4677"/>
-        <location filename="mainwindow.cpp" line="4678"/>
-        <location filename="mainwindow.cpp" line="4679"/>
-        <location filename="mainwindow.cpp" line="4680"/>
-        <location filename="mainwindow.cpp" line="4681"/>
-        <location filename="mainwindow.cpp" line="4682"/>
-        <location filename="mainwindow.cpp" line="4683"/>
-        <location filename="mainwindow.cpp" line="4684"/>
-        <location filename="mainwindow.cpp" line="4685"/>
-        <location filename="mainwindow.cpp" line="4686"/>
-        <location filename="mainwindow.cpp" line="4688"/>
-        <location filename="mainwindow.cpp" line="4729"/>
-        <location filename="mainwindow.cpp" line="4730"/>
-        <location filename="mainwindow.cpp" line="4736"/>
-        <location filename="mainwindow.cpp" line="4737"/>
-        <location filename="mainwindow.cpp" line="4738"/>
-        <location filename="mainwindow.cpp" line="4739"/>
-        <location filename="mainwindow.cpp" line="4740"/>
-        <location filename="mainwindow.cpp" line="4741"/>
-        <location filename="mainwindow.cpp" line="4742"/>
-        <location filename="mainwindow.cpp" line="4743"/>
-        <location filename="mainwindow.cpp" line="4744"/>
-        <location filename="mainwindow.cpp" line="4745"/>
-        <location filename="mainwindow.cpp" line="4746"/>
-        <location filename="mainwindow.cpp" line="4747"/>
-        <location filename="mainwindow.cpp" line="4748"/>
+        <location filename="mainwindow.cpp" line="4762"/>
+        <location filename="mainwindow.cpp" line="4763"/>
+        <location filename="mainwindow.cpp" line="4764"/>
+        <location filename="mainwindow.cpp" line="4765"/>
+        <location filename="mainwindow.cpp" line="4766"/>
+        <location filename="mainwindow.cpp" line="4767"/>
+        <location filename="mainwindow.cpp" line="4768"/>
+        <location filename="mainwindow.cpp" line="4769"/>
+        <location filename="mainwindow.cpp" line="4770"/>
+        <location filename="mainwindow.cpp" line="4771"/>
+        <location filename="mainwindow.cpp" line="4772"/>
+        <location filename="mainwindow.cpp" line="4774"/>
+        <location filename="mainwindow.cpp" line="4815"/>
+        <location filename="mainwindow.cpp" line="4816"/>
+        <location filename="mainwindow.cpp" line="4822"/>
+        <location filename="mainwindow.cpp" line="4823"/>
+        <location filename="mainwindow.cpp" line="4824"/>
+        <location filename="mainwindow.cpp" line="4825"/>
+        <location filename="mainwindow.cpp" line="4826"/>
+        <location filename="mainwindow.cpp" line="4827"/>
+        <location filename="mainwindow.cpp" line="4828"/>
+        <location filename="mainwindow.cpp" line="4829"/>
+        <location filename="mainwindow.cpp" line="4830"/>
+        <location filename="mainwindow.cpp" line="4831"/>
+        <location filename="mainwindow.cpp" line="4832"/>
+        <location filename="mainwindow.cpp" line="4833"/>
+        <location filename="mainwindow.cpp" line="4834"/>
         <source>Auto</source>
         <translation>自动</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
-        <location filename="mainwindow.cpp" line="4701"/>
-        <location filename="mainwindow.cpp" line="4702"/>
-        <location filename="mainwindow.cpp" line="4703"/>
-        <location filename="mainwindow.cpp" line="4704"/>
-        <location filename="mainwindow.cpp" line="4705"/>
-        <location filename="mainwindow.cpp" line="4706"/>
-        <location filename="mainwindow.cpp" line="4707"/>
-        <location filename="mainwindow.cpp" line="4708"/>
-        <location filename="mainwindow.cpp" line="4709"/>
-        <location filename="mainwindow.cpp" line="4710"/>
-        <location filename="mainwindow.cpp" line="4711"/>
-        <location filename="mainwindow.cpp" line="4712"/>
-        <location filename="mainwindow.cpp" line="4713"/>
-        <location filename="mainwindow.cpp" line="4714"/>
-        <location filename="mainwindow.cpp" line="4715"/>
-        <location filename="mainwindow.cpp" line="4716"/>
-        <location filename="mainwindow.cpp" line="4717"/>
-        <location filename="mainwindow.cpp" line="4718"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
+        <location filename="mainwindow.cpp" line="4787"/>
+        <location filename="mainwindow.cpp" line="4788"/>
+        <location filename="mainwindow.cpp" line="4789"/>
+        <location filename="mainwindow.cpp" line="4790"/>
+        <location filename="mainwindow.cpp" line="4791"/>
+        <location filename="mainwindow.cpp" line="4792"/>
+        <location filename="mainwindow.cpp" line="4793"/>
+        <location filename="mainwindow.cpp" line="4794"/>
+        <location filename="mainwindow.cpp" line="4795"/>
+        <location filename="mainwindow.cpp" line="4796"/>
+        <location filename="mainwindow.cpp" line="4797"/>
+        <location filename="mainwindow.cpp" line="4798"/>
+        <location filename="mainwindow.cpp" line="4799"/>
+        <location filename="mainwindow.cpp" line="4800"/>
+        <location filename="mainwindow.cpp" line="4801"/>
+        <location filename="mainwindow.cpp" line="4802"/>
+        <location filename="mainwindow.cpp" line="4803"/>
+        <location filename="mainwindow.cpp" line="4804"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
         <source>Ultrafast</source>
         <translation>超级快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
         <source>Superfast</source>
         <translation>超快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
         <source>Veryfast</source>
         <translation>非常快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
         <source>Faster</source>
         <translation>快速</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
         <source>Medium</source>
         <translation>中等</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
-        <location filename="mainwindow.cpp" line="4701"/>
-        <location filename="mainwindow.cpp" line="4702"/>
-        <location filename="mainwindow.cpp" line="4703"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
+        <location filename="mainwindow.cpp" line="4787"/>
+        <location filename="mainwindow.cpp" line="4788"/>
+        <location filename="mainwindow.cpp" line="4789"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
         <source>Slower</source>
         <translation>较慢</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4696"/>
-        <location filename="mainwindow.cpp" line="4697"/>
-        <location filename="mainwindow.cpp" line="4698"/>
-        <location filename="mainwindow.cpp" line="4699"/>
-        <location filename="mainwindow.cpp" line="4700"/>
+        <location filename="mainwindow.cpp" line="4782"/>
+        <location filename="mainwindow.cpp" line="4783"/>
+        <location filename="mainwindow.cpp" line="4784"/>
+        <location filename="mainwindow.cpp" line="4785"/>
+        <location filename="mainwindow.cpp" line="4786"/>
         <source>Veryslow</source>
         <translation>很慢</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4726"/>
-        <location filename="mainwindow.cpp" line="4727"/>
-        <location filename="mainwindow.cpp" line="4728"/>
-        <location filename="mainwindow.cpp" line="4734"/>
-        <location filename="mainwindow.cpp" line="4735"/>
+        <location filename="mainwindow.cpp" line="4812"/>
+        <location filename="mainwindow.cpp" line="4813"/>
+        <location filename="mainwindow.cpp" line="4814"/>
+        <location filename="mainwindow.cpp" line="4820"/>
+        <location filename="mainwindow.cpp" line="4821"/>
         <source>1 Pass</source>
         <translation>1 遍</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4726"/>
-        <location filename="mainwindow.cpp" line="4727"/>
-        <location filename="mainwindow.cpp" line="4728"/>
-        <location filename="mainwindow.cpp" line="4731"/>
-        <location filename="mainwindow.cpp" line="4732"/>
-        <location filename="mainwindow.cpp" line="4733"/>
-        <location filename="mainwindow.cpp" line="4734"/>
-        <location filename="mainwindow.cpp" line="4735"/>
+        <location filename="mainwindow.cpp" line="4812"/>
+        <location filename="mainwindow.cpp" line="4813"/>
+        <location filename="mainwindow.cpp" line="4814"/>
+        <location filename="mainwindow.cpp" line="4817"/>
+        <location filename="mainwindow.cpp" line="4818"/>
+        <location filename="mainwindow.cpp" line="4819"/>
+        <location filename="mainwindow.cpp" line="4820"/>
+        <location filename="mainwindow.cpp" line="4821"/>
         <source>2 Pass</source>
         <translation>2 遍</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4904"/>
+        <location filename="mainwindow.cpp" line="4990"/>
         <source>Task</source>
         <translation>任务</translation>
     </message>
