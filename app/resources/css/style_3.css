@@ -1130,42 +1130,46 @@ QSlider::handle:horizontal:disabled {
 /*********************************************/
 
 QSlider#horizontalSlider_resize {
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 20px;
+    padding-right: 5px;
     border: 1px dotted #CCCCCC;
     background-color: transparent;
+
+    background-image: url(:/resources/icons/16x16/cil-zoom-in_black.png);
+    background-repeat: no-repeat;
+    background-position: left;
 }
 QSlider::groove:horizontal#horizontalSlider_resize {
     height: 2px;
     padding-left: 3px;
     padding-right: 3px;
-    border: 1px solid #DDDDDD;
+    border: 0px solid #EEEEEE;
     border-radius: 2px;
-    background-color: #DDDDDD;
+    background-color: #EEEEEE;
 }
 QSlider::sub-page:horizontal#horizontalSlider_resize {
-    border: 1px solid #DDDDDD;
+    border: 0px solid #EEEEEE;
     border-radius: 2px;
-    background-color: #DDDDDD;
+    background-color: #EEEEEE;
 }
 QSlider::handle:horizontal#horizontalSlider_resize {
     width: 8px;
     margin: -4px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #BBBBBB;
     border-radius: 4px;
-    background-color: #CCCCCC;
+    background-color: #BBBBBB;
 }
 QSlider::sub-page:horizontal:disabled#horizontalSlider_resize {
-    border: 1px solid #DDDDDD;
+    border: 0px solid #EEEEEE;
     border-radius: 2px;
-    background-color: #DDDDDD;
+    background-color: #EEEEEE;
 }
 QSlider::handle:horizontal:disabled#horizontalSlider_resize {
     width: 8px;
     margin: -4px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #BBBBBB;
     border-radius: 4px;
-    background-color: #CCCCCC;
+    background-color: #BBBBBB;
 }
 
 

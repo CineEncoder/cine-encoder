@@ -309,5 +309,9 @@
         <file>resources/translation/translation_de.qm</file>
         <file>resources/translation/translation_zh.qm</file>
         <file>resources/images/no_preview.png</file>
+        <file>resources/icons/16x16/cil-low-vision_black.png</file>
+        <file>resources/icons/16x16/cil-zoom-in_black.png</file>
+        <file>resources/icons/16x16/cil-zoom-out_black.png</file>
+        <file>resources/icons/16x16/cil-magnifying-glass_black.png</file>
     </qresource>
 </RCC>
