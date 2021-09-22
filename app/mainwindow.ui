@@ -3596,7 +3596,7 @@
              </rect>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3615,8 +3615,8 @@
             </property>
             <property name="baseSize">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>146</width>
+              <height>82</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -3730,7 +3730,7 @@
              </rect>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3749,8 +3749,8 @@
             </property>
             <property name="baseSize">
              <size>
-              <width>371</width>
-              <height>103</height>
+              <width>150</width>
+              <height>82</height>
              </size>
             </property>
             <property name="frameShape">
@@ -3866,7 +3866,7 @@
              </rect>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3885,8 +3885,8 @@
             </property>
             <property name="baseSize">
              <size>
-              <width>371</width>
-              <height>103</height>
+              <width>150</width>
+              <height>82</height>
              </size>
             </property>
             <property name="frameShape">

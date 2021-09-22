@@ -448,8 +448,6 @@ private:
 
     // ******************** Top label ****************************//
 
-    QHBoxLayout *raiseLayout;
-
     QLabel *raiseThumb;
 
     // **************** Progress animation ***********************//

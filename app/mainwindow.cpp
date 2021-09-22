@@ -49,73 +49,73 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
 
     // **************************** Set front label ***********************************//
 
-    raiseLayout = new QHBoxLayout(this);
-    raiseThumb = new QLabel(this);
+    QHBoxLayout *raiseLayout = new QHBoxLayout(ui->tableWidget);
+    ui->tableWidget->setLayout(raiseLayout);
+    raiseThumb = new QLabel(ui->tableWidget);
+    raiseLayout->addWidget(raiseThumb);
     raiseThumb->setAlignment(Qt::AlignCenter);
     raiseThumb->setText(tr("No media"));
     raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-    ui->tableWidget->setLayout(raiseLayout);
-    raiseLayout->addWidget(raiseThumb);
 
     // **************************** Create docks ***********************************//
 
-    QGridLayout *layout = new QGridLayout(this);
-    QGridLayout *windowLayout = new QGridLayout(this);
-    QGridLayout *centralwidgetLayout = new QGridLayout(this);
-
-    window = new QMainWindow(this);
-    window->setObjectName("CentralWindow");
-    window->setWindowFlags(Qt::Widget);
-    window->setDockNestingEnabled(true);
+    QGridLayout *layout = new QGridLayout(ui->frame_middle);
     ui->frame_middle->setLayout(layout);
+    window = new QMainWindow(ui->frame_middle);
     layout->addWidget(window);
     layout->setContentsMargins(6, 2, 6, 2);
     layout->setVerticalSpacing(0);
     layout->setHorizontalSpacing(0);
+    window->setObjectName("CentralWindow");
+    window->setWindowFlags(Qt::Widget);
+    window->setDockNestingEnabled(true);
 
-    centralWidget = new QWidget(this);
+    QGridLayout *windowLayout = new QGridLayout(window);
     window->setLayout(windowLayout);
+    centralWidget = new QWidget(window);
     windowLayout->addWidget(centralWidget);
     window->setCentralWidget(centralWidget);
+
+    QGridLayout *centralwidgetLayout = new QGridLayout(centralWidget);
     centralWidget->setLayout(centralwidgetLayout);
     centralwidgetLayout->addWidget(ui->frame_task);
     centralwidgetLayout->setContentsMargins(0, 0, 0, 0);
 
-    dock1 = new QDockWidget(tr("Presets"), this);
+    dock1 = new QDockWidget(tr("Presets"), window);
+    window->addDockWidget(Qt::LeftDockWidgetArea, dock1);
     dock1->setObjectName("Dock_presets");
     dock1->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock1->setWidget(ui->frameLeft);
-    window->addDockWidget(Qt::LeftDockWidgetArea, dock1);
 
-    dock2 = new QDockWidget(tr("Preview"), this);
+    dock2 = new QDockWidget(tr("Preview"), window);
+    window->addDockWidget(Qt::BottomDockWidgetArea, dock2);
     dock2->setObjectName("Dock_preview");
     dock2->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock2->setWidget(ui->frame_preview);
-    window->addDockWidget(Qt::BottomDockWidgetArea, dock2);
 
-    dock3 = new QDockWidget(tr("Source"), this);
+    dock3 = new QDockWidget(tr("Source"), window);
+    window->addDockWidget(Qt::BottomDockWidgetArea, dock3);
     dock3->setObjectName("Dock_source");
     dock3->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock3->setWidget(ui->frame_source);
-    window->addDockWidget(Qt::BottomDockWidgetArea, dock3);
 
-    dock4 = new QDockWidget(tr("Output"), this);
+    dock4 = new QDockWidget(tr("Output"), window);
+    window->addDockWidget(Qt::BottomDockWidgetArea, dock4);
     dock4->setObjectName("Dock_output");
     dock4->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock4->setWidget(ui->frame_output);
-    window->addDockWidget(Qt::BottomDockWidgetArea, dock4);
 
-    dock5 = new QDockWidget(tr("Options"), this);
+    dock5 = new QDockWidget(tr("Options"), window);
+    window->addDockWidget(Qt::RightDockWidgetArea, dock5);
     dock5->setObjectName("Dock_options");
     dock5->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock5->setWidget(ui->frameRight);
-    window->addDockWidget(Qt::RightDockWidgetArea, dock5);
 
-    dock6 = new QDockWidget(tr("Log"), this);
+    dock6 = new QDockWidget(tr("Log"), window);
+    window->addDockWidget(Qt::RightDockWidgetArea, dock6);
     dock6->setObjectName("Dock_log");
     dock6->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock6->setWidget(ui->frameLog);
-    window->addDockWidget(Qt::RightDockWidgetArea, dock6);
 
     // **************************** Set Event Filters ***********************************//
 
@@ -197,6 +197,13 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         // Save Main Window
         _settings->beginGroup("MainWindow");
         _settings->setValue("MainWindow/state", window->saveState());
+        _settings->setValue("MainWindow/geometry", window->saveGeometry());
+        _settings->endGroup();
+
+        // Save Tables
+        _settings->beginGroup("Tables");
+        _settings->setValue("Tables/table_widget_state", ui->tableWidget->horizontalHeader()->saveState());
+        _settings->setValue("Tables/tree_widget_state", ui->treeWidget->header()->saveState());
         _settings->endGroup();
 
         // Save Settings Widget
@@ -754,6 +761,13 @@ void Widget::setParameters()    /*** Set parameters ***/
         // Restore Main Window
         _settings->beginGroup("MainWindow");
         window->restoreState(_settings->value("MainWindow/state").toByteArray());
+        window->restoreGeometry(_settings->value("MainWindow/geometry").toByteArray());
+        _settings->endGroup();
+
+        // Restore Tables
+        _settings->beginGroup("Tables");
+        ui->tableWidget->horizontalHeader()->restoreState(_settings->value("Tables/table_widget_state").toByteArray());
+        ui->treeWidget->header()->restoreState(_settings->value("Tables/tree_widget_state").toByteArray());
         _settings->endGroup();
 
         // Restore Settings Widget
