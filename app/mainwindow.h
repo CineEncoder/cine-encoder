@@ -605,6 +605,8 @@ private:
 
     QString _preset_mkvmerge;
 
+    QString _sub_mux_param;
+
 
     QString _fmt;
 

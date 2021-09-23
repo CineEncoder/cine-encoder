@@ -1611,6 +1611,7 @@ void Widget::make_preset()  /*** Make preset ***/
     std::cout << "Make preset..." << std::endl;                       // Debug information //
     int _CODEC = _cur_param[curParamIndex::CODEC].toInt();
     int _MODE = _cur_param[curParamIndex::MODE].toInt();
+    int _CONTAINER = _cur_param[curParamIndex::CONTAINER].toInt();
     QString _BQR = _cur_param[curParamIndex::BQR];
     QString _MINRATE = _cur_param[curParamIndex::MINRATE];
     QString _MAXRATE = _cur_param[curParamIndex::MAXRATE];
@@ -1645,6 +1646,7 @@ void Widget::make_preset()  /*** Make preset ***/
     _preset_pass1 = "";
     _preset = "";
     _preset_mkvmerge = "";
+    _sub_mux_param = "";
     _error_message = "";
     _flag_two_pass = false;
     _flag_hdr = false;
@@ -2116,6 +2118,29 @@ void Widget::make_preset()  /*** Make preset ***/
     }
     QString audio_param = sampling + acodec + channels;
 
+    /************************************ Subtitle module *************************************/
+
+    QString sub_param("");
+    QString container = updateFieldContainer(_CODEC, _CONTAINER);
+    if (_flag_hdr) {
+        sub_param = QString(" -c:s copy"); // -c:s mov_text, -c:s srt
+    }
+    else {
+        if (container == "MKV") {
+            sub_param = QString(" -c:s copy");
+        }
+        else {
+            sub_param = QString(" -c:s mov_text");
+        }
+    }
+
+    if (container == "MKV") {
+        _sub_mux_param = QString("-c:s copy");
+    }
+    else {
+        _sub_mux_param = QString("-c:s mov_text");
+    }
+
     /************************************* Color module ***************************************/
 
     // color primaries
@@ -2516,9 +2541,9 @@ void Widget::make_preset()  /*** Make preset ***/
 
     _preset_0 = "-hide_banner" + hwaccel + _splitStartParam;
     _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
-            + colorprim + colormatrix + transfer + "-an -f null /dev/null";
+            + colorprim + colormatrix + transfer + "-an -sn -f null /dev/null";
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
-            + colorprim + colormatrix + transfer + audio_param;
+            + colorprim + colormatrix + transfer + audio_param + sub_param;
     _preset_mkvmerge = QString("%1%2%3%4%5%6 ").arg(max_cll, max_fall, max_lum, min_lum, chroma_coord, white_coord);
     std::cout << "Flag two-pass: " << _flag_two_pass << std::endl;
     std::cout << "Flag HDR: " << _flag_hdr << std::endl;
@@ -2570,7 +2595,7 @@ void Widget::encode()   /*** Encode ***/
         ui->label_53->setText(tr("Muxing:"));
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
                   << "-map" << "0:s?" << "-movflags" << "+write_colr"
-                  << "-c:v" << "copy" << "-c:a" << "copy" << "-y" << _output_file;
+                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param.split(" ") << "-y" << _output_file;
     } else {
         if (_fr_count == 0) {
             _status_encode_btn = "start";
@@ -2623,18 +2648,18 @@ void Widget::encode()   /*** Encode ***/
             ui->label_53->setText(tr("Encoding:"));
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _output_file;
         }
-        if (_flag_two_pass == false && _flag_hdr == true) {
+        else if (_flag_two_pass == false && _flag_hdr == true) {
             std::cout << "Encode HDR..." << std::endl;  //  Debug info //
             ui->label_53->setText(tr("Encoding:"));
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _temp_file;
         }
-        if (_flag_two_pass == true) {
+        else if (_flag_two_pass == true) {
             std::cout << "Encode 1-st pass..." << std::endl;  //  Debug info //
             ui->label_53->setText(tr("1-st pass:"));
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file << _preset_pass1.split(" ");
         }
     }
-    //qDebug() << arguments;
+    qDebug() << arguments;
     process_1->start("ffmpeg", arguments);
     if (!process_1->waitForStarted()) {
         std::cout << "cmd command not found!!!" << std::endl;
@@ -3541,32 +3566,9 @@ void Widget::get_output_filename()  /*** Get output data ***/
     QString extension("");
     QString suffix("");
     QString prefix("");
-    QString arr[NUMBER_PRESETS][5] = {
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MPG", "AVI", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"WebM", "MKV", "",    "",     ""},
-        {"WebM", "MKV", "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MXF",  "",    "",    "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"}
-    };
-    extension = arr[_cur_param[curParamIndex::CODEC].toInt()][_cur_param[curParamIndex::CONTAINER].toInt()].toLower();
+    int _CODEC = _cur_param[curParamIndex::CODEC].toInt();
+    int _CONTAINER = _cur_param[curParamIndex::CONTAINER].toInt();
+    extension = updateFieldContainer(_CODEC, _CONTAINER).toLower();
 
     if (_suffixType == 0) {
         QString row_qstr = QString::number(_row);
