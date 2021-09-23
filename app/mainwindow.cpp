@@ -69,11 +69,7 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     window->setObjectName("CentralWindow");
     window->setWindowFlags(Qt::Widget);
     window->setDockNestingEnabled(true);
-
-    QGridLayout *windowLayout = new QGridLayout(window);
-    window->setLayout(windowLayout);
     centralWidget = new QWidget(window);
-    windowLayout->addWidget(centralWidget);
     window->setCentralWidget(centralWidget);
 
     QGridLayout *centralwidgetLayout = new QGridLayout(centralWidget);
@@ -760,8 +756,8 @@ void Widget::setParameters()    /*** Set parameters ***/
 
         // Restore Main Window
         _settings->beginGroup("MainWindow");
-        window->restoreState(_settings->value("MainWindow/state").toByteArray());
         window->restoreGeometry(_settings->value("MainWindow/geometry").toByteArray());
+        window->restoreState(_settings->value("MainWindow/state").toByteArray());
         _settings->endGroup();
 
         // Restore Tables
