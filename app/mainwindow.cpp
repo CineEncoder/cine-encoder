@@ -2122,23 +2122,24 @@ void Widget::make_preset()  /*** Make preset ***/
 
     QString sub_param("");
     QString container = updateFieldContainer(_CODEC, _CONTAINER);
-    if (_flag_hdr) {
-        sub_param = QString(" -c:s copy"); // -c:s mov_text, -c:s srt
-    }
-    else {
-        if (container == "MKV") {
-            sub_param = QString(" -c:s copy");
-        }
-        else {
-            sub_param = QString(" -c:s mov_text");
-        }
-    }
-
     if (container == "MKV") {
         _sub_mux_param = QString("-c:s copy");
     }
-    else {
+    else if (container == "WebM") {
+        _sub_mux_param = QString("-c:s webvtt");
+    }
+    else if (container == "MP4" || container == "MOV") {
         _sub_mux_param = QString("-c:s mov_text");
+    }
+    else {
+        _sub_mux_param = QString("-sn");
+    }
+
+    if (_flag_hdr) {
+        sub_param = QString(" -c:s copy");
+    }
+    else {
+        sub_param = QString(" ") + _sub_mux_param;
     }
 
     /************************************* Color module ***************************************/
@@ -2659,7 +2660,7 @@ void Widget::encode()   /*** Encode ***/
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file << _preset_pass1.split(" ");
         }
     }
-    qDebug() << arguments;
+    //qDebug() << arguments;
     process_1->start("ffmpeg", arguments);
     if (!process_1->waitForStarted()) {
         std::cout << "cmd command not found!!!" << std::endl;
