@@ -25,13 +25,11 @@ int main(int argc, char *argv[])
     //for (const QString &family : fontFamilies) {
     //  std::cout << "Style: " << family.toStdString() << std::endl;
     //}
-
+    int _fontSize = 8;
     QFont font = app.font();
     //std::cout << "Style: " << font.family().toStdString() << " Size: " << font.pointSize() << std::endl;
     //font.setFamily("Microsoft Yahei");
-    //font.setFamily("Microsoft Yahei");
-    font.setPointSize(8);
-    app.setFont(font);
+
 
     /******************* Set Translate ****************************/
     QString _language = "";
@@ -49,8 +47,16 @@ int main(int argc, char *argv[])
     QString _settings_path = QDir::homePath() + QString("/CineEncoder");
     QSettings *_settings = new QSettings(_settings_path + QString("/ce_window.ini"), QSettings::IniFormat, nullptr);
     _settings->beginGroup("Settings");
+    int fontSize = _settings->value("Settings/font_size").toInt();
     QString language = _settings->value("Settings/language").toString();
     _settings->endGroup();
+
+    if (fontSize != 0) {
+        _fontSize = fontSize;
+    }
+    font.setPointSize(_fontSize);
+    app.setFont(font);
+
     QTranslator qtTranslator;
     if (language == "" && _language != "") {
         if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {

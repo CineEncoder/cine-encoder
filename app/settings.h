@@ -31,7 +31,8 @@ public:
                        bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
                        int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
                        int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
-                       QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv);
+                       QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv,
+                       int *ptr_fontSize);
 
 private slots:
 
@@ -67,6 +68,8 @@ private slots:
 
     void on_buttonTab_2_clicked();
 
+    void on_comboBox_fontsize_currentIndexChanged(int index);
+
 private:
 
     Ui::Settings *ui_settings;
@@ -91,6 +94,8 @@ private:
 
     int _curr_theme;
 
+    int _curr_fontSize;
+
     int _curr_timer_interval;
 
     bool _curr_showHDR_mode;
@@ -112,6 +117,8 @@ private:
     QString *_ptr_suffixName;
 
     QString *_ptr_language;
+
+    int *_ptr_fontSize;
 
     int *_ptr_prefxType;
 

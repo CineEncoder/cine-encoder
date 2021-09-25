@@ -113,6 +113,12 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     dock6->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock6->setWidget(ui->frameLog);
 
+//    dock7 = new QDockWidget(tr("Metadata"), window);
+//    window->addDockWidget(Qt::RightDockWidgetArea, dock7);
+//    dock7->setObjectName("Dock_metadata");
+//    dock7->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+//    dock7->setWidget(ui->frameTab_1);
+
     // **************************** Set Event Filters ***********************************//
 
     ui->centralwidget->installEventFilter(this);
@@ -218,6 +224,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->setValue("Settings/batch_mode", _batch_mode);
         _settings->setValue("Settings/tray", _hideInTrayFlag);
         _settings->setValue("Settings/language", _language);
+        _settings->setValue("Settings/font_size", _fontSize);
         _settings->setValue("Settings/enviroment", _desktopEnv);
         _settings->setValue("Settings/row_size", _rowSize);
         _settings->endGroup();
@@ -303,23 +310,14 @@ void Widget::desktopEnvDetection()
 #endif
 }
 
-void Widget::setParameters()    /*** Set parameters ***/
+void Widget::createConnections()
 {
-    // ***************************** Set parameters ***********************************//
-
-    openingFiles.setParent(this);
-    openingFiles.setModal(true);
-    trayIcon = new QSystemTrayIcon(this);
     timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_1()));
     timerCallSetThumbnail = new QTimer(this);
     timerCallSetThumbnail->setSingleShot(true);
     timerCallSetThumbnail->setInterval(800);
-    connect(timer, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_1()));
     connect(timerCallSetThumbnail, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_2()));
-    _preset_table.resize(PARAMETERS_COUNT+1);
-    for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
-      _preset_table[i].resize(5);
-    }
 
     // ***************************** Top menu actions ***********************************//
 
@@ -443,6 +441,115 @@ void Widget::setParameters()    /*** Set parameters ***/
     presetMenu->addAction(edit_preset);
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, &Widget::providePresetContextMenu);
 
+    // ***************************** Preset menu actions ***********************************//
+
+    addsection = new QAction(tr("Add section"), this);
+    addpreset = new QAction(tr("Add new preset"), this);
+    addsection->setIcon(QIcon(":/resources/icons/16x16/cil-folder.png"));
+    addpreset->setIcon(QIcon(":/resources/icons/16x16/cil-file.png"));
+    connect(addsection, &QAction::triggered, this, &Widget::add_section);
+    connect(addpreset, &QAction::triggered, this, &Widget::add_preset);
+
+    menu = new QMenu(this);
+    menu->addAction(addsection);
+    menu->addSeparator();
+    menu->addAction(addpreset);
+    ui->actionAdd_preset->setMenu(menu);
+
+    // ***************************** Elements actions ***********************************//
+
+    for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
+        QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        connect(checkBoxAudio, &QCheckBox::clicked, this, [this, checkBoxAudio, stream](){
+            if (_row != -1) {
+                QString state_qstr = "0";
+                int state = checkBoxAudio->checkState();
+                if (state == 2) {
+                    state_qstr = "1";
+                }
+                QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
+                ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_1 + stream, newItem_checkstate);
+                _audioStreamCheckState[stream] = state_qstr.toInt();
+            }
+        });
+
+        QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        connect(lineEditLangAudio, &QLineEdit::editingFinished, this, [this, lineEditLangAudio, stream](){
+            if (_row != -1) {
+                QString langAudio = lineEditLangAudio->text();
+                QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
+                ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_1 + stream, newItem_langAudio);
+                _audioLang[stream] = langAudio;
+            }
+        });
+
+        QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        connect(lineEditTitleAudio, &QLineEdit::editingFinished, this, [this, lineEditTitleAudio, stream](){
+            if (_row != -1) {
+                QString titleAudio = lineEditTitleAudio->text();
+                QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
+                ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_1 + stream, newItem_titleAudio);
+                _audioTitle[stream] = titleAudio;
+            }
+        });
+    }
+
+    for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
+        QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        connect(checkBoxSubtitle, &QCheckBox::clicked, this, [this, checkBoxSubtitle, stream](){
+            if (_row != -1) {
+                QString state_qstr = "0";
+                int state = checkBoxSubtitle->checkState();
+                if (state == 2) {
+                    state_qstr = "1";
+                }
+                QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
+                ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_1 + stream, newItem_checkstate);
+                _subtitleCheckState[stream] = state_qstr.toInt();
+            }
+        });
+
+        QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        connect(lineEditLangSubtitle, &QLineEdit::editingFinished, this, [this, lineEditLangSubtitle, stream](){
+            if (_row != -1) {
+                QString langSubtitle = lineEditLangSubtitle->text();
+                QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
+                ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_1 + stream, newItem_langSubtitle);
+                _subtitleLang[stream] = langSubtitle;
+            }
+        });
+
+        QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        connect(lineEditTitleSubtitle, &QLineEdit::editingFinished, this, [this, lineEditTitleSubtitle, stream](){
+            if (_row != -1) {
+                QString titleSubtitle = lineEditTitleSubtitle->text();
+                QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
+                ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_1 + stream, newItem_titleSubtitle);
+                _subtitleTitle[stream] = titleSubtitle;
+            }
+        });
+    }
+}
+
+void Widget::setParameters()    /*** Set parameters ***/
+{
+    // ***************************** Set parameters ***********************************//
+
+    createConnections();
+    openingFiles.setParent(this);
+    openingFiles.setModal(true);
+    trayIcon = new QSystemTrayIcon(this);
+    _preset_table.resize(PARAMETERS_COUNT+1);
+    for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
+      _preset_table[i].resize(5);
+    }
+
     // ****************************** Initialize variables ************************************//
 
     QDesktopWidget *screenSize = QApplication::desktop();
@@ -467,6 +574,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _timer_interval = 30;
     _curTime = 0;
     _language = "";
+    _fontSize = 8;
     _curFilename = "";
     _curPath = "";
     _input_file = "";
@@ -731,21 +839,6 @@ void Widget::setParameters()    /*** Set parameters ***/
         ui->treeWidget->hideColumn(i);
     }
 
-    // ***************************** Preset menu actions ***********************************//
-
-    addsection = new QAction(tr("Add section"), this);
-    addpreset = new QAction(tr("Add new preset"), this);
-    addsection->setIcon(QIcon(":/resources/icons/16x16/cil-folder.png"));
-    addpreset->setIcon(QIcon(":/resources/icons/16x16/cil-file.png"));
-    connect(addsection, &QAction::triggered, this, &Widget::add_section);
-    connect(addpreset, &QAction::triggered, this, &Widget::add_preset);
-
-    menu = new QMenu(this);
-    menu->addAction(addsection);
-    menu->addSeparator();
-    menu->addAction(addpreset);
-    ui->actionAdd_preset->setMenu(menu);
-
     // ************************** Set theme and geometry ******************************//
 
     if (_settings->childGroups().contains("MainWidget", Qt::CaseInsensitive)) {
@@ -782,6 +875,7 @@ void Widget::setParameters()    /*** Set parameters ***/
         _batch_mode = _settings->value("Settings/batch_mode").toBool();
         _hideInTrayFlag = _settings->value("Settings/tray").toBool();
         _language = _settings->value("Settings/language").toString();
+        _fontSize = _settings->value("Settings/font_size").toInt();
         _desktopEnv = _settings->value("Settings/enviroment").toString();
         _rowSize = _settings->value("Settings/row_size").toInt();
         _settings->endGroup();
@@ -793,6 +887,10 @@ void Widget::setParameters()    /*** Set parameters ***/
 
     if (_rowSize != 0) {
         ui->horizontalSlider_resize->setValue(_rowSize);
+    }
+
+    if (_fontSize == 0) {
+        _fontSize = 8;
     }
 
     if (_language == "") {
@@ -928,7 +1026,7 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     settings.setParameters(&_settingsWindowGeometry, &_stn_file, &_output_folder,
                            &_temp_folder, &_protection, &_showHDR_mode, &_timer_interval, &_theme,
                            &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag,
-                           &_language, &acceptFlag, _desktopEnv);
+                           &_language, &acceptFlag, _desktopEnv, &_fontSize);
     settings.setModal(true);
     settings.exec();
     timer->setInterval(_timer_interval*1000);
@@ -3718,7 +3816,7 @@ void Widget::on_lineEditDescriptionVideo_editingFinished()
     }
 }
 
-void Widget::on_checkBoxAudio_1_clicked()
+/*void Widget::on_checkBoxAudio_1_clicked()
 {
     if (_row != -1) {
         QString state_qstr = "0";
@@ -3842,9 +3940,9 @@ void Widget::on_checkBoxAudio_9_clicked()
         ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_9, newItem_checkstate);
         _audioStreamCheckState[8] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_9)->text()).toInt();
     }
-}
+}*/
 
-void Widget::on_lineEditLangAudio_1_editingFinished()
+/*void Widget::on_lineEditLangAudio_1_editingFinished()
 {
     if (_row != -1) {
         QString langAudio = ui->lineEditLangAudio_1->text();
@@ -3932,9 +4030,9 @@ void Widget::on_lineEditLangAudio_9_editingFinished()
         ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_9, newItem_langAudio);
         _audioLang[8] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_9)->text();
     }
-}
+}*/
 
-void Widget::on_lineEditTitleAudio_1_editingFinished()
+/*void Widget::on_lineEditTitleAudio_1_editingFinished()
 {
     if (_row != -1) {
         QString titleAudio = ui->lineEditTitleAudio_1->text();
@@ -4022,9 +4120,9 @@ void Widget::on_lineEditTitleAudio_9_editingFinished()
         ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_9, newItem_titleAudio);
         _audioTitle[8] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_9)->text();
     }
-}
+}*/
 
-void Widget::on_checkBoxSubtitle_1_clicked()
+/*void Widget::on_checkBoxSubtitle_1_clicked()
 {
     if (_row != -1) {
         QString state_qstr = "0";
@@ -4328,7 +4426,7 @@ void Widget::on_lineEditTitleSubtitle_9_editingFinished()
         ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_9, newItem_titleSubtitle);
         _subtitleTitle[8] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_9)->text();
     }
-}
+}*/
 
 void Widget::on_horizontalSlider_valueChanged(int value)
 {

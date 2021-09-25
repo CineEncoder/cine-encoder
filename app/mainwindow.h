@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QCheckBox>
 #include <QMainWindow>
 #include <QtGlobal>
 #include <QSystemTrayIcon>
@@ -140,6 +141,8 @@ public:
 
     QString _suffixName;
 
+    int _fontSize;
+
     int _prefxType;
 
     int _suffixType;
@@ -240,7 +243,7 @@ private slots:
 
     void on_lineEditDescriptionVideo_editingFinished();
 
-    void on_checkBoxAudio_1_clicked();
+    /*void on_checkBoxAudio_1_clicked();
 
     void on_checkBoxAudio_2_clicked();
 
@@ -346,7 +349,7 @@ private slots:
 
     void on_lineEditTitleSubtitle_8_editingFinished();
 
-    void on_lineEditTitleSubtitle_9_editingFinished();
+    void on_lineEditTitleSubtitle_9_editingFinished();*/
 
     void on_horizontalSlider_valueChanged(int value);
 
@@ -445,6 +448,8 @@ private:
     QDockWidget *dock5;
 
     QDockWidget *dock6;
+
+    //QDockWidget *dock7;
 
     // ******************** Top label ****************************//
 
@@ -685,6 +690,8 @@ private:
     int curHeight;
 
     // ****************************************************************************//
+
+    void createConnections();
 
     void on_actionAbout_clicked();
 
