@@ -224,6 +224,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->setValue("Settings/batch_mode", _batch_mode);
         _settings->setValue("Settings/tray", _hideInTrayFlag);
         _settings->setValue("Settings/language", _language);
+        _settings->setValue("Settings/font", _font);
         _settings->setValue("Settings/font_size", _fontSize);
         _settings->setValue("Settings/enviroment", _desktopEnv);
         _settings->setValue("Settings/row_size", _rowSize);
@@ -540,7 +541,6 @@ void Widget::createConnections()
 void Widget::setParameters()    /*** Set parameters ***/
 {
     // ***************************** Set parameters ***********************************//
-
     createConnections();
     openingFiles.setParent(this);
     openingFiles.setModal(true);
@@ -551,7 +551,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
 
     // ****************************** Initialize variables ************************************//
-
     QDesktopWidget *screenSize = QApplication::desktop();
     int screenWidth = screenSize->width();
     int screenHeight = screenSize->height();
@@ -574,6 +573,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _timer_interval = 30;
     _curTime = 0;
     _language = "";
+    _font = "";
     _fontSize = 8;
     _curFilename = "";
     _curPath = "";
@@ -621,7 +621,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     process_1->setWorkingDirectory(QDir::homePath());
 
     // ****************************** Setup widgets ************************************//
-
     ui->labelAnimation->setMovie(animation);
     ui->labelAnimation->hide();
     ui->label_53->hide();
@@ -654,7 +653,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
 
     // ****************************** Create folders ************************************//
-
     if (!QDir(_settings_path).exists()) {
         QDir().mkdir(_settings_path);
         std::cout << "Setting path not existed and was created ..." << std::endl;  // Debug info //
@@ -673,7 +671,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
 
     // ****************************** Read the files ************************************//
-
     _stn_file.setFileName(_settings_file);
     _prs_file.setFileName(_preset_file);
 
@@ -787,7 +784,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
 
     // ***************************** Preset parameters ***********************************//
-
     ui->treeWidget->clear();
     ui->treeWidget->setHeaderHidden(false);
     ui->treeWidget->setAlternatingRowColors(true);
@@ -840,7 +836,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
 
     // ************************** Set theme and geometry ******************************//
-
     if (_settings->childGroups().contains("MainWidget", Qt::CaseInsensitive)) {
         // Restore Main Widget
         _settings->beginGroup("MainWidget");
@@ -875,6 +870,7 @@ void Widget::setParameters()    /*** Set parameters ***/
         _batch_mode = _settings->value("Settings/batch_mode").toBool();
         _hideInTrayFlag = _settings->value("Settings/tray").toBool();
         _language = _settings->value("Settings/language").toString();
+        _font = _settings->value("Settings/font").toString();
         _fontSize = _settings->value("Settings/font_size").toInt();
         _desktopEnv = _settings->value("Settings/enviroment").toString();
         _rowSize = _settings->value("Settings/row_size").toInt();
@@ -935,7 +931,6 @@ void Widget::setParameters()    /*** Set parameters ***/
 void Widget::setDocksParameters()
 {
     // ************************** Set Docks Parameters ********************************//
-
     int windowWidth = window->size().width();
     int windowHeight = window->size().height();
 
@@ -1026,7 +1021,7 @@ void Widget::on_actionSettings_clicked()    /*** Settings ***/
     settings.setParameters(&_settingsWindowGeometry, &_stn_file, &_output_folder,
                            &_temp_folder, &_protection, &_showHDR_mode, &_timer_interval, &_theme,
                            &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag,
-                           &_language, &acceptFlag, _desktopEnv, &_fontSize);
+                           &_language, &acceptFlag, _desktopEnv, &_fontSize, &_font);
     settings.setModal(true);
     settings.exec();
     timer->setInterval(_timer_interval*1000);
@@ -3816,618 +3811,6 @@ void Widget::on_lineEditDescriptionVideo_editingFinished()
     }
 }
 
-/*void Widget::on_checkBoxAudio_1_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_1->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_1, newItem_checkstate);
-        _audioStreamCheckState[0] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_1)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_2_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_2->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_2, newItem_checkstate);
-        _audioStreamCheckState[1] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_2)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_3_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_3->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_3, newItem_checkstate);
-        _audioStreamCheckState[2] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_3)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_4_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_4->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_4, newItem_checkstate);
-        _audioStreamCheckState[3] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_4)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_5_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_5->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_5, newItem_checkstate);
-        _audioStreamCheckState[4] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_5)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_6_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_6->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_6, newItem_checkstate);
-        _audioStreamCheckState[5] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_6)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_7_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_7->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_7, newItem_checkstate);
-        _audioStreamCheckState[6] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_7)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_8_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_8->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_8, newItem_checkstate);
-        _audioStreamCheckState[7] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_8)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxAudio_9_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxAudio_9->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_9, newItem_checkstate);
-        _audioStreamCheckState[8] = (ui->tableWidget->item(_row, columnIndex::T_AUDIOCHECK_9)->text()).toInt();
-    }
-}*/
-
-/*void Widget::on_lineEditLangAudio_1_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_1->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_1, newItem_langAudio);
-        _audioLang[0] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_1)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_2_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_2->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_2, newItem_langAudio);
-        _audioLang[1] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_2)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_3_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_3->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_3, newItem_langAudio);
-        _audioLang[2] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_3)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_4_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_4->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_4, newItem_langAudio);
-        _audioLang[3] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_4)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_5_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_5->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_5, newItem_langAudio);
-        _audioLang[4] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_5)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_6_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_6->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_6, newItem_langAudio);
-        _audioLang[5] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_6)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_7_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_7->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_7, newItem_langAudio);
-        _audioLang[6] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_7)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_8_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_8->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_8, newItem_langAudio);
-        _audioLang[7] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_8)->text();
-    }
-}
-
-void Widget::on_lineEditLangAudio_9_editingFinished()
-{
-    if (_row != -1) {
-        QString langAudio = ui->lineEditLangAudio_9->text();
-        QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_9, newItem_langAudio);
-        _audioLang[8] = ui->tableWidget->item(_row, columnIndex::T_AUDIOLANG_9)->text();
-    }
-}*/
-
-/*void Widget::on_lineEditTitleAudio_1_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_1->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_1, newItem_titleAudio);
-        _audioTitle[0] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_1)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_2_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_2->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_2, newItem_titleAudio);
-        _audioTitle[1] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_2)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_3_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_3->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_3, newItem_titleAudio);
-        _audioTitle[2] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_3)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_4_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_4->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_4, newItem_titleAudio);
-        _audioTitle[3] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_4)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_5_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_5->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_5, newItem_titleAudio);
-        _audioTitle[4] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_5)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_6_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_6->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_6, newItem_titleAudio);
-        _audioTitle[5] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_6)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_7_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_7->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_7, newItem_titleAudio);
-        _audioTitle[6] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_7)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_8_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_8->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_8, newItem_titleAudio);
-        _audioTitle[7] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_8)->text();
-    }
-}
-
-void Widget::on_lineEditTitleAudio_9_editingFinished()
-{
-    if (_row != -1) {
-        QString titleAudio = ui->lineEditTitleAudio_9->text();
-        QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-        ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_9, newItem_titleAudio);
-        _audioTitle[8] = ui->tableWidget->item(_row, columnIndex::T_AUDIOTITLE_9)->text();
-    }
-}*/
-
-/*void Widget::on_checkBoxSubtitle_1_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_1->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_1, newItem_checkstate);
-        _subtitleCheckState[0] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_1)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_2_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_2->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_2, newItem_checkstate);
-        _subtitleCheckState[1] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_2)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_3_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_3->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_3, newItem_checkstate);
-        _subtitleCheckState[2] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_3)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_4_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_4->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_4, newItem_checkstate);
-        _subtitleCheckState[3] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_4)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_5_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_5->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_5, newItem_checkstate);
-        _subtitleCheckState[4] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_5)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_6_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_6->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_6, newItem_checkstate);
-        _subtitleCheckState[5] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_6)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_7_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_7->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_7, newItem_checkstate);
-        _subtitleCheckState[6] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_7)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_8_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_8->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_8, newItem_checkstate);
-        _subtitleCheckState[7] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_8)->text()).toInt();
-    }
-}
-
-void Widget::on_checkBoxSubtitle_9_clicked()
-{
-    if (_row != -1) {
-        QString state_qstr = "0";
-        int state = ui->checkBoxSubtitle_9->checkState();
-        if (state == 2) {
-            state_qstr = "1";
-        }
-        QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_9, newItem_checkstate);
-        _subtitleCheckState[8] = (ui->tableWidget->item(_row, columnIndex::T_SUBCHECK_9)->text()).toInt();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_1_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_1->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_1, newItem_langSubtitle);
-        _subtitleLang[0] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_1)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_2_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_2->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_2, newItem_langSubtitle);
-        _subtitleLang[1] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_2)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_3_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_3->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_3, newItem_langSubtitle);
-        _subtitleLang[2] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_3)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_4_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_4->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_4, newItem_langSubtitle);
-        _subtitleLang[3] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_4)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_5_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_5->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_5, newItem_langSubtitle);
-        _subtitleLang[4] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_5)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_6_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_6->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_6, newItem_langSubtitle);
-        _subtitleLang[5] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_6)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_7_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_7->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_7, newItem_langSubtitle);
-        _subtitleLang[6] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_7)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_8_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_8->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_8, newItem_langSubtitle);
-        _subtitleLang[7] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_8)->text();
-    }
-}
-
-void Widget::on_lineEditLangSubtitle_9_editingFinished()
-{
-    if (_row != -1) {
-        QString langSubtitle = ui->lineEditLangSubtitle_9->text();
-        QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_9, newItem_langSubtitle);
-        _subtitleLang[8] = ui->tableWidget->item(_row, columnIndex::T_SUBLANG_9)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_1_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_1->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_1, newItem_titleSubtitle);
-        _subtitleTitle[0] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_1)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_2_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_2->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_2, newItem_titleSubtitle);
-        _subtitleTitle[1] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_2)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_3_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_3->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_3, newItem_titleSubtitle);
-        _subtitleTitle[2] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_3)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_4_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_4->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_4, newItem_titleSubtitle);
-        _subtitleTitle[3] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_4)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_5_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_5->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_5, newItem_titleSubtitle);
-        _subtitleTitle[4] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_5)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_6_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_6->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_6, newItem_titleSubtitle);
-        _subtitleTitle[5] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_6)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_7_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_7->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_7, newItem_titleSubtitle);
-        _subtitleTitle[6] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_7)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_8_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_8->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_8, newItem_titleSubtitle);
-        _subtitleTitle[7] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_8)->text();
-    }
-}
-
-void Widget::on_lineEditTitleSubtitle_9_editingFinished()
-{
-    if (_row != -1) {
-        QString titleSubtitle = ui->lineEditTitleSubtitle_9->text();
-        QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_9, newItem_titleSubtitle);
-        _subtitleTitle[8] = ui->tableWidget->item(_row, columnIndex::T_TITLESUB_9)->text();
-    }
-}*/
-
 void Widget::on_horizontalSlider_valueChanged(int value)
 {
     if (_row != -1) {
@@ -4747,7 +4130,7 @@ void Widget::setItemStyle(QTreeWidgetItem *item)
             foregroundChildColor.setRgb(qRgb(50, 100, 157));
             break;
         case 3:
-            foregroundChildColor.setRgb(qRgb(50, 100, 157));
+            foregroundChildColor.setRgb(qRgb(30, 50, 150));
             break;
     }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);

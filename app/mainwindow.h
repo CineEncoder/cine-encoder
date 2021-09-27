@@ -141,6 +141,8 @@ public:
 
     QString _suffixName;
 
+    QString _font;
+
     int _fontSize;
 
     int _prefxType;
@@ -242,114 +244,6 @@ private slots:
     void on_lineEditMovieNameVideo_editingFinished();
 
     void on_lineEditDescriptionVideo_editingFinished();
-
-    /*void on_checkBoxAudio_1_clicked();
-
-    void on_checkBoxAudio_2_clicked();
-
-    void on_checkBoxAudio_3_clicked();
-
-    void on_checkBoxAudio_4_clicked();
-
-    void on_checkBoxAudio_5_clicked();
-
-    void on_checkBoxAudio_6_clicked();
-
-    void on_checkBoxAudio_7_clicked();
-
-    void on_checkBoxAudio_8_clicked();
-
-    void on_checkBoxAudio_9_clicked();
-
-    void on_lineEditLangAudio_1_editingFinished();
-
-    void on_lineEditLangAudio_2_editingFinished();
-
-    void on_lineEditLangAudio_3_editingFinished();
-
-    void on_lineEditLangAudio_4_editingFinished();
-
-    void on_lineEditLangAudio_5_editingFinished();
-
-    void on_lineEditLangAudio_6_editingFinished();
-
-    void on_lineEditLangAudio_7_editingFinished();
-
-    void on_lineEditLangAudio_8_editingFinished();
-
-    void on_lineEditLangAudio_9_editingFinished();
-
-    void on_lineEditTitleAudio_1_editingFinished();
-
-    void on_lineEditTitleAudio_2_editingFinished();
-
-    void on_lineEditTitleAudio_3_editingFinished();
-
-    void on_lineEditTitleAudio_4_editingFinished();
-
-    void on_lineEditTitleAudio_5_editingFinished();
-
-    void on_lineEditTitleAudio_6_editingFinished();
-
-    void on_lineEditTitleAudio_7_editingFinished();
-
-    void on_lineEditTitleAudio_8_editingFinished();
-
-    void on_lineEditTitleAudio_9_editingFinished();
-
-    void on_checkBoxSubtitle_1_clicked();
-
-    void on_checkBoxSubtitle_2_clicked();
-
-    void on_checkBoxSubtitle_3_clicked();
-
-    void on_checkBoxSubtitle_4_clicked();
-
-    void on_checkBoxSubtitle_5_clicked();
-
-    void on_checkBoxSubtitle_6_clicked();
-
-    void on_checkBoxSubtitle_7_clicked();
-
-    void on_checkBoxSubtitle_8_clicked();
-
-    void on_checkBoxSubtitle_9_clicked();
-
-    void on_lineEditLangSubtitle_1_editingFinished();
-
-    void on_lineEditLangSubtitle_2_editingFinished();
-
-    void on_lineEditLangSubtitle_3_editingFinished();
-
-    void on_lineEditLangSubtitle_4_editingFinished();
-
-    void on_lineEditLangSubtitle_5_editingFinished();
-
-    void on_lineEditLangSubtitle_6_editingFinished();
-
-    void on_lineEditLangSubtitle_7_editingFinished();
-
-    void on_lineEditLangSubtitle_8_editingFinished();
-
-    void on_lineEditLangSubtitle_9_editingFinished();
-
-    void on_lineEditTitleSubtitle_1_editingFinished();
-
-    void on_lineEditTitleSubtitle_2_editingFinished();
-
-    void on_lineEditTitleSubtitle_3_editingFinished();
-
-    void on_lineEditTitleSubtitle_4_editingFinished();
-
-    void on_lineEditTitleSubtitle_5_editingFinished();
-
-    void on_lineEditTitleSubtitle_6_editingFinished();
-
-    void on_lineEditTitleSubtitle_7_editingFinished();
-
-    void on_lineEditTitleSubtitle_8_editingFinished();
-
-    void on_lineEditTitleSubtitle_9_editingFinished();*/
 
     void on_horizontalSlider_valueChanged(int value);
 

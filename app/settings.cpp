@@ -46,6 +46,7 @@ void Settings::closeEvent(QCloseEvent *close_settings)  /*** Show prompt when cl
         *_ptr_suffixType = _curr_suffixType;
         *_ptr_hideInTrayFlag = _curr_hideInTrayFlag;
         *_ptr_language = _curr_language;
+        *_ptr_font = _curr_font;
         *_ptr_fontSize = _curr_fontSize;
     }
     close_settings->accept();
@@ -57,14 +58,15 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
                              int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
                              int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
                              QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv,
-                             int *ptr_fontSize)  /*** Set parameters ***/
+                             int *ptr_fontSize, QString *ptr_font)  /*** Set parameters ***/
 {
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
-    QFont font;
-    font.setPointSize(10);
+    QFont title_font;
+    title_font.setPointSize(10);
+    ui_settings->label_title->setFont(title_font);
+
     desktopEnv = _desktopEnv;
-    ui_settings->label_title->setFont(font);
     _ptr_settingsWindowGeometry = ptr_settingsWindowGeometry;
     _ptr_showHDR_mode = ptr_showHDR_mode;
     _ptr_stn_file = ptr_stn_file;
@@ -79,6 +81,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _ptr_suffixType = ptr_suffixType;
     _ptr_hideInTrayFlag = ptr_hideInTrayFlag;
     _ptr_language = ptr_language;
+    _ptr_font = ptr_font;
     _ptr_fontSize = ptr_fontSize;
     _ptr_acceptFlag = ptr_aceptFlag;
 
@@ -130,6 +133,20 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
         ui_settings->lineEditSuffix->setText(*_ptr_suffixName);
     }
 
+    QFontDatabase database;
+    QFontDatabase::WritingSystem values = QFontDatabase::WritingSystem::Latin;
+    const QStringList fontFamilies = database.families(values);
+    QStringListModel *fontModel = new QStringListModel(this);
+    fontModel->setStringList(fontFamilies);
+    ui_settings->comboBox_font->blockSignals(true);
+    ui_settings->comboBox_font->setModel(fontModel);
+    QString appFontFamily = qApp->font().family();
+    int fontInd = ui_settings->comboBox_font->findText(appFontFamily);
+    if (fontInd != -1) {
+        ui_settings->comboBox_font->setCurrentIndex(fontInd);
+    }
+    ui_settings->comboBox_font->blockSignals(false);
+
     _curr_output_folder = *_ptr_output_folder;
     _curr_temp_folder = *_ptr_temp_folder;
     _curr_showHDR_mode = *_ptr_showHDR_mode;
@@ -142,16 +159,19 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _curr_suffixType = *_ptr_suffixType;
     _curr_hideInTrayFlag = *_ptr_hideInTrayFlag;
     _curr_language = *_ptr_language;
+    _curr_font = *_ptr_font;
     _curr_fontSize = *_ptr_fontSize;
     _flag_save = false;
 
     QListView *comboboxLangListView = new QListView(ui_settings->comboBox_lang);
     QListView *comboboxThemeListView = new QListView(ui_settings->comboBox_theme);
+    QListView *comboboxFontListView = new QListView(ui_settings->comboBox_font);
     QListView *comboboxFontSizeListView = new QListView(ui_settings->comboBox_fontsize);
     QListView *comboboxPrefixTypeListView = new QListView(ui_settings->comboBoxPrefixType);
     QListView *comboboxSuffixTypeListView = new QListView(ui_settings->comboBoxSuffixType);
     ui_settings->comboBox_lang->setView(comboboxLangListView);
     ui_settings->comboBox_theme->setView(comboboxThemeListView);
+    ui_settings->comboBox_font->setView(comboboxFontListView);
     ui_settings->comboBox_fontsize->setView(comboboxFontSizeListView);
     ui_settings->comboBoxPrefixType->setView(comboboxPrefixTypeListView);
     ui_settings->comboBoxSuffixType->setView(comboboxSuffixTypeListView);
@@ -236,6 +256,7 @@ void Settings::on_buttonApply_clicked() /*** Save settings ***/
         (*_ptr_stn_file).write(line_7.toUtf8());
 
         (*_ptr_stn_file).close();
+        *_ptr_font = ui_settings->comboBox_font->currentText();
         _flag_save = true;
         *_ptr_acceptFlag = true;
         this->close();
@@ -267,8 +288,14 @@ void Settings::on_buttonReset_clicked() /*** Reset settings ***/
     *_ptr_protection = false;
     *_ptr_showHDR_mode = false;
     *_ptr_theme = 3;
-    *_ptr_language = "en";
-    *_ptr_fontSize = 8;
+    //*_ptr_language = "en";
+    //*_ptr_fontSize = 8;
+    QFont font;
+    QString appFontFamily = font.defaultFamily();
+    int fontInd = ui_settings->comboBox_font->findText(appFontFamily);
+    if (fontInd != -1) {
+        ui_settings->comboBox_font->setCurrentIndex(fontInd);
+    }
 }
 
 void Settings::on_buttonOutputPath_clicked()  /*** Select output folder ***/
@@ -653,6 +680,13 @@ void Settings::on_comboBox_fontsize_currentIndexChanged(int index)
     *_ptr_fontSize = arrFontSize[index];
 }
 
+void Settings::on_comboBox_font_currentIndexChanged(const QString &arg1)
+{
+    QFont font;
+    font.setFamily(arg1);
+    ui_settings->comboBox_font->setFont(font);
+}
+
 void Settings::on_buttonTab_1_clicked()
 {
     ui_settings->buttonTab_1->setEnabled(false);
@@ -666,4 +700,3 @@ void Settings::on_buttonTab_2_clicked()
     ui_settings->buttonTab_2->setEnabled(false);
     ui_settings->tabWidgetSettings->setCurrentIndex(1);
 }
-

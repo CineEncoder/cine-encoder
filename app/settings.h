@@ -8,6 +8,9 @@
 #include <QHoverEvent>
 #include <QListView>
 #include <QMap>
+#include <QFontDatabase>
+#include <QStringListModel>
+//#include <QDebug>
 
 
 namespace Ui
@@ -32,7 +35,7 @@ public:
                        int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
                        int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
                        QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv,
-                       int *ptr_fontSize);
+                       int *ptr_fontSize, QString *ptr_font);
 
 private slots:
 
@@ -70,6 +73,8 @@ private slots:
 
     void on_comboBox_fontsize_currentIndexChanged(int index);
 
+    void on_comboBox_font_currentIndexChanged(const QString &arg1);
+
 private:
 
     Ui::Settings *ui_settings;
@@ -87,6 +92,8 @@ private:
     QString _curr_suffixName;
 
     QString _curr_language;
+
+    QString _curr_font;
 
     int _curr_prefxType;
 
@@ -117,6 +124,8 @@ private:
     QString *_ptr_suffixName;
 
     QString *_ptr_language;
+
+    QString *_ptr_font;
 
     int *_ptr_fontSize;
 

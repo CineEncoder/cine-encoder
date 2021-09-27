@@ -7,68 +7,60 @@ MAIN.CPP
 #include <QSplashScreen>
 #include <QElapsedTimer>
 #include <QFontDatabase>
+#include <QMap>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");
     QApplication app(argc, argv);
-
     QCoreApplication::setOrganizationName("CineEncoder");
     QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
 
-    /********************* Set Fonts ******************************/
-    //QFontDatabase database;
-    //QFontDatabase::WritingSystem values = QFontDatabase::WritingSystem::Latin;
-    //const QStringList fontFamilies = database.families(values);
-    //for (const QString &family : fontFamilies) {
-    //  std::cout << "Style: " << family.toStdString() << std::endl;
-    //}
-    int _fontSize = 8;
-    QFont font = app.font();
-    //std::cout << "Style: " << font.family().toStdString() << " Size: " << font.pointSize() << std::endl;
-    //font.setFamily("Microsoft Yahei");
-
-
-    /******************* Set Translate ****************************/
-    QString _language = "";
-    QLocale locale = QLocale::system();
-    if (locale.language() == QLocale::Chinese) {
-        _language = "zh";
-    }
-    else if (locale.language() == QLocale::German) {
-        _language = "de";
-    }
-    else if (locale.language() == QLocale::Russian) {
-        _language = "ru";
-    }
-
+    /******************* Read Settings ****************************/
     QString _settings_path = QDir::homePath() + QString("/CineEncoder");
     QSettings *_settings = new QSettings(_settings_path + QString("/ce_window.ini"), QSettings::IniFormat, nullptr);
     _settings->beginGroup("Settings");
-    int fontSize = _settings->value("Settings/font_size").toInt();
-    QString language = _settings->value("Settings/language").toString();
+    int _fontSize = _settings->value("Settings/font_size").toInt();
+    QString _fontFamily = _settings->value("Settings/font").toString();
+    QString _language = _settings->value("Settings/language").toString();
     _settings->endGroup();
+    delete _settings;
 
-    if (fontSize != 0) {
-        _fontSize = fontSize;
+    /********************* Set Font ******************************/
+    QFont font = app.font();
+    if (_fontSize == 0) {
+        _fontSize = 8;
+    }
+    if (_fontFamily != "") {
+        font.setFamily(_fontFamily);
     }
     font.setPointSize(_fontSize);
     app.setFont(font);
 
-    QTranslator qtTranslator;
-    if (language == "" && _language != "") {
-        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
-            app.installTranslator(&qtTranslator);
-        }
+    /******************* Set Translate ****************************/
+    QString language = "";
+    QLocale locale = QLocale::system();
+    QMap<int, QString> langIndex;
+    langIndex[QLocale::Chinese] = "zh";
+    langIndex[QLocale::German] = "de";
+    langIndex[QLocale::Russian] = "ru";
+    if (langIndex.contains(locale.language())) {
+        language = langIndex.value(locale.language());
     }
-    else if (language != "" && language != "en") {
+
+    QTranslator qtTranslator;
+    if (_language == "" && language != "") {
         if (qtTranslator.load(":/resources/translation/translation_" + language + ".qm")) {
             app.installTranslator(&qtTranslator);
         }
     }
-    delete _settings;
+    else if (_language != "" && _language != "en") {
+        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
+            app.installTranslator(&qtTranslator);
+        }
+    }
 
     /******************* Set Splash *******************************/
     QPixmap pixmap(":/resources/images/splash.png");
