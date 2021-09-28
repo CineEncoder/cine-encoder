@@ -1,3 +1,16 @@
+/***********************************************************************
+
+                          C I N E   E N C O D E R
+                                JULY, 2020
+                            COPYRIGHT (C) 2020
+
+ FILE: about.h
+ MODIFIED: September, 2021
+ COMMENT:
+ LICENSE: GNU General Public License v3.0
+
+***********************************************************************/
+
 #ifndef ABOUT_H
 #define ABOUT_H
 

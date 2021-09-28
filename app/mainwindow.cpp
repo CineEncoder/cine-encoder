@@ -1,6 +1,15 @@
-﻿/****************************************************************
-MAINWINDOW.CPP
-****************************************************************/
+﻿/***********************************************************************
+
+                          C I N E   E N C O D E R
+                                JULY, 2020
+                            COPYRIGHT (C) 2020
+
+ FILE: mainwindow.cpp
+ MODIFIED: September, 2021
+ COMMENT:
+ LICENSE: GNU General Public License v3.0
+
+***********************************************************************/
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -10,7 +19,6 @@ MAINWINDOW.CPP
 #include "preset.h"
 #include "taskcomplete.h"
 #include "dialog.h"
-
 
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE

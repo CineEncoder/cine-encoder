@@ -1,3 +1,16 @@
+/***********************************************************************
+
+                          C I N E   E N C O D E R
+                                JULY, 2020
+                            COPYRIGHT (C) 2020
+
+ FILE: dialog.h
+ MODIFIED: September, 2021
+ COMMENT:
+ LICENSE: GNU General Public License v3.0
+
+***********************************************************************/
+
 #ifndef DIALOG_H
 #define DIALOG_H
 
