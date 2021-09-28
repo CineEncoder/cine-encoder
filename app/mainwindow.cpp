@@ -208,6 +208,13 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->beginGroup("MainWindow");
         _settings->setValue("MainWindow/state", window->saveState());
         _settings->setValue("MainWindow/geometry", window->saveGeometry());
+        QList<QDockWidget*> docks = {dock1, dock2, dock3, dock4, dock5};
+        _settings->beginWriteArray("MainWindow/docks_geometry");
+                for (int i = 0; i < docks.count(); i++) {
+                    _settings->setArrayIndex(i);
+                    _settings->setValue("MainWindow/docks_geometry/dock_size", docks.at(i)->size());
+                }
+                _settings->endArray();
         _settings->endGroup();
 
         // Save Tables
@@ -844,6 +851,8 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
 
     // ************************** Set theme and geometry ******************************//
+    QList<int> dockSizesX = {};
+    QList<int> dockSizesY = {};
     if (_settings->childGroups().contains("MainWidget", Qt::CaseInsensitive)) {
         // Restore Main Widget
         _settings->beginGroup("MainWidget");
@@ -854,6 +863,16 @@ void Widget::setParameters()    /*** Set parameters ***/
         _settings->beginGroup("MainWindow");
         window->restoreGeometry(_settings->value("MainWindow/geometry").toByteArray());
         window->restoreState(_settings->value("MainWindow/state").toByteArray());
+        QList<QDockWidget*> docks = {dock1, dock2, dock3, dock4, dock5};
+        int docksCount = docks.count();
+        int arraySize = _settings->beginReadArray("MainWindow/docks_geometry");
+            for (int i = 0; i < arraySize && i < docksCount; i++) {
+                _settings->setArrayIndex(i);
+                QSize size = _settings->value("MainWindow/docks_geometry/dock_size").toSize();
+                dockSizesX.append(size.width());
+                dockSizesY.append(size.height());
+            }
+            _settings->endArray();
         _settings->endGroup();
 
         // Restore Tables
@@ -886,8 +905,18 @@ void Widget::setParameters()    /*** Set parameters ***/
 
     } else {
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
-        setDocksParameters();
+        float coeffX[5] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f};
+        float coeffY[5] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f};
+        for (int ind = 0; ind < 5; ind++) {
+            int dockWidth = static_cast<int>(coeffX[ind] * widthMainWindow);
+            int dockHeight = static_cast<int>(coeffY[ind] * heightMainWindow);
+            dockSizesX.append(dockWidth);
+            dockSizesY.append(dockHeight);
+        }
     }
+    QTimer::singleShot(200, this, [this, dockSizesX, dockSizesY](){
+        setDocksParameters(dockSizesX, dockSizesY);
+    });
 
     if (_rowSize != 0) {
         ui->horizontalSlider_resize->setValue(_rowSize);
@@ -936,26 +965,12 @@ void Widget::setParameters()    /*** Set parameters ***/
     setTheme(_theme);
 }
 
-void Widget::setDocksParameters()
+void Widget::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY)
 {
     // ************************** Set Docks Parameters ********************************//
-    int windowWidth = window->size().width();
-    int windowHeight = window->size().height();
-
-    int dock1Width = static_cast<int>(0.25f * windowWidth);
-    int dock5Width = static_cast<int>(0.25f * windowWidth);
-
-    int dock2Width = static_cast<int>(0.08f * windowWidth);
-    int dock3Width = static_cast<int>(0.46f * windowWidth);
-    int dock4Width = static_cast<int>(0.46f * windowWidth);
-
-    int dock1Height = static_cast<int>(0.9f * windowHeight);
-    int dock2Height = static_cast<int>(0.1f * windowHeight);
-
-    window->resizeDocks({dock1, dock2, dock3, dock4, dock5},
-                        {dock1Width, dock2Width, dock3Width, dock4Width, dock5Width}, Qt::Horizontal);
-    window->resizeDocks({dock1, dock2, dock3, dock4, dock5},
-                        {dock1Height, dock2Height, dock2Height, dock2Height, dock1Height}, Qt::Vertical);
+    QList<QDockWidget*> docks = {dock1, dock2, dock3, dock4, dock5};
+    window->resizeDocks(docks, dockSizesX, Qt::Horizontal);
+    window->resizeDocks(docks, dockSizesY, Qt::Vertical);
 }
 
 void Widget::on_closeWindow_clicked()    /*** Close window signal ***/

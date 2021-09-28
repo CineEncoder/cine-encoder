@@ -207,7 +207,7 @@ private slots:
 
     void setParameters();
 
-    void setDocksParameters();
+    void setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY);
 
     void showEvent(QShowEvent *event);
 
