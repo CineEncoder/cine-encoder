@@ -571,7 +571,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _settings_path = QDir::homePath() + QString("/CineEncoder");
     _thumb_path = _settings_path + QString("/thumbnails");
     _settings_file = _settings_path + QString("/ce_settings");
-    _preset_file = _settings_path + QString("/ce_preset34.ini");
+    _preset_file = _settings_path + QString("/ce_preset35.ini");
     _settings = new QSettings(_settings_path + QString("/ce_window.ini"), QSettings::IniFormat, this);
     _status_encode_btn = "start";
     _timer_interval = 30;
@@ -892,6 +892,8 @@ void Widget::setParameters()    /*** Set parameters ***/
 
     } else {
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
+    }
+    if (dockSizesX.count() == 0 || dockSizesY.count() == 0) {
         float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f};
         float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f};
         for (int ind = 0; ind < DOCKS_COUNT; ind++) {
