@@ -4063,7 +4063,7 @@
                  <property name="maximumSize">
                   <size>
                    <width>3840</width>
-                   <height>21</height>
+                   <height>30</height>
                   </size>
                  </property>
                  <property name="frameShape">
@@ -4150,10 +4150,16 @@
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>20</height>
+                     </size>
+                    </property>
                     <property name="maximumSize">
                      <size>
                       <width>3840</width>
-                      <height>20</height>
+                      <height>30</height>
                      </size>
                     </property>
                     <property name="text">
