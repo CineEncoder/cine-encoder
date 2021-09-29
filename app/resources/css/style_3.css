@@ -1251,7 +1251,6 @@ QFrame[frameShape="5"] {
 **************************************************************************/
 
 QDockWidget {
-    /*font-size: 8pt;*/
     titlebar-close-icon: url(:/resources/icons/16x16/cil-x_black.png);
     titlebar-normal-icon: url(:/resources/icons/16x16/cil-pin_black.png);
     color: @frameSourceOutputText;

@@ -101,10 +101,11 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
         docks[ind] = new QDockWidget(dockNames.at(ind), window);
         docks[ind]->setObjectName(objNames[ind]);
         docks[ind]->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-        window->addDockWidget(dockArea[ind], docks[ind]);
+        docks[ind]->setFeatures(QDockWidget::AllDockWidgetFeatures);
         arrWidgets[ind] = new QWidget(docks[ind]);
-        arrWidgets[ind]->setObjectName(QString("dockWidgetContents") + QString::number(ind));
+        arrWidgets[ind]->setObjectName(QString("dockWidgetContents_") + QString::number(ind));
         docks[ind]->setWidget(arrWidgets[ind]);
+        window->addDockWidget(dockArea[ind], docks[ind]);
         arrLayout[ind] = new QGridLayout(arrWidgets[ind]);
         arrWidgets[ind]->setLayout(arrLayout[ind]);
         arrLayout[ind]->addWidget(dockFrames[ind]);
@@ -966,6 +967,12 @@ void Widget::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY)
     }
     window->resizeDocks(docksVis, dockVisSizesX, Qt::Horizontal);
     window->resizeDocks(docksVis, dockVisSizesY, Qt::Vertical);
+    for (int i = 0; i < DOCKS_COUNT; i++) {
+        if (docks[i]->isVisible() && docks[i]->isFloating()){
+            docks[i]->setFloating(false); // Bypassing the error with detached docks in some Linux distributions
+            docks[i]->setFloating(true);
+        }
+    }
 }
 
 void Widget::on_closeWindow_clicked()    /*** Close window signal ***/

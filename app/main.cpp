@@ -16,6 +16,7 @@
 #include <QSplashScreen>
 #include <QElapsedTimer>
 #include <QFontDatabase>
+#include <QStyleFactory>
 #include <QMap>
 #include "mainwindow.h"
 
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("CineEncoder");
     QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
+    app.setStyle(QStyleFactory::create("Fusion"));
 
     /******************* Read Settings ****************************/
     QString _settings_path = QDir::homePath() + QString("/CineEncoder");
