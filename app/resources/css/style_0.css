@@ -49,24 +49,6 @@ QMainWindow::separator {
     height: 1px;
     background: @mainBackground;
 }
-/*
-QMainWindow::separator {
-  background-color: @mainBackground;
-  border: none;
-  spacing: 0px;
-  padding: 0px;
-}
-
-QMainWindow::separator:horizontal {
-  width: 1px;
-  margin: 0px;
-}
-
-QMainWindow::separator:vertical {
-  height: 1px;
-  margin: 0px;
-}
-*/
 
 QWidget {
     background: @frameLeftRightBackground;
@@ -291,14 +273,13 @@ QTableWidget {
     color: @headerTextColor;
     background-color: @tableBackground;
     selection-background-color: #1C252F;
-    /*gridline-color: @tableGrid;*/
+    /*gridline-style: solid;*/
+    gridline-color: @tableGrid;
     alternate-background-color: @tableAlternateBackground;
 }
 QTableWidget::item {
     margin-left: 0px;
     margin-right: 0px;
-    /*border-color: #373C47;
-    gridline-color: @tableGrid;*/
 }
 QTableWidget::item:selected {
     margin: 0px;
@@ -1293,7 +1274,7 @@ QDockWidget::title {
 }
 QDockWidget::close-button,
 QDockWidget::float-button {
-    icon-size: 20px;
+    icon-size: 10px;
     padding-top: 0px;
     padding-bottom: 0px;
     border: none;

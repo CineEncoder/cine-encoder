@@ -44,7 +44,8 @@ void OpeningFiles::setText(QString &text)
 {
     QString elidedText;
     QFontMetrics fm = ui->label_filename->fontMetrics();
-    int fwidth = fm.horizontalAdvance(text);
+    //int fwidth = fm.horizontalAdvance(text);
+    int fwidth = fm.width(text);
     int width = ui->label_filename->width();
     if (fwidth > width) {
         elidedText = fm.elidedText(text, Qt::ElideMiddle, width, 0);

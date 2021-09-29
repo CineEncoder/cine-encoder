@@ -78,6 +78,7 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     window->setWindowFlags(Qt::Widget);
     window->setDockNestingEnabled(true);
     centralWidget = new QWidget(window);
+    centralWidget->setObjectName("centralwidget");
     window->setCentralWidget(centralWidget);
 
     QGridLayout *centralwidgetLayout = new QGridLayout(centralWidget);
@@ -85,41 +86,32 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     centralwidgetLayout->addWidget(ui->frame_task);
     centralwidgetLayout->setContentsMargins(0, 0, 0, 0);
 
-    dock1 = new QDockWidget(tr("Presets"), window);
-    window->addDockWidget(Qt::LeftDockWidgetArea, dock1);
-    dock1->setObjectName("Dock_presets");
-    dock1->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-    dock1->setWidget(ui->frameLeft);
-
-    dock2 = new QDockWidget(tr("Preview"), window);
-    window->addDockWidget(Qt::BottomDockWidgetArea, dock2);
-    dock2->setObjectName("Dock_preview");
-    dock2->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-    dock2->setWidget(ui->frame_preview);
-
-    dock3 = new QDockWidget(tr("Source"), window);
-    window->addDockWidget(Qt::BottomDockWidgetArea, dock3);
-    dock3->setObjectName("Dock_source");
-    dock3->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-    dock3->setWidget(ui->frame_source);
-
-    dock4 = new QDockWidget(tr("Output"), window);
-    window->addDockWidget(Qt::BottomDockWidgetArea, dock4);
-    dock4->setObjectName("Dock_output");
-    dock4->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-    dock4->setWidget(ui->frame_output);
-
-    dock5 = new QDockWidget(tr("Options"), window);
-    window->addDockWidget(Qt::RightDockWidgetArea, dock5);
-    dock5->setObjectName("Dock_options");
-    dock5->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-    dock5->setWidget(ui->frameRight);
-
-    dock6 = new QDockWidget(tr("Log"), window);
-    window->addDockWidget(Qt::RightDockWidgetArea, dock6);
-    dock6->setObjectName("Dock_log");
-    dock6->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-    dock6->setWidget(ui->frameLog);
+    QList<QString> dockNames = {tr("Presets"), tr("Preview"), tr("Source"),
+                                tr("Output"), tr("Options"), tr("Log")};
+    QList<Qt::DockWidgetArea> dockArea = {Qt::LeftDockWidgetArea, Qt::BottomDockWidgetArea,
+                                          Qt::BottomDockWidgetArea, Qt::BottomDockWidgetArea,
+                                          Qt::RightDockWidgetArea, Qt::RightDockWidgetArea};
+    QList<QString> objNames = {"Dock_presets", "Dock_preview", "Dock_source",
+                               "Dock_output", "Dock_options", "Dock_log"};
+    QList<QFrame*> dockFrames= {ui->frameLeft, ui->frame_preview, ui->frame_source,
+                                ui->frame_output, ui->frameRight, ui->frameLog};
+    QWidget *arrWidgets[DOCKS_COUNT];
+    QGridLayout *arrLayout[DOCKS_COUNT];
+    for (int ind = 0; ind < DOCKS_COUNT; ind++) {
+        docks[ind] = new QDockWidget(dockNames.at(ind), window);
+        docks[ind]->setObjectName(objNames[ind]);
+        docks[ind]->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+        window->addDockWidget(dockArea[ind], docks[ind]);
+        arrWidgets[ind] = new QWidget(docks[ind]);
+        arrWidgets[ind]->setObjectName(QString("dockWidgetContents") + QString::number(ind));
+        docks[ind]->setWidget(arrWidgets[ind]);
+        arrLayout[ind] = new QGridLayout(arrWidgets[ind]);
+        arrWidgets[ind]->setLayout(arrLayout[ind]);
+        arrLayout[ind]->addWidget(dockFrames[ind]);
+        arrLayout[ind]->setContentsMargins(0, 0, 0, 0);
+        arrLayout[ind]->setHorizontalSpacing(0);
+        arrLayout[ind]->setVerticalSpacing(0);
+    }
 
 //    dock7 = new QDockWidget(tr("Metadata"), window);
 //    window->addDockWidget(Qt::RightDockWidgetArea, dock7);
@@ -208,13 +200,12 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         _settings->beginGroup("MainWindow");
         _settings->setValue("MainWindow/state", window->saveState());
         _settings->setValue("MainWindow/geometry", window->saveGeometry());
-        QList<QDockWidget*> docks = {dock1, dock2, dock3, dock4, dock5};
         _settings->beginWriteArray("MainWindow/docks_geometry");
-                for (int i = 0; i < docks.count(); i++) {
-                    _settings->setArrayIndex(i);
-                    _settings->setValue("MainWindow/docks_geometry/dock_size", docks.at(i)->size());
-                }
-                _settings->endArray();
+            for (int ind = 0; ind < DOCKS_COUNT; ind++) {
+                _settings->setArrayIndex(ind);
+                _settings->setValue("MainWindow/docks_geometry/dock_size", docks[ind]->size());
+            }
+            _settings->endArray();
         _settings->endGroup();
 
         // Save Tables
@@ -388,15 +379,12 @@ void Widget::createConnections()
     ui->menuToolsButton->setMenu(menuTools);
 
     menuView = new QMenu(this);
-    menuView->addAction(dock1->toggleViewAction());
-    menuView->addAction(dock2->toggleViewAction());
-    menuView->addAction(dock3->toggleViewAction());
-    menuView->addAction(dock4->toggleViewAction());
-    menuView->addAction(dock5->toggleViewAction());
-    menuView->addAction(dock6->toggleViewAction());
+    for (int i = 0; i < DOCKS_COUNT; i++) {
+        menuView->addAction(docks[i]->toggleViewAction());
+    }
     ui->menuViewButton->setMenu(menuView);
-    dock6->toggleViewAction()->setChecked(false);
-    dock6->setVisible(false);
+    docks[5]->toggleViewAction()->setChecked(false);
+    docks[5]->setVisible(false);
 
     menuPreferences = new QMenu(this);
     menuPreferences->addAction(settings);
@@ -861,12 +849,10 @@ void Widget::setParameters()    /*** Set parameters ***/
 
         // Restore Main Window
         _settings->beginGroup("MainWindow");
-        window->restoreGeometry(_settings->value("MainWindow/geometry").toByteArray());
+        //window->restoreGeometry(_settings->value("MainWindow/geometry").toByteArray());
         window->restoreState(_settings->value("MainWindow/state").toByteArray());
-        QList<QDockWidget*> docks = {dock1, dock2, dock3, dock4, dock5};
-        int docksCount = docks.count();
         int arraySize = _settings->beginReadArray("MainWindow/docks_geometry");
-            for (int i = 0; i < arraySize && i < docksCount; i++) {
+            for (int i = 0; i < arraySize && i < DOCKS_COUNT; i++) {
                 _settings->setArrayIndex(i);
                 QSize size = _settings->value("MainWindow/docks_geometry/dock_size").toSize();
                 dockSizesX.append(size.width());
@@ -905,9 +891,9 @@ void Widget::setParameters()    /*** Set parameters ***/
 
     } else {
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
-        float coeffX[5] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f};
-        float coeffY[5] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f};
-        for (int ind = 0; ind < 5; ind++) {
+        float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f};
+        float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f};
+        for (int ind = 0; ind < DOCKS_COUNT; ind++) {
             int dockWidth = static_cast<int>(coeffX[ind] * widthMainWindow);
             int dockHeight = static_cast<int>(coeffY[ind] * heightMainWindow);
             dockSizesX.append(dockWidth);
@@ -968,9 +954,18 @@ void Widget::setParameters()    /*** Set parameters ***/
 void Widget::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY)
 {
     // ************************** Set Docks Parameters ********************************//
-    QList<QDockWidget*> docks = {dock1, dock2, dock3, dock4, dock5};
-    window->resizeDocks(docks, dockSizesX, Qt::Horizontal);
-    window->resizeDocks(docks, dockSizesY, Qt::Vertical);
+    QList<QDockWidget*> docksVis;
+    QList<int> dockVisSizesX;
+    QList<int> dockVisSizesY;
+    for (int i = 0; i < DOCKS_COUNT; i++) {
+        if (docks[i]->isVisible() && !docks[i]->isFloating()){
+            docksVis.append(docks[i]);
+            dockVisSizesX.append(dockSizesX.at(i));
+            dockVisSizesY.append(dockSizesY.at(i));
+        }
+    }
+    window->resizeDocks(docksVis, dockVisSizesX, Qt::Horizontal);
+    window->resizeDocks(docksVis, dockVisSizesY, Qt::Vertical);
 }
 
 void Widget::on_closeWindow_clicked()    /*** Close window signal ***/

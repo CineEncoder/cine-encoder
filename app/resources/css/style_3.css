@@ -6,7 +6,7 @@
 @tableRowSelectedBackground = #D0D0D0;
 @tableTextColor = #000000;
 @tableTextSelected = #000000;
-@tableGrid = #373C47;
+@tableGrid = #CCCCCC;
 
 @frameLeftRightBackground = #FFFFFF;
 @frameLeftRightBorder = #B6B6B6;
@@ -273,14 +273,13 @@ QTableWidget {
     color: @headerTextColor;
     background-color: @tableBackground;
     selection-background-color: #1C252F;
-    /*gridline-color: @tableGrid;*/
+    /*gridline-style: solid;*/
+    gridline-color: @tableGrid;
     alternate-background-color: @tableAlternateBackground;
 }
 QTableWidget::item {
     margin-left: 0px;
     margin-right: 0px;
-    /*border-color: #373C47;
-    gridline-color: @tableGrid;*/
 }
 QTableWidget::item:selected {
     margin: 0px;
@@ -1269,7 +1268,7 @@ QDockWidget::title {
 }
 QDockWidget::close-button,
 QDockWidget::float-button {
-    icon-size: 20px;
+    icon-size: 10px;
     padding-top: 0px;
     padding-bottom: 0px;
     border: none;

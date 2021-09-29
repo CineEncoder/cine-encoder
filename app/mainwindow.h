@@ -345,19 +345,9 @@ private:
 
     QWidget *centralWidget;
 
-    QDockWidget *dock1;
+    static const int DOCKS_COUNT = 6;
 
-    QDockWidget *dock2;
-
-    QDockWidget *dock3;
-
-    QDockWidget *dock4;
-
-    QDockWidget *dock5;
-
-    QDockWidget *dock6;
-
-    //QDockWidget *dock7;
+    QDockWidget *docks[DOCKS_COUNT];
 
     // ******************** Top label ****************************//
 
