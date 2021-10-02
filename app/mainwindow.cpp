@@ -458,9 +458,25 @@ void Widget::createConnections()
     menu->addAction(addpreset);
     ui->actionAdd_preset->setMenu(menu);
 
-    // ***************************** Elements actions ***********************************//
+    // ************************ Metadata Elements Actions ****************************//
+
+    QList<QLineEdit *> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit *>();
+    foreach (QLineEdit *lineEdit, linesEditMetadata) {
+        QList<QAction*> actionList = lineEdit->findChildren<QAction*>();
+        if (!actionList.isEmpty()) {
+            connect(actionList.first(), &QAction::triggered, this, [this, lineEdit]() {
+            lineEdit->clear();
+            lineEdit->insert("");
+            lineEdit->setModified(true);
+            ui->frame_middle->setFocus();
+            });
+        }
+    }
+
+    // ************************ Audio Elements Actions ****************************//
 
     for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
+        // Check Boxes
         QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
         connect(checkBoxAudio, &QCheckBox::clicked, this, [this, checkBoxAudio, stream](){
@@ -475,31 +491,60 @@ void Widget::createConnections()
                 _audioStreamCheckState[stream] = state_qstr.toInt();
             }
         });
-
+        // Line Edit Lang
         QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
         connect(lineEditLangAudio, &QLineEdit::editingFinished, this, [this, lineEditLangAudio, stream](){
             if (_row != -1) {
+                if (!lineEditLangAudio->isModified()) {
+                    return;
+                }
+                lineEditLangAudio->setModified(false);
                 QString langAudio = lineEditLangAudio->text();
                 QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
                 ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_1 + stream, newItem_langAudio);
                 _audioLang[stream] = langAudio;
             }
         });
-
+        QList<QAction*> actionLangAudioList = lineEditLangAudio->findChildren<QAction*>();
+        if (!actionLangAudioList.isEmpty()) {
+            connect(actionLangAudioList.first(), &QAction::triggered, this, [this, lineEditLangAudio]() {
+            lineEditLangAudio->clear();
+            lineEditLangAudio->insert("");
+            lineEditLangAudio->setModified(true);
+            ui->frame_middle->setFocus();
+            });
+        }
+        // Line Edit Title
         QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
         connect(lineEditTitleAudio, &QLineEdit::editingFinished, this, [this, lineEditTitleAudio, stream](){
             if (_row != -1) {
+                if (!lineEditTitleAudio->isModified()) {
+                    return;
+                }
+                lineEditTitleAudio->setModified(false);
                 QString titleAudio = lineEditTitleAudio->text();
                 QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
                 ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_1 + stream, newItem_titleAudio);
                 _audioTitle[stream] = titleAudio;
             }
         });
+        QList<QAction*> actionTitleAudioList = lineEditTitleAudio->findChildren<QAction*>();
+        if (!actionTitleAudioList.isEmpty()) {
+            connect(actionTitleAudioList.first(), &QAction::triggered, this, [this, lineEditTitleAudio]() {
+            lineEditTitleAudio->clear();
+            lineEditTitleAudio->insert("");
+            lineEditTitleAudio->setModified(true);
+            ui->frame_middle->setFocus();
+            });
+        }
     }
 
+    // ************************ Subtitle Elements Actions ****************************//
+
     for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
+        // Check Boxes
         QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
         connect(checkBoxSubtitle, &QCheckBox::clicked, this, [this, checkBoxSubtitle, stream](){
@@ -514,28 +559,54 @@ void Widget::createConnections()
                 _subtitleCheckState[stream] = state_qstr.toInt();
             }
         });
-
+        // Line Edit Lang
         QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
         connect(lineEditLangSubtitle, &QLineEdit::editingFinished, this, [this, lineEditLangSubtitle, stream](){
             if (_row != -1) {
+                if (!lineEditLangSubtitle->isModified()) {
+                    return;
+                }
+                lineEditLangSubtitle->setModified(false);
                 QString langSubtitle = lineEditLangSubtitle->text();
                 QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
                 ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_1 + stream, newItem_langSubtitle);
                 _subtitleLang[stream] = langSubtitle;
             }
         });
-
+        QList<QAction*> actionLangSubtitleList = lineEditLangSubtitle->findChildren<QAction*>();
+        if (!actionLangSubtitleList.isEmpty()) {
+            connect(actionLangSubtitleList.first(), &QAction::triggered, this, [this, lineEditLangSubtitle]() {
+            lineEditLangSubtitle->clear();
+            lineEditLangSubtitle->insert("");
+            lineEditLangSubtitle->setModified(true);
+            ui->frame_middle->setFocus();
+            });
+        }
+        // Line Edit Title
         QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
         connect(lineEditTitleSubtitle, &QLineEdit::editingFinished, this, [this, lineEditTitleSubtitle, stream](){
             if (_row != -1) {
+                if (!lineEditTitleSubtitle->isModified()) {
+                    return;
+                }
+                lineEditTitleSubtitle->setModified(false);
                 QString titleSubtitle = lineEditTitleSubtitle->text();
                 QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
                 ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_1 + stream, newItem_titleSubtitle);
                 _subtitleTitle[stream] = titleSubtitle;
             }
         });
+        QList<QAction*> actionTitleSubtitleList = lineEditTitleSubtitle->findChildren<QAction*>();
+        if (!actionTitleSubtitleList.isEmpty()) {
+            connect(actionTitleSubtitleList.first(), &QAction::triggered, this, [this, lineEditTitleSubtitle]() {
+            lineEditTitleSubtitle->clear();
+            lineEditTitleSubtitle->insert("");
+            lineEditTitleSubtitle->setModified(true);
+            ui->frame_middle->setFocus();
+            });
+        }
     }
 }
 
@@ -1460,6 +1531,15 @@ void Widget::restore_initial_state()    /*** Restore initial state ***/
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and move window ***/
 {
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
+            ui->frame_middle->setFocus();
+            return true;
+        }
+        return false;
+    }
+
     if (event->type() == QEvent::MouseButtonRelease) // *************** Reset ************************* //
     {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
@@ -3786,68 +3866,96 @@ QString Widget::callFileDialog(const QString title)  /*** Call file dialog ***/
 }
 
 /************************************************
-** Options Window
+** Metadata Window
 ************************************************/
 
 void Widget::on_lineEditTitleVideo_editingFinished()
 {
     if (_row != -1) {
+        if (!ui->lineEditTitleVideo->isModified()) {
+            return;
+        }
+        ui->lineEditTitleVideo->setModified(false);
         QString videoTitle = ui->lineEditTitleVideo->text();
         QTableWidgetItem *newItem_videoTitle = new QTableWidgetItem(videoTitle);
         ui->tableWidget->setItem(_row, columnIndex::T_VIDEOTITLE, newItem_videoTitle);
-        _videoMetadata[VIDEO_TITLE] = ui->tableWidget->item(_row, columnIndex::T_VIDEOTITLE)->text();
+        _videoMetadata[VIDEO_TITLE] = videoTitle;
     }
 }
 
 void Widget::on_lineEditAuthorVideo_editingFinished()
 {
     if (_row != -1) {
+        if (!ui->lineEditAuthorVideo->isModified()) {
+            return;
+        }
+        ui->lineEditAuthorVideo->setModified(false);
         QString videoAuthor = ui->lineEditAuthorVideo->text();
         QTableWidgetItem *newItem_videoAuthor = new QTableWidgetItem(videoAuthor);
         ui->tableWidget->setItem(_row, columnIndex::T_VIDEOAUTHOR, newItem_videoAuthor);
-        _videoMetadata[VIDEO_AUTHOR] = ui->tableWidget->item(_row, columnIndex::T_VIDEOAUTHOR)->text();
+        _videoMetadata[VIDEO_AUTHOR] = videoAuthor;
     }
 }
 
 void Widget::on_lineEditYearVideo_editingFinished()
 {
     if (_row != -1) {
+        if (!ui->lineEditYearVideo->isModified()) {
+            return;
+        }
+        ui->lineEditYearVideo->setModified(false);
         QString videoYear = ui->lineEditYearVideo->text();
         QTableWidgetItem *newItem_videoYear = new QTableWidgetItem(videoYear);
         ui->tableWidget->setItem(_row, columnIndex::T_VIDEOYEAR, newItem_videoYear);
-        _videoMetadata[VIDEO_YEAR] = ui->tableWidget->item(_row, columnIndex::T_VIDEOYEAR)->text();
+        _videoMetadata[VIDEO_YEAR] = videoYear;
     }
 }
 
 void Widget::on_lineEditPerfVideo_editingFinished()
 {
     if (_row != -1) {
+        if (!ui->lineEditPerfVideo->isModified()) {
+            return;
+        }
+        ui->lineEditPerfVideo->setModified(false);
         QString videoPerf = ui->lineEditPerfVideo->text();
         QTableWidgetItem *newItem_videoPerf = new QTableWidgetItem(videoPerf);
         ui->tableWidget->setItem(_row, columnIndex::T_VIDEOPERF, newItem_videoPerf);
-        _videoMetadata[VIDEO_PERFORMER] = ui->tableWidget->item(_row, columnIndex::T_VIDEOPERF)->text();
+        _videoMetadata[VIDEO_PERFORMER] = videoPerf;
     }
 }
 
 void Widget::on_lineEditMovieNameVideo_editingFinished()
 {
     if (_row != -1) {
+        if (!ui->lineEditMovieNameVideo->isModified()) {
+            return;
+        }
+        ui->lineEditMovieNameVideo->setModified(false);
         QString videoMovieName = ui->lineEditMovieNameVideo->text();
         QTableWidgetItem *newItem_videoMovieName = new QTableWidgetItem(videoMovieName);
         ui->tableWidget->setItem(_row, columnIndex::T_VIDEOMOVIENAME, newItem_videoMovieName);
-        _videoMetadata[VIDEO_MOVIENAME] = ui->tableWidget->item(_row, columnIndex::T_VIDEOMOVIENAME)->text();
+        _videoMetadata[VIDEO_MOVIENAME] = videoMovieName;
     }
 }
 
 void Widget::on_lineEditDescriptionVideo_editingFinished()
 {
     if (_row != -1) {
+        if (!ui->lineEditDescriptionVideo->isModified()) {
+            return;
+        }
+        ui->lineEditDescriptionVideo->setModified(false);
         QString videoDescription = ui->lineEditDescriptionVideo->text();
         QTableWidgetItem *newItem_videoDescription = new QTableWidgetItem(videoDescription);
         ui->tableWidget->setItem(_row, columnIndex::T_VIDEODESCR, newItem_videoDescription);
-        _videoMetadata[VIDEO_DESCRIPTION] = ui->tableWidget->item(_row, columnIndex::T_VIDEODESCR)->text();
+        _videoMetadata[VIDEO_DESCRIPTION] = videoDescription;
     }
 }
+
+/************************************************
+** Split Window
+************************************************/
 
 void Widget::on_horizontalSlider_valueChanged(int value)
 {
@@ -4538,3 +4646,4 @@ void Widget::call_task_complete(const QString &_message, const bool &_timer_mode
         taskcomplete.exec();
     }
 }
+

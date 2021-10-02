@@ -58,7 +58,6 @@
 #include <QMap>
 #include <QTranslator>
 #include "openingfiles.h"
-//#include <QDebug>
 
 
 enum columnIndex {
