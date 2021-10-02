@@ -109,6 +109,10 @@ enum videoMetadataIndex {
     VIDEO_TITLE,        VIDEO_AUTHOR,       VIDEO_YEAR,
     VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME
 };
+enum dockIndex {
+    PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
+    STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK
+};
 
 
 QT_BEGIN_NAMESPACE
@@ -345,7 +349,7 @@ private:
 
     QWidget *centralWidget;
 
-    static const int DOCKS_COUNT = 6;
+    static const int DOCKS_COUNT = 8;
 
     QDockWidget *docks[DOCKS_COUNT];
 
@@ -623,7 +627,7 @@ private:
 
     QString timeConverter(float &time);
 
-    QString setThumbnail(QString curFilename, double time, QString quality);
+    QString setThumbnail(QString curFilename, double time, QString quality, int destination);
 
     void provideContextMenu(const QPoint &position);
 

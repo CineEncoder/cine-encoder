@@ -314,5 +314,9 @@
         <file>resources/icons/16x16/cil-zoom-out_black.png</file>
         <file>resources/icons/16x16/cil-magnifying-glass_black.png</file>
         <file>resources/icons/16x16/cil-screen-desktop_black.png</file>
+        <file>resources/icons/16x16/cil-erase.png</file>
+        <file>resources/icons/16x16/cil-find.png</file>
+        <file>resources/icons/16x16/cil-loop-circular_black.png</file>
+        <file>resources/icons/16x16/cil-warning.png</file>
     </qresource>
 </RCC>

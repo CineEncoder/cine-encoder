@@ -69,6 +69,8 @@ QFrame {
     border: none;
     background-color: @mainBackground;
 }
+QFrame#frameSplit,
+QFrame#frameMetadata,
 QFrame#frameLog,
 QFrame#frameLeft,
 QFrame#frameRight,
@@ -104,8 +106,8 @@ QFrame#frame_top {
     background-color: @frameHintBackground;
 }
 QFrame#frameTab_1, QFrame#frameTab_2, QFrame#frameTab_3, QFrame#frameTab_4,
-QFrame#frameLeftTab_1, QFrame#frameLeftTab_2 {
-    background-color: @frameLeftRightBackground;
+QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
+    background-color: @tableBackground;
 }
 
 
@@ -668,6 +670,13 @@ QLabel#labelThumb {
     background-color: @frameSourceOutputBackground;
 }
 
+QLabel#labelSplitPreview {
+    color: @frameHeaderBackground;
+    font: 24pt;
+    font-style: oblique;
+    background-color: #050505;
+}
+
 QLabel#label_source,
 QLabel#label_output {
     color: @tableTextColor;
@@ -852,7 +861,8 @@ QPushButton#buttonCloseTaskWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
-
+QPushButton:hover#pushButton_findMetadata,
+QPushButton:hover#pushButton_clearMetadata,
 QPushButton:hover#actionAdd_preset,
 QPushButton:hover#actionRemove_preset,
 QPushButton:hover#actionEdit_preset,
@@ -872,6 +882,8 @@ QPushButton:hover#closeWindow,
 QPushButton:hover#buttonCloseTaskWindow {
         background-color: #D9D9D9;
 }
+QPushButton:pressed#pushButton_findMetadata,
+QPushButton:pressed#pushButton_clearMetadata,
 QPushButton:pressed#actionAdd_preset,
 QPushButton:pressed#actionRemove_preset,
 QPushButton:pressed#actionEdit_preset,
@@ -929,24 +941,24 @@ QPushButton:pressed#buttonTab_4 {
 /*********************************************/
 
 QPushButton#buttonFramePrevious {
-    padding-left: 12px;
-    padding-right: 16px;
+    padding-left: 2px;
+    padding-right: 2px;
     text-align: right center;
-    border: 1px solid #373C46;
+    border: 0px solid #373C46;
     color: #000000;
     background-color: transparent;
-    image: url(:/resources/icons/16x16/cil-chevron-left_black.png);
-    image-position: left;
+    image: url(:/resources/icons/16x16/cil-caret-left_black.png);
+    image-position: center;
 }
 QPushButton#buttonFrameNext {
-    padding-left: 16px;
-    padding-right: 12px;
+    padding-left: 2px;
+    padding-right: 2px;
     text-align: left center;
-    border: 1px solid #373C46;
+    border: 0px solid #373C46;
     color: #000000;
     background-color: transparent;
-    image: url(:/resources/icons/16x16/cil-chevron-right_black.png);
-    image-position: right;
+    image: url(:/resources/icons/16x16/cil-caret-right_black.png);
+    image-position: center;
 }
 QPushButton#buttonTempPath,
 QPushButton#buttonOutputPath {

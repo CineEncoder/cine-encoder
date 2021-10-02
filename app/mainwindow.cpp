@@ -86,15 +86,16 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     centralwidgetLayout->addWidget(ui->frame_task);
     centralwidgetLayout->setContentsMargins(0, 0, 0, 0);
 
-    QList<QString> dockNames = {tr("Presets"), tr("Preview"), tr("Source"),
-                                tr("Output"), tr("Options"), tr("Log")};
+    QList<QString> dockNames = {tr("Presets"), tr("Preview"), tr("Source"), tr("Output"),
+                                tr("Streams"), tr("Log"), tr("Metadata"), tr("Split")};
     QList<Qt::DockWidgetArea> dockArea = {Qt::LeftDockWidgetArea, Qt::BottomDockWidgetArea,
                                           Qt::BottomDockWidgetArea, Qt::BottomDockWidgetArea,
+                                          Qt::RightDockWidgetArea, Qt::RightDockWidgetArea,
                                           Qt::RightDockWidgetArea, Qt::RightDockWidgetArea};
-    QList<QString> objNames = {"Dock_presets", "Dock_preview", "Dock_source",
-                               "Dock_output", "Dock_options", "Dock_log"};
-    QList<QFrame*> dockFrames= {ui->frameLeft, ui->frame_preview, ui->frame_source,
-                                ui->frame_output, ui->frameRight, ui->frameLog};
+    QList<QString> objNames = {"Dock_presets", "Dock_preview", "Dock_source", "Dock_output",
+                               "Dock_options", "Dock_log", "Dock_metadata", "Dock_split"};
+    QList<QFrame*> dockFrames= {ui->frameLeft, ui->frame_preview, ui->frame_source, ui->frame_output,
+                                ui->frameRight, ui->frameLog, ui->frameMetadata, ui->frameSplit};
     QWidget *arrWidgets[DOCKS_COUNT];
     QGridLayout *arrLayout[DOCKS_COUNT];
     for (int ind = 0; ind < DOCKS_COUNT; ind++) {
@@ -113,12 +114,6 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
         arrLayout[ind]->setHorizontalSpacing(0);
         arrLayout[ind]->setVerticalSpacing(0);
     }
-
-//    dock7 = new QDockWidget(tr("Metadata"), window);
-//    window->addDockWidget(Qt::RightDockWidgetArea, dock7);
-//    dock7->setObjectName("Dock_metadata");
-//    dock7->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-//    dock7->setWidget(ui->frameTab_1);
 
     // **************************** Set Event Filters ***********************************//
 
@@ -384,8 +379,10 @@ void Widget::createConnections()
         menuView->addAction(docks[i]->toggleViewAction());
     }
     ui->menuViewButton->setMenu(menuView);
-    docks[5]->toggleViewAction()->setChecked(false);
-    docks[5]->setVisible(false);
+    docks[dockIndex::LOG_DOCK]->toggleViewAction()->setChecked(false);
+    docks[dockIndex::SPLIT_DOCK]->toggleViewAction()->setChecked(false);
+    docks[dockIndex::LOG_DOCK]->setVisible(false);
+    docks[dockIndex::SPLIT_DOCK]->setVisible(false);
 
     menuPreferences = new QMenu(this);
     menuPreferences->addAction(settings);
@@ -619,6 +616,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     ui->comboBoxView->setVisible(false);
     animation = new QMovie(this);
     animation->setFileName(":/resources/icons/Animated/cil-spinner-circle.gif");
+    animation->setScaledSize(QSize(18, 18));
     process_1 = new QProcess(this);
     process_5 = new QProcess(this);
     process_1->setProcessChannelMode(QProcess::MergedChannels);
@@ -630,7 +628,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     ui->label_53->hide();
     ui->label_54->hide();
     ui->label_55->hide();
-    ui->progressBar->hide();   
+    ui->progressBar->hide();
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->horizontalHeader()->setVisible(true);
     ui->tableWidget->setAlternatingRowColors(true);
@@ -893,9 +891,9 @@ void Widget::setParameters()    /*** Set parameters ***/
     } else {
         this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
     }
-    if (dockSizesX.count() == 0 || dockSizesY.count() == 0) {
-        float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f};
-        float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f};
+    if (dockSizesX.count() < DOCKS_COUNT || dockSizesY.count() < DOCKS_COUNT) {
+        float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
+        float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
         for (int ind = 0; ind < DOCKS_COUNT; ind++) {
             int dockWidth = static_cast<int>(coeffX[ind] * widthMainWindow);
             int dockHeight = static_cast<int>(coeffY[ind] * heightMainWindow);
@@ -1091,34 +1089,36 @@ void Widget::showOpeningFiles(int percent)
 
 void Widget::showMetadataEditor()
 {
-    if (ui->frameRight->isHidden()) {
-        ui->frameRight->show();
+    if (!docks[dockIndex::METADATA_DOCK]->isVisible()) {
+        docks[dockIndex::METADATA_DOCK]->setVisible(true);
     }
-    ui->tabWidgetRight->setCurrentIndex(0);
+    docks[dockIndex::METADATA_DOCK]->setFloating(true);
 }
 
 void Widget::showAudioStreamsSelection()
 {
-    if (ui->frameRight->isHidden()) {
-        ui->frameRight->show();
+    if (!docks[dockIndex::STREAMS_DOCK]->isVisible()) {
+        docks[dockIndex::STREAMS_DOCK]->setVisible(true);
     }
-    ui->tabWidgetRight->setCurrentIndex(1);
+    docks[dockIndex::STREAMS_DOCK]->setFloating(true);
+    ui->tabWidgetRight->setCurrentIndex(0);
 }
 
 void Widget::showSubtitlesSelection()
 {
-    if (ui->frameRight->isHidden()) {
-        ui->frameRight->show();
+    if (!docks[dockIndex::STREAMS_DOCK]->isVisible()) {
+        docks[dockIndex::STREAMS_DOCK]->setVisible(true);
     }
-    ui->tabWidgetRight->setCurrentIndex(2);
+    docks[dockIndex::STREAMS_DOCK]->setFloating(true);
+    ui->tabWidgetRight->setCurrentIndex(1);
 }
 
 void Widget::showVideoSplitter()
 {
-    if (ui->frameRight->isHidden()) {
-        ui->frameRight->show();
+    if (!docks[dockIndex::SPLIT_DOCK]->isVisible()) {
+        docks[dockIndex::SPLIT_DOCK]->setVisible(true);
     }
-    ui->tabWidgetRight->setCurrentIndex(3);
+    docks[dockIndex::SPLIT_DOCK]->setFloating(true);
 }
 
 void Widget::get_current_data() /*** Get current data ***/
@@ -1185,7 +1185,7 @@ void Widget::get_current_data() /*** Get current data ***/
     //******************************** Set icons *****************************//
 
     double halfTime = _dur/2;
-    QString tmb_file = setThumbnail(_curFilename, halfTime, "high");
+    QString tmb_file = setThumbnail(_curFilename, halfTime, "high", 1);
 
     QSize imageSize = QSize(85, 48);
     if (_rowSize == 25) {
@@ -3411,6 +3411,13 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
     ui->label_54->hide();
     ui->label_55->hide();
     ui->progressBar->hide();
+    ui->labelSplitPreview->clear();
+    ui->horizontalSlider->blockSignals(true);
+    ui->horizontalSlider->setValue(0);
+    ui->horizontalSlider->blockSignals(false);
+    ui->lineEditCurTime->clear();
+    ui->lineEditStartTime->clear();
+    ui->lineEditEndTime->clear();
 
     // **************************** Disable audio widgets ***********************************//
     QList <QCheckBox *> checkBoxAudio = ui->frameTab_2->findChildren<QCheckBox *>();
@@ -3446,9 +3453,7 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
         ui->labelThumb->setText(tr("Preview"));
         ui->label_source->setText("");
         ui->label_output->setText("");
-
-        ui->lineEditStartTime->clear();
-        ui->lineEditEndTime->clear();
+        ui->horizontalSlider->setMaximum(0);
 
         // **************************** Reset metadata widgets ***********************************//
         QList<QLineEdit *> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit *>();
@@ -3482,8 +3487,8 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
         _fmt = "";
         _fps = "";
         _fr_count = 0;
-        _startTime = 0;
-        _endTime = 0;
+        _startTime = 0.0;
+        _endTime = 0.0;
 
         _hdr[CUR_COLOR_RANGE] = "";    // color range
         _hdr[CUR_COLOR_PRIMARY] = "";  // color primary
@@ -3627,7 +3632,7 @@ void Widget::on_horizontalSlider_resize_valueChanged(int value)
 ** Preview Window
 ************************************************/
 
-QString Widget::setThumbnail(QString curFilename, double time, QString quality)     /*** Thumbnail ***/
+QString Widget::setThumbnail(QString curFilename, double time, QString quality, int destination)     /*** Thumbnail ***/
 {
     QString qualityParam = "-vf scale=144:-1 -compression_level 10 -pix_fmt rgb24";
     if (quality == "low")
@@ -3649,8 +3654,14 @@ QString Widget::setThumbnail(QString curFilename, double time, QString quality) 
         tmb_file = ":/resources/images/no_preview.png";
     }
     QPixmap pix(tmb_file);
-    QPixmap pix_scaled = pix.scaled(ui->frame_preview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui->labelThumb->setPixmap(pix_scaled);
+    QPixmap pix_scaled;
+    if (destination == 1) {
+        pix_scaled = pix.scaled(ui->frame_preview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        ui->labelThumb->setPixmap(pix_scaled);
+    } else {
+        pix_scaled = pix.scaled(ui->labelSplitPreview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        ui->labelSplitPreview->setPixmap(pix_scaled);
+    }
     return tmb_file;
 }
 
@@ -3658,7 +3669,7 @@ void Widget::repeatHandler_Type_2()  /*** Repeat handler ***/
 {
     std::cout << "Call by timer... " << std::endl;
     if (_row != -1) {
-        setThumbnail(_curFilename, _curTime, "high");
+        setThumbnail(_curFilename, _curTime, "high", 2);
     }
 }
 
