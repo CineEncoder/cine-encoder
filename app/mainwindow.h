@@ -356,6 +356,10 @@ private:
 
     QLabel *raiseThumb;
 
+    QLabel *audioThumb;
+
+    QLabel *subtitleThumb;
+
     // **************** Progress animation ***********************//
 
     QMovie *animation;

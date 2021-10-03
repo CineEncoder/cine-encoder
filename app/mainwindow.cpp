@@ -65,6 +65,20 @@ Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
     raiseThumb->setText(tr("No media"));
     raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
 
+    audioThumb = new QLabel(ui->frameTab_2);
+    ui->gridLayoutAudio->addWidget(audioThumb);
+    audioThumb->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    audioThumb->setAlignment(Qt::AlignCenter);
+    audioThumb->setText(tr("No audio"));
+    audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+
+    subtitleThumb = new QLabel(ui->frameTab_3);
+    ui->gridLayoutSubtitle->addWidget(subtitleThumb);
+    subtitleThumb->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    subtitleThumb->setAlignment(Qt::AlignCenter);
+    subtitleThumb->setText(tr("No subtitle"));
+    subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+
     // **************************** Create docks ***********************************//
 
     QGridLayout *layout = new QGridLayout(ui->frame_middle);
@@ -474,6 +488,11 @@ void Widget::createConnections()
     }
 
     // ************************ Audio Elements Actions ****************************//
+    QList<QLabel*> labelsAudio = ui->frameTab_2->findChildren<QLabel*>();
+    foreach (QLabel *label, labelsAudio) {
+        label->setVisible(false);
+    }
+    audioThumb->setVisible(true);
 
     for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
         // Check Boxes
@@ -491,6 +510,8 @@ void Widget::createConnections()
                 _audioStreamCheckState[stream] = state_qstr.toInt();
             }
         });
+        checkBoxAudio->setEnabled(true);
+        checkBoxAudio->setVisible(false);
         // Line Edit Lang
         QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
@@ -515,6 +536,8 @@ void Widget::createConnections()
             ui->frame_middle->setFocus();
             });
         }
+        lineEditLangAudio->setEnabled(true);
+        lineEditLangAudio->setVisible(false);
         // Line Edit Title
         QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
@@ -539,9 +562,16 @@ void Widget::createConnections()
             ui->frame_middle->setFocus();
             });
         }
+        lineEditTitleAudio->setEnabled(true);
+        lineEditTitleAudio->setVisible(false);
     }
 
     // ************************ Subtitle Elements Actions ****************************//
+    QList<QLabel*> labelsSubtitle = ui->frameTab_3->findChildren<QLabel*>();
+    foreach (QLabel *label, labelsSubtitle) {
+        label->setVisible(false);
+    }
+    subtitleThumb->setVisible(true);
 
     for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
         // Check Boxes
@@ -559,6 +589,8 @@ void Widget::createConnections()
                 _subtitleCheckState[stream] = state_qstr.toInt();
             }
         });
+        checkBoxSubtitle->setEnabled(true);
+        checkBoxSubtitle->setVisible(false);
         // Line Edit Lang
         QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
@@ -583,6 +615,8 @@ void Widget::createConnections()
             ui->frame_middle->setFocus();
             });
         }
+        lineEditLangSubtitle->setEnabled(true);
+        lineEditLangSubtitle->setVisible(false);
         // Line Edit Title
         QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
             + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
@@ -607,6 +641,8 @@ void Widget::createConnections()
             ui->frame_middle->setFocus();
             });
         }
+        lineEditTitleSubtitle->setEnabled(true);
+        lineEditTitleSubtitle->setVisible(false);
     }
 }
 
@@ -1372,7 +1408,9 @@ void Widget::get_current_data() /*** Get current data ***/
     }
 
     //******************************** Set audio widgets *****************************//
-
+    if (countAudioStreams > 0) {
+        audioThumb->setVisible(false);
+    }
     for (int q = 0; q < AMOUNT_AUDIO_STREAMS; q++) {
         QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
             + QString::number(q+1), Qt::FindDirectChildrenOnly);
@@ -1385,15 +1423,20 @@ void Widget::get_current_data() /*** Get current data ***/
             + QString::number(q+1), Qt::FindDirectChildrenOnly);
         lineEditTitleAudio->setText(_audioTitle[q]);
         lineEditTitleAudio->setCursorPosition(0);
+        QLabel *labelAudio = ui->frameTab_2->findChild<QLabel *>("labelTitleAudio_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
         if (q < countAudioStreams) {
-            checkBoxAudio->setEnabled(true);
-            lineEditLangAudio->setEnabled(true);
-            lineEditTitleAudio->setEnabled(true);
+            checkBoxAudio->setVisible(true);
+            lineEditLangAudio->setVisible(true);
+            lineEditTitleAudio->setVisible(true);
+            labelAudio->setVisible(true);
         }
     }
 
     //******************************** Set subtitle widgets *****************************//
-
+    if (countSubtitles > 0) {
+        subtitleThumb->setVisible(false);
+    }
     for (int q = 0; q < AMOUNT_SUBTITLES; q++) {
         QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
             + QString::number(q+1), Qt::FindDirectChildrenOnly);
@@ -1406,10 +1449,13 @@ void Widget::get_current_data() /*** Get current data ***/
             + QString::number(q+1), Qt::FindDirectChildrenOnly);
         lineEditTitleSubtitle->setText(_subtitleTitle[q]);
         lineEditTitleSubtitle->setCursorPosition(0);
+        QLabel *labelSubtitle = ui->frameTab_3->findChild<QLabel *>("labelTitleSub_"
+            + QString::number(q+1), Qt::FindDirectChildrenOnly);
         if (q < countSubtitles) {
-            checkBoxSubtitle->setEnabled(true);
-            lineEditLangSubtitle->setEnabled(true);
-            lineEditTitleSubtitle->setEnabled(true);
+            checkBoxSubtitle->setVisible(true);
+            lineEditLangSubtitle->setVisible(true);
+            lineEditTitleSubtitle->setVisible(true);
+            labelSubtitle->setVisible(true);
         }
     }
 }
@@ -1423,18 +1469,26 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
         case 0:
             file.setFileName(":/resources/css/style_0.css");
             raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             break;
         case 1:
             file.setFileName(":/resources/css/style_1.css");
             raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             break;
         case 2:
             file.setFileName(":/resources/css/style_2.css");
             raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             break;
         case 3:
             file.setFileName(":/resources/css/style_3.css");
             raiseThumb->setStyleSheet("color: #E3E3E3; font: 64pt; font-style: oblique;");
+            audioThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
+            subtitleThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
             break;
     }
     if (file.open(QFile::ReadOnly)) {
@@ -3502,22 +3556,32 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
     // **************************** Disable audio widgets ***********************************//
     QList <QCheckBox *> checkBoxAudio = ui->frameTab_2->findChildren<QCheckBox *>();
     QList <QLineEdit *> lineEditAudio = ui->frameTab_2->findChildren<QLineEdit *>();
+    QList <QLabel*> labelsAudio = ui->frameTab_2->findChildren<QLabel*>();
     foreach (QCheckBox *checkBox, checkBoxAudio) {
-        checkBox->setEnabled(false);
+        checkBox->setVisible(false);
     }
     foreach (QLineEdit *lineEdit, lineEditAudio) {
-        lineEdit->setEnabled(false);
+        lineEdit->setVisible(false);
     }
+    foreach (QLabel *label, labelsAudio) {
+        label->setVisible(false);
+    }
+    audioThumb->setVisible(true);
 
     // **************************** Disable subtitle widgets ***********************************//
     QList <QCheckBox *> checkBoxSubtitle = ui->frameTab_3->findChildren<QCheckBox *>();
     QList <QLineEdit *> lineEditSubtitle = ui->frameTab_3->findChildren<QLineEdit *>();
+    QList <QLabel*> labelsSubtitle = ui->frameTab_3->findChildren<QLabel*>();
     foreach (QCheckBox *checkBox, checkBoxSubtitle) {
-        checkBox->setEnabled(false);
+        checkBox->setVisible(false);
     }
     foreach (QLineEdit *lineEdit, lineEditSubtitle) {
-        lineEdit->setEnabled(false);
+        lineEdit->setVisible(false);
     }
+    foreach (QLabel *label, labelsSubtitle) {
+        label->setVisible(false);
+    }
+    subtitleThumb->setVisible(true);
 
     _row = ui->tableWidget->currentRow();
     if (_row != -1) {

@@ -1348,7 +1348,7 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>268</width>
+                        <width>273</width>
                         <height>371</height>
                        </rect>
                       </property>
@@ -2170,6 +2170,9 @@
                             <property name="orientation">
                              <enum>Qt::Vertical</enum>
                             </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Expanding</enum>
+                            </property>
                             <property name="sizeHint" stdset="0">
                              <size>
                               <width>20</width>
@@ -2216,8 +2219,8 @@
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>0</y>
-                        <width>268</width>
+                        <y>-179</y>
+                        <width>273</width>
                         <height>371</height>
                        </rect>
                       </property>
@@ -2268,7 +2271,7 @@
                            <number>9</number>
                           </property>
                           <item row="0" column="0">
-                           <layout class="QGridLayout" name="gridLayout_17">
+                           <layout class="QGridLayout" name="gridLayoutSubtitle">
                             <property name="sizeConstraint">
                              <enum>QLayout::SetDefaultConstraint</enum>
                             </property>
@@ -2317,7 +2320,7 @@
                              </widget>
                             </item>
                             <item row="0" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_15">
+                             <widget class="QLabel" name="labelTitleSub_1">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2383,7 +2386,7 @@
                              </widget>
                             </item>
                             <item row="2" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_10">
+                             <widget class="QLabel" name="labelTitleSub_3">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2564,7 +2567,7 @@
                              </widget>
                             </item>
                             <item row="1" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_12">
+                             <widget class="QLabel" name="labelTitleSub_2">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2598,7 +2601,7 @@
                              </widget>
                             </item>
                             <item row="8" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_16">
+                             <widget class="QLabel" name="labelTitleSub_9">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2706,7 +2709,7 @@
                              </widget>
                             </item>
                             <item row="4" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_13">
+                             <widget class="QLabel" name="labelTitleSub_5">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2785,7 +2788,7 @@
                              </widget>
                             </item>
                             <item row="5" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_11">
+                             <widget class="QLabel" name="labelTitleSub_6">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2819,7 +2822,7 @@
                              </widget>
                             </item>
                             <item row="6" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_14">
+                             <widget class="QLabel" name="labelTitleSub_7">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2936,7 +2939,7 @@
                              </widget>
                             </item>
                             <item row="3" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_17">
+                             <widget class="QLabel" name="labelTitleSub_4">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2986,7 +2989,7 @@
                              </widget>
                             </item>
                             <item row="7" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_18">
+                             <widget class="QLabel" name="labelTitleSub_8">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -5315,7 +5318,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>404</width>
+                    <width>407</width>
                     <height>371</height>
                    </rect>
                   </property>
@@ -6119,8 +6122,8 @@
                  <widget class="QWidget" name="scrollAreaWidgetContents_4">
                   <property name="geometry">
                    <rect>
-                    <x>-11</x>
-                    <y>-37</y>
+                    <x>0</x>
+                    <y>0</y>
                     <width>415</width>
                     <height>371</height>
                    </rect>
