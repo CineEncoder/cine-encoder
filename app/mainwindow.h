@@ -106,7 +106,7 @@ enum curHDRIndex {
 };
 enum videoMetadataIndex {
     VIDEO_TITLE,        VIDEO_AUTHOR,       VIDEO_YEAR,
-    VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME
+    VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME, ENUM_END_LABEL
 };
 enum dockIndex {
     PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
@@ -319,6 +319,18 @@ private slots:
     void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
     void desktopEnvDetection();
+
+    void on_actionClearMetadata_clicked();
+
+    void on_actionUndoMetadata_clicked();
+
+    void on_actionClearAudioTitles_clicked();
+
+    void on_actionClearSubtitleTitles_clicked();
+
+    void on_actionUndoTitles_clicked();
+
+    void on_actionResetLabels_clicked();
 
 private:
 

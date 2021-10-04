@@ -2366,21 +2366,21 @@ Fortsetzen nach:</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="347"/>
-        <location filename="mainwindow.cpp" line="348"/>
+        <location filename="mainwindow.cpp" line="362"/>
         <source>Settings</source>
         <translation>Einstellung</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="476"/>
-        <location filename="mainwindow.cpp" line="425"/>
+        <location filename="mainwindow.cpp" line="439"/>
         <source>Apply</source>
         <translation>Gelten</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="507"/>
-        <location filename="mainwindow.ui" line="6869"/>
-        <location filename="mainwindow.ui" line="6875"/>
-        <location filename="mainwindow.cpp" line="426"/>
+        <location filename="mainwindow.ui" line="7180"/>
+        <location filename="mainwindow.ui" line="7186"/>
+        <location filename="mainwindow.cpp" line="440"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
@@ -2391,7 +2391,7 @@ Fortsetzen nach:</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="608"/>
-        <location filename="mainwindow.cpp" line="419"/>
+        <location filename="mainwindow.cpp" line="433"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
@@ -2422,7 +2422,7 @@ Fortsetzen nach:</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="801"/>
-        <location filename="mainwindow.ui" line="4742"/>
+        <location filename="mainwindow.ui" line="5150"/>
         <source>Mode</source>
         <translation>Modus</translation>
     </message>
@@ -2443,7 +2443,7 @@ Fortsetzen nach:</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="857"/>
-        <location filename="mainwindow.ui" line="1323"/>
+        <location filename="mainwindow.ui" line="1278"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -2508,203 +2508,203 @@ Fortsetzen nach:</translation>
         <translation>ID 33 - TECHNICAL INFO: REP_TRC</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1262"/>
-        <location filename="mainwindow.ui" line="6595"/>
-        <location filename="mainwindow.ui" line="6598"/>
+        <location filename="mainwindow.ui" line="3114"/>
+        <location filename="mainwindow.ui" line="6906"/>
+        <location filename="mainwindow.ui" line="6909"/>
         <source>View</source>
         <translation>Blick</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1266"/>
+        <location filename="mainwindow.ui" line="3118"/>
         <source>Simple View</source>
         <translation>Einfache Ansicht</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1271"/>
+        <location filename="mainwindow.ui" line="3123"/>
         <source>Extended Viev</source>
         <translation>Erweiterte Ansicht</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="104"/>
         <source>Metadata</source>
         <translation>Metadaten</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5356"/>
+        <location filename="mainwindow.ui" line="5852"/>
         <source>   Performer:</source>
         <translation>   Darsteller:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5257"/>
+        <location filename="mainwindow.ui" line="5593"/>
         <source>   Author:</source>
         <translation>   Autor:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5322"/>
+        <location filename="mainwindow.ui" line="5710"/>
         <source>   Description:</source>
         <translation>   Beschreibung:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5390"/>
+        <location filename="mainwindow.ui" line="5553"/>
         <source>   Year:</source>
         <translation>   Jahr:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5145"/>
+        <location filename="mainwindow.ui" line="5670"/>
         <source>   Title:</source>
         <translation>   Titelleiste:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5424"/>
+        <location filename="mainwindow.ui" line="5992"/>
         <source>   Name:</source>
         <translation>   Name:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1446"/>
+        <location filename="mainwindow.ui" line="1413"/>
         <source>Audio #7:</source>
         <translation>Audio #7:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1859"/>
+        <location filename="mainwindow.ui" line="1919"/>
         <source>Audio #3:</source>
         <translation>Audio #3:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1436"/>
-        <location filename="mainwindow.ui" line="1529"/>
-        <location filename="mainwindow.ui" line="1557"/>
-        <location filename="mainwindow.ui" line="1585"/>
-        <location filename="mainwindow.ui" line="1678"/>
-        <location filename="mainwindow.ui" line="1823"/>
-        <location filename="mainwindow.ui" line="1903"/>
-        <location filename="mainwindow.ui" line="1970"/>
-        <location filename="mainwindow.ui" line="1998"/>
-        <location filename="mainwindow.ui" line="2199"/>
-        <location filename="mainwindow.ui" line="2253"/>
-        <location filename="mainwindow.ui" line="2398"/>
-        <location filename="mainwindow.ui" line="2426"/>
-        <location filename="mainwindow.ui" line="2519"/>
-        <location filename="mainwindow.ui" line="2586"/>
-        <location filename="mainwindow.ui" line="2614"/>
-        <location filename="mainwindow.ui" line="2707"/>
-        <location filename="mainwindow.ui" line="2748"/>
+        <location filename="mainwindow.ui" line="1397"/>
+        <location filename="mainwindow.ui" line="1508"/>
+        <location filename="mainwindow.ui" line="1542"/>
+        <location filename="mainwindow.ui" line="1576"/>
+        <location filename="mainwindow.ui" line="1696"/>
+        <location filename="mainwindow.ui" line="1874"/>
+        <location filename="mainwindow.ui" line="1972"/>
+        <location filename="mainwindow.ui" line="2048"/>
+        <location filename="mainwindow.ui" line="2082"/>
+        <location filename="mainwindow.ui" line="2307"/>
+        <location filename="mainwindow.ui" line="2373"/>
+        <location filename="mainwindow.ui" line="2554"/>
+        <location filename="mainwindow.ui" line="2588"/>
+        <location filename="mainwindow.ui" line="2696"/>
+        <location filename="mainwindow.ui" line="2775"/>
+        <location filename="mainwindow.ui" line="2809"/>
+        <location filename="mainwindow.ui" line="2926"/>
+        <location filename="mainwindow.ui" line="2976"/>
         <source>Title:</source>
         <translation>Tite:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1608"/>
+        <location filename="mainwindow.ui" line="1611"/>
         <source>Audio #9:</source>
         <translation>Audio #9:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1688"/>
+        <location filename="mainwindow.ui" line="1712"/>
         <source>Audio #2:</source>
         <translation>Audio #2:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1595"/>
+        <location filename="mainwindow.ui" line="1592"/>
         <source>Audio #4:</source>
         <translation>Audio #4:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1459"/>
+        <location filename="mainwindow.ui" line="1432"/>
         <source>Audio #6:</source>
         <translation>Audio #6:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1701"/>
+        <location filename="mainwindow.ui" line="1731"/>
         <source>Audio #1:</source>
         <translation>Audio #1:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2008"/>
+        <location filename="mainwindow.ui" line="2098"/>
         <source>Audio #5:</source>
         <translation>Audio #5:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1792"/>
+        <location filename="mainwindow.ui" line="1837"/>
         <source>Audio #8:</source>
         <translation>Audio #8:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2057"/>
+        <location filename="mainwindow.ui" line="2150"/>
         <source>Subtitles</source>
         <translation>Untertitel</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2222"/>
+        <location filename="mainwindow.ui" line="2336"/>
         <source>Subtitle #7:</source>
         <translation>Subtitle #7:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2676"/>
+        <location filename="mainwindow.ui" line="2889"/>
         <source>Subtitle #3:</source>
         <translation>Subtitle #3:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2302"/>
+        <location filename="mainwindow.ui" line="2440"/>
         <source>Subtitle #9:</source>
         <translation>Subtitle #9:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2663"/>
+        <location filename="mainwindow.ui" line="2870"/>
         <source>Subtitle #2:</source>
         <translation>Subtitle #2:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2367"/>
+        <location filename="mainwindow.ui" line="2517"/>
         <source>Subtitle #4:</source>
         <translation>Subtitle #4:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2624"/>
+        <location filename="mainwindow.ui" line="2825"/>
         <source>Subtitle #6:</source>
         <translation>Subtitle #6:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2263"/>
+        <location filename="mainwindow.ui" line="2389"/>
         <source>Subtitle #1:</source>
         <translation>Subtitle #1:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2168"/>
+        <location filename="mainwindow.ui" line="2270"/>
         <source>Subtitle #5:</source>
         <translation>Subtitle #5:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2276"/>
+        <location filename="mainwindow.ui" line="2408"/>
         <source>Subtitle #8:</source>
         <translation>Subtitle #8:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="104"/>
         <source>Split</source>
         <translation>Split</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6249"/>
+        <location filename="mainwindow.ui" line="6507"/>
         <source>Next Frame  </source>
         <translation>Näch Frame  </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6058"/>
-        <location filename="mainwindow.ui" line="6230"/>
-        <location filename="mainwindow.ui" line="6280"/>
+        <location filename="mainwindow.ui" line="6377"/>
+        <location filename="mainwindow.ui" line="6544"/>
+        <location filename="mainwindow.ui" line="6575"/>
         <source>00:00:00.000</source>
         <translation>00:00:00.000</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6196"/>
+        <location filename="mainwindow.ui" line="6628"/>
         <source>Set end time</source>
         <translation>End. einst.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6093"/>
+        <location filename="mainwindow.ui" line="6402"/>
         <source>  Prev Frame</source>
         <translation>  Vorh Frame</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6174"/>
+        <location filename="mainwindow.ui" line="6600"/>
         <source>Set start time</source>
         <translation>Star. einst.</translation>
     </message>
@@ -2713,680 +2713,696 @@ Fortsetzen nach:</translation>
         <translation type="vanished">Aktuelle Zeit:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="2928"/>
-        <location filename="mainwindow.cpp" line="89"/>
-        <location filename="mainwindow.cpp" line="3453"/>
+        <location filename="mainwindow.ui" line="3336"/>
+        <location filename="mainwindow.cpp" line="103"/>
+        <location filename="mainwindow.cpp" line="3666"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3063"/>
-        <location filename="mainwindow.ui" line="4580"/>
-        <location filename="mainwindow.cpp" line="327"/>
+        <location filename="mainwindow.ui" line="3471"/>
+        <location filename="mainwindow.ui" line="4988"/>
+        <location filename="mainwindow.cpp" line="341"/>
         <source>Add files</source>
         <translation>Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3199"/>
+        <location filename="mainwindow.ui" line="3607"/>
         <source>Output folder</source>
         <translation>Ausgabeordner</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4475"/>
+        <location filename="mainwindow.ui" line="4883"/>
         <source>Sort Z-A</source>
         <translation>Sortierung Z-A</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3647"/>
+        <location filename="mainwindow.ui" line="4055"/>
         <source>File name</source>
         <translation>Dateinamen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3655"/>
+        <location filename="mainwindow.ui" line="1236"/>
+        <source>Clear all subtitle titles</source>
+        <translation>Löschen Sie alle Untertitel-Titel</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3043"/>
+        <source>Clear all audio titles</source>
+        <translation>Löschen Sie alle audio-Titel</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3191"/>
+        <source>Undo all titles</source>
+        <translation>Alle Titel rückgängig machen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4063"/>
         <source>Format</source>
         <translation>Formatierung</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3663"/>
+        <location filename="mainwindow.ui" line="4071"/>
         <source>Resolution</source>
         <translation>Auflösung</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3671"/>
+        <location filename="mainwindow.ui" line="4079"/>
         <source>Duration</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3679"/>
+        <location filename="mainwindow.ui" line="4087"/>
         <source>FPS</source>
         <translation>FPS</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3687"/>
+        <location filename="mainwindow.ui" line="4095"/>
         <source>AR</source>
         <translation>AR</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3695"/>
+        <location filename="mainwindow.ui" line="4103"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3703"/>
+        <location filename="mainwindow.ui" line="4111"/>
         <source>Bitrate</source>
         <translation>Bitrate</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3711"/>
+        <location filename="mainwindow.ui" line="4119"/>
         <source>Subsampling</source>
         <translation>Subsampling</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3719"/>
+        <location filename="mainwindow.ui" line="4127"/>
         <source>Bit depth</source>
         <translation>Bittiefe</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3727"/>
+        <location filename="mainwindow.ui" line="4135"/>
         <source>Color space</source>
         <translation>Farbraums</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3735"/>
+        <location filename="mainwindow.ui" line="4143"/>
         <source>Color range</source>
         <translation>Farbbereich</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3743"/>
+        <location filename="mainwindow.ui" line="4151"/>
         <source>Color prim</source>
         <translation>Farbe primär</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3751"/>
+        <location filename="mainwindow.ui" line="4159"/>
         <source>Color mtrx</source>
         <translation>Farbmatrix</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3759"/>
+        <location filename="mainwindow.ui" line="4167"/>
         <source>Transfer</source>
         <translation>Transfer</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3767"/>
+        <location filename="mainwindow.ui" line="4175"/>
         <source>Max lum</source>
         <translation>Max lum</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3775"/>
+        <location filename="mainwindow.ui" line="4183"/>
         <source>Min lum</source>
         <translation>Min lum</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3783"/>
+        <location filename="mainwindow.ui" line="4191"/>
         <source>Max CLL</source>
         <translation>Max CLL</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3791"/>
+        <location filename="mainwindow.ui" line="4199"/>
         <source>Max Fall</source>
         <translation>Max Fall</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3799"/>
+        <location filename="mainwindow.ui" line="4207"/>
         <source>Master display</source>
         <translation>Master-Anzeige</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3807"/>
+        <location filename="mainwindow.ui" line="4215"/>
         <source>Path</source>
         <translation>Pfad</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3815"/>
+        <location filename="mainwindow.ui" line="4223"/>
         <source>ID 21 - TECHNICAL INFO: Duration</source>
         <translation>ID 21 - TECHNICAL INFO: Duration</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3823"/>
+        <location filename="mainwindow.ui" line="4231"/>
         <source>ID 22 - TECHNICAL INFO: Chroma coord</source>
         <translation>ID 22 - TECHNICAL INFO: Chroma coord</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3831"/>
+        <location filename="mainwindow.ui" line="4239"/>
         <source>ID 23 - TECHNICAL INFO: White coord</source>
         <translation>ID 23 - TECHNICAL INFO: White coord</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3839"/>
+        <location filename="mainwindow.ui" line="4247"/>
         <source>ID 24 - TECHNICAL INFO: Stream size</source>
         <translation>ID 24 - TECHNICAL INFO: Stream size</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3847"/>
+        <location filename="mainwindow.ui" line="4255"/>
         <source>ID 25 - TECHNICAL INFO: Width</source>
         <translation>ID 25 - TECHNICAL INFO: Width</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3855"/>
+        <location filename="mainwindow.ui" line="4263"/>
         <source>ID 26 - TECHNICAL INFO: Height</source>
         <translation>ID 26 - TECHNICAL INFO: Height</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3863"/>
+        <location filename="mainwindow.ui" line="4271"/>
         <source>ID 27 - TECHNICAL INFO: VideoTitle</source>
         <translation>ID 27 - TECHNICAL INFO: VideoTitle</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3871"/>
+        <location filename="mainwindow.ui" line="4279"/>
         <source>ID 28 - TECHNICAL INFO: Video Movie Name</source>
         <translation>ID 28 - TECHNICAL INFO: Video Movie Name</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3879"/>
+        <location filename="mainwindow.ui" line="4287"/>
         <source>ID 29 - TECHNICAL INFO: Video Year</source>
         <translation>ID 29 - TECHNICAL INFO: Video Year</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3887"/>
+        <location filename="mainwindow.ui" line="4295"/>
         <source>ID 30 - TECHNICAL INFO: Video Author</source>
         <translation>ID 30 - TECHNICAL INFO: Video Author</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3895"/>
+        <location filename="mainwindow.ui" line="4303"/>
         <source>ID 31 - TECHNICAL INFO: Video Performer</source>
         <translation>ID 31 - TECHNICAL INFO: Video Performer</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3903"/>
+        <location filename="mainwindow.ui" line="4311"/>
         <source>ID 32 - TECHNICAL INFO: Video Description</source>
         <translation>ID 32 - TECHNICAL INFO: Video Description</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3911"/>
+        <location filename="mainwindow.ui" line="4319"/>
         <source>ID 33 - TECHNICAL INFO: Audio #1</source>
         <translation>ID 33 - TECHNICAL INFO: Audio #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3919"/>
+        <location filename="mainwindow.ui" line="4327"/>
         <source>ID 34 - TECHNICAL INFO: Audio #2</source>
         <translation>ID 34 - TECHNICAL INFO: Audio #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3927"/>
+        <location filename="mainwindow.ui" line="4335"/>
         <source>ID 35 - TECHNICAL INFO: Audio #3</source>
         <translation>ID 35 - TECHNICAL INFO: Audio #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3935"/>
+        <location filename="mainwindow.ui" line="4343"/>
         <source>ID 36 - TECHNICAL INFO: Audio #4</source>
         <translation>ID 36 - TECHNICAL INFO: Audio #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3943"/>
+        <location filename="mainwindow.ui" line="4351"/>
         <source>ID 37 - TECHNICAL INFO: Audio #5</source>
         <translation>ID 37 - TECHNICAL INFO: Audio #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3951"/>
+        <location filename="mainwindow.ui" line="4359"/>
         <source>ID 38 - TECHNICAL INFO: Audio #6</source>
         <translation>ID 38 - TECHNICAL INFO: Audio #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3959"/>
+        <location filename="mainwindow.ui" line="4367"/>
         <source>ID 39 - TECHNICAL INFO: Audio #7</source>
         <translation>ID 39 - TECHNICAL INFO: Audio #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3967"/>
+        <location filename="mainwindow.ui" line="4375"/>
         <source>ID 40 - TECHNICAL INFO: Audio #8</source>
         <translation>ID 40 - TECHNICAL INFO: Audio #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3975"/>
+        <location filename="mainwindow.ui" line="4383"/>
         <source>ID 41 - TECHNICAL INFO: Audio #9</source>
         <translation>ID 41 - TECHNICAL INFO: Audio #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3983"/>
+        <location filename="mainwindow.ui" line="4391"/>
         <source>ID 42 - TECHNICAL INFO: Audio Lang #1</source>
         <translation>ID 42 - TECHNICAL INFO: Audio Lang #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3991"/>
+        <location filename="mainwindow.ui" line="4399"/>
         <source>ID 43 - TECHNICAL INFO: Audio Lang #2</source>
         <translation>ID 43 - TECHNICAL INFO: Audio Lang #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3999"/>
+        <location filename="mainwindow.ui" line="4407"/>
         <source>ID 44 - TECHNICAL INFO: Audio Lang #3</source>
         <translation>ID 44 - TECHNICAL INFO: Audio Lang #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4007"/>
+        <location filename="mainwindow.ui" line="4415"/>
         <source>ID 45 - TECHNICAL INFO: Audio Lang #4</source>
         <translation>ID 45 - TECHNICAL INFO: Audio Lang #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4015"/>
+        <location filename="mainwindow.ui" line="4423"/>
         <source>ID 46 - TECHNICAL INFO: Audio Lang #5</source>
         <translation>ID 46 - TECHNICAL INFO: Audio Lang #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4023"/>
+        <location filename="mainwindow.ui" line="4431"/>
         <source>ID 47 - TECHNICAL INFO: Audio Lang #6</source>
         <translation>ID 47 - TECHNICAL INFO: Audio Lang #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4031"/>
+        <location filename="mainwindow.ui" line="4439"/>
         <source>ID 48 - TECHNICAL INFO: Audio Lang #7</source>
         <translation>ID 48 - TECHNICAL INFO: Audio Lang #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4039"/>
+        <location filename="mainwindow.ui" line="4447"/>
         <source>ID 49 - TECHNICAL INFO: Audio Lang #8</source>
         <translation>ID 49 - TECHNICAL INFO: Audio Lang #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4047"/>
+        <location filename="mainwindow.ui" line="4455"/>
         <source>ID 50 - TECHNICAL INFO: Audio Lang #9</source>
         <translation>ID 50 - TECHNICAL INFO: Audio Lang #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4055"/>
+        <location filename="mainwindow.ui" line="4463"/>
         <source>ID 51 - TECHNICAL INFO: Audio Title #1</source>
         <translation>ID 51 - TECHNICAL INFO: Audio Title #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4063"/>
+        <location filename="mainwindow.ui" line="4471"/>
         <source>ID 52 - TECHNICAL INFO: Audio Title #2</source>
         <translation>ID 52 - TECHNICAL INFO: Audio Title #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4071"/>
+        <location filename="mainwindow.ui" line="4479"/>
         <source>ID 53 - TECHNICAL INFO: Audio Title #3</source>
         <translation>ID 53 - TECHNICAL INFO: Audio Title #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4079"/>
+        <location filename="mainwindow.ui" line="4487"/>
         <source>ID 54 - TECHNICAL INFO: Audio Title #4</source>
         <translation>ID 54 - TECHNICAL INFO: Audio Title #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4087"/>
+        <location filename="mainwindow.ui" line="4495"/>
         <source>ID 55 - TECHNICAL INFO: Audio Title #5</source>
         <translation>ID 55 - TECHNICAL INFO: Audio Title #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4095"/>
+        <location filename="mainwindow.ui" line="4503"/>
         <source>ID 56 - TECHNICAL INFO: Audio Title #6</source>
         <translation>ID 56 - TECHNICAL INFO: Audio Title #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4103"/>
+        <location filename="mainwindow.ui" line="4511"/>
         <source>ID 57 - TECHNICAL INFO: Audio Title #7</source>
         <translation>ID 57 - TECHNICAL INFO: Audio Title #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4111"/>
+        <location filename="mainwindow.ui" line="4519"/>
         <source>ID 58 - TECHNICAL INFO: Audio Title #8</source>
         <translation>ID 58 - TECHNICAL INFO: Audio Title #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4119"/>
+        <location filename="mainwindow.ui" line="4527"/>
         <source>ID 59 - TECHNICAL INFO: Audio Title #9</source>
         <translation>ID 59 - TECHNICAL INFO: Audio Title #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4127"/>
+        <location filename="mainwindow.ui" line="4535"/>
         <source>ID 60 - TECHNICAL INFO: Audio #1 Check State</source>
         <translation>ID 60 - TECHNICAL INFO: Audio #1 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4132"/>
+        <location filename="mainwindow.ui" line="4540"/>
         <source>ID 61 - TECHNICAL INFO: Audio #2 Check State</source>
         <translation>ID 61 - TECHNICAL INFO: Audio #2 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4137"/>
+        <location filename="mainwindow.ui" line="4545"/>
         <source>ID 62 - TECHNICAL INFO: Audio #3 Check State</source>
         <translation>ID 62 - TECHNICAL INFO: Audio #3 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4142"/>
+        <location filename="mainwindow.ui" line="4550"/>
         <source>ID 63 - TECHNICAL INFO: Audio #4 Check State</source>
         <translation>ID 63 - TECHNICAL INFO: Audio #4 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4147"/>
+        <location filename="mainwindow.ui" line="4555"/>
         <source>ID 64 - TECHNICAL INFO: Audio #5 Check State</source>
         <translation>ID 64 - TECHNICAL INFO: Audio #5 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4152"/>
+        <location filename="mainwindow.ui" line="4560"/>
         <source>ID 65 - TECHNICAL INFO: Audio #6 Check State</source>
         <translation>ID 65 - TECHNICAL INFO: Audio #6 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4157"/>
+        <location filename="mainwindow.ui" line="4565"/>
         <source>ID 66 - TECHNICAL INFO: Audio #7 Check State</source>
         <translation>ID 66 - TECHNICAL INFO: Audio #7 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4162"/>
+        <location filename="mainwindow.ui" line="4570"/>
         <source>ID 67 - TECHNICAL INFO: Audio #8 Check State</source>
         <translation>ID 67 - TECHNICAL INFO: Audio #8 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4167"/>
+        <location filename="mainwindow.ui" line="4575"/>
         <source>ID 68 - TECHNICAL INFO: Audio #9 Check State</source>
         <translation>ID 68 - TECHNICAL INFO: Audio #9 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4172"/>
+        <location filename="mainwindow.ui" line="4580"/>
         <source>ID 69 - TECHNICAL INFO: Subtitle #1</source>
         <translation>ID 69 - TECHNICAL INFO: Subtitle #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4177"/>
+        <location filename="mainwindow.ui" line="4585"/>
         <source>ID 70 - TECHNICAL INFO: Subtitle #2</source>
         <translation>ID 70 - TECHNICAL INFO: Subtitle #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4182"/>
+        <location filename="mainwindow.ui" line="4590"/>
         <source>ID 71 - TECHNICAL INFO: Subtitle #3</source>
         <translation>ID 71 - TECHNICAL INFO: Subtitle #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4187"/>
+        <location filename="mainwindow.ui" line="4595"/>
         <source>ID 72 - TECHNICAL INFO: Subtitle #4</source>
         <translation>ID 72 - TECHNICAL INFO: Subtitle #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4192"/>
+        <location filename="mainwindow.ui" line="4600"/>
         <source>ID 73 - TECHNICAL INFO: Subtitle #5</source>
         <translation>ID 73 - TECHNICAL INFO: Subtitle #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4197"/>
+        <location filename="mainwindow.ui" line="4605"/>
         <source>ID 74 - TECHNICAL INFO: Subtitle #6</source>
         <translation>ID 74 - TECHNICAL INFO: Subtitle #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4202"/>
+        <location filename="mainwindow.ui" line="4610"/>
         <source>ID 75 - TECHNICAL INFO: Subtitle #7</source>
         <translation>ID 75 - TECHNICAL INFO: Subtitle #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4207"/>
+        <location filename="mainwindow.ui" line="4615"/>
         <source>ID 76 - TECHNICAL INFO: Subtitle #8</source>
         <translation>ID 76 - TECHNICAL INFO: Subtitle #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4212"/>
+        <location filename="mainwindow.ui" line="4620"/>
         <source>ID 77 - TECHNICAL INFO: Subtitle #9</source>
         <translation>ID 77 - TECHNICAL INFO: Subtitle #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4217"/>
+        <location filename="mainwindow.ui" line="4625"/>
         <source>ID 78 - TECHNICAL INFO: Subtitle Lang #1</source>
         <translation>ID 78 - TECHNICAL INFO: Subtitle Lang #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4222"/>
+        <location filename="mainwindow.ui" line="4630"/>
         <source>ID 79 - TECHNICAL INFO: Subtitle Lang #2</source>
         <translation>ID 79 - TECHNICAL INFO: Subtitle Lang #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4227"/>
+        <location filename="mainwindow.ui" line="4635"/>
         <source>ID 80 - TECHNICAL INFO: Subtitle Lang #3</source>
         <translation>ID 80 - TECHNICAL INFO: Subtitle Lang #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4232"/>
+        <location filename="mainwindow.ui" line="4640"/>
         <source>ID 81 - TECHNICAL INFO: Subtitle Lang #4</source>
         <translation>ID 81 - TECHNICAL INFO: Subtitle Lang #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4237"/>
+        <location filename="mainwindow.ui" line="4645"/>
         <source>ID 82 - TECHNICAL INFO: Subtitle Lang #5</source>
         <translation>ID 82 - TECHNICAL INFO: Subtitle Lang #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4242"/>
+        <location filename="mainwindow.ui" line="4650"/>
         <source>ID 83 - TECHNICAL INFO: Subtitle Lang #6</source>
         <translation>ID 83 - TECHNICAL INFO: Subtitle Lang #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4247"/>
+        <location filename="mainwindow.ui" line="4655"/>
         <source>ID 84 - TECHNICAL INFO: Subtitle Lang #7</source>
         <translation>ID 84 - TECHNICAL INFO: Subtitle Lang #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4252"/>
+        <location filename="mainwindow.ui" line="4660"/>
         <source>ID 85 - TECHNICAL INFO: Subtitle Lang #8</source>
         <translation>ID 85 - TECHNICAL INFO: Subtitle Lang #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4257"/>
+        <location filename="mainwindow.ui" line="4665"/>
         <source>ID 86 - TECHNICAL INFO: Subtitle Lang #9</source>
         <translation>ID 86 - TECHNICAL INFO: Subtitle Lang #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4262"/>
+        <location filename="mainwindow.ui" line="4670"/>
         <source>ID 87 - TECHNICAL INFO: Subtitle Title #1</source>
         <translation>ID 87 - TECHNICAL INFO: Subtitle Title #1</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4267"/>
+        <location filename="mainwindow.ui" line="4675"/>
         <source>ID 88 - TECHNICAL INFO: Subtitle Title #2</source>
         <translation>ID 88 - TECHNICAL INFO: Subtitle Title #2</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4272"/>
+        <location filename="mainwindow.ui" line="4680"/>
         <source>ID 89 - TECHNICAL INFO: Subtitle Title #3</source>
         <translation>ID 89 - TECHNICAL INFO: Subtitle Title #3</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4277"/>
+        <location filename="mainwindow.ui" line="4685"/>
         <source>ID 90 - TECHNICAL INFO: Subtitle Title #4</source>
         <translation>ID 90 - TECHNICAL INFO: Subtitle Title #4</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4282"/>
+        <location filename="mainwindow.ui" line="4690"/>
         <source>ID 91 - TECHNICAL INFO: Subtitle Title #5</source>
         <translation>ID 91 - TECHNICAL INFO: Subtitle Title #5</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4287"/>
+        <location filename="mainwindow.ui" line="4695"/>
         <source>ID 92 - TECHNICAL INFO: Subtitle Title #6</source>
         <translation>ID 92 - TECHNICAL INFO: Subtitle Title #6</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4292"/>
+        <location filename="mainwindow.ui" line="4700"/>
         <source>ID 93 - TECHNICAL INFO: Subtitle Title #7</source>
         <translation>ID 93 - TECHNICAL INFO: Subtitle Title #7</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4297"/>
+        <location filename="mainwindow.ui" line="4705"/>
         <source>ID 94 - TECHNICAL INFO: Subtitle Title #8</source>
         <translation>ID 94 - TECHNICAL INFO: Subtitle Title #8</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4302"/>
+        <location filename="mainwindow.ui" line="4710"/>
         <source>ID 95 - TECHNICAL INFO: Subtitle Title #9</source>
         <translation>ID 95 - TECHNICAL INFO: Subtitle Title #9</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4307"/>
+        <location filename="mainwindow.ui" line="4715"/>
         <source>ID 96 - TECHNICAL INFO: Subtitle #1 Check State</source>
         <translation>ID 96 - TECHNICAL INFO: Subtitle #1 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4312"/>
+        <location filename="mainwindow.ui" line="4720"/>
         <source>ID 97 - TECHNICAL INFO: Subtitle #2 Check State</source>
         <translation>ID 97 - TECHNICAL INFO: Subtitle #2 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4317"/>
+        <location filename="mainwindow.ui" line="4725"/>
         <source>ID 98 - TECHNICAL INFO: Subtitle #3 Check State</source>
         <translation>ID 98 - TECHNICAL INFO: Subtitle #3 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4322"/>
+        <location filename="mainwindow.ui" line="4730"/>
         <source>ID 99 - TECHNICAL INFO: Subtitle #4 Check State</source>
         <translation>ID 99 - TECHNICAL INFO: Subtitle #4 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4327"/>
+        <location filename="mainwindow.ui" line="4735"/>
         <source>ID 100 - TECHNICAL INFO: Subtitle #5 Check State</source>
         <translation>ID 100 - TECHNICAL INFO: Subtitle #5 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4332"/>
+        <location filename="mainwindow.ui" line="4740"/>
         <source>ID 101 - TECHNICAL INFO: Subtitle #6 Check State</source>
         <translation>ID 101 - TECHNICAL INFO: Subtitle #6 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4337"/>
+        <location filename="mainwindow.ui" line="4745"/>
         <source>ID 102 - TECHNICAL INFO: Subtitle #7 Check State</source>
         <translation>ID 102 - TECHNICAL INFO: Subtitle #7 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4342"/>
+        <location filename="mainwindow.ui" line="4750"/>
         <source>ID 103 - TECHNICAL INFO: Subtitle #8 Check State</source>
         <translation>ID 103 - TECHNICAL INFO: Subtitle #8 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4347"/>
+        <location filename="mainwindow.ui" line="4755"/>
         <source>ID 104 - TECHNICAL INFO: Subtitle #9 Check State</source>
         <translation>ID 104 - TECHNICAL INFO: Subtitle #9 Check State</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4352"/>
+        <location filename="mainwindow.ui" line="4760"/>
         <source>ID 105 - TECHNICAL INFO: Start Time</source>
         <translation>ID 105 - TECHNICAL INFO: Start Time</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4357"/>
+        <location filename="mainwindow.ui" line="4765"/>
         <source>ID 106 - TECHNICAL INFO: End Time</source>
         <translation>ID 106 - TECHNICAL INFO: End Time</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4704"/>
-        <location filename="mainwindow.cpp" line="1458"/>
-        <location filename="mainwindow.cpp" line="2720"/>
+        <location filename="mainwindow.ui" line="5112"/>
+        <location filename="mainwindow.cpp" line="1617"/>
+        <location filename="mainwindow.cpp" line="2888"/>
         <source>Encode</source>
         <translation>Codieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4746"/>
+        <location filename="mainwindow.ui" line="5154"/>
         <source>Single Mode</source>
         <translation>Einzel-Modus</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4751"/>
+        <location filename="mainwindow.ui" line="5159"/>
         <source>Batch Mode</source>
         <translation>Batchmodus</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3391"/>
+        <location filename="mainwindow.ui" line="3799"/>
         <source>Tasks</source>
         <translation>Aufgaben</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4386"/>
-        <location filename="mainwindow.cpp" line="328"/>
+        <location filename="mainwindow.ui" line="4794"/>
+        <location filename="mainwindow.cpp" line="342"/>
         <source>Remove from the list</source>
         <translation>Aus der Liste entfernen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4427"/>
-        <location filename="mainwindow.cpp" line="335"/>
-        <location filename="mainwindow.cpp" line="3003"/>
+        <location filename="mainwindow.ui" line="4835"/>
+        <location filename="mainwindow.cpp" line="349"/>
+        <location filename="mainwindow.cpp" line="3206"/>
         <source>Stop</source>
         <translation>Anhalten</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4660"/>
+        <location filename="mainwindow.ui" line="5068"/>
         <source>Sort A-Z</source>
         <translation>Sortierung A-Z</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4787"/>
+        <location filename="mainwindow.ui" line="5195"/>
         <source>Scale</source>
         <translation>Skala</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5539"/>
-        <location filename="mainwindow.ui" line="5567"/>
-        <location filename="mainwindow.ui" line="5595"/>
-        <location filename="mainwindow.ui" line="5623"/>
-        <location filename="mainwindow.ui" line="5651"/>
-        <location filename="mainwindow.ui" line="5679"/>
         <source>Clear</source>
-        <translation>Klar</translation>
+        <translation type="vanished">Klar</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5799"/>
-        <location filename="mainwindow.ui" line="6404"/>
         <source>Auto fill metadata</source>
-        <translation>Metadaten automatisch füllen</translation>
+        <translation type="vanished">Metadaten automatisch füllen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="5847"/>
-        <location filename="mainwindow.ui" line="6448"/>
+        <location filename="mainwindow.ui" line="6093"/>
         <source>Clear all</source>
         <translation>Alle löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6560"/>
-        <location filename="mainwindow.ui" line="6563"/>
+        <location filename="mainwindow.ui" line="6144"/>
+        <source>Undo all</source>
+        <translation>Alle rückgängig machen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6707"/>
+        <source>Reset labels</source>
+        <translation>Etiketten zurücksetzen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="6871"/>
+        <location filename="mainwindow.ui" line="6874"/>
         <source>Preferences</source>
         <translation>Systemeinstellungen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6620"/>
-        <location filename="mainwindow.cpp" line="270"/>
+        <location filename="mainwindow.ui" line="6931"/>
+        <location filename="mainwindow.cpp" line="284"/>
         <source>Hide</source>
         <translation>Verstecken</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6673"/>
-        <location filename="mainwindow.cpp" line="329"/>
+        <location filename="mainwindow.ui" line="6984"/>
+        <location filename="mainwindow.cpp" line="343"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6707"/>
+        <location filename="mainwindow.ui" line="7018"/>
         <source>Add title for all files</source>
         <translation>Titel für alle Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6710"/>
+        <location filename="mainwindow.ui" line="7021"/>
         <source>Title  (global)</source>
         <translation>Titel  (global)</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6729"/>
+        <location filename="mainwindow.ui" line="7040"/>
         <source>Expand</source>
         <translation>Erweitern</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6767"/>
-        <location filename="mainwindow.ui" line="6770"/>
+        <location filename="mainwindow.ui" line="7078"/>
+        <location filename="mainwindow.ui" line="7081"/>
         <source>Tools</source>
         <translation>Tools</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6815"/>
-        <location filename="mainwindow.ui" line="6818"/>
-        <location filename="mainwindow.cpp" line="351"/>
+        <location filename="mainwindow.ui" line="7126"/>
+        <location filename="mainwindow.ui" line="7129"/>
+        <location filename="mainwindow.cpp" line="365"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="6907"/>
-        <location filename="mainwindow.ui" line="6910"/>
+        <location filename="mainwindow.ui" line="7218"/>
+        <location filename="mainwindow.ui" line="7221"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
@@ -3396,28 +3412,38 @@ Fortsetzen nach:</translation>
         <translation>Keine Medien</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
+        <location filename="mainwindow.cpp" line="72"/>
+        <source>No audio</source>
+        <translation>Kein audio</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="79"/>
+        <source>No subtitle</source>
+        <translation>Kein Untertitel</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="103"/>
         <source>Presets</source>
         <translation>Voreinstellungen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
-        <location filename="mainwindow.cpp" line="4377"/>
-        <location filename="mainwindow.cpp" line="4378"/>
-        <location filename="mainwindow.cpp" line="4379"/>
-        <location filename="mainwindow.cpp" line="4380"/>
-        <location filename="mainwindow.cpp" line="4381"/>
-        <location filename="mainwindow.cpp" line="4382"/>
-        <location filename="mainwindow.cpp" line="4383"/>
-        <location filename="mainwindow.cpp" line="4384"/>
-        <location filename="mainwindow.cpp" line="4385"/>
-        <location filename="mainwindow.cpp" line="4386"/>
-        <location filename="mainwindow.cpp" line="4399"/>
+        <location filename="mainwindow.cpp" line="103"/>
+        <location filename="mainwindow.cpp" line="4732"/>
+        <location filename="mainwindow.cpp" line="4733"/>
+        <location filename="mainwindow.cpp" line="4734"/>
+        <location filename="mainwindow.cpp" line="4735"/>
+        <location filename="mainwindow.cpp" line="4736"/>
+        <location filename="mainwindow.cpp" line="4737"/>
+        <location filename="mainwindow.cpp" line="4738"/>
+        <location filename="mainwindow.cpp" line="4739"/>
+        <location filename="mainwindow.cpp" line="4740"/>
+        <location filename="mainwindow.cpp" line="4741"/>
+        <location filename="mainwindow.cpp" line="4754"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
+        <location filename="mainwindow.cpp" line="103"/>
         <source>Output</source>
         <translation>Ausgabe</translation>
     </message>
@@ -3426,162 +3452,162 @@ Fortsetzen nach:</translation>
         <translation type="vanished">Option</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="104"/>
         <source>Log</source>
         <translation>Log</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="104"/>
         <source>Streams</source>
         <translation>Datenströme</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="147"/>
+        <location filename="mainwindow.cpp" line="161"/>
         <source>Quit program?</source>
         <translation>Programm beenden?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="271"/>
+        <location filename="mainwindow.cpp" line="285"/>
         <source>Show</source>
         <translation>Karte</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="272"/>
+        <location filename="mainwindow.cpp" line="286"/>
         <source>Exit</source>
         <translation>Ausfahrt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="334"/>
+        <location filename="mainwindow.cpp" line="348"/>
         <source>Encode/Pause</source>
         <translation>Kodieren/Pause</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="339"/>
+        <location filename="mainwindow.cpp" line="353"/>
         <source>Edit metadata</source>
         <translation>Metadaten bearbeiten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="340"/>
+        <location filename="mainwindow.cpp" line="354"/>
         <source>Select audio streams</source>
         <translation>Wählen Sie audio-streams</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="341"/>
+        <location filename="mainwindow.cpp" line="355"/>
         <source>Select subtitles</source>
         <translation>Untertitel auswählen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="342"/>
+        <location filename="mainwindow.cpp" line="356"/>
         <source>Split video</source>
         <translation>Split video</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="352"/>
+        <location filename="mainwindow.cpp" line="366"/>
         <source>Donate</source>
         <translation>Donat</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="416"/>
-        <location filename="mainwindow.cpp" line="448"/>
+        <location filename="mainwindow.cpp" line="430"/>
+        <location filename="mainwindow.cpp" line="462"/>
         <source>Add section</source>
         <translation>Abschnitt hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="417"/>
+        <location filename="mainwindow.cpp" line="431"/>
         <source>Add preset</source>
         <translation>Voreinstellung hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="418"/>
+        <location filename="mainwindow.cpp" line="432"/>
         <source>Rename</source>
         <translation>Umbenennen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="449"/>
+        <location filename="mainwindow.cpp" line="463"/>
         <source>Add new preset</source>
         <translation>Neues Preset hinzufügen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1063"/>
+        <location filename="mainwindow.cpp" line="1170"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>Sie müssen das Programm neu starten, damit die Einstellungen wirksam werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1243"/>
+        <location filename="mainwindow.cpp" line="1350"/>
         <source> bit, </source>
         <translation> bit, </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1246"/>
+        <location filename="mainwindow.cpp" line="1353"/>
         <source> kbps; </source>
         <translation> kbps; </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1258"/>
+        <location filename="mainwindow.cpp" line="1365"/>
         <source>Audio #</source>
         <translation>Audio #</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1273"/>
+        <location filename="mainwindow.cpp" line="1380"/>
         <source>Undefined</source>
         <translation>Undefiniert</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2288"/>
+        <location filename="mainwindow.cpp" line="2456"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
         <translation>Farbvorwahlen %1 können in der Quellkarte nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2334"/>
+        <location filename="mainwindow.cpp" line="2502"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
         <translation>Die Farbmatrix %1 kann in der Quellkarte nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2384"/>
+        <location filename="mainwindow.cpp" line="2552"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
         <translation>Übertragungsmerkmale %1 können in der Quellzuordnung nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2566"/>
+        <location filename="mainwindow.cpp" line="2734"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
         <translation>Falsche master display chroma koordinaten quelle parameter!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2576"/>
+        <location filename="mainwindow.cpp" line="2744"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
         <translation>Falsche master display weiß punkt koordinaten quelle parameter!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2712"/>
+        <location filename="mainwindow.cpp" line="2880"/>
         <source>Muxing:</source>
         <translation>Muxen:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2721"/>
+        <location filename="mainwindow.cpp" line="2889"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
         <translation>Die Datei enthält keine FPS-Informationen!
 Wählen Sie die richtige Eingabedatei!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2725"/>
-        <location filename="mainwindow.cpp" line="2985"/>
+        <location filename="mainwindow.cpp" line="2893"/>
+        <location filename="mainwindow.cpp" line="3188"/>
         <source>Encoding</source>
         <translation>Encoding</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2765"/>
-        <location filename="mainwindow.cpp" line="2770"/>
+        <location filename="mainwindow.cpp" line="2968"/>
+        <location filename="mainwindow.cpp" line="2973"/>
         <source>Encoding:</source>
         <translation>Encoding:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2775"/>
+        <location filename="mainwindow.cpp" line="2978"/>
         <source>1-st pass:</source>
         <translation>1-st übergeben:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2785"/>
+        <location filename="mainwindow.cpp" line="2988"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
@@ -3590,12 +3616,12 @@ Möglich FFMPEG nicht installiert.
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2797"/>
+        <location filename="mainwindow.cpp" line="3000"/>
         <source>Add data:</source>
         <translation>Daten hinzufügen:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2806"/>
+        <location filename="mainwindow.cpp" line="3009"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
@@ -3604,13 +3630,13 @@ Mögliche mkvtoolnix nicht installiert.
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2815"/>
+        <location filename="mainwindow.cpp" line="3018"/>
         <source>Done!</source>
         <translation>Fertig!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2841"/>
-        <location filename="mainwindow.cpp" line="2854"/>
+        <location filename="mainwindow.cpp" line="3044"/>
+        <location filename="mainwindow.cpp" line="3057"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -3619,323 +3645,323 @@ Mögliche mkvtoolnix nicht installiert.
 Verstrichene Zeit:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2965"/>
-        <location filename="mainwindow.cpp" line="3035"/>
-        <location filename="mainwindow.cpp" line="3113"/>
-        <location filename="mainwindow.cpp" line="3134"/>
+        <location filename="mainwindow.cpp" line="3168"/>
+        <location filename="mainwindow.cpp" line="3238"/>
+        <location filename="mainwindow.cpp" line="3316"/>
+        <location filename="mainwindow.cpp" line="3337"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3010"/>
+        <location filename="mainwindow.cpp" line="3213"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>Der aktuelle Kodierungsprozess wurde abgebrochen!
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3021"/>
+        <location filename="mainwindow.cpp" line="3224"/>
         <source>Error!</source>
         <translation>Error!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3024"/>
+        <location filename="mainwindow.cpp" line="3227"/>
         <source>An error occurred: </source>
         <translation>Ein Fehler ist aufgetreten: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3026"/>
+        <location filename="mainwindow.cpp" line="3229"/>
         <source>Unexpected error occurred!</source>
         <translation>Unerwarteter Fehler aufgetreten!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3058"/>
+        <location filename="mainwindow.cpp" line="3261"/>
         <source>Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)</source>
         <translation>Videodateien: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3102"/>
+        <location filename="mainwindow.cpp" line="3305"/>
         <source>Select input file first!</source>
         <translation>Wählen Sie zuerst Eingabedatei!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3107"/>
+        <location filename="mainwindow.cpp" line="3310"/>
         <source>Select preset first!</source>
         <translation>Wählen Sie voreingestellte erste!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3126"/>
+        <location filename="mainwindow.cpp" line="3329"/>
         <source>Resume</source>
         <translation>Lebenslauf</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3144"/>
+        <location filename="mainwindow.cpp" line="3347"/>
         <source>Stop encoding?</source>
         <translation>Hör auf zu kodieren?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3171"/>
+        <location filename="mainwindow.cpp" line="3374"/>
         <source>Unexpected error while trying to perform file name detection.</source>
         <translation>Unerwarteter Fehler beim Versuch, die Dateinamenerfassung durchzuführen.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3744"/>
+        <location filename="mainwindow.cpp" line="3957"/>
         <source>Select output folder</source>
         <translation>Ausgabeordner auswählen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3970"/>
-        <location filename="mainwindow.cpp" line="3984"/>
-        <location filename="mainwindow.cpp" line="4045"/>
-        <location filename="mainwindow.cpp" line="4079"/>
+        <location filename="mainwindow.cpp" line="4325"/>
+        <location filename="mainwindow.cpp" line="4339"/>
+        <location filename="mainwindow.cpp" line="4400"/>
+        <location filename="mainwindow.cpp" line="4434"/>
         <source>Select preset first!
 </source>
         <translation>Wählen Sie voreingestellte erste!
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4007"/>
+        <location filename="mainwindow.cpp" line="4362"/>
         <source>Delete?</source>
         <translation>Löschen?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4035"/>
+        <location filename="mainwindow.cpp" line="4390"/>
         <source>Delete presets first!
 </source>
         <translation>Löschen Sie Presets zuerst!
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4192"/>
+        <location filename="mainwindow.cpp" line="4547"/>
         <source>Preset not selected</source>
         <translation>Preset nicht aktiviert</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4257"/>
+        <location filename="mainwindow.cpp" line="4612"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
         <translation>H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4258"/>
+        <location filename="mainwindow.cpp" line="4613"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
         <translation>H.265/HEVC 4:2:0 8 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4259"/>
+        <location filename="mainwindow.cpp" line="4614"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
         <translation>H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4260"/>
+        <location filename="mainwindow.cpp" line="4615"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4261"/>
+        <location filename="mainwindow.cpp" line="4616"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
         <translation>Intel QSV MPEG-2 4:2:0 8 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4262"/>
+        <location filename="mainwindow.cpp" line="4617"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4263"/>
+        <location filename="mainwindow.cpp" line="4618"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 8 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4264"/>
+        <location filename="mainwindow.cpp" line="4619"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation>NVENC H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4265"/>
+        <location filename="mainwindow.cpp" line="4620"/>
         <source>VP9 4:2:0 10 bit</source>
         <translation>VP9 4:2:0 10 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4266"/>
+        <location filename="mainwindow.cpp" line="4621"/>
         <source>VP9 4:2:0 8 bit</source>
         <translation>VP9 4:2:0 8 bit</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4267"/>
+        <location filename="mainwindow.cpp" line="4622"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4269"/>
+        <location filename="mainwindow.cpp" line="4624"/>
         <source>ProRes Standard</source>
         <translation>ProRes Standard</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4279"/>
+        <location filename="mainwindow.cpp" line="4634"/>
         <source>From source</source>
         <translation>Von der Quelle</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4297"/>
-        <location filename="mainwindow.cpp" line="4298"/>
-        <location filename="mainwindow.cpp" line="4299"/>
-        <location filename="mainwindow.cpp" line="4300"/>
-        <location filename="mainwindow.cpp" line="4301"/>
-        <location filename="mainwindow.cpp" line="4302"/>
-        <location filename="mainwindow.cpp" line="4303"/>
-        <location filename="mainwindow.cpp" line="4304"/>
-        <location filename="mainwindow.cpp" line="4305"/>
-        <location filename="mainwindow.cpp" line="4306"/>
-        <location filename="mainwindow.cpp" line="4307"/>
-        <location filename="mainwindow.cpp" line="4309"/>
-        <location filename="mainwindow.cpp" line="4350"/>
-        <location filename="mainwindow.cpp" line="4351"/>
-        <location filename="mainwindow.cpp" line="4357"/>
-        <location filename="mainwindow.cpp" line="4358"/>
-        <location filename="mainwindow.cpp" line="4359"/>
-        <location filename="mainwindow.cpp" line="4360"/>
-        <location filename="mainwindow.cpp" line="4361"/>
-        <location filename="mainwindow.cpp" line="4362"/>
-        <location filename="mainwindow.cpp" line="4363"/>
-        <location filename="mainwindow.cpp" line="4364"/>
-        <location filename="mainwindow.cpp" line="4365"/>
-        <location filename="mainwindow.cpp" line="4366"/>
-        <location filename="mainwindow.cpp" line="4367"/>
-        <location filename="mainwindow.cpp" line="4368"/>
-        <location filename="mainwindow.cpp" line="4369"/>
+        <location filename="mainwindow.cpp" line="4652"/>
+        <location filename="mainwindow.cpp" line="4653"/>
+        <location filename="mainwindow.cpp" line="4654"/>
+        <location filename="mainwindow.cpp" line="4655"/>
+        <location filename="mainwindow.cpp" line="4656"/>
+        <location filename="mainwindow.cpp" line="4657"/>
+        <location filename="mainwindow.cpp" line="4658"/>
+        <location filename="mainwindow.cpp" line="4659"/>
+        <location filename="mainwindow.cpp" line="4660"/>
+        <location filename="mainwindow.cpp" line="4661"/>
+        <location filename="mainwindow.cpp" line="4662"/>
+        <location filename="mainwindow.cpp" line="4664"/>
+        <location filename="mainwindow.cpp" line="4705"/>
+        <location filename="mainwindow.cpp" line="4706"/>
+        <location filename="mainwindow.cpp" line="4712"/>
+        <location filename="mainwindow.cpp" line="4713"/>
+        <location filename="mainwindow.cpp" line="4714"/>
+        <location filename="mainwindow.cpp" line="4715"/>
+        <location filename="mainwindow.cpp" line="4716"/>
+        <location filename="mainwindow.cpp" line="4717"/>
+        <location filename="mainwindow.cpp" line="4718"/>
+        <location filename="mainwindow.cpp" line="4719"/>
+        <location filename="mainwindow.cpp" line="4720"/>
+        <location filename="mainwindow.cpp" line="4721"/>
+        <location filename="mainwindow.cpp" line="4722"/>
+        <location filename="mainwindow.cpp" line="4723"/>
+        <location filename="mainwindow.cpp" line="4724"/>
         <source>Auto</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
-        <location filename="mainwindow.cpp" line="4322"/>
-        <location filename="mainwindow.cpp" line="4323"/>
-        <location filename="mainwindow.cpp" line="4324"/>
-        <location filename="mainwindow.cpp" line="4325"/>
-        <location filename="mainwindow.cpp" line="4326"/>
-        <location filename="mainwindow.cpp" line="4327"/>
-        <location filename="mainwindow.cpp" line="4328"/>
-        <location filename="mainwindow.cpp" line="4329"/>
-        <location filename="mainwindow.cpp" line="4330"/>
-        <location filename="mainwindow.cpp" line="4331"/>
-        <location filename="mainwindow.cpp" line="4332"/>
-        <location filename="mainwindow.cpp" line="4333"/>
-        <location filename="mainwindow.cpp" line="4334"/>
-        <location filename="mainwindow.cpp" line="4335"/>
-        <location filename="mainwindow.cpp" line="4336"/>
-        <location filename="mainwindow.cpp" line="4337"/>
-        <location filename="mainwindow.cpp" line="4338"/>
-        <location filename="mainwindow.cpp" line="4339"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
+        <location filename="mainwindow.cpp" line="4677"/>
+        <location filename="mainwindow.cpp" line="4678"/>
+        <location filename="mainwindow.cpp" line="4679"/>
+        <location filename="mainwindow.cpp" line="4680"/>
+        <location filename="mainwindow.cpp" line="4681"/>
+        <location filename="mainwindow.cpp" line="4682"/>
+        <location filename="mainwindow.cpp" line="4683"/>
+        <location filename="mainwindow.cpp" line="4684"/>
+        <location filename="mainwindow.cpp" line="4685"/>
+        <location filename="mainwindow.cpp" line="4686"/>
+        <location filename="mainwindow.cpp" line="4687"/>
+        <location filename="mainwindow.cpp" line="4688"/>
+        <location filename="mainwindow.cpp" line="4689"/>
+        <location filename="mainwindow.cpp" line="4690"/>
+        <location filename="mainwindow.cpp" line="4691"/>
+        <location filename="mainwindow.cpp" line="4692"/>
+        <location filename="mainwindow.cpp" line="4693"/>
+        <location filename="mainwindow.cpp" line="4694"/>
         <source>None</source>
         <translation>Kein</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
         <source>Ultrafast</source>
         <translation>Ultraschnell</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
         <source>Superfast</source>
         <translation>Superschnell</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
         <source>Veryfast</source>
         <translation>Sehrschnell</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
         <source>Faster</source>
         <translation>Schneller</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
         <source>Fast</source>
         <translation>Schnell</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
         <source>Medium</source>
         <translation>Medium</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
-        <location filename="mainwindow.cpp" line="4322"/>
-        <location filename="mainwindow.cpp" line="4323"/>
-        <location filename="mainwindow.cpp" line="4324"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
+        <location filename="mainwindow.cpp" line="4677"/>
+        <location filename="mainwindow.cpp" line="4678"/>
+        <location filename="mainwindow.cpp" line="4679"/>
         <source>Slow</source>
         <translation>Langsam</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
         <source>Slower</source>
         <translation>Langsamer</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4317"/>
-        <location filename="mainwindow.cpp" line="4318"/>
-        <location filename="mainwindow.cpp" line="4319"/>
-        <location filename="mainwindow.cpp" line="4320"/>
-        <location filename="mainwindow.cpp" line="4321"/>
+        <location filename="mainwindow.cpp" line="4672"/>
+        <location filename="mainwindow.cpp" line="4673"/>
+        <location filename="mainwindow.cpp" line="4674"/>
+        <location filename="mainwindow.cpp" line="4675"/>
+        <location filename="mainwindow.cpp" line="4676"/>
         <source>Veryslow</source>
         <translation>Sehrlangsam</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4347"/>
-        <location filename="mainwindow.cpp" line="4348"/>
-        <location filename="mainwindow.cpp" line="4349"/>
-        <location filename="mainwindow.cpp" line="4355"/>
-        <location filename="mainwindow.cpp" line="4356"/>
+        <location filename="mainwindow.cpp" line="4702"/>
+        <location filename="mainwindow.cpp" line="4703"/>
+        <location filename="mainwindow.cpp" line="4704"/>
+        <location filename="mainwindow.cpp" line="4710"/>
+        <location filename="mainwindow.cpp" line="4711"/>
         <source>1 Pass</source>
         <translation>1 Übergeben</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4347"/>
-        <location filename="mainwindow.cpp" line="4348"/>
-        <location filename="mainwindow.cpp" line="4349"/>
-        <location filename="mainwindow.cpp" line="4352"/>
-        <location filename="mainwindow.cpp" line="4353"/>
-        <location filename="mainwindow.cpp" line="4354"/>
-        <location filename="mainwindow.cpp" line="4355"/>
-        <location filename="mainwindow.cpp" line="4356"/>
+        <location filename="mainwindow.cpp" line="4702"/>
+        <location filename="mainwindow.cpp" line="4703"/>
+        <location filename="mainwindow.cpp" line="4704"/>
+        <location filename="mainwindow.cpp" line="4707"/>
+        <location filename="mainwindow.cpp" line="4708"/>
+        <location filename="mainwindow.cpp" line="4709"/>
+        <location filename="mainwindow.cpp" line="4710"/>
+        <location filename="mainwindow.cpp" line="4711"/>
         <source>2 Pass</source>
         <translation>2 Übergeben</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="4525"/>
+        <location filename="mainwindow.cpp" line="4880"/>
         <source>Task</source>
         <translation>Aufgabe</translation>
     </message>

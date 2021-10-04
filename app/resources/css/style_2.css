@@ -861,8 +861,12 @@ QPushButton#buttonCloseTaskWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
-QPushButton:hover#pushButton_findMetadata,
-QPushButton:hover#pushButton_clearMetadata,
+QPushButton:hover#actionResetLabels,
+QPushButton:hover#actionClearAudioTitles,
+QPushButton:hover#actionClearSubtitleTitles,
+QPushButton:hover#actionUndoTitles,
+QPushButton:hover#actionClearMetadata,
+QPushButton:hover#actionUndoMetadata,
 QPushButton:hover#actionAdd_preset,
 QPushButton:hover#actionRemove_preset,
 QPushButton:hover#actionEdit_preset,
@@ -882,8 +886,12 @@ QPushButton:hover#closeWindow,
 QPushButton:hover#buttonCloseTaskWindow {
         background-color: #343B48;
 }
-QPushButton:pressed#pushButton_findMetadata,
-QPushButton:pressed#pushButton_clearMetadata,
+QPushButton:pressed#actionResetLabels,
+QPushButton:pressed#actionClearAudioTitles,
+QPushButton:pressed#actionClearSubtitleTitles,
+QPushButton:pressed#actionUndoTitles,
+QPushButton:pressed#actionClearMetadata,
+QPushButton:pressed#actionUndoMetadata,
 QPushButton:pressed#actionAdd_preset,
 QPushButton:pressed#actionRemove_preset,
 QPushButton:pressed#actionEdit_preset,
@@ -947,7 +955,7 @@ QPushButton#buttonFramePrevious {
     border: 0px solid #373C46;
     color: #D2D2D2;
     background-color: transparent;
-    image: url(:/resources/icons/16x16/cil-caret-left.png);
+    image: url(:/resources/icons/16x16/cil-frame-left.png);
     image-position: center;
 }
 QPushButton#buttonFrameNext {
@@ -957,7 +965,7 @@ QPushButton#buttonFrameNext {
     border: 0px solid #373C46;
     color: #D2D2D2;
     background-color: transparent;
-    image: url(:/resources/icons/16x16/cil-caret-right.png);
+    image: url(:/resources/icons/16x16/cil-frame-right.png);
     image-position: center;
 }
 QPushButton#buttonTempPath,
@@ -1106,39 +1114,48 @@ QProgressBar::chunk#progressBar_opening {
 **************************************************************************/
 
 QSlider {
+    padding-left: 4px;
+    padding-right: 4px;
     background-color: transparent;
 }
 QSlider::groove:horizontal {
     height: 6px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: -4px;
+    padding-right: -4px;
     border: 1px solid #082028;
-    border-radius: 4px;
+    border-radius: 0px;
     background-color: #082028;
 }
 QSlider::sub-page:horizontal {
     border: 1px solid #08283C;
-    border-radius: 4px;
+    border-radius: 0px;
     background-color: #08283C;
 }
 QSlider::handle:horizontal {
-    width: 5px;
-    margin: -6px;
-    border: 1px solid #175C7F;
-    border-radius: 2px;
-    background-color: #175C7F;
+    image: url(:/resources/icons/16x16/cil-cursor-center.png);
+    width: 16px;
+    padding-left: -4px;
+    padding-right: -4px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    border: none;
+    border-radius: 0px;
+    background-color: transparent;
 }
 QSlider::sub-page:horizontal:disabled {
     border: 1px solid #082028;
-    border-radius: 4px;
+    border-radius: 0px;
     background-color: #082028;
 }
 QSlider::handle:horizontal:disabled {
-    width: 5px;
-    margin: -6px;
-    border: 1px solid #22252D;
-    border-radius: 2px;
-    background-color: #22252D;
+    width: 16px;
+    padding-left: -4px;
+    padding-right: -4px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    border: none;
+    border-radius: 0px;
+    background-color: transparent;
 }
 
 /*********************************************/
@@ -1167,7 +1184,9 @@ QSlider::sub-page:horizontal#horizontalSlider_resize {
     background-color: #08283C;
 }
 QSlider::handle:horizontal#horizontalSlider_resize {
+    image: none;
     width: 8px;
+    padding: 0px;
     margin: -4px;
     border: 1px solid #175C7F;
     border-radius: 4px;
@@ -1180,6 +1199,7 @@ QSlider::sub-page:horizontal:disabled#horizontalSlider_resize {
 }
 QSlider::handle:horizontal:disabled#horizontalSlider_resize {
     width: 8px;
+    padding: 0px;
     margin: -4px;
     border: 1px solid #22252D;
     border-radius: 4px;
@@ -1342,7 +1362,7 @@ QTabBar::tab:top:selected, QDockWidget QTabBar::tab:top:selected {
     padding-right: 10px;
     margin-bottom: -1px;
     border: 1px solid @frameLeftRightBorder;
-    background-color: @frameSourceOutputBackground;
+    background-color: @tableBackground;
 }
 QTabBar::tab:top:!selected, QDockWidget QTabBar::tab:top:!selected {
     background-color: @frameSourceOutputBackground;

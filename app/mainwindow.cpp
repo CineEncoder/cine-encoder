@@ -1577,6 +1577,40 @@ void Widget::restore_initial_state()    /*** Restore initial state ***/
     ui->buttonHotOutputFile->setEnabled(true);
     ui->horizontalSlider_resize->setEnabled(true);
 
+    ui->actionClearMetadata->setEnabled(true);
+    ui->actionUndoMetadata->setEnabled(true);
+    QList<QLineEdit*> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
+    foreach (QLineEdit *lineEdit, linesEditMetadata) {
+        lineEdit->setEnabled(true);
+    }
+
+    ui->actionUndoTitles->setEnabled(true);
+    ui->actionClearAudioTitles->setEnabled(true);
+    for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
+        QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        checkBoxAudio->setEnabled(true);
+        QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditLangAudio->setEnabled(true);
+        QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditTitleAudio->setEnabled(true);
+    }
+
+    ui->actionClearSubtitleTitles->setEnabled(true);
+    for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
+        QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        checkBoxSubtitle->setEnabled(true);
+        QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditLangSubtitle->setEnabled(true);
+        QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditTitleSubtitle->setEnabled(true);
+    }
+    ui->actionResetLabels->setEnabled(true);
     ui->actionSettings->setEnabled(true);
     _status_encode_btn = "start";
     ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
@@ -2884,6 +2918,41 @@ void Widget::encode()   /*** Encode ***/
         ui->buttonHotOutputFile->setEnabled(false);
         ui->horizontalSlider_resize->setEnabled(false);
 
+        ui->actionClearMetadata->setEnabled(false);
+        ui->actionUndoMetadata->setEnabled(false);
+        QList<QLineEdit*> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
+        foreach (QLineEdit *lineEdit, linesEditMetadata) {
+            lineEdit->setEnabled(false);
+        }
+
+        ui->actionUndoTitles->setEnabled(false);
+        ui->actionClearAudioTitles->setEnabled(false);
+        for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
+            QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            checkBoxAudio->setEnabled(false);
+            QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditLangAudio->setEnabled(false);
+            QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditTitleAudio->setEnabled(false);
+        }
+
+        ui->actionClearSubtitleTitles->setEnabled(false);
+        for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
+            QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            checkBoxSubtitle->setEnabled(false);
+            QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditLangSubtitle->setEnabled(false);
+            QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditTitleSubtitle->setEnabled(false);
+        }
+
+        ui->actionResetLabels->setEnabled(false);
         ui->actionSettings->setEnabled(false);
         ui->labelAnimation->show();
         animation->start();
@@ -4017,6 +4086,97 @@ void Widget::on_lineEditDescriptionVideo_editingFinished()
     }
 }
 
+void Widget::on_actionClearMetadata_clicked()
+{
+    if (_row != -1) {
+        QList<QLineEdit*> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
+        foreach (QLineEdit *lineEdit, linesEditMetadata) {
+            lineEdit->clear();
+            lineEdit->insert("");
+            lineEdit->setFocus();
+            lineEdit->setModified(true);
+        }
+        ui->frame_middle->setFocus();
+    }
+}
+
+void Widget::on_actionUndoMetadata_clicked()
+{
+    if (_row != -1) {
+        QList<QLineEdit*> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
+        foreach (QLineEdit *lineEdit, linesEditMetadata) {
+            lineEdit->undo();
+            if (lineEdit->text() != "") {
+                lineEdit->setFocus();
+                lineEdit->setCursorPosition(0);
+                lineEdit->setModified(true);
+            }
+        }
+        ui->frame_middle->setFocus();
+    }
+}
+
+/************************************************
+** Streams Window
+************************************************/
+
+void Widget::on_actionClearAudioTitles_clicked()
+{
+    if (_row != -1) {
+        for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
+            QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditTitleAudio->clear();
+            lineEditTitleAudio->insert("");
+            lineEditTitleAudio->setFocus();
+            lineEditTitleAudio->setModified(true);
+        }
+        ui->frame_middle->setFocus();
+    }
+}
+
+void Widget::on_actionClearSubtitleTitles_clicked()
+{
+    if (_row != -1) {
+        for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
+            QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditTitleSubtitle->clear();
+            lineEditTitleSubtitle->insert("");
+            lineEditTitleSubtitle->setFocus();
+            lineEditTitleSubtitle->setModified(true);
+        }
+        ui->frame_middle->setFocus();
+    }
+}
+
+void Widget::on_actionUndoTitles_clicked()
+{
+    if (_row != -1) {
+        for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
+            QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditTitleAudio->undo();
+            if (lineEditTitleAudio->text() != "") {
+                lineEditTitleAudio->setFocus();
+                lineEditTitleAudio->setCursorPosition(0);
+                lineEditTitleAudio->setModified(true);
+            }
+        }
+        for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
+            QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+            lineEditTitleSubtitle->undo();
+            if (lineEditTitleSubtitle->text() != "") {
+                lineEditTitleSubtitle->setFocus();
+                lineEditTitleSubtitle->setCursorPosition(0);
+                lineEditTitleSubtitle->setModified(true);
+            }
+        }
+        ui->frame_middle->setFocus();
+    }
+}
+
 /************************************************
 ** Split Window
 ************************************************/
@@ -4074,6 +4234,29 @@ void Widget::on_buttonSetEndTime_clicked()
         {
             _endTime =_startTime;
         }
+        ui->lineEditEndTime->setText(timeConverter(_endTime));
+        QTableWidgetItem *newItem_endTime = new QTableWidgetItem(QString::number(_endTime, 'f', 3));
+        ui->tableWidget->setItem(_row, columnIndex::T_ENDTIME, newItem_endTime);
+    }
+}
+
+void Widget::on_actionResetLabels_clicked()
+{
+    if (_row != -1) {
+        ui->labelSplitPreview->clear();
+        ui->horizontalSlider->blockSignals(true);
+        ui->horizontalSlider->setValue(0);
+        ui->horizontalSlider->blockSignals(false);
+
+        _curTime = 0.0;
+        ui->lineEditCurTime->setText(timeConverter(_curTime));
+
+        _startTime = 0.0;
+        ui->lineEditStartTime->setText(timeConverter(_startTime));
+        QTableWidgetItem *newItem_startTime = new QTableWidgetItem(QString::number(_startTime, 'f', 3));
+        ui->tableWidget->setItem(_row, columnIndex::T_STARTTIME, newItem_startTime);
+
+        _endTime = 0.0;
         ui->lineEditEndTime->setText(timeConverter(_endTime));
         QTableWidgetItem *newItem_endTime = new QTableWidgetItem(QString::number(_endTime, 'f', 3));
         ui->tableWidget->setItem(_row, columnIndex::T_ENDTIME, newItem_endTime);
@@ -4710,4 +4893,3 @@ void Widget::call_task_complete(const QString &_message, const bool &_timer_mode
         taskcomplete.exec();
     }
 }
-

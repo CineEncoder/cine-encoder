@@ -1201,7 +1201,7 @@
              <item>
               <layout class="QGridLayout" name="gridLayout_22">
                <property name="topMargin">
-                <number>3</number>
+                <number>0</number>
                </property>
                <property name="bottomMargin">
                 <number>3</number>
@@ -1212,84 +1212,39 @@
                <property name="verticalSpacing">
                 <number>3</number>
                </property>
-               <item row="1" column="0">
-                <spacer name="horizontalSpacer_36">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+               <item row="0" column="3">
+                <widget class="QPushButton" name="actionClearSubtitleTitles">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>3</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="2">
-                <spacer name="verticalSpacer_11">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>9</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="2" column="2" alignment="Qt::AlignVCenter">
-                <widget class="QComboBox" name="comboBoxView">
                  <property name="minimumSize">
                   <size>
-                   <width>120</width>
-                   <height>0</height>
+                   <width>30</width>
+                   <height>22</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>120</width>
-                   <height>20</height>
+                   <width>30</width>
+                   <height>22</height>
                   </size>
                  </property>
                  <property name="toolTip">
-                  <string>View</string>
+                  <string>Clear all subtitle titles</string>
                  </property>
-                 <item>
-                  <property name="text">
-                   <string>Simple View</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Extended Viev</string>
-                  </property>
-                 </item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="files.qrc">
+                   <normaloff>:/resources/icons/16x16/cil-clear-subt.png</normaloff>:/resources/icons/16x16/cil-clear-subt.png</iconset>
+                 </property>
                 </widget>
                </item>
-               <item row="1" column="3">
-                <spacer name="horizontalSpacer_12">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>3</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="1" colspan="2">
+               <item row="1" column="1" colspan="7">
                 <widget class="QTabWidget" name="tabWidgetRight">
                  <property name="enabled">
                   <bool>true</bool>
@@ -2219,7 +2174,7 @@
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>-179</y>
+                        <y>0</y>
                         <width>273</width>
                         <height>371</height>
                        </rect>
@@ -3064,6 +3019,112 @@
                  </widget>
                 </widget>
                </item>
+               <item row="0" column="1" alignment="Qt::AlignLeft">
+                <widget class="QPushButton" name="actionClearAudioTitles">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Clear all audio titles</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="files.qrc">
+                   <normaloff>:/resources/icons/16x16/cil-clear-audio.png</normaloff>:/resources/icons/16x16/cil-clear-audio.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="6">
+                <spacer name="horizontalSpacer_56">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="8">
+                <spacer name="horizontalSpacer_12">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="2">
+                <spacer name="horizontalSpacer_55">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>4</width>
+                   <height>9</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="7" alignment="Qt::AlignVCenter">
+                <widget class="QComboBox" name="comboBoxView">
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>View</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Simple View</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Extended Viev</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
                <item row="2" column="1">
                 <spacer name="verticalSpacer_6">
                  <property name="orientation">
@@ -3076,6 +3137,80 @@
                   <size>
                    <width>20</width>
                    <height>23</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="7">
+                <spacer name="verticalSpacer_11">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>9</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_36">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="5">
+                <widget class="QPushButton" name="actionUndoTitles">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Undo all titles</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="files.qrc">
+                   <normaloff>:/resources/icons/16x16/cil-undo.png</normaloff>:/resources/icons/16x16/cil-undo.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <spacer name="horizontalSpacer_57">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>4</width>
+                   <height>9</height>
                   </size>
                  </property>
                 </spacer>
@@ -5340,6 +5475,9 @@
                    </property>
                    <item row="0" column="0">
                     <widget class="QFrame" name="frameTab_1">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
@@ -5929,56 +6067,9 @@
                 </spacer>
                </item>
                <item row="0" column="1" alignment="Qt::AlignLeft|Qt::AlignVCenter">
-                <widget class="QPushButton" name="pushButton_findMetadata">
+                <widget class="QPushButton" name="actionClearMetadata">
                  <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Auto fill metadata</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <spacer name="horizontalSpacer_39">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>3</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="3" alignment="Qt::AlignLeft">
-                <widget class="QPushButton" name="pushButton_clearMetadata">
-                 <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -6003,6 +6094,61 @@
                  </property>
                  <property name="text">
                   <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="files.qrc">
+                   <normaloff>:/resources/icons/16x16/cil-list-clear-1.png</normaloff>:/resources/icons/16x16/cil-list-clear-1.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_39">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="3" alignment="Qt::AlignLeft">
+                <widget class="QPushButton" name="actionUndoMetadata">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Undo all</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="files.qrc">
+                   <normaloff>:/resources/icons/16x16/cil-undo.png</normaloff>:/resources/icons/16x16/cil-undo.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -6089,8 +6235,24 @@
                <property name="verticalSpacing">
                 <number>3</number>
                </property>
-               <item row="2" column="1">
-                <spacer name="verticalSpacer_18">
+               <item row="1" column="5">
+                <spacer name="horizontalSpacer_48">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="4">
+                <spacer name="verticalSpacer_15">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -6099,13 +6261,13 @@
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>10</width>
-                   <height>23</height>
+                   <width>9</width>
+                   <height>25</height>
                   </size>
                  </property>
                 </spacer>
                </item>
-               <item row="1" column="1" colspan="5">
+               <item row="1" column="1" colspan="4">
                 <widget class="QScrollArea" name="scrollArea_4">
                  <property name="horizontalScrollBarPolicy">
                   <enum>Qt::ScrollBarAsNeeded</enum>
@@ -6123,9 +6285,9 @@
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>0</y>
-                    <width>415</width>
-                    <height>371</height>
+                    <y>-149</y>
+                    <width>407</width>
+                    <height>350</height>
                    </rect>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_35">
@@ -6148,8 +6310,8 @@
                     <widget class="QFrame" name="frameTab_4">
                      <property name="minimumSize">
                       <size>
-                       <width>415</width>
-                       <height>371</height>
+                       <width>380</width>
+                       <height>350</height>
                       </size>
                      </property>
                      <property name="maximumSize">
@@ -6180,7 +6342,7 @@
                       <item row="0" column="1">
                        <layout class="QGridLayout" name="gridLayout_19">
                         <property name="horizontalSpacing">
-                         <number>6</number>
+                         <number>8</number>
                         </property>
                         <property name="verticalSpacing">
                          <number>12</number>
@@ -6189,6 +6351,12 @@
                          <widget class="QLineEdit" name="lineEditCurTime">
                           <property name="enabled">
                            <bool>true</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
                           </property>
                           <property name="minimumSize">
                            <size>
@@ -6210,24 +6378,14 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="5" column="3">
-                         <spacer name="horizontalSpacer_31">
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="sizeType">
-                           <enum>QSizePolicy::Fixed</enum>
-                          </property>
-                          <property name="sizeHint" stdset="0">
-                           <size>
-                            <width>2</width>
-                            <height>10</height>
-                           </size>
-                          </property>
-                         </spacer>
-                        </item>
                         <item row="2" column="1">
                          <widget class="QPushButton" name="buttonFramePrevious">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="minimumSize">
                            <size>
                             <width>20</width>
@@ -6237,7 +6395,7 @@
                           <property name="maximumSize">
                            <size>
                             <width>20</width>
-                            <height>31</height>
+                            <height>20</height>
                            </size>
                           </property>
                           <property name="toolTip">
@@ -6251,29 +6409,7 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="2" column="2" colspan="4">
-                         <widget class="QSlider" name="horizontalSlider">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="maximum">
-                           <number>0</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="tickPosition">
-                           <enum>QSlider::NoTicks</enum>
-                          </property>
-                          <property name="tickInterval">
-                           <number>5</number>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0" colspan="7" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                        <item row="1" column="0" colspan="6" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                          <widget class="QLabel" name="labelSplitPreview">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -6307,51 +6443,109 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="5" column="1" colspan="2" alignment="Qt::AlignLeft">
-                         <widget class="QPushButton" name="buttonSetStartTime">
+                        <item row="2" column="2" colspan="3" alignment="Qt::AlignHCenter">
+                         <widget class="QSlider" name="horizontalSlider">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="minimumSize">
                            <size>
-                            <width>94</width>
-                            <height>25</height>
+                            <width>225</width>
+                            <height>0</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>94</width>
-                            <height>25</height>
+                            <width>225</width>
+                            <height>20</height>
                            </size>
                           </property>
+                          <property name="baseSize">
+                           <size>
+                            <width>225</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="maximum">
+                           <number>0</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="tickPosition">
+                           <enum>QSlider::NoTicks</enum>
+                          </property>
+                          <property name="tickInterval">
+                           <number>5</number>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="5" alignment="Qt::AlignVCenter">
+                         <widget class="QPushButton" name="buttonFrameNext">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>20</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>20</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                          <property name="toolTip">
+                           <string>Next Frame  </string>
+                          </property>
                           <property name="text">
-                           <string>Set start time</string>
+                           <string/>
                           </property>
                           <property name="flat">
                            <bool>false</bool>
                           </property>
                          </widget>
                         </item>
-                        <item row="5" column="5" colspan="2" alignment="Qt::AlignRight">
-                         <widget class="QPushButton" name="buttonSetEndTime">
+                        <item row="5" column="0">
+                         <widget class="QLineEdit" name="lineEditStartTime">
+                          <property name="enabled">
+                           <bool>true</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="minimumSize">
                            <size>
-                            <width>94</width>
+                            <width>80</width>
                             <height>25</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>94</width>
+                            <width>80</width>
                             <height>25</height>
                            </size>
                           </property>
-                          <property name="text">
-                           <string>Set end time</string>
+                          <property name="readOnly">
+                           <bool>true</bool>
                           </property>
-                          <property name="flat">
-                           <bool>false</bool>
+                          <property name="placeholderText">
+                           <string>00:00:00.000</string>
                           </property>
                          </widget>
                         </item>
-                        <item row="5" column="4">
+                        <item row="5" column="3">
                          <widget class="QLineEdit" name="lineEditEndTime">
                           <property name="enabled">
                            <bool>true</bool>
@@ -6382,53 +6576,59 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="2" column="6" alignment="Qt::AlignVCenter">
-                         <widget class="QPushButton" name="buttonFrameNext">
+                        <item row="5" column="1" colspan="2">
+                         <widget class="QPushButton" name="buttonSetStartTime">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="minimumSize">
                            <size>
-                            <width>20</width>
-                            <height>20</height>
+                            <width>94</width>
+                            <height>25</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>20</width>
-                            <height>31</height>
+                            <width>94</width>
+                            <height>25</height>
                            </size>
                           </property>
-                          <property name="toolTip">
-                           <string>Next Frame  </string>
-                          </property>
                           <property name="text">
-                           <string/>
+                           <string>Set start time</string>
                           </property>
                           <property name="flat">
                            <bool>false</bool>
                           </property>
                          </widget>
                         </item>
-                        <item row="5" column="0">
-                         <widget class="QLineEdit" name="lineEditStartTime">
-                          <property name="enabled">
-                           <bool>true</bool>
+                        <item row="5" column="4" colspan="2">
+                         <widget class="QPushButton" name="buttonSetEndTime">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
                           </property>
                           <property name="minimumSize">
                            <size>
-                            <width>80</width>
+                            <width>94</width>
                             <height>25</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>80</width>
+                            <width>94</width>
                             <height>25</height>
                            </size>
                           </property>
-                          <property name="readOnly">
-                           <bool>true</bool>
+                          <property name="text">
+                           <string>Set end time</string>
                           </property>
-                          <property name="placeholderText">
-                           <string>00:00:00.000</string>
+                          <property name="flat">
+                           <bool>false</bool>
                           </property>
                          </widget>
                         </item>
@@ -6483,21 +6683,37 @@
                  </widget>
                 </widget>
                </item>
-               <item row="1" column="6">
-                <spacer name="horizontalSpacer_48">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+               <item row="0" column="1" alignment="Qt::AlignLeft|Qt::AlignVCenter">
+                <widget class="QPushButton" name="actionResetLabels">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
+                 <property name="minimumSize">
                   <size>
-                   <width>3</width>
-                   <height>6</height>
+                   <width>30</width>
+                   <height>22</height>
                   </size>
                  </property>
-                </spacer>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Reset labels</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="files.qrc">
+                   <normaloff>:/resources/icons/16x16/cil-reset.png</normaloff>:/resources/icons/16x16/cil-reset.png</iconset>
+                 </property>
+                </widget>
                </item>
                <item row="0" column="2">
                 <spacer name="horizontalSpacer_49">
@@ -6515,50 +6731,6 @@
                  </property>
                 </spacer>
                </item>
-               <item row="0" column="5">
-                <spacer name="verticalSpacer_15">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>9</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="1" alignment="Qt::AlignLeft|Qt::AlignVCenter">
-                <widget class="QPushButton" name="pushButton_find">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Auto fill metadata</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="0">
                 <spacer name="horizontalSpacer_51">
                  <property name="orientation">
@@ -6575,35 +6747,7 @@
                  </property>
                 </spacer>
                </item>
-               <item row="0" column="3" alignment="Qt::AlignLeft">
-                <widget class="QPushButton" name="pushButton_clear">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Clear all</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="4">
+               <item row="0" column="3">
                 <spacer name="horizontalSpacer_52">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -6612,6 +6756,22 @@
                   <size>
                    <width>40</width>
                    <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="1">
+                <spacer name="verticalSpacer_18">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>23</height>
                   </size>
                  </property>
                 </spacer>

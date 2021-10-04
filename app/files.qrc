@@ -318,5 +318,15 @@
         <file>resources/icons/16x16/cil-find.png</file>
         <file>resources/icons/16x16/cil-loop-circular_black.png</file>
         <file>resources/icons/16x16/cil-warning.png</file>
+        <file>resources/icons/16x16/cil-reset.png</file>
+        <file>resources/icons/16x16/cil-list-clear.png</file>
+        <file>resources/icons/16x16/cil-undo.png</file>
+        <file>resources/icons/16x16/cil-list-clear-1.png</file>
+        <file>resources/icons/16x16/cil-flag-reset.png</file>
+        <file>resources/icons/16x16/cil-clear-audio.png</file>
+        <file>resources/icons/16x16/cil-clear-subt.png</file>
+        <file>resources/icons/16x16/cil-frame-left.png</file>
+        <file>resources/icons/16x16/cil-frame-right.png</file>
+        <file>resources/icons/16x16/cil-cursor-center.png</file>
     </qresource>
 </RCC>
