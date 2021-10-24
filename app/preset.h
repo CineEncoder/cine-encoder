@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: preset.h
- MODIFIED: September, 2021
+ MODIFIED: October, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -25,15 +25,16 @@
 
 enum Profile {
     HIGH,           MAIN,           MAIN10,
-    PROFILE_0,      PROFILE_1,      PROFILE_2,
-    PROFILE_3,      PROFILE_4,      PROFILE_5,
-    DNXHR_LB,       DNXHR_SQ,       DNXHR_HQ,
-    DNXHR_HQX,      DNXHR_444,      PROFILE_AUTO
+    MAIN12,         PROFILE_0,      PROFILE_1,
+    PROFILE_2,      PROFILE_3,      PROFILE_4,
+    PROFILE_5,      DNXHR_LB,       DNXHR_SQ,
+    DNXHR_HQ,       DNXHR_HQX,      DNXHR_444,
+    PROFILE_AUTO
 };
 enum Pixformat {
-    YUV444P10LE,    YUV422P10LE,    YUV420P10LE,
-    YUV422p,        YUV420P,        P010LE,
-    PIXFORMAT_AUTO
+    YUV420P12LE,    YUV444P10LE,    YUV422P10LE,
+    YUV420P10LE,    YUV422p,        YUV420P,
+    P010LE,         PIXFORMAT_AUTO
 };
 enum Parameters {
     _OUTPUT_PARAM,   _CODEC,          _MODE,
@@ -126,9 +127,7 @@ private:
 
     Ui::Preset *ui_preset;
 
-    //static const int PARAMETERS_COUNT = 30;
-
-    static const int NUMBER_PRESETS = 23;
+    static const int NUMBER_PRESETS = 29;
 
     QString *_new_param;
 

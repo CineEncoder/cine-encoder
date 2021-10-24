@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: mainwindow.cpp
- MODIFIED: September, 2021
+ MODIFIED: October, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -675,7 +675,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _settings_path = QDir::homePath() + QString("/CineEncoder");
     _thumb_path = _settings_path + QString("/thumbnails");
     _settings_file = _settings_path + QString("/ce_settings");
-    _preset_file = _settings_path + QString("/ce_preset35.ini");
+    _preset_file = _settings_path + QString("/ce_preset352.ini");
     _settings = new QSettings(_settings_path + QString("/ce_window.ini"), QSettings::IniFormat, this);
     _status_encode_btn = "start";
     _timer_interval = 30;
@@ -2097,14 +2097,7 @@ void Widget::make_preset()  /*** Make preset ***/
     }
 
     /*********************************** Intel QSV presets ************************************/
-
     QString intelQSV_filter = "hwmap=derive_device=qsv,format=qsv";
-    //QString intelQSV_H265_10_preset = "-c:v hevc_qsv -profile:v main10 ";
-    //QString intelQSV_H265_preset = "-c:v hevc_qsv -profile:v main ";
-    QString intelQSV_H264_preset = "-c:v h264_qsv -profile:v high ";
-    QString intelQSV_MPEG2_preset = "-c:v mpeg2_qsv -profile:v high ";
-    //QString intelQSV_VP9_10_preset = "-c:v vp9_qsv -profile:v 2 ";
-    //QString intelQSV_VP9_preset = "-c:v vp9_qsv ";
 #if defined (Q_OS_WIN64)
     QString intelQSVhwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
 #elif defined (Q_OS_UNIX)
@@ -2112,36 +2105,45 @@ void Widget::make_preset()  /*** Make preset ***/
 #endif
 
     /************************************* XDCAM presets **************************************/
-
     QString xdcam_preset = "-pix_fmt yuv422p -c:v mpeg2video -profile:v 0 -flags ilme -top 1 "
                            "-metadata creation_time=now -vtag xd5c -timecode 01:00:00:00 ";
+
+    /************************************* XAVC presets **************************************/
+    QString xavc_preset = "-pix_fmt yuv422p -c:v libx264 -me_method tesa -subq 9 -partitions all -direct-pred auto "
+                          "-psy 0 -g 0 -keyint_min 0 -x264opts filler -x264opts force-cfr -tune fastdecode ";
 
     /************************************* Codec module ***************************************/
 
     QString arr_codec[NUMBER_PRESETS][4] = {
-        {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",               "1", ""},
-        {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",               "0", ""},
-        {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",               "0", ""},
-        {intelQSV_H264_preset,                                          intelQSVhwaccel,  "0", intelQSV_filter},
-        {intelQSV_MPEG2_preset,                                         intelQSVhwaccel,  "0", intelQSV_filter},
-        {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda", "1", ""},
-        {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda", "0", ""},
-        {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda", "0", ""},
-        {"-pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", "",               "1", ""},
-        {"-pix_fmt yuv420p -c:v libvpx-vp9 -speed 4 ",                  "",               "0", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 0 ",           "",               "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 1 ",           "",               "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 2 ",           "",               "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           "",               "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 4 ",           "",               "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 5 ",           "",               "1", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_lb ",            "",               "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_sq ",            "",               "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",               "0", ""},
-        {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",               "1", ""},
-        {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",               "1", ""},
-        {xdcam_preset,                                                  "",               "0", ""},
-        {"-movflags +write_colr -c:v copy ",                            "",               "1", ""}
+        {"-pix_fmt yuv420p12le -c:v libx265 -profile:v main12 ",        "",                     "1", ""},
+        {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",                     "1", ""},
+        {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",                     "0", ""},
+        {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",                     "0", ""},
+        {"-pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", "",                     "1", ""},
+        {"-pix_fmt yuv420p -c:v libvpx-vp9 -speed 4 ",                  "",                     "0", ""},
+        {"-c:v hevc_qsv -profile:v main10 ",                            intelQSVhwaccel,   "1", intelQSV_filter},
+        {"-pix_fmt qsv -c:v hevc_qsv -profile:v main ",                 intelQSVhwaccel,   "0", intelQSV_filter},
+        {"-pix_fmt qsv -c:v h264_qsv -profile:v high ",                 intelQSVhwaccel,   "0", intelQSV_filter},
+        {"-c:v vp9_qsv -profile:v 2 ",                                  intelQSVhwaccel,   "1", intelQSV_filter},
+        {"-pix_fmt qsv -c:v vp9_qsv ",                                  intelQSVhwaccel,   "0", intelQSV_filter},
+        {"-pix_fmt qsv -c:v mpeg2_qsv -profile:v high ",                intelQSVhwaccel,   "0", intelQSV_filter},
+        {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda",       "1", ""},
+        {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda",       "0", ""},
+        {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda",       "0", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 0 ",           "",                     "1", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 1 ",           "",                     "1", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 2 ",           "",                     "1", ""},
+        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           "",                     "1", ""},
+        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 4 ",           "",                     "1", ""},
+        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 5 ",           "",                     "1", ""},
+        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_lb ",            "",                     "0", ""},
+        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_sq ",            "",                     "0", ""},
+        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",                     "0", ""},
+        {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",                     "1", ""},
+        {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",                     "1", ""},
+        {xdcam_preset,                                                  "",                     "0", ""},
+        {xavc_preset,                                                   " -guess_layout_max 0", "0", ""},
+        {"-movflags +write_colr -c:v copy ",                            "",                     "1", ""}
     };
 
     QString hwaccel = arr_codec[_CODEC][1];
@@ -2153,14 +2155,19 @@ void Widget::make_preset()  /*** Make preset ***/
     QString arr_level[NUMBER_PRESETS][21] = {
         {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
+        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
-        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
+        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
+        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
+        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"}, 
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
@@ -2173,6 +2180,7 @@ void Widget::make_preset()  /*** Make preset ***/
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"2",    "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {"5.2",  "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}
     };
 
@@ -2188,13 +2196,18 @@ void Widget::make_preset()  /*** Make preset ***/
         {"CBR",    "ABR", "VBR", "CRF", "CQP"},
         {"CBR",    "ABR", "VBR", "CRF", "CQP"},
         {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
+        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
         {"ABR",    "CRF", "",    "",    ""},
         {"ABR",    "CRF", "",    "",    ""},
+        {"VBR",    "",    "",    "",    ""},
+        {"VBR",    "",    "",    "",    ""},
+        {"VBR",    "",    "",    "",    ""},
+        {"ABR",    "CRF", "",    "",    ""},
+        {"ABR",    "CRF", "",    "",    ""},
+        {"VBR",    "",    "",    "",    ""},
+        {"VBR_NV", "",    "",    "",    ""},
+        {"VBR_NV", "",    "",    "",    ""},
+        {"VBR_NV", "",    "",    "",    ""},
         {"",       "",    "",    "",    ""},
         {"",       "",    "",    "",    ""},
         {"",       "",    "",    "",    ""},
@@ -2207,6 +2220,7 @@ void Widget::make_preset()  /*** Make preset ***/
         {"",       "",    "",    "",    ""},
         {"",       "",    "",    "",    ""},
         {"VBR",    "",    "",    "",    ""},
+        {"CBR",    "",    "",    "",    ""},
         {"",       "",    "",    "",    ""}
     };
     QString mode = "";
@@ -2241,8 +2255,15 @@ void Widget::make_preset()  /*** Make preset ***/
         {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
         {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
         {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
+        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
         {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
         {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
+        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
+        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
         {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
         {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
         {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
@@ -2258,8 +2279,7 @@ void Widget::make_preset()  /*** Make preset ***/
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
+        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}
     };
     QString preset = "";
@@ -2273,14 +2293,20 @@ void Widget::make_preset()  /*** Make preset ***/
     QString arr_pass[NUMBER_PRESETS][2] = {
         {"",                     "-x265-params pass=2 "},
         {"",                     "-x265-params pass=2 "},
+        {"",                     "-x265-params pass=2 "},
         {"",                     "-pass 2 "},
+        {"",                     "-pass 2 "},
+        {"",                     "-pass 2 "},
+        {"",                     ""},
+        {"",                     ""},
+        {"",                     ""},
+        {"",                     ""},
         {"",                     ""},
         {"",                     ""},
         {"-2pass 1 ",            ""},
         {"-2pass 1 ",            ""},
         {"-2pass 1 ",            ""},
-        {"",                     "-pass 2 "},
-        {"",                     "-pass 2 "},
+        {"",                     ""},
         {"",                     ""},
         {"",                     ""},
         {"",                     ""},
@@ -2313,12 +2339,17 @@ void Widget::make_preset()  /*** Make preset ***/
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
+        {"Opus",  "Vorbis", "Source", "",       "",     ""},
+        {"Opus",  "Vorbis", "Source", "",       "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"Opus",  "Vorbis", "Source", "",       "",     ""},
         {"Opus",  "Vorbis", "Source", "",       "",     ""},
+        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
+        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
+        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
+        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
@@ -2331,6 +2362,7 @@ void Widget::make_preset()  /*** Make preset ***/
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
         {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
         {"PCM16", "",       "",       "",       "",     ""},
+        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
         {"AAC",   "AC3",    "DTS",    "Vorbis", "Opus", "Source"}
     };
 
@@ -4609,16 +4641,21 @@ void Widget::updatePresetTable()
 QString Widget::updateFieldCodec(int &codec)
 {
     QString arr_codec[NUMBER_PRESETS] = {
+        tr("H.265/HEVC 4:2:0 12 bit"),
         tr("H.265/HEVC 4:2:0 10 bit"),
         tr("H.265/HEVC 4:2:0 8 bit"),
         tr("H.264/AVC 4:2:0 8 bit"),
+        tr("VP9 4:2:0 10 bit"),
+        tr("VP9 4:2:0 8 bit"),
+        tr("Intel QSV H.265/HEVC 4:2:0 10 bit"),
+        tr("Intel QSV H.265/HEVC 4:2:0 8 bit"),
         tr("Intel QSV H.264/AVC 4:2:0 8 bit"),
+        tr("Intel QSV VP9 4:2:0 10 bit"),
+        tr("Intel QSV VP9 4:2:0 8 bit"),
         tr("Intel QSV MPEG-2 4:2:0 8 bit"),
         tr("NVENC H.265/HEVC 4:2:0 10 bit"),
         tr("NVENC H.265/HEVC 4:2:0 8 bit"),
         tr("NVENC H.264/AVC 4:2:0 8 bit"),
-        tr("VP9 4:2:0 10 bit"),
-        tr("VP9 4:2:0 8 bit"),
         tr("ProRes Proxy"),
         "ProRes LT",
         tr("ProRes Standard"),
@@ -4631,6 +4668,7 @@ QString Widget::updateFieldCodec(int &codec)
         "DNxHR HQX",
         "DNxHR 444",
         "XDCAM HD422",
+        "XAVC 4:2:2",
         tr("From source")
     };
     return arr_codec[codec];
@@ -4639,16 +4677,21 @@ QString Widget::updateFieldCodec(int &codec)
 QString Widget::updateFieldMode(int &codec, int &mode)
 {
     QString arr_mode[NUMBER_PRESETS][5] = {
-        {"CBR",  "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",  "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",  "ABR", "VBR", "CRF", "CQP"},
-        {"VBR",  "",    "",    "",    ""},
-        {"VBR",  "",    "",    "",    ""},
-        {"VBR",  "",    "",    "",    ""},
-        {"VBR",  "",    "",    "",    ""},
-        {"VBR",  "",    "",    "",    ""},
-        {"ABR",  "CRF", "",    "",    ""},
-        {"ABR",  "CRF", "",    "",    ""},
+        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
+        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
+        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
+        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
+        {"ABR",      "CRF", "",    "",    ""},
+        {"ABR",      "CRF", "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
+        {"ABR",      "CRF", "",    "",    ""},
+        {"ABR",      "CRF", "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
         {tr("Auto"), "",    "",    "",    ""},
         {tr("Auto"), "",    "",    "",    ""},
         {tr("Auto"), "",    "",    "",    ""},
@@ -4660,7 +4703,8 @@ QString Widget::updateFieldMode(int &codec, int &mode)
         {tr("Auto"), "",    "",    "",    ""},
         {tr("Auto"), "",    "",    "",    ""},
         {tr("Auto"), "",    "",    "",    ""},
-        {"VBR",  "",    "",    "",    ""},
+        {"VBR",      "",    "",    "",    ""},
+        {"CBR",      "",    "",    "",    ""},
         {tr("Auto"), "",    "",    "",    ""}
     };
     return arr_mode[codec][mode];
@@ -4672,26 +4716,32 @@ QString Widget::updateFieldPreset(int &codec, int &preset)
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",       ""},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",       ""},
-        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), "",          "",          "",         "",       "",     "",       "",         "",       ""}
+        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""}
     };
     return arr_preset[codec][preset];
 }
@@ -4702,13 +4752,19 @@ QString Widget::updateFieldPass(int &codec, int &pass)
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("Auto"),   ""},
+        {tr("Auto"),   ""},
+        {tr("Auto"),   ""},
+        {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
+        {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
@@ -4733,12 +4789,17 @@ QString Widget::updateFieldAcodec(int &codec, int &acodec)
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
@@ -4751,6 +4812,7 @@ QString Widget::updateFieldAcodec(int &codec, int &acodec)
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
         {"PCM 16 bit", "",           "",           "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        "Vorbis",     "Opus", tr("Source")}
     };
     return arr_acodec[codec][acodec];
@@ -4760,15 +4822,20 @@ QString Widget::updateFieldContainer(int &codec, int &container)
 {
     QString arr_container[NUMBER_PRESETS][5] = {
         {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "",     ""},
+        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
+        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
+        {"WebM", "MKV", "",    "",     ""},
+        {"WebM", "MKV", "",    "",     ""},
+        {"MKV",  "MOV", "MP4", "",     ""},
+        {"MKV",  "MOV", "MP4", "",     ""},
+        {"MKV",  "MOV", "MP4", "",     ""},
+        {"WebM", "MKV", "",    "",     ""},
+        {"WebM", "MKV", "",    "",     ""},
         {"MKV",  "MPG", "AVI", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"WebM", "MKV", "",    "",     ""},
-        {"WebM", "MKV", "",    "",     ""},
         {"MOV",  "",    "",    "",     ""},
         {"MOV",  "",    "",    "",     ""},
         {"MOV",  "",    "",    "",     ""},
@@ -4780,6 +4847,7 @@ QString Widget::updateFieldContainer(int &codec, int &container)
         {"MOV",  "",    "",    "",     ""},
         {"MOV",  "",    "",    "",     ""},
         {"MOV",  "",    "",    "",     ""},
+        {"MXF",  "",    "",    "",     ""},
         {"MXF",  "",    "",    "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"}
     };

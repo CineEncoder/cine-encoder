@@ -586,7 +586,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>595</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_27">
@@ -1819,7 +1819,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>595</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
@@ -2082,11 +2082,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2443,11 +2443,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2492,6 +2492,9 @@
                               <property name="styleSheet">
                                <string notr="true"/>
                               </property>
+                              <property name="currentIndex">
+                               <number>1</number>
+                              </property>
                               <property name="maxVisibleItems">
                                <number>15</number>
                               </property>
@@ -2504,12 +2507,17 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
-                              </property>
+                              <item>
+                               <property name="text">
+                                <string>H.265/HEVC 4:2:0 12 bit</string>
+                               </property>
+                              </item>
                               <item>
                                <property name="text">
                                 <string>H.265/HEVC 4:2:0 10 bit</string>
@@ -2527,7 +2535,37 @@
                               </item>
                               <item>
                                <property name="text">
+                                <string>VP9 4:2:0 10 bit</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>VP9 4:2:0 8 bit</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>Intel QSV H.265/HEVC 4:2:0 10 bit</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>Intel QSV H.265/HEVC 4:2:0 8 bit</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
                                 <string>Intel QSV H.264/AVC 4:2:0 8 bit</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>Intel QSV VP9 4:2:0 10 bit</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>Intel QSV VP9 4:2:0 8 bit</string>
                                </property>
                               </item>
                               <item>
@@ -2548,16 +2586,6 @@
                               <item>
                                <property name="text">
                                 <string>NVENC H.264/AVC 4:2:0 8 bit</string>
-                               </property>
-                              </item>
-                              <item>
-                               <property name="text">
-                                <string>VP9 4:2:0 10 bit</string>
-                               </property>
-                              </item>
-                              <item>
-                               <property name="text">
-                                <string>VP9 4:2:0 8 bit</string>
                                </property>
                               </item>
                               <item>
@@ -2618,6 +2646,11 @@
                               <item>
                                <property name="text">
                                 <string>XDCAM HD422</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>XAVC 4:2:2</string>
                                </property>
                               </item>
                               <item>
@@ -2690,11 +2723,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2709,6 +2742,11 @@
                               <item>
                                <property name="text">
                                 <string>Main10</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>Main12</string>
                                </property>
                               </item>
                               <item>
@@ -2820,11 +2858,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -2948,11 +2986,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3118,7 +3156,7 @@
                                <bool>false</bool>
                               </property>
                               <property name="currentIndex">
-                               <number>2</number>
+                               <number>3</number>
                               </property>
                               <property name="maxCount">
                                <number>20</number>
@@ -3129,12 +3167,17 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
-                              </property>
+                              <item>
+                               <property name="text">
+                                <string>yuv420p12le</string>
+                               </property>
+                              </item>
                               <item>
                                <property name="text">
                                 <string>yuv444p10le</string>
@@ -3210,11 +3253,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3387,7 +3430,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>595</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_32">
@@ -3491,11 +3534,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3658,11 +3701,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3740,11 +3783,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -3917,7 +3960,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>426</width>
-                     <height>595</height>
+                     <height>597</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_33">
@@ -4043,11 +4086,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -4618,11 +4661,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -4760,11 +4803,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -4902,11 +4945,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">
@@ -5004,11 +5047,11 @@
                                 <height>16</height>
                                </size>
                               </property>
+                              <property name="placeholderText">
+                               <string notr="true"/>
+                              </property>
                               <property name="frame">
                                <bool>true</bool>
-                              </property>
-                              <property name="placeholderText" stdset="0">
-                               <string notr="true"/>
                               </property>
                               <item>
                                <property name="text">

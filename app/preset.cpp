@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: preset.cpp
- MODIFIED: September, 2021
+ MODIFIED: October, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -551,16 +551,21 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
     /************************************* Codec module ***************************************/
 
     QString arr_codec[NUMBER_PRESETS][3] = {
+        {"HEVC, ",                tr("YUV, 4:2:0, 12 bit, "), "HDR: "},
         {"HEVC, ",                tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"HEVC, ",                tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"AVC, ",                 tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"VP9, ",                 tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
+        {"VP9, ",                 tr("YUV, 4:2:0, 8  bit, "), ""},
+        {"Intel QSV, HEVC, ",     tr("YUV, 4:2:0, 10 bit, "),  "HDR: "},
+        {"Intel QSV, HEVC, ",     tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"Intel QSV, AVC, ",      tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"Intel QSV, VP9, ",      tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
+        {"Intel QSV, VP9, ",      tr("YUV, 4:2:0, 8  bit, "), ""},
         {"Intel QSV, MPEG-2, ",   tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"NVENC, AVC, ",          tr("YUV, 4:2:0, 8 bit, "),  ""},
-        {"VP9, ",                 tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
-        {"VP9, ",                 tr("YUV, 4:2:0, 8  bit, "), ""},
         {tr("ProRes Proxy, "),    tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
         {"ProRes LT, ",           tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
         {tr("ProRes Standard, "), tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
@@ -573,6 +578,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"DNxHR HQX, ",           tr("YUV, 4:2:2, 10 bit, "), "HDR: "},
         {"DNxHR 444, ",           tr("YUV, 4:4:4, 10 bit, "), "HDR: "},
         {"XDCAM HD422, ",         tr("YUV, 4:2:2, 8 bit, "),  ""},
+        {"XAVC 4:2:2, ",          tr("YUV, 4:2:2, 8 bit, "),  ""},
         {tr("From source, "),     "",                         "HDR: "}
     };
     codec = arr_codec[c1][0];
@@ -605,13 +611,18 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
-        {"VBR", "",    "",    "",    ""},
-        {"VBR", "",    "",    "",    ""},
+        {"CBR", "ABR", "VBR", "CRF", "CQP"},
+        {"ABR", "CRF", "",    "",    ""},
+        {"ABR", "CRF", "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
+        {"VBR", "",    "",    "",    ""},
+        {"VBR", "",    "",    "",    ""},
+        {"VBR", "",    "",    "",    ""},
+        {"VBR", "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
@@ -624,6 +635,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"",    "",    "",    "",    ""},
         {"",    "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
+        {"CBR", "",    "",    "",    ""},
         {"",    "",    "",    "",    ""}
     };
     QString selected_mode = arr_mode[c1][c2];
@@ -640,26 +652,32 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",       ""},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",       ""},
-        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
-        {tr("None"), tr("Slow"),      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}
+        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
+        {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""}
     };
     QString p = arr_preset[c1][c12];
     if (p != "" && p != tr("None")) {
@@ -672,13 +690,20 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass")},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
+        {"",       ""},
         {"",       ""},
         {"",       ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
+        {"",       ""},
+        {"",       ""},
         {"",       ""},
         {"",       ""},
         {"",       ""},
@@ -706,25 +731,31 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
+        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"Opus",       "Vorbis",     tr("Source"),     "",       "",     ""},
-        {"Opus",       "Vorbis",     tr("Source"),     "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",       "",     ""},
-        {"PCM 16 bit", "",           "",           "",       "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Vorbis", "Opus", tr("Source")}
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"PCM 16 bit", "",           "",           "",           "",     ""},
+        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
+        {"AAC",        "AC3",        "DTS",        "Vorbis",     "Opus", tr("Source")}
     };
     if (arr_acodec[c1][c21] != "") {
         acodec = tr("Audio: ") + arr_acodec[c1][c21] + ", ";
@@ -761,8 +792,6 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
 void Preset::on_comboBoxAspectRatio_currentIndexChanged(int index)
 {
-    //lockSignals(true);
-
     QString aspect_ratio[34][2] = {
         {tr("Source"), tr("Source")}, // Source
         {"640",    "480"},    // 640x480
@@ -821,10 +850,7 @@ void Preset::on_comboBoxAspectRatio_currentIndexChanged(int index)
     } else {
         _aspectRatio = 0.0f;
     }
-
-    std::cout << ">>>>>>>>>>>>>> ASPECT RATIO : " << _aspectRatio << std::endl;
-
-    //lockSignals(false);
+    //std::cout << ">>>>>>>>>>>>>> ASPECT RATIO : " << _aspectRatio << std::endl;
     _repeat++;
 }
 
@@ -1047,18 +1073,20 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 {
     lockSignals(true);
     std::cout << "Change current codec..." << std::endl;
-    const QStringList levelsH264 = {tr("Auto"), "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3", "3.1",
-                              "3.2", "4", "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"};
-    const QStringList levelsH265 = {tr("Auto"), "1", "2", "2.1", "3", "3.1", "4", "4.1",
-                              "5", "5.1", "5.2", "6", "6.1", "6.2"};
+    const QStringList levelsH264 = {tr("Auto"), "1", "1b",  "1.1", "1.2", "1.3", "2",   "2.1", "2.2", "3", "3.1",
+                                    "3.2",      "4", "4.1", "4.2", "5",   "5.1", "5.2", "6",   "6.1", "6.2"};
+    const QStringList levelsH265 = {tr("Auto"), "1",   "2",   "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1",
+                                    "5.2", "6", "6.1", "6.2"};
     const QStringList presetsH264 = {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"),
-                              tr("Fast"), tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow")};
+                                     tr("Fast"), tr("Medium"),    tr("Slow"),      tr("Slower"),   tr("Veryslow")};
     const QStringList presetsH265 = {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"),
-                              tr("Fast"), tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow")};
+                                     tr("Fast"), tr("Medium"),    tr("Slow"),      tr("Slower"),   tr("Veryslow")};
     const QStringList presetsH264QSV = {tr("None"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"),
-                              tr("Slow"), tr("Slower"), tr("Veryslow")};
+                                        tr("Slow"), tr("Slower"),   tr("Veryslow")};
+    const QStringList presetsH265QSV = {tr("None"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"),
+                                        tr("Slow"), tr("Slower"),   tr("Veryslow")};
     const QStringList presetsMPEG2QSV = {tr("None"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"),
-                              tr("Slow"), tr("Slower"), tr("Veryslow")};
+                                         tr("Slow"), tr("Slower"),   tr("Veryslow")};
     ui_preset->comboBoxAspectRatio->setEnabled(true);
     ui_preset->comboBox_width->setEnabled(true);
     ui_preset->comboBox_height->setEnabled(true);
@@ -1085,7 +1113,22 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
     ui_preset->comboBox_level->clear();
     ui_preset->comboBox_audio_codec->clear();
 
-    if (arg1 == tr("H.265/HEVC 4:2:0 10 bit")) {
+    if (arg1 == tr("H.265/HEVC 4:2:0 12 bit")) {
+        ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
+        ui_preset->comboBox_container->setCurrentIndex(2);
+        ui_preset->comboBox_mode->addItems({tr("Constant Bitrate"), tr("Average Bitrate"), tr("Variable Bitrate"),
+                                            tr("Constant Rate Factor"), tr("Constant QP")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::MAIN12);
+        ui_preset->comboBox_preset->addItems(presetsH265);
+        ui_preset->comboBox_preset->setCurrentIndex(6);
+        ui_preset->comboBox_level->addItems(levelsH265);
+        ui_preset->comboBox_level->setCurrentIndex(0);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P12LE);
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
+    }
+
+    else if (arg1 == tr("H.265/HEVC 4:2:0 10 bit")) {
         ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui_preset->comboBox_container->setCurrentIndex(2);
         ui_preset->comboBox_mode->addItems({tr("Constant Bitrate"), tr("Average Bitrate"), tr("Variable Bitrate"),
@@ -1132,6 +1175,76 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         disableHDR();
     }
 
+    else if (arg1 == tr("VP9 4:2:0 10 bit")) {
+        ui_preset->comboBox_container->addItems({"WebM", "MKV"});
+        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_2);
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P10LE);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_level->addItems({tr("Auto")});
+        ui_preset->comboBox_level->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
+    }
+
+    else if (arg1 == tr("VP9 4:2:0 8 bit")) {
+        ui_preset->comboBox_container->addItems({"WebM", "MKV"});
+        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
+        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_1);
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_level->addItems({tr("Auto")});
+        ui_preset->comboBox_level->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
+        disableHDR();
+    }
+
+    else if (arg1 == tr("Intel QSV H.265/HEVC 4:2:0 10 bit")) {
+        ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
+        ui_preset->comboBoxAspectRatio->setEnabled(false);
+        ui_preset->comboBox_width->setEnabled(false);
+        ui_preset->comboBox_height->setEnabled(false);
+        ui_preset->comboBoxFrameRate->setEnabled(false);
+        ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
+        ui_preset->comboBox_container->setCurrentIndex(2);
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::MAIN10);
+        ui_preset->comboBox_preset->addItems(presetsH265QSV);
+        ui_preset->comboBox_preset->setCurrentIndex(4);
+        ui_preset->comboBox_level->addItems(levelsH265);
+        ui_preset->comboBox_level->setCurrentIndex(0);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
+    }
+
+    else if (arg1 == tr("Intel QSV H.265/HEVC 4:2:0 8 bit")) {
+        ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
+        ui_preset->comboBoxAspectRatio->setEnabled(false);
+        ui_preset->comboBox_width->setEnabled(false);
+        ui_preset->comboBox_height->setEnabled(false);
+        ui_preset->comboBoxFrameRate->setEnabled(false);
+        ui_preset->comboBox_container->addItems({"MKV", "MOV", "MP4"});
+        ui_preset->comboBox_container->setCurrentIndex(2);
+        ui_preset->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::MAIN);
+        ui_preset->comboBox_preset->addItems(presetsH265QSV);
+        ui_preset->comboBox_preset->setCurrentIndex(4);
+        ui_preset->comboBox_level->addItems(levelsH265);
+        ui_preset->comboBox_level->setCurrentIndex(0);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
+        disableHDR();
+    }
+
     else if (arg1 == tr("Intel QSV H.264/AVC 4:2:0 8 bit")) {
         ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
         ui_preset->comboBoxAspectRatio->setEnabled(false);
@@ -1151,6 +1264,47 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
+        disableHDR();
+    }
+
+    else if (arg1 == tr("Intel QSV VP9 4:2:0 10 bit")) {
+        ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
+        ui_preset->comboBoxAspectRatio->setEnabled(false);
+        ui_preset->comboBox_width->setEnabled(false);
+        ui_preset->comboBox_height->setEnabled(false);
+        ui_preset->comboBoxFrameRate->setEnabled(false);
+        ui_preset->comboBox_container->addItems({"WebM", "MKV"});
+        ui_preset->comboBox_container->setCurrentIndex(0);
+        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_2);
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_level->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
+    }
+
+    else if (arg1 == tr("Intel QSV VP9 4:2:0 8 bit")) {
+        ui_preset->comboBoxAspectRatio->setCurrentIndex(0);
+        ui_preset->comboBoxAspectRatio->setEnabled(false);
+        ui_preset->comboBox_width->setEnabled(false);
+        ui_preset->comboBox_height->setEnabled(false);
+        ui_preset->comboBoxFrameRate->setEnabled(false);
+        ui_preset->comboBox_container->addItems({"WebM", "MKV"});
+        ui_preset->comboBox_container->setCurrentIndex(0);
+        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_1);
+        ui_preset->comboBox_preset->addItems({tr("None")});
+        ui_preset->comboBox_level->addItems({tr("Auto")});
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
+        ui_preset->comboBox_preset->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_level->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
         disableHDR();
     }
 
@@ -1223,33 +1377,6 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
-        disableHDR();
-    }
-
-    else if (arg1 == tr("VP9 4:2:0 10 bit")) {
-        ui_preset->comboBox_container->addItems({"WebM", "MKV"});
-        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
-        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
-        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_2);
-        ui_preset->comboBox_preset->addItems({tr("None")});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P10LE);
-        ui_preset->comboBox_preset->setEnabled(false);
-        ui_preset->comboBox_level->addItems({tr("Auto")});
-        ui_preset->comboBox_level->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
-    }
-
-    else if (arg1 == tr("VP9 4:2:0 8 bit")) {
-        ui_preset->comboBox_container->addItems({"WebM", "MKV"});
-        ui_preset->comboBox_mode->addItems({tr("Average Bitrate"), tr("Constant Rate Factor")});
-        ui_preset->comboBox_pass->addItems({tr("1 Pass"), tr("2 Pass")});
-        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_1);
-        ui_preset->comboBox_preset->addItems({tr("None")});
-        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P);
-        ui_preset->comboBox_preset->setEnabled(false);
-        ui_preset->comboBox_level->addItems({tr("Auto")});
-        ui_preset->comboBox_level->setEnabled(false);
-        ui_preset->comboBox_audio_codec->addItems({"Opus", "Vorbis", tr("Source")});
         disableHDR();
     }
 
@@ -1447,6 +1574,25 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui_preset->comboBox_mode->setEnabled(false);
         ui_preset->comboBox_pass->setEnabled(false);
         ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit"});
+        disableHDR();
+    }
+
+    else if (arg1 == "XAVC 4:2:2") {
+        ui_preset->comboBoxFrameRate->setCurrentIndex(8);
+        ui_preset->comboBox_container->addItems({"MXF"});
+        ui_preset->comboBox_mode->addItems({tr("Constant Bitrate")});
+        ui_preset->lineEdit_bitrate->setText("480");
+        ui_preset->lineEdit_bufsize->setText("480");
+        ui_preset->comboBox_pass->addItems({tr("Auto")});
+        ui_preset->comboBox_profile->setCurrentIndex(Profile::PROFILE_AUTO);
+        ui_preset->comboBox_preset->addItems(presetsH264);
+        ui_preset->comboBox_level->addItems({"5.2"});
+        ui_preset->comboBox_level->setEnabled(false);
+        ui_preset->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV422p);
+        ui_preset->comboBox_container->setEnabled(false);
+        ui_preset->comboBox_mode->setEnabled(false);
+        ui_preset->comboBox_pass->setEnabled(false);
+        ui_preset->comboBox_audio_codec->addItems({"PCM 16 bit", "PCM 24 bit", "PCM 32 bit"});
         disableHDR();
     }
 

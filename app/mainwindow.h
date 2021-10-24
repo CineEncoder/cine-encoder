@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: mainwindow.h
- MODIFIED: September, 2021
+ MODIFIED: October, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -346,7 +346,7 @@ private:
 
     // ******************* Constants *****************************//
 
-    static const int NUMBER_PRESETS = 23;
+    static const int NUMBER_PRESETS = 29;
 
     static const int AMOUNT_AUDIO_STREAMS = 9;
 
