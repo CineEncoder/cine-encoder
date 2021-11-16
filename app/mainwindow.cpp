@@ -286,7 +286,14 @@ void Widget::setTrayIconActions()
     quitAction = new QAction(tr("Exit"), this);
 
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
-    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+    connect(restoreAction, &QAction::triggered, this, [this](){
+        if (_expandWindowsState) {
+            this->showFullScreen();
+        }
+        else {
+            this->showNormal();
+        }
+    });
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
 
     trayIconMenu = new QMenu(this);
@@ -362,6 +369,9 @@ void Widget::createConnections()
     settings = new QAction(tr("Settings"), this);
     connect(settings, &QAction::triggered, this, &Widget::on_actionSettings_clicked);
 
+    reset_view = new QAction(tr("Reset view"), this);
+    connect(reset_view, &QAction::triggered, this, &Widget::resetView);
+
     about = new QAction(tr("About"), this);
     donate = new QAction(tr("Donate"), this);
     connect(about, &QAction::triggered, this, &Widget::on_actionAbout_clicked);
@@ -392,6 +402,7 @@ void Widget::createConnections()
     for (int i = 0; i < DOCKS_COUNT; i++) {
         menuView->addAction(docks[i]->toggleViewAction());
     }
+    menuView->addAction(reset_view);
     ui->menuViewButton->setMenu(menuView);
     docks[dockIndex::LOG_DOCK]->toggleViewAction()->setChecked(false);
     docks[dockIndex::SPLIT_DOCK]->toggleViewAction()->setChecked(false);
@@ -676,7 +687,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _thumb_path = _settings_path + QString("/thumbnails");
     _settings_file = _settings_path + QString("/ce_settings");
     _preset_file = _settings_path + QString("/ce_preset352.ini");
-    _settings = new QSettings(_settings_path + QString("/ce_window.ini"), QSettings::IniFormat, this);
+    _settings = new QSettings(_settings_path + QString("/ce_window352.ini"), QSettings::IniFormat, this);
     _status_encode_btn = "start";
     _timer_interval = 30;
     _curTime = 0;
@@ -1042,7 +1053,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
     std::cout << "Desktop env.: " << _desktopEnv.toStdString() << std::endl;
 
-    if (this->isMaximized()) {
+    if (this->isFullScreen()) {
         _expandWindowsState = true;
     }
 
@@ -1110,13 +1121,12 @@ void Widget::setExpandIcon()
 
 void Widget::on_expandWindow_clicked()    /*** Expand window ***/
 {
-    if (_expandWindowsState == false)
-    {
-        this->showMaximized();
+    if (!this->isFullScreen()) {
         _expandWindowsState = true;
+        this->showFullScreen();
     } else {
-        this->showNormal();
         _expandWindowsState = false;
+        this->showNormal();
     }
     setExpandIcon();
 }
@@ -3785,6 +3795,42 @@ void Widget::resizeTableRows(int rows_height)
         }
         ui->tableWidget->selectRow(row);
     }
+}
+
+void Widget::resetView()
+{
+    this->showNormal();
+    _expandWindowsState = false;
+    setExpandIcon();
+    QDesktopWidget *screenSize = QApplication::desktop();
+    int screenWidth = screenSize->width();
+    int screenHeight = screenSize->height();
+    int widthMainWindow = 1024;
+    int heightMainWindow = 650;
+    int x_pos = static_cast<int>(round(static_cast<float>(screenWidth - widthMainWindow)/2));
+    int y_pos = static_cast<int>(round(static_cast<float>(screenHeight - heightMainWindow)/2));
+    this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
+
+    QList<bool> dockVisible = {true, true, true, true, true, false, true, false};
+    /*PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
+    STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK*/
+    for (int ind = 0; ind < DOCKS_COUNT; ind++) {
+        docks[ind]->toggleViewAction()->setChecked(dockVisible[ind]);
+        docks[ind]->setVisible(dockVisible[ind]);
+        docks[ind]->setFloating(false);
+    }
+
+    QList<int> dockSizesX = {};
+    QList<int> dockSizesY = {};
+    float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
+    float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
+    for (int ind = 0; ind < DOCKS_COUNT; ind++) {
+        int dockWidth = static_cast<int>(coeffX[ind] * widthMainWindow);
+        int dockHeight = static_cast<int>(coeffY[ind] * heightMainWindow);
+        dockSizesX.append(dockWidth);
+        dockSizesY.append(dockHeight);
+    }
+    setDocksParameters(dockSizesX, dockSizesY);
 }
 
 void Widget::provideContextMenu(const QPoint &position)     /*** Call table items menu  ***/

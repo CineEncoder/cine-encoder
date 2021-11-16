@@ -415,6 +415,7 @@ private:
 
     QAction *settings;
 
+    QAction *reset_view;
 
     QAction *about;
 
@@ -649,6 +650,8 @@ private:
     void providePresetContextMenu(const QPoint &position);
 
     void resizeTableRows(int rows_height);
+
+    void resetView();
 
     /************************* Preset Window ******************************/
 
