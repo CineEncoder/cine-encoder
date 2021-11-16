@@ -3200,7 +3200,7 @@ void Widget::pause()    /*** Pause ***/
         setStatus(tr("Pause"));
         animation->stop();
 #ifdef Q_OS_WIN
-        _PROCESS_INFORMATION *pi = process_1->pid();  // pause for Windows
+        _PROCESS_INFORMATION *pi = process_1->pid();
         SuspendThread(pi->hThread);  // pause for Windows
 #else
         kill(pid_t(process_1->processId()), SIGSTOP);  // pause for Unix
@@ -3220,8 +3220,8 @@ void Widget::resume()   /*** Resume ***/
         setStatus(tr("Encoding"));
         animation->start();
 #ifdef Q_OS_WIN
-        _PROCESS_INFORMATION *pi = process_1->pid();  // pause for Windows
-        ResumeThread(pi->hThread);  // pause for Windows
+        _PROCESS_INFORMATION *pi = process_1->pid();
+        ResumeThread(pi->hThread);  // resume for Windows
 #else
         kill(pid_t(process_1->processId()), SIGCONT); // resume for Unix
 #endif
@@ -3399,24 +3399,16 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
     int countFileNames = openFileNames.size();
     while (i <= countFileNames)
     {
-        int numRows = ui->tableWidget->rowCount();
-        std::wstring filePath_wstr = openFileNames.at(i-1).toStdWString();
-        std::wstring::size_type separator = filePath_wstr.rfind('/');
-        if (separator == std::wstring::npos) {
-            _message = tr("Unexpected error while trying to perform file name detection.");
-            call_task_complete(_message, false);
-            return;
-        }
+        const int numRows = ui->tableWidget->rowCount();
         ui->tableWidget->setRowCount(numRows + 1);
-        QString inputFile = QString::fromStdWString(filePath_wstr.substr(separator + 1));
-        QString inputFolder = QString::fromStdWString(filePath_wstr.substr(0, separator));
+        const QString file = openFileNames.at(i-1);
+        const QString inputFolder = QFileInfo(file).absolutePath();
+        const QString inputFile = QFileInfo(file).fileName();
         showOpeningFiles(inputFile);
         showOpeningFiles(0);
         QApplication::processEvents();
-        if (i == 1) {
-            _openDir = inputFolder;
-        }
-        MI.Open(filePath_wstr);
+        if (i == 1) _openDir = inputFolder;
+        MI.Open(file.toStdWString());
         QString duration_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Duration"));
         double duration_double = 0.001 * duration_qstr.toDouble();
         float duration_float = static_cast<float>(duration_double);
