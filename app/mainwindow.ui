@@ -139,7 +139,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_53">
+             <widget class="QLabel" name="label_Progress">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -279,7 +279,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_54">
+             <widget class="QLabel" name="label_Remaining">
               <property name="autoFillBackground">
                <bool>false</bool>
               </property>
@@ -289,7 +289,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_55">
+             <widget class="QLabel" name="label_RemTime">
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
               </property>

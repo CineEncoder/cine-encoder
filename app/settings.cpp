@@ -286,14 +286,14 @@ QString Settings::callFileDialog(const QString title)
     selectFolderWindow.setWindowTitle(title);
     selectFolderWindow.setMinimumWidth(600);
     selectFolderWindow.setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    if (desktopEnv == "gnome") selectFolderWindow.setOptions(QFileDialog::DontUseNativeDialog);
+    if (desktopEnv == "gnome") selectFolderWindow.setOption(QFileDialog::DontUseNativeDialog, true);
     selectFolderWindow.setFileMode(QFileDialog::DirectoryOnly);
     selectFolderWindow.setAcceptMode(QFileDialog::AcceptOpen);
     selectFolderWindow.setDirectory(QDir::homePath());
-    if (selectFolderWindow.exec() != QFileDialog::Accepted) {
-        return QString("");
+    if (selectFolderWindow.exec() == QFileDialog::Accepted) {
+        return selectFolderWindow.selectedFiles().at(0);
     }
-    return selectFolderWindow.selectedFiles().at(0);
+    return QString("");
 }
 
 bool Settings::eventFilter(QObject *watched, QEvent *event)

@@ -43,7 +43,10 @@
 
 
 
-Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
+Widget::Widget(QWidget *parent):
+    QWidget(parent),
+    ui(new Ui::Widget),
+    _windowActivated(false)
 {
     ui->setupUi(this);
 #ifdef Q_OS_WIN64
@@ -148,7 +151,7 @@ Widget::~Widget()
 void Widget::showEvent(QShowEvent *event)   /*** Call set parameters ***/
 {
     QWidget::showEvent(event);
-    if (_windowActivated == false) {
+    if (!_windowActivated) {
         _windowActivated = true;
         std::cout << "Window Activated ..." << std::endl;
         setParameters();
@@ -163,15 +166,9 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
     if (confirm == true)
     {
         std::cout << "Exit confirmed!" << std::endl;  // Debug info //
-        short s1 = process_1->state();
-        short s2 = process_5->state();
+        if (processEncoding->state() != QProcess::NotRunning) processEncoding->kill();
+        if (processThumbCreation->state() != QProcess::NotRunning) processThumbCreation->kill();
 
-        if (s1 != 0) {
-            process_1->kill();
-        }
-        if (s2 != 0) {
-            process_5->kill();
-        }
         const QString SEP = "<&>";
         if (_prs_file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
@@ -748,17 +745,17 @@ void Widget::setParameters()    /*** Set parameters ***/
     animation = new QMovie(this);
     animation->setFileName(":/resources/icons/Animated/cil-spinner-circle.gif");
     animation->setScaledSize(QSize(18, 18));
-    process_1 = new QProcess(this);
-    process_5 = new QProcess(this);
-    process_1->setProcessChannelMode(QProcess::MergedChannels);
-    process_1->setWorkingDirectory(QDir::homePath());
+    processEncoding = new QProcess(this);
+    processThumbCreation = new QProcess(this);
+    processEncoding->setProcessChannelMode(QProcess::MergedChannels);
+    processEncoding->setWorkingDirectory(QDir::homePath());
 
     // ****************************** Setup widgets ************************************//
     ui->labelAnimation->setMovie(animation);
     ui->labelAnimation->hide();
-    ui->label_53->hide();
-    ui->label_54->hide();
-    ui->label_55->hide();
+    ui->label_Progress->hide();
+    ui->label_Remaining->hide();
+    ui->label_RemTime->hide();
     ui->progressBar->hide();
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->horizontalHeader()->setVisible(true);
@@ -2874,13 +2871,13 @@ void Widget::encode()   /*** Encode ***/
     std::cout << "Encode ..." << std::endl;  //  Debug info //
     QStringList arguments;
     _calling_pr_1 = true;
-    process_1->disconnect();
-    connect(process_1, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
-    connect(process_1, SIGNAL(finished(int)), this, SLOT(error()));
+    processEncoding->disconnect();
+    connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
+    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
     ui->progressBar->setValue(0);
     if (_mux_mode == true) {
         std::cout << "Muxing mode ..." << std::endl;  //  Debug info //
-        ui->label_53->setText(tr("Muxing:"));
+        ui->label_Progress->setText(tr("Muxing:"));
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
                   << "-map" << "0:s?" << "-movflags" << "+write_colr"
                   << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param.split(" ") << "-y" << _output_file;
@@ -2959,34 +2956,34 @@ void Widget::encode()   /*** Encode ***/
         ui->actionSettings->setEnabled(false);
         ui->labelAnimation->show();
         animation->start();
-        ui->label_53->show();
-        ui->label_54->show();
-        ui->label_55->show();
+        ui->label_Progress->show();
+        ui->label_Remaining->show();
+        ui->label_RemTime->show();
         ui->progressBar->show();
 
 
         _loop_start = time(nullptr);
         if (_flag_two_pass == false && _flag_hdr == false) {
             std::cout << "Encode non HDR..." << std::endl;  //  Debug info //
-            ui->label_53->setText(tr("Encoding:"));
+            ui->label_Progress->setText(tr("Encoding:"));
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _output_file;
         }
         else if (_flag_two_pass == false && _flag_hdr == true) {
             std::cout << "Encode HDR..." << std::endl;  //  Debug info //
-            ui->label_53->setText(tr("Encoding:"));
+            ui->label_Progress->setText(tr("Encoding:"));
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _temp_file;
         }
         else if (_flag_two_pass == true) {
             std::cout << "Encode 1-st pass..." << std::endl;  //  Debug info //
-            ui->label_53->setText(tr("1-st pass:"));
+            ui->label_Progress->setText(tr("1-st pass:"));
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file << _preset_pass1.split(" ");
         }
     }
     //qDebug() << arguments;
-    process_1->start("ffmpeg", arguments);
-    if (!process_1->waitForStarted()) {
+    processEncoding->start("ffmpeg", arguments);
+    if (!processEncoding->waitForStarted()) {
         std::cout << "cmd command not found!!!" << std::endl;
-        process_1->disconnect();
+        processEncoding->disconnect();
         restore_initial_state();
         _message = tr("An unknown error occurred!\n Possible FFMPEG not installed.\n");
         call_task_complete(_message, false);
@@ -2997,17 +2994,17 @@ void Widget::add_metadata() /*** Add metedata ***/
 {
     std::cout << "Add metadata ..." << std::endl;  //  Debug info //
     _calling_pr_1 = true;
-    process_1->disconnect();
-    connect(process_1, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_2()));
-    connect(process_1, SIGNAL(finished(int)), this, SLOT(error()));
-    ui->label_53->setText(tr("Add data:"));
+    processEncoding->disconnect();
+    connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_2()));
+    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
+    ui->label_Progress->setText(tr("Add data:"));
     ui->progressBar->setValue(0);
     QStringList arguments;
     arguments << "--edit" << "track:1" << _preset_mkvmerge.split(" ") << _temp_file;
-    process_1->start("mkvpropedit", arguments);
-    if (!process_1->waitForStarted()) {
+    processEncoding->start("mkvpropedit", arguments);
+    if (!processEncoding->waitForStarted()) {
         std::cout << "cmd command not found!!!" << std::endl;
-        process_1->disconnect();
+        processEncoding->disconnect();
         restore_initial_state();
         _message = tr("An unknown error occured!\n Possible mkvtoolnix not installed.\n");
         call_task_complete(_message, false);
@@ -3017,12 +3014,12 @@ void Widget::add_metadata() /*** Add metedata ***/
 void Widget::complete() /*** Complete ***/
 {
     std::cout << "Complete ..." << std::endl;  //  Debug info //
-    process_1->disconnect();
+    processEncoding->disconnect();
     setStatus(tr("Done!"));
     animation->stop();
-    ui->label_53->hide();
-    ui->label_54->hide();
-    ui->label_55->hide();
+    ui->label_Progress->hide();
+    ui->label_Remaining->hide();
+    ui->label_RemTime->hide();
     ui->labelAnimation->hide();
     ui->progressBar->hide();
     if (_flag_hdr == true) {
@@ -3068,7 +3065,7 @@ void Widget::complete() /*** Complete ***/
 
 void Widget::progress_1()   /*** Progress 1 ***/
 {
-    QString line = process_1->readAllStandardOutput();
+    QString line = processEncoding->readAllStandardOutput();
     QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
     //std::cout << line_mod6.toStdString() << std::endl;
     ui->textBrowser_log->append(line_mod6);
@@ -3108,7 +3105,7 @@ void Widget::progress_1()   /*** Progress 1 ***/
         if (rem_time > MAXIMUM_ALLOWED_TIME) {
             rem_time = MAXIMUM_ALLOWED_TIME;
         }
-        ui->label_55->setText(timeConverter(rem_time));
+        ui->label_RemTime->setText(timeConverter(rem_time));
 
         float percent = static_cast<float>(frame * 100) / _fr_count;
         int percent_int = static_cast<int>(round(percent));
@@ -3118,20 +3115,20 @@ void Widget::progress_1()   /*** Progress 1 ***/
         ui->progressBar->setValue(percent_int);
 
         if ((percent_int >= 95) && (_calling_pr_1 == true)) {
-             disconnect(process_1, SIGNAL(finished(int)), this, SLOT(error()));
+             disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
              if (_mux_mode == true) {
-                 connect(process_1, SIGNAL(finished(int)), this, SLOT(complete()));
+                 connect(processEncoding, SIGNAL(finished(int)), this, SLOT(complete()));
              } else {
                  if (_flag_two_pass == false && _flag_hdr == true) {
-                     disconnect(process_1, SIGNAL(finished(int)), this, SLOT(encode()));
-                     connect(process_1, SIGNAL(finished(int)), this, SLOT(add_metadata()));
+                     disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
+                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(add_metadata()));
                  }
                  if (_flag_two_pass == false && _flag_hdr == false) {
-                     disconnect(process_1, SIGNAL(finished(int)), this, SLOT(encode()));
-                     connect(process_1, SIGNAL(finished(int)), this, SLOT(complete()));
+                     disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
+                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(complete()));
                  }
                  if (_flag_two_pass == true) {
-                     connect(process_1, SIGNAL(finished(int)), this, SLOT(encode()));
+                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
                      _flag_two_pass = false;
                  }
              }
@@ -3142,7 +3139,7 @@ void Widget::progress_1()   /*** Progress 1 ***/
 
 void Widget::progress_2()   /*** Progress 2 ***/
 {
-    QString line = process_1->readAllStandardOutput();
+    QString line = processEncoding->readAllStandardOutput();
     ui->textBrowser_log->append(line);
     int pos_st = line.indexOf("Done.");
     int pos_nf = line.indexOf("Nothing to do.");
@@ -3150,51 +3147,41 @@ void Widget::progress_2()   /*** Progress 2 ***/
         int percent = 100;
         ui->progressBar->setValue(percent);
         if ((percent == 100) && (_calling_pr_1 == true)) {
-            disconnect(process_1, SIGNAL(finished(int)), this, SLOT(error()));
+            disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
             _mux_mode = true;
             _loop_start = time(nullptr);
             _calling_pr_1 = false;
-            connect(process_1, SIGNAL(finished(int)), this, SLOT(encode()));
+            connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
         };
     };
 }
 
 void Widget::pause()    /*** Pause ***/
 {
-    if (_protection == true) {
-        timer->stop();
-    }
-    short s1 = process_1->state();
-    qint64 pr1 = process_1->processId();
-    std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
-    if (s1 != 0) {
+    if (_protection) timer->stop();
+    if (processEncoding->state() != QProcess::NotRunning) {
         setStatus(tr("Pause"));
         animation->stop();
 #ifdef Q_OS_WIN
-        _PROCESS_INFORMATION *pi = process_1->pid();
+        _PROCESS_INFORMATION *pi = processEncoding->pid();
         SuspendThread(pi->hThread);  // pause for Windows
 #else
-        kill(pid_t(process_1->processId()), SIGSTOP);  // pause for Unix
+        kill(pid_t(processEncoding->processId()), SIGSTOP);  // pause for Unix
 #endif
     }
 }
 
 void Widget::resume()   /*** Resume ***/
 {
-    if (_protection == true) {
-        timer->start();
-    }
-    short s1 = process_1->state();
-    qint64 pr1 = process_1->processId();
-    std::cout << "State procedure_1: " << s1 << " PID: " << pr1 << std::endl;
-    if (s1 != 0) {
+    if (_protection) timer->start();
+    if (processEncoding->state() != QProcess::NotRunning) {
         setStatus(tr("Encoding"));
         animation->start();
 #ifdef Q_OS_WIN
-        _PROCESS_INFORMATION *pi = process_1->pid();
+        _PROCESS_INFORMATION *pi = processEncoding->pid();
         ResumeThread(pi->hThread);  // resume for Windows
 #else
-        kill(pid_t(process_1->processId()), SIGCONT); // resume for Unix
+        kill(pid_t(processEncoding->processId()), SIGCONT); // resume for Unix
 #endif
     }
 }
@@ -3202,14 +3189,12 @@ void Widget::resume()   /*** Resume ***/
 void Widget::cancel()   /*** Stop execute ***/
 {
     std::cout << "Stop execute ..." << std::endl;  //  Debug info //
-    if (_protection == true) {
-        timer->stop();
-    }
-    process_1->disconnect();
+    if (_protection) timer->stop();
+    processEncoding->disconnect();
     setStatus(tr("Stop"));
-    ui->label_53->hide();
-    ui->label_54->hide();
-    ui->label_55->hide();
+    ui->label_Progress->hide();
+    ui->label_Remaining->hide();
+    ui->label_RemTime->hide();
     ui->labelAnimation->hide();
     ui->progressBar->hide();
     restore_initial_state();
@@ -3220,10 +3205,8 @@ void Widget::cancel()   /*** Stop execute ***/
 void Widget::error()  /*** Error ***/
 {
     std::cout << "Error_1 ..." << std::endl;  //  Debug info //
-    if (_protection == true) {
-        timer->stop();
-    }
-    process_1->disconnect();
+    if (_protection) timer->stop();
+    processEncoding->disconnect();
     setStatus(tr("Error!"));
     restore_initial_state();
     if (_error_message != "") {
@@ -3248,30 +3231,20 @@ void Widget::repeatHandler_Type_1()  /*** Repeat handler ***/
 
 void Widget::on_actionAdd_clicked() /*** Add files ***/
 {
-    QFileDialog *openFilesWindow = new QFileDialog(nullptr);
-    openFilesWindow->setFileMode(QFileDialog::ExistingFiles);
-#ifdef Q_OS_WIN
-    openFilesWindow->setOptions(QFileDialog::DontResolveSymlinks);
-#endif
-    if (_desktopEnv == "gnome") {
-        openFilesWindow->setOptions(QFileDialog::DontUseNativeDialog | QFileDialog::DontResolveSymlinks);
-    } else {
-        openFilesWindow->setOptions(QFileDialog::DontResolveSymlinks);
-    }
-    openFilesWindow->setDirectory(_openDir);
-    openFilesWindow->setMinimumWidth(600);
-    openFilesWindow->setWindowTitle("Open Files");
-    openFilesWindow->setNameFilter(tr("Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, "
-                                      "*.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v "
-                                      "*.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)"));
-    openFilesWindow->setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    openFilesWindow->exec();
-    int res = openFilesWindow->result();
-    const QStringList openFileNames = openFilesWindow->selectedFiles();
-    delete openFilesWindow;
-    if (res == 0) {
-        return;
-    } else {
+    QFileDialog openFilesWindow(nullptr);
+    openFilesWindow.setWindowTitle("Open Files");
+    openFilesWindow.setMinimumWidth(600);
+    openFilesWindow.setWindowFlags(Qt::Dialog | Qt::SubWindow);
+    openFilesWindow.setOption(QFileDialog::DontResolveSymlinks, true);
+    if (_desktopEnv == "gnome") openFilesWindow.setOption(QFileDialog::DontUseNativeDialog, true);
+    openFilesWindow.setFileMode(QFileDialog::ExistingFiles);
+    openFilesWindow.setAcceptMode(QFileDialog::AcceptOpen);
+    openFilesWindow.setDirectory(_openDir);
+    openFilesWindow.setNameFilter(tr("Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, "
+                                     "*.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v "
+                                     "*.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)"));
+    if (openFilesWindow.exec() == QFileDialog::Accepted) {
+        const QStringList openFileNames = openFilesWindow.selectedFiles();
         openFiles(openFileNames);
     }
 }
@@ -3345,14 +3318,13 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
 void Widget::on_actionStop_clicked()    /*** Stop ***/
 {
     std::cout << "Call Stop ..." << std::endl;  //  Debug info //
-    short s1 = process_1->state();
-    if (s1 != 0) {
+    if (processEncoding->state() != QProcess::NotRunning) {
         _message = tr("Stop encoding?");
         bool confirm = call_dialog(_message);
-        if (confirm == true) {
-            process_1->disconnect();
-            connect(process_1, SIGNAL(finished(int)), this, SLOT(cancel()));
-            process_1->kill();
+        if (confirm) {
+            processEncoding->disconnect();
+            connect(processEncoding, SIGNAL(finished(int)), this, SLOT(cancel()));
+            processEncoding->kill();
         }
     }
 }
@@ -3361,9 +3333,9 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
 {
     showOpeningFiles(true);
     ui->labelAnimation->hide();
-    ui->label_53->hide();
-    ui->label_54->hide();
-    ui->label_55->hide();
+    ui->label_Progress->hide();
+    ui->label_Remaining->hide();
+    ui->label_RemTime->hide();
     ui->progressBar->hide();
     MediaInfo MI;
     int i = 1;
@@ -3605,9 +3577,9 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
 void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed ***/
 {
     ui->labelAnimation->hide();
-    ui->label_53->hide();
-    ui->label_54->hide();
-    ui->label_55->hide();
+    ui->label_Progress->hide();
+    ui->label_Remaining->hide();
+    ui->label_RemTime->hide();
     ui->progressBar->hide();
     ui->labelSplitPreview->clear();
     ui->horizontalSlider->blockSignals(true);
@@ -3891,8 +3863,8 @@ QString Widget::setThumbnail(QString curFilename, double time, QString quality, 
         QStringList cmd;
         cmd << "-hide_banner" << "-ss" << time_qstr << "-i" << _input_file
             << qualityParam.split(" ") << "-vframes" << "1" << "-y" << tmb_file;
-        process_5->start("ffmpeg", cmd);
-        process_5->waitForFinished();
+        processThumbCreation->start("ffmpeg", cmd);
+        processThumbCreation->waitForFinished();
     }
     if (!tmb.exists()) {
         tmb_file = ":/resources/images/no_preview.png";
@@ -3985,48 +3957,28 @@ void Widget::get_output_filename()  /*** Get output data ***/
 
 void Widget::on_buttonHotOutputFile_clicked()
 {
-    QString output_folder_name = callFileDialog(tr("Select output folder"));
-    if (output_folder_name.isEmpty()) {
-        return;
-    }
+    const QString output_folder_name = callFileDialog(tr("Select output folder"));
+    if (output_folder_name.isEmpty()) return;
     _output_folder = output_folder_name;
-    if (_row != -1) {
-        get_output_filename();
-    }
+    if (_row != -1) get_output_filename();
 }
 
 QString Widget::callFileDialog(const QString title)  /*** Call file dialog ***/
 {
-    QFileDialog *selectFolderWindow = new QFileDialog(nullptr);
-    selectFolderWindow->setFileMode(QFileDialog::DirectoryOnly);
-#ifdef Q_OS_WIN
-    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                   QFileDialog::ReadOnly);
-#endif
-    if (_desktopEnv == "gnome") {
-        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                       QFileDialog::DontUseNativeDialog |
-                                       QFileDialog::ReadOnly);
-    } else {
-        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                       QFileDialog::ReadOnly);
-    }
+    QFileDialog selectFolderWindow(nullptr);
+    selectFolderWindow.setWindowTitle(title);
+    selectFolderWindow.setMinimumWidth(600);
+    selectFolderWindow.setWindowFlags(Qt::Dialog | Qt::SubWindow);
+    if (_desktopEnv == "gnome") selectFolderWindow.setOption(QFileDialog::DontUseNativeDialog, true);
+    selectFolderWindow.setFileMode(QFileDialog::DirectoryOnly);
+    selectFolderWindow.setAcceptMode(QFileDialog::AcceptOpen);
     QString directory = QDir::homePath();
-    if (_output_folder != "") {
-        directory = _output_folder;
+    if (_output_folder != "") directory = _output_folder;
+    selectFolderWindow.setDirectory(directory);
+    if (selectFolderWindow.exec() == QFileDialog::Accepted) {
+        return selectFolderWindow.selectedFiles().at(0);
     }
-    selectFolderWindow->setDirectory(directory);
-    selectFolderWindow->setMinimumWidth(600);
-    selectFolderWindow->setWindowTitle(title);
-    selectFolderWindow->setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    selectFolderWindow->exec();
-    if (selectFolderWindow->result() == 0) {
-        return QString("");
-    }
-    const QStringList folder_name_dir = selectFolderWindow->selectedFiles();
-    delete selectFolderWindow;
-    QString folder_name = folder_name_dir[0];
-    return folder_name;
+    return QString("");
 }
 
 /************************************************

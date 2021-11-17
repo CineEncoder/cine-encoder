@@ -450,9 +450,9 @@ private:
 
     // ********************** Processes ****************************//
 
-    QProcess *process_1;
+    QProcess *processEncoding;
 
-    QProcess *process_5;
+    QProcess *processThumbCreation;
 
     // *********************** Timers ******************************//
 
@@ -568,7 +568,7 @@ private:
 
     int _rowSize;
 
-    bool _windowActivated = false;
+    bool _windowActivated;
 
     bool _expandWindowsState;
 
