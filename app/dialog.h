@@ -34,7 +34,7 @@ public:
 
     ~Dialog();
 
-    void setMessage(const QString &_message, bool *_aceptFlag);
+    void setMessage(const QString &_message);
 
 private slots:
 
@@ -51,8 +51,6 @@ private:
     Ui::Dialog *ui_dialog;
 
     QString _message;
-
-    bool *acceptFlag;
 
     bool clickPressedFlag = false;
 

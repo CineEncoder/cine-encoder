@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: mainwindow.cpp
- MODIFIED: October, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -236,6 +236,16 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
 
         // Save Settings
         _settings->beginGroup("Settings");
+        _settings->setValue("Settings/prefix_type", _prefxType);
+        _settings->setValue("Settings/suffix_type", _suffixType);
+        _settings->setValue("Settings/prefix_name", _prefixName);
+        _settings->setValue("Settings/suffix_name", _suffixName);
+        _settings->setValue("Settings/timer_interval", _timer_interval);
+        _settings->setValue("Settings/theme", _theme);
+        _settings->setValue("Settings/protection", _protection);
+        _settings->setValue("Settings/show_hdr_mode", _showHDR_mode);
+        _settings->setValue("Settings/temp_folder", _temp_folder);
+        _settings->setValue("Settings/output_folder", _output_folder);
         _settings->setValue("Settings/open_dir", _openDir);
         _settings->setValue("Settings/batch_mode", _batch_mode);
         _settings->setValue("Settings/tray", _hideInTrayFlag);
@@ -268,11 +278,15 @@ void Widget::paintEvent(QPaintEvent *event) /*** Disable QTab draw base ***/
 
 void Widget::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    switch (reason)
-    {
+    switch (reason) {
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::DoubleClick:
-            this->showNormal();
+            if (_expandWindowsState) {
+                this->showFullScreen();
+            }
+            else {
+                this->showNormal();
+            }
             break;
         default:
             break;
@@ -685,9 +699,8 @@ void Widget::setParameters()    /*** Set parameters ***/
     _openDir = QDir::homePath();
     _settings_path = QDir::homePath() + QString("/CineEncoder");
     _thumb_path = _settings_path + QString("/thumbnails");
-    _settings_file = _settings_path + QString("/ce_settings");
-    _preset_file = _settings_path + QString("/ce_preset352.ini");
-    _settings = new QSettings(_settings_path + QString("/ce_window352.ini"), QSettings::IniFormat, this);
+    _preset_file = _settings_path + QString("/presets352.ini");
+    _settings = new QSettings(_settings_path + QString("/settings352.ini"), QSettings::IniFormat, this);
     _status_encode_btn = "start";
     _timer_interval = 30;
     _curTime = 0;
@@ -791,63 +804,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
 
     // ****************************** Read the files ************************************//
-    _stn_file.setFileName(_settings_file);
     _prs_file.setFileName(_preset_file);
-
-    if (_stn_file.exists())
-    {
-        std::cout << "Settings file exist ..." << std::endl;  // Debug info //
-        if (_stn_file.open(QIODevice::ReadOnly | QIODevice::Text))   // Read settings from file
-        {
-            QStringList line;
-            while(!_stn_file.atEnd()) {
-                line << _stn_file.readLine();
-            }
-
-            std::cout << "Number of lines in settings file: " << line.size() << std::endl; // Debug info //
-            if (line.size() == 10)
-            {
-                _temp_folder = line[0].replace("temp_folder:", "").replace("\n", "");
-                _output_folder = line[1].replace("output_folder:", "").replace("\n", "");
-
-                if (line[2].indexOf("true") != -1) {
-                    _showHDR_mode = true;
-                }
-
-                if (line[3].indexOf("true") != -1) {
-                    _protection = true;
-                }
-
-                _timer_interval = (line[4].replace("timer_interval:", "").replace("\n", "")).toInt();
-                if (_timer_interval < 15) {
-                    _timer_interval = 30;
-                }
-                timer->setInterval(_timer_interval*1000);
-
-                _theme = (line[5].replace("theme:", "").replace("\n", "")).toInt();
-
-                _prefxType = (line[6].replace("prefix_type:", "").replace("\n", "")).toInt();
-
-                _suffixType = (line[7].replace("suffix_type:", "").replace("\n", "")).toInt();
-
-                _prefixName = line[8].replace("prefix_name:", "").replace("\n", "");
-
-                _suffixName = line[9].replace("suffix_name:", "").replace("\n", "");
-
-            } else {
-                std::cout << "Setting file error, not enough parameters!!! " << std::endl;  // Debug info //
-            }
-            std::cout << "Temp folder: " << _temp_folder.toStdString() << std::endl;  // Debug info //
-            std::cout << "Output folder: " << _output_folder.toStdString() << std::endl;  // Debug info //
-            std::cout << "Protection: " << _protection << std::endl;  // Debug info //
-            std::cout << "Timer interval: " << _timer_interval << std::endl;  // Debug info //
-            _stn_file.close();
-        } else {
-            std::cout << "Setting file error (cannot be open)." << std::endl;  // Debug info //
-        }
-    } else {
-        std::cout << "Setting file not exist ..." << std::endl;  // Debug info //
-    }
 
     if (_prs_file.exists())
     {
@@ -903,6 +860,70 @@ void Widget::setParameters()    /*** Set parameters ***/
         set_defaults();
     }
 
+    // ************************** Read settings ******************************//
+    QList<int> dockSizesX = {};
+    QList<int> dockSizesY = {};
+    if (_settings->childGroups().contains("MainWidget", Qt::CaseInsensitive)) {
+        // Restore Main Widget
+        _settings->beginGroup("MainWidget");
+        this->restoreGeometry(_settings->value("MainWidget/geometry").toByteArray());
+        _settings->endGroup();
+
+        // Restore Main Window
+        _settings->beginGroup("MainWindow");
+        window->restoreState(_settings->value("MainWindow/state").toByteArray());
+        int arraySize = _settings->beginReadArray("MainWindow/docks_geometry");
+            for (int i = 0; i < arraySize && i < DOCKS_COUNT; i++) {
+                _settings->setArrayIndex(i);
+                QSize size = _settings->value("MainWindow/docks_geometry/dock_size").toSize();
+                dockSizesX.append(size.width());
+                dockSizesY.append(size.height());
+            }
+            _settings->endArray();
+        _settings->endGroup();
+
+        // Restore Tables
+        _settings->beginGroup("Tables");
+        ui->tableWidget->horizontalHeader()->restoreState(_settings->value("Tables/table_widget_state").toByteArray());
+        ui->treeWidget->header()->restoreState(_settings->value("Tables/tree_widget_state").toByteArray());
+        _settings->endGroup();
+
+        // Restore Settings Widget
+        _settings->beginGroup("SettingsWidget");
+        _settingsWindowGeometry = _settings->value("SettingsWidget/geometry").toByteArray();
+        _settings->endGroup();
+
+        // Restore Preset Widget
+        _settings->beginGroup("PresetWidget");
+        _presetWindowGeometry = _settings->value("PresetWidget/geometry").toByteArray();
+        _settings->endGroup();
+
+        // Restore Settings
+        _settings->beginGroup("Settings");
+        _prefxType = _settings->value("Settings/prefix_type").toInt();
+        _suffixType = _settings->value("Settings/suffix_type").toInt();
+        _prefixName = _settings->value("Settings/prefix_name").toString();
+        _suffixName = _settings->value("Settings/suffix_name").toString();
+        _timer_interval = _settings->value("Settings/timer_interval").toInt();
+        _theme = _settings->value("Settings/theme").toInt();
+        _protection = _settings->value("Settings/protection").toBool();
+        _showHDR_mode = _settings->value("Settings/show_hdr_mode").toBool();
+        _temp_folder = _settings->value("Settings/temp_folder").toString();
+        _output_folder = _settings->value("Settings/output_folder").toString();
+        _openDir = _settings->value("Settings/open_dir").toString();
+        _batch_mode = _settings->value("Settings/batch_mode").toBool();
+        _hideInTrayFlag = _settings->value("Settings/tray").toBool();
+        _language = _settings->value("Settings/language").toString();
+        _font = _settings->value("Settings/font").toString();
+        _fontSize = _settings->value("Settings/font_size").toInt();
+        _desktopEnv = _settings->value("Settings/enviroment").toString();
+        _rowSize = _settings->value("Settings/row_size").toInt();
+        _settings->endGroup();
+
+    } else {
+        this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
+    }
+
     // ***************************** Preset parameters ***********************************//
     ui->treeWidget->clear();
     ui->treeWidget->setHeaderHidden(false);
@@ -955,60 +976,7 @@ void Widget::setParameters()    /*** Set parameters ***/
         ui->treeWidget->hideColumn(i);
     }
 
-    // ************************** Set theme and geometry ******************************//
-    QList<int> dockSizesX = {};
-    QList<int> dockSizesY = {};
-    if (_settings->childGroups().contains("MainWidget", Qt::CaseInsensitive)) {
-        // Restore Main Widget
-        _settings->beginGroup("MainWidget");
-        this->restoreGeometry(_settings->value("MainWidget/geometry").toByteArray());
-        _settings->endGroup();
-
-        // Restore Main Window
-        _settings->beginGroup("MainWindow");
-        //window->restoreGeometry(_settings->value("MainWindow/geometry").toByteArray());
-        window->restoreState(_settings->value("MainWindow/state").toByteArray());
-        int arraySize = _settings->beginReadArray("MainWindow/docks_geometry");
-            for (int i = 0; i < arraySize && i < DOCKS_COUNT; i++) {
-                _settings->setArrayIndex(i);
-                QSize size = _settings->value("MainWindow/docks_geometry/dock_size").toSize();
-                dockSizesX.append(size.width());
-                dockSizesY.append(size.height());
-            }
-            _settings->endArray();
-        _settings->endGroup();
-
-        // Restore Tables
-        _settings->beginGroup("Tables");
-        ui->tableWidget->horizontalHeader()->restoreState(_settings->value("Tables/table_widget_state").toByteArray());
-        ui->treeWidget->header()->restoreState(_settings->value("Tables/tree_widget_state").toByteArray());
-        _settings->endGroup();
-
-        // Restore Settings Widget
-        _settings->beginGroup("SettingsWidget");
-        _settingsWindowGeometry = _settings->value("SettingsWidget/geometry").toByteArray();
-        _settings->endGroup();
-
-        // Restore Preset Widget
-        _settings->beginGroup("PresetWidget");
-        _presetWindowGeometry = _settings->value("PresetWidget/geometry").toByteArray();
-        _settings->endGroup();
-
-        // Restore Settings
-        _settings->beginGroup("Settings");
-        _openDir = _settings->value("Settings/open_dir").toString();
-        _batch_mode = _settings->value("Settings/batch_mode").toBool();
-        _hideInTrayFlag = _settings->value("Settings/tray").toBool();
-        _language = _settings->value("Settings/language").toString();
-        _font = _settings->value("Settings/font").toString();
-        _fontSize = _settings->value("Settings/font_size").toInt();
-        _desktopEnv = _settings->value("Settings/enviroment").toString();
-        _rowSize = _settings->value("Settings/row_size").toInt();
-        _settings->endGroup();
-
-    } else {
-        this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
-    }
+    // ***************************** Other parameters ***********************************//
     if (dockSizesX.count() < DOCKS_COUNT || dockSizesY.count() < DOCKS_COUNT) {
         float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
         float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
@@ -1023,13 +991,12 @@ void Widget::setParameters()    /*** Set parameters ***/
         setDocksParameters(dockSizesX, dockSizesY);
     });
 
-    if (_rowSize != 0) {
-        ui->horizontalSlider_resize->setValue(_rowSize);
-    }
+    if (_timer_interval < 15) _timer_interval = 30;
+    timer->setInterval(_timer_interval*1000);
 
-    if (_fontSize == 0) {
-        _fontSize = 8;
-    }
+    if (_rowSize != 0) ui->horizontalSlider_resize->setValue(_rowSize);
+
+    if (_fontSize == 0) _fontSize = 8;
 
     if (_language == "") {
         QLocale locale = QLocale::system();
@@ -1053,9 +1020,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
     std::cout << "Desktop env.: " << _desktopEnv.toStdString() << std::endl;
 
-    if (this->isFullScreen()) {
-        _expandWindowsState = true;
-    }
+    if (this->isFullScreen()) _expandWindowsState = true;
 
     if (_batch_mode) {
         ui->comboBoxMode->blockSignals(true);
@@ -1064,9 +1029,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
     setTrayIconActions();
     showTrayIcon();
-    if (_hideInTrayFlag) {
-        trayIcon->show();
-    }
+    if (_hideInTrayFlag) trayIcon->show();
     setTheme(_theme);
 }
 
@@ -1156,27 +1119,25 @@ void Widget::on_actionDonate_clicked()   /*** Donate ***/
     donate.exec();
 }
 
-void Widget::on_actionSettings_clicked()    /*** Settings ***/
+void Widget::on_actionSettings_clicked()
 {
-    bool acceptFlag = false;
     Settings settings(this);
-    settings.setParameters(&_settingsWindowGeometry, &_stn_file, &_output_folder,
-                           &_temp_folder, &_protection, &_showHDR_mode, &_timer_interval, &_theme,
-                           &_prefixName, &_suffixName, &_prefxType, &_suffixType, &_hideInTrayFlag,
-                           &_language, &acceptFlag, _desktopEnv, &_fontSize, &_font);
+    settings.setParameters(&_settingsWindowGeometry, &_output_folder, &_temp_folder, &_protection,
+                           &_showHDR_mode, &_timer_interval, &_theme, &_prefixName, &_suffixName,
+                           &_prefxType, &_suffixType, &_hideInTrayFlag, &_language, _desktopEnv,
+                           &_fontSize, &_font);
     settings.setModal(true);
-    settings.exec();
-    timer->setInterval(_timer_interval*1000);
-    setTheme(_theme);
-    if (_hideInTrayFlag) {
-        trayIcon->show();
-    } else {
-        trayIcon->hide();
-    }
-    if (_row != -1) {
-        get_output_filename();
-    }
-    if (acceptFlag) {
+    if (settings.exec() == QDialog::Accepted) {
+        timer->setInterval(_timer_interval*1000);
+        setTheme(_theme);
+        if (_hideInTrayFlag) {
+            trayIcon->show();
+        } else {
+            trayIcon->hide();
+        }
+        if (_row != -1) {
+            get_output_filename();
+        }
         _message = tr("You need to restart the program for the settings to take effect.");
         call_task_complete(_message, false);
     }
@@ -4971,12 +4932,13 @@ void Widget::providePresetContextMenu(const QPoint &position)     /*** Call tree
 
 bool Widget::call_dialog(const QString &_message)  /*** Call dialog ***/
 {
-    bool acceptFlag = false;
     Dialog dialog(this);
-    dialog.setMessage(_message, &acceptFlag);
+    dialog.setMessage(_message);
     dialog.setModal(true);
-    dialog.exec();
-    return acceptFlag;
+    if (dialog.exec() == QDialog::Accepted) {
+        return true;
+    }
+    return false;
 }
 
 void Widget::call_task_complete(const QString &_message, const bool &_timer_mode)  /*** Call task complete ***/

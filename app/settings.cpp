@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: settings.cpp
- MODIFIED: September, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -13,72 +13,55 @@
 
 #include "settings.h"
 #include "ui_settings.h"
-#include "taskcomplete.h"
 
 
-Settings::Settings(QWidget *parent): QDialog(parent), ui_settings(new Ui::Settings)
+
+Settings::Settings(QWidget *parent):
+    QDialog(parent),
+    ui(new Ui::Settings)
 {
-    ui_settings->setupUi(this);
+    ui->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
     this->setMouseTracking(true);
 
-    ui_settings->widget_main->installEventFilter(this);
-    ui_settings->widget_main->setAttribute(Qt::WA_Hover, true);
+    ui->widget_main->installEventFilter(this);
+    ui->widget_main->setAttribute(Qt::WA_Hover, true);
 
-    ui_settings->frame_main->installEventFilter(this);
-    ui_settings->frame_main->setAttribute(Qt::WA_Hover, true);
-    ui_settings->frame_main->setAttribute(Qt::WA_NoMousePropagation, true);
+    ui->frame_main->installEventFilter(this);
+    ui->frame_main->setAttribute(Qt::WA_Hover, true);
+    ui->frame_main->setAttribute(Qt::WA_NoMousePropagation, true);
 
-    ui_settings->frame_top->installEventFilter(this);
+    ui->frame_top->installEventFilter(this);
 }
 
 Settings::~Settings()
 {
-    delete ui_settings;
+    delete ui;
 }
 
-void Settings::closeEvent(QCloseEvent *close_settings)  /*** Show prompt when close app ***/
+void Settings::closeEvent(QCloseEvent *event)
 {
-    close_settings->ignore();
+    event->ignore();
     *_ptr_settingsWindowGeometry = this->saveGeometry();
-    if (_flag_save == false)
-    {
-        *_ptr_output_folder = _curr_output_folder;
-        *_ptr_temp_folder = _curr_temp_folder;
-        *_ptr_showHDR_mode = _curr_showHDR_mode;
-        *_ptr_protection = _curr_protection;
-        *_ptr_timer_interval = _curr_timer_interval;
-        *_ptr_theme = _curr_theme;
-        *_ptr_prefixName = _curr_prefixName;
-        *_ptr_suffixName = _curr_suffixName;
-        *_ptr_prefxType = _curr_prefxType;
-        *_ptr_suffixType = _curr_suffixType;
-        *_ptr_hideInTrayFlag = _curr_hideInTrayFlag;
-        *_ptr_language = _curr_language;
-        *_ptr_font = _curr_font;
-        *_ptr_fontSize = _curr_fontSize;
-    }
-    close_settings->accept();
+    event->accept();
 }
 
-void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_stn_file,
-                             QString *ptr_output_folder, QString *ptr_temp_folder,
-                             bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
-                             int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
-                             int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
-                             QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv,
-                             int *ptr_fontSize, QString *ptr_font)  /*** Set parameters ***/
+void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QString *ptr_output_folder,
+                             QString *ptr_temp_folder, bool *ptr_protection, bool *ptr_showHDR_mode,
+                             int *ptr_timer_interval, int *ptr_theme, QString *ptr_prefixName,
+                             QString *ptr_suffixName, int *ptr_prefxType, int *ptr_suffixType,
+                             bool *ptr_hideInTrayFlag, QString *ptr_language, const QString &_desktopEnv,
+                             int *ptr_fontSize, QString *ptr_font)
 {
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
     QFont title_font;
     title_font.setPointSize(10);
-    ui_settings->label_title->setFont(title_font);
+    ui->label_title->setFont(title_font);
 
     desktopEnv = _desktopEnv;
     _ptr_settingsWindowGeometry = ptr_settingsWindowGeometry;
     _ptr_showHDR_mode = ptr_showHDR_mode;
-    _ptr_stn_file = ptr_stn_file;
     _ptr_output_folder = ptr_output_folder;
     _ptr_temp_folder = ptr_temp_folder;
     _ptr_protection = ptr_protection;
@@ -92,30 +75,24 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     _ptr_language = ptr_language;
     _ptr_font = ptr_font;
     _ptr_fontSize = ptr_fontSize;
-    _ptr_acceptFlag = ptr_aceptFlag;
 
     if (*_ptr_settingsWindowGeometry != "default") {
         this->restoreGeometry(*_ptr_settingsWindowGeometry);
-        if (this->isMaximized()) {
-            _expandWindowsState = true;
-        }
+        if (this->isFullScreen()) _expandWindowsState = true;
     }
-    ui_settings->lineEdit_9->setText(*_ptr_temp_folder);
-    ui_settings->lineEdit_10->setText(*_ptr_output_folder);
-    ui_settings->spinBox_3->setValue(*_ptr_timer_interval);
+    ui->lineEdit_tempPath->setText(*_ptr_temp_folder);
+    ui->lineEdit_outPath->setText(*_ptr_output_folder);
+    ui->spinBox_protection_timer->setValue(*_ptr_timer_interval);
 
-    if (*_ptr_showHDR_mode == true)
-    {
-        ui_settings->checkBox_2->setChecked(true);
+    if (*_ptr_showHDR_mode == true) {
+        ui->checkBox_showHDR->setChecked(true);
     }
-    if (*_ptr_hideInTrayFlag == true)
-    {
-        ui_settings->checkBox_tray->setChecked(true);
+    if (*_ptr_hideInTrayFlag == true) {
+        ui->checkBox_tray->setChecked(true);
     }
-    if (*_ptr_protection == true)
-    {
-        ui_settings->checkBox_3->setChecked(true);
-        ui_settings->spinBox_3->setEnabled(true);
+    if (*_ptr_protection == true) {
+        ui->checkBox_protection->setChecked(true);
+        ui->spinBox_protection_timer->setEnabled(true);
     }
     QMap<QString, int> langIndex;
     langIndex["en"] = 0;
@@ -123,7 +100,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     langIndex["de"] = 2;
     langIndex["ru"] = 3;
     if (langIndex.contains(*_ptr_language)) {
-        ui_settings->comboBox_lang->setCurrentIndex(langIndex.value(*_ptr_language));
+        ui->comboBox_lang->setCurrentIndex(langIndex.value(*_ptr_language));
     }
     QMap<int, int> fontSizeIndex;
     fontSizeIndex[8] = 0;
@@ -132,14 +109,14 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     fontSizeIndex[11] = 3;
     fontSizeIndex[12] = 4;
     if (fontSizeIndex.contains(*_ptr_fontSize)) {
-        ui_settings->comboBox_fontsize->setCurrentIndex(fontSizeIndex.value(*_ptr_fontSize));
+        ui->comboBox_fontsize->setCurrentIndex(fontSizeIndex.value(*_ptr_fontSize));
     }
 
-    ui_settings->comboBox_theme->setCurrentIndex(*_ptr_theme);
-    ui_settings->comboBoxPrefixType->setCurrentIndex(*_ptr_prefxType);
-    ui_settings->comboBoxSuffixType->setCurrentIndex(*_ptr_suffixType);
+    ui->comboBox_theme->setCurrentIndex(*_ptr_theme);
+    ui->comboBoxPrefixType->setCurrentIndex(*_ptr_prefxType);
+    ui->comboBoxSuffixType->setCurrentIndex(*_ptr_suffixType);
     if (*_ptr_suffixType == 0) {
-        ui_settings->lineEditSuffix->setText(*_ptr_suffixName);
+        ui->lineEditSuffix->setText(*_ptr_suffixName);
     }
 
     QFontDatabase database;
@@ -147,254 +124,176 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_
     const QStringList fontFamilies = database.families(values);
     QStringListModel *fontModel = new QStringListModel(this);
     fontModel->setStringList(fontFamilies);
-    ui_settings->comboBox_font->blockSignals(true);
-    ui_settings->comboBox_font->setModel(fontModel);
+    ui->comboBox_font->blockSignals(true);
+    ui->comboBox_font->setModel(fontModel);
     QString appFontFamily = qApp->font().family();
-    int fontInd = ui_settings->comboBox_font->findText(appFontFamily);
+    int fontInd = ui->comboBox_font->findText(appFontFamily);
     if (fontInd != -1) {
-        ui_settings->comboBox_font->setCurrentIndex(fontInd);
+        ui->comboBox_font->setCurrentIndex(fontInd);
     }
-    ui_settings->comboBox_font->blockSignals(false);
+    ui->comboBox_font->blockSignals(false);
 
-    _curr_output_folder = *_ptr_output_folder;
-    _curr_temp_folder = *_ptr_temp_folder;
-    _curr_showHDR_mode = *_ptr_showHDR_mode;
-    _curr_protection = *_ptr_protection;
-    _curr_timer_interval = *_ptr_timer_interval;
-    _curr_theme = *_ptr_theme;
-    _curr_prefixName = *_ptr_prefixName;
-    _curr_suffixName = *_ptr_suffixName;
-    _curr_prefxType = *_ptr_prefxType;
-    _curr_suffixType = *_ptr_suffixType;
-    _curr_hideInTrayFlag = *_ptr_hideInTrayFlag;
-    _curr_language = *_ptr_language;
-    _curr_font = *_ptr_font;
-    _curr_fontSize = *_ptr_fontSize;
-    _flag_save = false;
+    QListView *comboboxLangListView = new QListView(ui->comboBox_lang);
+    QListView *comboboxThemeListView = new QListView(ui->comboBox_theme);
+    QListView *comboboxFontListView = new QListView(ui->comboBox_font);
+    QListView *comboboxFontSizeListView = new QListView(ui->comboBox_fontsize);
+    QListView *comboboxPrefixTypeListView = new QListView(ui->comboBoxPrefixType);
+    QListView *comboboxSuffixTypeListView = new QListView(ui->comboBoxSuffixType);
+    ui->comboBox_lang->setView(comboboxLangListView);
+    ui->comboBox_theme->setView(comboboxThemeListView);
+    ui->comboBox_font->setView(comboboxFontListView);
+    ui->comboBox_fontsize->setView(comboboxFontSizeListView);
+    ui->comboBoxPrefixType->setView(comboboxPrefixTypeListView);
+    ui->comboBoxSuffixType->setView(comboboxSuffixTypeListView);
 
-    QListView *comboboxLangListView = new QListView(ui_settings->comboBox_lang);
-    QListView *comboboxThemeListView = new QListView(ui_settings->comboBox_theme);
-    QListView *comboboxFontListView = new QListView(ui_settings->comboBox_font);
-    QListView *comboboxFontSizeListView = new QListView(ui_settings->comboBox_fontsize);
-    QListView *comboboxPrefixTypeListView = new QListView(ui_settings->comboBoxPrefixType);
-    QListView *comboboxSuffixTypeListView = new QListView(ui_settings->comboBoxSuffixType);
-    ui_settings->comboBox_lang->setView(comboboxLangListView);
-    ui_settings->comboBox_theme->setView(comboboxThemeListView);
-    ui_settings->comboBox_font->setView(comboboxFontListView);
-    ui_settings->comboBox_fontsize->setView(comboboxFontSizeListView);
-    ui_settings->comboBoxPrefixType->setView(comboboxPrefixTypeListView);
-    ui_settings->comboBoxSuffixType->setView(comboboxSuffixTypeListView);
+    QRegExpValidator *prefixValidator = new QRegExpValidator(QRegExp("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditPrefix);
+    QRegExpValidator *suffixValidator = new QRegExpValidator(QRegExp("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditSuffix);
+    ui->lineEditPrefix->setValidator(prefixValidator);
+    ui->lineEditSuffix->setValidator(suffixValidator);
 }
 
-void Settings::on_closeWindow_clicked() /*** Close settings window ***/
+void Settings::on_closeWindow_clicked()
 {
     this->close();
 }
 
 void Settings::on_expandWindow_clicked()
 {
-    if (_expandWindowsState == false)
-    {
-        this->showMaximized();
+    if (!this->isFullScreen()) {
         _expandWindowsState = true;
+        this->showFullScreen();
     } else {
-        this->showNormal();
         _expandWindowsState = false;
+        this->showNormal();
     }
 }
 
-void Settings::on_buttonCancel_clicked() /*** Close settings window ***/
+void Settings::on_buttonCancel_clicked()
 {
     this->close();
 }
 
-void Settings::on_buttonApply_clicked() /*** Save settings ***/
+void Settings::on_buttonApply_clicked()
 {
-    if ((*_ptr_stn_file).open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QString line_0 = QString("temp_folder:") + *_ptr_temp_folder + QString("\n");
-        (*_ptr_stn_file).write(line_0.toUtf8());
+    /*===================== Font ==================*/
+    *_ptr_font = ui->comboBox_font->currentText();
 
-        QString line_1 = QString("output_folder:") + *_ptr_output_folder + QString("\n");
-        (*_ptr_stn_file).write(line_1.toUtf8());
+    const int font_size_index = ui->comboBox_fontsize->currentIndex();
+    int arrFontSize[5] = {8, 9, 10, 11, 12};
+    *_ptr_fontSize = arrFontSize[font_size_index];
+    /*===================== Theme =================*/
+    *_ptr_theme = ui->comboBox_theme->currentIndex();
 
-        if (*_ptr_showHDR_mode == true) {
-            (*_ptr_stn_file).write("show_hdr:true\n");
-        } else {
-            (*_ptr_stn_file).write("show_hdr:false\n");
-        }
+    /*===================== Lang ==================*/
+    const int lang_index = ui->comboBox_lang->currentIndex();
+    QString arrLang[4] = {"en", "zh", "de", "ru"};
+    *_ptr_language = arrLang[lang_index];
 
-        if (*_ptr_protection == true) {
-            (*_ptr_stn_file).write("protection:true\n");
-        } else {
-            (*_ptr_stn_file).write("protection:false\n");
-        }
+    /*==================== Paths ==================*/
+    *_ptr_temp_folder = ui->lineEdit_tempPath->text();
+    *_ptr_output_folder = ui->lineEdit_outPath->text();
 
-        *_ptr_timer_interval = ui_settings->spinBox_3->value();
-        QString line_2 = QString("timer_interval:") + QString::number(*_ptr_timer_interval) + QString("\n");
-        (*_ptr_stn_file).write(line_2.toUtf8());
-
-        *_ptr_theme = ui_settings->comboBox_theme->currentIndex();
-        QString line_3 = QString("theme:") + QString::number(*_ptr_theme) + QString("\n");
-        (*_ptr_stn_file).write(line_3.toUtf8());
-
-        *_ptr_prefxType = ui_settings->comboBoxPrefixType->currentIndex();
-        QString line_4 = QString("prefix_type:") + QString::number(*_ptr_prefxType) + QString("\n");
-        (*_ptr_stn_file).write(line_4.toUtf8());
-
-        *_ptr_suffixType = ui_settings->comboBoxSuffixType->currentIndex();
-        QString line_5 = QString("suffix_type:") + QString::number(*_ptr_suffixType) + QString("\n");
-        (*_ptr_stn_file).write(line_5.toUtf8());
-
-        if (*_ptr_prefxType != 0) {
-            *_ptr_prefixName = ui_settings->lineEditPrefix->text();
-        }
-        QString line_6 = QString("prefix_name:") + (*_ptr_prefixName).replace("\\", "").replace("/", "")
-                        .replace(":", "").replace("*", "").replace("?", "").replace("\"", "").replace("<", "")
-                        .replace(">", "").replace("|", "").replace("+", "").replace("%", "").replace("!", "")
-                        .replace("@", "")+ QString("\n");
-        (*_ptr_stn_file).write(line_6.toUtf8());
-
-        if (*_ptr_suffixType == 0) {
-            *_ptr_suffixName = ui_settings->lineEditSuffix->text();
-        }
-        QString line_7 = QString("suffix_name:") + (*_ptr_suffixName).replace("\\", "").replace("/", "")
-                        .replace(":", "").replace("*", "").replace("?", "").replace("\"", "").replace("<", "")
-                        .replace(">", "").replace("|", "").replace("+", "").replace("%", "").replace("!", "")
-                        .replace("@", "")+ QString("\n");
-        (*_ptr_stn_file).write(line_7.toUtf8());
-
-        (*_ptr_stn_file).close();
-        *_ptr_font = ui_settings->comboBox_font->currentText();
-        _flag_save = true;
-        *_ptr_acceptFlag = true;
-        this->close();
-    }
-    else
-    {
-        _message = tr("Settings file not found!\n");
-        call_task_complete(_message, false);
-    };
-}
-
-void Settings::on_buttonReset_clicked() /*** Reset settings ***/
-{
-    ui_settings->lineEdit_9->clear();
-    ui_settings->lineEdit_10->clear();
-    ui_settings->checkBox_2->setChecked(false);
-    ui_settings->checkBox_3->setChecked(false);
-    ui_settings->spinBox_3->setEnabled(false);
-    ui_settings->comboBox_theme->setCurrentIndex(3);
-    ui_settings->comboBoxPrefixType->setCurrentIndex(0);
-    ui_settings->comboBoxSuffixType->setCurrentIndex(0);
-    ui_settings->comboBox_lang->setCurrentIndex(0);
-    ui_settings->comboBox_fontsize->setCurrentIndex(0);
-    ui_settings->lineEditSuffix->setText("_encoded_");
-    *_ptr_prefixName = "output";
-    *_ptr_suffixName = "_encoded_";
-    *_ptr_temp_folder = "";
-    *_ptr_output_folder = "";
-    *_ptr_protection = false;
-    *_ptr_showHDR_mode = false;
-    *_ptr_theme = 3;
-    //*_ptr_language = "en";
-    //*_ptr_fontSize = 8;
-    QFont font;
-    QString appFontFamily = font.defaultFamily();
-    int fontInd = ui_settings->comboBox_font->findText(appFontFamily);
-    if (fontInd != -1) {
-        ui_settings->comboBox_font->setCurrentIndex(fontInd);
-    }
-}
-
-void Settings::on_buttonOutputPath_clicked()  /*** Select output folder ***/
-{
-    QString output_folder_name = callFileDialog("Select output folder");
-    if (output_folder_name.isEmpty()) {
-        return;
-    }
-    ui_settings->lineEdit_10->setText(output_folder_name);
-    *_ptr_output_folder = output_folder_name;
-}
-
-void Settings::on_buttonTempPath_clicked() /*** Select temp folder ***/
-{
-    QString temp_folder_name = callFileDialog("Select temp folder");
-    if (temp_folder_name.isEmpty()) {
-        return;
-    }
-    ui_settings->lineEdit_9->setText(temp_folder_name);
-    *_ptr_temp_folder = temp_folder_name;
-}
-
-void Settings::on_checkBox_2_clicked()  /*** Show HDR info select ***/
-{
-    int stts_2 = ui_settings->checkBox_2->checkState();
-    if (stts_2 == 2) {
-        *_ptr_showHDR_mode = true;
-    } else {
-        *_ptr_showHDR_mode = false;
-    }
-}
-
-void Settings::on_checkBox_3_clicked()  /*** Protection mode select ***/
-{
-    int stts_3 = ui_settings->checkBox_3->checkState();
-    if (stts_3 == 2) {
-        *_ptr_protection = true;
-        ui_settings->spinBox_3->setEnabled(true);
-    } else {
-        *_ptr_protection = false;
-        ui_settings->spinBox_3->setEnabled(false);
-    };
-}
-
-void Settings::on_checkBox_tray_clicked()
-{
-    int stts_tray = ui_settings->checkBox_tray->checkState();
+    /*==================== Tray  ==================*/
+    int stts_tray = ui->checkBox_tray->checkState();
     if (stts_tray == 2) {
         *_ptr_hideInTrayFlag = true;
     } else {
         *_ptr_hideInTrayFlag = false;
     }
+    /*================= HDR Info  =================*/
+    int stts_hdr_info = ui->checkBox_showHDR->checkState();
+    if (stts_hdr_info == 2) {
+        *_ptr_showHDR_mode = true;
+    } else {
+        *_ptr_showHDR_mode = false;
+    }
+    /*================ Protection ================*/
+    *_ptr_timer_interval = ui->spinBox_protection_timer->value();
+
+    int stts_protect = ui->checkBox_protection->checkState();
+    if (stts_protect == 2) {
+        *_ptr_protection = true;
+    } else {
+        *_ptr_protection = false;
+    }
+    /*============== Pref and Suff ===============*/
+    *_ptr_prefxType = ui->comboBoxPrefixType->currentIndex();
+    *_ptr_suffixType = ui->comboBoxSuffixType->currentIndex();
+    if (*_ptr_prefxType != 0) {
+        *_ptr_prefixName = ui->lineEditPrefix->text();
+    }
+    if (*_ptr_suffixType == 0) {
+        *_ptr_suffixName = ui->lineEditSuffix->text();
+    }
+
+    this->accept();
 }
 
-QString Settings::callFileDialog(const QString title)  /*** Call file dialog ***/
+void Settings::on_buttonReset_clicked()
 {
-    QFileDialog *selectFolderWindow = new QFileDialog(nullptr);
-    selectFolderWindow->setFileMode(QFileDialog::DirectoryOnly);
-#ifdef Q_OS_WIN
-    selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                   QFileDialog::ReadOnly);
-#endif
-    if (desktopEnv == "gnome") {
-        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                       QFileDialog::DontUseNativeDialog |
-                                       QFileDialog::ReadOnly);
-    } else {
-        selectFolderWindow->setOptions(QFileDialog::ShowDirsOnly |
-                                       QFileDialog::ReadOnly);
+    ui->lineEdit_tempPath->clear();
+    ui->lineEdit_outPath->clear();
+    ui->checkBox_showHDR->setChecked(false);
+    ui->checkBox_tray->setChecked(false);
+    ui->checkBox_protection->setChecked(false);
+    ui->spinBox_protection_timer->setEnabled(false);
+    ui->comboBox_theme->setCurrentIndex(3);
+    ui->comboBox_lang->setCurrentIndex(0);
+    ui->comboBoxPrefixType->setCurrentIndex(0);
+    ui->comboBoxSuffixType->setCurrentIndex(0);
+    ui->lineEditPrefix->setText("output");
+    ui->lineEditSuffix->setText("_encoded_");
+    ui->comboBox_fontsize->setCurrentIndex(0);
+    QFont font;
+    QString appFontFamily = font.defaultFamily();
+    int fontInd = ui->comboBox_font->findText(appFontFamily);
+    if (fontInd != -1) {
+        ui->comboBox_font->setCurrentIndex(fontInd);
     }
-    selectFolderWindow->setDirectory(QDir::homePath());
-    selectFolderWindow->setMinimumWidth(600);
-    selectFolderWindow->setWindowTitle(title);
-    selectFolderWindow->setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    selectFolderWindow->exec();
-    if (selectFolderWindow->result() == 0) {
+}
+
+void Settings::on_buttonOutputPath_clicked()
+{
+    const QString output_folder_name = callFileDialog("Select output folder");
+    if (output_folder_name.isEmpty()) {
+        return;
+    }
+    ui->lineEdit_outPath->setText(output_folder_name);
+}
+
+void Settings::on_buttonTempPath_clicked()
+{
+    const QString temp_folder_name = callFileDialog("Select temp folder");
+    if (temp_folder_name.isEmpty()) {
+        return;
+    }
+    ui->lineEdit_tempPath->setText(temp_folder_name);
+}
+
+void Settings::on_checkBox_protection_clicked()
+{
+    int stts_protect = ui->checkBox_protection->checkState();
+    if (stts_protect == 2) {
+        ui->spinBox_protection_timer->setEnabled(true);
+    } else {
+        ui->spinBox_protection_timer->setEnabled(false);
+    }
+}
+
+QString Settings::callFileDialog(const QString title)
+{
+    QFileDialog selectFolderWindow(nullptr);
+    selectFolderWindow.setWindowTitle(title);
+    selectFolderWindow.setMinimumWidth(600);
+    selectFolderWindow.setWindowFlags(Qt::Dialog | Qt::SubWindow);
+    if (desktopEnv == "gnome") selectFolderWindow.setOptions(QFileDialog::DontUseNativeDialog);
+    selectFolderWindow.setFileMode(QFileDialog::DirectoryOnly);
+    selectFolderWindow.setAcceptMode(QFileDialog::AcceptOpen);
+    selectFolderWindow.setDirectory(QDir::homePath());
+    if (selectFolderWindow.exec() != QFileDialog::Accepted) {
         return QString("");
     }
-    const QStringList folder_name_dir = selectFolderWindow->selectedFiles();
-    delete selectFolderWindow;
-    QString folder_name = folder_name_dir[0];
-    return folder_name;
-}
-
-void Settings::call_task_complete(const QString &_message, const bool &_timer_mode)   /*** Call task complete ***/
-{
-    Taskcomplete taskcomplete(this);
-    taskcomplete.setMessage(_message, _timer_mode);
-    taskcomplete.setModal(true);
-    taskcomplete.exec();
+    return selectFolderWindow.selectedFiles().at(0);
 }
 
 bool Settings::eventFilter(QObject *watched, QEvent *event)
@@ -402,7 +301,7 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
-            ui_settings->frame_middle->setFocus();
+            ui->frame_middle->setFocus();
             return true;
         }
         return false;
@@ -428,7 +327,7 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
         return false;
     }
 
-    if (watched == ui_settings->widget_main) // *************** Resize window realisation ************************* //
+    if (watched == ui->widget_main) // *************** Resize window realisation ************************* //
     {
         if (!this->isMaximized())
         {
@@ -445,7 +344,7 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
             {
                 curWidth = this->width();
                 curHeight = this->height();
-                mouseCoordinate = ui_settings->widget_main->mapFromGlobal(QCursor::pos());
+                mouseCoordinate = ui->widget_main->mapFromGlobal(QCursor::pos());
                 if ((mouseCoordinate.x() < 6) && (mouseCoordinate.y() > 62) && (mouseCoordinate.y() < (curHeight - 6)))
                 {
                     QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
@@ -599,7 +498,7 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
         return false;
     }
 
-    if (watched == ui_settings->frame_main) // ******** Resize right frame realisation ********************** //
+    if (watched == ui->frame_main) // ******** Resize right frame realisation ********************** //
     {
         if (event->type() == QEvent::HoverMove)
         {
@@ -609,7 +508,7 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
         return false;
     }
 
-    if (watched == ui_settings->frame_top) // *************** Drag window realisation ************************* //
+    if (watched == ui->frame_top) // *************** Drag window realisation ************************* //
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -654,58 +553,42 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
 void Settings::on_comboBoxPrefixType_currentIndexChanged(int index)
 {
     if (index == 0) {
-        ui_settings->lineEditPrefix->setEnabled(false);
-        ui_settings->lineEditPrefix->setText(tr("None"));
+        ui->lineEditPrefix->setEnabled(false);
+        ui->lineEditPrefix->setText(tr("None"));
     } else {
-        ui_settings->lineEditPrefix->setEnabled(true);
-        ui_settings->lineEditPrefix->setText(*_ptr_prefixName);
+        ui->lineEditPrefix->setEnabled(true);
+        ui->lineEditPrefix->setText(*_ptr_prefixName);
     }
 }
 
 void Settings::on_comboBoxSuffixType_currentIndexChanged(int index)
 {
     if (index == 0) {
-        ui_settings->lineEditSuffix->setEnabled(true);
-        ui_settings->lineEditSuffix->setText(*_ptr_suffixName);
+        ui->lineEditSuffix->setEnabled(true);
+        ui->lineEditSuffix->setText(*_ptr_suffixName);
     } else {
-        ui_settings->lineEditSuffix->setEnabled(false);
-        ui_settings->lineEditSuffix->setText("_hhmmss_MMddyyyy");
+        ui->lineEditSuffix->setEnabled(false);
+        ui->lineEditSuffix->setText("_hhmmss_MMddyyyy");
     }
-}
-
-void Settings::on_comboBox_lang_currentIndexChanged(int index)
-{
-    QString arrLang[4] = {
-        "en", "zh", "de", "ru"
-    };
-    *_ptr_language = arrLang[index];
-}
-
-void Settings::on_comboBox_fontsize_currentIndexChanged(int index)
-{
-    int arrFontSize[5] = {
-        8, 9, 10, 11, 12
-    };
-    *_ptr_fontSize = arrFontSize[index];
 }
 
 void Settings::on_comboBox_font_currentIndexChanged(const QString &arg1)
 {
     QFont font;
     font.setFamily(arg1);
-    ui_settings->comboBox_font->setFont(font);
+    ui->comboBox_font->setFont(font);
 }
 
 void Settings::on_buttonTab_1_clicked()
 {
-    ui_settings->buttonTab_1->setEnabled(false);
-    ui_settings->buttonTab_2->setEnabled(true);
-    ui_settings->tabWidgetSettings->setCurrentIndex(0);
+    ui->buttonTab_1->setEnabled(false);
+    ui->buttonTab_2->setEnabled(true);
+    ui->tabWidgetSettings->setCurrentIndex(0);
 }
 
 void Settings::on_buttonTab_2_clicked()
 {
-    ui_settings->buttonTab_1->setEnabled(true);
-    ui_settings->buttonTab_2->setEnabled(false);
-    ui_settings->tabWidgetSettings->setCurrentIndex(1);
+    ui->buttonTab_1->setEnabled(true);
+    ui->buttonTab_2->setEnabled(false);
+    ui->tabWidgetSettings->setCurrentIndex(1);
 }

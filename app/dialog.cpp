@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: dialog.cpp
- MODIFIED: September, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -30,9 +30,8 @@ Dialog::~Dialog()
     delete ui_dialog;
 }
 
-void Dialog::setMessage(const QString &_message, bool *_acceptFlag)   /*** Set parameters ***/
+void Dialog::setMessage(const QString &_message)   /*** Set parameters ***/
 {
-    acceptFlag = _acceptFlag;
     mouseClickCoordinate.setX(0);
     mouseClickCoordinate.setY(0);
     QFont font;
@@ -48,8 +47,7 @@ void Dialog::setMessage(const QString &_message, bool *_acceptFlag)   /*** Set p
 
 void Dialog::on_buttonApply_clicked()
 {
-    *acceptFlag = true;
-    this->close();
+    this->accept();
 }
 
 void Dialog::on_buttonCancel_clicked()

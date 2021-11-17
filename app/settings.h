@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: settings.h
- MODIFIED: September, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -23,7 +23,6 @@
 #include <QMap>
 #include <QFontDatabase>
 #include <QStringListModel>
-//#include <QDebug>
 
 
 namespace Ui
@@ -42,15 +41,15 @@ public:
 
     ~Settings();
 
-    void setParameters(QByteArray *ptr_settingsWindowGeometry, QFile *ptr_stn_file,
-                       QString *ptr_output_folder, QString *ptr_temp_folder,
-                       bool *ptr_protection, bool *ptr_showHDR_mode, int *ptr_timer_interval,
-                       int *ptr_theme, QString *ptr_prefixName, QString *ptr_suffixName,
-                       int *ptr_prefxType, int *ptr_suffixType, bool *ptr_hideInTrayFlag,
-                       QString *ptr_language, bool *ptr_aceptFlag, QString &_desktopEnv,
+    void setParameters(QByteArray *ptr_settingsWindowGeometry, QString *ptr_output_folder,
+                       QString *ptr_temp_folder, bool *ptr_protection, bool *ptr_showHDR_mode,
+                       int *ptr_timer_interval, int *ptr_theme, QString *ptr_prefixName,
+                       QString *ptr_suffixName, int *ptr_prefxType, int *ptr_suffixType,
+                       bool *ptr_hideInTrayFlag, QString *ptr_language, const QString &_desktopEnv,
                        int *ptr_fontSize, QString *ptr_font);
-
 private slots:
+
+    void closeEvent(QCloseEvent *event);
 
     void on_closeWindow_clicked();
 
@@ -64,19 +63,13 @@ private slots:
 
     void on_buttonTempPath_clicked();
 
-    void on_checkBox_2_clicked();
-
-    void on_checkBox_3_clicked();
-
-    void on_checkBox_tray_clicked();
+    void on_checkBox_protection_clicked();
 
     void on_comboBoxPrefixType_currentIndexChanged(int index);
 
     void on_comboBoxSuffixType_currentIndexChanged(int index);
 
-    void on_comboBox_lang_currentIndexChanged(int index);
-
-    void closeEvent(QCloseEvent *event);
+    void on_comboBox_font_currentIndexChanged(const QString &arg1);
 
     bool eventFilter(QObject *watched, QEvent *event);
 
@@ -84,49 +77,11 @@ private slots:
 
     void on_buttonTab_2_clicked();
 
-    void on_comboBox_fontsize_currentIndexChanged(int index);
-
-    void on_comboBox_font_currentIndexChanged(const QString &arg1);
-
 private:
 
-    Ui::Settings *ui_settings;
+    Ui::Settings *ui;
 
     QString desktopEnv;
-
-    QString _message;
-
-    QString _curr_output_folder;
-
-    QString _curr_temp_folder;
-
-    QString _curr_prefixName;
-
-    QString _curr_suffixName;
-
-    QString _curr_language;
-
-    QString _curr_font;
-
-    int _curr_prefxType;
-
-    int _curr_suffixType;
-
-    int _curr_theme;
-
-    int _curr_fontSize;
-
-    int _curr_timer_interval;
-
-    bool _curr_showHDR_mode;
-
-    bool _curr_protection;
-
-    bool _curr_hideInTrayFlag;
-
-    bool _flag_save;
-
-    QFile *_ptr_stn_file;
 
     QString *_ptr_output_folder;
 
@@ -155,8 +110,6 @@ private:
     bool *_ptr_protection;
 
     bool *_ptr_hideInTrayFlag;
-
-    bool *_ptr_acceptFlag;
 
     /**************** Geometry **************************/
 
@@ -194,11 +147,9 @@ private:
 
     int curHeight;
 
-    void call_task_complete(const QString &_message, const bool &timer_mode);
+    void on_expandWindow_clicked();
 
     QString callFileDialog(const QString title);
-
-    void on_expandWindow_clicked();
 };
 
 #endif // SETTINGS_H

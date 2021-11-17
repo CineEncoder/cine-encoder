@@ -615,7 +615,7 @@
                          </spacer>
                         </item>
                         <item row="2" column="2">
-                         <widget class="QLineEdit" name="lineEdit_10">
+                         <widget class="QLineEdit" name="lineEdit_outPath">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -727,7 +727,7 @@
                          </widget>
                         </item>
                         <item row="0" column="2">
-                         <widget class="QLineEdit" name="lineEdit_9">
+                         <widget class="QLineEdit" name="lineEdit_tempPath">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -913,7 +913,7 @@
                          <number>0</number>
                         </property>
                         <item row="0" column="1" alignment="Qt::AlignRight">
-                         <widget class="QLabel" name="label">
+                         <widget class="QLabel" name="label_1">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1077,7 +1077,7 @@
                          </widget>
                         </item>
                         <item row="6" column="2">
-                         <widget class="QCheckBox" name="checkBox_2">
+                         <widget class="QCheckBox" name="checkBox_showHDR">
                           <property name="enabled">
                            <bool>true</bool>
                           </property>
@@ -1328,7 +1328,7 @@
                          <number>0</number>
                         </property>
                         <item row="2" column="2">
-                         <widget class="QSpinBox" name="spinBox_3">
+                         <widget class="QSpinBox" name="spinBox_protection_timer">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1407,7 +1407,7 @@
                          </widget>
                         </item>
                         <item row="0" column="2" colspan="2">
-                         <widget class="QCheckBox" name="checkBox_3">
+                         <widget class="QCheckBox" name="checkBox_protection">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                             <horstretch>0</horstretch>

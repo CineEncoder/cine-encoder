@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: mainwindow.h
- MODIFIED: October, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -138,8 +138,6 @@ public:
 
     QString _new_param[PARAMETERS_COUNT];
 
-    QFile _stn_file;
-
     QByteArray _settingsWindowGeometry;
 
     QByteArray _presetWindowGeometry;
@@ -171,8 +169,6 @@ public:
     int _pos_cld;
 
     int _timer_interval;
-
-    bool _batch_mode;
 
     bool _showHDR_mode;
 
@@ -515,10 +511,7 @@ private:
 
     QString _thumb_path;
 
-    QString _settings_file;
-
     QString _preset_file;
-
 
     QString _preset_0;
 
@@ -568,6 +561,8 @@ private:
     bool _calling_pr_1;
 
     bool _mux_mode;
+
+    bool _batch_mode;
 
     // *********************** Geometry ***********************************//
 
