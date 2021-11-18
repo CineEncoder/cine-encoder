@@ -1028,7 +1028,7 @@ void Widget::setParameters()    /*** Set parameters ***/
         }
     }
 
-    if (_desktopEnv == "") {
+    if (_desktopEnv == "default") {
         std::cout << "Detect desktop env. ..." << std::endl;
         desktopEnvDetection();
     }
