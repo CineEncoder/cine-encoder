@@ -167,34 +167,6 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         if (processEncoding->state() != QProcess::NotRunning) processEncoding->kill();
         if (processThumbCreation->state() != QProcess::NotRunning) processThumbCreation->kill();
 
-        /*const QString SEP = "<&>";
-        if (_prs_file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            QString line = "";
-            for (int i = 0; i < PARAMETERS_COUNT; i++)
-            {
-                line += _cur_param[i] + SEP;
-            }
-            line += QString::number(_pos_top) + SEP +  QString::number(_pos_cld) + SEP + QString("\n");
-            _prs_file.write(line.toUtf8());
-            int column = _preset_table.size();  // Column count
-            int row =  _preset_table[0].size();  // Row count
-            if (row < 500 && column < PARAMETERS_COUNT+2)
-            {
-                for (int i = 0; i < row; i++)
-                {
-                    line = "";
-                    for (int j = 0; j < column; j++)
-                    {
-                        line += _preset_table[j][i] + SEP;
-                    }
-                    line += QString("\n");
-                    _prs_file.write(line.toUtf8());
-                }
-            }
-            _prs_file.close();
-            std::cout << "Preset file saved..." << std::endl;  // Debug info //
-        }*/
         QFile _prs_file(_preset_file);
         if (_prs_file.open(QIODevice::WriteOnly)) {
             QDataStream out(&_prs_file);
@@ -388,7 +360,7 @@ void Widget::createConnections()
     settings = new QAction(tr("Settings"), this);
     connect(settings, &QAction::triggered, this, &Widget::on_actionSettings_clicked);
 
-    reset_view = new QAction(tr("Reset view"), this);
+    reset_view = new QAction(tr("Reset state"), this);
     connect(reset_view, &QAction::triggered, this, &Widget::resetView);
 
     about = new QAction(tr("About"), this);
@@ -829,50 +801,6 @@ void Widget::setParameters()    /*** Set parameters ***/
     } else {
         set_defaults();
     }
-    /*if (_prs_file.open(QIODevice::ReadOnly | QIODevice::Text)) {  // Read preset from file
-        QStringList line;
-        while(!_prs_file.atEnd()) {
-            line << _prs_file.readLine();
-        }
-        const QString SEP = "<&>";
-        std::cout << "Number of lines in preset file: " << line.size() << std::endl; // Debug info //
-        if (line.size() > 0) {
-            QStringList cur_param = line[0].split(SEP);
-            if (cur_param.size() == PARAMETERS_COUNT+3)
-            {
-                for (int k = 0; k < PARAMETERS_COUNT; k++) {
-                    _cur_param[k] = cur_param[k];
-                }
-                _pos_top = cur_param[PARAMETERS_COUNT].toInt();
-                _pos_cld = cur_param[PARAMETERS_COUNT+1].toInt();
-                int n = line.size() - 1;
-                for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
-                  _preset_table[i].resize(n);
-                }
-                for (int j = 1; j <= n; j++) {
-                    cur_param = line[j].split(SEP);
-                    if (cur_param.size() == PARAMETERS_COUNT+2) {
-                        for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
-                            _preset_table[m][j-1] = cur_param[m];
-                        }
-                    } else {
-                        std::cout << "Preset column size: " << cur_param.size() << ". Error!!! Break!!!" << std::endl;  // Debug info //
-                        break;
-                    }
-                }
-            } else {
-                std::cout << "Preset file error, uncorrect parameters!!! " << std::endl;  // Debug info //
-                set_defaults();
-            }
-        } else {
-            std::cout << "Preset file error, not enough parameters!!! " << std::endl;  // Debug info //
-            set_defaults();
-        }
-        _prs_file.close();
-    } else {
-        std::cout << "Preset file error (cannot be open)." << std::endl;  // Debug info //
-        set_defaults();
-    }*/
 
     // ************************** Read settings ******************************//
     QList<int> dockSizesX = {};
@@ -4303,31 +4231,6 @@ void Widget::set_defaults() /*** Set default presets ***/
         }
         _prs_file.close();
     }
-    /*QStringList line;
-    QFile file(":/resources/data/default_presets.txt");
-    if (file.open(QFile::ReadOnly)) {
-        while(!file.atEnd()) {
-            line << file.readLine();
-        }
-        const QString SEP = "<&>";
-        QStringList cur_param = line[0].split(SEP);
-        for (int k = 0; k < PARAMETERS_COUNT; k++) {
-            _cur_param[k] = cur_param[k];
-        }
-        _pos_top = cur_param[PARAMETERS_COUNT].toInt();
-        _pos_cld = cur_param[PARAMETERS_COUNT+1].toInt();
-        int n = line.size() - 1;
-        for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
-          _preset_table[i].resize(n);
-        }
-        for (int j = 1; j <= n; j++) {
-            cur_param = line[j].split(SEP);
-            for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
-                _preset_table[m][j-1] = cur_param[m];
-            }
-        }
-        file.close();
-    }*/
 }
 
 void Widget::on_buttonApplyPreset_clicked()  /*** Apply preset ***/
@@ -4471,14 +4374,7 @@ void Widget::add_preset()  /*** Add preset ***/
         call_task_complete(_message, false);
         return;
     }
-    /*QStringList line;
-    QFile file(":/resources/data/default_presets.txt");
-    if (!file.open(QIODevice::ReadOnly)) return;
-    while(!file.atEnd()) {
-        line << file.readLine();
-    }
-    const QString SEP = "<&>";
-    QStringList cur_param = line[0].split(SEP);*/
+
     QVector<QString> cur_param;
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
