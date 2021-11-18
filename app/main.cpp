@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
     /******************* Read Settings ****************************/
     QString _settings_path = QDir::homePath() + QString("/CineEncoder");
-    QSettings *_settings = new QSettings(_settings_path + QString("/settings352.ini"), QSettings::IniFormat, nullptr);
+    QSettings *_settings = new QSettings(_settings_path + QString("/settings.ini"), QSettings::IniFormat, nullptr);
     _settings->beginGroup("Settings");
     int _fontSize = _settings->value("Settings/font_size").toInt();
     QString _fontFamily = _settings->value("Settings/font").toString();

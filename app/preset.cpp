@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: preset.cpp
- MODIFIED: October, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -16,7 +16,9 @@
 
 
 
-Preset::Preset(QWidget *parent): QDialog(parent), ui_preset(new Ui::Preset)
+Preset::Preset(QWidget *parent):
+    QDialog(parent),
+    ui_preset(new Ui::Preset)
 {
     ui_preset->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
@@ -298,7 +300,7 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
     return QDialog::eventFilter(watched, event);
 }
 
-void Preset::setParameters(QByteArray *ptr_presetWindowGeometry, QString *_old_param)  /*** Set parameters ***/
+void Preset::setParameters(QByteArray *ptr_presetWindowGeometry, QVector<QString> *_old_param)  /*** Set parameters ***/
 {
     _new_param = _old_param;
     mouseClickCoordinate.setX(0);
@@ -380,39 +382,39 @@ void Preset::setParameters(QByteArray *ptr_presetWindowGeometry, QString *_old_p
 //    ui_preset->lineEdit_max_cll->setValidator(intValidator);
 //    ui_preset->lineEdit_max_fall->setValidator(intValidator);
 
-    ui_preset->textBrowser_presetname->setText(_new_param[Parameters::_OUTPUT_PARAM]);
-    ui_preset->comboBox_codec->setCurrentIndex(_new_param[Parameters::_CODEC].toInt());
-    ui_preset->comboBox_mode->setCurrentIndex(_new_param[Parameters::_MODE].toInt());
-    ui_preset->comboBox_container->setCurrentIndex(_new_param[Parameters::_CONTAINER].toInt());
-    ui_preset->lineEdit_bitrate->setText(_new_param[Parameters::_BQR]);
-    ui_preset->lineEdit_minrate->setText(_new_param[Parameters::_MINRATE]);
-    ui_preset->lineEdit_maxrate->setText(_new_param[Parameters::_MAXRATE]);
-    ui_preset->lineEdit_bufsize->setText(_new_param[Parameters::_BUFSIZE]);
-    ui_preset->comboBox_level->setCurrentIndex(_new_param[Parameters::_LEVEL].toInt());
-    ui_preset->comboBoxFrameRate->setCurrentIndex(_new_param[Parameters::_FRAME_RATE].toInt());
-    ui_preset->comboBoxBlending->setCurrentIndex(_new_param[Parameters::_BLENDING].toInt());
-    ui_preset->comboBox_width->setCurrentIndex(_new_param[Parameters::_WIDTH].toInt());
-    ui_preset->comboBox_height->setCurrentIndex(_new_param[Parameters::_HEIGHT].toInt());
-    ui_preset->comboBox_pass->setCurrentIndex(_new_param[Parameters::_PASS].toInt());
-    ui_preset->comboBox_preset->setCurrentIndex(_new_param[Parameters::_PRESET].toInt());
-    ui_preset->comboBox_color_range->setCurrentIndex(_new_param[Parameters::_COLOR_RANGE].toInt());
-    ui_preset->comboBox_color_prim->setCurrentIndex(_new_param[Parameters::_PRIMARY].toInt());
-    ui_preset->comboBox_color_matrix->setCurrentIndex(_new_param[Parameters::_MATRIX].toInt());
-    ui_preset->comboBox_transfer->setCurrentIndex(_new_param[Parameters::_TRC].toInt());
-    ui_preset->lineEdit_min_lum->setText(_new_param[Parameters::_MIN_LUM]);
-    ui_preset->lineEdit_max_lum->setText(_new_param[Parameters::_MAX_LUM]);
-    ui_preset->lineEdit_max_cll->setText(_new_param[Parameters::_MAX_CLL]);
-    ui_preset->lineEdit_max_fall->setText(_new_param[Parameters::_MAX_FALL]);
-    ui_preset->comboBox_master_disp->setCurrentIndex(_new_param[Parameters::_MASTER_DISPLAY].toInt());
-    ui_preset->lineEdit_chroma_coord->setText(_new_param[Parameters::_CHROMA_COORD]);
-    ui_preset->lineEdit_white_coord->setText(_new_param[Parameters::_WHITE_COORD]);
-    ui_preset->comboBox_audio_codec->setCurrentIndex(_new_param[Parameters::_AUDIO_CODEC].toInt());
-    ui_preset->comboBox_audio_bitrate->setCurrentIndex(_new_param[Parameters::_AUDIO_BITRATE].toInt());
-    ui_preset->comboBox_audio_sampling->setCurrentIndex(_new_param[Parameters::_ASAMPLE_RATE].toInt());
-    ui_preset->comboBox_audio_channels->setCurrentIndex(_new_param[Parameters::_ACHANNELS].toInt()); 
-    ui_preset->checkBox_primaries->setCheckState((Qt::CheckState)_new_param[Parameters::_REP_PRIM].toInt());
-    ui_preset->checkBox_matrix->setCheckState((Qt::CheckState)_new_param[Parameters::_REP_MATRIX].toInt());
-    ui_preset->checkBox_transfer->setCheckState((Qt::CheckState)_new_param[Parameters::_REP_TRC].toInt());
+    ui_preset->textBrowser_presetname->setText((*_new_param)[Parameters::_OUTPUT_PARAM]);
+    ui_preset->comboBox_codec->setCurrentIndex((*_new_param)[Parameters::_CODEC].toInt());
+    ui_preset->comboBox_mode->setCurrentIndex((*_new_param)[Parameters::_MODE].toInt());
+    ui_preset->comboBox_container->setCurrentIndex((*_new_param)[Parameters::_CONTAINER].toInt());
+    ui_preset->lineEdit_bitrate->setText((*_new_param)[Parameters::_BQR]);
+    ui_preset->lineEdit_minrate->setText((*_new_param)[Parameters::_MINRATE]);
+    ui_preset->lineEdit_maxrate->setText((*_new_param)[Parameters::_MAXRATE]);
+    ui_preset->lineEdit_bufsize->setText((*_new_param)[Parameters::_BUFSIZE]);
+    ui_preset->comboBox_level->setCurrentIndex((*_new_param)[Parameters::_LEVEL].toInt());
+    ui_preset->comboBoxFrameRate->setCurrentIndex((*_new_param)[Parameters::_FRAME_RATE].toInt());
+    ui_preset->comboBoxBlending->setCurrentIndex((*_new_param)[Parameters::_BLENDING].toInt());
+    ui_preset->comboBox_width->setCurrentIndex((*_new_param)[Parameters::_WIDTH].toInt());
+    ui_preset->comboBox_height->setCurrentIndex((*_new_param)[Parameters::_HEIGHT].toInt());
+    ui_preset->comboBox_pass->setCurrentIndex((*_new_param)[Parameters::_PASS].toInt());
+    ui_preset->comboBox_preset->setCurrentIndex((*_new_param)[Parameters::_PRESET].toInt());
+    ui_preset->comboBox_color_range->setCurrentIndex((*_new_param)[Parameters::_COLOR_RANGE].toInt());
+    ui_preset->comboBox_color_prim->setCurrentIndex((*_new_param)[Parameters::_PRIMARY].toInt());
+    ui_preset->comboBox_color_matrix->setCurrentIndex((*_new_param)[Parameters::_MATRIX].toInt());
+    ui_preset->comboBox_transfer->setCurrentIndex((*_new_param)[Parameters::_TRC].toInt());
+    ui_preset->lineEdit_min_lum->setText((*_new_param)[Parameters::_MIN_LUM]);
+    ui_preset->lineEdit_max_lum->setText((*_new_param)[Parameters::_MAX_LUM]);
+    ui_preset->lineEdit_max_cll->setText((*_new_param)[Parameters::_MAX_CLL]);
+    ui_preset->lineEdit_max_fall->setText((*_new_param)[Parameters::_MAX_FALL]);
+    ui_preset->comboBox_master_disp->setCurrentIndex((*_new_param)[Parameters::_MASTER_DISPLAY].toInt());
+    ui_preset->lineEdit_chroma_coord->setText((*_new_param)[Parameters::_CHROMA_COORD]);
+    ui_preset->lineEdit_white_coord->setText((*_new_param)[Parameters::_WHITE_COORD]);
+    ui_preset->comboBox_audio_codec->setCurrentIndex((*_new_param)[Parameters::_AUDIO_CODEC].toInt());
+    ui_preset->comboBox_audio_bitrate->setCurrentIndex((*_new_param)[Parameters::_AUDIO_BITRATE].toInt());
+    ui_preset->comboBox_audio_sampling->setCurrentIndex((*_new_param)[Parameters::_ASAMPLE_RATE].toInt());
+    ui_preset->comboBox_audio_channels->setCurrentIndex((*_new_param)[Parameters::_ACHANNELS].toInt());
+    ui_preset->checkBox_primaries->setCheckState((Qt::CheckState)(*_new_param)[Parameters::_REP_PRIM].toInt());
+    ui_preset->checkBox_matrix->setCheckState((Qt::CheckState)(*_new_param)[Parameters::_REP_MATRIX].toInt());
+    ui_preset->checkBox_transfer->setCheckState((Qt::CheckState)(*_new_param)[Parameters::_REP_TRC].toInt());
 }
 
 void Preset::on_closeWindow_clicked()
@@ -422,11 +424,11 @@ void Preset::on_closeWindow_clicked()
 
 void Preset::on_expandWindow_clicked()
 {
-    if (_expandWindowsState == false)
-    {
-        this->showMaximized();
+    if (!this->isFullScreen()) {
+        this->showFullScreen();
         _expandWindowsState = true;
-    } else {
+    }
+    else {
         this->showNormal();
         _expandWindowsState = false;
     }
@@ -439,40 +441,41 @@ void Preset::on_buttonCancel_clicked()  /*** Close preset window ***/
 
 void Preset::on_buttonApply_clicked()  /*** Apply preset ***/
 {
-    _new_param[Parameters::_OUTPUT_PARAM] = ui_preset->textBrowser_presetname->toPlainText();
-    _new_param[Parameters::_CODEC] = QString::number(ui_preset->comboBox_codec->currentIndex());
-    _new_param[Parameters::_MODE] = QString::number(ui_preset->comboBox_mode->currentIndex());
-    _new_param[Parameters::_CONTAINER] = QString::number(ui_preset->comboBox_container->currentIndex());
-    _new_param[Parameters::_BQR] = ui_preset->lineEdit_bitrate->text();
-    _new_param[Parameters::_MINRATE] = ui_preset->lineEdit_minrate->text();
-    _new_param[Parameters::_MAXRATE] = ui_preset->lineEdit_maxrate->text();
-    _new_param[Parameters::_BUFSIZE] = ui_preset->lineEdit_bufsize->text();
-    _new_param[Parameters::_LEVEL] = QString::number(ui_preset->comboBox_level->currentIndex());
-    _new_param[Parameters::_FRAME_RATE] = QString::number(ui_preset->comboBoxFrameRate->currentIndex());
-    _new_param[Parameters::_BLENDING] = QString::number(ui_preset->comboBoxBlending->currentIndex());
-    _new_param[Parameters::_WIDTH] = QString::number(ui_preset->comboBox_width->currentIndex());
-    _new_param[Parameters::_HEIGHT] = QString::number(ui_preset->comboBox_height->currentIndex());
-    _new_param[Parameters::_PASS]= QString::number(ui_preset->comboBox_pass->currentIndex());
-    _new_param[Parameters::_PRESET] = QString::number(ui_preset->comboBox_preset->currentIndex());
-    _new_param[Parameters::_COLOR_RANGE] = QString::number(ui_preset->comboBox_color_range->currentIndex());
-    _new_param[Parameters::_PRIMARY] = QString::number(ui_preset->comboBox_color_prim->currentIndex());
-    _new_param[Parameters::_MATRIX] = QString::number(ui_preset->comboBox_color_matrix->currentIndex());
-    _new_param[Parameters::_TRC] = QString::number(ui_preset->comboBox_transfer->currentIndex());
-    _new_param[Parameters::_MIN_LUM] = ui_preset->lineEdit_min_lum->text();
-    _new_param[Parameters::_MAX_LUM] = ui_preset->lineEdit_max_lum->text();
-    _new_param[Parameters::_MAX_CLL] = ui_preset->lineEdit_max_cll->text();
-    _new_param[Parameters::_MAX_FALL] = ui_preset->lineEdit_max_fall->text();
-    _new_param[Parameters::_MASTER_DISPLAY] = QString::number(ui_preset->comboBox_master_disp->currentIndex());
-    _new_param[Parameters::_CHROMA_COORD] = ui_preset->lineEdit_chroma_coord->text();
-    _new_param[Parameters::_WHITE_COORD] = ui_preset->lineEdit_white_coord->text();
-    _new_param[Parameters::_AUDIO_CODEC] = QString::number(ui_preset->comboBox_audio_codec->currentIndex());
-    _new_param[Parameters::_AUDIO_BITRATE] = QString::number(ui_preset->comboBox_audio_bitrate->currentIndex());
-    _new_param[Parameters::_ASAMPLE_RATE] = QString::number(ui_preset->comboBox_audio_sampling->currentIndex());
-    _new_param[Parameters::_ACHANNELS] = QString::number(ui_preset->comboBox_audio_channels->currentIndex());
-    _new_param[Parameters::_REP_PRIM] = QString::number(ui_preset->checkBox_primaries->checkState());
-    _new_param[Parameters::_REP_MATRIX] = QString::number(ui_preset->checkBox_matrix->checkState());
-    _new_param[Parameters::_REP_TRC] = QString::number(ui_preset->checkBox_transfer->checkState());
-    this->close();
+    (*_new_param)[Parameters::_OUTPUT_PARAM] = ui_preset->textBrowser_presetname->toPlainText();
+    (*_new_param)[Parameters::_CODEC] = QString::number(ui_preset->comboBox_codec->currentIndex());
+    (*_new_param)[Parameters::_MODE] = QString::number(ui_preset->comboBox_mode->currentIndex());
+    (*_new_param)[Parameters::_CONTAINER] = QString::number(ui_preset->comboBox_container->currentIndex());
+    (*_new_param)[Parameters::_BQR] = ui_preset->lineEdit_bitrate->text();
+    (*_new_param)[Parameters::_MINRATE] = ui_preset->lineEdit_minrate->text();
+    (*_new_param)[Parameters::_MAXRATE] = ui_preset->lineEdit_maxrate->text();
+    (*_new_param)[Parameters::_BUFSIZE] = ui_preset->lineEdit_bufsize->text();
+    (*_new_param)[Parameters::_LEVEL] = QString::number(ui_preset->comboBox_level->currentIndex());
+    (*_new_param)[Parameters::_FRAME_RATE] = QString::number(ui_preset->comboBoxFrameRate->currentIndex());
+    (*_new_param)[Parameters::_BLENDING] = QString::number(ui_preset->comboBoxBlending->currentIndex());
+    (*_new_param)[Parameters::_WIDTH] = QString::number(ui_preset->comboBox_width->currentIndex());
+    (*_new_param)[Parameters::_HEIGHT] = QString::number(ui_preset->comboBox_height->currentIndex());
+    (*_new_param)[Parameters::_PASS]= QString::number(ui_preset->comboBox_pass->currentIndex());
+    (*_new_param)[Parameters::_PRESET] = QString::number(ui_preset->comboBox_preset->currentIndex());
+    (*_new_param)[Parameters::_COLOR_RANGE] = QString::number(ui_preset->comboBox_color_range->currentIndex());
+    (*_new_param)[Parameters::_PRIMARY] = QString::number(ui_preset->comboBox_color_prim->currentIndex());
+    (*_new_param)[Parameters::_MATRIX] = QString::number(ui_preset->comboBox_color_matrix->currentIndex());
+    (*_new_param)[Parameters::_TRC] = QString::number(ui_preset->comboBox_transfer->currentIndex());
+    (*_new_param)[Parameters::_MIN_LUM] = ui_preset->lineEdit_min_lum->text();
+    (*_new_param)[Parameters::_MAX_LUM] = ui_preset->lineEdit_max_lum->text();
+    (*_new_param)[Parameters::_MAX_CLL] = ui_preset->lineEdit_max_cll->text();
+    (*_new_param)[Parameters::_MAX_FALL] = ui_preset->lineEdit_max_fall->text();
+    (*_new_param)[Parameters::_MASTER_DISPLAY] = QString::number(ui_preset->comboBox_master_disp->currentIndex());
+    (*_new_param)[Parameters::_CHROMA_COORD] = ui_preset->lineEdit_chroma_coord->text();
+    (*_new_param)[Parameters::_WHITE_COORD] = ui_preset->lineEdit_white_coord->text();
+    (*_new_param)[Parameters::_AUDIO_CODEC] = QString::number(ui_preset->comboBox_audio_codec->currentIndex());
+    (*_new_param)[Parameters::_AUDIO_BITRATE] = QString::number(ui_preset->comboBox_audio_bitrate->currentIndex());
+    (*_new_param)[Parameters::_ASAMPLE_RATE] = QString::number(ui_preset->comboBox_audio_sampling->currentIndex());
+    (*_new_param)[Parameters::_ACHANNELS] = QString::number(ui_preset->comboBox_audio_channels->currentIndex());
+    (*_new_param)[Parameters::_REP_PRIM] = QString::number(ui_preset->checkBox_primaries->checkState());
+    (*_new_param)[Parameters::_REP_MATRIX] = QString::number(ui_preset->checkBox_matrix->checkState());
+    (*_new_param)[Parameters::_REP_TRC] = QString::number(ui_preset->checkBox_transfer->checkState());
+
+    this->accept();
 }
 
 void Preset::on_buttonTab_1_clicked()
@@ -1659,7 +1662,7 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_maxrate->setEnabled(false);
         ui_preset->lineEdit_bufsize->setEnabled(false);
     }
-    if (arg1 == tr("Constant Bitrate")) {
+    else if (arg1 == tr("Constant Bitrate")) {
         ui_preset->label_bitrate->setText(tr("Bitrate"));
         ui_preset->label_bitrate_prefix->setText(tr("MBps"));
         ui_preset->label_minrate->hide();
@@ -1674,7 +1677,7 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_bitrate->setText("50");
         ui_preset->lineEdit_bufsize->setText("50");
     }
-    if (arg1 == tr("Average Bitrate")) {
+    else if (arg1 == tr("Average Bitrate")) {
         ui_preset->label_bitrate->setText(tr("Bitrate"));
         ui_preset->label_minrate->hide();
         ui_preset->label_maxrate->hide();
@@ -1688,7 +1691,7 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_bufsize->hide();
         ui_preset->lineEdit_bitrate->setText("50");
     }
-    if (arg1 == tr("Variable Bitrate")) {
+    else if (arg1 == tr("Variable Bitrate")) {
         ui_preset->label_bitrate->setText(tr("Bitrate"));
         ui_preset->label_bitrate_prefix->setText(tr("MBps"));
         ui_preset->label_minrate->show();
@@ -1705,7 +1708,7 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_maxrate->setText("50");
         ui_preset->lineEdit_bufsize->setText("50");
     }
-    if (arg1 == tr("Constant Rate Factor")) {
+    else if (arg1 == tr("Constant Rate Factor")) {
         ui_preset->label_bitrate->setText(tr("Rate factor"));
         ui_preset->label_minrate->hide();
         ui_preset->label_maxrate->hide();
@@ -1719,7 +1722,7 @@ void Preset::on_comboBox_mode_currentTextChanged(const QString &arg1)  /*** Chan
         ui_preset->lineEdit_bufsize->hide();
         ui_preset->lineEdit_bitrate->setText("19");
     }
-    if (arg1 == tr("Constant QP")) {
+    else if (arg1 == tr("Constant QP")) {
         ui_preset->label_bitrate->setText(tr("Quantizer"));
         ui_preset->label_minrate->hide();
         ui_preset->label_maxrate->hide();
@@ -1779,36 +1782,36 @@ void Preset::on_comboBox_audio_codec_currentTextChanged(const QString &arg1) /**
         ui_preset->comboBox_audio_channels->setCurrentIndex(0);
         ui_preset->comboBox_audio_channels->setEnabled(false);
     }
-    if (arg1 == "AAC") {
+    else if (arg1 == "AAC") {
         ui_preset->comboBox_audio_bitrate->addItems({"384k", "320k", "256k", "192k", "128k", "96k"});
         ui_preset->comboBox_audio_bitrate->setCurrentIndex(2);
     }
-    if (arg1 == "AC3") {
+    else if (arg1 == "AC3") {
         ui_preset->comboBox_audio_bitrate->addItems({"640k", "448k", "384k", "256k"});
         ui_preset->comboBox_audio_bitrate->setCurrentIndex(1);
     }
-    if (arg1 == "DTS") {
+    else if (arg1 == "DTS") {
         ui_preset->comboBox_audio_bitrate->addItems({"3840k", "3072k", "2048k", "1920k", "1536k", "1472k", "1344k", "1280k", "1152k",
                                                      "1024k", "960k", "768k", "640k", "576k", "512k", "448k", "384k"});
         ui_preset->comboBox_audio_bitrate->setCurrentIndex(4);
     }
-    if (arg1 == "Vorbis") {
+    else if (arg1 == "Vorbis") {
         ui_preset->comboBox_audio_bitrate->addItems({"448k", "384k", "256k", "128k", "96k", "64k"});
         ui_preset->comboBox_audio_bitrate->setCurrentIndex(2);
     }
-    if (arg1 == "Opus") {
+    else if (arg1 == "Opus") {
         ui_preset->comboBox_audio_bitrate->addItems({"448k", "384k", "256k", "128k", "96k", "64k"});
         ui_preset->comboBox_audio_bitrate->setCurrentIndex(2);
     }
-    if (arg1 == "PCM 16 bit") {
+    else if (arg1 == "PCM 16 bit") {
         ui_preset->comboBox_audio_bitrate->addItems({tr("Auto")});
         ui_preset->comboBox_audio_bitrate->setEnabled(false);
     }
-    if (arg1 == "PCM 24 bit") {
+    else if (arg1 == "PCM 24 bit") {
         ui_preset->comboBox_audio_bitrate->addItems({tr("Auto")});
         ui_preset->comboBox_audio_bitrate->setEnabled(false);
     }
-    if (arg1 == "PCM 32 bit") {
+    else if (arg1 == "PCM 32 bit") {
         ui_preset->comboBox_audio_bitrate->addItems({tr("Auto")});
         ui_preset->comboBox_audio_bitrate->setEnabled(false);
     }
@@ -1839,35 +1842,35 @@ void Preset::on_comboBox_master_disp_currentTextChanged(const QString &arg1)  /*
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == tr("Source")) {
+    else if (arg1 == tr("Source")) {
         ui_preset->lineEdit_chroma_coord->setText(tr("Source"));
         ui_preset->lineEdit_white_coord->setText(tr("Source"));
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == tr("Custom")) {
+    else if (arg1 == tr("Custom")) {
         ui_preset->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui_preset->lineEdit_white_coord->setText("0.3127,0.3290");
     }
-    if (arg1 == tr("Display P3")) {
+    else if (arg1 == tr("Display P3")) {
         ui_preset->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui_preset->lineEdit_white_coord->setText("0.3127,0.3290");
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == tr("DCI P3")) {
+    else if (arg1 == tr("DCI P3")) {
         ui_preset->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui_preset->lineEdit_white_coord->setText("0.314,0.3510");
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == "BT.2020") {
+    else if (arg1 == "BT.2020") {
         ui_preset->lineEdit_chroma_coord->setText("0.708,0.292,0.170,0.797,0.131,0.046");
         ui_preset->lineEdit_white_coord->setText("0.3127,0.3290");
         ui_preset->lineEdit_chroma_coord->setEnabled(false);
         ui_preset->lineEdit_white_coord->setEnabled(false);
     }
-    if (arg1 == "BT.709") {
+    else if (arg1 == "BT.709") {
         ui_preset->lineEdit_chroma_coord->setText("0.640,0.330,0.30,0.60,0.150,0.060");
         ui_preset->lineEdit_white_coord->setText("0.3127,0.3290");
         ui_preset->lineEdit_chroma_coord->setEnabled(false);

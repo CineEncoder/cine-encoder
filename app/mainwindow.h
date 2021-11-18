@@ -136,7 +136,9 @@ public:
 
     // ******************** Settings *************************//
 
-    QString _new_param[PARAMETERS_COUNT];
+    //QString _new_param[PARAMETERS_COUNT];
+
+    QVector<QString> _new_param;
 
     QByteArray _settingsWindowGeometry;
 
@@ -332,15 +334,19 @@ private:
 
     Ui::Widget *ui;
 
-    QTranslator qtTranslator;
+    //QString _cur_param[PARAMETERS_COUNT];
 
-    QString _cur_param[PARAMETERS_COUNT];
+    QVector<QString> _cur_param;
 
-    QVector <QVector <QString> > _preset_table;
+    QVector<QVector<QString>> _preset_table;
 
     OpeningFiles openingFiles;
 
     // ******************* Constants *****************************//
+
+    static const int PRESETS_VERSION = 352;
+
+    static const int SETTINGS_VERSION = 352;
 
     static const int NUMBER_PRESETS = 29;
 
@@ -461,8 +467,6 @@ private:
     QTimer *timerCallSetThumbnail;
 
     // ******************** Initialization *************************//
-
-    QFile _prs_file;
 
     QFile _wind_file;
 

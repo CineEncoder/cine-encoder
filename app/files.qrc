@@ -260,7 +260,6 @@
         <file>resources/icons/32x32/cil-zoom-out.png</file>
         <file>resources/icons/64x64/cine-encoder.png</file>
         <file>resources/images/splash.png</file>
-        <file>resources/data/default_presets.txt</file>
         <file>resources/icons/16x16/cil-file-add.png</file>
         <file>resources/icons/16x16/cil-file-delete.png</file>
         <file>resources/icons/16x16/cil-forward.png</file>
@@ -328,5 +327,6 @@
         <file>resources/icons/16x16/cil-frame-left.png</file>
         <file>resources/icons/16x16/cil-frame-right.png</file>
         <file>resources/icons/16x16/cil-cursor-center.png</file>
+        <file>resources/data/default_presets.ini</file>
     </qresource>
 </RCC>

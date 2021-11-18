@@ -20,6 +20,7 @@
 #include "taskcomplete.h"
 #include "dialog.h"
 
+
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE
         #define UNICODE
@@ -161,15 +162,12 @@ void Widget::showEvent(QShowEvent *event)   /*** Call set parameters ***/
 void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
 {
     event->ignore();
-    _message = tr("Quit program?");
-    bool confirm = call_dialog(_message);
-    if (confirm == true)
-    {
-        std::cout << "Exit confirmed!" << std::endl;  // Debug info //
+    if (call_dialog(tr("Quit program?"))) {
+
         if (processEncoding->state() != QProcess::NotRunning) processEncoding->kill();
         if (processThumbCreation->state() != QProcess::NotRunning) processThumbCreation->kill();
 
-        const QString SEP = "<&>";
+        /*const QString SEP = "<&>";
         if (_prs_file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QString line = "";
@@ -196,7 +194,18 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
             }
             _prs_file.close();
             std::cout << "Preset file saved..." << std::endl;  // Debug info //
+        }*/
+        QFile _prs_file(_preset_file);
+        if (_prs_file.open(QIODevice::WriteOnly)) {
+            QDataStream out(&_prs_file);
+            out.setVersion(QDataStream::Qt_4_0);
+            out << PRESETS_VERSION;
+            out << _cur_param << _pos_top << _pos_cld << _preset_table;
+            _prs_file.close();
         }
+
+        // Save Version
+        _settings->setValue("Version", SETTINGS_VERSION);
 
         // Save Main Widget
         _settings->beginGroup("MainWidget");
@@ -256,7 +265,6 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
         if (_hideInTrayFlag) {
             trayIcon->hide();
         }
-
         event->accept();
     }
 }
@@ -675,6 +683,8 @@ void Widget::setParameters()    /*** Set parameters ***/
     openingFiles.setParent(this);
     openingFiles.setModal(true);
     trayIcon = new QSystemTrayIcon(this);
+    _new_param.resize(PARAMETERS_COUNT);
+    _cur_param.resize(PARAMETERS_COUNT);
     _preset_table.resize(PARAMETERS_COUNT+1);
     for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
       _preset_table[i].resize(5);
@@ -696,8 +706,8 @@ void Widget::setParameters()    /*** Set parameters ***/
     _openDir = QDir::homePath();
     _settings_path = QDir::homePath() + QString("/CineEncoder");
     _thumb_path = _settings_path + QString("/thumbnails");
-    _preset_file = _settings_path + QString("/presets352.ini");
-    _settings = new QSettings(_settings_path + QString("/settings352.ini"), QSettings::IniFormat, this);
+    _preset_file = _settings_path + QString("/presets.ini");
+    _settings = new QSettings(_settings_path + QString("/settings.ini"), QSettings::IniFormat, this);
     _status_encode_btn = "start";
     _timer_interval = 30;
     _curTime = 0;
@@ -800,67 +810,74 @@ void Widget::setParameters()    /*** Set parameters ***/
         std::cout << "Thumbnail path not existed and was created ..." << std::endl;  // Debug info //
     }
 
-    // ****************************** Read the files ************************************//
-    _prs_file.setFileName(_preset_file);
-
-    if (_prs_file.exists())
-    {
-        std::cout << "Preset file exist ..." << std::endl;  // Debug info //
-        if (_prs_file.open(QIODevice::ReadOnly | QIODevice::Text))   // Read preset from file
-        {
-            QStringList line;
-            while(!_prs_file.atEnd()) {
-                line << _prs_file.readLine();
-            }
-            const QString SEP = "<&>";
-            std::cout << "Number of lines in preset file: " << line.size() << std::endl; // Debug info //
-            if (line.size() > 0)
-            {
-                QStringList cur_param = line[0].split(SEP);
-                if (cur_param.size() == PARAMETERS_COUNT+3)
-                {
-                    for (int k = 0; k < PARAMETERS_COUNT; k++) {
-                        _cur_param[k] = cur_param[k];
-                    }
-                    _pos_top = cur_param[PARAMETERS_COUNT].toInt();
-                    _pos_cld = cur_param[PARAMETERS_COUNT+1].toInt();
-                    int n = line.size() - 1;
-                    for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
-                      _preset_table[i].resize(n);
-                    }
-                    for (int j = 1; j <= n; j++) {
-                        cur_param = line[j].split(SEP);
-                        if (cur_param.size() == PARAMETERS_COUNT+2) {
-                            for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
-                                _preset_table[m][j-1] = cur_param[m];
-                            }
-                        } else {
-                            std::cout << "Preset column size: " << cur_param.size() << ". Error!!! Break!!!" << std::endl;  // Debug info //
-                            break;
-                        }
-                    }
-                } else {
-                    std::cout << "Preset file error, uncorrect parameters!!! " << std::endl;  // Debug info //
-                    set_defaults();
-                }
-            } else {
-                std::cout << "Preset file error, not enough parameters!!! " << std::endl;  // Debug info //
-                set_defaults();
-            }
+    // ****************************** Read presets ************************************//
+    QFile _prs_file(_preset_file);
+    if (_prs_file.open(QIODevice::ReadOnly)) {
+        QDataStream in(&_prs_file);
+        in.setVersion(QDataStream::Qt_4_0);
+        int ver;
+        in >> ver;
+        if (ver == PRESETS_VERSION) {
+            in >> _cur_param >> _pos_top >> _pos_cld >> _preset_table;
             _prs_file.close();
-        } else {
-            std::cout << "Preset file error (cannot be open)." << std::endl;  // Debug info //
+        }
+        else {
+            _prs_file.close();
             set_defaults();
         }
+
     } else {
-        std::cout << "Preset file not exist ..." << std::endl;  // Debug info //
         set_defaults();
     }
+    /*if (_prs_file.open(QIODevice::ReadOnly | QIODevice::Text)) {  // Read preset from file
+        QStringList line;
+        while(!_prs_file.atEnd()) {
+            line << _prs_file.readLine();
+        }
+        const QString SEP = "<&>";
+        std::cout << "Number of lines in preset file: " << line.size() << std::endl; // Debug info //
+        if (line.size() > 0) {
+            QStringList cur_param = line[0].split(SEP);
+            if (cur_param.size() == PARAMETERS_COUNT+3)
+            {
+                for (int k = 0; k < PARAMETERS_COUNT; k++) {
+                    _cur_param[k] = cur_param[k];
+                }
+                _pos_top = cur_param[PARAMETERS_COUNT].toInt();
+                _pos_cld = cur_param[PARAMETERS_COUNT+1].toInt();
+                int n = line.size() - 1;
+                for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
+                  _preset_table[i].resize(n);
+                }
+                for (int j = 1; j <= n; j++) {
+                    cur_param = line[j].split(SEP);
+                    if (cur_param.size() == PARAMETERS_COUNT+2) {
+                        for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
+                            _preset_table[m][j-1] = cur_param[m];
+                        }
+                    } else {
+                        std::cout << "Preset column size: " << cur_param.size() << ". Error!!! Break!!!" << std::endl;  // Debug info //
+                        break;
+                    }
+                }
+            } else {
+                std::cout << "Preset file error, uncorrect parameters!!! " << std::endl;  // Debug info //
+                set_defaults();
+            }
+        } else {
+            std::cout << "Preset file error, not enough parameters!!! " << std::endl;  // Debug info //
+            set_defaults();
+        }
+        _prs_file.close();
+    } else {
+        std::cout << "Preset file error (cannot be open)." << std::endl;  // Debug info //
+        set_defaults();
+    }*/
 
     // ************************** Read settings ******************************//
     QList<int> dockSizesX = {};
     QList<int> dockSizesY = {};
-    if (_settings->childGroups().contains("MainWidget", Qt::CaseInsensitive)) {
+    if (_settings->value("Version").toInt() == SETTINGS_VERSION) {
         // Restore Main Widget
         _settings->beginGroup("MainWidget");
         this->restoreGeometry(_settings->value("MainWidget/geometry").toByteArray());
@@ -3008,7 +3025,7 @@ void Widget::add_metadata() /*** Add metedata ***/
         restore_initial_state();
         _message = tr("An unknown error occured!\n Possible mkvtoolnix not installed.\n");
         call_task_complete(_message, false);
-    };
+    }
 }
 
 void Widget::complete() /*** Complete ***/
@@ -3152,8 +3169,8 @@ void Widget::progress_2()   /*** Progress 2 ***/
             _loop_start = time(nullptr);
             _calling_pr_1 = false;
             connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-        };
-    };
+        }
+    }
 }
 
 void Widget::pause()    /*** Pause ***/
@@ -3732,7 +3749,7 @@ void Widget::resizeTableRows(int rows_height)
 
 void Widget::resetView()
 {
-    this->showNormal();
+    /*this->showNormal();
     _expandWindowsState = false;
     setExpandIcon();
     QDesktopWidget *screenSize = QApplication::desktop();
@@ -3742,7 +3759,7 @@ void Widget::resetView()
     int heightMainWindow = 650;
     int x_pos = static_cast<int>(round(static_cast<float>(screenWidth - widthMainWindow)/2));
     int y_pos = static_cast<int>(round(static_cast<float>(screenHeight - heightMainWindow)/2));
-    this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
+    this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);*/
 
     QList<bool> dockVisible = {true, true, true, true, true, false, true, false};
     /*PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
@@ -3753,7 +3770,7 @@ void Widget::resetView()
         docks[ind]->setFloating(false);
     }
 
-    QList<int> dockSizesX = {};
+    /*QList<int> dockSizesX = {};
     QList<int> dockSizesY = {};
     float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
     float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
@@ -3763,7 +3780,7 @@ void Widget::resetView()
         dockSizesX.append(dockWidth);
         dockSizesY.append(dockHeight);
     }
-    setDocksParameters(dockSizesX, dockSizesY);
+    setDocksParameters(dockSizesX, dockSizesY);*/
 }
 
 void Widget::provideContextMenu(const QPoint &position)     /*** Call table items menu  ***/
@@ -4275,30 +4292,42 @@ QString Widget::timeConverter(double &time)     /*** Time converter to hh:mm:ss.
 void Widget::set_defaults() /*** Set default presets ***/
 {
     std::cout<< "Set defaults..." << std::endl;
-    QStringList line;
-    QFile file;
-    file.setFileName(":/resources/data/default_presets.txt");
-    file.open(QFile::ReadOnly);
-    while(!file.atEnd()) {
-        line << file.readLine();
-    }
-    const QString SEP = "<&>";
-    QStringList cur_param = line[0].split(SEP);
-    for (int k = 0; k < PARAMETERS_COUNT; k++) {
-        _cur_param[k] = cur_param[k];
-    }
-    _pos_top = cur_param[PARAMETERS_COUNT].toInt();
-    _pos_cld = cur_param[PARAMETERS_COUNT+1].toInt();
-    int n = line.size() - 1;
-    for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
-      _preset_table[i].resize(n);
-    }
-    for (int j = 1; j <= n; j++) {
-        cur_param = line[j].split(SEP);
-        for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
-            _preset_table[m][j-1] = cur_param[m];
+    QFile _prs_file(":/resources/data/default_presets.ini");
+    if (_prs_file.open(QIODevice::ReadOnly)) {
+        QDataStream in(&_prs_file);
+        in.setVersion(QDataStream::Qt_4_0);
+        int ver;
+        in >> ver;
+        if (ver == PRESETS_VERSION) {
+            in >> _cur_param >> _pos_top >> _pos_cld >> _preset_table;
         }
+        _prs_file.close();
     }
+    /*QStringList line;
+    QFile file(":/resources/data/default_presets.txt");
+    if (file.open(QFile::ReadOnly)) {
+        while(!file.atEnd()) {
+            line << file.readLine();
+        }
+        const QString SEP = "<&>";
+        QStringList cur_param = line[0].split(SEP);
+        for (int k = 0; k < PARAMETERS_COUNT; k++) {
+            _cur_param[k] = cur_param[k];
+        }
+        _pos_top = cur_param[PARAMETERS_COUNT].toInt();
+        _pos_cld = cur_param[PARAMETERS_COUNT+1].toInt();
+        int n = line.size() - 1;
+        for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
+          _preset_table[i].resize(n);
+        }
+        for (int j = 1; j <= n; j++) {
+            cur_param = line[j].split(SEP);
+            for (int m = 0; m < PARAMETERS_COUNT+1; m++) {
+                _preset_table[m][j-1] = cur_param[m];
+            }
+        }
+        file.close();
+    }*/
 }
 
 void Widget::on_buttonApplyPreset_clicked()  /*** Apply preset ***/
@@ -4392,26 +4421,26 @@ void Widget::on_actionEdit_preset_clicked()  /*** Edit preset ***/
             _new_param[k] = item->text(k+7);
         };
         Preset presetWindow(this);
-        presetWindow.setParameters(&_presetWindowGeometry, _new_param);
+        presetWindow.setParameters(&_presetWindowGeometry, &_new_param);
         presetWindow.setModal(true);
-        presetWindow.exec();  //******************** Go to Preset and wait for return *********************//
-        for (int k = 0; k < PARAMETERS_COUNT; k++) {
-            item->setText(k+7, _new_param[k]);
-        }
-        updateInfoFields(_new_param[1], _new_param[2], _new_param[3], _new_param[4],
-                         _new_param[11], _new_param[12], _new_param[21], item, true);
-        int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
-        int index_child = parentItem->indexOfChild(item);
-        if (_pos_top == index_top && _pos_cld == index_child) {
+        if (presetWindow.exec() == QDialog::Accepted) {
             for (int k = 0; k < PARAMETERS_COUNT; k++) {
-                _cur_param[k] = item->text(k+7);
-            };
-            if (_row != -1) {
-                get_output_filename();
+                item->setText(k+7, _new_param[k]);
             }
+            updateInfoFields(_new_param[1], _new_param[2], _new_param[3], _new_param[4],
+                             _new_param[11], _new_param[12], _new_param[21], item, true);
+            int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
+            int index_child = parentItem->indexOfChild(item);
+            if (_pos_top == index_top && _pos_cld == index_child) {
+                for (int k = 0; k < PARAMETERS_COUNT; k++) {
+                    _cur_param[k] = item->text(k+7);
+                }
+                if (_row != -1) {
+                    get_output_filename();
+                }
+            }
+            updatePresetTable();
         }
-        updatePresetTable();
-
     } else {
         // Item is parent...
         _message = tr("Select preset first!\n");
@@ -4438,46 +4467,56 @@ void Widget::add_preset()  /*** Add preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
+        _message = tr("First add a section!\n");
+        call_task_complete(_message, false);
         return;
     }
-
-    QTreeWidgetItem *item = ui->treeWidget->currentItem();
-    QTreeWidgetItem *parentItem = item->parent();
-    QTreeWidgetItem *child = new QTreeWidgetItem();
-
-    QStringList line;
-    QFile file;
-    file.setFileName(":/resources/data/default_presets.txt");
-    file.open(QFile::ReadOnly);
+    /*QStringList line;
+    QFile file(":/resources/data/default_presets.txt");
+    if (!file.open(QIODevice::ReadOnly)) return;
     while(!file.atEnd()) {
         line << file.readLine();
     }
     const QString SEP = "<&>";
-    QStringList cur_param = line[0].split(SEP);
-    for (int k = 0; k < PARAMETERS_COUNT; k++) {
-        child->setText(k + 7, cur_param[k]);
+    QStringList cur_param = line[0].split(SEP);*/
+    QVector<QString> cur_param;
+    QFile _prs_file(":/resources/data/default_presets.ini");
+    if (_prs_file.open(QIODevice::ReadOnly)) {
+        QDataStream in(&_prs_file);
+        in.setVersion(QDataStream::Qt_4_0);
+        int ver;
+        in >> ver;
+        if (ver == PRESETS_VERSION) {
+            in >> cur_param;
+            QTreeWidgetItem *item = ui->treeWidget->currentItem();
+            QTreeWidgetItem *parentItem = item->parent();
+            QTreeWidgetItem *child = new QTreeWidgetItem();
+            for (int k = 0; k < PARAMETERS_COUNT; k++) {
+                child->setText(k + 7, cur_param[k]);
+            }
+            updateInfoFields(cur_param[1], cur_param[2], cur_param[3], cur_param[4],
+                             cur_param[11], cur_param[12], cur_param[21], child, true);
+            setItemStyle(child);
+            if (parentItem != nullptr) {
+                // Item is child...
+                parentItem->addChild(child);
+
+                int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
+                int index_child = parentItem->indexOfChild(child);
+                updateCurPresetPos(index_top, index_child);
+            } else {
+                // Item is parent...
+                item->addChild(child);
+                ui->treeWidget->expandItem(item);
+
+                int index_top = ui->treeWidget->indexOfTopLevelItem(item);
+                int index_child = item->indexOfChild(child);
+                updateCurPresetPos(index_top, index_child);
+            }
+            updatePresetTable();
+        }
+        _prs_file.close();
     }
-    updateInfoFields(cur_param[1], cur_param[2], cur_param[3], cur_param[4],
-                     cur_param[11], cur_param[12], cur_param[21], child, true);
-    setItemStyle(child);
-    if (parentItem != nullptr) {
-        // Item is child...
-        parentItem->addChild(child);
-
-        int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
-        int index_child = parentItem->indexOfChild(child);
-        updateCurPresetPos(index_top, index_child);
-    } else {
-        // Item is parent...
-        item->addChild(child);
-        ui->treeWidget->expandItem(item);
-
-        int index_top = ui->treeWidget->indexOfTopLevelItem(item);
-        int index_child = item->indexOfChild(child);
-        updateCurPresetPos(index_top, index_child);
-    }
-
-    updatePresetTable();
 }
 
 void Widget::renameSectionPreset()

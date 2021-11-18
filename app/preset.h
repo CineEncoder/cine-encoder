@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: preset.h
- MODIFIED: October, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -67,7 +67,7 @@ public:
 
     ~Preset();
 
-    void setParameters(QByteArray *ptr_presetWindowGeometry, QString *_old_param);
+    void setParameters(QByteArray *ptr_presetWindowGeometry, QVector<QString> *_old_param);
 
 private slots:
 
@@ -129,7 +129,7 @@ private:
 
     static const int NUMBER_PRESETS = 29;
 
-    QString *_new_param;
+    QVector<QString> *_new_param;
 
     QTimer *timer;
 
