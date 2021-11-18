@@ -121,8 +121,9 @@ int checkForDuplicates()
         if (lindex != rindex) {
             QMessageBox msgBox(nullptr);
             msgBox.setWindowTitle("Cine Encoder");
-            msgBox.setText("The program is already running!");
+            msgBox.setWindowIcon(QIcon(":/resources/icons/64x64/cine-encoder.png"));
             msgBox.setIcon(QMessageBox::Critical);
+            msgBox.setText("The program is already running!");
             msgBox.exec();
             return 1;
         }
