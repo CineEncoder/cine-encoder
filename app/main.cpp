@@ -17,8 +17,13 @@
 #include <QElapsedTimer>
 #include <QFontDatabase>
 #include <QStyleFactory>
+#include <QMessageBox>
 #include <QMap>
 #include "mainwindow.h"
+
+
+
+int checkForDuplicates();
 
 int main(int argc, char *argv[])
 {
@@ -28,6 +33,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
     app.setStyle(QStyleFactory::create("Fusion"));
+    if (checkForDuplicates() == 1) return 1;
 
     /******************* Read Settings ****************************/
     QString _settings_path = QDir::homePath() + QString("/CineEncoder");
@@ -91,4 +97,37 @@ int main(int argc, char *argv[])
     splash->finish(&window);
     delete splash;
     return app.exec();
+}
+
+int checkForDuplicates()
+{
+    QProcess process;
+    process.setProcessChannelMode(QProcess::MergedChannels);
+    QString cmd;
+    QStringList arguments;
+#if defined (Q_OS_WIN64)
+    cmd = "cmd";
+    arguments << "/C" << "echo" << "process" << "get" << "caption" << "|" << "wmic";
+#elif defined (Q_OS_UNIX)
+    cmd = "ps";
+    arguments << "-A";
+#endif
+    process.start(cmd,  arguments);
+    if (process.waitForFinished(1000)) {
+        QString list = QString(process.readAllStandardOutput()).replace("\r\r\n", "").replace("\r\r\n", "");
+        int lindex = list.indexOf("cine_encoder");
+        int rindex = list.lastIndexOf("cine_encoder");
+        //qDebug() << list << "\n" << lindex << rindex;
+        if (lindex != rindex) {
+            QMessageBox msgBox(nullptr);
+            msgBox.setWindowTitle("Cine Encoder");
+            msgBox.setText("The program is already running!");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
+            return 1;
+        }
+    } else {
+        std::cout << "Command \""<< cmd.toStdString() << "\" not found." << std::endl;
+    }
+    return 0;
 }

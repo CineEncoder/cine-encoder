@@ -424,8 +424,8 @@ void Preset::on_closeWindow_clicked()
 
 void Preset::on_expandWindow_clicked()
 {
-    if (!this->isFullScreen()) {
-        this->showFullScreen();
+    if (!this->isMaximized()) {
+        this->showMaximized();
         _expandWindowsState = true;
     }
     else {

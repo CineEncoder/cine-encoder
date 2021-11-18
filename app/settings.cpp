@@ -78,7 +78,7 @@ void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QString *pt
 
     if (*_ptr_settingsWindowGeometry != "default") {
         this->restoreGeometry(*_ptr_settingsWindowGeometry);
-        if (this->isFullScreen()) _expandWindowsState = true;
+        if (this->isMaximized()) _expandWindowsState = true;
     }
     ui->lineEdit_tempPath->setText(*_ptr_temp_folder);
     ui->lineEdit_outPath->setText(*_ptr_output_folder);
@@ -159,9 +159,9 @@ void Settings::on_closeWindow_clicked()
 
 void Settings::on_expandWindow_clicked()
 {
-    if (!this->isFullScreen()) {
+    if (!this->isMaximized()) {
         _expandWindowsState = true;
-        this->showFullScreen();
+        this->showMaximized();
     } else {
         _expandWindowsState = false;
         this->showNormal();

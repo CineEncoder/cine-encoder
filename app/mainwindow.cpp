@@ -259,7 +259,7 @@ void Widget::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::DoubleClick:
             if (_expandWindowsState) {
-                this->showFullScreen();
+                this->showMaximized();
             }
             else {
                 this->showNormal();
@@ -279,7 +279,7 @@ void Widget::setTrayIconActions()
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
     connect(restoreAction, &QAction::triggered, this, [this](){
         if (_expandWindowsState) {
-            this->showFullScreen();
+            this->showMaximized();
         }
         else {
             this->showNormal();
@@ -962,7 +962,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
     std::cout << "Desktop env.: " << _desktopEnv.toStdString() << std::endl;
 
-    if (this->isFullScreen()) _expandWindowsState = true;
+    if (this->isMaximized()) _expandWindowsState = true;
 
     if (_batch_mode) {
         ui->comboBoxMode->blockSignals(true);
@@ -1026,9 +1026,9 @@ void Widget::setExpandIcon()
 
 void Widget::on_expandWindow_clicked()    /*** Expand window ***/
 {
-    if (!this->isFullScreen()) {
+    if (!this->isMaximized()) {
         _expandWindowsState = true;
-        this->showFullScreen();
+        this->showMaximized();
     } else {
         _expandWindowsState = false;
         this->showNormal();
