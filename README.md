@@ -1,6 +1,6 @@
 # Cine Encoder
 
-Cine Encoder is an application, uses the FFmpeg, MKVToolNix and MediaInfo utilities, that allows to convert media files while preserving HDR metadata.  Supported hardware encoding NVENC for codecs H265, H264 and Intel QSV (for Windows and experimental for Linux) for codecs H264, MPEG-2. The following encoding modes are implemented: H265, H264, VP9, MPEG-2, XDCAM, DNxHR, ProRes
+Cine Encoder is an application, uses the FFmpeg, MKVToolNix and MediaInfo utilities, that allows to convert media files while preserving HDR metadata. Supported hardware encoding NVENC and Intel QSV (for Windows and experimental for Linux). The following encoding modes are implemented: H265, H264, VP9, MPEG-2, XDCAM, XAVC, DNxHR, ProRes.
 
 ![View](./images/View_1.png)
 
@@ -10,7 +10,7 @@ By default, there are several categories of presets. You can change existing or 
 
 ### Installation
 
-Supported operating system: Linux x86_64, Windows 8.1/10 x86_64
+Supported operating system: Linux x86_64, Windows 8.1/10 x86_64.
 
 Make sure that the NVIDIA drivers are installed in accordance with the following requirements: [Using FFMPEG with NVIDIA.](https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/index.html)
 
