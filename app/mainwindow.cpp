@@ -3677,38 +3677,27 @@ void Widget::resizeTableRows(int rows_height)
 
 void Widget::resetView()
 {
-    /*this->showNormal();
-    _expandWindowsState = false;
-    setExpandIcon();
-    QDesktopWidget *screenSize = QApplication::desktop();
-    int screenWidth = screenSize->width();
-    int screenHeight = screenSize->height();
-    int widthMainWindow = 1024;
-    int heightMainWindow = 650;
-    int x_pos = static_cast<int>(round(static_cast<float>(screenWidth - widthMainWindow)/2));
-    int y_pos = static_cast<int>(round(static_cast<float>(screenHeight - heightMainWindow)/2));
-    this->setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);*/
-
-    QList<bool> dockVisible = {true, true, true, true, true, false, true, false};
-    /*PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
-    STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK*/
-    for (int ind = 0; ind < DOCKS_COUNT; ind++) {
-        docks[ind]->toggleViewAction()->setChecked(dockVisible[ind]);
-        docks[ind]->setVisible(dockVisible[ind]);
-        docks[ind]->setFloating(false);
+    const QString defaultSettings(":/resources/data/default_settings.ini");
+    QSettings *settings = new QSettings(defaultSettings, QSettings::IniFormat, this);
+    if (settings->value("Version").toInt() == SETTINGS_VERSION) {
+        // Restore Main Window
+        settings->beginGroup("MainWindow");
+        window->restoreState(settings->value("MainWindow/state").toByteArray());
+        settings->endGroup();
     }
+    delete settings;
 
-    /*QList<int> dockSizesX = {};
+    QList<int> dockSizesX = {};
     QList<int> dockSizesY = {};
     float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
     float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
     for (int ind = 0; ind < DOCKS_COUNT; ind++) {
-        int dockWidth = static_cast<int>(coeffX[ind] * widthMainWindow);
-        int dockHeight = static_cast<int>(coeffY[ind] * heightMainWindow);
+        int dockWidth = static_cast<int>(coeffX[ind] * this->width());
+        int dockHeight = static_cast<int>(coeffY[ind] * this->height());
         dockSizesX.append(dockWidth);
         dockSizesY.append(dockHeight);
     }
-    setDocksParameters(dockSizesX, dockSizesY);*/
+    setDocksParameters(dockSizesX, dockSizesY);
 }
 
 void Widget::provideContextMenu(const QPoint &position)     /*** Call table items menu  ***/
