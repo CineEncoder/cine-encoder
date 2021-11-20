@@ -2,8 +2,11 @@
 Installation
 ============
 
+|
 
 Supported operating system:  Linux x86_64, Windows8/10 x86_64
+
+|
 
 Make sure that the NVIDIA drivers are installed in accordance with the following requirements: `Using FFMPEG with NVIDIA. <https://docs.nvidia.com/video-technologies/video-codec-sdk/ffmpeg-with-nvidia-gpu/index.html>`_
 
