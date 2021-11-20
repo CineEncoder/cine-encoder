@@ -3,17 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Cine Encoder 2020 documentation
+Cine Encoder documentation
 ===============================
 
 .. toctree::
    :maxdepth: 3
-   
+
    about
    download
    installation
    build
    support
    license
-   
+
 * :ref:`search`
