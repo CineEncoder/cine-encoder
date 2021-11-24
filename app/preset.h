@@ -22,6 +22,8 @@
 #include <QMouseEvent>
 #include <QHoverEvent>
 #include <QCloseEvent>
+#include <QResizeEvent>
+
 
 enum Profile {
     HIGH,           MAIN,           MAIN10,
@@ -50,6 +52,7 @@ enum Parameters {
     _PRESET_NAME,    _REP_PRIM,       _REP_MATRIX,
     _REP_TRC
 };
+
 
 namespace Ui
 {
@@ -125,7 +128,7 @@ private slots:
 
 private:
 
-    Ui::Preset *ui_preset;
+    Ui::Preset *ui;
 
     static const int NUMBER_PRESETS = 29;
 
@@ -139,39 +142,24 @@ private:
 
     /**************** Geometry **************************/
 
+    enum Resize {
+        LEFT,   LEFT_TOP,   LEFT_BOTTOM,   TOP,
+        RIGHT,  RIGHT_TOP,  RIGHT_BOTTOM,  BOTTOM
+    };
+
     QByteArray *_ptr_presetWindowGeometry;
+
+    bool _expandWindowsState;
+
+    bool clickPressedFlag;
+
+    QVector<bool> clickPressedToResizeFlag;
+
+    QPoint mouseClickCoordinate;
 
     int oldWidth;
 
     int oldHeight;
-
-    int curWidth;
-
-    int curHeight;
-
-    QPoint mouseClickCoordinate;
-
-    QPoint mouseCoordinate;
-
-    bool _expandWindowsState = false;
-
-    bool clickPressedFlag = false;
-
-    bool clickPressed_Left_ResizeFlag = false;
-
-    bool clickPressed_Left_Top_ResizeFlag = false;
-
-    bool clickPressed_Top_ResizeFlag = false;
-
-    bool clickPressed_Right_Top_ResizeFlag = false;
-
-    bool clickPressed_Right_ResizeFlag = false;
-
-    bool clickPressed_Right_Bottom_ResizeFlag = false;
-
-    bool clickPressed_Bottom_ResizeFlag = false;
-
-    bool clickPressed_Left_Bottom_ResizeFlag = false;
 
     void on_expandWindow_clicked();
 

@@ -34,7 +34,7 @@ public:
 
     ~Dialog();
 
-    void setMessage(const QString &_message);
+    void setMessage(const QString &message);
 
 private slots:
 
@@ -48,15 +48,11 @@ private slots:
 
 private:
 
-    Ui::Dialog *ui_dialog;
+    Ui::Dialog *ui;
 
-    QString _message;
-
-    bool clickPressedFlag = false;
+    bool clickPressedFlag;
 
     QPoint mouseClickCoordinate;
-
-    void show_message(QString _message);
 };
 
 #endif // DIALOG_H

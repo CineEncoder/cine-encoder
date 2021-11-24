@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: openingfiles.h
- MODIFIED: September, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -17,6 +17,7 @@
 #include <QDialog>
 #include <QFontMetrics>
 #include <math.h>
+
 
 namespace Ui
 {
@@ -33,11 +34,11 @@ public:
 
     ~OpeningFiles();
 
-    void setParameters(bool &show, QPoint &position);
+    void setParameters(const bool &show, const QPoint &position);
 
-    void setText(QString &text);
+    void setText(const QString &text);
 
-    void setPercent(int &percent);
+    void setPercent(const int &percent);
 
 private:
 

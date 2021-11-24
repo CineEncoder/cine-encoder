@@ -114,7 +114,7 @@ int checkForDuplicates()
 #endif
     process.start(cmd,  arguments);
     if (process.waitForFinished(1000)) {
-        QString list = QString(process.readAllStandardOutput()).replace("\r\r\n", "").replace("\r\r\n", "");
+        QString list = QString(process.readAllStandardOutput());
         int lindex = list.indexOf("cine_encoder");
         int rindex = list.lastIndexOf("cine_encoder");
         //qDebug() << list << "\n" << lindex << rindex;

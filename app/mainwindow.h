@@ -136,8 +136,6 @@ public:
 
     // ******************** Settings *************************//
 
-    //QString _new_param[PARAMETERS_COUNT];
-
     QVector<QString> _new_param;
 
     QByteArray _settingsWindowGeometry;
@@ -333,8 +331,6 @@ private slots:
 private:
 
     Ui::Widget *ui;
-
-    //QString _cur_param[PARAMETERS_COUNT];
 
     QVector<QString> _cur_param;
 
@@ -570,6 +566,11 @@ private:
 
     // *********************** Geometry ***********************************//
 
+    enum Resize {
+        LEFT,   LEFT_TOP,   LEFT_BOTTOM,   TOP,
+        RIGHT,  RIGHT_TOP,  RIGHT_BOTTOM,  BOTTOM
+    };
+
     int _rowSize;
 
     bool _windowActivated;
@@ -578,33 +579,13 @@ private:
 
     bool clickPressedFlag;
 
-    bool clickPressed_Left_ResizeFlag;
-
-    bool clickPressed_Left_Top_ResizeFlag;
-
-    bool clickPressed_Top_ResizeFlag;
-
-    bool clickPressed_Right_Top_ResizeFlag;
-
-    bool clickPressed_Right_ResizeFlag;
-
-    bool clickPressed_Right_Bottom_ResizeFlag;
-
-    bool clickPressed_Bottom_ResizeFlag;
-
-    bool clickPressed_Left_Bottom_ResizeFlag;
+    QVector<bool> clickPressedToResizeFlag;
 
     QPoint mouseClickCoordinate;
-
-    QPoint mouseCoordinate;
 
     int oldWidth;
 
     int oldHeight;
-
-    int curWidth;
-
-    int curHeight;
 
     // ****************************************************************************//
 

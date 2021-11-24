@@ -25,6 +25,7 @@
 #include <QStringListModel>
 
 
+
 namespace Ui
 {
 class Settings;
@@ -113,39 +114,24 @@ private:
 
     /**************** Geometry **************************/
 
+    enum Resize {
+        LEFT,   LEFT_TOP,   LEFT_BOTTOM,   TOP,
+        RIGHT,  RIGHT_TOP,  RIGHT_BOTTOM,  BOTTOM
+    };
+
     QByteArray *_ptr_settingsWindowGeometry;
 
-    bool _expandWindowsState = false;
+    bool _expandWindowsState;
 
-    bool clickPressedFlag = false;
+    bool clickPressedFlag;
 
-    bool clickPressed_Left_ResizeFlag = false;
-
-    bool clickPressed_Left_Top_ResizeFlag = false;
-
-    bool clickPressed_Top_ResizeFlag = false;
-
-    bool clickPressed_Right_Top_ResizeFlag = false;
-
-    bool clickPressed_Right_ResizeFlag = false;
-
-    bool clickPressed_Right_Bottom_ResizeFlag = false;
-
-    bool clickPressed_Bottom_ResizeFlag = false;
-
-    bool clickPressed_Left_Bottom_ResizeFlag = false;
+    QVector<bool> clickPressedToResizeFlag;
 
     QPoint mouseClickCoordinate;
-
-    QPoint mouseCoordinate;
 
     int oldWidth;
 
     int oldHeight;
-
-    int curWidth;
-
-    int curHeight;
 
     void on_expandWindow_clicked();
 

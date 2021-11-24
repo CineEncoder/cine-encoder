@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: taskcomplete.h
- MODIFIED: September, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -53,7 +53,7 @@ private slots:
 
 private:
 
-    Ui::Taskcomplete *ui_taskcomplete;
+    Ui::Taskcomplete *ui;
 
     QTimer *timer;
 
@@ -61,7 +61,7 @@ private:
 
     int elps_t;
 
-    bool clickPressedFlag = false;
+    bool clickPressedFlag;
 
     QPoint mouseClickCoordinate;
 

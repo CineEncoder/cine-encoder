@@ -19,9 +19,10 @@
 #include <QUrl>
 #include <QMouseEvent>
 
+
 namespace Ui
 {
-class Donate;
+    class Donate;
 }
 
 
@@ -51,9 +52,9 @@ private slots:
 
 private:
 
-    Ui::Donate *ui_donate;
+    Ui::Donate *ui;
 
-    bool clickPressedFlag = false;
+    bool clickPressedFlag;
 
     QPoint mouseClickCoordinate;
 };

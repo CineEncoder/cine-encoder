@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: donate.cpp
- MODIFIED: September, 2021
+ MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -16,40 +16,42 @@
 
 
 
-Donate::Donate(QWidget *parent): QDialog(parent), ui_donate(new Ui::Donate)
+Donate::Donate(QWidget *parent):
+    QDialog(parent),
+    ui(new Ui::Donate),
+    clickPressedFlag(false),
+    mouseClickCoordinate(QPoint())
 {
-    ui_donate->setupUi(this);
+    ui->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
     this->setMouseTracking(true);
 
-    ui_donate->frame_top->installEventFilter(this);
+    ui->frame_top->installEventFilter(this);
 }
 
 Donate::~Donate()
 {
-    delete ui_donate;
+    delete ui;
 }
 
 void Donate::setParameters()
 {
-    mouseClickCoordinate.setX(0);
-    mouseClickCoordinate.setY(0);
     QFont font;
     font.setPointSize(10);
-    ui_donate->label_title->setFont(font);
-    QString text;
+    ui->label_title->setFont(font);
+    QString text("");
     QFile file(":/resources/html/donate.html");
-    if (file.open(QFile::ReadOnly)) {
-        text = file.readAll();
+    if (file.open(QIODevice::ReadOnly)) {
+        text = QString(file.readAll());
         file.close();
     }
-    QString text1 = text.arg(tr("This software is free for personal and commercial use. "
+    QString mod_text = text.arg(tr("This software is free for personal and commercial use. "
                                 "It is distributed in the hope that it is useful but without "
                                 "any warranty. See the GNU General Public Licence v3 for more "
                                 "information."), tr("If you find this application useful, "
                                 "consider making a donation to support the development."));
-    ui_donate->textBrowser->setHtml(text1);
-    ui_donate->textBrowser->setOpenExternalLinks(true);
+    ui->textBrowser->setHtml(mod_text);
+    ui->textBrowser->setOpenExternalLinks(true);
 }
 
 void Donate::on_buttonCancel_clicked()   /*** Close window ***/
@@ -74,42 +76,35 @@ void Donate::on_buttonBitcoin_clicked()   /*** Open browser Bitcoin ***/
 
 bool Donate::eventFilter(QObject *watched, QEvent *event)
 {
-    if (event->type() == QEvent::MouseButtonRelease)
-    {
+    if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
-        if (mouse_event->button() == Qt::LeftButton)
-        {
+        if (mouse_event->button() == Qt::LeftButton) {
             clickPressedFlag = false;
             return true;
         }
-        return false;
+        return QDialog::eventFilter(watched, event);
     }
 
-    if (watched == ui_donate->frame_top)
-    {
-        if (event->type() == QEvent::MouseButtonPress)
-        {
+    if (watched == ui->frame_top) {
+        if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
-            if (mouse_event->button() == Qt::LeftButton)
-            {
+            if (mouse_event->button() == Qt::LeftButton) {
                 mouseClickCoordinate = mouse_event->pos();
                 clickPressedFlag = true;
                 return true;
             }
-            return false;
+            return QDialog::eventFilter(watched, event);
         }
 
-        if ((event->type() == QEvent::MouseMove) && clickPressedFlag == true)
-        {
+        if ((event->type() == QEvent::MouseMove) && clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
-            if (mouse_event->buttons() & Qt::LeftButton)
-            {
+            if (mouse_event->buttons() & Qt::LeftButton) {
                 this->move(mouse_event->globalPos() - mouseClickCoordinate);
                 return true;
             }
-            return false;
+            return QDialog::eventFilter(watched, event);
         }
-        return false;
+        return QDialog::eventFilter(watched, event);
     }
     return QDialog::eventFilter(watched, event);
 }

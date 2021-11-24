@@ -15,7 +15,10 @@
 #include "ui_openingfiles.h"
 
 
-OpeningFiles::OpeningFiles(QWidget *parent): QDialog(parent), ui(new Ui::OpeningFiles)
+
+OpeningFiles::OpeningFiles(QWidget *parent):
+    QDialog(parent),
+    ui(new Ui::OpeningFiles)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
@@ -26,7 +29,7 @@ OpeningFiles::~OpeningFiles()
     delete ui;
 }
 
-void OpeningFiles::setParameters(bool &show, QPoint &position)
+void OpeningFiles::setParameters(const bool &show, const QPoint &position)
 {
     QSize sizeWindow = this->size();
     int x_pos = position.x() - static_cast<int>(round(static_cast<float>(sizeWindow.width())/2));
@@ -40,7 +43,7 @@ void OpeningFiles::setParameters(bool &show, QPoint &position)
     }
 }
 
-void OpeningFiles::setText(QString &text)
+void OpeningFiles::setText(const QString &text)
 {
     QString elidedText;
     QFontMetrics fm = ui->label_filename->fontMetrics();
@@ -55,7 +58,7 @@ void OpeningFiles::setText(QString &text)
     ui->label_filename->setText(elidedText);
 }
 
-void OpeningFiles::setPercent(int &percent)
+void OpeningFiles::setPercent(const int &percent)
 {
     ui->progressBar_opening->setValue(percent);
 }
