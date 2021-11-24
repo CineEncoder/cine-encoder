@@ -59,11 +59,11 @@ private:
 
     QString _message;
 
-    int elps_t;
+    int _elps_t;
 
-    bool clickPressedFlag;
+    bool _clickPressedFlag;
 
-    QPoint mouseClickCoordinate;
+    QPoint _mouseClickCoordinate;
 
     void show_message(QString _message);
 };

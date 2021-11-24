@@ -19,8 +19,7 @@
 Donate::Donate(QWidget *parent):
     QDialog(parent),
     ui(new Ui::Donate),
-    clickPressedFlag(false),
-    mouseClickCoordinate(QPoint())
+    _clickPressedFlag(false)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
@@ -79,7 +78,7 @@ bool Donate::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
         if (mouse_event->button() == Qt::LeftButton) {
-            clickPressedFlag = false;
+            _clickPressedFlag = false;
             return true;
         }
         return QDialog::eventFilter(watched, event);
@@ -89,17 +88,17 @@ bool Donate::eventFilter(QObject *watched, QEvent *event)
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                mouseClickCoordinate = mouse_event->pos();
-                clickPressedFlag = true;
+                _mouseClickCoordinate = mouse_event->pos();
+                _clickPressedFlag = true;
                 return true;
             }
             return QDialog::eventFilter(watched, event);
         }
 
-        if ((event->type() == QEvent::MouseMove) && clickPressedFlag) {
+        if ((event->type() == QEvent::MouseMove) && _clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
-                this->move(mouse_event->globalPos() - mouseClickCoordinate);
+                this->move(mouse_event->globalPos() - _mouseClickCoordinate);
                 return true;
             }
             return QDialog::eventFilter(watched, event);

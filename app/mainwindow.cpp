@@ -49,9 +49,8 @@ Widget::Widget(QWidget *parent):
     ui(new Ui::Widget),
     _windowActivated(false),
     _expandWindowsState(false),
-    clickPressedFlag(false),
-    clickPressedToResizeFlag(8, false),
-    mouseClickCoordinate(QPoint())
+    _clickPressedFlag(false),
+    _clickPressedToResizeFlag(8, false)
 {
     ui->setupUi(this);
 #ifdef Q_OS_WIN64
@@ -1543,8 +1542,8 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
         if (mouse_event->button() == Qt::LeftButton) {
             QGuiApplication::restoreOverrideCursor();
-            clickPressedFlag = false;
-            clickPressedToResizeFlag.fill(false);
+            _clickPressedFlag = false;
+            _clickPressedToResizeFlag.fill(false);
             return true;
         }
         return QWidget::eventFilter(watched, event);
@@ -1557,7 +1556,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                 return true;
 
             }
-            if (event->type() == QEvent::HoverMove && clickPressedToResizeFlag.indexOf(true) == -1) {
+            if (event->type() == QEvent::HoverMove && _clickPressedToResizeFlag.indexOf(true) == -1) {
                 const QPoint &&mouseCoordinate = ui->centralwidget->mapFromGlobal(QCursor::pos());
                 if (mouseCoordinate.x() < 6) {
                     if (mouseCoordinate.y() < 6) {
@@ -1606,46 +1605,49 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
             if (event->type() == QEvent::MouseButtonPress) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->button() == Qt::LeftButton) {
-                    oldWidth = this->width();
-                    oldHeight = this->height();
-                    mouseClickCoordinate = mouse_event->pos();
+                    _oldPosX = this->pos().x();
+                    _oldPosY = this->pos().y();
+                    _oldWidth = this->width();
+                    _oldHeight = this->height();
+                    _globalMouseClickCoordinate = mouse_event->globalPos();
+                    const QPoint &&mouseClickCoordinate = mouse_event->pos();
                     if (mouseClickCoordinate.x() < 6) {
                         if (mouseClickCoordinate.y() < 6) {
-                            clickPressedToResizeFlag[Resize::LEFT_TOP] = true;
+                            _clickPressedToResizeFlag[Resize::LEFT_TOP] = true;
                             return true;
                         }
-                        if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (oldHeight - 6)) {
-                            clickPressedToResizeFlag[Resize::LEFT] = true;
+                        if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
+                            _clickPressedToResizeFlag[Resize::LEFT] = true;
                             return true;
                         }
-                        if (mouseClickCoordinate.y() > (oldHeight - 6)) {
-                            clickPressedToResizeFlag[Resize::LEFT_BOTTOM] = true;
-                            return true;
-                        }
-                        return QWidget::eventFilter(watched, event);
-                    }
-                    if (mouseClickCoordinate.x() > 6 && mouseClickCoordinate.x() < (oldWidth - 6)) {
-                        if (mouseClickCoordinate.y() < 6) {
-                            clickPressedToResizeFlag[Resize::TOP] = true;
-                            return true;
-                        }
-                        if (mouseClickCoordinate.y() > (oldHeight - 6)) {
-                            clickPressedToResizeFlag[Resize::BOTTOM] = true;
+                        if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
+                            _clickPressedToResizeFlag[Resize::LEFT_BOTTOM] = true;
                             return true;
                         }
                         return QWidget::eventFilter(watched, event);
                     }
-                    if (mouseClickCoordinate.x() > (oldWidth - 6)) {
+                    if (mouseClickCoordinate.x() > 6 && mouseClickCoordinate.x() < (_oldWidth - 6)) {
                         if (mouseClickCoordinate.y() < 6) {
-                            clickPressedToResizeFlag[Resize::RIGHT_TOP] = true;
+                            _clickPressedToResizeFlag[Resize::TOP] = true;
                             return true;
                         }
-                        if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (oldHeight - 6)) {
-                            clickPressedToResizeFlag[Resize::RIGHT] = true;
+                        if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
+                            _clickPressedToResizeFlag[Resize::BOTTOM] = true;
                             return true;
                         }
-                        if (mouseClickCoordinate.y() > (oldHeight - 6)) {
-                            clickPressedToResizeFlag[Resize::RIGHT_BOTTOM] = true;
+                        return QWidget::eventFilter(watched, event);
+                    }
+                    if (mouseClickCoordinate.x() > (_oldWidth - 6)) {
+                        if (mouseClickCoordinate.y() < 6) {
+                            _clickPressedToResizeFlag[Resize::RIGHT_TOP] = true;
+                            return true;
+                        }
+                        if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
+                            _clickPressedToResizeFlag[Resize::RIGHT] = true;
+                            return true;
+                        }
+                        if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
+                            _clickPressedToResizeFlag[Resize::RIGHT_BOTTOM] = true;
                             return true;
                         }
                         return QWidget::eventFilter(watched, event);
@@ -1657,40 +1659,36 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
             if (event->type() == QEvent::MouseMove) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->buttons() & Qt::LeftButton) {
-                    int index = clickPressedToResizeFlag.indexOf(true);
+                    int index = _clickPressedToResizeFlag.indexOf(true);
                     if (index != -1) {
-                        const int &&deltaX = mouse_event->globalPos().x() - mouseClickCoordinate.x();
-                        const int &&deltaY = mouse_event->globalPos().y() - mouseClickCoordinate.y();
-                        const int &&deltaWidth = static_cast<int>(mouse_event->localPos().x()) - mouseClickCoordinate.x();
-                        const int &&deltaHeight = static_cast<int>(mouse_event->localPos().y()) - mouseClickCoordinate.y();
-                        const int &&posX = pos().x();
-                        const int &&posY = pos().y();
-                        const int &&currWidth = width();
-                        const int &&currHeight = height();
+                        const int &&deltaX = mouse_event->globalPos().x();
+                        const int &&deltaY = mouse_event->globalPos().y();
+                        const int &&deltaWidth = deltaX - _globalMouseClickCoordinate.x();
+                        const int &&deltaHeight = deltaY - _globalMouseClickCoordinate.y();
                         switch (index) {
                         case Resize::LEFT:
-                            setGeometry(deltaX, posY, currWidth - deltaWidth, oldHeight);
+                            setGeometry(deltaX, _oldPosY, _oldWidth - deltaWidth, _oldHeight);
                             break;
                         case Resize::LEFT_TOP:
-                            setGeometry(deltaX, deltaY, currWidth - deltaWidth, currHeight - deltaHeight);
+                            setGeometry(deltaX, deltaY, _oldWidth - deltaWidth, _oldHeight - deltaHeight);
                             break;
                         case Resize::LEFT_BOTTOM:
-                            setGeometry(deltaX, posY, currWidth - deltaWidth, oldHeight + deltaHeight);
+                            setGeometry(deltaX, _oldPosY, _oldWidth - deltaWidth, _oldHeight + deltaHeight);
                             break;
                         case Resize::TOP:
-                            setGeometry(posX, deltaY, oldWidth, currHeight - deltaHeight);
+                            setGeometry(_oldPosX, deltaY, _oldWidth, _oldHeight - deltaHeight);
                             break;
                         case Resize::RIGHT:
-                            setGeometry(posX, posY, oldWidth + deltaWidth, oldHeight);
+                            setGeometry(_oldPosX, _oldPosY, _oldWidth + deltaWidth, _oldHeight);
                             break;
                         case Resize::RIGHT_TOP:
-                            setGeometry(posX, deltaY, oldWidth + deltaWidth, currHeight - deltaHeight);
+                            setGeometry(_oldPosX, deltaY, _oldWidth + deltaWidth, _oldHeight - deltaHeight);
                             break;
                         case Resize::RIGHT_BOTTOM:
-                            setGeometry(posX, posY, oldWidth + deltaWidth, oldHeight + deltaHeight);
+                            setGeometry(_oldPosX, _oldPosY, _oldWidth + deltaWidth, _oldHeight + deltaHeight);
                             break;
                         case Resize::BOTTOM:
-                            setGeometry(posX, posY, oldWidth, oldHeight + deltaHeight);
+                            setGeometry(_oldPosX, _oldPosY, _oldWidth, _oldHeight + deltaHeight);
                             break;
                         }
                         return true;
@@ -1716,17 +1714,17 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                mouseClickCoordinate = mouse_event->pos();
-                clickPressedFlag = true;
+                _mouseClickCoordinate = mouse_event->pos();
+                _clickPressedFlag = true;
                 return true;
             }
             return QWidget::eventFilter(watched, event);
         }
-        if ((event->type() == QEvent::MouseMove) && clickPressedFlag) {
+        if ((event->type() == QEvent::MouseMove) && _clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
                 if (this->isMaximized()) on_expandWindow_clicked();
-                this->move(mouse_event->globalPos() - mouseClickCoordinate);
+                this->move(mouse_event->globalPos() - _mouseClickCoordinate);
                 return true;
             }
             return QWidget::eventFilter(watched, event);

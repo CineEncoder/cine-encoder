@@ -54,9 +54,9 @@ private:
 
     Ui::Donate *ui;
 
-    bool clickPressedFlag;
+    bool _clickPressedFlag;
 
-    QPoint mouseClickCoordinate;
+    QPoint _mouseClickCoordinate;
 };
 
 #endif // DONATE_H

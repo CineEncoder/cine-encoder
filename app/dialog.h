@@ -50,9 +50,9 @@ private:
 
     Ui::Dialog *ui;
 
-    bool clickPressedFlag;
+    bool _clickPressedFlag;
 
-    QPoint mouseClickCoordinate;
+    QPoint _mouseClickCoordinate;
 };
 
 #endif // DIALOG_H

@@ -50,9 +50,9 @@ private:
 
     Ui::About *ui;
 
-    bool clickPressedFlag;
+    bool _clickPressedFlag;
 
-    QPoint mouseClickCoordinate;
+    QPoint _mouseClickCoordinate;
 };
 
 #endif // ABOUT_H

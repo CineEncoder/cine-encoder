@@ -577,15 +577,21 @@ private:
 
     bool _expandWindowsState;
 
-    bool clickPressedFlag;
+    bool _clickPressedFlag;
 
-    QVector<bool> clickPressedToResizeFlag;
+    QVector<bool> _clickPressedToResizeFlag;
 
-    QPoint mouseClickCoordinate;
+    QPoint _mouseClickCoordinate;
 
-    int oldWidth;
+    QPoint _globalMouseClickCoordinate;
 
-    int oldHeight;
+    int _oldPosX;
+
+    int _oldPosY;
+
+    int _oldWidth;
+
+    int _oldHeight;
 
     // ****************************************************************************//
 
