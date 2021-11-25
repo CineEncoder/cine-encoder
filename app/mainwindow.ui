@@ -5289,10 +5289,10 @@
              <item>
               <layout class="QGridLayout" name="gridLayout_30">
                <property name="topMargin">
-                <number>3</number>
+                <number>1</number>
                </property>
                <property name="bottomMargin">
-                <number>3</number>
+                <number>1</number>
                </property>
                <property name="horizontalSpacing">
                 <number>0</number>
@@ -5300,7 +5300,7 @@
                <property name="verticalSpacing">
                 <number>3</number>
                </property>
-               <item row="1" column="0">
+               <item row="0" column="0">
                 <spacer name="horizontalSpacer_37">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -5316,23 +5316,10 @@
                  </property>
                 </spacer>
                </item>
-               <item row="0" column="2">
-                <spacer name="verticalSpacer_13">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>9</width>
-                   <height>25</height>
-                  </size>
-                 </property>
-                </spacer>
+               <item row="0" column="1" colspan="2">
+                <widget class="QTextBrowser" name="textBrowser_log"/>
                </item>
-               <item row="1" column="3">
+               <item row="0" column="3">
                 <spacer name="horizontalSpacer_33">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -5347,25 +5334,6 @@
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item row="2" column="1">
-                <spacer name="verticalSpacer_16">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>23</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="1" colspan="2">
-                <widget class="QTextBrowser" name="textBrowser_log"/>
                </item>
               </layout>
              </item>
