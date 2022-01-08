@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: mainwindow.h
- MODIFIED: November, 2021
+ MODIFIED: December, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -60,59 +60,6 @@
 #include "openingfiles.h"
 
 
-enum columnIndex {
-    FILENAME,       FORMAT,         RESOLUTION,     DURATION,           FPS,
-    AR,             STATUS,         BITRATE,        SUBSAMPLING,        BITDEPTH,
-    COLORSPACE,     COLORRANGE,     COLORPRIM,      COLORMATRIX,        TRANSFER,
-    MAXLUM,         MINLUM,         MAXCLL,         MAXFALL,            MASTERDISPLAY,
-    PATH,           T_DUR,          T_CHROMACOORD,  T_WHITECOORD,       T_STREAMSIZE,
-    T_WIDTH,        T_HEIGHT,       T_VIDEOTITLE,   T_VIDEOMOVIENAME,   T_VIDEOYEAR,
-    T_VIDEOAUTHOR,  T_VIDEOPERF,    T_VIDEODESCR,   T_AUDIO_1,          T_AUDIO_2,
-    T_AUDIO_3,      T_AUDIO_4,      T_AUDIO_5,      T_AUDIO_6,          T_AUDIO_7,
-    T_AUDIO_8,      T_AUDIO_9,      T_AUDIOLANG_1,  T_AUDIOLANG_2,      T_AUDIOLANG_3,
-    T_AUDIOLANG_4,  T_AUDIOLANG_5,  T_AUDIOLANG_6,  T_AUDIOLANG_7,      T_AUDIOLANG_8,
-    T_AUDIOLANG_9,  T_AUDIOTITLE_1, T_AUDIOTITLE_2, T_AUDIOTITLE_3,     T_AUDIOTITLE_4,
-    T_AUDIOTITLE_5, T_AUDIOTITLE_6, T_AUDIOTITLE_7, T_AUDIOTITLE_8,     T_AUDIOTITLE_9,
-    T_AUDIOCHECK_1, T_AUDIOCHECK_2, T_AUDIOCHECK_3, T_AUDIOCHECK_4,     T_AUDIOCHECK_5,
-    T_AUDIOCHECK_6, T_AUDIOCHECK_7, T_AUDIOCHECK_8, T_AUDIOCHECK_9,     T_SUBTITLE_1,
-    T_SUBTITLE_2,   T_SUBTITLE_3,   T_SUBTITLE_4,   T_SUBTITLE_5,       T_SUBTITLE_6,
-    T_SUBTITLE_7,   T_SUBTITLE_8,   T_SUBTITLE_9,   T_SUBLANG_1,        T_SUBLANG_2,
-    T_SUBLANG_3,    T_SUBLANG_4,    T_SUBLANG_5,    T_SUBLANG_6,        T_SUBLANG_7,
-    T_SUBLANG_8,    T_SUBLANG_9,    T_TITLESUB_1,   T_TITLESUB_2,       T_TITLESUB_3,
-    T_TITLESUB_4,   T_TITLESUB_5,   T_TITLESUB_6,   T_TITLESUB_7,       T_TITLESUB_8,
-    T_TITLESUB_9,   T_SUBCHECK_1,   T_SUBCHECK_2,   T_SUBCHECK_3,       T_SUBCHECK_4,
-    T_SUBCHECK_5,   T_SUBCHECK_6,   T_SUBCHECK_7,   T_SUBCHECK_8,       T_SUBCHECK_9,
-    T_STARTTIME,    T_ENDTIME
-};
-enum curParamIndex {
-    OUTPUT_PARAM,   CODEC,          MODE,
-    CONTAINER,      BQR,            MAXRATE,
-    BUFSIZE,        FRAME_RATE,     BLENDING,
-    WIDTH,          HEIGHT,         PASS,
-    PRESET,         COLOR_RANGE,    MIN_LUM,
-    MAX_LUM,        MAX_CLL,        MAX_FALL,
-    MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
-    AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
-    LEVEL,          ASAMPLE_RATE,   ACHANNELS,
-    MATRIX,         PRIMARY,        TRC,
-    PRESET_NAME,    REP_PRIM,       REP_MATRIX,
-    REP_TRC
-};
-enum curHDRIndex {
-    CUR_COLOR_RANGE,    CUR_COLOR_PRIMARY,  CUR_COLOR_MATRIX,
-    CUR_TRANSFER,       CUR_MAX_LUM,        CUR_MIN_LUM,
-    CUR_MAX_CLL,        CUR_MAX_FALL,       CUR_MASTER_DISPLAY,
-    CUR_CHROMA_COORD,   CUR_WHITE_COORD
-};
-enum videoMetadataIndex {
-    VIDEO_TITLE,        VIDEO_AUTHOR,       VIDEO_YEAR,
-    VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME, ENUM_END_LABEL
-};
-enum dockIndex {
-    PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
-    STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK
-};
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -136,43 +83,30 @@ public:
 
     // ******************** Settings *************************//
 
+    bool        _hideInTrayFlag,
+                _showHDR_mode,
+                _protection;
+
+    int         _fontSize,
+                _prefxType,
+                _suffixType,
+                _pos_top,
+                _pos_cld,
+                _timer_interval;
+
+    QString     _desktopEnv,
+                _language,
+                _output_folder,
+                _temp_folder,
+                _prefixName,
+                _suffixName,
+                _font;
+
+    QByteArray  _settingsWindowGeometry,
+                _presetWindowGeometry;
+
     QVector<QString> _new_param;
 
-    QByteArray _settingsWindowGeometry;
-
-    QByteArray _presetWindowGeometry;
-
-    bool _hideInTrayFlag;
-
-    QString _desktopEnv;
-
-    QString _language;
-
-    QString _output_folder;
-
-    QString _temp_folder;
-
-    QString _prefixName;
-
-    QString _suffixName;
-
-    QString _font;
-
-    int _fontSize;
-
-    int _prefxType;
-
-    int _suffixType;
-
-    int _pos_top;
-
-    int _pos_cld;
-
-    int _timer_interval;
-
-    bool _showHDR_mode;
-
-    bool _protection;
 
 private slots:
 
@@ -354,215 +288,149 @@ private:
 
     // ******************** Dock area ****************************//
 
+    static const int DOCKS_COUNT = 8;
+
     QMainWindow *window;
 
-    QWidget *centralWidget;
-
-    static const int DOCKS_COUNT = 8;
+    QWidget     *centralWidget;
 
     QDockWidget *docks[DOCKS_COUNT];
 
     // ******************** Top label ****************************//
 
-    QLabel *raiseThumb;
-
-    QLabel *audioThumb;
-
-    QLabel *subtitleThumb;
+    QLabel      *raiseThumb,
+                *audioThumb,
+                *subtitleThumb;
 
     // **************** Progress animation ***********************//
 
-    QMovie *animation;
+    QMovie      *animation;
 
     // ***************** Tray menu actions ************************//
 
     QSystemTrayIcon *trayIcon;
 
-    QMenu *trayIconMenu;
+    QMenu       *trayIconMenu;
 
-    QAction *minimizeAction;
-
-    QAction *restoreAction;
-
-    QAction *quitAction;
+    QAction     *minimizeAction,
+                *restoreAction,
+                *quitAction;
 
     // ***************** Top menu actions ************************//
 
-    QAction *add_files;
+    QAction     *add_files,
+                *remove_files,
+                *close_prog;
 
-    QAction *remove_files;
+    QAction     *select_preset,
+                *encode_files,
+                *stop_encode;
 
-    QAction *close_prog;
+    QAction     *edit_metadata,
+                *select_audio,
+                *select_subtitles,
+                *split_video;
 
+    QAction     *settings,
+                *reset_view,
+                *about,
+                *donate;
 
-    QAction *select_preset;
-
-    QAction *encode_files;
-
-    QAction *stop_encode;
-
-
-    QAction *edit_metadata;
-
-    QAction *select_audio;
-
-    QAction *select_subtitles;
-
-    QAction *split_video;
-
-
-    QAction *settings;
-
-    QAction *reset_view;
-
-    QAction *about;
-
-    QAction *donate;
-
-
-    QMenu* menuFiles;
-
-    QMenu* menuEdit;
-
-    QMenu* menuTools;
-
-    QMenu* menuView;
-
-    QMenu* menuPreferences;
-
-    QMenu* menuAbout;
+    QMenu       *menuFiles,
+                *menuEdit,
+                *menuTools,
+                *menuView,
+                *menuPreferences,
+                *menuAbout;
 
     // ***************** Table menu actions ************************//
 
-    QMenu* itemMenu;
+    QMenu       *itemMenu;
 
     // ****************** Tree menu actions ************************//
 
-    QMenu* sectionMenu;
-
-    QMenu* presetMenu;
+    QMenu       *sectionMenu,
+                *presetMenu;
 
     // ***************** Preset menu actions ***********************//
 
-    QAction *addsection;
+    QAction     *addsection,
+                *addpreset;
 
-    QAction *addpreset;
-
-    QMenu* menu;
+    QMenu       *menu;
 
     // ********************** Processes ****************************//
 
-    QProcess *processEncoding;
-
-    QProcess *processThumbCreation;
+    QProcess    *processEncoding,
+                *processThumbCreation;
 
     // *********************** Timers ******************************//
 
-    QTimer *timer;
-
-    QTimer *timerCallSetThumbnail;
+    QTimer      *timer,
+                *timerCallSetThumbnail;
 
     // ******************** Initialization *************************//
 
-    QFile _wind_file;
+    QFile       _wind_file;
 
-    QString _openDir;
+    QString     _openDir;
 
-    int _theme;
+    int         _theme;
 
     // ************************** Metadata ************************//
 
-    QString _hdr[11];
+    int         _audioStreamCheckState[AMOUNT_AUDIO_STREAMS],
+                _subtitleCheckState[AMOUNT_SUBTITLES];
 
-    QString _videoMetadata[6];
-
-    int _audioStreamCheckState[AMOUNT_AUDIO_STREAMS];
-
-    QString _audioLang[AMOUNT_AUDIO_STREAMS];
-
-    QString _audioTitle[AMOUNT_AUDIO_STREAMS];
-
-    int _subtitleCheckState[AMOUNT_SUBTITLES];
-
-    QString _subtitleLang[AMOUNT_SUBTITLES];
-
-    QString _subtitleTitle[AMOUNT_SUBTITLES];
+    QString     _hdr[11],
+                _videoMetadata[6],
+                _audioLang[AMOUNT_AUDIO_STREAMS],
+                _audioTitle[AMOUNT_AUDIO_STREAMS],
+                _subtitleLang[AMOUNT_SUBTITLES],
+                _subtitleTitle[AMOUNT_SUBTITLES];
 
     // ************************* Encoding ***************************//
 
-    QString _message;
+    bool        _flag_two_pass,
+                _flag_hdr,
+                _calling_pr_1,
+                _mux_mode,
+                _batch_mode;
 
-    QString _error_message;
+    int         _fr_count,
+                _row;
 
+    time_t      _loop_start,
+                _strt_t;
 
-    QSettings *_settings;
+    double      _dur,
+                _curTime,
+                _startTime,
+                _endTime;
 
-    QString _curFilename;
+    QString     _message,
+                _error_message,
+                _curFilename,
+                _curPath,
+                _temp_file,
+                _input_file,
+                _output_file,
+                _settings_path,
+                _thumb_path,
+                _preset_file,
+                _preset_0,
+                _preset_pass1,
+                _preset,
+                _preset_mkvmerge,
+                _sub_mux_param,
+                _fmt,
+                _width,
+                _height,
+                _fps,
+                _stream_size,
+                _status_encode_btn;
 
-    QString _curPath;
-
-    QString _temp_file;
-
-    QString _input_file;
-
-    QString _output_file;
-
-    QString _settings_path;
-
-    QString _thumb_path;
-
-    QString _preset_file;
-
-    QString _preset_0;
-
-    QString _preset_pass1;
-
-    QString _preset;
-
-    QString _preset_mkvmerge;
-
-    QString _sub_mux_param;
-
-
-    QString _fmt;
-
-    QString _width;
-
-    QString _height;
-
-    QString _fps;
-
-    QString _stream_size;
-
-    double _dur;
-
-    int _fr_count;
-
-
-    time_t _loop_start;
-
-    time_t _strt_t;
-
-    double _curTime;
-
-    double _startTime;
-
-    double _endTime;
-
-
-    int _row;
-
-    QString _status_encode_btn;
-
-    bool _flag_two_pass;
-
-    bool _flag_hdr;
-
-    bool _calling_pr_1;
-
-    bool _mux_mode;
-
-    bool _batch_mode;
+    QSettings   *_settings;
 
     // *********************** Geometry ***********************************//
 
@@ -571,27 +439,20 @@ private:
         RIGHT,  RIGHT_TOP,  RIGHT_BOTTOM,  BOTTOM
     };
 
-    int _rowSize;
+    bool        _windowActivated,
+                _expandWindowsState,
+                _clickPressedFlag;
 
-    bool _windowActivated;
+    int         _rowSize,
+                _oldPosX,
+                _oldPosY,
+                _oldWidth,
+                _oldHeight;
 
-    bool _expandWindowsState;
+    QPoint      _mouseClickCoordinate,
+                _globalMouseClickCoordinate;
 
-    bool _clickPressedFlag;
-
-    QVector<bool> _clickPressedToResizeFlag;
-
-    QPoint _mouseClickCoordinate;
-
-    QPoint _globalMouseClickCoordinate;
-
-    int _oldPosX;
-
-    int _oldPosY;
-
-    int _oldWidth;
-
-    int _oldHeight;
+    QVector<bool> _clickPressedToResizeFlag;    
 
     // ****************************************************************************//
 
@@ -664,6 +525,67 @@ private:
     QString updateFieldAcodec(int &codec, int &acodec);
 
     QString updateFieldContainer(int &codec, int &container);
+
+    enum ColumnIndex {
+        FILENAME,       FORMAT,         RESOLUTION,     DURATION,           FPS,
+        AR,             STATUS,         BITRATE,        SUBSAMPLING,        BITDEPTH,
+        COLORSPACE,     COLORRANGE,     COLORPRIM,      COLORMATRIX,        TRANSFER,
+        MAXLUM,         MINLUM,         MAXCLL,         MAXFALL,            MASTERDISPLAY,
+        PATH,           T_DUR,          T_CHROMACOORD,  T_WHITECOORD,       T_STREAMSIZE,
+        T_WIDTH,        T_HEIGHT,       T_VIDEOTITLE,   T_VIDEOMOVIENAME,   T_VIDEOYEAR,
+        T_VIDEOAUTHOR,  T_VIDEOPERF,    T_VIDEODESCR,   T_AUDIO_1,          T_AUDIO_2,
+        T_AUDIO_3,      T_AUDIO_4,      T_AUDIO_5,      T_AUDIO_6,          T_AUDIO_7,
+        T_AUDIO_8,      T_AUDIO_9,      T_AUDIOLANG_1,  T_AUDIOLANG_2,      T_AUDIOLANG_3,
+        T_AUDIOLANG_4,  T_AUDIOLANG_5,  T_AUDIOLANG_6,  T_AUDIOLANG_7,      T_AUDIOLANG_8,
+        T_AUDIOLANG_9,  T_AUDIOTITLE_1, T_AUDIOTITLE_2, T_AUDIOTITLE_3,     T_AUDIOTITLE_4,
+        T_AUDIOTITLE_5, T_AUDIOTITLE_6, T_AUDIOTITLE_7, T_AUDIOTITLE_8,     T_AUDIOTITLE_9,
+        T_AUDIOCHECK_1, T_AUDIOCHECK_2, T_AUDIOCHECK_3, T_AUDIOCHECK_4,     T_AUDIOCHECK_5,
+        T_AUDIOCHECK_6, T_AUDIOCHECK_7, T_AUDIOCHECK_8, T_AUDIOCHECK_9,     T_SUBTITLE_1,
+        T_SUBTITLE_2,   T_SUBTITLE_3,   T_SUBTITLE_4,   T_SUBTITLE_5,       T_SUBTITLE_6,
+        T_SUBTITLE_7,   T_SUBTITLE_8,   T_SUBTITLE_9,   T_SUBLANG_1,        T_SUBLANG_2,
+        T_SUBLANG_3,    T_SUBLANG_4,    T_SUBLANG_5,    T_SUBLANG_6,        T_SUBLANG_7,
+        T_SUBLANG_8,    T_SUBLANG_9,    T_TITLESUB_1,   T_TITLESUB_2,       T_TITLESUB_3,
+        T_TITLESUB_4,   T_TITLESUB_5,   T_TITLESUB_6,   T_TITLESUB_7,       T_TITLESUB_8,
+        T_TITLESUB_9,   T_SUBCHECK_1,   T_SUBCHECK_2,   T_SUBCHECK_3,       T_SUBCHECK_4,
+        T_SUBCHECK_5,   T_SUBCHECK_6,   T_SUBCHECK_7,   T_SUBCHECK_8,       T_SUBCHECK_9,
+        T_STARTTIME,    T_ENDTIME
+    };
+
+    enum CurParamIndex {
+        OUTPUT_PARAM,   CODEC,          MODE,
+        CONTAINER,      BQR,            MAXRATE,
+        BUFSIZE,        FRAME_RATE,     BLENDING,
+        WIDTH,          HEIGHT,         PASS,
+        PRESET,         COLOR_RANGE,    MIN_LUM,
+        MAX_LUM,        MAX_CLL,        MAX_FALL,
+        MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
+        AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
+        LEVEL,          ASAMPLE_RATE,   ACHANNELS,
+        MATRIX,         PRIMARY,        TRC,
+        PRESET_NAME,    REP_PRIM,       REP_MATRIX,
+        REP_TRC
+    };
+
+    enum CurHDRIndex {
+        CUR_COLOR_RANGE,    CUR_COLOR_PRIMARY,  CUR_COLOR_MATRIX,
+        CUR_TRANSFER,       CUR_MAX_LUM,        CUR_MIN_LUM,
+        CUR_MAX_CLL,        CUR_MAX_FALL,       CUR_MASTER_DISPLAY,
+        CUR_CHROMA_COORD,   CUR_WHITE_COORD
+    };
+
+    enum VideoMetadataIndex {
+        VIDEO_TITLE,        VIDEO_AUTHOR,       VIDEO_YEAR,
+        VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME, ENUM_END_LABEL
+    };
+
+    enum DockIndex {
+        PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
+        STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK
+    };
+
+    enum Theme {
+        GRAY, DARK, WAVE, DEFAULT
+    };
 };
 
 #endif // WIDGET_H

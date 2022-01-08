@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: main.cpp
- MODIFIED: October, 2021
+ MODIFIED: December, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     if (checkForDuplicates() == 1) return 1;
 
     /******************* Read Settings ****************************/
-    QString _settings_path = QDir::homePath() + QString("/CineEncoder");
+    const QString _settings_path = QDir::homePath() + QString("/CineEncoder");
     QSettings *_settings = new QSettings(_settings_path + QString("/settings.ini"), QSettings::IniFormat, nullptr);
     _settings->beginGroup("Settings");
     int _fontSize = _settings->value("Settings/font_size").toInt();
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     }
 
     /******************* Set Splash *******************************/
-    QPixmap pixmap(":/resources/images/splash.png");
+    const QPixmap pixmap(":/resources/images/splash.png");
     QSplashScreen *splash = new QSplashScreen(pixmap);
     splash->show();
     app.processEvents();

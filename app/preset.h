@@ -25,38 +25,10 @@
 #include <QResizeEvent>
 
 
-enum Profile {
-    HIGH,           MAIN,           MAIN10,
-    MAIN12,         PROFILE_0,      PROFILE_1,
-    PROFILE_2,      PROFILE_3,      PROFILE_4,
-    PROFILE_5,      DNXHR_LB,       DNXHR_SQ,
-    DNXHR_HQ,       DNXHR_HQX,      DNXHR_444,
-    PROFILE_AUTO
-};
-enum Pixformat {
-    YUV420P12LE,    YUV444P10LE,    YUV422P10LE,
-    YUV420P10LE,    YUV422p,        YUV420P,
-    P010LE,         PIXFORMAT_AUTO
-};
-enum Parameters {
-    _OUTPUT_PARAM,   _CODEC,          _MODE,
-    _CONTAINER,      _BQR,            _MAXRATE,
-    _BUFSIZE,        _FRAME_RATE,     _BLENDING,
-    _WIDTH,          _HEIGHT,         _PASS,
-    _PRESET,         _COLOR_RANGE,    _MIN_LUM,
-    _MAX_LUM,        _MAX_CLL,        _MAX_FALL,
-    _MASTER_DISPLAY, _CHROMA_COORD,   _WHITE_COORD,
-    _AUDIO_CODEC,    _AUDIO_BITRATE,  _MINRATE,
-    _LEVEL,          _ASAMPLE_RATE,   _ACHANNELS,
-    _MATRIX,         _PRIMARY,        _TRC,
-    _PRESET_NAME,    _REP_PRIM,       _REP_MATRIX,
-    _REP_TRC
-};
-
 
 namespace Ui
 {
-class Preset;
+    class Preset;
 }
 
 
@@ -147,29 +119,53 @@ private:
         RIGHT,  RIGHT_TOP,  RIGHT_BOTTOM,  BOTTOM
     };
 
-    QByteArray *_ptr_presetWindowGeometry;
+    bool        _expandWindowsState,
+                _clickPressedFlag;
 
-    bool _expandWindowsState;
+    int         _oldPosX,
+                _oldPosY,
+                _oldWidth,
+                _oldHeight;
 
-    bool _clickPressedFlag;
+    QPoint      _mouseClickCoordinate,
+                _globalMouseClickCoordinate;
+
+    QByteArray  *_ptr_presetWindowGeometry;
 
     QVector<bool> _clickPressedToResizeFlag;
 
-    QPoint _mouseClickCoordinate;
-
-    QPoint _globalMouseClickCoordinate;
-
-    int _oldPosX;
-
-    int _oldPosY;
-
-    int _oldWidth;
-
-    int _oldHeight;
 
     void on_expandWindow_clicked();
 
     void lockSignals(bool status);
+
+    enum Profile {
+        HIGH,           MAIN,           MAIN10,
+        MAIN12,         PROFILE_0,      PROFILE_1,
+        PROFILE_2,      PROFILE_3,      PROFILE_4,
+        PROFILE_5,      DNXHR_LB,       DNXHR_SQ,
+        DNXHR_HQ,       DNXHR_HQX,      DNXHR_444,
+        PROFILE_AUTO
+    };
+    enum Pixformat {
+        YUV420P12LE,    YUV444P10LE,    YUV422P10LE,
+        YUV420P10LE,    YUV422p,        YUV420P,
+        P010LE,         PIXFORMAT_AUTO
+    };
+    enum Parameters {
+        _OUTPUT_PARAM,   _CODEC,          _MODE,
+        _CONTAINER,      _BQR,            _MAXRATE,
+        _BUFSIZE,        _FRAME_RATE,     _BLENDING,
+        _WIDTH,          _HEIGHT,         _PASS,
+        _PRESET,         _COLOR_RANGE,    _MIN_LUM,
+        _MAX_LUM,        _MAX_CLL,        _MAX_FALL,
+        _MASTER_DISPLAY, _CHROMA_COORD,   _WHITE_COORD,
+        _AUDIO_CODEC,    _AUDIO_BITRATE,  _MINRATE,
+        _LEVEL,          _ASAMPLE_RATE,   _ACHANNELS,
+        _MATRIX,         _PRIMARY,        _TRC,
+        _PRESET_NAME,    _REP_PRIM,       _REP_MATRIX,
+        _REP_TRC
+    };
 };
 
 #endif // PRESET_H

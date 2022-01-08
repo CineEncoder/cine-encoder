@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: mainwindow.cpp
- MODIFIED: November, 2021
+ MODIFIED: January, 2022
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -158,7 +158,7 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::showEvent(QShowEvent *event)   /*** Call set parameters ***/
+void Widget::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
     if (!_windowActivated) {
@@ -168,7 +168,7 @@ void Widget::showEvent(QShowEvent *event)   /*** Call set parameters ***/
     }
 }
 
-void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
+void Widget::closeEvent(QCloseEvent *event) // Show prompt when close app
 {
     event->ignore();
     if (call_dialog(tr("Quit program?"))) {
@@ -250,7 +250,7 @@ void Widget::closeEvent(QCloseEvent *event) /*** Show prompt when close app ***/
     }
 }
 
-void Widget::paintEvent(QPaintEvent *event) /*** Disable QTab draw base ***/
+void Widget::paintEvent(QPaintEvent *event) // Disable QTab draw base
 {
     if (event->type() == QEvent::Paint) {
         QList<QTabBar*> tabBars = window->findChildren<QTabBar*>();
@@ -404,10 +404,10 @@ void Widget::createConnections()
     }
     menuView->addAction(reset_view);
     ui->menuViewButton->setMenu(menuView);
-    docks[dockIndex::LOG_DOCK]->toggleViewAction()->setChecked(false);
-    docks[dockIndex::SPLIT_DOCK]->toggleViewAction()->setChecked(false);
-    docks[dockIndex::LOG_DOCK]->setVisible(false);
-    docks[dockIndex::SPLIT_DOCK]->setVisible(false);
+    docks[DockIndex::LOG_DOCK]->toggleViewAction()->setChecked(false);
+    docks[DockIndex::SPLIT_DOCK]->toggleViewAction()->setChecked(false);
+    docks[DockIndex::LOG_DOCK]->setVisible(false);
+    docks[DockIndex::SPLIT_DOCK]->setVisible(false);
 
     menuPreferences = new QMenu(this);
     menuPreferences->addAction(settings);
@@ -517,7 +517,7 @@ void Widget::createConnections()
                     state_qstr = "1";
                 }
                 QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-                ui->tableWidget->setItem(_row, columnIndex::T_AUDIOCHECK_1 + stream, newItem_checkstate);
+                ui->tableWidget->setItem(_row, ColumnIndex::T_AUDIOCHECK_1 + stream, newItem_checkstate);
                 _audioStreamCheckState[stream] = state_qstr.toInt();
             }
         });
@@ -534,7 +534,7 @@ void Widget::createConnections()
                 lineEditLangAudio->setModified(false);
                 QString langAudio = lineEditLangAudio->text();
                 QTableWidgetItem *newItem_langAudio = new QTableWidgetItem(langAudio);
-                ui->tableWidget->setItem(_row, columnIndex::T_AUDIOLANG_1 + stream, newItem_langAudio);
+                ui->tableWidget->setItem(_row, ColumnIndex::T_AUDIOLANG_1 + stream, newItem_langAudio);
                 _audioLang[stream] = langAudio;
             }
         });
@@ -560,7 +560,7 @@ void Widget::createConnections()
                 lineEditTitleAudio->setModified(false);
                 QString titleAudio = lineEditTitleAudio->text();
                 QTableWidgetItem *newItem_titleAudio = new QTableWidgetItem(titleAudio);
-                ui->tableWidget->setItem(_row, columnIndex::T_AUDIOTITLE_1 + stream, newItem_titleAudio);
+                ui->tableWidget->setItem(_row, ColumnIndex::T_AUDIOTITLE_1 + stream, newItem_titleAudio);
                 _audioTitle[stream] = titleAudio;
             }
         });
@@ -596,7 +596,7 @@ void Widget::createConnections()
                     state_qstr = "1";
                 }
                 QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(state_qstr);
-                ui->tableWidget->setItem(_row, columnIndex::T_SUBCHECK_1 + stream, newItem_checkstate);
+                ui->tableWidget->setItem(_row, ColumnIndex::T_SUBCHECK_1 + stream, newItem_checkstate);
                 _subtitleCheckState[stream] = state_qstr.toInt();
             }
         });
@@ -613,7 +613,7 @@ void Widget::createConnections()
                 lineEditLangSubtitle->setModified(false);
                 QString langSubtitle = lineEditLangSubtitle->text();
                 QTableWidgetItem *newItem_langSubtitle = new QTableWidgetItem(langSubtitle);
-                ui->tableWidget->setItem(_row, columnIndex::T_SUBLANG_1 + stream, newItem_langSubtitle);
+                ui->tableWidget->setItem(_row, ColumnIndex::T_SUBLANG_1 + stream, newItem_langSubtitle);
                 _subtitleLang[stream] = langSubtitle;
             }
         });
@@ -639,7 +639,7 @@ void Widget::createConnections()
                 lineEditTitleSubtitle->setModified(false);
                 QString titleSubtitle = lineEditTitleSubtitle->text();
                 QTableWidgetItem *newItem_titleSubtitle = new QTableWidgetItem(titleSubtitle);
-                ui->tableWidget->setItem(_row, columnIndex::T_TITLESUB_1 + stream, newItem_titleSubtitle);
+                ui->tableWidget->setItem(_row, ColumnIndex::T_TITLESUB_1 + stream, newItem_titleSubtitle);
                 _subtitleTitle[stream] = titleSubtitle;
             }
         });
@@ -740,24 +740,24 @@ void Widget::setParameters()    /*** Set parameters ***/
     ui->tableWidget->horizontalHeader()->setVisible(true);
     ui->tableWidget->setAlternatingRowColors(true);
     ui->tableWidget->verticalHeader()->setFixedWidth(0);
-    ui->tableWidget->setColumnWidth(columnIndex::FILENAME, 250);
-    ui->tableWidget->setColumnWidth(columnIndex::FORMAT, 80);
-    ui->tableWidget->setColumnWidth(columnIndex::RESOLUTION, 85);
-    ui->tableWidget->setColumnWidth(columnIndex::DURATION, 70);
-    ui->tableWidget->setColumnWidth(columnIndex::FPS, 70);
-    ui->tableWidget->setColumnWidth(columnIndex::AR, 60);
-    ui->tableWidget->setColumnWidth(columnIndex::STATUS, 80);
+    ui->tableWidget->setColumnWidth(ColumnIndex::FILENAME, 250);
+    ui->tableWidget->setColumnWidth(ColumnIndex::FORMAT, 80);
+    ui->tableWidget->setColumnWidth(ColumnIndex::RESOLUTION, 85);
+    ui->tableWidget->setColumnWidth(ColumnIndex::DURATION, 70);
+    ui->tableWidget->setColumnWidth(ColumnIndex::FPS, 70);
+    ui->tableWidget->setColumnWidth(ColumnIndex::AR, 60);
+    ui->tableWidget->setColumnWidth(ColumnIndex::STATUS, 80);
     ui->tableWidget->setIconSize(QSize(16, 16));
 
-    for (int i = columnIndex::COLORRANGE; i <= columnIndex::MAXFALL; i++) {
+    for (int i = ColumnIndex::COLORRANGE; i <= ColumnIndex::MAXFALL; i++) {
         ui->tableWidget->setColumnWidth(i, 82);
     }
 
-    for (int i = columnIndex::BITRATE; i <= columnIndex::COLORSPACE; i++) {
+    for (int i = ColumnIndex::BITRATE; i <= ColumnIndex::COLORSPACE; i++) {
         ui->tableWidget->hideColumn(i);
     }
 
-    for (int i = columnIndex::T_DUR; i <= columnIndex::T_ENDTIME; i++) {
+    for (int i = ColumnIndex::T_DUR; i <= ColumnIndex::T_ENDTIME; i++) {
         ui->tableWidget->hideColumn(i);
     }
 
@@ -1004,15 +1004,15 @@ void Widget::setExpandIcon()
 {
     switch (_theme)
     {
-        case 0:
-        case 1:
-        case 2:
+        case Theme::GRAY:
+        case Theme::DARK:
+        case Theme::WAVE:
             if (_expandWindowsState) {
                 ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
             } else {
                 ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));}
             break;
-        case 3:
+        case Theme::DEFAULT:
             if (_expandWindowsState) {
                 ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone_black.png"));
             } else {
@@ -1106,97 +1106,97 @@ void Widget::showOpeningFiles(int percent)
 
 void Widget::showMetadataEditor()
 {
-    if (!docks[dockIndex::METADATA_DOCK]->isVisible()) {
-        docks[dockIndex::METADATA_DOCK]->setVisible(true);
+    if (!docks[DockIndex::METADATA_DOCK]->isVisible()) {
+        docks[DockIndex::METADATA_DOCK]->setVisible(true);
     }
-    docks[dockIndex::METADATA_DOCK]->setFloating(true);
+    docks[DockIndex::METADATA_DOCK]->setFloating(true);
 }
 
 void Widget::showAudioStreamsSelection()
 {
-    if (!docks[dockIndex::STREAMS_DOCK]->isVisible()) {
-        docks[dockIndex::STREAMS_DOCK]->setVisible(true);
+    if (!docks[DockIndex::STREAMS_DOCK]->isVisible()) {
+        docks[DockIndex::STREAMS_DOCK]->setVisible(true);
     }
-    docks[dockIndex::STREAMS_DOCK]->setFloating(true);
+    docks[DockIndex::STREAMS_DOCK]->setFloating(true);
     ui->tabWidgetRight->setCurrentIndex(0);
 }
 
 void Widget::showSubtitlesSelection()
 {
-    if (!docks[dockIndex::STREAMS_DOCK]->isVisible()) {
-        docks[dockIndex::STREAMS_DOCK]->setVisible(true);
+    if (!docks[DockIndex::STREAMS_DOCK]->isVisible()) {
+        docks[DockIndex::STREAMS_DOCK]->setVisible(true);
     }
-    docks[dockIndex::STREAMS_DOCK]->setFloating(true);
+    docks[DockIndex::STREAMS_DOCK]->setFloating(true);
     ui->tabWidgetRight->setCurrentIndex(1);
 }
 
 void Widget::showVideoSplitter()
 {
-    if (!docks[dockIndex::SPLIT_DOCK]->isVisible()) {
-        docks[dockIndex::SPLIT_DOCK]->setVisible(true);
+    if (!docks[DockIndex::SPLIT_DOCK]->isVisible()) {
+        docks[DockIndex::SPLIT_DOCK]->setVisible(true);
     }
-    docks[dockIndex::SPLIT_DOCK]->setFloating(true);
+    docks[DockIndex::SPLIT_DOCK]->setFloating(true);
 }
 
 void Widget::get_current_data() /*** Get current data ***/
 {
-    _dur = (ui->tableWidget->item(_row, columnIndex::T_DUR)->text()).toDouble();
-    _stream_size = ui->tableWidget->item(_row, columnIndex::T_STREAMSIZE)->text();
-    _width = ui->tableWidget->item(_row, columnIndex::T_WIDTH)->text();
-    _height = ui->tableWidget->item(_row, columnIndex::T_HEIGHT)->text();
-    _fmt = ui->tableWidget->item(_row, columnIndex::FORMAT)->text();
-    _fps = ui->tableWidget->item(_row, columnIndex::FPS)->text();
+    _dur = (ui->tableWidget->item(_row, ColumnIndex::T_DUR)->text()).toDouble();
+    _stream_size = ui->tableWidget->item(_row, ColumnIndex::T_STREAMSIZE)->text();
+    _width = ui->tableWidget->item(_row, ColumnIndex::T_WIDTH)->text();
+    _height = ui->tableWidget->item(_row, ColumnIndex::T_HEIGHT)->text();
+    _fmt = ui->tableWidget->item(_row, ColumnIndex::FORMAT)->text();
+    _fps = ui->tableWidget->item(_row, ColumnIndex::FPS)->text();
 
     double fps_double = _fps.toDouble();
     _fr_count = static_cast<int>(round(_dur * fps_double));
 
-    _startTime = (ui->tableWidget->item(_row, columnIndex::T_STARTTIME)->text()).toDouble();
-    _endTime = (ui->tableWidget->item(_row, columnIndex::T_ENDTIME)->text()).toDouble();
+    _startTime = (ui->tableWidget->item(_row, ColumnIndex::T_STARTTIME)->text()).toDouble();
+    _endTime = (ui->tableWidget->item(_row, ColumnIndex::T_ENDTIME)->text()).toDouble();
 
     //std::cout << "DURATION SEC COUNT <<<<<<<<<<<<<<<<<< : " << _dur << std::endl;
     //std::cout << "FRAME RATE COUNT <<<<<<<<<<<<<<<<<< : " << _fr_count << std::endl;
 
     QString curCodec = _fmt;
     QString curFps = _fps;
-    QString curRes = ui->tableWidget->item(_row, columnIndex::RESOLUTION)->text();
-    QString curAr = ui->tableWidget->item(_row, columnIndex::AR)->text();
-    QString curBitrate = ui->tableWidget->item(_row, columnIndex::BITRATE)->text();
-    QString curColorSampling = ui->tableWidget->item(_row, columnIndex::SUBSAMPLING)->text();
-    QString curDepth = ui->tableWidget->item(_row, columnIndex::BITDEPTH)->text();
-    QString curSpace = ui->tableWidget->item(_row, columnIndex::COLORSPACE)->text();
+    QString curRes = ui->tableWidget->item(_row, ColumnIndex::RESOLUTION)->text();
+    QString curAr = ui->tableWidget->item(_row, ColumnIndex::AR)->text();
+    QString curBitrate = ui->tableWidget->item(_row, ColumnIndex::BITRATE)->text();
+    QString curColorSampling = ui->tableWidget->item(_row, ColumnIndex::SUBSAMPLING)->text();
+    QString curDepth = ui->tableWidget->item(_row, ColumnIndex::BITDEPTH)->text();
+    QString curSpace = ui->tableWidget->item(_row, ColumnIndex::COLORSPACE)->text();
 
-    _curPath = ui->tableWidget->item(_row, columnIndex::PATH)->text();
-    _curFilename = ui->tableWidget->item(_row, columnIndex::FILENAME)->text();
+    _curPath = ui->tableWidget->item(_row, ColumnIndex::PATH)->text();
+    _curFilename = ui->tableWidget->item(_row, ColumnIndex::FILENAME)->text();
     _input_file = _curPath + QString("/") + _curFilename;
-    _hdr[CUR_COLOR_RANGE] = ui->tableWidget->item(_row, columnIndex::COLORRANGE)->text();       // color range
-    _hdr[CUR_COLOR_PRIMARY] = ui->tableWidget->item(_row, columnIndex::COLORPRIM)->text();      // color primary
-    _hdr[CUR_COLOR_MATRIX] = ui->tableWidget->item(_row, columnIndex::COLORMATRIX)->text();     // color matrix
-    _hdr[CUR_TRANSFER] = ui->tableWidget->item(_row, columnIndex::TRANSFER)->text();            // transfer
-    _hdr[CUR_MAX_LUM] = ui->tableWidget->item(_row, columnIndex::MAXLUM)->text();               // max lum
-    _hdr[CUR_MIN_LUM] = ui->tableWidget->item(_row, columnIndex::MINLUM)->text();               // min lum
-    _hdr[CUR_MAX_CLL] = ui->tableWidget->item(_row, columnIndex::MAXCLL)->text();               // max cll
-    _hdr[CUR_MAX_FALL] = ui->tableWidget->item(_row, columnIndex::MAXFALL)->text();             // max fall
-    _hdr[CUR_MASTER_DISPLAY] = ui->tableWidget->item(_row, columnIndex::MASTERDISPLAY)->text(); // master display
-    _hdr[CUR_CHROMA_COORD] = ui->tableWidget->item(_row, columnIndex::T_CHROMACOORD)->text();   // chr coord
-    _hdr[CUR_WHITE_COORD] = ui->tableWidget->item(_row, columnIndex::T_WHITECOORD)->text();     // white coord
+    _hdr[CUR_COLOR_RANGE] = ui->tableWidget->item(_row, ColumnIndex::COLORRANGE)->text();       // color range
+    _hdr[CUR_COLOR_PRIMARY] = ui->tableWidget->item(_row, ColumnIndex::COLORPRIM)->text();      // color primary
+    _hdr[CUR_COLOR_MATRIX] = ui->tableWidget->item(_row, ColumnIndex::COLORMATRIX)->text();     // color matrix
+    _hdr[CUR_TRANSFER] = ui->tableWidget->item(_row, ColumnIndex::TRANSFER)->text();            // transfer
+    _hdr[CUR_MAX_LUM] = ui->tableWidget->item(_row, ColumnIndex::MAXLUM)->text();               // max lum
+    _hdr[CUR_MIN_LUM] = ui->tableWidget->item(_row, ColumnIndex::MINLUM)->text();               // min lum
+    _hdr[CUR_MAX_CLL] = ui->tableWidget->item(_row, ColumnIndex::MAXCLL)->text();               // max cll
+    _hdr[CUR_MAX_FALL] = ui->tableWidget->item(_row, ColumnIndex::MAXFALL)->text();             // max fall
+    _hdr[CUR_MASTER_DISPLAY] = ui->tableWidget->item(_row, ColumnIndex::MASTERDISPLAY)->text(); // master display
+    _hdr[CUR_CHROMA_COORD] = ui->tableWidget->item(_row, ColumnIndex::T_CHROMACOORD)->text();   // chr coord
+    _hdr[CUR_WHITE_COORD] = ui->tableWidget->item(_row, ColumnIndex::T_WHITECOORD)->text();     // white coord
 
-    _videoMetadata[VIDEO_TITLE] = ui->tableWidget->item(_row, columnIndex::T_VIDEOTITLE)->text();
-    _videoMetadata[VIDEO_AUTHOR] = ui->tableWidget->item(_row, columnIndex::T_VIDEOAUTHOR)->text();
-    _videoMetadata[VIDEO_YEAR] = ui->tableWidget->item(_row, columnIndex::T_VIDEOYEAR)->text();
-    _videoMetadata[VIDEO_PERFORMER] = ui->tableWidget->item(_row, columnIndex::T_VIDEOPERF)->text();
-    _videoMetadata[VIDEO_DESCRIPTION] = ui->tableWidget->item(_row, columnIndex::T_VIDEODESCR)->text();
-    _videoMetadata[VIDEO_MOVIENAME] = ui->tableWidget->item(_row, columnIndex::T_VIDEOMOVIENAME)->text();
+    _videoMetadata[VIDEO_TITLE] = ui->tableWidget->item(_row, ColumnIndex::T_VIDEOTITLE)->text();
+    _videoMetadata[VIDEO_AUTHOR] = ui->tableWidget->item(_row, ColumnIndex::T_VIDEOAUTHOR)->text();
+    _videoMetadata[VIDEO_YEAR] = ui->tableWidget->item(_row, ColumnIndex::T_VIDEOYEAR)->text();
+    _videoMetadata[VIDEO_PERFORMER] = ui->tableWidget->item(_row, ColumnIndex::T_VIDEOPERF)->text();
+    _videoMetadata[VIDEO_DESCRIPTION] = ui->tableWidget->item(_row, ColumnIndex::T_VIDEODESCR)->text();
+    _videoMetadata[VIDEO_MOVIENAME] = ui->tableWidget->item(_row, ColumnIndex::T_VIDEOMOVIENAME)->text();
 
     for (int p = 0; p < AMOUNT_AUDIO_STREAMS; p++) {
-        _audioStreamCheckState[p] = (ui->tableWidget->item(_row, p + columnIndex::T_AUDIOCHECK_1)->text()).toInt();
-        _audioLang[p] = ui->tableWidget->item(_row, p + columnIndex::T_AUDIOLANG_1)->text();
-        _audioTitle[p] = ui->tableWidget->item(_row, p + columnIndex::T_AUDIOTITLE_1)->text();
+        _audioStreamCheckState[p] = (ui->tableWidget->item(_row, p + ColumnIndex::T_AUDIOCHECK_1)->text()).toInt();
+        _audioLang[p] = ui->tableWidget->item(_row, p + ColumnIndex::T_AUDIOLANG_1)->text();
+        _audioTitle[p] = ui->tableWidget->item(_row, p + ColumnIndex::T_AUDIOTITLE_1)->text();
     }
 
     for (int p = 0; p < AMOUNT_SUBTITLES; p++) {
-        _subtitleCheckState[p] = (ui->tableWidget->item(_row, p + columnIndex::T_SUBCHECK_1)->text()).toInt();
-        _subtitleLang[p] = ui->tableWidget->item(_row, p + columnIndex::T_SUBLANG_1)->text();
-        _subtitleTitle[p] = ui->tableWidget->item(_row, p + columnIndex::T_TITLESUB_1)->text();
+        _subtitleCheckState[p] = (ui->tableWidget->item(_row, p + ColumnIndex::T_SUBCHECK_1)->text()).toInt();
+        _subtitleLang[p] = ui->tableWidget->item(_row, p + ColumnIndex::T_SUBLANG_1)->text();
+        _subtitleTitle[p] = ui->tableWidget->item(_row, p + ColumnIndex::T_TITLESUB_1)->text();
     }
 
     //******************************** Set icons *****************************//
@@ -1232,7 +1232,7 @@ void Widget::get_current_data() /*** Get current data ***/
     }
     QPixmap pxmp(tmb_file);
     QPixmap scaled = pxmp.scaled(imageSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    ui->tableWidget->item(_row, columnIndex::FILENAME)->setIcon(QIcon(scaled));
+    ui->tableWidget->item(_row, ColumnIndex::FILENAME)->setIcon(QIcon(scaled));
 
     //******************************** Set description *****************************//
 
@@ -1267,7 +1267,7 @@ void Widget::get_current_data() /*** Get current data ***/
     int countAudioStreams = 0;
     QString curAudioStream("");
     while (countAudioStreams < AMOUNT_AUDIO_STREAMS) {
-        curAudioStream = ui->tableWidget->item(_row, countAudioStreams + columnIndex::T_AUDIO_1)->text();
+        curAudioStream = ui->tableWidget->item(_row, countAudioStreams + ColumnIndex::T_AUDIO_1)->text();
         if (curAudioStream == "") {
             break;
         }
@@ -1278,7 +1278,7 @@ void Widget::get_current_data() /*** Get current data ***/
     int countSubtitles = 0;
     QString curSubtitle("");
     while (countSubtitles < AMOUNT_SUBTITLES) {
-        curSubtitle = ui->tableWidget->item(_row, countSubtitles + columnIndex::T_SUBTITLE_1)->text();
+        curSubtitle = ui->tableWidget->item(_row, countSubtitles + ColumnIndex::T_SUBTITLE_1)->text();
         if (curSubtitle == "") {
             break;
         }
@@ -1376,25 +1376,25 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
     QString list("");
     switch (ind_theme)
     {
-        case 0:
+        case Theme::GRAY:
             file.setFileName(":/resources/css/style_0.css");
             raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
             audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             break;
-        case 1:
+        case Theme::DARK:
             file.setFileName(":/resources/css/style_1.css");
             raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
             audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             break;
-        case 2:
+        case Theme::WAVE:
             file.setFileName(":/resources/css/style_2.css");
             raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
             audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
             break;
-        case 3:
+        case Theme::DEFAULT:
             file.setFileName(":/resources/css/style_3.css");
             raiseThumb->setStyleSheet("color: #E3E3E3; font: 64pt; font-style: oblique;");
             audioThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
@@ -1454,7 +1454,7 @@ void Widget::setStatus(QString status)
 {
     QTableWidgetItem *newItem_status = new QTableWidgetItem(status);
     newItem_status->setTextAlignment(Qt::AlignCenter);
-    ui->tableWidget->setItem(_row, columnIndex::STATUS, newItem_status);
+    ui->tableWidget->setItem(_row, ColumnIndex::STATUS, newItem_status);
 }
 
 void Widget::restore_initial_state()    /*** Restore initial state ***/
@@ -1659,7 +1659,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
             if (event->type() == QEvent::MouseMove) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->buttons() & Qt::LeftButton) {
-                    int index = _clickPressedToResizeFlag.indexOf(true);
+                    const int &&index = _clickPressedToResizeFlag.indexOf(true);
                     if (index != -1) {
                         const int &&deltaX = mouse_event->globalPos().x();
                         const int &&deltaY = mouse_event->globalPos().y();
@@ -1761,38 +1761,38 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
 void Widget::make_preset()  /*** Make preset ***/
 {
     std::cout << "Make preset..." << std::endl;                       // Debug information //
-    int _CODEC = _cur_param[curParamIndex::CODEC].toInt();
-    int _MODE = _cur_param[curParamIndex::MODE].toInt();
-    int _CONTAINER = _cur_param[curParamIndex::CONTAINER].toInt();
-    QString _BQR = _cur_param[curParamIndex::BQR];
-    QString _MINRATE = _cur_param[curParamIndex::MINRATE];
-    QString _MAXRATE = _cur_param[curParamIndex::MAXRATE];
-    QString _BUFSIZE = _cur_param[curParamIndex::BUFSIZE];
-    int _LEVEL = _cur_param[curParamIndex::LEVEL].toInt();
-    int _FRAME_RATE = _cur_param[curParamIndex::FRAME_RATE].toInt();
-    int _BLENDING = _cur_param[curParamIndex::BLENDING].toInt();
-    int _WIDTH = _cur_param[curParamIndex::WIDTH].toInt();
-    int _HEIGHT = _cur_param[curParamIndex::HEIGHT].toInt();
-    int _PASS = _cur_param[curParamIndex::PASS].toInt();
-    int _PRESET = _cur_param[curParamIndex::PRESET].toInt();
-    int _COLOR_RANGE = _cur_param[curParamIndex::COLOR_RANGE].toInt();
-    int _MATRIX = _cur_param[curParamIndex::MATRIX].toInt();
-    int _PRIMARY = _cur_param[curParamIndex::PRIMARY].toInt();
-    int _TRC = _cur_param[curParamIndex::TRC].toInt();
-    QString _MIN_LUM = _cur_param[curParamIndex::MIN_LUM].replace(",", ".");
-    QString _MAX_LUM = _cur_param[curParamIndex::MAX_LUM].replace(",", ".");
-    QString _MAX_CLL = _cur_param[curParamIndex::MAX_CLL].replace(",", ".");
-    QString _MAX_FALL = _cur_param[curParamIndex::MAX_FALL].replace(",", ".");
-    int _MASTER_DISPLAY = _cur_param[curParamIndex::MASTER_DISPLAY].toInt();
-    QString _CHROMA_COORD = _cur_param[curParamIndex::CHROMA_COORD];
-    QString _WHITE_COORD = _cur_param[curParamIndex::WHITE_COORD];
-    int _AUDIO_CODEC = _cur_param[curParamIndex::AUDIO_CODEC].toInt();
-    int _AUDIO_BITRATE = _cur_param[curParamIndex::AUDIO_BITRATE].toInt();
-    int _AUDIO_SAMPLING = _cur_param[curParamIndex::ASAMPLE_RATE].toInt();
-    int _AUDIO_CHANNELS = _cur_param[curParamIndex::ACHANNELS].toInt();
-    int _REP_PRIM = _cur_param[curParamIndex::REP_PRIM].toInt();
-    int _REP_MATRIX = _cur_param[curParamIndex::REP_MATRIX].toInt();
-    int _REP_TRC = _cur_param[curParamIndex::REP_TRC].toInt();
+    int _CODEC = _cur_param[CurParamIndex::CODEC].toInt();
+    int _MODE = _cur_param[CurParamIndex::MODE].toInt();
+    int _CONTAINER = _cur_param[CurParamIndex::CONTAINER].toInt();
+    QString _BQR = _cur_param[CurParamIndex::BQR];
+    QString _MINRATE = _cur_param[CurParamIndex::MINRATE];
+    QString _MAXRATE = _cur_param[CurParamIndex::MAXRATE];
+    QString _BUFSIZE = _cur_param[CurParamIndex::BUFSIZE];
+    int _LEVEL = _cur_param[CurParamIndex::LEVEL].toInt();
+    int _FRAME_RATE = _cur_param[CurParamIndex::FRAME_RATE].toInt();
+    int _BLENDING = _cur_param[CurParamIndex::BLENDING].toInt();
+    int _WIDTH = _cur_param[CurParamIndex::WIDTH].toInt();
+    int _HEIGHT = _cur_param[CurParamIndex::HEIGHT].toInt();
+    int _PASS = _cur_param[CurParamIndex::PASS].toInt();
+    int _PRESET = _cur_param[CurParamIndex::PRESET].toInt();
+    int _COLOR_RANGE = _cur_param[CurParamIndex::COLOR_RANGE].toInt();
+    int _MATRIX = _cur_param[CurParamIndex::MATRIX].toInt();
+    int _PRIMARY = _cur_param[CurParamIndex::PRIMARY].toInt();
+    int _TRC = _cur_param[CurParamIndex::TRC].toInt();
+    QString _MIN_LUM = _cur_param[CurParamIndex::MIN_LUM].replace(",", ".");
+    QString _MAX_LUM = _cur_param[CurParamIndex::MAX_LUM].replace(",", ".");
+    QString _MAX_CLL = _cur_param[CurParamIndex::MAX_CLL].replace(",", ".");
+    QString _MAX_FALL = _cur_param[CurParamIndex::MAX_FALL].replace(",", ".");
+    int _MASTER_DISPLAY = _cur_param[CurParamIndex::MASTER_DISPLAY].toInt();
+    QString _CHROMA_COORD = _cur_param[CurParamIndex::CHROMA_COORD];
+    QString _WHITE_COORD = _cur_param[CurParamIndex::WHITE_COORD];
+    int _AUDIO_CODEC = _cur_param[CurParamIndex::AUDIO_CODEC].toInt();
+    int _AUDIO_BITRATE = _cur_param[CurParamIndex::AUDIO_BITRATE].toInt();
+    int _AUDIO_SAMPLING = _cur_param[CurParamIndex::ASAMPLE_RATE].toInt();
+    int _AUDIO_CHANNELS = _cur_param[CurParamIndex::ACHANNELS].toInt();
+    int _REP_PRIM = _cur_param[CurParamIndex::REP_PRIM].toInt();
+    int _REP_MATRIX = _cur_param[CurParamIndex::REP_MATRIX].toInt();
+    int _REP_TRC = _cur_param[CurParamIndex::REP_TRC].toInt();
 
     _preset_0 = "";
     _preset_pass1 = "";
@@ -3164,12 +3164,12 @@ void Widget::on_buttonCloseTaskWindow_clicked()
 
 void Widget::on_buttonSortDown_clicked()    /*** Sort table ***/
 {
-    ui->tableWidget->sortByColumn(columnIndex::FILENAME, Qt::DescendingOrder);
+    ui->tableWidget->sortByColumn(ColumnIndex::FILENAME, Qt::DescendingOrder);
 }
 
 void Widget::on_buttonSortUp_clicked()    /*** Sort table ***/
 {
-    ui->tableWidget->sortByColumn(columnIndex::FILENAME, Qt::AscendingOrder);
+    ui->tableWidget->sortByColumn(ColumnIndex::FILENAME, Qt::AscendingOrder);
 }
 
 void Widget::on_actionEncode_clicked()  /*** Encode button ***/
@@ -3366,40 +3366,40 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         newItem_max_fall->setTextAlignment(Qt::AlignCenter);
         newItem_mastering_display->setTextAlignment(Qt::AlignCenter);
 
-        ui->tableWidget->setItem(numRows, columnIndex::FILENAME, newItem_file);
-        ui->tableWidget->setItem(numRows, columnIndex::PATH, newItem_folder);
-        ui->tableWidget->setItem(numRows, columnIndex::FORMAT, newItem_fmt);
-        ui->tableWidget->setItem(numRows, columnIndex::RESOLUTION, newItem_resolution);
-        ui->tableWidget->setItem(numRows, columnIndex::DURATION, newItem_duration_time);
-        ui->tableWidget->setItem(numRows, columnIndex::FPS, newItem_fps);
-        ui->tableWidget->setItem(numRows, columnIndex::AR, newItem_aspect_ratio);
-        ui->tableWidget->setItem(numRows, columnIndex::BITRATE, newItem_bitrate);
-        ui->tableWidget->setItem(numRows, columnIndex::SUBSAMPLING, newItem_subsampling);
-        ui->tableWidget->setItem(numRows, columnIndex::BITDEPTH, newItem_bit_depth);
-        ui->tableWidget->setItem(numRows, columnIndex::COLORSPACE, newItem_color_space);
-        ui->tableWidget->setItem(numRows, columnIndex::COLORRANGE, newItem_color_range);
-        ui->tableWidget->setItem(numRows, columnIndex::COLORPRIM, newItem_color_primaries);
-        ui->tableWidget->setItem(numRows, columnIndex::COLORMATRIX, newItem_color_matrix);
-        ui->tableWidget->setItem(numRows, columnIndex::TRANSFER, newItem_transfer_characteristics);
-        ui->tableWidget->setItem(numRows, columnIndex::MAXLUM, newItem_max_lum);
-        ui->tableWidget->setItem(numRows, columnIndex::MINLUM, newItem_min_lum);
-        ui->tableWidget->setItem(numRows, columnIndex::MAXCLL, newItem_max_cll);
-        ui->tableWidget->setItem(numRows, columnIndex::MAXFALL, newItem_max_fall);
-        ui->tableWidget->setItem(numRows, columnIndex::MASTERDISPLAY, newItem_mastering_display);
-        ui->tableWidget->setItem(numRows, columnIndex::T_CHROMACOORD, newItem_chroma_coord);
-        ui->tableWidget->setItem(numRows, columnIndex::T_WHITECOORD, newItem_white_coord);
-        ui->tableWidget->setItem(numRows, columnIndex::T_DUR, newItem_duration);
-        ui->tableWidget->setItem(numRows, columnIndex::T_STREAMSIZE, newItem_stream_size);
-        ui->tableWidget->setItem(numRows, columnIndex::T_WIDTH, newItem_width);
-        ui->tableWidget->setItem(numRows, columnIndex::T_HEIGHT, newItem_height);
-        ui->tableWidget->setItem(numRows, columnIndex::T_VIDEOTITLE, newItem_videoTitle);
-        ui->tableWidget->setItem(numRows, columnIndex::T_VIDEOAUTHOR, newItem_videoAuthor);
-        ui->tableWidget->setItem(numRows, columnIndex::T_VIDEOYEAR, newItem_videoYear);
-        ui->tableWidget->setItem(numRows, columnIndex::T_VIDEOPERF, newItem_videoPerformer);
-        ui->tableWidget->setItem(numRows, columnIndex::T_VIDEODESCR, newItem_videoDescription);
-        ui->tableWidget->setItem(numRows, columnIndex::T_VIDEOMOVIENAME, newItem_videoMovieName);
-        ui->tableWidget->setItem(numRows, columnIndex::T_STARTTIME, newItem_startTime);
-        ui->tableWidget->setItem(numRows, columnIndex::T_ENDTIME, newItem_endTime);
+        ui->tableWidget->setItem(numRows, ColumnIndex::FILENAME, newItem_file);
+        ui->tableWidget->setItem(numRows, ColumnIndex::PATH, newItem_folder);
+        ui->tableWidget->setItem(numRows, ColumnIndex::FORMAT, newItem_fmt);
+        ui->tableWidget->setItem(numRows, ColumnIndex::RESOLUTION, newItem_resolution);
+        ui->tableWidget->setItem(numRows, ColumnIndex::DURATION, newItem_duration_time);
+        ui->tableWidget->setItem(numRows, ColumnIndex::FPS, newItem_fps);
+        ui->tableWidget->setItem(numRows, ColumnIndex::AR, newItem_aspect_ratio);
+        ui->tableWidget->setItem(numRows, ColumnIndex::BITRATE, newItem_bitrate);
+        ui->tableWidget->setItem(numRows, ColumnIndex::SUBSAMPLING, newItem_subsampling);
+        ui->tableWidget->setItem(numRows, ColumnIndex::BITDEPTH, newItem_bit_depth);
+        ui->tableWidget->setItem(numRows, ColumnIndex::COLORSPACE, newItem_color_space);
+        ui->tableWidget->setItem(numRows, ColumnIndex::COLORRANGE, newItem_color_range);
+        ui->tableWidget->setItem(numRows, ColumnIndex::COLORPRIM, newItem_color_primaries);
+        ui->tableWidget->setItem(numRows, ColumnIndex::COLORMATRIX, newItem_color_matrix);
+        ui->tableWidget->setItem(numRows, ColumnIndex::TRANSFER, newItem_transfer_characteristics);
+        ui->tableWidget->setItem(numRows, ColumnIndex::MAXLUM, newItem_max_lum);
+        ui->tableWidget->setItem(numRows, ColumnIndex::MINLUM, newItem_min_lum);
+        ui->tableWidget->setItem(numRows, ColumnIndex::MAXCLL, newItem_max_cll);
+        ui->tableWidget->setItem(numRows, ColumnIndex::MAXFALL, newItem_max_fall);
+        ui->tableWidget->setItem(numRows, ColumnIndex::MASTERDISPLAY, newItem_mastering_display);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_CHROMACOORD, newItem_chroma_coord);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_WHITECOORD, newItem_white_coord);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_DUR, newItem_duration);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_STREAMSIZE, newItem_stream_size);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_WIDTH, newItem_width);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_HEIGHT, newItem_height);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOTITLE, newItem_videoTitle);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOAUTHOR, newItem_videoAuthor);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOYEAR, newItem_videoYear);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOPERF, newItem_videoPerformer);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEODESCR, newItem_videoDescription);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOMOVIENAME, newItem_videoMovieName);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_STARTTIME, newItem_startTime);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_ENDTIME, newItem_endTime);
 
         int smplrt_int;
         QString audioFormat("");
@@ -3429,10 +3429,10 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
             QTableWidgetItem *newItem_lang = new QTableWidgetItem(audioLang);
             QTableWidgetItem *newItem_title = new QTableWidgetItem(audioTitle);
             QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(audioCheckstate);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_AUDIO_1, newItem_audio);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_AUDIOLANG_1, newItem_lang);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_AUDIOTITLE_1, newItem_title);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_AUDIOCHECK_1, newItem_checkstate);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_AUDIO_1, newItem_audio);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_AUDIOLANG_1, newItem_lang);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_AUDIOTITLE_1, newItem_title);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_AUDIOCHECK_1, newItem_checkstate);
         }
 
         QString subtitleFormat("");
@@ -3452,10 +3452,10 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
             QTableWidgetItem *newItem_lang = new QTableWidgetItem(subtitleLang);
             QTableWidgetItem *newItem_title = new QTableWidgetItem(subtitleTitle);
             QTableWidgetItem *newItem_checkstate = new QTableWidgetItem(subtitleCheckstate);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_SUBTITLE_1, newItem_subtitle);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_SUBLANG_1, newItem_lang);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_TITLESUB_1, newItem_title);
-            ui->tableWidget->setItem(numRows, j + columnIndex::T_SUBCHECK_1, newItem_checkstate);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_SUBTITLE_1, newItem_subtitle);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_SUBLANG_1, newItem_lang);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_TITLESUB_1, newItem_title);
+            ui->tableWidget->setItem(numRows, j + ColumnIndex::T_SUBCHECK_1, newItem_checkstate);
         }
         MI.Close();
         showOpeningFiles(50);
@@ -3702,29 +3702,19 @@ void Widget::dropEvent(QDropEvent* event)     /*** Drag & Drop ***/
 }
 
 QString Widget::timeConverter(float &time)     /*** Time converter to hh:mm:ss ***/
-{
-    int h = static_cast<int>(trunc(time / 3600));
-    int m = static_cast<int>(trunc((time - float(h * 3600)) / 60));
-    int s = static_cast<int>(round(time - float(h * 3600) - float(m * 60)));
-    QString hrs = QString::number(h);
-    QString min = QString::number(m);
-    QString sec = QString::number(s);
-    std::ostringstream sstr;
-    sstr << std::setw(2) << std::setfill('0') << hrs.toStdString() << ":"
-         << std::setw(2) << std::setfill('0') << min.toStdString() << ":"
-         << std::setw(2) << std::setfill('0') << sec.toStdString();
-    std::string time_str = sstr.str();
-
-    return QString::fromStdString(time_str);
+{    
+    const int h = static_cast<int>(trunc(time / 3600));
+    const int m = static_cast<int>(trunc((time - float(h * 3600)) / 60));
+    const int s = static_cast<int>(round(time - float(h * 3600) - float(m * 60)));
+    const QString hrs = QString::number(h).rightJustified(2, '0');
+    const QString min = QString::number(m).rightJustified(2, '0');
+    const QString sec = QString::number(s).rightJustified(2, '0');
+    return QString("%1:%2:%3").arg(hrs, min, sec);
 }
 
 void Widget::on_comboBoxMode_currentIndexChanged(int index)
 {
-    if (index == 0) {
-        _batch_mode = false;
-    } else {
-        _batch_mode = true;
-    }
+    _batch_mode = (index == 0) ? false : true;
 }
 
 void Widget::on_horizontalSlider_resize_valueChanged(int value)
@@ -3739,11 +3729,8 @@ void Widget::on_horizontalSlider_resize_valueChanged(int value)
 
 QString Widget::setThumbnail(QString curFilename, double time, QString quality, int destination)     /*** Thumbnail ***/
 {
-    QString qualityParam = "-vf scale=144:-1 -compression_level 10 -pix_fmt rgb24";
-    if (quality == "low")
-    {
-        qualityParam = "-vf scale=144:-1,format=pal8,dctdnoiz=4.5";
-    }
+    QString qualityParam("-vf scale=480:-1 -compression_level 10 -pix_fmt rgb24");
+    if (quality == "low") qualityParam = QString("-vf scale=144:-1,format=pal8,dctdnoiz=4.5");
     const QString time_qstr = QString::number(time, 'f', 3);
     const QString tmb_name = curFilename.replace(".", "_").replace(" ", "_") + time_qstr;
     QString tmb_file = _thumb_path + QString("/") + tmb_name + QString(".png");
@@ -3755,9 +3742,7 @@ QString Widget::setThumbnail(QString curFilename, double time, QString quality, 
         processThumbCreation->start("ffmpeg", cmd);
         processThumbCreation->waitForFinished();
     }
-    if (!tmb.exists()) {
-        tmb_file = ":/resources/images/no_preview.png";
-    }
+    if (!tmb.exists()) tmb_file = ":/resources/images/no_preview.png";
     QPixmap pix(tmb_file);
     QPixmap pix_scaled;
     if (destination == 1) {
@@ -3770,12 +3755,10 @@ QString Widget::setThumbnail(QString curFilename, double time, QString quality, 
     return tmb_file;
 }
 
-void Widget::repeatHandler_Type_2()  /*** Repeat handler ***/
+void Widget::repeatHandler_Type_2()
 {
-    std::cout << "Call by timer... " << std::endl;
-    if (_row != -1) {
-        setThumbnail(_curFilename, _curTime, "high", 2);
-    }
+    //std::cout << "Call by timer... " << std::endl;
+    if (_row != -1) setThumbnail(_curFilename, _curTime, "high", 2);
 }
 
 /************************************************
@@ -3794,13 +3777,13 @@ void Widget::on_buttonHotInputFile_clicked()
 void Widget::get_output_filename()  /*** Get output data ***/
 {
     ui->textBrowser_2->clear();
-    ui->textBrowser_2->setText(_cur_param[curParamIndex::OUTPUT_PARAM]);
+    ui->textBrowser_2->setText(_cur_param[CurParamIndex::OUTPUT_PARAM]);
     QString file_without_ext("");
     QString extension("");
     QString suffix("");
     QString prefix("");
-    int _CODEC = _cur_param[curParamIndex::CODEC].toInt();
-    int _CONTAINER = _cur_param[curParamIndex::CONTAINER].toInt();
+    int _CODEC = _cur_param[CurParamIndex::CODEC].toInt();
+    int _CONTAINER = _cur_param[CurParamIndex::CONTAINER].toInt();
     extension = updateFieldContainer(_CODEC, _CONTAINER).toLower();
 
     if (_suffixType == 0) {
@@ -3883,7 +3866,7 @@ void Widget::on_lineEditTitleVideo_editingFinished()
         ui->lineEditTitleVideo->setModified(false);
         QString videoTitle = ui->lineEditTitleVideo->text();
         QTableWidgetItem *newItem_videoTitle = new QTableWidgetItem(videoTitle);
-        ui->tableWidget->setItem(_row, columnIndex::T_VIDEOTITLE, newItem_videoTitle);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_VIDEOTITLE, newItem_videoTitle);
         _videoMetadata[VIDEO_TITLE] = videoTitle;
     }
 }
@@ -3897,7 +3880,7 @@ void Widget::on_lineEditAuthorVideo_editingFinished()
         ui->lineEditAuthorVideo->setModified(false);
         QString videoAuthor = ui->lineEditAuthorVideo->text();
         QTableWidgetItem *newItem_videoAuthor = new QTableWidgetItem(videoAuthor);
-        ui->tableWidget->setItem(_row, columnIndex::T_VIDEOAUTHOR, newItem_videoAuthor);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_VIDEOAUTHOR, newItem_videoAuthor);
         _videoMetadata[VIDEO_AUTHOR] = videoAuthor;
     }
 }
@@ -3911,7 +3894,7 @@ void Widget::on_lineEditYearVideo_editingFinished()
         ui->lineEditYearVideo->setModified(false);
         QString videoYear = ui->lineEditYearVideo->text();
         QTableWidgetItem *newItem_videoYear = new QTableWidgetItem(videoYear);
-        ui->tableWidget->setItem(_row, columnIndex::T_VIDEOYEAR, newItem_videoYear);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_VIDEOYEAR, newItem_videoYear);
         _videoMetadata[VIDEO_YEAR] = videoYear;
     }
 }
@@ -3925,7 +3908,7 @@ void Widget::on_lineEditPerfVideo_editingFinished()
         ui->lineEditPerfVideo->setModified(false);
         QString videoPerf = ui->lineEditPerfVideo->text();
         QTableWidgetItem *newItem_videoPerf = new QTableWidgetItem(videoPerf);
-        ui->tableWidget->setItem(_row, columnIndex::T_VIDEOPERF, newItem_videoPerf);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_VIDEOPERF, newItem_videoPerf);
         _videoMetadata[VIDEO_PERFORMER] = videoPerf;
     }
 }
@@ -3939,7 +3922,7 @@ void Widget::on_lineEditMovieNameVideo_editingFinished()
         ui->lineEditMovieNameVideo->setModified(false);
         QString videoMovieName = ui->lineEditMovieNameVideo->text();
         QTableWidgetItem *newItem_videoMovieName = new QTableWidgetItem(videoMovieName);
-        ui->tableWidget->setItem(_row, columnIndex::T_VIDEOMOVIENAME, newItem_videoMovieName);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_VIDEOMOVIENAME, newItem_videoMovieName);
         _videoMetadata[VIDEO_MOVIENAME] = videoMovieName;
     }
 }
@@ -3953,7 +3936,7 @@ void Widget::on_lineEditDescriptionVideo_editingFinished()
         ui->lineEditDescriptionVideo->setModified(false);
         QString videoDescription = ui->lineEditDescriptionVideo->text();
         QTableWidgetItem *newItem_videoDescription = new QTableWidgetItem(videoDescription);
-        ui->tableWidget->setItem(_row, columnIndex::T_VIDEODESCR, newItem_videoDescription);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_VIDEODESCR, newItem_videoDescription);
         _videoMetadata[VIDEO_DESCRIPTION] = videoDescription;
     }
 }
@@ -4088,13 +4071,12 @@ void Widget::on_buttonSetStartTime_clicked()
 {
     if (_row != -1) {
         _startTime = _curTime;
-        if (_startTime > _endTime && _endTime != 0.0)
-        {
+        if (_startTime > _endTime && _endTime != 0.0) {
             _startTime = _endTime;
         }
         ui->lineEditStartTime->setText(timeConverter(_startTime));
         QTableWidgetItem *newItem_startTime = new QTableWidgetItem(QString::number(_startTime, 'f', 3));
-        ui->tableWidget->setItem(_row, columnIndex::T_STARTTIME, newItem_startTime);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_STARTTIME, newItem_startTime);
     }
 }
 
@@ -4102,13 +4084,12 @@ void Widget::on_buttonSetEndTime_clicked()
 {
     if (_row != -1) {
         _endTime = _curTime;
-        if (_endTime < _startTime)
-        {
+        if (_endTime < _startTime) {
             _endTime =_startTime;
         }
         ui->lineEditEndTime->setText(timeConverter(_endTime));
         QTableWidgetItem *newItem_endTime = new QTableWidgetItem(QString::number(_endTime, 'f', 3));
-        ui->tableWidget->setItem(_row, columnIndex::T_ENDTIME, newItem_endTime);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_ENDTIME, newItem_endTime);
     }
 }
 
@@ -4126,35 +4107,26 @@ void Widget::on_actionResetLabels_clicked()
         _startTime = 0.0;
         ui->lineEditStartTime->setText(timeConverter(_startTime));
         QTableWidgetItem *newItem_startTime = new QTableWidgetItem(QString::number(_startTime, 'f', 3));
-        ui->tableWidget->setItem(_row, columnIndex::T_STARTTIME, newItem_startTime);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_STARTTIME, newItem_startTime);
 
         _endTime = 0.0;
         ui->lineEditEndTime->setText(timeConverter(_endTime));
         QTableWidgetItem *newItem_endTime = new QTableWidgetItem(QString::number(_endTime, 'f', 3));
-        ui->tableWidget->setItem(_row, columnIndex::T_ENDTIME, newItem_endTime);
+        ui->tableWidget->setItem(_row, ColumnIndex::T_ENDTIME, newItem_endTime);
     }
 }
 
 QString Widget::timeConverter(double &time)     /*** Time converter to hh:mm:ss.msc ***/
 {
-    int h = static_cast<int>(trunc(time / 3600));
-    int m = static_cast<int>(trunc((time - double(h * 3600)) / 60));
-    int s = static_cast<int>(trunc(time - double(h * 3600) - double(m * 60)));
-    int ms = static_cast<int>(round(1000 * (time - double(h * 3600) - double(m * 60) - double(s))));
-
-    QString hrs = QString::number(h);
-    QString min = QString::number(m);
-    QString sec = QString::number(s);
-    QString msec = QString::number(ms);
-
-    std::ostringstream sstr;
-    sstr << std::setw(2) << std::setfill('0') << hrs.toStdString() << ":"
-         << std::setw(2) << std::setfill('0') << min.toStdString() << ":"
-         << std::setw(2) << std::setfill('0') << sec.toStdString() << "."
-         << std::setw(3) << msec.toStdString();
-    std::string time_str = sstr.str();
-
-    return QString::fromStdString(time_str);
+    const int h = static_cast<int>(trunc(time / 3600));
+    const int m = static_cast<int>(trunc((time - double(h * 3600)) / 60));
+    const int s = static_cast<int>(trunc(time - double(h * 3600) - double(m * 60)));
+    const int ms = static_cast<int>(round(1000 * (time - double(h * 3600) - double(m * 60) - double(s))));
+    const QString hrs = QString::number(h).rightJustified(2, '0');
+    const QString min = QString::number(m).rightJustified(2, '0');
+    const QString sec = QString::number(s).rightJustified(2, '0');
+    const QString msec = QString::number(ms).rightJustified(3, '0');
+    return QString("%1:%2:%3.%4").arg(hrs, min, sec, msec);
 }
 
 /************************************************
@@ -4406,7 +4378,7 @@ void Widget::updateCurPresetPos(int &index_top, int &index_child)
     //if (index_child == _pos_cld) {
     _pos_top = -1;
     _pos_cld = -1;
-    _cur_param[curParamIndex::OUTPUT_PARAM] = tr("Preset not selected");
+    _cur_param[CurParamIndex::OUTPUT_PARAM] = tr("Preset not selected");
     if (_row != -1) {
         get_output_filename();
     }
@@ -4690,15 +4662,15 @@ void Widget::setPresetIcon(QTreeWidgetItem *item, bool collapsed)
     QString path;
     switch (_theme)
     {
-        case 0:
-        case 1:
-        case 2:
+        case Theme::GRAY:
+        case Theme::DARK:
+        case Theme::WAVE:
             if (collapsed) {
                 path = QString::fromUtf8(":/resources/icons/16x16/cil-folder.png");
             } else {
                 path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png");}
             break;
-        case 3:
+        case Theme::DEFAULT:
             if (collapsed) {
                 path = QString::fromUtf8(":/resources/icons/16x16/cil-folder_light.png");
             } else {

@@ -5,7 +5,7 @@
                             COPYRIGHT (C) 2020
 
  FILE: settings.h
- MODIFIED: November, 2021
+ MODIFIED: December, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -28,7 +28,7 @@
 
 namespace Ui
 {
-class Settings;
+    class Settings;
 }
 
 
@@ -84,33 +84,22 @@ private:
 
     QString desktopEnv;
 
-    QString *_ptr_output_folder;
+    QString *_ptr_output_folder,
+            *_ptr_temp_folder,
+            *_ptr_prefixName,
+            *_ptr_suffixName,
+            *_ptr_language,
+            *_ptr_font;
 
-    QString *_ptr_temp_folder;
+    int     *_ptr_fontSize,
+            *_ptr_prefxType,
+            *_ptr_suffixType,
+            *_ptr_timer_interval,
+            *_ptr_theme;
 
-    QString *_ptr_prefixName;
-
-    QString *_ptr_suffixName;
-
-    QString *_ptr_language;
-
-    QString *_ptr_font;
-
-    int *_ptr_fontSize;
-
-    int *_ptr_prefxType;
-
-    int *_ptr_suffixType;
-
-    int *_ptr_timer_interval;
-
-    int *_ptr_theme;
-
-    bool *_ptr_showHDR_mode;
-
-    bool *_ptr_protection;
-
-    bool *_ptr_hideInTrayFlag;
+    bool    *_ptr_showHDR_mode,
+            *_ptr_protection,
+            *_ptr_hideInTrayFlag;
 
     /**************** Geometry **************************/
 
@@ -121,23 +110,18 @@ private:
 
     QByteArray *_ptr_settingsWindowGeometry;
 
-    bool _expandWindowsState;
-
-    bool _clickPressedFlag;
+    bool    _expandWindowsState,
+            _clickPressedFlag;
 
     QVector<bool> _clickPressedToResizeFlag;
 
-    QPoint _mouseClickCoordinate;
+    QPoint  _mouseClickCoordinate,
+            _globalMouseClickCoordinate;
 
-    QPoint _globalMouseClickCoordinate;
-
-    int _oldPosX;
-
-    int _oldPosY;
-
-    int _oldWidth;
-
-    int _oldHeight;
+    int     _oldPosX,
+            _oldPosY,
+            _oldWidth,
+            _oldHeight;
 
     void on_expandWindow_clicked();
 
