@@ -49,12 +49,22 @@ void Settings::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry, QString *ptr_output_folder,
-                             QString *ptr_temp_folder, bool *ptr_protection, bool *ptr_showHDR_mode,
-                             int *ptr_timer_interval, int *ptr_theme, QString *ptr_prefixName,
-                             QString *ptr_suffixName, int *ptr_prefxType, int *ptr_suffixType,
-                             bool *ptr_hideInTrayFlag, QString *ptr_language, const QString &_desktopEnv,
-                             int *ptr_fontSize, QString *ptr_font)
+void Settings::setParameters(QByteArray *ptr_settingsWindowGeometry,
+                             QString    *ptr_output_folder,
+                             QString    *ptr_temp_folder,
+                             bool       *ptr_protection,
+                             bool       *ptr_showHDR_mode,
+                             int        *ptr_timer_interval,
+                             int        *ptr_theme,
+                             QString    *ptr_prefixName,
+                             QString    *ptr_suffixName,
+                             int        *ptr_prefxType,
+                             int        *ptr_suffixType,
+                             bool       *ptr_hideInTrayFlag,
+                             QString    *ptr_language,
+                             const QString &_desktopEnv,
+                             int        *ptr_fontSize,
+                             QString    *ptr_font)
 {
     QFont title_font;
     title_font.setPointSize(10);

@@ -1061,10 +1061,22 @@ void Widget::on_actionDonate_clicked()   /*** Donate ***/
 void Widget::on_actionSettings_clicked()
 {
     Settings settings(this);
-    settings.setParameters(&_settingsWindowGeometry, &_output_folder, &_temp_folder, &_protection,
-                           &_showHDR_mode, &_timer_interval, &_theme, &_prefixName, &_suffixName,
-                           &_prefxType, &_suffixType, &_hideInTrayFlag, &_language, _desktopEnv,
-                           &_fontSize, &_font);
+    settings.setParameters(&_settingsWindowGeometry,
+                           &_output_folder,
+                           &_temp_folder,
+                           &_protection,
+                           &_showHDR_mode,
+                           &_timer_interval,
+                           &_theme,
+                           &_prefixName,
+                           &_suffixName,
+                           &_prefxType,
+                           &_suffixType,
+                           &_hideInTrayFlag,
+                           &_language,
+                           _desktopEnv,
+                           &_fontSize,
+                           &_font);
     settings.setModal(true);
     if (settings.exec() == QDialog::Accepted) {
         timer->setInterval(_timer_interval*1000);
