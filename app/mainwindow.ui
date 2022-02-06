@@ -182,9 +182,7 @@
               </property>
               <property name="font">
                <font>
-                <family>Segoe UI</family>
                 <pointsize>10</pointsize>
-                <weight>75</weight>
                 <bold>true</bold>
                 <kerning>true</kerning>
                </font>
@@ -788,7 +786,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -802,7 +799,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -816,7 +812,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -830,7 +825,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -844,7 +838,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -858,7 +851,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -872,7 +864,6 @@
                   </property>
                   <property name="font">
                    <font>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -4073,168 +4064,105 @@
                   <property name="text">
                    <string>File name</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Format</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Resolution</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Duration</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>FPS</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>AR</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Status</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Bitrate</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Subsampling</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Bit depth</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Color space</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Color range</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Color prim</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Color mtrx</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Transfer</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Max lum</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Min lum</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Max CLL</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Max Fall</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Master display</string>
                   </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
-                  </property>
                  </column>
                  <column>
                   <property name="text">
                    <string>Path</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignCenter</set>
                   </property>
                  </column>
                  <column>

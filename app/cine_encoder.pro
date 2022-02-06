@@ -38,6 +38,7 @@ SOURCES += \
     about.cpp \
     dialog.cpp \
     donate.cpp \
+    encoder.cpp \
     main.cpp \
     mainwindow.cpp \
     openingfiles.cpp \
@@ -47,8 +48,10 @@ SOURCES += \
 
 HEADERS += \
     about.h \
+    constants.h \
     dialog.h \
     donate.h \
+    encoder.h \
     mainwindow.h \
     openingfiles.h \
     preset.h \

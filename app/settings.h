@@ -23,6 +23,7 @@
 #include <QMap>
 #include <QFontDatabase>
 #include <QStringListModel>
+#include "constants.h"
 
 
 
@@ -112,11 +113,6 @@ private:
             *_ptr_hideInTrayFlag;
 
     /**************** Geometry **************************/
-
-    enum Resize {
-        LEFT,   LEFT_TOP,   LEFT_BOTTOM,   TOP,
-        RIGHT,  RIGHT_TOP,  RIGHT_BOTTOM,  BOTTOM
-    };
 
     QByteArray *_ptr_settingsWindowGeometry;
 
