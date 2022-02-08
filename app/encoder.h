@@ -4,7 +4,7 @@
                                 JULY, 2020
                             COPYRIGHT (C) 2020
 
- FILE: donate.cpp
+ FILE: encoder.h
  MODIFIED: February, 2022
  COMMENT:
  LICENSE: GNU General Public License v3.0

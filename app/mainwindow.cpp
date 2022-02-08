@@ -26,7 +26,6 @@
         #define UNICODE
     #endif
     #include <unistd.h>
-    #include <signal.h>
     #include <MediaInfo/MediaInfo.h>
     using namespace MediaInfoLib;
 #elif defined(Q_OS_WIN64)
@@ -1015,22 +1014,21 @@ void Widget::on_closeWindow_clicked()    /*** Close window signal ***/
 
 void Widget::setExpandIcon()
 {
-    switch (_theme)
-    {
-        case Theme::GRAY:
-        case Theme::DARK:
-        case Theme::WAVE:
-            if (_expandWindowsState) {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
-            } else {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));}
-            break;
-        case Theme::DEFAULT:
-            if (_expandWindowsState) {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone_black.png"));
-            } else {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop_black.png"));}
-            break;
+    switch (_theme) {
+    case Theme::GRAY:
+    case Theme::DARK:
+    case Theme::WAVE:
+        if (_expandWindowsState) {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
+        } else {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));}
+        break;
+    case Theme::DEFAULT:
+        if (_expandWindowsState) {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone_black.png"));
+        } else {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop_black.png"));}
+        break;
     }
 }
 
@@ -1399,32 +1397,31 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
 {
     QFile file;
     QString list("");
-    switch (ind_theme)
-    {
-        case Theme::GRAY:
-            file.setFileName(":/resources/css/style_0.css");
-            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            break;
-        case Theme::DARK:
-            file.setFileName(":/resources/css/style_1.css");
-            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            break;
-        case Theme::WAVE:
-            file.setFileName(":/resources/css/style_2.css");
-            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            break;
-        case Theme::DEFAULT:
-            file.setFileName(":/resources/css/style_3.css");
-            raiseThumb->setStyleSheet("color: #E3E3E3; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
-            break;
+    switch (ind_theme) {
+    case Theme::GRAY:
+        file.setFileName(":/resources/css/style_0.css");
+        raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+        audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+        subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+        break;
+    case Theme::DARK:
+        file.setFileName(":/resources/css/style_1.css");
+        raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+        audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+        subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+        break;
+    case Theme::WAVE:
+        file.setFileName(":/resources/css/style_2.css");
+        raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
+        audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+        subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
+        break;
+    case Theme::DEFAULT:
+        file.setFileName(":/resources/css/style_3.css");
+        raiseThumb->setStyleSheet("color: #E3E3E3; font: 64pt; font-style: oblique;");
+        audioThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
+        subtitleThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
+        break;
     }
     if (file.open(QFile::ReadOnly)) {
         list = QString::fromUtf8(file.readAll());
