@@ -67,23 +67,23 @@ Widget::Widget(QWidget *parent):
     ui->tableWidget->setLayout(raiseLayout);
     raiseThumb = new QLabel(ui->tableWidget);
     raiseLayout->addWidget(raiseThumb);
+    raiseThumb->setObjectName(QString::fromUtf8("TableWidgetLabel"));
     raiseThumb->setAlignment(Qt::AlignCenter);
     raiseThumb->setText(tr("No media"));
-    raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
 
     audioThumb = new QLabel(ui->frameTab_2);
     ui->gridLayoutAudio->addWidget(audioThumb);
     audioThumb->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    audioThumb->setObjectName(QString::fromUtf8("AudioLabel"));
     audioThumb->setAlignment(Qt::AlignCenter);
     audioThumb->setText(tr("No audio"));
-    audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
 
     subtitleThumb = new QLabel(ui->frameTab_3);
     ui->gridLayoutSubtitle->addWidget(subtitleThumb);
     subtitleThumb->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    subtitleThumb->setObjectName(QString::fromUtf8("SubtitleLabel"));
     subtitleThumb->setAlignment(Qt::AlignCenter);
     subtitleThumb->setText(tr("No subtitle"));
-    subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
 
     // **************************** Create docks ***********************************//
 
@@ -1400,27 +1400,15 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
     switch (ind_theme) {
     case Theme::GRAY:
         file.setFileName(":/resources/css/style_0.css");
-        raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-        audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-        subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
         break;
     case Theme::DARK:
         file.setFileName(":/resources/css/style_1.css");
-        raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-        audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-        subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
         break;
     case Theme::WAVE:
         file.setFileName(":/resources/css/style_2.css");
-        raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-        audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-        subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
         break;
     case Theme::DEFAULT:
         file.setFileName(":/resources/css/style_3.css");
-        raiseThumb->setStyleSheet("color: #E3E3E3; font: 64pt; font-style: oblique;");
-        audioThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
-        subtitleThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
         break;
     }
     if (file.open(QFile::ReadOnly)) {
@@ -2152,40 +2140,25 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         QApplication::processEvents();
         if (i == 1) _openDir = inputFolder;
         MI.Open(file.toStdWString());
+        QString fmt_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Format"));
+        QString width_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Width"));
+        QString height_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Height"));
+        QString size = width_qstr + "x" + height_qstr;
         QString duration_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Duration"));
         double duration_double = 0.001 * duration_qstr.toDouble();
         float duration_float = static_cast<float>(duration_double);
         QString durationTime = timeConverter(duration_float);
-        QString bitrate_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitRate"));
+        QString fps_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"FrameRate"));
+        const QString status("");
+        const QString bitrate_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitRate"));
         int bitrate_int = static_cast<int>(0.001 * bitrate_qstr.toDouble());        
-        QString stream_size_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"StreamSize"));
+        QString matrix_coefficients = QString::fromStdWString(MI.Get(Stream_Video, 0, L"matrix_coefficients"));
+        const QString mtrx_coeff = matrix_coefficients.replace(" ", "").replace(".", "").replace("on-", "").replace("onstant", "");
         QString mastering_display_luminance_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MasteringDisplay_Luminance"));
         QString mastering_display_luminance_rep = mastering_display_luminance_qstr.replace("min: ", "").replace("max: ", "").replace(" cd/m2", "");
         QString min_luminance = mastering_display_luminance_rep.split(", ")[0];
         QString max_luminance = mastering_display_luminance_rep.replace(min_luminance, "").replace(", ", "");
-        QString color_primaries = QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_primaries"));
-        QString matrix_coefficients = QString::fromStdWString(MI.Get(Stream_Video, 0, L"matrix_coefficients"));
-        QString transfer_characteristics = QString::fromStdWString(MI.Get(Stream_Video, 0, L"transfer_characteristics"));
-        QString mastering_display_color_primaries = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MasteringDisplay_ColorPrimaries"));
-        QString color_range = QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_range"));
-        QString maxCll = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxCLL"));
-        QString maxFall = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxFALL"));
-        QString width_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Width"));
-        QString height_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Height"));
-        QString chroma_subsampling = QString::fromStdWString(MI.Get(Stream_Video, 0, L"ChromaSubsampling"));
-        QString aspect_ratio = QString::fromStdWString(MI.Get(Stream_Video, 0, L"DisplayAspectRatio"));
-        QString color_space = QString::fromStdWString(MI.Get(Stream_Video, 0, L"ColorSpace"));
-        QString bit_depth = QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitDepth"));
-        QString fmt_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Format"));
-        QString fps_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"FrameRate"));
-        QString size = width_qstr + "x" + height_qstr;
-        QString videoTitle = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Title"));
-        QString videoAuthor = QString::fromStdWString(MI.Get(Stream_General, 0, L"AUTHOR"));
-        QString videoYear = QString::fromStdWString(MI.Get(Stream_General, 0, L"YEAR"));
-        QString videoPerformer = QString::fromStdWString(MI.Get(Stream_General, 0, L"Performer"));
-        QString videoDescription = QString::fromStdWString(MI.Get(Stream_General, 0, L"Description"));
-        QString videoMovieName = QString::fromStdWString(MI.Get(Stream_General, 0, L"Movie"));
-
+        QString mastering_display_color_primaries = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MasteringDisplay_ColorPrimaries"));       
         int len = mastering_display_color_primaries.length();
         QString white_coord = "";
         QString chroma_coord = "";
@@ -2212,94 +2185,44 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
             durationTime = "Undef";
         }
 
-        QTableWidgetItem *newItem_file = new QTableWidgetItem(inputFile);
-        QTableWidgetItem *newItem_folder = new QTableWidgetItem(inputFolder);
-        QTableWidgetItem *newItem_fmt = new QTableWidgetItem(fmt_qstr);
-        QTableWidgetItem *newItem_resolution = new QTableWidgetItem(size);
-        QTableWidgetItem *newItem_duration_time = new QTableWidgetItem(durationTime);
-        QTableWidgetItem *newItem_fps = new QTableWidgetItem(fps_qstr);
-        QTableWidgetItem *newItem_aspect_ratio = new QTableWidgetItem(aspect_ratio);
-        QTableWidgetItem *newItem_bitrate = new QTableWidgetItem(QString::number(bitrate_int));
-        QTableWidgetItem *newItem_subsampling = new QTableWidgetItem(chroma_subsampling);
-        QTableWidgetItem *newItem_bit_depth = new QTableWidgetItem(bit_depth);
-        QTableWidgetItem *newItem_color_space = new QTableWidgetItem(color_space);
-        QTableWidgetItem *newItem_color_range = new QTableWidgetItem(color_range);
-        QTableWidgetItem *newItem_color_primaries = new QTableWidgetItem(color_primaries.replace(".", ""));
-        QTableWidgetItem *newItem_color_matrix = new QTableWidgetItem(matrix_coefficients.replace(" ", "").replace(".", "").replace("on-", "").replace("onstant", ""));
-        QTableWidgetItem *newItem_transfer_characteristics = new QTableWidgetItem(transfer_characteristics.replace(".", ""));
-        QTableWidgetItem *newItem_max_lum = new QTableWidgetItem(max_luminance);
-        QTableWidgetItem *newItem_min_lum = new QTableWidgetItem(min_luminance);
-        QTableWidgetItem *newItem_max_cll = new QTableWidgetItem(maxCll.replace(" cd/m2", ""));
-        QTableWidgetItem *newItem_max_fall = new QTableWidgetItem(maxFall.replace(" cd/m2", ""));
-        QTableWidgetItem *newItem_mastering_display = new QTableWidgetItem(mastering_display_color_primaries);
-        QTableWidgetItem *newItem_chroma_coord = new QTableWidgetItem(chroma_coord);
-        QTableWidgetItem *newItem_white_coord = new QTableWidgetItem(white_coord);
-        QTableWidgetItem *newItem_duration = new QTableWidgetItem(QString::number(duration_double, 'f', 3));
-        QTableWidgetItem *newItem_stream_size = new QTableWidgetItem(stream_size_qstr);
-        QTableWidgetItem *newItem_width = new QTableWidgetItem(width_qstr);
-        QTableWidgetItem *newItem_height = new QTableWidgetItem(height_qstr);
-        QTableWidgetItem *newItem_videoTitle = new QTableWidgetItem(videoTitle);
-        QTableWidgetItem *newItem_videoAuthor = new QTableWidgetItem(videoAuthor);
-        QTableWidgetItem *newItem_videoYear = new QTableWidgetItem(videoYear);
-        QTableWidgetItem *newItem_videoPerformer = new QTableWidgetItem(videoPerformer);
-        QTableWidgetItem *newItem_videoDescription = new QTableWidgetItem(videoDescription);
-        QTableWidgetItem *newItem_videoMovieName = new QTableWidgetItem(videoMovieName);
-        QTableWidgetItem *newItem_startTime = new QTableWidgetItem("0");
-        QTableWidgetItem *newItem_endTime = new QTableWidgetItem("0");
+        const QString arr_items[] = {
+            inputFile, fmt_qstr, size, durationTime, fps_qstr,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"DisplayAspectRatio")),
+            status, QString::number(bitrate_int),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"ChromaSubsampling")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitDepth")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"ColorSpace")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_range")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_primaries")).replace(".", ""),
+            mtrx_coeff,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"transfer_characteristics")).replace(".", ""),
+            max_luminance, min_luminance,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxCLL")).replace(" cd/m2", ""),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxFALL")).replace(" cd/m2", ""),
+            mastering_display_color_primaries, inputFolder, QString::number(duration_double, 'f', 3),
+            chroma_coord, white_coord,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"StreamSize")),
+            width_qstr, height_qstr,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"Title")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"Movie")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"YEAR")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"AUTHOR")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"Performer")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"Description"))
+        };
 
-        newItem_fmt->setTextAlignment(Qt::AlignCenter);
-        newItem_resolution->setTextAlignment(Qt::AlignCenter);
-        newItem_duration_time->setTextAlignment(Qt::AlignCenter);
-        newItem_fps->setTextAlignment(Qt::AlignCenter);
-        newItem_aspect_ratio->setTextAlignment(Qt::AlignCenter);
-        newItem_bitrate->setTextAlignment(Qt::AlignCenter);
-        newItem_subsampling->setTextAlignment(Qt::AlignCenter);
-        newItem_bit_depth->setTextAlignment(Qt::AlignCenter);
-        newItem_color_space->setTextAlignment(Qt::AlignCenter);
-        newItem_color_range->setTextAlignment(Qt::AlignCenter);
-        newItem_color_primaries->setTextAlignment(Qt::AlignCenter);
-        newItem_color_matrix->setTextAlignment(Qt::AlignCenter);
-        newItem_transfer_characteristics->setTextAlignment(Qt::AlignCenter);
-        newItem_max_lum->setTextAlignment(Qt::AlignCenter);
-        newItem_min_lum->setTextAlignment(Qt::AlignCenter);
-        newItem_max_cll->setTextAlignment(Qt::AlignCenter);
-        newItem_max_fall->setTextAlignment(Qt::AlignCenter);
-        newItem_mastering_display->setTextAlignment(Qt::AlignCenter);
+        for (int column = ColumnIndex::FILENAME; column <= ColumnIndex::T_VIDEODESCR; column++) {
+            QTableWidgetItem *item = new QTableWidgetItem(arr_items[column]);
+            if (column >= ColumnIndex::FORMAT && column <= ColumnIndex::MASTERDISPLAY) {
+                item->setTextAlignment(Qt::AlignCenter);
+            }
+            ui->tableWidget->setItem(numRows, column, item);
+        }
 
-        ui->tableWidget->setItem(numRows, ColumnIndex::FILENAME, newItem_file);
-        ui->tableWidget->setItem(numRows, ColumnIndex::PATH, newItem_folder);
-        ui->tableWidget->setItem(numRows, ColumnIndex::FORMAT, newItem_fmt);
-        ui->tableWidget->setItem(numRows, ColumnIndex::RESOLUTION, newItem_resolution);
-        ui->tableWidget->setItem(numRows, ColumnIndex::DURATION, newItem_duration_time);
-        ui->tableWidget->setItem(numRows, ColumnIndex::FPS, newItem_fps);
-        ui->tableWidget->setItem(numRows, ColumnIndex::AR, newItem_aspect_ratio);
-        ui->tableWidget->setItem(numRows, ColumnIndex::BITRATE, newItem_bitrate);
-        ui->tableWidget->setItem(numRows, ColumnIndex::SUBSAMPLING, newItem_subsampling);
-        ui->tableWidget->setItem(numRows, ColumnIndex::BITDEPTH, newItem_bit_depth);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORSPACE, newItem_color_space);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORRANGE, newItem_color_range);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORPRIM, newItem_color_primaries);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORMATRIX, newItem_color_matrix);
-        ui->tableWidget->setItem(numRows, ColumnIndex::TRANSFER, newItem_transfer_characteristics);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MAXLUM, newItem_max_lum);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MINLUM, newItem_min_lum);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MAXCLL, newItem_max_cll);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MAXFALL, newItem_max_fall);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MASTERDISPLAY, newItem_mastering_display);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_CHROMACOORD, newItem_chroma_coord);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_WHITECOORD, newItem_white_coord);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_DUR, newItem_duration);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_STREAMSIZE, newItem_stream_size);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_WIDTH, newItem_width);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_HEIGHT, newItem_height);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOTITLE, newItem_videoTitle);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOAUTHOR, newItem_videoAuthor);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOYEAR, newItem_videoYear);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOPERF, newItem_videoPerformer);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEODESCR, newItem_videoDescription);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOMOVIENAME, newItem_videoMovieName);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_STARTTIME, newItem_startTime);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_ENDTIME, newItem_endTime);
+        QTableWidgetItem *item_startTime = new QTableWidgetItem("0");
+        QTableWidgetItem *item_endTime = new QTableWidgetItem("0");
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_STARTTIME, item_startTime);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_ENDTIME, item_endTime);
 
         int smplrt_int;
         QString audioFormat("");
@@ -3259,16 +3182,15 @@ void Widget::setItemStyle(QTreeWidgetItem *item)
     QFont font = qApp->font();
     font.setItalic(true);
     QColor foregroundChildColor;
-    switch (_theme)
-    {
-        case 0:
-        case 1:
-        case 2:
-            foregroundChildColor.setRgb(qRgb(50, 100, 157));
-            break;
-        case 3:
-            foregroundChildColor.setRgb(qRgb(30, 50, 150));
-            break;
+    switch (_theme) {
+    case Theme::GRAY:
+    case Theme::DARK:
+    case Theme::WAVE:
+        foregroundChildColor.setRgb(qRgb(50, 100, 157));
+        break;
+    case Theme::DEFAULT:
+        foregroundChildColor.setRgb(qRgb(30, 50, 150));
+        break;
     }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
     item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
@@ -3576,22 +3498,21 @@ void Widget::setPresetIcon(QTreeWidgetItem *item, bool collapsed)
 {
     QIcon sectionIcon;
     QString path;
-    switch (_theme)
-    {
-        case Theme::GRAY:
-        case Theme::DARK:
-        case Theme::WAVE:
-            if (collapsed) {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder.png");
-            } else {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png");}
-            break;
-        case Theme::DEFAULT:
-            if (collapsed) {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder_light.png");
-            } else {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open_light.png");}
-            break;
+    switch (_theme) {
+    case Theme::GRAY:
+    case Theme::DARK:
+    case Theme::WAVE:
+        if (collapsed) {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder.png");
+        } else {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png");}
+        break;
+    case Theme::DEFAULT:
+        if (collapsed) {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder_light.png");
+        } else {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open_light.png");}
+        break;
     }
     sectionIcon.addFile(path, QSize(), QIcon::Normal, QIcon::Off);
     item->setIcon(0, sectionIcon);

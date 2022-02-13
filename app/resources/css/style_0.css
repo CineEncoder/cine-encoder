@@ -114,6 +114,13 @@ QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
     background-color: @tableBackground;
 }
 
+#AudioLabel {
+    color: #09161E; font: 24pt; font-style: oblique;
+}
+
+#SubtitleLabel {
+    color: #09161E; font: 24pt; font-style: oblique;
+}
 
 /**************************************************************************
 **  QToolTip
@@ -293,6 +300,9 @@ QTableWidget::item:selected {
     background-color: @tableRowSelectedBackground;
 }
 
+#TableWidgetLabel {
+    color: #09161E; font: 64pt; font-style: oblique;
+}
 
 /**************************************************************************
 **  QTreeWidget
