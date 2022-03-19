@@ -13,7 +13,7 @@
 
 #include "preset.h"
 #include "ui_preset.h"
-
+#include <QGraphicsDropShadowEffect>
 
 
 Preset::Preset(QWidget *parent):
@@ -26,6 +26,17 @@ Preset::Preset(QWidget *parent):
     ui->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
     this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_main);
+    shadow->setBlurRadius(10.0);
+    shadow->setColor(QColor(0, 0, 0, 160));
+    shadow->setOffset(0.0);
+    ui->widget_main->setGraphicsEffect(shadow);
+
+    // **************************** Set Event Filters ***********************************//
+    this->setAttribute(Qt::WA_Hover, true);
+    this->installEventFilter(this);
 
     ui->widget_main->installEventFilter(this);
     ui->widget_main->setAttribute(Qt::WA_Hover, true);
@@ -35,6 +46,7 @@ Preset::Preset(QWidget *parent):
     ui->frame_main->setAttribute(Qt::WA_NoMousePropagation, true);
 
     ui->frame_top->installEventFilter(this);
+    ui->frame_middle->setFocusPolicy(Qt::StrongFocus);
 }
 
 Preset::~Preset()
@@ -57,8 +69,7 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
             ui->frame_middle->setFocus();
             return true;
         }
-        return QDialog::eventFilter(watched, event);
-    }
+    } else
 
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
@@ -68,62 +79,53 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
             _clickPressedToResizeFlag.fill(false);
             return true;
         }
-        return QDialog::eventFilter(watched, event);
-    }
+    } else
 
-    if (watched == ui->widget_main) {   // ********** Resize window realisation *********** //
+    if (watched == this) {   // ********** Resize window realisation *********** //
         if (!this->isMaximized()) {
             if (event->type() == QEvent::HoverLeave) {
-                QGuiApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
+                QGuiApplication::restoreOverrideCursor();
                 return true;
+            } else
 
-            }
             if (event->type() == QEvent::HoverMove && _clickPressedToResizeFlag.indexOf(true) == -1) {
-                const QPoint &&mouseCoordinate = ui->widget_main->mapFromGlobal(QCursor::pos());
+                const QPoint &&mouseCoordinate = this->mapFromGlobal(QCursor::pos());
                 if (mouseCoordinate.x() < 6) {
                     if (mouseCoordinate.y() < 6) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                        setCursor(QCursor(Qt::SizeFDiagCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > 6 && mouseCoordinate.y() < (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                        setCursor(QCursor(Qt::SizeHorCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                        setCursor(QCursor(Qt::SizeBDiagCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QDialog::eventFilter(watched, event);
-                }
+                } else
                 if (mouseCoordinate.x() > 6 && mouseCoordinate.x() < (width() - 6)) {
                     if (mouseCoordinate.y() < 6 || mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+                        setCursor(QCursor(Qt::SizeVerCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QDialog::eventFilter(watched, event);
-                }
+                } else
                 if (mouseCoordinate.x() > (width() - 6)) {
                     if (mouseCoordinate.y() < 6) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                        setCursor(QCursor(Qt::SizeBDiagCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > 6 && mouseCoordinate.y() < (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                        setCursor(QCursor(Qt::SizeHorCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                        setCursor(QCursor(Qt::SizeFDiagCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QDialog::eventFilter(watched, event);
                 }
                 QGuiApplication::restoreOverrideCursor();
-                return QDialog::eventFilter(watched, event);
-
-            }
+            } else
             if (event->type() == QEvent::MouseButtonPress) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->button() == Qt::LeftButton) {
@@ -132,61 +134,56 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
                     _oldWidth = this->width();
                     _oldHeight = this->height();
                     _globalMouseClickCoordinate = mouse_event->globalPos();
-                    const QPoint &&mouseClickCoordinate = mouse_event->pos();
+                    const QPoint mouseClickCoordinate = mouse_event->pos();
                     if (mouseClickCoordinate.x() < 6) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::LEFT_TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::LEFT] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::LEFT_BOTTOM] = true;
                             return true;
                         }
-                        return QDialog::eventFilter(watched, event);
-                    }
+                    } else
                     if (mouseClickCoordinate.x() > 6 && mouseClickCoordinate.x() < (_oldWidth - 6)) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::BOTTOM] = true;
                             return true;
                         }
-                        return QDialog::eventFilter(watched, event);
-                    }
+                    } else
                     if (mouseClickCoordinate.x() > (_oldWidth - 6)) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::RIGHT_TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::RIGHT] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::RIGHT_BOTTOM] = true;
                             return true;
                         }
-                        return QDialog::eventFilter(watched, event);
                     }
-                    return QDialog::eventFilter(watched, event);
                 }
-                return QDialog::eventFilter(watched, event);
-            }
+            } else
             if (event->type() == QEvent::MouseMove) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->buttons() & Qt::LeftButton) {
-                    int index = _clickPressedToResizeFlag.indexOf(true);
+                    const int index = _clickPressedToResizeFlag.indexOf(true);
                     if (index != -1) {
-                        const int &&deltaX = mouse_event->globalPos().x();
-                        const int &&deltaY = mouse_event->globalPos().y();
-                        const int &&deltaWidth = deltaX - _globalMouseClickCoordinate.x();
-                        const int &&deltaHeight = deltaY - _globalMouseClickCoordinate.y();
+                        const int deltaX = mouse_event->globalPos().x();
+                        const int deltaY = mouse_event->globalPos().y();
+                        const int deltaWidth = deltaX - _globalMouseClickCoordinate.x();
+                        const int deltaHeight = deltaY - _globalMouseClickCoordinate.y();
                         switch (index) {
                         case Resize::LEFT:
                             setGeometry(deltaX, _oldPosY, _oldWidth - deltaWidth, _oldHeight);
@@ -215,33 +212,27 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
                         }
                         return true;
                     }
-                    return QDialog::eventFilter(watched, event);
                 }
-                return QDialog::eventFilter(watched, event);
             }
-            return QDialog::eventFilter(watched, event);
         }
-        return QDialog::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->frame_main) {   // ******** Restore cursor realisation ********** //
         if (event->type() == QEvent::HoverMove) {
-            QGuiApplication::restoreOverrideCursor();
+            setCursor(QCursor(Qt::ArrowCursor));
             return true;
         }
-        return QDialog::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->frame_top) {    // ******* Drag and expand window realisation ******* //
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                _mouseClickCoordinate = mouse_event->pos();
+                _mouseClickCoordinate = mouse_event->pos() + QPoint(7,7);
                 _clickPressedFlag = true;
                 return true;
             }
-            return QDialog::eventFilter(watched, event);
-        }
+        } else
         if ((event->type() == QEvent::MouseMove) && _clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
@@ -249,17 +240,14 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
                 this->move(mouse_event->globalPos() - _mouseClickCoordinate);
                 return true;
             }
-            return QDialog::eventFilter(watched, event);
-        }
+        } else
         if (event->type() == QEvent::MouseButtonDblClick) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
                 on_expandWindow_clicked();
                 return true;
             }
-            return QDialog::eventFilter(watched, event);
         }
-        return QDialog::eventFilter(watched, event);
     }
     return QDialog::eventFilter(watched, event);
 }
@@ -272,6 +260,7 @@ void Preset::setParameters(QByteArray *ptr_presetWindowGeometry, QVector<QString
         this->restoreGeometry(*_ptr_presetWindowGeometry);
         if (this->isMaximized()) {
             _expandWindowsState = true;
+            layout()->setMargin(0);
         }
     }
     _repeat = 0;
@@ -344,39 +333,39 @@ void Preset::setParameters(QByteArray *ptr_presetWindowGeometry, QVector<QString
 //    ui->lineEdit_max_cll->setValidator(intValidator);
 //    ui->lineEdit_max_fall->setValidator(intValidator);
 
-    ui->textBrowser_presetname->setText((*_new_param)[Parameters::_OUTPUT_PARAM]);
-    ui->comboBox_codec->setCurrentIndex((*_new_param)[Parameters::_CODEC].toInt());
-    ui->comboBox_mode->setCurrentIndex((*_new_param)[Parameters::_MODE].toInt());
-    ui->comboBox_container->setCurrentIndex((*_new_param)[Parameters::_CONTAINER].toInt());
-    ui->lineEdit_bitrate->setText((*_new_param)[Parameters::_BQR]);
-    ui->lineEdit_minrate->setText((*_new_param)[Parameters::_MINRATE]);
-    ui->lineEdit_maxrate->setText((*_new_param)[Parameters::_MAXRATE]);
-    ui->lineEdit_bufsize->setText((*_new_param)[Parameters::_BUFSIZE]);
-    ui->comboBox_level->setCurrentIndex((*_new_param)[Parameters::_LEVEL].toInt());
-    ui->comboBoxFrameRate->setCurrentIndex((*_new_param)[Parameters::_FRAME_RATE].toInt());
-    ui->comboBoxBlending->setCurrentIndex((*_new_param)[Parameters::_BLENDING].toInt());
-    ui->comboBox_width->setCurrentIndex((*_new_param)[Parameters::_WIDTH].toInt());
-    ui->comboBox_height->setCurrentIndex((*_new_param)[Parameters::_HEIGHT].toInt());
-    ui->comboBox_pass->setCurrentIndex((*_new_param)[Parameters::_PASS].toInt());
-    ui->comboBox_preset->setCurrentIndex((*_new_param)[Parameters::_PRESET].toInt());
-    ui->comboBox_color_range->setCurrentIndex((*_new_param)[Parameters::_COLOR_RANGE].toInt());
-    ui->comboBox_color_prim->setCurrentIndex((*_new_param)[Parameters::_PRIMARY].toInt());
-    ui->comboBox_color_matrix->setCurrentIndex((*_new_param)[Parameters::_MATRIX].toInt());
-    ui->comboBox_transfer->setCurrentIndex((*_new_param)[Parameters::_TRC].toInt());
-    ui->lineEdit_min_lum->setText((*_new_param)[Parameters::_MIN_LUM]);
-    ui->lineEdit_max_lum->setText((*_new_param)[Parameters::_MAX_LUM]);
-    ui->lineEdit_max_cll->setText((*_new_param)[Parameters::_MAX_CLL]);
-    ui->lineEdit_max_fall->setText((*_new_param)[Parameters::_MAX_FALL]);
-    ui->comboBox_master_disp->setCurrentIndex((*_new_param)[Parameters::_MASTER_DISPLAY].toInt());
-    ui->lineEdit_chroma_coord->setText((*_new_param)[Parameters::_CHROMA_COORD]);
-    ui->lineEdit_white_coord->setText((*_new_param)[Parameters::_WHITE_COORD]);
-    ui->comboBox_audio_codec->setCurrentIndex((*_new_param)[Parameters::_AUDIO_CODEC].toInt());
-    ui->comboBox_audio_bitrate->setCurrentIndex((*_new_param)[Parameters::_AUDIO_BITRATE].toInt());
-    ui->comboBox_audio_sampling->setCurrentIndex((*_new_param)[Parameters::_ASAMPLE_RATE].toInt());
-    ui->comboBox_audio_channels->setCurrentIndex((*_new_param)[Parameters::_ACHANNELS].toInt());
-    ui->checkBox_primaries->setCheckState((Qt::CheckState)(*_new_param)[Parameters::_REP_PRIM].toInt());
-    ui->checkBox_matrix->setCheckState((Qt::CheckState)(*_new_param)[Parameters::_REP_MATRIX].toInt());
-    ui->checkBox_transfer->setCheckState((Qt::CheckState)(*_new_param)[Parameters::_REP_TRC].toInt());
+    ui->textBrowser_presetname->setText((*_new_param)[CurParamIndex::OUTPUT_PARAM]);
+    ui->comboBox_codec->setCurrentIndex((*_new_param)[CurParamIndex::CODEC].toInt());
+    ui->comboBox_mode->setCurrentIndex((*_new_param)[CurParamIndex::MODE].toInt());
+    ui->comboBox_container->setCurrentIndex((*_new_param)[CurParamIndex::CONTAINER].toInt());
+    ui->lineEdit_bitrate->setText((*_new_param)[CurParamIndex::BQR]);
+    ui->lineEdit_minrate->setText((*_new_param)[CurParamIndex::MINRATE]);
+    ui->lineEdit_maxrate->setText((*_new_param)[CurParamIndex::MAXRATE]);
+    ui->lineEdit_bufsize->setText((*_new_param)[CurParamIndex::BUFSIZE]);
+    ui->comboBox_level->setCurrentIndex((*_new_param)[CurParamIndex::LEVEL].toInt());
+    ui->comboBoxFrameRate->setCurrentIndex((*_new_param)[CurParamIndex::FRAME_RATE].toInt());
+    ui->comboBoxBlending->setCurrentIndex((*_new_param)[CurParamIndex::BLENDING].toInt());
+    ui->comboBox_width->setCurrentIndex((*_new_param)[CurParamIndex::WIDTH].toInt());
+    ui->comboBox_height->setCurrentIndex((*_new_param)[CurParamIndex::HEIGHT].toInt());
+    ui->comboBox_pass->setCurrentIndex((*_new_param)[CurParamIndex::PASS].toInt());
+    ui->comboBox_preset->setCurrentIndex((*_new_param)[CurParamIndex::PRESET].toInt());
+    ui->comboBox_color_range->setCurrentIndex((*_new_param)[CurParamIndex::COLOR_RANGE].toInt());
+    ui->comboBox_color_prim->setCurrentIndex((*_new_param)[CurParamIndex::PRIMARY].toInt());
+    ui->comboBox_color_matrix->setCurrentIndex((*_new_param)[CurParamIndex::MATRIX].toInt());
+    ui->comboBox_transfer->setCurrentIndex((*_new_param)[CurParamIndex::TRC].toInt());
+    ui->lineEdit_min_lum->setText((*_new_param)[CurParamIndex::MIN_LUM]);
+    ui->lineEdit_max_lum->setText((*_new_param)[CurParamIndex::MAX_LUM]);
+    ui->lineEdit_max_cll->setText((*_new_param)[CurParamIndex::MAX_CLL]);
+    ui->lineEdit_max_fall->setText((*_new_param)[CurParamIndex::MAX_FALL]);
+    ui->comboBox_master_disp->setCurrentIndex((*_new_param)[CurParamIndex::MASTER_DISPLAY].toInt());
+    ui->lineEdit_chroma_coord->setText((*_new_param)[CurParamIndex::CHROMA_COORD]);
+    ui->lineEdit_white_coord->setText((*_new_param)[CurParamIndex::WHITE_COORD]);
+    ui->comboBox_audio_codec->setCurrentIndex((*_new_param)[CurParamIndex::AUDIO_CODEC].toInt());
+    ui->comboBox_audio_bitrate->setCurrentIndex((*_new_param)[CurParamIndex::AUDIO_BITRATE].toInt());
+    ui->comboBox_audio_sampling->setCurrentIndex((*_new_param)[CurParamIndex::ASAMPLE_RATE].toInt());
+    ui->comboBox_audio_channels->setCurrentIndex((*_new_param)[CurParamIndex::ACHANNELS].toInt());
+    ui->checkBox_primaries->setCheckState((Qt::CheckState)(*_new_param)[CurParamIndex::REP_PRIM].toInt());
+    ui->checkBox_matrix->setCheckState((Qt::CheckState)(*_new_param)[CurParamIndex::REP_MATRIX].toInt());
+    ui->checkBox_transfer->setCheckState((Qt::CheckState)(*_new_param)[CurParamIndex::REP_TRC].toInt());
 }
 
 void Preset::on_closeWindow_clicked()
@@ -387,12 +376,13 @@ void Preset::on_closeWindow_clicked()
 void Preset::on_expandWindow_clicked()
 {
     if (!this->isMaximized()) {
-        this->showMaximized();
         _expandWindowsState = true;
-    }
-    else {
-        this->showNormal();
+        layout()->setMargin(0);
+        this->showMaximized();
+    } else {
         _expandWindowsState = false;
+        layout()->setMargin(6);
+        this->showNormal();
     }
 }
 
@@ -403,39 +393,39 @@ void Preset::on_buttonCancel_clicked()  /*** Close preset window ***/
 
 void Preset::on_buttonApply_clicked()  /*** Apply preset ***/
 {
-    (*_new_param)[Parameters::_OUTPUT_PARAM] = ui->textBrowser_presetname->toPlainText();
-    (*_new_param)[Parameters::_CODEC] = QString::number(ui->comboBox_codec->currentIndex());
-    (*_new_param)[Parameters::_MODE] = QString::number(ui->comboBox_mode->currentIndex());
-    (*_new_param)[Parameters::_CONTAINER] = QString::number(ui->comboBox_container->currentIndex());
-    (*_new_param)[Parameters::_BQR] = ui->lineEdit_bitrate->text();
-    (*_new_param)[Parameters::_MINRATE] = ui->lineEdit_minrate->text();
-    (*_new_param)[Parameters::_MAXRATE] = ui->lineEdit_maxrate->text();
-    (*_new_param)[Parameters::_BUFSIZE] = ui->lineEdit_bufsize->text();
-    (*_new_param)[Parameters::_LEVEL] = QString::number(ui->comboBox_level->currentIndex());
-    (*_new_param)[Parameters::_FRAME_RATE] = QString::number(ui->comboBoxFrameRate->currentIndex());
-    (*_new_param)[Parameters::_BLENDING] = QString::number(ui->comboBoxBlending->currentIndex());
-    (*_new_param)[Parameters::_WIDTH] = QString::number(ui->comboBox_width->currentIndex());
-    (*_new_param)[Parameters::_HEIGHT] = QString::number(ui->comboBox_height->currentIndex());
-    (*_new_param)[Parameters::_PASS]= QString::number(ui->comboBox_pass->currentIndex());
-    (*_new_param)[Parameters::_PRESET] = QString::number(ui->comboBox_preset->currentIndex());
-    (*_new_param)[Parameters::_COLOR_RANGE] = QString::number(ui->comboBox_color_range->currentIndex());
-    (*_new_param)[Parameters::_PRIMARY] = QString::number(ui->comboBox_color_prim->currentIndex());
-    (*_new_param)[Parameters::_MATRIX] = QString::number(ui->comboBox_color_matrix->currentIndex());
-    (*_new_param)[Parameters::_TRC] = QString::number(ui->comboBox_transfer->currentIndex());
-    (*_new_param)[Parameters::_MIN_LUM] = ui->lineEdit_min_lum->text();
-    (*_new_param)[Parameters::_MAX_LUM] = ui->lineEdit_max_lum->text();
-    (*_new_param)[Parameters::_MAX_CLL] = ui->lineEdit_max_cll->text();
-    (*_new_param)[Parameters::_MAX_FALL] = ui->lineEdit_max_fall->text();
-    (*_new_param)[Parameters::_MASTER_DISPLAY] = QString::number(ui->comboBox_master_disp->currentIndex());
-    (*_new_param)[Parameters::_CHROMA_COORD] = ui->lineEdit_chroma_coord->text();
-    (*_new_param)[Parameters::_WHITE_COORD] = ui->lineEdit_white_coord->text();
-    (*_new_param)[Parameters::_AUDIO_CODEC] = QString::number(ui->comboBox_audio_codec->currentIndex());
-    (*_new_param)[Parameters::_AUDIO_BITRATE] = QString::number(ui->comboBox_audio_bitrate->currentIndex());
-    (*_new_param)[Parameters::_ASAMPLE_RATE] = QString::number(ui->comboBox_audio_sampling->currentIndex());
-    (*_new_param)[Parameters::_ACHANNELS] = QString::number(ui->comboBox_audio_channels->currentIndex());
-    (*_new_param)[Parameters::_REP_PRIM] = QString::number(ui->checkBox_primaries->checkState());
-    (*_new_param)[Parameters::_REP_MATRIX] = QString::number(ui->checkBox_matrix->checkState());
-    (*_new_param)[Parameters::_REP_TRC] = QString::number(ui->checkBox_transfer->checkState());
+    (*_new_param)[CurParamIndex::OUTPUT_PARAM] = ui->textBrowser_presetname->toPlainText();
+    (*_new_param)[CurParamIndex::CODEC] = QString::number(ui->comboBox_codec->currentIndex());
+    (*_new_param)[CurParamIndex::MODE] = QString::number(ui->comboBox_mode->currentIndex());
+    (*_new_param)[CurParamIndex::CONTAINER] = QString::number(ui->comboBox_container->currentIndex());
+    (*_new_param)[CurParamIndex::BQR] = ui->lineEdit_bitrate->text();
+    (*_new_param)[CurParamIndex::MINRATE] = ui->lineEdit_minrate->text();
+    (*_new_param)[CurParamIndex::MAXRATE] = ui->lineEdit_maxrate->text();
+    (*_new_param)[CurParamIndex::BUFSIZE] = ui->lineEdit_bufsize->text();
+    (*_new_param)[CurParamIndex::LEVEL] = QString::number(ui->comboBox_level->currentIndex());
+    (*_new_param)[CurParamIndex::FRAME_RATE] = QString::number(ui->comboBoxFrameRate->currentIndex());
+    (*_new_param)[CurParamIndex::BLENDING] = QString::number(ui->comboBoxBlending->currentIndex());
+    (*_new_param)[CurParamIndex::WIDTH] = QString::number(ui->comboBox_width->currentIndex());
+    (*_new_param)[CurParamIndex::HEIGHT] = QString::number(ui->comboBox_height->currentIndex());
+    (*_new_param)[CurParamIndex::PASS]= QString::number(ui->comboBox_pass->currentIndex());
+    (*_new_param)[CurParamIndex::PRESET] = QString::number(ui->comboBox_preset->currentIndex());
+    (*_new_param)[CurParamIndex::COLOR_RANGE] = QString::number(ui->comboBox_color_range->currentIndex());
+    (*_new_param)[CurParamIndex::PRIMARY] = QString::number(ui->comboBox_color_prim->currentIndex());
+    (*_new_param)[CurParamIndex::MATRIX] = QString::number(ui->comboBox_color_matrix->currentIndex());
+    (*_new_param)[CurParamIndex::TRC] = QString::number(ui->comboBox_transfer->currentIndex());
+    (*_new_param)[CurParamIndex::MIN_LUM] = ui->lineEdit_min_lum->text();
+    (*_new_param)[CurParamIndex::MAX_LUM] = ui->lineEdit_max_lum->text();
+    (*_new_param)[CurParamIndex::MAX_CLL] = ui->lineEdit_max_cll->text();
+    (*_new_param)[CurParamIndex::MAX_FALL] = ui->lineEdit_max_fall->text();
+    (*_new_param)[CurParamIndex::MASTER_DISPLAY] = QString::number(ui->comboBox_master_disp->currentIndex());
+    (*_new_param)[CurParamIndex::CHROMA_COORD] = ui->lineEdit_chroma_coord->text();
+    (*_new_param)[CurParamIndex::WHITE_COORD] = ui->lineEdit_white_coord->text();
+    (*_new_param)[CurParamIndex::AUDIO_CODEC] = QString::number(ui->comboBox_audio_codec->currentIndex());
+    (*_new_param)[CurParamIndex::AUDIO_BITRATE] = QString::number(ui->comboBox_audio_bitrate->currentIndex());
+    (*_new_param)[CurParamIndex::ASAMPLE_RATE] = QString::number(ui->comboBox_audio_sampling->currentIndex());
+    (*_new_param)[CurParamIndex::ACHANNELS] = QString::number(ui->comboBox_audio_channels->currentIndex());
+    (*_new_param)[CurParamIndex::REP_PRIM] = QString::number(ui->checkBox_primaries->checkState());
+    (*_new_param)[CurParamIndex::REP_MATRIX] = QString::number(ui->checkBox_matrix->checkState());
+    (*_new_param)[CurParamIndex::REP_TRC] = QString::number(ui->checkBox_transfer->checkState());
 
     this->accept();
 }

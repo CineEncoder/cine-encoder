@@ -5,25 +5,25 @@
 
 @mainBackground = #2C2C34;
 
-@tableBackground = #16181F;
-@tableAlternateBackground = #13151C;
+@tableBackground = #192327;
+@tableAlternateBackground = #182123;
 @tableRowSelectedBackground = #1C252F;
 @tableTextColor = #B4B4B4;
 @tableTextSelected = #D2D2D2;
 @tableGrid = #373C47;
 
-@frameLeftRightBackground = #292930;
-@frameLeftRightBorder = #32363F;
-@frameSourceOutputBackground = #292930;
-@frameSourceOutputText = #A0A5AA;
-@frameSourceOutputBorder = #32363F;
-@frameHintBackground = #202A30;
+@frameEdgingBackground = #212428;
+@frameMiddleBorder = #32363F;
+@frameMiddleBackground = #192327;
+@frameTextColor = #A0A5AA;
+@frameEdgeBorder = #32363F;
+@frameTopBackground = #202A30;
 @frameBottomBackground = #202A30;
 @frameHeaderBackground = #25272C;
 
-@scrollBackground = #171920;
+@scrollBackground = #1A1C24;
 @scrollHandle = #1C1E26;
-@scrollAddLineSubLine = #191B22;
+@scrollAddLineSubLine = #1C1E26;
 
 @headerTextColor = #A0A5AA;
 @headerBackground = #1C2026;
@@ -55,13 +55,13 @@ QMainWindow::separator {
 }
 
 QWidget {
-    background: @frameLeftRightBackground;
+    background: @frameEdgingBackground;
 }
 QWidget#centralwidget {
-    background: #175C7F;
+    background: @frameTopBackground;
 }
 QWidget#widget_main {
-    background: #175C7F;
+    background: @frameTopBackground;
 }
 
 
@@ -78,18 +78,27 @@ QFrame#frameMetadata,
 QFrame#frameLog,
 QFrame#frameLeft,
 QFrame#frameRight,
+QFrame#frame_task {
+    border-left: 1px solid @frameEdgeBorder;
+    border-bottom: 1px solid @frameEdgeBorder;
+    border-right: 1px solid @frameEdgeBorder;
+    border-top: none;
+    background-color: @frameEdgingBackground;
+}
+
 QFrame#frame_preview,
 QFrame#frame_source,
-QFrame#frame_output,
-QFrame#frame_task {
-    border-left: 1px solid @frameSourceOutputBorder;
-    border-bottom: 1px solid @frameSourceOutputBorder;
-    border-right: 1px solid @frameSourceOutputBorder;
+QFrame#frame_output {
+    border-left: 1px solid @frameEdgeBorder;
+    border-bottom: 1px solid @frameEdgeBorder;
+    border-right: 1px solid @frameEdgeBorder;
     border-top: none;
-    background-color: @frameLeftRightBackground;
+    background-color: @frameMiddleBackground;
 }
+
 QFrame#frameTaskHeader {
-    border-top: 1px solid @frameSourceOutputBorder;
+    min-height: 23px;
+    border-top: 1px solid @frameEdgeBorder;
     background-color: @frameHeaderBackground;
 }
 
@@ -102,18 +111,25 @@ QFrame#frameAltTab_2
 }
 QFrame#frame_bottom {
     border: none;
-    /*border-top: 1px solid @frameSourceOutputBorder;*/
+    /*border-top: 1px solid @frameEdgeBorder;*/
     background-color: @frameBottomBackground;
 }
 QFrame#frame_top {
     border: none;
-    background-color: @frameHintBackground;
+    background-color: @frameTopBackground;
 }
 QFrame#frameTab_1, QFrame#frameTab_2, QFrame#frameTab_3, QFrame#frameTab_4,
 QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
     background-color: @tableBackground;
 }
 
+#AudioLabel {
+    color: @frameHeaderBackground; font: 24pt; font-style: oblique;
+}
+
+#SubtitleLabel {
+    color: @frameHeaderBackground; font: 24pt; font-style: oblique;
+}
 
 /**************************************************************************
 **  QToolTip
@@ -293,6 +309,9 @@ QTableWidget::item:selected {
     background-color: @tableRowSelectedBackground;
 }
 
+#TableWidgetLabel {
+    color: @frameHeaderBackground; font: 64pt; font-style: oblique;
+}
 
 /**************************************************************************
 **  QTreeWidget
@@ -416,41 +435,41 @@ QTreeWidget::branch:open:has-children:has-siblings {
 
 QTabWidget {
     qproperty-tabPosition: North;
-    color: @frameSourceOutputText;
-    background-color: @frameSourceOutputBackground;
+    color: @frameTextColor;
+    background-color: @frameMiddleBackground;
 }
 QTabWidget::tab-bar {
     alignment: left;
-    background-color: @frameSourceOutputBackground;
+    background-color: @frameMiddleBackground;
 }
 QTabWidget::pane {
     top:-1px;
-    border: 1px solid @frameLeftRightBorder;
-    background-color: @frameSourceOutputBackground;
+    border: 1px solid @frameMiddleBorder;
+    background-color: @frameMiddleBackground;
 }
 
 /*********************************************/
 
 QTabWidget#tabWidgetRight {
     qproperty-tabPosition: North;
-    color: @frameSourceOutputText;
-    background-color: @frameSourceOutputBackground;
+    color: @frameTextColor;
+    background-color: @frameMiddleBackground;
 }
 QTabWidget::tab-bar#tabWidgetRight {
     alignment: left;
-    background-color: @frameSourceOutputBackground;
+    background-color: @frameMiddleBackground;
 }
 QTabWidget::pane#tabWidgetRight {
     top:-1px;
-    border: 1px solid @frameLeftRightBorder;
-    background-color: @frameSourceOutputBackground;
+    border: 1px solid @frameMiddleBorder;
+    background-color: @frameMiddleBackground;
 }
 
 /*********************************************/
 
 QTabWidget#tabWidgetSettings {
     qproperty-tabPosition: South;
-    color: @frameSourceOutputText;
+    color: @frameTextColor;
     background-color: @mainBackground;
 }
 QTabWidget::tab-bar#tabWidgetSettings {
@@ -663,7 +682,7 @@ QLabel {
     background-color: transparent;
 }
 QLabel:disabled {
-    color: @frameSourceOutputText;
+    color: @frameTextColor;
     background-color: transparent;
 }
 
@@ -671,7 +690,7 @@ QLabel#labelThumb {
     color: @frameHeaderBackground;
     font: 24pt;
     font-style: oblique;
-    background-color: @frameSourceOutputBackground;
+    background-color: @frameMiddleBackground;
 }
 
 QLabel#labelSplitPreview {
@@ -886,9 +905,11 @@ QPushButton:hover#buttonHotOutputFile,
 QPushButton:hover#actionSettings,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
-QPushButton:hover#closeWindow,
 QPushButton:hover#buttonCloseTaskWindow {
-        background-color: #343B48;
+    background-color: #343B48;
+}
+QPushButton:hover#closeWindow {
+    background-color: #EE0000;
 }
 QPushButton:pressed#actionResetLabels,
 QPushButton:pressed#actionClearAudioTitles,
@@ -913,7 +934,7 @@ QPushButton:pressed#hideWindow,
 QPushButton:pressed#expandWindow,
 QPushButton:pressed#closeWindow,
 QPushButton:pressed#buttonCloseTaskWindow {
-        background-color: #55AAFF;
+    background-color: #55AAFF;
 }
 
 
@@ -1022,7 +1043,7 @@ QPushButton:pressed#buttonOutputPath {
 QPushButton#buttonApplyPreset {
     border-radius: 0px;
     border: 1px solid #373C46;
-    color: @frameSourceOutputText;
+    color: @frameTextColor;
     background-color: transparent;
 }
 QPushButton:disabled#buttonApplyPreset
@@ -1216,13 +1237,13 @@ QSlider::handle:horizontal:disabled#horizontalSlider_resize {
 **************************************************************************/
 
 QGroupBox {
-    border: 1px solid @frameLeftRightBorder;
+    border: 1px solid @frameMiddleBorder;
     margin-top: 12px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
-    background: @frameSourceOutputBackground;
+    background: @frameMiddleBackground;
 }
 QGroupBox::title {
     subcontrol-origin: margin;
@@ -1230,7 +1251,7 @@ QGroupBox::title {
     top: 0 ex;
     left: 12px;
     padding: 5px 5px;
-    color: @frameSourceOutputText;
+    color: @frameTextColor;
 }
 
 /*********************************************/
@@ -1246,13 +1267,13 @@ QGroupBox#groupBoxSettings_8,
 QGroupBox#groupBoxSettings_9,
 QGroupBox#groupBoxSettings_10
 {
-    border: 1px solid @frameLeftRightBorder;
+    border: 1px solid @frameMiddleBorder;
     margin-top: 21px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
-    background: @frameSourceOutputBackground;
+    background: @frameMiddleBackground;
 }
 QGroupBox::title#groupBoxSettings_1,
 QGroupBox::title#groupBoxSettings_2,
@@ -1292,16 +1313,16 @@ QFrame[frameShape="5"] {
 QDockWidget {
     titlebar-close-icon: url(:/resources/icons/16x16/cil-x.png);
     titlebar-normal-icon: url(:/resources/icons/16x16/cil-pin.png);
-    color: @frameSourceOutputText;
+    color: @frameTextColor;
 }
 QDockWidget::title {
     padding-left: 12px;
     padding-top: 3px;
     padding-bottom: 3px;
     text-align: center left;
-    border-left: 1px solid @frameSourceOutputBorder;
-    border-top: 1px solid @frameSourceOutputBorder;
-    border-right: 1px solid @frameSourceOutputBorder;
+    border-left: 1px solid @frameEdgeBorder;
+    border-top: 1px solid @frameEdgeBorder;
+    border-right: 1px solid @frameEdgeBorder;
     background: @frameHeaderBackground;
 }
 QDockWidget::close-button,
@@ -1345,7 +1366,7 @@ QDockWidget::float-button {
 
 QTabBar, QDockWidget QTabBar {
     /*qproperty-drawBase: 0;*/
-    color: @frameSourceOutputText;
+    color: @frameTextColor;
 }
 QTabBar::tab, QDockWidget QTabBar::tab {
 }
@@ -1356,8 +1377,8 @@ QTabBar::tab:top, QDockWidget QTabBar::tab:top {
     padding-bottom: 3px;
     padding-left: 10px;
     padding-right: 10px;
-    border-bottom: 1px solid @frameLeftRightBorder;
-    background-color: @frameSourceOutputBackground;
+    border-bottom: 1px solid @frameMiddleBorder;
+    background-color: @frameMiddleBackground;
 }
 QTabBar::tab:top:selected, QDockWidget QTabBar::tab:top:selected {
     padding-top: 3px;
@@ -1365,11 +1386,11 @@ QTabBar::tab:top:selected, QDockWidget QTabBar::tab:top:selected {
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: -1px;
-    border: 1px solid @frameLeftRightBorder;
+    border: 1px solid @frameMiddleBorder;
     background-color: @tableBackground;
 }
 QTabBar::tab:top:!selected, QDockWidget QTabBar::tab:top:!selected {
-    background-color: @frameSourceOutputBackground;
+    background-color: @frameMiddleBackground;
 }
 
 QTabBar::tab:bottom, QDockWidget QTabBar::tab:bottom {
@@ -1379,7 +1400,7 @@ QTabBar::tab:bottom, QDockWidget QTabBar::tab:bottom {
     padding-left: 10px;
     padding-right: 10px;
     border: none;
-    background-color: @frameSourceOutputBackground;
+    background-color: @frameMiddleBackground;
 }
 QTabBar::tab:bottom:selected, QDockWidget QTabBar::tab:bottom:selected {
     padding-top: 3px;
@@ -1387,12 +1408,12 @@ QTabBar::tab:bottom:selected, QDockWidget QTabBar::tab:bottom:selected {
     padding-left: 10px;
     padding-right: 10px;
     margin-top: -1px;
-    border-left: 1px solid @frameLeftRightBorder;
-    border-right: 1px solid @frameLeftRightBorder;
-    border-bottom: 1px solid @frameLeftRightBorder;
+    border-left: 1px solid @frameMiddleBorder;
+    border-right: 1px solid @frameMiddleBorder;
+    border-bottom: 1px solid @frameMiddleBorder;
     border-top: none;
     background-color: @frameHeaderBackground;
 }
 QTabBar::tab:bottom:!selected, QDockWidget QTabBar::tab:bottom:!selected {
-    background-color: @frameSourceOutputBackground;
+    background-color: @frameMiddleBackground;
 }

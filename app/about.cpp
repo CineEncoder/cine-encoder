@@ -13,7 +13,7 @@
 
 #include "about.h"
 #include "ui_about.h"
-
+#include <QGraphicsDropShadowEffect>
 
 
 About::About(QWidget *parent):
@@ -24,6 +24,13 @@ About::About(QWidget *parent):
     ui->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
     this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_main);
+    shadow->setBlurRadius(10.0);
+    shadow->setColor(QColor(0, 0, 0, 160));
+    shadow->setOffset(0.0);
+    ui->widget_main->setGraphicsEffect(shadow);
 
     ui->frame_top->installEventFilter(this);
 }
@@ -72,29 +79,24 @@ bool About::eventFilter(QObject *watched, QEvent *event)    /*** Drag window ***
             _clickPressedFlag = false;
             return true;
         }
-        return QDialog::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->frame_top) {
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                _mouseClickCoordinate = mouse_event->pos();
+                _mouseClickCoordinate = mouse_event->pos() + QPoint(7,7);
                 _clickPressedFlag = true;
                 return true;
             }
-            return QDialog::eventFilter(watched, event);
-        }
-
+        } else
         if ((event->type() == QEvent::MouseMove) && _clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
                 this->move(mouse_event->globalPos() - _mouseClickCoordinate);
                 return true;
             }
-            return QDialog::eventFilter(watched, event);
         }
-        return QDialog::eventFilter(watched, event);
     }
     return QDialog::eventFilter(watched, event);
 }

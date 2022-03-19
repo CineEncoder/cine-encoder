@@ -1,43 +1,43 @@
+#***********************************************************************
+#
+#                          C I N E   E N C O D E R
+#                                JULY, 2020
+#                            COPYRIGHT (C) 2020
+#
+# FILE: cine_encoder.pro
+# LICENSE: GNU General Public License v3.0
+#
+#***********************************************************************
+
+# QT
 QT += core
 QT += gui
 QT += multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 CONFIG += c++11
+CODECFORSRC = UTF-8
 
-# Default rules for deployment.
-
+# GENERAL
 TARGET = cine_encoder
 TEMPLATE = app
-# QMAKE_LFLAGS += /MANIFESTUAC:$$quote(\"level=\'requireAdministrator\' uiAccess=\'false\'\")
+VERSION = 3.5.3
 
-#OBJECTS_DIR = ../builddir/obj
-#MOC_DIR = ../builddir/moc
-#UI_DIR = ../builddir/ui
-#RCC_DIR = ../builddir/rcc
+# DIRS
+OBJECTS_DIR = ../builddir/obj
+MOC_DIR = ../builddir/moc
+UI_DIR = ../builddir/ui
+RCC_DIR = ../builddir/rcc
+DESTDIR = ../builddir
 
-#RES_DIR = $${PWD}/unknownsys_build
-#win32: RES_DIR = $${PWD}/builddir
-#unix:  RES_DIR = $${PWD}/builddir
-#macx: RES_DIR = $${PWD}/builddir
-
-#DESTDIR = $${RES_DIR}
-#OBJECTS_DIR = $${RES_DIR}/obj
-#MOC_DIR = $${RES_DIR}/moc
-#UI_DIR = $${RES_DIR}/ui
-#RCC_DIR = $${RES_DIR}/rcc
-#OUT_PWD = $${RES_DIR}
-
+# DEFINES
 DEFINES += QT_DEPRECATED_X
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
+# FILES
 SOURCES += \
     about.cpp \
     dialog.cpp \
     donate.cpp \
+    encoder.cpp \
     main.cpp \
     mainwindow.cpp \
     openingfiles.cpp \
@@ -47,8 +47,10 @@ SOURCES += \
 
 HEADERS += \
     about.h \
+    constants.h \
     dialog.h \
     donate.h \
+    encoder.h \
     mainwindow.h \
     openingfiles.h \
     preset.h \
@@ -68,15 +70,20 @@ FORMS += \
 RESOURCES += \
     files.qrc
 
-
-unix:!macx {
-    LIBS += -lmediainfo
-}
-
 win32 {
     RC_FILE = icon.rc
 }
 
+TRANSLATIONS += translation_de.ts \
+                translation_ru.ts \
+                translation_zh.ts
+
+# LIBS
+unix:!macx {
+    LIBS += -lmediainfo
+}
+
+# INSTALLS
 qnx: target.path = /tmp/bin
 else: unix:!android {
     target.path = /usr/bin
@@ -85,11 +92,3 @@ else: unix:!android {
 
 # BIN     = $(DESTDIR)/usr/bin
 # ICONS   = $(DESTDIR)/usr/share/icons/hicolor/64x64/apps
-
-#linguist
-
-TRANSLATIONS += translation_de.ts \
-                translation_ru.ts \
-                translation_zh.ts
-
-CODECFORSRC     = UTF-8

@@ -19,14 +19,13 @@
 #include "preset.h"
 #include "taskcomplete.h"
 #include "dialog.h"
-
+#include <QGraphicsDropShadowEffect>
 
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE
         #define UNICODE
     #endif
     #include <unistd.h>
-    #include <signal.h>
     #include <MediaInfo/MediaInfo.h>
     using namespace MediaInfoLib;
 #elif defined(Q_OS_WIN64)
@@ -61,30 +60,36 @@ Widget::Widget(QWidget *parent):
 #endif
     this->setMouseTracking(true);
     this->setAcceptDrops(true);
+    this->setAttribute(Qt::WA_TranslucentBackground);
 
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->centralwidget);
+    shadow->setBlurRadius(10.0);
+    shadow->setColor(QColor(0, 0, 0, 160));
+    shadow->setOffset(0.0);
+    ui->centralwidget->setGraphicsEffect(shadow);
     // **************************** Set front label ***********************************//
 
     QHBoxLayout *raiseLayout = new QHBoxLayout(ui->tableWidget);
     ui->tableWidget->setLayout(raiseLayout);
     raiseThumb = new QLabel(ui->tableWidget);
     raiseLayout->addWidget(raiseThumb);
+    raiseThumb->setObjectName(QString::fromUtf8("TableWidgetLabel"));
     raiseThumb->setAlignment(Qt::AlignCenter);
     raiseThumb->setText(tr("No media"));
-    raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
 
     audioThumb = new QLabel(ui->frameTab_2);
     ui->gridLayoutAudio->addWidget(audioThumb);
     audioThumb->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    audioThumb->setObjectName(QString::fromUtf8("AudioLabel"));
     audioThumb->setAlignment(Qt::AlignCenter);
     audioThumb->setText(tr("No audio"));
-    audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
 
     subtitleThumb = new QLabel(ui->frameTab_3);
     ui->gridLayoutSubtitle->addWidget(subtitleThumb);
     subtitleThumb->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    subtitleThumb->setObjectName(QString::fromUtf8("SubtitleLabel"));
     subtitleThumb->setAlignment(Qt::AlignCenter);
     subtitleThumb->setText(tr("No subtitle"));
-    subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
 
     // **************************** Create docks ***********************************//
 
@@ -143,14 +148,18 @@ Widget::Widget(QWidget *parent):
     }
 
     // **************************** Set Event Filters ***********************************//
+    this->setAttribute(Qt::WA_Hover, true);
+    this->installEventFilter(this);
 
-    ui->centralwidget->installEventFilter(this);
     ui->centralwidget->setAttribute(Qt::WA_Hover, true);
+    ui->centralwidget->setAttribute(Qt::WA_NoMousePropagation, true);
     ui->frame_main->installEventFilter(this);
     ui->frame_main->setAttribute(Qt::WA_Hover, true);
     ui->frame_main->setAttribute(Qt::WA_NoMousePropagation, true);
     ui->frame_top->installEventFilter(this);
     raiseThumb->installEventFilter(this);
+    ui->labelThumb->installEventFilter(this);
+    ui->frame_middle->setFocusPolicy(Qt::StrongFocus);
 }
 
 Widget::~Widget()
@@ -173,7 +182,7 @@ void Widget::closeEvent(QCloseEvent *event) // Show prompt when close app
     event->ignore();
     if (call_dialog(tr("Quit program?"))) {
 
-        if (processEncoding->state() != QProcess::NotRunning) processEncoding->kill();
+        if (encoder->getEncodingState() != QProcess::NotRunning) encoder->killEncoding();
         if (processThumbCreation->state() != QProcess::NotRunning) processThumbCreation->kill();
 
         QFile _prs_file(_preset_file);
@@ -336,6 +345,16 @@ void Widget::desktopEnvDetection()
 
 void Widget::createConnections()
 {
+    encoder = new Encoder(this);
+    connect(encoder, &Encoder::onEncodingMode, this, &Widget::onEncodingMode);
+    connect(encoder, &Encoder::onEncodingStarted, this, &Widget::onEncodingStarted);
+    connect(encoder, &Encoder::onEncodingInitError, this, &Widget::onEncodingInitError);
+    connect(encoder, &Encoder::onEncodingProgress, this, &Widget::onEncodingProgress);
+    connect(encoder, &Encoder::onEncodingLog, this, &Widget::onEncodingLog);
+    connect(encoder, &Encoder::onEncodingCompleted, this, &Widget::onEncodingCompleted);
+    connect(encoder, &Encoder::onEncodingAborted, this, &Widget::onEncodingAborted);
+    connect(encoder, &Encoder::onEncodingError, this, &Widget::onEncodingError);
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_1()));
     timerCallSetThumbnail = new QTimer(this);
@@ -687,7 +706,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     _thumb_path = _settings_path + QString("/thumbnails");
     _preset_file = _settings_path + QString("/presets.ini");
     _settings = new QSettings(_settings_path + QString("/settings.ini"), QSettings::IniFormat, this);
-    _status_encode_btn = "start";
+    _status_encode_btn = EncodingStatus::START;
     _timer_interval = 30;
     _curTime = 0;
     _language = "";
@@ -724,10 +743,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     animation = new QMovie(this);
     animation->setFileName(":/resources/icons/Animated/cil-spinner-circle.gif");
     animation->setScaledSize(QSize(18, 18));
-    processEncoding = new QProcess(this);
     processThumbCreation = new QProcess(this);
-    processEncoding->setProcessChannelMode(QProcess::MergedChannels);
-    processEncoding->setWorkingDirectory(QDir::homePath());
 
     // ****************************** Setup widgets ************************************//
     ui->labelAnimation->setMovie(animation);
@@ -899,9 +915,14 @@ void Widget::setParameters()    /*** Set parameters ***/
             }
             QString savedPresetName = child->text(30 + 7);
             child->setText(0, savedPresetName);
-            updateInfoFields(_preset_table[1][i], _preset_table[2][i], _preset_table[3][i],
-                             _preset_table[4][i], _preset_table[11][i], _preset_table[12][i],
-                             _preset_table[21][i], child, false);
+            updateInfoFields(_preset_table[1][i],
+                             _preset_table[2][i],
+                             _preset_table[3][i],
+                             _preset_table[4][i],
+                             _preset_table[11][i],
+                             _preset_table[12][i],
+                             _preset_table[21][i],
+                             child, false);
             setItemStyle(child);
             item->addChild(child);
         }
@@ -939,16 +960,13 @@ void Widget::setParameters()    /*** Set parameters ***/
 
     if (_language == "") {
         QLocale locale = QLocale::system();
-        if (locale.language() == QLocale::Chinese) {
-            _language = "zh";
-        }
-        else if (locale.language() == QLocale::German) {
-            _language = "de";
-        }
-        else if (locale.language() == QLocale::Russian) {
-            _language = "ru";
-        }
-        else {
+        QMap<int, QString> langIndex;
+        langIndex[QLocale::Chinese] = "zh";
+        langIndex[QLocale::German] = "de";
+        langIndex[QLocale::Russian] = "ru";
+        if (langIndex.contains(locale.language())) {
+            _language = langIndex.value(locale.language());
+        } else {
             _language = "en";
         }
     }
@@ -959,7 +977,10 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
     std::cout << "Desktop env.: " << _desktopEnv.toStdString() << std::endl;
 
-    if (this->isMaximized()) _expandWindowsState = true;
+    if (this->isMaximized()) {
+        _expandWindowsState = true;
+        layout()->setMargin(0);
+    }
 
     if (_batch_mode) {
         ui->comboBoxMode->blockSignals(true);
@@ -1002,22 +1023,21 @@ void Widget::on_closeWindow_clicked()    /*** Close window signal ***/
 
 void Widget::setExpandIcon()
 {
-    switch (_theme)
-    {
-        case Theme::GRAY:
-        case Theme::DARK:
-        case Theme::WAVE:
-            if (_expandWindowsState) {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
-            } else {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));}
-            break;
-        case Theme::DEFAULT:
-            if (_expandWindowsState) {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone_black.png"));
-            } else {
-                ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop_black.png"));}
-            break;
+    switch (_theme) {
+    case Theme::GRAY:
+    case Theme::DARK:
+    case Theme::WAVE:
+        if (_expandWindowsState) {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
+        } else {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));}
+        break;
+    case Theme::DEFAULT:
+        if (_expandWindowsState) {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone_black.png"));
+        } else {
+            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop_black.png"));}
+        break;
     }
 }
 
@@ -1025,9 +1045,11 @@ void Widget::on_expandWindow_clicked()    /*** Expand window ***/
 {
     if (!this->isMaximized()) {
         _expandWindowsState = true;
+        layout()->setMargin(0);
         this->showMaximized();
     } else {
         _expandWindowsState = false;
+        layout()->setMargin(6);
         this->showNormal();
     }
     setExpandIcon();
@@ -1061,10 +1083,22 @@ void Widget::on_actionDonate_clicked()   /*** Donate ***/
 void Widget::on_actionSettings_clicked()
 {
     Settings settings(this);
-    settings.setParameters(&_settingsWindowGeometry, &_output_folder, &_temp_folder, &_protection,
-                           &_showHDR_mode, &_timer_interval, &_theme, &_prefixName, &_suffixName,
-                           &_prefxType, &_suffixType, &_hideInTrayFlag, &_language, _desktopEnv,
-                           &_fontSize, &_font);
+    settings.setParameters(&_settingsWindowGeometry,
+                           &_output_folder,
+                           &_temp_folder,
+                           &_protection,
+                           &_showHDR_mode,
+                           &_timer_interval,
+                           &_theme,
+                           &_prefixName,
+                           &_suffixName,
+                           &_prefxType,
+                           &_suffixType,
+                           &_hideInTrayFlag,
+                           &_language,
+                           _desktopEnv,
+                           &_fontSize,
+                           &_font);
     settings.setModal(true);
     if (settings.exec() == QDialog::Accepted) {
         timer->setInterval(_timer_interval*1000);
@@ -1202,7 +1236,7 @@ void Widget::get_current_data() /*** Get current data ***/
     //******************************** Set icons *****************************//
 
     double halfTime = _dur/2;
-    QString tmb_file = setThumbnail(_curFilename, halfTime, "high", 1);
+    QString tmb_file = setThumbnail(_curFilename, halfTime, PreviewRes::RES_HIGH, PreviewDest::PREVIEW);
 
     QSize imageSize = QSize(85, 48);
     if (_rowSize == 25) {
@@ -1374,32 +1408,19 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
 {
     QFile file;
     QString list("");
-    switch (ind_theme)
-    {
-        case Theme::GRAY:
-            file.setFileName(":/resources/css/style_0.css");
-            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            break;
-        case Theme::DARK:
-            file.setFileName(":/resources/css/style_1.css");
-            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            break;
-        case Theme::WAVE:
-            file.setFileName(":/resources/css/style_2.css");
-            raiseThumb->setStyleSheet("color: #09161E; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #09161E; font: 24pt; font-style: oblique;");
-            break;
-        case Theme::DEFAULT:
-            file.setFileName(":/resources/css/style_3.css");
-            raiseThumb->setStyleSheet("color: #E3E3E3; font: 64pt; font-style: oblique;");
-            audioThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
-            subtitleThumb->setStyleSheet("color: #E3E3E3; font: 24pt; font-style: oblique;");
-            break;
+    switch (ind_theme) {
+    case Theme::GRAY:
+        file.setFileName(":/resources/css/style_0.css");
+        break;
+    case Theme::DARK:
+        file.setFileName(":/resources/css/style_1.css");
+        break;
+    case Theme::WAVE:
+        file.setFileName(":/resources/css/style_2.css");
+        break;
+    case Theme::DEFAULT:
+        file.setFileName(":/resources/css/style_3.css");
+        break;
     }
     if (file.open(QFile::ReadOnly)) {
         list = QString::fromUtf8(file.readAll());
@@ -1522,7 +1543,7 @@ void Widget::restore_initial_state()    /*** Restore initial state ***/
     }
     ui->actionResetLabels->setEnabled(true);
     ui->actionSettings->setEnabled(true);
-    _status_encode_btn = "start";
+    _status_encode_btn = EncodingStatus::START;
     ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
     ui->actionEncode->setToolTip(tr("Encode"));
 }
@@ -1535,8 +1556,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
             ui->frame_middle->setFocus();
             return true;
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
@@ -1546,62 +1566,53 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
             _clickPressedToResizeFlag.fill(false);
             return true;
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
-    if (watched == ui->centralwidget) {     // ******** Resize window realisation ******* //
+    if (watched == this) {     // ******** Resize window realisation ******* //
         if (!this->isMaximized()) {
             if (event->type() == QEvent::HoverLeave) {
                 QGuiApplication::restoreOverrideCursor();
                 return true;
+            } else
 
-            }
             if (event->type() == QEvent::HoverMove && _clickPressedToResizeFlag.indexOf(true) == -1) {
-                const QPoint &&mouseCoordinate = ui->centralwidget->mapFromGlobal(QCursor::pos());
+                const QPoint &&mouseCoordinate = this->mapFromGlobal(QCursor::pos());
                 if (mouseCoordinate.x() < 6) {
                     if (mouseCoordinate.y() < 6) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                        setCursor(QCursor(Qt::SizeFDiagCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > 6 && mouseCoordinate.y() < (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                        setCursor(QCursor(Qt::SizeHorCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                        setCursor(QCursor(Qt::SizeBDiagCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QWidget::eventFilter(watched, event);
-                }
+                } else
                 if (mouseCoordinate.x() > 6 && mouseCoordinate.x() < (width() - 6)) {
                     if (mouseCoordinate.y() < 6 || mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+                        setCursor(QCursor(Qt::SizeVerCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QWidget::eventFilter(watched, event);
-                }
+                } else
                 if (mouseCoordinate.x() > (width() - 6)) {
                     if (mouseCoordinate.y() < 6) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                        setCursor(QCursor(Qt::SizeBDiagCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > 6 && mouseCoordinate.y() < (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                        setCursor(QCursor(Qt::SizeHorCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                        setCursor(QCursor(Qt::SizeFDiagCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QWidget::eventFilter(watched, event);
                 }
                 QGuiApplication::restoreOverrideCursor();
-                return QWidget::eventFilter(watched, event);
-
-            }
+            } else
             if (event->type() == QEvent::MouseButtonPress) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->button() == Qt::LeftButton) {
@@ -1610,61 +1621,56 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                     _oldWidth = this->width();
                     _oldHeight = this->height();
                     _globalMouseClickCoordinate = mouse_event->globalPos();
-                    const QPoint &&mouseClickCoordinate = mouse_event->pos();
+                    const QPoint mouseClickCoordinate = mouse_event->pos();
                     if (mouseClickCoordinate.x() < 6) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::LEFT_TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::LEFT] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::LEFT_BOTTOM] = true;
                             return true;
                         }
-                        return QWidget::eventFilter(watched, event);
-                    }
+                    } else
                     if (mouseClickCoordinate.x() > 6 && mouseClickCoordinate.x() < (_oldWidth - 6)) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::BOTTOM] = true;
                             return true;
                         }
-                        return QWidget::eventFilter(watched, event);
-                    }
+                    } else
                     if (mouseClickCoordinate.x() > (_oldWidth - 6)) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::RIGHT_TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::RIGHT] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::RIGHT_BOTTOM] = true;
                             return true;
                         }
-                        return QWidget::eventFilter(watched, event);
                     }
-                    return QWidget::eventFilter(watched, event);
                 }
-                return QWidget::eventFilter(watched, event);
-            }
+            } else
             if (event->type() == QEvent::MouseMove) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->buttons() & Qt::LeftButton) {
-                    const int &&index = _clickPressedToResizeFlag.indexOf(true);
+                    const int index = _clickPressedToResizeFlag.indexOf(true);
                     if (index != -1) {
-                        const int &&deltaX = mouse_event->globalPos().x();
-                        const int &&deltaY = mouse_event->globalPos().y();
-                        const int &&deltaWidth = deltaX - _globalMouseClickCoordinate.x();
-                        const int &&deltaHeight = deltaY - _globalMouseClickCoordinate.y();
+                        const int deltaX = mouse_event->globalPos().x();
+                        const int deltaY = mouse_event->globalPos().y();
+                        const int deltaWidth = deltaX - _globalMouseClickCoordinate.x();
+                        const int deltaHeight = deltaY - _globalMouseClickCoordinate.y();
                         switch (index) {
                         case Resize::LEFT:
                             setGeometry(deltaX, _oldPosY, _oldWidth - deltaWidth, _oldHeight);
@@ -1693,33 +1699,27 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                         }
                         return true;
                     }
-                    return QWidget::eventFilter(watched, event);
                 }
-                return QWidget::eventFilter(watched, event);
             }
-            return QWidget::eventFilter(watched, event);
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->frame_main) {    // ***** Restore cursor realisation ******** //
         if (event->type() == QEvent::HoverMove) {
-            QGuiApplication::restoreOverrideCursor();
+            setCursor(QCursor(Qt::ArrowCursor));
             return true;
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->frame_top) {     // ********* Drag and expand window realisation ********* //
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                _mouseClickCoordinate = mouse_event->pos();
+                _mouseClickCoordinate = mouse_event->pos() + QPoint(7,7);
                 _clickPressedFlag = true;
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
-        }
+        } else
         if ((event->type() == QEvent::MouseMove) && _clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
@@ -1727,18 +1727,15 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                 this->move(mouse_event->globalPos() - _mouseClickCoordinate);
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
-        }
+        } else
         if (event->type() == QEvent::MouseButtonDblClick) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
                 on_expandWindow_clicked();
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == raiseThumb) {    // ********* Click thumb realisation ********** //
         if (event->type() == QEvent::MouseButtonPress) {
@@ -1747,1174 +1744,161 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                 on_actionAdd_clicked();
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
         }
-        return QWidget::eventFilter(watched, event);
+    } else
+
+    if (watched == ui->labelThumb) {
+        if (event->type() == QEvent::Resize) {
+            if (!preview_pixmap.isNull()) {
+                QPixmap pix_scaled;
+                pix_scaled = preview_pixmap.scaled(ui->frame_preview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                ui->labelThumb->setPixmap(pix_scaled);
+            }
+        }
     }
     return QWidget::eventFilter(watched, event);
+}
+
+bool Widget::event(QEvent *event)
+{
+
+    return QWidget::event(event);
 }
 
 /************************************************
 ** Encoder
 ************************************************/
 
-void Widget::make_preset()  /*** Make preset ***/
+void Widget::initEncoding()
 {
-    std::cout << "Make preset..." << std::endl;                       // Debug information //
-    int _CODEC = _cur_param[CurParamIndex::CODEC].toInt();
-    int _MODE = _cur_param[CurParamIndex::MODE].toInt();
-    int _CONTAINER = _cur_param[CurParamIndex::CONTAINER].toInt();
-    QString _BQR = _cur_param[CurParamIndex::BQR];
-    QString _MINRATE = _cur_param[CurParamIndex::MINRATE];
-    QString _MAXRATE = _cur_param[CurParamIndex::MAXRATE];
-    QString _BUFSIZE = _cur_param[CurParamIndex::BUFSIZE];
-    int _LEVEL = _cur_param[CurParamIndex::LEVEL].toInt();
-    int _FRAME_RATE = _cur_param[CurParamIndex::FRAME_RATE].toInt();
-    int _BLENDING = _cur_param[CurParamIndex::BLENDING].toInt();
-    int _WIDTH = _cur_param[CurParamIndex::WIDTH].toInt();
-    int _HEIGHT = _cur_param[CurParamIndex::HEIGHT].toInt();
-    int _PASS = _cur_param[CurParamIndex::PASS].toInt();
-    int _PRESET = _cur_param[CurParamIndex::PRESET].toInt();
-    int _COLOR_RANGE = _cur_param[CurParamIndex::COLOR_RANGE].toInt();
-    int _MATRIX = _cur_param[CurParamIndex::MATRIX].toInt();
-    int _PRIMARY = _cur_param[CurParamIndex::PRIMARY].toInt();
-    int _TRC = _cur_param[CurParamIndex::TRC].toInt();
-    QString _MIN_LUM = _cur_param[CurParamIndex::MIN_LUM].replace(",", ".");
-    QString _MAX_LUM = _cur_param[CurParamIndex::MAX_LUM].replace(",", ".");
-    QString _MAX_CLL = _cur_param[CurParamIndex::MAX_CLL].replace(",", ".");
-    QString _MAX_FALL = _cur_param[CurParamIndex::MAX_FALL].replace(",", ".");
-    int _MASTER_DISPLAY = _cur_param[CurParamIndex::MASTER_DISPLAY].toInt();
-    QString _CHROMA_COORD = _cur_param[CurParamIndex::CHROMA_COORD];
-    QString _WHITE_COORD = _cur_param[CurParamIndex::WHITE_COORD];
-    int _AUDIO_CODEC = _cur_param[CurParamIndex::AUDIO_CODEC].toInt();
-    int _AUDIO_BITRATE = _cur_param[CurParamIndex::AUDIO_BITRATE].toInt();
-    int _AUDIO_SAMPLING = _cur_param[CurParamIndex::ASAMPLE_RATE].toInt();
-    int _AUDIO_CHANNELS = _cur_param[CurParamIndex::ACHANNELS].toInt();
-    int _REP_PRIM = _cur_param[CurParamIndex::REP_PRIM].toInt();
-    int _REP_MATRIX = _cur_param[CurParamIndex::REP_MATRIX].toInt();
-    int _REP_TRC = _cur_param[CurParamIndex::REP_TRC].toInt();
-
-    _preset_0 = "";
-    _preset_pass1 = "";
-    _preset = "";
-    _preset_mkvmerge = "";
-    _sub_mux_param = "";
-    _error_message = "";
-    _flag_two_pass = false;
-    _flag_hdr = false;
-    _mux_mode = false;
-    _fr_count = 0;
     ui->textBrowser_log->clear();
-
-    /****************************************** Resize ****************************************/
-
-    QString width[16] = {
-        "Source", "7680", "4520", "4096", "3840", "3656", "2048", "1920",
-        "1828",   "1440", "1280", "1024", "768",  "720",  "640",  "320"
-    };
-
-    QString height[32] = {
-        "Source", "4320", "3112", "3072", "2664", "2540", "2468", "2304",
-        "2214",   "2204", "2160", "2056", "1976", "1744", "1556", "1536",
-        "1332",   "1234", "1152", "1107", "1102", "1080", "1028", "988",
-        "872",    "768",  "720",  "576",  "540",  "486",  "480",  "240"
-    };
-
-    QString resize_vf = "";
-    if ((width[_WIDTH] != "Source") && (height[_HEIGHT] != "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(width[_WIDTH], height[_HEIGHT]);
-    }
-    else if ((width[_WIDTH] != "Source") && (height[_HEIGHT] == "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(width[_WIDTH], _height);
-    }
-    else if ((width[_WIDTH] == "Source") && (height[_HEIGHT] != "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(_width, height[_HEIGHT]);
-    }
-
-    /******************************************* FPS *****************************************/
-
-    QString frame_rate[14] = {
-        "Source", "120", "60", "59.940", "50", "48", "30",
-        "29.970", "25",  "24", "23.976", "20", "18", "16"
-    };
-
-    QString blending[4] = {
-        "Simple", "Interpolated", "MCI", "Blend"
-    };
-
-    QString fps_vf = "";
-    double fps_dest;
-
-    if (frame_rate[_FRAME_RATE] != "Source") {
-        fps_dest = frame_rate[_FRAME_RATE].toDouble();
-        if (blending[_BLENDING] == "Simple") {
-            fps_vf = QString("fps=fps=%1").arg(frame_rate[_FRAME_RATE]);
-        }
-        else if (blending[_BLENDING] == "Interpolated") {
-            fps_vf = QString("framerate=fps=%1").arg(frame_rate[_FRAME_RATE]);
-        }
-        else if (blending[_BLENDING] == "MCI") {
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
-                    .arg(frame_rate[_FRAME_RATE]);
-        }
-        else if (blending[_BLENDING] == "Blend") {
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(frame_rate[_FRAME_RATE]);
-        }
-    } else {
-        fps_dest = _fps.toDouble();
-    }
-
-    /****************************************** Split ****************************************/
-
-    QString _splitStartParam = "";
-    QString _splitParam = "";
-
-    if (_endTime > 0 && _startTime < _endTime) {
-        double duration = _endTime - _startTime;
-        _fr_count = static_cast<int>(round(duration * fps_dest));
-        int startFrame = static_cast<int>(round(_startTime * fps_dest));
-        int endFrame = static_cast<int>(round(_endTime * fps_dest));
-        int amountFrames = endFrame - startFrame;
-        _splitStartParam = QString(" -ss %1").arg(QString::number(_startTime, 'f', 3));
-        _splitParam = QString("-vframes %1 ").arg(QString::number(amountFrames));
-    } else {
-        _fr_count = static_cast<int>(round(_dur * fps_dest));
-    }
-
-    /************************************** Video metadata ************************************/
-
-    QString videoMetadata[6] = {"", "", "", "", "", ""};
-    QString _videoMetadataParam = "";
-    QString globalTitle = ui->lineEditGlobalTitle->text();
-
-    if (globalTitle != "") {
-        videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(globalTitle.replace(" ", "\u00A0"));
-    } else {
-        if (_videoMetadata[VIDEO_TITLE] != "") {
-            videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(_videoMetadata[VIDEO_TITLE]
-                                                                        .replace(" ", "\u00A0"));
-        } else {
-            videoMetadata[0] = QString("-map_metadata:s:v:0 -1 ");
-        }
-    }
-    if (_videoMetadata[VIDEO_MOVIENAME] != "") {
-        videoMetadata[1] = QString("-metadata title=%1 ").arg(_videoMetadata[VIDEO_MOVIENAME]
-                                                              .replace(" ", "\u00A0"));
-    }
-    if (_videoMetadata[VIDEO_AUTHOR] != "") {
-        videoMetadata[2] = QString("-metadata author=%1 ").arg(_videoMetadata[VIDEO_AUTHOR]
-                                                               .replace(" ", "\u00A0"));
-    }
-    if (_videoMetadata[VIDEO_DESCRIPTION] != "") {
-        videoMetadata[3] = QString("-metadata description=%1 ").arg(_videoMetadata[VIDEO_DESCRIPTION]
-                                                                    .replace(" ", "\u00A0"));
-    }
-    if (_videoMetadata[VIDEO_YEAR] != "") {
-        videoMetadata[4] = QString("-metadata year=%1 ").arg(_videoMetadata[VIDEO_YEAR].replace(" ", ""));
-    }
-    if (_videoMetadata[VIDEO_PERFORMER] != "") {
-        videoMetadata[5] = QString("-metadata author=%1 ").arg(_videoMetadata[VIDEO_PERFORMER]
-                                                               .replace(" ", "\u00A0"));
-    }
-    for (int i = 0; i < 6; i++) {
-        _videoMetadataParam += videoMetadata[i];
-    }
-
-    /************************************** Audio streams ************************************/
-
-    QString audioLang[AMOUNT_AUDIO_STREAMS] = {"", "", "", "", "", "", "", "", ""};
-    QString audioTitle[AMOUNT_AUDIO_STREAMS] = {"", "", "", "", "", "", "", "", ""};
-    QString audioMap[AMOUNT_AUDIO_STREAMS] = {"", "", "", "", "", "", "", "", ""};
-    QString _audioMapParam = "";
-    QString _audioMetadataParam = "";
-    int countDestAudioStream = 0;
-
-    for (int k = 0; k < AMOUNT_AUDIO_STREAMS; k++) {
-        if (_audioStreamCheckState[k] == 1) {
-            audioMap[k] = QString("-map 0:a:%1? ").arg(QString::number(k));
-            audioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
-                           .arg(QString::number(countDestAudioStream), _audioLang[k].replace(" ", "\u00A0"));
-            audioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
-                            .arg(QString::number(countDestAudioStream), _audioTitle[k].replace(" ", "\u00A0"));
-            countDestAudioStream++;
-        }
-        _audioMapParam += audioMap[k];
-        _audioMetadataParam += audioLang[k] + audioTitle[k];
-    }
-
-    /**************************************** Subtitles **************************************/
-
-    QString subtitleLang[AMOUNT_SUBTITLES] = {"", "", "", "", "", "", "", "", ""};
-    QString subtitleTitle[AMOUNT_SUBTITLES] = {"", "", "", "", "", "", "", "", ""};
-    QString subtitleMap[AMOUNT_SUBTITLES] = {"", "", "", "", "", "", "", "", ""};
-    QString _subtitleMapParam = "";
-    QString _subtitleMetadataParam = "";
-    int countDestSubtitleStream = 0;
-
-    for (int k = 0; k < AMOUNT_SUBTITLES; k++) {
-        if (_subtitleCheckState[k] == 1) {
-            subtitleMap[k] = QString("-map 0:s:%1? ").arg(QString::number(k));
-            subtitleLang[k] = QString("-metadata:s:s:%1 language=%2 ")
-                           .arg(QString::number(countDestSubtitleStream), _subtitleLang[k].replace(" ", "\u00A0"));
-            subtitleTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
-                            .arg(QString::number(countDestSubtitleStream), _subtitleTitle[k].replace(" ", "\u00A0"));
-            countDestSubtitleStream++;
-        }
-        _subtitleMapParam += subtitleMap[k];
-        _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k];
-    }
-
-    /*********************************** Intel QSV presets ************************************/
-    QString intelQSV_filter = "hwmap=derive_device=qsv,format=qsv";
-#if defined (Q_OS_WIN64)
-    QString intelQSVhwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
-#elif defined (Q_OS_UNIX)
-    QString intelQSVhwaccel = " -hwaccel vaapi -hwaccel_output_format vaapi";
-#endif
-
-    /************************************* XDCAM presets **************************************/
-    QString xdcam_preset = "-pix_fmt yuv422p -c:v mpeg2video -profile:v 0 -flags ilme -top 1 "
-                           "-metadata creation_time=now -vtag xd5c -timecode 01:00:00:00 ";
-
-    /************************************* XAVC presets **************************************/
-    QString xavc_preset = "-pix_fmt yuv422p -c:v libx264 -me_method tesa -subq 9 -partitions all -direct-pred auto "
-                          "-psy 0 -g 0 -keyint_min 0 -x264opts filler -x264opts force-cfr -tune fastdecode ";
-
-    /************************************* Codec module ***************************************/
-
-    QString arr_codec[NUMBER_PRESETS][4] = {
-        {"-pix_fmt yuv420p12le -c:v libx265 -profile:v main12 ",        "",                     "1", ""},
-        {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",                     "1", ""},
-        {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",                     "0", ""},
-        {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",                     "0", ""},
-        {"-pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", "",                     "1", ""},
-        {"-pix_fmt yuv420p -c:v libvpx-vp9 -speed 4 ",                  "",                     "0", ""},
-        {"-c:v hevc_qsv -profile:v main10 ",                            intelQSVhwaccel,   "1", intelQSV_filter},
-        {"-pix_fmt qsv -c:v hevc_qsv -profile:v main ",                 intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt qsv -c:v h264_qsv -profile:v high ",                 intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-c:v vp9_qsv -profile:v 2 ",                                  intelQSVhwaccel,   "1", intelQSV_filter},
-        {"-pix_fmt qsv -c:v vp9_qsv ",                                  intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt qsv -c:v mpeg2_qsv -profile:v high ",                intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda",       "1", ""},
-        {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda",       "0", ""},
-        {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda",       "0", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 0 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 1 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 2 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 4 ",           "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 5 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_lb ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_sq ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",                     "1", ""},
-        {xdcam_preset,                                                  "",                     "0", ""},
-        {xavc_preset,                                                   " -guess_layout_max 0", "0", ""},
-        {"-movflags +write_colr -c:v copy ",                            "",                     "1", ""}
-    };
-
-    QString hwaccel = arr_codec[_CODEC][1];
-    QString hwaccel_filter_vf = arr_codec[_CODEC][3];
-    _flag_hdr = static_cast<bool>(arr_codec[_CODEC][2].toInt());
-
-    /************************************* Level module **************************************/
-
-    QString arr_level[NUMBER_PRESETS][21] = {
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"}, 
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"2",    "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"5.2",  "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}
-    };
-
-    QString level = "";
-    QString selected_level = arr_level[_CODEC][_LEVEL];
-    if (selected_level != "" && selected_level != "Auto") {
-        level = QString("-level:v %1 ").arg(selected_level);
-    }
-
-    /************************************* Mode module ***************************************/
-
-    QString arr_mode[NUMBER_PRESETS][5] = {
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"CBR",    "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""}
-    };
-    QString mode = "";
-    QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 0);
-    QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 0);
-    QString maxrate = QString::number(1000000.0*_MAXRATE.toDouble(), 'f', 0);
-    QString bufsize = QString::number(1000000.0*_BUFSIZE.toDouble(), 'f', 0);
-    QString selected_mode = arr_mode[_CODEC][_MODE];
-
-    if (selected_mode == "CBR") {
-        mode = QString("-b:v %1 -minrate %1 -maxrate %1 -bufsize %2 ").arg(bitrate, bufsize);
-    }
-    else if (selected_mode == "ABR") {
-        mode = QString("-b:v %1 ").arg(bitrate);
-    }
-    else if (selected_mode == "VBR") {
-        mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 ").arg(bitrate, minrate, maxrate, bufsize);
-    }
-    else if (selected_mode == "VBR_NV") {
-        mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 -rc vbr_hq ").arg(bitrate, minrate, maxrate, bufsize);
-    }
-    else if (selected_mode == "CRF") {
-        mode = QString("-crf %1 ").arg(_BQR);
-    }
-    else if (selected_mode == "CQP") {
-        mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
-    }
-
-    /************************************* Preset module ***************************************/
-
-    QString arr_preset[NUMBER_PRESETS][10] = {
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}
-    };
-    QString preset = "";
-    QString selected_preset = arr_preset[_CODEC][_PRESET];
-    if (selected_preset != "" && selected_preset != "None") {
-        preset = QString("-preset ") + selected_preset.toLower() + QString(" ");
-    }
-
-    /************************************* Pass module ***************************************/
-
-    QString arr_pass[NUMBER_PRESETS][2] = {
-        {"",                     "-x265-params pass=2 "},
-        {"",                     "-x265-params pass=2 "},
-        {"",                     "-x265-params pass=2 "},
-        {"",                     "-pass 2 "},
-        {"",                     "-pass 2 "},
-        {"",                     "-pass 2 "},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"-2pass 1 ",            ""},
-        {"-2pass 1 ",            ""},
-        {"-2pass 1 ",            ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""}
-    };
-    QString pass1 = "";
-    QString pass = arr_pass[_CODEC][_PASS];
-    if (pass == "-x265-params pass=2 ") {
-        pass1 = "-x265-params pass=1 ";
-        _flag_two_pass = true;
-    }
-    if (pass == "-pass 2 ") {
-        pass1 = "-pass 1 ";
-        _flag_two_pass = true;
-    }
-
-    /************************************* Audio module ***************************************/
-
-    QString arr_acodec[NUMBER_PRESETS][6] = {
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "",       "",       "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Vorbis", "Opus", "Source"}
-    };
-
-    QString arr_bitrate[5][17] = {
-        {"384k",  "320k",  "256k",  "192k",  "128k",  "96k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AAC
-        {"640k",  "448k",  "384k",  "256k",  "",      "",      "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AC3
-        {"3840k", "3072k", "2048k", "1920k", "1536k", "1472k", "1344k", "1280k", "1152k", "1024k", "960k", "768k", "640k", "576k", "512k", "448k", "384k"}, // DTS
-        {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // Vorbis
-        {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""} // Opus
-    };
-
-    QString arr_sampling[12] = {
-        "Source", "8000",  "11025", "16000", "22050",  "32000",
-        "44100",  "48000", "88200", "96000", "176400", "192000"
-    };
-
-    QString arr_channels[3] = {
-        "Source", "1", "2"
-    };
-
-    QString acodec = "";
-    QString selected_acodec = arr_acodec[_CODEC][_AUDIO_CODEC];
-    QString selected_bitrate = "";
-
-    QString sampling = "";
-    QString selected_sampling = arr_sampling[_AUDIO_SAMPLING];
-    if (selected_sampling != "Source") {
-        sampling = QString("-af aresample=%1:resampler=soxr ").arg(selected_sampling);
-    }
-
-    QString channels = "";
-    QString selected_channels = arr_channels[_AUDIO_CHANNELS];
-    if (selected_channels != "Source") {
-        channels = QString(" -ac %1").arg(selected_channels);
-    }
-
-
-    if (selected_acodec == "AAC") {
-        selected_bitrate = arr_bitrate[0][_AUDIO_BITRATE];
-        acodec = QString("-c:a aac -b:a %1").arg(selected_bitrate);
-    }
-    else if (selected_acodec == "AC3") {
-        selected_bitrate = arr_bitrate[1][_AUDIO_BITRATE];
-        acodec = QString("-c:a ac3 -b:a %1").arg(selected_bitrate);
-    }
-    else if (selected_acodec == "DTS") {
-        selected_bitrate = arr_bitrate[2][_AUDIO_BITRATE];
-        acodec = QString("-strict -2 -c:a dca -b:a %1").arg(selected_bitrate);
-    }
-    else if (selected_acodec == "Vorbis") {
-        selected_bitrate = arr_bitrate[3][_AUDIO_BITRATE];
-        acodec = QString("-c:a libvorbis -b:a %1").arg(selected_bitrate);
-    }
-    else if (selected_acodec == "Opus") {
-        selected_bitrate = arr_bitrate[4][_AUDIO_BITRATE];
-        acodec = QString("-c:a libopus -b:a %1").arg(selected_bitrate);
-    }
-    else if (selected_acodec == "PCM16") {
-        acodec = "-c:a pcm_s16le";
-    }
-    else if (selected_acodec == "PCM24") {
-        acodec = "-c:a pcm_s24le";
-    }
-    else if (selected_acodec == "PCM32") {
-        acodec = "-c:a pcm_s32le";
-    }
-    else if (selected_acodec == "Source") {
-        acodec = "-c:a copy";
-    }
-    QString audio_param = sampling + acodec + channels;
-
-    /************************************ Subtitle module *************************************/
-
-    QString sub_param("");
-    QString container = updateFieldContainer(_CODEC, _CONTAINER);
-    if (container == "MKV") {
-        _sub_mux_param = QString("-c:s copy");
-    }
-    else if (container == "WebM") {
-        _sub_mux_param = QString("-c:s webvtt");
-    }
-    else if (container == "MP4" || container == "MOV") {
-        _sub_mux_param = QString("-c:s mov_text");
-    }
-    else {
-        _sub_mux_param = QString("-sn");
-    }
-
-    if (_flag_hdr) {
-        sub_param = QString(" -c:s copy");
-    }
-    else {
-        sub_param = QString(" ") + _sub_mux_param;
-    }
-
-    /************************************* Color module ***************************************/
-
-    // color primaries
-
-    QString arr_colorprim[11] = {
-        "Source",    "bt470m",   "bt470bg",  "bt709",    "bt2020", "smpte170m",
-        "smpte240m", "smpte428", "smpte431", "smpte432", "film"
-    };
-    QMap<QString, QString> curr_colorprim = {
-        {"BT709",           "bt709"},
-        {"BT2020",          "bt2020"},
-        {"BT601 NTSC",      "smpte170m"},
-        {"BT601 PAL",       "bt470bg"},
-        {"BT470 System M",  "bt470m"},
-        {"SMPTE 240M",      "smpte240m"},
-        {"Generic film",    "film"},
-        {"DCI P3",          "smpte431"},
-        {"XYZ",             "smpte428"},
-        {"Display P3",      "smpte432"},
-        {"",                ""}
-    };
-
-    QString colorprim = "";
-    QString colorprim_vf = "";
-    QString selected_colorprim = arr_colorprim[_PRIMARY];
-    if (!curr_colorprim.contains(_hdr[CUR_COLOR_PRIMARY])) {
-        restore_initial_state();
-        _message = tr("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
-        call_task_complete(_message, false);
-        return;
-    }
-    if (selected_colorprim == "Source") {
-        if (_hdr[CUR_COLOR_PRIMARY] != "") {
-            colorprim = QString("-color_primaries %1 ").arg(curr_colorprim[_hdr[CUR_COLOR_PRIMARY]]);
-        }
-    }
-    else {
-        colorprim = QString("-color_primaries %1 ").arg(selected_colorprim);
-        if (_REP_PRIM == 2) {
-            colorprim_vf = QString("zscale=p=%1").arg(selected_colorprim);
-        } else {
-
-        }
-    }
-
-    // color matrix
-
-    QString arr_colormatrix[14] = {
-        "Source", "bt470bg", "bt709", "bt2020nc", "bt2020c", "smpte170m", "smpte240m",
-        "smpte2085", "chroma-derived-nc", "chroma-derived-c", "fcc", "GBR", "ICtCp", "YCgCo"
-    };
-    QMap<QString, QString> curr_colormatrix = {
-        {"BT709",                   "bt709"},
-        {"BT2020nc",                "bt2020nc"},
-        {"BT2020c",                 "bt2020c"},
-        {"FCC73682",                "fcc"},
-        {"BT470SystemB/G",          "bt470bg"},
-        {"SMPTE240M",               "smpte240m"},
-        {"YCgCo",                   "YCgCo"},
-        {"Y'D'zD'x",                "smpte2085"},
-        {"Chromaticity-derivednc",  "chroma-derived-nc"},
-        {"Chromaticity-derivedc",   "chroma-derived-c"},
-        {"ICtCp",                   "ICtCp"},
-        {"BT601",                   "smpte170m"},
-        {"Identity",                "GBR"},
-        {"",                        ""}
-    };
-
-    QString colormatrix = "";
-    QString colormatrix_vf = "";
-    QString selected_colormatrix = arr_colormatrix[_MATRIX];
-    if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
-        restore_initial_state();
-        _message = tr("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
-        call_task_complete(_message, false);
-        return;
-    }
-    if (selected_colormatrix == "Source") {
-        if (_hdr[CUR_COLOR_MATRIX] != "") {
-            colormatrix = QString("-colorspace %1 ").arg(curr_colormatrix[_hdr[CUR_COLOR_MATRIX]]);
-        }
-    }
-    else {
-        colormatrix = QString("-colorspace %1 ").arg(selected_colormatrix);
-        if (_REP_MATRIX == 2) {
-            colormatrix_vf = QString("zscale=m=%1").arg(selected_colormatrix);
-        } else {
-
-        }
-    }
-
-    // transfer characteristics
-
-    QString arr_trc[17] = {
-        "Source", "bt470m", "bt470bg", "bt709", "bt1361e", "bt2020-10", "bt2020-12", "smpte170m",
-        "smpte240m", "smpte428", "smpte2084", "arib-std-b67", "linear", "log100", "log316",
-        "iec61966-2-1", "iec61966-2-4"
-    };
-    QMap<QString, QString> curr_transfer = {
-        {"BT709",                    "bt709"},
-        {"PQ",                       "smpte2084"},
-        {"HLG",                      "arib-std-b67"},
-        {"BT2020 (10-bit)",          "bt2020-10"},
-        {"BT2020 (12-bit)",          "bt2020-12"},
-        {"BT470 System M",           "bt470m"},
-        {"BT470 System B/G",         "bt470bg"},
-        {"SMPTE 240M",               "smpte240m"},
-        {"Linear",                   "linear"},
-        {"Logarithmic (100:1)",      "log100"},
-        {"Logarithmic (31622777:1)", "log316"},
-        {"xvYCC",                    "iec61966-2-4"},
-        {"BT1361",                   "bt1361e"},
-        {"sRGB/sYCC",                "iec61966-2-1"},
-        {"SMPTE 428M",               "smpte428"},
-        {"BT601",                    "smpte170m"},
-        {"",                         ""}
-    };
-
-    QString transfer = "";
-    QString transfer_vf = "";
-    QString selected_transfer = arr_trc[_TRC];
-    if (!curr_transfer.contains(_hdr[CUR_TRANSFER])) {
-        restore_initial_state();
-        _message = tr("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
-        call_task_complete(_message, false);
-        return;
-    }
-    if (selected_transfer == "Source") {
-        if (_hdr[CUR_TRANSFER] != "") {
-            transfer = QString("-color_trc %1 ").arg(curr_transfer[_hdr[CUR_TRANSFER]]);
-        }
-    }
-    else {
-        transfer = QString("-color_trc %1 ").arg(selected_transfer);
-        if (_REP_TRC == 2) {
-            transfer_vf = QString("zscale=t=%1").arg(selected_transfer);
-        } else {
-
-        }
-    }
-
-    const int vf_size = 6;
-    QString vf_transform_arr[vf_size] = {
-        hwaccel_filter_vf,
-        fps_vf,
-        resize_vf,
-        colorprim_vf,
-        colormatrix_vf,
-        transfer_vf,
-    };
-
-    QString vf = "";
-    int pos = 0;
-    for (int n = 0; n < vf_size; n ++) {
-        if (vf_transform_arr[n] != "") {
-            pos++;
-            if (pos == 1) {
-                vf += vf_transform_arr[n];
-            } else {
-                vf += "," + vf_transform_arr[n];
-            }
-        }
-    }
-
-    QString transform = "";
-    if (vf != "") {
-        transform = QString("-vf %1 ").arg(vf);
-    }
-
-    QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
-                    QString("-map_metadata -1 ") + _videoMetadataParam + _audioMetadataParam +
-                    _subtitleMetadataParam + transform + arr_codec[_CODEC][0];
-
-    /************************************* HDR module ***************************************/
-
-    QString color_range = "";
-    QString max_lum = "";
-    QString min_lum = "";
-    QString max_cll = "";
-    QString max_fall = "";
-    QString chroma_coord = "";
-    QString white_coord = "";
-    if (_flag_hdr == true) {
-
-        /********************************* Color range module **********************************/
-
-        if (_COLOR_RANGE == 0) {                             // color range
-            if (_hdr[CUR_COLOR_RANGE] == "Limited") {
-                color_range = "-color_range tv ";
-            }
-            else if (_hdr[CUR_COLOR_RANGE] == "Full") {
-                color_range = "-color_range pc ";
-            }
-        }
-        else if (_COLOR_RANGE == 1) {
-            color_range = "-color_range pc ";
-        }
-        else if (_COLOR_RANGE == 2) {
-            color_range = "-color_range tv ";
-        }
-
-        /************************************* Lum module ***************************************/
-
-        if (_MAX_LUM != "") {                           // max lum
-            max_lum = QString("-s max-luminance=%1 ").arg(_MAX_LUM);
-        } else {
-            if (_hdr[CUR_MAX_LUM] != "") {
-                max_lum = QString("-s max-luminance=%1 ").arg(_hdr[CUR_MAX_LUM]);
-            } else {
-                max_lum = "-d max-luminance ";
-            }
-        }
-
-        if (_MIN_LUM != "") {                           // min lum
-            min_lum = QString("-s min-luminance=%1 ").arg(_MIN_LUM);
-        } else {
-            if (_hdr[CUR_MIN_LUM] != "") {
-                min_lum = QString("-s min-luminance=%1 ").arg(_hdr[CUR_MIN_LUM]);
-            } else {
-                min_lum = "-d min-luminance ";
-            }
-        }
-
-        if (_MAX_CLL != "") {                           // max cll
-            max_cll = QString("-s max-content-light=%1 ").arg(_MAX_CLL);
-        } else {
-            if (_hdr[CUR_MAX_CLL] != "") {
-                max_cll = QString("-s max-content-light=%1 ").arg(_hdr[CUR_MAX_CLL]);
-            } else {
-                max_cll = "-d max-content-light ";
-            }
-        }
-
-        if (_MAX_FALL != "") {                           // max fall
-            max_fall = QString("-s max-frame-light=%1 ").arg(_MAX_FALL);
-        } else {
-            if (_hdr[CUR_MAX_FALL] != "") {
-                max_fall = QString("-s max-frame-light=%1 ").arg(_hdr[CUR_MAX_FALL]);
-            } else {
-                max_fall = "-d max-frame-light ";
-            }
-        }
-
-        /************************************* Display module ***************************************/
-
-        QString chroma_coord_curr_red_x = "";
-        QString chroma_coord_curr_red_y = "";
-        QString chroma_coord_curr_green_x = "";
-        QString chroma_coord_curr_green_y = "";
-        QString chroma_coord_curr_blue_x = "";
-        QString chroma_coord_curr_blue_y = "";
-        QString white_coord_curr_x = "";
-        QString white_coord_curr_y = "";
-        if (_MASTER_DISPLAY == 0) {     // From source
-            if (_hdr[CUR_MASTER_DISPLAY] == "Display P3") {
-                chroma_coord_curr_red_x = "0.680";
-                chroma_coord_curr_red_y = "0.320";
-                chroma_coord_curr_green_x = "0.265";
-                chroma_coord_curr_green_y = "0.690";
-                chroma_coord_curr_blue_x = "0.150";
-                chroma_coord_curr_blue_y = "0.060";
-                white_coord_curr_x = "0.3127";
-                white_coord_curr_y = "0.3290";
-            }
-            if (_hdr[CUR_MASTER_DISPLAY] == "DCI P3") {
-                chroma_coord_curr_red_x = "0.680";
-                chroma_coord_curr_red_y = "0.320";
-                chroma_coord_curr_green_x = "0.265";
-                chroma_coord_curr_green_y = "0.690";
-                chroma_coord_curr_blue_x = "0.150";
-                chroma_coord_curr_blue_y = "0.060";
-                white_coord_curr_x = "0.314";
-                white_coord_curr_y = "0.3510";
-            }
-            if (_hdr[CUR_MASTER_DISPLAY] == "BT.2020") {
-                chroma_coord_curr_red_x = "0.708";
-                chroma_coord_curr_red_y = "0.292";
-                chroma_coord_curr_green_x = "0.170";
-                chroma_coord_curr_green_y = "0.797";
-                chroma_coord_curr_blue_x = "0.131";
-                chroma_coord_curr_blue_y = "0.046";
-                white_coord_curr_x = "0.3127";
-                white_coord_curr_y = "0.3290";
-            }
-            if (_hdr[CUR_MASTER_DISPLAY] == "BT.709") {
-                chroma_coord_curr_red_x = "0.640";
-                chroma_coord_curr_red_y = "0.330";
-                chroma_coord_curr_green_x = "0.30";
-                chroma_coord_curr_green_y = "0.60";
-                chroma_coord_curr_blue_x = "0.150";
-                chroma_coord_curr_blue_y = "0.060";
-                white_coord_curr_x = "0.3127";
-                white_coord_curr_y = "0.3290";
-            }
-            if (_hdr[CUR_MASTER_DISPLAY] == "Undefined") {
-                QStringList chr = _hdr[CUR_CHROMA_COORD].split(",");
-                if (chr.size() == 6) {
-                    chroma_coord_curr_red_x = chr[0];
-                    chroma_coord_curr_red_y = chr[1];
-                    chroma_coord_curr_green_x = chr[2];
-                    chroma_coord_curr_green_y = chr[3];
-                    chroma_coord_curr_blue_x = chr[4];
-                    chroma_coord_curr_blue_y = chr[5];
-                } else {
-                    restore_initial_state();
-                    _message = tr("Incorrect master display chroma coordinates source parameters!");
-                    call_task_complete(_message, false);
-                    return;
-                }
-                QStringList wht = _hdr[CUR_WHITE_COORD].split(",");
-                if (wht.size() == 2) {
-                    white_coord_curr_x = wht[0];
-                    white_coord_curr_y = wht[1];
-                } else {
-                    restore_initial_state();
-                    _message = tr("Incorrect master display white point coordinates source parameters!");
-                    call_task_complete(_message, false);
-                    return;
-                }
-            }
-        }
-        if (_MASTER_DISPLAY == 1) {     // Display P3
-            chroma_coord_curr_red_x = "0.680";
-            chroma_coord_curr_red_y = "0.320";
-            chroma_coord_curr_green_x = "0.265";
-            chroma_coord_curr_green_y = "0.690";
-            chroma_coord_curr_blue_x = "0.150";
-            chroma_coord_curr_blue_y = "0.060";
-            white_coord_curr_x = "0.3127";
-            white_coord_curr_y = "0.3290";
-        }
-        if (_MASTER_DISPLAY == 2) {     // DCI P3
-            chroma_coord_curr_red_x = "0.680";
-            chroma_coord_curr_red_y = "0.320";
-            chroma_coord_curr_green_x = "0.265";
-            chroma_coord_curr_green_y = "0.690";
-            chroma_coord_curr_blue_x = "0.150";
-            chroma_coord_curr_blue_y = "0.060";
-            white_coord_curr_x = "0.314";
-            white_coord_curr_y = "0.3510";
-        }
-        if (_MASTER_DISPLAY == 3) {     // BT.2020
-            chroma_coord_curr_red_x = "0.708";
-            chroma_coord_curr_red_y = "0.292";
-            chroma_coord_curr_green_x = "0.170";
-            chroma_coord_curr_green_y = "0.797";
-            chroma_coord_curr_blue_x = "0.131";
-            chroma_coord_curr_blue_y = "0.046";
-            white_coord_curr_x = "0.3127";
-            white_coord_curr_y = "0.3290";
-        }
-        if (_MASTER_DISPLAY == 4) {     // BT.709
-            chroma_coord_curr_red_x = "0.640";
-            chroma_coord_curr_red_y = "0.330";
-            chroma_coord_curr_green_x = "0.30";
-            chroma_coord_curr_green_y = "0.60";
-            chroma_coord_curr_blue_x = "0.150";
-            chroma_coord_curr_blue_y = "0.060";
-            white_coord_curr_x = "0.3127";
-            white_coord_curr_y = "0.3290";
-        }
-        if (_MASTER_DISPLAY == 5) {     // Custom
-            QStringList chr = _CHROMA_COORD.split(",");
-            if (chr.size() == 6) {
-                chroma_coord_curr_red_x = chr[0];
-                chroma_coord_curr_red_y = chr[1];
-                chroma_coord_curr_green_x = chr[2];
-                chroma_coord_curr_green_y = chr[3];
-                chroma_coord_curr_blue_x = chr[4];
-                chroma_coord_curr_blue_y = chr[5];
-            }
-            QStringList wht = _WHITE_COORD.split(",");
-            if (wht.size() == 2) {
-                white_coord_curr_x = wht[0];
-                white_coord_curr_y = wht[1];
-            }
-        }
-
-        if (chroma_coord_curr_red_x == "") {
-            chroma_coord = "-d chromaticity-coordinates-red-x -d chromaticity-coordinates-red-y "
-                           "-d chromaticity-coordinates-green-x -d chromaticity-coordinates-green-y "
-                           "-d chromaticity-coordinates-blue-x -d chromaticity-coordinates-blue-y ";
-        } else {
-            chroma_coord = QString("-s chromaticity-coordinates-red-x=%1 -s chromaticity-coordinates-red-y=%2 "
-                                   "-s chromaticity-coordinates-green-x=%3 -s chromaticity-coordinates-green-y=%4 "
-                                   "-s chromaticity-coordinates-blue-x=%5 -s chromaticity-coordinates-blue-y=%6 ")
-                                   .arg(chroma_coord_curr_red_x, chroma_coord_curr_red_y, chroma_coord_curr_green_x,
-                                        chroma_coord_curr_green_y, chroma_coord_curr_blue_x, chroma_coord_curr_blue_y);
-        }
-        if (white_coord_curr_x == "") {
-            white_coord = "-d white-coordinates-x -d white-coordinates-y ";
-        } else {
-            white_coord = QString("-s white-coordinates-x=%1 -s white-coordinates-y=%2 ").arg(white_coord_curr_x, white_coord_curr_y);
-        }
-    }
-
-    /************************************* Result module ***************************************/
-
-    _preset_0 = "-hide_banner" + hwaccel + _splitStartParam;
-    _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
-            + colorprim + colormatrix + transfer + "-an -sn -f null /dev/null";
-    _preset = _splitParam + codec + level + preset + mode + pass + color_range
-            + colorprim + colormatrix + transfer + audio_param + sub_param;
-    _preset_mkvmerge = QString("%1%2%3%4%5%6 ").arg(max_cll, max_fall, max_lum, min_lum, chroma_coord, white_coord);
-    std::cout << "Flag two-pass: " << _flag_two_pass << std::endl;
-    std::cout << "Flag HDR: " << _flag_hdr << std::endl;
-    std::cout << "preset_0: " << _preset_0.toStdString() << std::endl;
-    if ((_flag_two_pass == true) && (_flag_hdr == true)) {
-        std::cout << "preset_pass1: " << _preset_pass1.toStdString() << std::endl;
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        std::cout << "preset_mkvpropedit: " << _preset_mkvmerge.toStdString() << std::endl;
-        ui->textBrowser_log->append(QString("Preset pass 1: ") + _preset_0 + QString(" -i <input file> ") +
-                                    _preset_pass1 + QString("\n"));
-        ui->textBrowser_log->append(QString("Preset pass 2: ") + _preset_0 + QString(" -i <input file> ") +
-                                    _preset  + QString(" -y <output file>\n"));
-        ui->textBrowser_log->append(QString("Preset mkvpropedit: ") + _preset_mkvmerge  + QString("\n"));
-    }
-    else if ((_flag_two_pass == true) && (_flag_hdr == false)) {
-        std::cout << "preset_pass1: " << _preset_pass1.toStdString() << std::endl;
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        ui->textBrowser_log->append(QString("Preset pass 1: ") + _preset_0 + QString(" -i <input file> ") +
-                                    _preset_pass1 + QString("\n"));
-        ui->textBrowser_log->append(QString("Preset pass 2: ") + _preset_0 + QString(" -i <input file> ") +
-                                    _preset  + QString(" -y <output file>\n"));
-    }
-    else if ((_flag_two_pass == false) && (_flag_hdr == true)) {
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        std::cout << "preset_mkvpropedit: " << _preset_mkvmerge.toStdString() << std::endl;
-        ui->textBrowser_log->append(QString("Preset: ") + _preset_0 + QString(" -i <input file> ") +
-                                    _preset  + QString(" -y <output file>\n"));
-        ui->textBrowser_log->append(QString("Preset mkvpropedit: ") + _preset_mkvmerge  + QString("\n"));
-    }
-    else if ((_flag_two_pass == false) && (_flag_hdr == false)) {
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        ui->textBrowser_log->append(QString("Preset: ") + _preset_0 + QString(" -i <input file> ") +
-                                    _preset  + QString(" -y <output file>\n"));
-    }
-    encode();
+    const QString globalTitle = ui->lineEditGlobalTitle->text();
+    encoder->initEncoding(_temp_file,
+                          _input_file,
+                          _output_file,
+                          _width,
+                          _height,
+                          _fps,
+                          _startTime,
+                          _endTime,
+                          _dur,
+                          extension,
+                          globalTitle,
+                          _cur_param,
+                          _hdr,
+                          _videoMetadata,
+                          _audioLang,
+                          _audioTitle,
+                          _subtitleLang,
+                          _subtitleTitle,
+                          _audioStreamCheckState,
+                          _subtitleCheckState,
+                          &_fr_count);
 }
 
-void Widget::encode()   /*** Encode ***/
+void Widget::onEncodingMode(const QString &mode)
 {
-    std::cout << "Encode ..." << std::endl;  //  Debug info //
-    QStringList arguments;
-    _calling_pr_1 = true;
-    processEncoding->disconnect();
-    connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
-    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
-    ui->progressBar->setValue(0);
-    if (_mux_mode == true) {
-        std::cout << "Muxing mode ..." << std::endl;  //  Debug info //
-        ui->label_Progress->setText(tr("Muxing:"));
-        arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
-                  << "-map" << "0:s?" << "-movflags" << "+write_colr"
-                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param.split(" ") << "-y" << _output_file;
-    } else {
-        if (_fr_count == 0) {
-            _status_encode_btn = "start";
-            ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
-            ui->actionEncode->setToolTip(tr("Encode"));
-            _message = tr("The file does not contain FPS information!\nSelect the correct input file!");
-            call_task_complete(_message, false);
-            return;
-        }
-        setStatus(tr("Encoding"));
-        ui->treeWidget->setEnabled(false);
-        add_files->setEnabled(false);
-        remove_files->setEnabled(false);
-        settings->setEnabled(false);
-        ui->lineEditCurTime->setEnabled(false);
-        ui->lineEditStartTime->setEnabled(false);
-        ui->lineEditEndTime->setEnabled(false);
-        ui->buttonFramePrevious->setEnabled(false);
-        ui->buttonFrameNext->setEnabled(false);
-        ui->horizontalSlider->setEnabled(false);
-        ui->buttonSetStartTime->setEnabled(false);
-        ui->buttonSetEndTime->setEnabled(false);
-        ui->tableWidget->setEnabled(false);
-        ui->buttonSortUp->setEnabled(false);
-        ui->buttonSortDown->setEnabled(false);
-        ui->actionAdd->setEnabled(false);
-        ui->actionRemove->setEnabled(false);
-
-        ui->actionAdd_preset->setEnabled(false);
-        ui->actionRemove_preset->setEnabled(false);
-        ui->actionEdit_preset->setEnabled(false);
-        ui->buttonApplyPreset->setEnabled(false);
-        ui->comboBoxMode->setEnabled(false);
-        ui->buttonHotInputFile->setEnabled(false);
-        ui->buttonHotOutputFile->setEnabled(false);
-        ui->horizontalSlider_resize->setEnabled(false);
-
-        ui->actionClearMetadata->setEnabled(false);
-        ui->actionUndoMetadata->setEnabled(false);
-        QList<QLineEdit*> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
-        foreach (QLineEdit *lineEdit, linesEditMetadata) {
-            lineEdit->setEnabled(false);
-        }
-
-        ui->actionUndoTitles->setEnabled(false);
-        ui->actionClearAudioTitles->setEnabled(false);
-        for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
-            QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
-                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
-            checkBoxAudio->setEnabled(false);
-            QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
-                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
-            lineEditLangAudio->setEnabled(false);
-            QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
-                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
-            lineEditTitleAudio->setEnabled(false);
-        }
-
-        ui->actionClearSubtitleTitles->setEnabled(false);
-        for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
-            QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
-                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
-            checkBoxSubtitle->setEnabled(false);
-            QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
-                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
-            lineEditLangSubtitle->setEnabled(false);
-            QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
-                + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
-            lineEditTitleSubtitle->setEnabled(false);
-        }
-
-        ui->actionResetLabels->setEnabled(false);
-        ui->actionSettings->setEnabled(false);
-        ui->labelAnimation->show();
-        animation->start();
-        ui->label_Progress->show();
-        ui->label_Remaining->show();
-        ui->label_RemTime->show();
-        ui->progressBar->show();
-
-
-        _loop_start = time(nullptr);
-        if (_flag_two_pass == false && _flag_hdr == false) {
-            std::cout << "Encode non HDR..." << std::endl;  //  Debug info //
-            ui->label_Progress->setText(tr("Encoding:"));
-            arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _output_file;
-        }
-        else if (_flag_two_pass == false && _flag_hdr == true) {
-            std::cout << "Encode HDR..." << std::endl;  //  Debug info //
-            ui->label_Progress->setText(tr("Encoding:"));
-            arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _temp_file;
-        }
-        else if (_flag_two_pass == true) {
-            std::cout << "Encode 1-st pass..." << std::endl;  //  Debug info //
-            ui->label_Progress->setText(tr("1-st pass:"));
-            arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file << _preset_pass1.split(" ");
-        }
-    }
-    //qDebug() << arguments;
-    processEncoding->start("ffmpeg", arguments);
-    if (!processEncoding->waitForStarted()) {
-        std::cout << "cmd command not found!!!" << std::endl;
-        processEncoding->disconnect();
-        restore_initial_state();
-        _message = tr("An unknown error occurred!\n Possible FFMPEG not installed.\n");
-        call_task_complete(_message, false);
-    }
+    ui->label_Progress->setText(mode);
 }
 
-void Widget::add_metadata() /*** Add metedata ***/
+void Widget::onEncodingStarted()
 {
-    std::cout << "Add metadata ..." << std::endl;  //  Debug info //
-    _calling_pr_1 = true;
-    processEncoding->disconnect();
-    connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_2()));
-    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
-    ui->label_Progress->setText(tr("Add data:"));
-    ui->progressBar->setValue(0);
-    QStringList arguments;
-    arguments << "--edit" << "track:1" << _preset_mkvmerge.split(" ") << _temp_file;
-    processEncoding->start("mkvpropedit", arguments);
-    if (!processEncoding->waitForStarted()) {
-        std::cout << "cmd command not found!!!" << std::endl;
-        processEncoding->disconnect();
-        restore_initial_state();
-        _message = tr("An unknown error occured!\n Possible mkvtoolnix not installed.\n");
-        call_task_complete(_message, false);
+    setStatus(tr("Encoding"));
+    ui->treeWidget->setEnabled(false);
+    add_files->setEnabled(false);
+    remove_files->setEnabled(false);
+    settings->setEnabled(false);
+    ui->lineEditCurTime->setEnabled(false);
+    ui->lineEditStartTime->setEnabled(false);
+    ui->lineEditEndTime->setEnabled(false);
+    ui->buttonFramePrevious->setEnabled(false);
+    ui->buttonFrameNext->setEnabled(false);
+    ui->horizontalSlider->setEnabled(false);
+    ui->buttonSetStartTime->setEnabled(false);
+    ui->buttonSetEndTime->setEnabled(false);
+    ui->tableWidget->setEnabled(false);
+    ui->buttonSortUp->setEnabled(false);
+    ui->buttonSortDown->setEnabled(false);
+    ui->actionAdd->setEnabled(false);
+    ui->actionRemove->setEnabled(false);
+
+    ui->actionAdd_preset->setEnabled(false);
+    ui->actionRemove_preset->setEnabled(false);
+    ui->actionEdit_preset->setEnabled(false);
+    ui->buttonApplyPreset->setEnabled(false);
+    ui->comboBoxMode->setEnabled(false);
+    ui->buttonHotInputFile->setEnabled(false);
+    ui->buttonHotOutputFile->setEnabled(false);
+    ui->horizontalSlider_resize->setEnabled(false);
+
+    ui->actionClearMetadata->setEnabled(false);
+    ui->actionUndoMetadata->setEnabled(false);
+    QList<QLineEdit*> linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
+    foreach (QLineEdit *lineEdit, linesEditMetadata) {
+        lineEdit->setEnabled(false);
     }
+
+    ui->actionUndoTitles->setEnabled(false);
+    ui->actionClearAudioTitles->setEnabled(false);
+    for (int stream = 0; stream < AMOUNT_AUDIO_STREAMS; stream++) {
+        QCheckBox *checkBoxAudio = ui->frameTab_2->findChild<QCheckBox *>("checkBoxAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        checkBoxAudio->setEnabled(false);
+        QLineEdit *lineEditLangAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditLangAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditLangAudio->setEnabled(false);
+        QLineEdit *lineEditTitleAudio = ui->frameTab_2->findChild<QLineEdit *>("lineEditTitleAudio_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditTitleAudio->setEnabled(false);
+    }
+
+    ui->actionClearSubtitleTitles->setEnabled(false);
+    for (int stream = 0; stream < AMOUNT_SUBTITLES; stream++) {
+        QCheckBox *checkBoxSubtitle = ui->frameTab_3->findChild<QCheckBox *>("checkBoxSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        checkBoxSubtitle->setEnabled(false);
+        QLineEdit *lineEditLangSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditLangSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditLangSubtitle->setEnabled(false);
+        QLineEdit *lineEditTitleSubtitle = ui->frameTab_3->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+            + QString::number(stream + 1), Qt::FindDirectChildrenOnly);
+        lineEditTitleSubtitle->setEnabled(false);
+    }
+
+    ui->actionResetLabels->setEnabled(false);
+    ui->actionSettings->setEnabled(false);
+    ui->labelAnimation->show();
+    animation->start();
+    ui->label_Progress->show();
+    ui->label_Remaining->show();
+    ui->label_RemTime->show();
+    ui->progressBar->show();
 }
 
-void Widget::complete() /*** Complete ***/
+void Widget::onEncodingInitError(const QString &message)
 {
-    std::cout << "Complete ..." << std::endl;  //  Debug info //
-    processEncoding->disconnect();
+    restore_initial_state();
+    call_task_complete(message, false);
+    /*_status_encode_btn = "start";
+    ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
+    ui->actionEncode->setToolTip(tr("Encode"));
+    call_task_complete(_message, false);*/
+}
+
+void Widget::onEncodingProgress(const int &percent, const float &rem_time)
+{
+    ui->progressBar->setValue(percent);
+    ui->label_RemTime->setText(timeConverter(rem_time));
+}
+
+void Widget::onEncodingLog(const QString &log)
+{
+    ui->textBrowser_log->append(log);
+}
+
+void Widget::onEncodingCompleted()
+{
+    std::cout << "Completed ..." << std::endl;  //  Debug info //
     setStatus(tr("Done!"));
     animation->stop();
     ui->label_Progress->hide();
@@ -2922,15 +1906,12 @@ void Widget::complete() /*** Complete ***/
     ui->label_RemTime->hide();
     ui->labelAnimation->hide();
     ui->progressBar->hide();
-    if (_flag_hdr == true) {
-        QDir().remove(_temp_file);
-    }
     if (_batch_mode == true) {
         int row = ui->tableWidget->currentRow();
         int numRows = ui->tableWidget->rowCount();
         if (numRows > (row + 1)) {
             ui->tableWidget->selectRow(row + 1);
-            make_preset();
+            initEncoding();
         } else {
             restore_initial_state();
             time_t end_t = time(nullptr);
@@ -2963,158 +1944,53 @@ void Widget::complete() /*** Complete ***/
     QDir().remove(QDir::homePath() + QString("/x265_2pass.log.cutree"));
 }
 
-void Widget::progress_1()   /*** Progress 1 ***/
-{
-    QString line = processEncoding->readAllStandardOutput();
-    QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
-    //std::cout << line_mod6.toStdString() << std::endl;
-    ui->textBrowser_log->append(line_mod6);
-    int pos_err_1 = line_mod6.indexOf("[error]:");
-    int pos_err_2 = line_mod6.indexOf("Error");
-    int pos_err_3 = line_mod6.indexOf(" @ ");
-    if (pos_err_1 != -1) {
-        QStringList error = line_mod6.split(":");
-        if (error.size() >= 2) {
-            _error_message = error[1];
-        }
-    }
-    if (pos_err_2 != -1) {
-        _error_message = line_mod6;
-    }
-    if (pos_err_3 != -1) {
-        QStringList error = line_mod6.split("]");
-        if (error.size() >= 2) {
-            _error_message = error[1];
-        }
-    }
-    int pos_st = line_mod6.indexOf("frame=");
-    if (pos_st == 0) {
-        QStringList data = line_mod6.split(" ");
-        QString frame_qstr = data[0].replace("frame=", "");
-        int frame = frame_qstr.toInt();
-        if (frame == 0) {
-            frame = 1;
-        }
-        time_t iter_start = time(nullptr);
-        int timer = static_cast<int>(iter_start - _loop_start);
-        float full_time = static_cast<float>(timer * _fr_count) / (frame);
-        float rem_time = full_time - static_cast<float>(timer);
-        if (rem_time < 0.0f) {
-            rem_time = 0.0f;
-        }
-        if (rem_time > MAXIMUM_ALLOWED_TIME) {
-            rem_time = MAXIMUM_ALLOWED_TIME;
-        }
-        ui->label_RemTime->setText(timeConverter(rem_time));
-
-        float percent = static_cast<float>(frame * 100) / _fr_count;
-        int percent_int = static_cast<int>(round(percent));
-        if (percent_int > 100) {
-            percent_int = 100;
-        }
-        ui->progressBar->setValue(percent_int);
-
-        if ((percent_int >= 95) && (_calling_pr_1 == true)) {
-             disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
-             if (_mux_mode == true) {
-                 connect(processEncoding, SIGNAL(finished(int)), this, SLOT(complete()));
-             } else {
-                 if (_flag_two_pass == false && _flag_hdr == true) {
-                     disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(add_metadata()));
-                 }
-                 if (_flag_two_pass == false && _flag_hdr == false) {
-                     disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(complete()));
-                 }
-                 if (_flag_two_pass == true) {
-                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-                     _flag_two_pass = false;
-                 }
-             }
-             _calling_pr_1 = false;
-        }
-    }
-}
-
-void Widget::progress_2()   /*** Progress 2 ***/
-{
-    QString line = processEncoding->readAllStandardOutput();
-    ui->textBrowser_log->append(line);
-    int pos_st = line.indexOf("Done.");
-    int pos_nf = line.indexOf("Nothing to do.");
-    if ((pos_st != -1) or (pos_nf != -1)) {
-        int percent = 100;
-        ui->progressBar->setValue(percent);
-        if ((percent == 100) && (_calling_pr_1 == true)) {
-            disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
-            _mux_mode = true;
-            _loop_start = time(nullptr);
-            _calling_pr_1 = false;
-            connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-        }
-    }
-}
-
-void Widget::pause()    /*** Pause ***/
-{
-    if (_protection) timer->stop();
-    if (processEncoding->state() != QProcess::NotRunning) {
-        setStatus(tr("Pause"));
-        animation->stop();
-#ifdef Q_OS_WIN
-        _PROCESS_INFORMATION *pi = processEncoding->pid();
-        SuspendThread(pi->hThread);  // pause for Windows
-#else
-        kill(pid_t(processEncoding->processId()), SIGSTOP);  // pause for Unix
-#endif
-    }
-}
-
-void Widget::resume()   /*** Resume ***/
-{
-    if (_protection) timer->start();
-    if (processEncoding->state() != QProcess::NotRunning) {
-        setStatus(tr("Encoding"));
-        animation->start();
-#ifdef Q_OS_WIN
-        _PROCESS_INFORMATION *pi = processEncoding->pid();
-        ResumeThread(pi->hThread);  // resume for Windows
-#else
-        kill(pid_t(processEncoding->processId()), SIGCONT); // resume for Unix
-#endif
-    }
-}
-
-void Widget::cancel()   /*** Stop execute ***/
+void Widget::onEncodingAborted()
 {
     std::cout << "Stop execute ..." << std::endl;  //  Debug info //
     if (_protection) timer->stop();
-    processEncoding->disconnect();
     setStatus(tr("Stop"));
     ui->label_Progress->hide();
     ui->label_Remaining->hide();
     ui->label_RemTime->hide();
     ui->labelAnimation->hide();
     ui->progressBar->hide();
-    restore_initial_state();
     _message = tr("The current encoding process has been canceled!\n");
+    restore_initial_state();
     call_task_complete(_message, false);
 }
 
-void Widget::error()  /*** Error ***/
+void Widget::onEncodingError(const QString &error_message)
 {
     std::cout << "Error_1 ..." << std::endl;  //  Debug info //
     if (_protection) timer->stop();
-    processEncoding->disconnect();
     setStatus(tr("Error!"));
     restore_initial_state();
-    if (_error_message != "") {
-        _message = tr("An error occurred: ") + _error_message;
+    if (error_message != "") {
+        _message = tr("An error occurred: ") + error_message;
     } else {
         _message = tr("Unexpected error occurred!");
     }
     call_task_complete(_message, false);
+}
+
+void Widget::pause()    // Pause encoding
+{
+    if (_protection) timer->stop();
+    if (encoder->getEncodingState() != QProcess::NotRunning) {
+        setStatus(tr("Pause"));
+        animation->stop();
+        encoder->pauseEncoding();
+    }
+}
+
+void Widget::resume()   // Resume encoding
+{
+    if (_protection) timer->start();
+    if (encoder->getEncodingState() != QProcess::NotRunning) {
+        setStatus(tr("Encoding"));
+        animation->start();
+        encoder->resumeEncoding();
+    }
 }
 
 void Widget::repeatHandler_Type_1()  /*** Repeat handler ***/
@@ -3174,7 +2050,8 @@ void Widget::on_buttonSortUp_clicked()    /*** Sort table ***/
 
 void Widget::on_actionEncode_clicked()  /*** Encode button ***/
 {
-    if (_status_encode_btn == "start") {
+    switch (_status_encode_btn) {
+    case EncodingStatus::START: {
         std::cout << "Status encode btn: start" << std::endl;  // Debug info //
         int cnt = ui->tableWidget->rowCount();
         if (cnt == 0) {
@@ -3187,44 +2064,45 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
             call_task_complete(_message, false);
             return;
         }
-        _status_encode_btn = "pause";
+        _status_encode_btn = EncodingStatus::PAUSE;
         ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-pause.png"));
         ui->actionEncode->setToolTip(tr("Pause"));
         _strt_t = time(nullptr);
         if (_protection == true) {
             timer->start();
         }
-        make_preset();
-        return;
+        initEncoding();
+        break;
     }
-    if (_status_encode_btn == "pause") {
+    case EncodingStatus::PAUSE: {
         std::cout << "Status encode btn: pause" << std::endl;  // Debug info //
         pause();
-        _status_encode_btn = "resume";
+        _status_encode_btn = EncodingStatus::RESUME;
         ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-forward.png"));
         ui->actionEncode->setToolTip(tr("Resume"));
-        return;
+        break;
     }
-    if (_status_encode_btn == "resume") {
+    case EncodingStatus::RESUME: {
         std::cout << "Status encode btn: resume" << std::endl;  // Debug info //
         resume();
-        _status_encode_btn = "pause";
+        _status_encode_btn = EncodingStatus::PAUSE;
         ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-pause.png"));
         ui->actionEncode->setToolTip(tr("Pause"));
-        return;
+        break;
+    }
+    default:
+        break;
     }
 }
 
 void Widget::on_actionStop_clicked()    /*** Stop ***/
 {
     std::cout << "Call Stop ..." << std::endl;  //  Debug info //
-    if (processEncoding->state() != QProcess::NotRunning) {
+    if (encoder->getEncodingState() != QProcess::NotRunning) {
         _message = tr("Stop encoding?");
         bool confirm = call_dialog(_message);
         if (confirm) {
-            processEncoding->disconnect();
-            connect(processEncoding, SIGNAL(finished(int)), this, SLOT(cancel()));
-            processEncoding->kill();
+            encoder->stopEncoding();
         }
     }
 }
@@ -3252,40 +2130,25 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
         QApplication::processEvents();
         if (i == 1) _openDir = inputFolder;
         MI.Open(file.toStdWString());
+        QString fmt_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Format"));
+        QString width_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Width"));
+        QString height_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Height"));
+        QString size = width_qstr + "x" + height_qstr;
         QString duration_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Duration"));
         double duration_double = 0.001 * duration_qstr.toDouble();
         float duration_float = static_cast<float>(duration_double);
         QString durationTime = timeConverter(duration_float);
-        QString bitrate_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitRate"));
+        QString fps_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"FrameRate"));
+        const QString status("");
+        const QString bitrate_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitRate"));
         int bitrate_int = static_cast<int>(0.001 * bitrate_qstr.toDouble());        
-        QString stream_size_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"StreamSize"));
+        QString matrix_coefficients = QString::fromStdWString(MI.Get(Stream_Video, 0, L"matrix_coefficients"));
+        const QString mtrx_coeff = matrix_coefficients.replace(" ", "").replace(".", "").replace("on-", "").replace("onstant", "");
         QString mastering_display_luminance_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MasteringDisplay_Luminance"));
         QString mastering_display_luminance_rep = mastering_display_luminance_qstr.replace("min: ", "").replace("max: ", "").replace(" cd/m2", "");
         QString min_luminance = mastering_display_luminance_rep.split(", ")[0];
         QString max_luminance = mastering_display_luminance_rep.replace(min_luminance, "").replace(", ", "");
-        QString color_primaries = QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_primaries"));
-        QString matrix_coefficients = QString::fromStdWString(MI.Get(Stream_Video, 0, L"matrix_coefficients"));
-        QString transfer_characteristics = QString::fromStdWString(MI.Get(Stream_Video, 0, L"transfer_characteristics"));
-        QString mastering_display_color_primaries = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MasteringDisplay_ColorPrimaries"));
-        QString color_range = QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_range"));
-        QString maxCll = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxCLL"));
-        QString maxFall = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxFALL"));
-        QString width_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Width"));
-        QString height_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Height"));
-        QString chroma_subsampling = QString::fromStdWString(MI.Get(Stream_Video, 0, L"ChromaSubsampling"));
-        QString aspect_ratio = QString::fromStdWString(MI.Get(Stream_Video, 0, L"DisplayAspectRatio"));
-        QString color_space = QString::fromStdWString(MI.Get(Stream_Video, 0, L"ColorSpace"));
-        QString bit_depth = QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitDepth"));
-        QString fmt_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Format"));
-        QString fps_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"FrameRate"));
-        QString size = width_qstr + "x" + height_qstr;
-        QString videoTitle = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Title"));
-        QString videoAuthor = QString::fromStdWString(MI.Get(Stream_General, 0, L"AUTHOR"));
-        QString videoYear = QString::fromStdWString(MI.Get(Stream_General, 0, L"YEAR"));
-        QString videoPerformer = QString::fromStdWString(MI.Get(Stream_General, 0, L"Performer"));
-        QString videoDescription = QString::fromStdWString(MI.Get(Stream_General, 0, L"Description"));
-        QString videoMovieName = QString::fromStdWString(MI.Get(Stream_General, 0, L"Movie"));
-
+        QString mastering_display_color_primaries = QString::fromStdWString(MI.Get(Stream_Video, 0, L"MasteringDisplay_ColorPrimaries"));       
         int len = mastering_display_color_primaries.length();
         QString white_coord = "";
         QString chroma_coord = "";
@@ -3312,94 +2175,44 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
             durationTime = "Undef";
         }
 
-        QTableWidgetItem *newItem_file = new QTableWidgetItem(inputFile);
-        QTableWidgetItem *newItem_folder = new QTableWidgetItem(inputFolder);
-        QTableWidgetItem *newItem_fmt = new QTableWidgetItem(fmt_qstr);
-        QTableWidgetItem *newItem_resolution = new QTableWidgetItem(size);
-        QTableWidgetItem *newItem_duration_time = new QTableWidgetItem(durationTime);
-        QTableWidgetItem *newItem_fps = new QTableWidgetItem(fps_qstr);
-        QTableWidgetItem *newItem_aspect_ratio = new QTableWidgetItem(aspect_ratio);
-        QTableWidgetItem *newItem_bitrate = new QTableWidgetItem(QString::number(bitrate_int));
-        QTableWidgetItem *newItem_subsampling = new QTableWidgetItem(chroma_subsampling);
-        QTableWidgetItem *newItem_bit_depth = new QTableWidgetItem(bit_depth);
-        QTableWidgetItem *newItem_color_space = new QTableWidgetItem(color_space);
-        QTableWidgetItem *newItem_color_range = new QTableWidgetItem(color_range);
-        QTableWidgetItem *newItem_color_primaries = new QTableWidgetItem(color_primaries.replace(".", ""));
-        QTableWidgetItem *newItem_color_matrix = new QTableWidgetItem(matrix_coefficients.replace(" ", "").replace(".", "").replace("on-", "").replace("onstant", ""));
-        QTableWidgetItem *newItem_transfer_characteristics = new QTableWidgetItem(transfer_characteristics.replace(".", ""));
-        QTableWidgetItem *newItem_max_lum = new QTableWidgetItem(max_luminance);
-        QTableWidgetItem *newItem_min_lum = new QTableWidgetItem(min_luminance);
-        QTableWidgetItem *newItem_max_cll = new QTableWidgetItem(maxCll.replace(" cd/m2", ""));
-        QTableWidgetItem *newItem_max_fall = new QTableWidgetItem(maxFall.replace(" cd/m2", ""));
-        QTableWidgetItem *newItem_mastering_display = new QTableWidgetItem(mastering_display_color_primaries);
-        QTableWidgetItem *newItem_chroma_coord = new QTableWidgetItem(chroma_coord);
-        QTableWidgetItem *newItem_white_coord = new QTableWidgetItem(white_coord);
-        QTableWidgetItem *newItem_duration = new QTableWidgetItem(QString::number(duration_double, 'f', 3));
-        QTableWidgetItem *newItem_stream_size = new QTableWidgetItem(stream_size_qstr);
-        QTableWidgetItem *newItem_width = new QTableWidgetItem(width_qstr);
-        QTableWidgetItem *newItem_height = new QTableWidgetItem(height_qstr);
-        QTableWidgetItem *newItem_videoTitle = new QTableWidgetItem(videoTitle);
-        QTableWidgetItem *newItem_videoAuthor = new QTableWidgetItem(videoAuthor);
-        QTableWidgetItem *newItem_videoYear = new QTableWidgetItem(videoYear);
-        QTableWidgetItem *newItem_videoPerformer = new QTableWidgetItem(videoPerformer);
-        QTableWidgetItem *newItem_videoDescription = new QTableWidgetItem(videoDescription);
-        QTableWidgetItem *newItem_videoMovieName = new QTableWidgetItem(videoMovieName);
-        QTableWidgetItem *newItem_startTime = new QTableWidgetItem("0");
-        QTableWidgetItem *newItem_endTime = new QTableWidgetItem("0");
+        const QString arr_items[] = {
+            inputFile, fmt_qstr, size, durationTime, fps_qstr,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"DisplayAspectRatio")),
+            status, QString::number(bitrate_int),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"ChromaSubsampling")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitDepth")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"ColorSpace")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_range")),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"colour_primaries")).replace(".", ""),
+            mtrx_coeff,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"transfer_characteristics")).replace(".", ""),
+            max_luminance, min_luminance,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxCLL")).replace(" cd/m2", ""),
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"MaxFALL")).replace(" cd/m2", ""),
+            mastering_display_color_primaries, inputFolder, QString::number(duration_double, 'f', 3),
+            chroma_coord, white_coord,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"StreamSize")),
+            width_qstr, height_qstr,
+            QString::fromStdWString(MI.Get(Stream_Video, 0, L"Title")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"Movie")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"YEAR")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"AUTHOR")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"Performer")),
+            QString::fromStdWString(MI.Get(Stream_General, 0, L"Description"))
+        };
 
-        newItem_fmt->setTextAlignment(Qt::AlignCenter);
-        newItem_resolution->setTextAlignment(Qt::AlignCenter);
-        newItem_duration_time->setTextAlignment(Qt::AlignCenter);
-        newItem_fps->setTextAlignment(Qt::AlignCenter);
-        newItem_aspect_ratio->setTextAlignment(Qt::AlignCenter);
-        newItem_bitrate->setTextAlignment(Qt::AlignCenter);
-        newItem_subsampling->setTextAlignment(Qt::AlignCenter);
-        newItem_bit_depth->setTextAlignment(Qt::AlignCenter);
-        newItem_color_space->setTextAlignment(Qt::AlignCenter);
-        newItem_color_range->setTextAlignment(Qt::AlignCenter);
-        newItem_color_primaries->setTextAlignment(Qt::AlignCenter);
-        newItem_color_matrix->setTextAlignment(Qt::AlignCenter);
-        newItem_transfer_characteristics->setTextAlignment(Qt::AlignCenter);
-        newItem_max_lum->setTextAlignment(Qt::AlignCenter);
-        newItem_min_lum->setTextAlignment(Qt::AlignCenter);
-        newItem_max_cll->setTextAlignment(Qt::AlignCenter);
-        newItem_max_fall->setTextAlignment(Qt::AlignCenter);
-        newItem_mastering_display->setTextAlignment(Qt::AlignCenter);
+        for (int column = ColumnIndex::FILENAME; column <= ColumnIndex::T_VIDEODESCR; column++) {
+            QTableWidgetItem *item = new QTableWidgetItem(arr_items[column]);
+            if (column >= ColumnIndex::FORMAT && column <= ColumnIndex::MASTERDISPLAY) {
+                item->setTextAlignment(Qt::AlignCenter);
+            }
+            ui->tableWidget->setItem(numRows, column, item);
+        }
 
-        ui->tableWidget->setItem(numRows, ColumnIndex::FILENAME, newItem_file);
-        ui->tableWidget->setItem(numRows, ColumnIndex::PATH, newItem_folder);
-        ui->tableWidget->setItem(numRows, ColumnIndex::FORMAT, newItem_fmt);
-        ui->tableWidget->setItem(numRows, ColumnIndex::RESOLUTION, newItem_resolution);
-        ui->tableWidget->setItem(numRows, ColumnIndex::DURATION, newItem_duration_time);
-        ui->tableWidget->setItem(numRows, ColumnIndex::FPS, newItem_fps);
-        ui->tableWidget->setItem(numRows, ColumnIndex::AR, newItem_aspect_ratio);
-        ui->tableWidget->setItem(numRows, ColumnIndex::BITRATE, newItem_bitrate);
-        ui->tableWidget->setItem(numRows, ColumnIndex::SUBSAMPLING, newItem_subsampling);
-        ui->tableWidget->setItem(numRows, ColumnIndex::BITDEPTH, newItem_bit_depth);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORSPACE, newItem_color_space);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORRANGE, newItem_color_range);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORPRIM, newItem_color_primaries);
-        ui->tableWidget->setItem(numRows, ColumnIndex::COLORMATRIX, newItem_color_matrix);
-        ui->tableWidget->setItem(numRows, ColumnIndex::TRANSFER, newItem_transfer_characteristics);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MAXLUM, newItem_max_lum);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MINLUM, newItem_min_lum);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MAXCLL, newItem_max_cll);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MAXFALL, newItem_max_fall);
-        ui->tableWidget->setItem(numRows, ColumnIndex::MASTERDISPLAY, newItem_mastering_display);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_CHROMACOORD, newItem_chroma_coord);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_WHITECOORD, newItem_white_coord);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_DUR, newItem_duration);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_STREAMSIZE, newItem_stream_size);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_WIDTH, newItem_width);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_HEIGHT, newItem_height);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOTITLE, newItem_videoTitle);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOAUTHOR, newItem_videoAuthor);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOYEAR, newItem_videoYear);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOPERF, newItem_videoPerformer);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEODESCR, newItem_videoDescription);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_VIDEOMOVIENAME, newItem_videoMovieName);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_STARTTIME, newItem_startTime);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_ENDTIME, newItem_endTime);
+        QTableWidgetItem *item_startTime = new QTableWidgetItem("0");
+        QTableWidgetItem *item_endTime = new QTableWidgetItem("0");
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_STARTTIME, item_startTime);
+        ui->tableWidget->setItem(numRows, ColumnIndex::T_ENDTIME, item_endTime);
 
         int smplrt_int;
         QString audioFormat("");
@@ -3474,7 +2287,7 @@ void Widget::openFiles(const QStringList &openFileNames)    /*** Open files ***/
     showOpeningFiles(false);
 }
 
-void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed ***/
+void Widget::on_tableWidget_itemSelectionChanged()
 {
     ui->labelAnimation->hide();
     ui->label_Progress->hide();
@@ -3527,6 +2340,7 @@ void Widget::on_tableWidget_itemSelectionChanged()  /*** Item selection changed 
     } else {
         // ********************************* Reset widgets ***************************************//
         raiseThumb->show();
+        preview_pixmap = QPixmap();
         ui->labelThumb->clear();
         ui->textBrowser_1->clear();
         ui->textBrowser_2->clear();
@@ -3701,7 +2515,7 @@ void Widget::dropEvent(QDropEvent* event)     /*** Drag & Drop ***/
     event->ignore();
 }
 
-QString Widget::timeConverter(float &time)     /*** Time converter to hh:mm:ss ***/
+QString Widget::timeConverter(const float &time)     /*** Time converter to hh:mm:ss ***/
 {    
     const int h = static_cast<int>(trunc(time / 3600));
     const int m = static_cast<int>(trunc((time - float(h * 3600)) / 60));
@@ -3727,10 +2541,13 @@ void Widget::on_horizontalSlider_resize_valueChanged(int value)
 ** Preview Window
 ************************************************/
 
-QString Widget::setThumbnail(QString curFilename, double time, QString quality, int destination)     /*** Thumbnail ***/
+QString Widget::setThumbnail(QString curFilename,
+                             const double &time,
+                             const int &quality,
+                             const int &destination)
 {
     QString qualityParam("-vf scale=480:-1 -compression_level 10 -pix_fmt rgb24");
-    if (quality == "low") qualityParam = QString("-vf scale=144:-1,format=pal8,dctdnoiz=4.5");
+    if (quality == PreviewRes::RES_LOW) qualityParam = QString("-vf scale=144:-1,format=pal8,dctdnoiz=4.5");
     const QString time_qstr = QString::number(time, 'f', 3);
     const QString tmb_name = curFilename.replace(".", "_").replace(" ", "_") + time_qstr;
     QString tmb_file = _thumb_path + QString("/") + tmb_name + QString(".png");
@@ -3743,13 +2560,14 @@ QString Widget::setThumbnail(QString curFilename, double time, QString quality, 
         processThumbCreation->waitForFinished();
     }
     if (!tmb.exists()) tmb_file = ":/resources/images/no_preview.png";
-    QPixmap pix(tmb_file);
+    preview_pixmap = QPixmap(tmb_file);
     QPixmap pix_scaled;
-    if (destination == 1) {
-        pix_scaled = pix.scaled(ui->frame_preview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    if (destination == PreviewDest::PREVIEW) {
+        pix_scaled = preview_pixmap.scaled(ui->frame_preview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         ui->labelThumb->setPixmap(pix_scaled);
-    } else {
-        pix_scaled = pix.scaled(ui->labelSplitPreview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    } else
+    if (destination == PreviewDest::SPLITTER) {
+        pix_scaled = preview_pixmap.scaled(ui->labelSplitPreview->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         ui->labelSplitPreview->setPixmap(pix_scaled);
     }
     return tmb_file;
@@ -3758,7 +2576,7 @@ QString Widget::setThumbnail(QString curFilename, double time, QString quality, 
 void Widget::repeatHandler_Type_2()
 {
     //std::cout << "Call by timer... " << std::endl;
-    if (_row != -1) setThumbnail(_curFilename, _curTime, "high", 2);
+    if (_row != -1) setThumbnail(_curFilename, _curTime, PreviewRes::RES_HIGH, PreviewDest::SPLITTER);
 }
 
 /************************************************
@@ -3779,7 +2597,6 @@ void Widget::get_output_filename()  /*** Get output data ***/
     ui->textBrowser_2->clear();
     ui->textBrowser_2->setText(_cur_param[CurParamIndex::OUTPUT_PARAM]);
     QString file_without_ext("");
-    QString extension("");
     QString suffix("");
     QString prefix("");
     int _CODEC = _cur_param[CurParamIndex::CODEC].toInt();
@@ -4246,8 +3063,14 @@ void Widget::on_actionEdit_preset_clicked()  /*** Edit preset ***/
             for (int k = 0; k < PARAMETERS_COUNT; k++) {
                 item->setText(k+7, _new_param[k]);
             }
-            updateInfoFields(_new_param[1], _new_param[2], _new_param[3], _new_param[4],
-                             _new_param[11], _new_param[12], _new_param[21], item, true);
+            updateInfoFields(_new_param[1],
+                             _new_param[2],
+                             _new_param[3],
+                             _new_param[4],
+                             _new_param[11],
+                             _new_param[12],
+                             _new_param[21],
+                             item, true);
             int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
             int index_child = parentItem->indexOfChild(item);
             if (_pos_top == index_top && _pos_cld == index_child) {
@@ -4349,16 +3172,15 @@ void Widget::setItemStyle(QTreeWidgetItem *item)
     QFont font = qApp->font();
     font.setItalic(true);
     QColor foregroundChildColor;
-    switch (_theme)
-    {
-        case 0:
-        case 1:
-        case 2:
-            foregroundChildColor.setRgb(qRgb(50, 100, 157));
-            break;
-        case 3:
-            foregroundChildColor.setRgb(qRgb(30, 50, 150));
-            break;
+    switch (_theme) {
+    case Theme::GRAY:
+    case Theme::DARK:
+    case Theme::WAVE:
+        foregroundChildColor.setRgb(qRgb(150, 190, 220));
+        break;
+    case Theme::DEFAULT:
+        foregroundChildColor.setRgb(qRgb(30, 50, 150));
+        break;
     }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
     item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
@@ -4385,9 +3207,15 @@ void Widget::updateCurPresetPos(int &index_top, int &index_child)
     //}
 }
 
-void Widget::updateInfoFields(QString &codec_qstr, QString &mode_qstr, QString &container_qstr,
-                              QString &bqr_qstr, QString &pass_qstr, QString &preset_qstr,
-                              QString &acodec_qstr, QTreeWidgetItem *item, bool defaultNameFlag)
+void Widget::updateInfoFields(QString &codec_qstr,
+                              QString &mode_qstr,
+                              QString &container_qstr,
+                              QString &bqr_qstr,
+                              QString &pass_qstr,
+                              QString &preset_qstr,
+                              QString &acodec_qstr,
+                              QTreeWidgetItem *item,
+                              bool defaultNameFlag)
 {
     int codec = codec_qstr.toInt();
     int mode = mode_qstr.toInt();
@@ -4660,22 +3488,21 @@ void Widget::setPresetIcon(QTreeWidgetItem *item, bool collapsed)
 {
     QIcon sectionIcon;
     QString path;
-    switch (_theme)
-    {
-        case Theme::GRAY:
-        case Theme::DARK:
-        case Theme::WAVE:
-            if (collapsed) {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder.png");
-            } else {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png");}
-            break;
-        case Theme::DEFAULT:
-            if (collapsed) {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder_light.png");
-            } else {
-                path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open_light.png");}
-            break;
+    switch (_theme) {
+    case Theme::GRAY:
+    case Theme::DARK:
+    case Theme::WAVE:
+        if (collapsed) {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder.png");
+        } else {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png");}
+        break;
+    case Theme::DEFAULT:
+        if (collapsed) {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder_light.png");
+        } else {
+            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open_light.png");}
+        break;
     }
     sectionIcon.addFile(path, QSize(), QIcon::Normal, QIcon::Off);
     item->setIcon(0, sectionIcon);
