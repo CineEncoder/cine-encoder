@@ -52,5 +52,5 @@ install -m 0644 share/%{name}.wav %{buildroot}/%{_datadir}/sounds
 %{_datadir}/sounds/cine-encoder.wav
 
 %changelog
-* Thu Nov 18 2021 Cine Encoder <depositmail@rambler.ru>
+* Sat Mar 19 2022 Cine Encoder <depositmail@rambler.ru>
 - Initial package for CentOS.
