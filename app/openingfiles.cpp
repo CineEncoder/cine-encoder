@@ -13,7 +13,7 @@
 
 #include "openingfiles.h"
 #include "ui_openingfiles.h"
-
+#include <QGraphicsDropShadowEffect>
 
 
 OpeningFiles::OpeningFiles(QWidget *parent):
@@ -22,6 +22,13 @@ OpeningFiles::OpeningFiles(QWidget *parent):
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_main);
+    shadow->setBlurRadius(10.0);
+    shadow->setColor(QColor(0, 0, 0, 160));
+    shadow->setOffset(0.0);
+    ui->widget_main->setGraphicsEffect(shadow);
 }
 
 OpeningFiles::~OpeningFiles()
@@ -45,16 +52,14 @@ void OpeningFiles::setParameters(const bool &show, const QPoint &position)
 
 void OpeningFiles::setText(const QString &text)
 {
-    QString elidedText;
     QFontMetrics fm = ui->label_filename->fontMetrics();
-    //int fwidth = fm.horizontalAdvance(text);
-    int fwidth = fm.width(text);
-    int width = ui->label_filename->width();
-    if (fwidth > width) {
-        elidedText = fm.elidedText(text, Qt::ElideMiddle, width, 0);
-    } else {
-        elidedText = text;
-    }
+#if (QT_VERSION < QT_VERSION_CHECK(5,11,0))
+    const int fwidth = fm.width(text);
+#else
+    const int fwidth = fm.horizontalAdvance(text);
+#endif
+    const int width = ui->label_filename->width();
+    const QString elidedText = (fwidth > width) ? fm.elidedText(text, Qt::ElideMiddle, width, 0) : text;
     ui->label_filename->setText(elidedText);
 }
 

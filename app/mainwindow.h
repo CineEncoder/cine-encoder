@@ -111,161 +111,90 @@ public:
 private slots:
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
-
     void setTrayIconActions();
-
     void showTrayIcon();
-
     void on_closeWindow_clicked();
-
     void setExpandIcon();
-
     void on_hideWindow_clicked();
-
     void on_expandWindow_clicked();
-
     void on_actionSettings_clicked();
-
     void on_actionAdd_clicked();
-
     void on_actionRemove_clicked();
-
     void on_actionEncode_clicked();
-
     void on_actionStop_clicked();
-
     void on_buttonSortDown_clicked();
-
     void on_buttonSortUp_clicked();
-
     void setParameters();
-
     void setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY);
 
     void showEvent(QShowEvent *event);
-
     void closeEvent(QCloseEvent *event);
-
     bool eventFilter(QObject *watched, QEvent *event);
-
+    bool event(QEvent *event);
     void dragEnterEvent(QDragEnterEvent* event);
-
     void dragMoveEvent(QDragMoveEvent* event);
-
     void dragLeaveEvent(QDragLeaveEvent* event);
-
     void dropEvent(QDropEvent* event);   
 
     void on_tableWidget_itemSelectionChanged();
-
     QString callFileDialog(const QString title);
 
     // ============= Encoder ================
 
     void initEncoding();
-
     void onEncodingMode(const QString &mode);
-
     void onEncodingStarted();
-
     void onEncodingInitError(const QString &_message);
-
     void onEncodingProgress(const int &percent, const float &rem_time);
-
     void onEncodingLog(const QString &log);
-
     void onEncodingCompleted();
-
     void onEncodingAborted();
-
     void onEncodingError(const QString &error_message);
-
     void pause();
-
     void resume();
 
     // ============= Video Metadata ================
 
     void on_lineEditTitleVideo_editingFinished();
-
     void on_lineEditAuthorVideo_editingFinished();
-
     void on_lineEditYearVideo_editingFinished();
-
     void on_lineEditPerfVideo_editingFinished();
-
     void on_lineEditMovieNameVideo_editingFinished();
-
     void on_lineEditDescriptionVideo_editingFinished();
-
     void on_horizontalSlider_valueChanged(int value);
-
     void on_buttonFramePrevious_clicked();
-
     void on_buttonFrameNext_clicked();
-
     void on_buttonSetStartTime_clicked();
-
     void on_buttonSetEndTime_clicked();
-
     void showMetadataEditor();
-
     void showAudioStreamsSelection();
-
     void showSubtitlesSelection();
-
     void showVideoSplitter();
-
     void repeatHandler_Type_1();
-
     void repeatHandler_Type_2();
-
     void on_buttonApplyPreset_clicked();
-
     void on_actionRemove_preset_clicked();
-
     void on_actionEdit_preset_clicked();
-
     void add_section();
-
     void add_preset();
-
     void renameSectionPreset();
-
     void setPresetIcon(QTreeWidgetItem *item, bool collapsed);
-
     void on_treeWidget_itemCollapsed(QTreeWidgetItem *item);
-
     void on_treeWidget_itemExpanded(QTreeWidgetItem *item);
-
     void on_buttonHotInputFile_clicked();
-
     void on_buttonHotOutputFile_clicked();
-
     void on_buttonCloseTaskWindow_clicked();
-
     void paintEvent(QPaintEvent *event);
-
     void on_treeWidget_itemChanged(QTreeWidgetItem *item, int column);
-
     void on_comboBoxMode_currentIndexChanged(int index);
-
     void on_horizontalSlider_resize_valueChanged(int value);
-
     void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
-
     void desktopEnvDetection();
-
     void on_actionClearMetadata_clicked();
-
     void on_actionUndoMetadata_clicked();
-
     void on_actionClearAudioTitles_clicked();
-
     void on_actionClearSubtitleTitles_clicked();
-
     void on_actionUndoTitles_clicked();
-
     void on_actionResetLabels_clicked();
 
 private:
@@ -435,60 +364,38 @@ private:
     // ====================================
 
     void createConnections();
-
     void on_actionAbout_clicked();
-
     void on_actionDonate_clicked();
-
     void showOpeningFiles(bool status);
-
     void showOpeningFiles(QString text);
-
     void showOpeningFiles(int percent);
-
     void openFiles(const QStringList &file_name_open);
-
     void get_current_data();
-
     void get_output_filename();
-
     void setStatus(QString status);
-
     void restore_initial_state();
-
     void call_task_complete(const QString &_message, const bool &_timer_mode);
-
     bool call_dialog(const QString &_message);
 
     void setTheme(int &ind_theme);
-
     QString styleCreator(const QString &list);
-
     QString timeConverter(double &time);
-
     QString timeConverter(const float &time);
-
     QString setThumbnail(QString curFilename,
                          const double &time,
                          const int &quality,
                          const int &destination);
 
     void provideContextMenu(const QPoint &position);
-
     void providePresetContextMenu(const QPoint &position);
-
     void resizeTableRows(int rows_height);
-
     void resetView();
 
     // ============= Preset Window =============
 
     void set_defaults();
-
     void setItemStyle(QTreeWidgetItem *item);
-
     void updateCurPresetPos(int &index_top, int &index_child);
-
     void updateInfoFields(QString &codec_qstr,
                           QString &mode_qstr,
                           QString &container_qstr,
@@ -500,17 +407,11 @@ private:
                           bool defaultNameFlag);
 
     void updatePresetTable();
-
     QString updateFieldCodec(int &codec);
-
     QString updateFieldMode(int &codec, int &mode);
-
     QString updateFieldPreset(int &codec, int &preset);
-
     QString updateFieldPass(int &codec, int &pass);
-
     QString updateFieldAcodec(int &codec, int &acodec);
-
     QString updateFieldContainer(int &codec, int &container);
 
 };

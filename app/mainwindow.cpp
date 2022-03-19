@@ -19,7 +19,7 @@
 #include "preset.h"
 #include "taskcomplete.h"
 #include "dialog.h"
-
+#include <QGraphicsDropShadowEffect>
 
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE
@@ -60,7 +60,13 @@ Widget::Widget(QWidget *parent):
 #endif
     this->setMouseTracking(true);
     this->setAcceptDrops(true);
+    this->setAttribute(Qt::WA_TranslucentBackground);
 
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->centralwidget);
+    shadow->setBlurRadius(10.0);
+    shadow->setColor(QColor(0, 0, 0, 160));
+    shadow->setOffset(0.0);
+    ui->centralwidget->setGraphicsEffect(shadow);
     // **************************** Set front label ***********************************//
 
     QHBoxLayout *raiseLayout = new QHBoxLayout(ui->tableWidget);
@@ -142,15 +148,18 @@ Widget::Widget(QWidget *parent):
     }
 
     // **************************** Set Event Filters ***********************************//
+    this->setAttribute(Qt::WA_Hover, true);
+    this->installEventFilter(this);
 
-    ui->centralwidget->installEventFilter(this);
     ui->centralwidget->setAttribute(Qt::WA_Hover, true);
+    ui->centralwidget->setAttribute(Qt::WA_NoMousePropagation, true);
     ui->frame_main->installEventFilter(this);
     ui->frame_main->setAttribute(Qt::WA_Hover, true);
     ui->frame_main->setAttribute(Qt::WA_NoMousePropagation, true);
     ui->frame_top->installEventFilter(this);
     raiseThumb->installEventFilter(this);
     ui->labelThumb->installEventFilter(this);
+    ui->frame_middle->setFocusPolicy(Qt::StrongFocus);
 }
 
 Widget::~Widget()
@@ -951,16 +960,13 @@ void Widget::setParameters()    /*** Set parameters ***/
 
     if (_language == "") {
         QLocale locale = QLocale::system();
-        if (locale.language() == QLocale::Chinese) {
-            _language = "zh";
-        }
-        else if (locale.language() == QLocale::German) {
-            _language = "de";
-        }
-        else if (locale.language() == QLocale::Russian) {
-            _language = "ru";
-        }
-        else {
+        QMap<int, QString> langIndex;
+        langIndex[QLocale::Chinese] = "zh";
+        langIndex[QLocale::German] = "de";
+        langIndex[QLocale::Russian] = "ru";
+        if (langIndex.contains(locale.language())) {
+            _language = langIndex.value(locale.language());
+        } else {
             _language = "en";
         }
     }
@@ -971,7 +977,10 @@ void Widget::setParameters()    /*** Set parameters ***/
     }
     std::cout << "Desktop env.: " << _desktopEnv.toStdString() << std::endl;
 
-    if (this->isMaximized()) _expandWindowsState = true;
+    if (this->isMaximized()) {
+        _expandWindowsState = true;
+        layout()->setMargin(0);
+    }
 
     if (_batch_mode) {
         ui->comboBoxMode->blockSignals(true);
@@ -1036,9 +1045,11 @@ void Widget::on_expandWindow_clicked()    /*** Expand window ***/
 {
     if (!this->isMaximized()) {
         _expandWindowsState = true;
+        layout()->setMargin(0);
         this->showMaximized();
     } else {
         _expandWindowsState = false;
+        layout()->setMargin(6);
         this->showNormal();
     }
     setExpandIcon();
@@ -1545,8 +1556,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
             ui->frame_middle->setFocus();
             return true;
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
@@ -1556,62 +1566,53 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
             _clickPressedToResizeFlag.fill(false);
             return true;
         }
-        return QWidget::eventFilter(watched, event);
-    }  
+    } else
 
-    if (watched == ui->centralwidget) {     // ******** Resize window realisation ******* //
+    if (watched == this) {     // ******** Resize window realisation ******* //
         if (!this->isMaximized()) {
             if (event->type() == QEvent::HoverLeave) {
                 QGuiApplication::restoreOverrideCursor();
                 return true;
+            } else
 
-            }
             if (event->type() == QEvent::HoverMove && _clickPressedToResizeFlag.indexOf(true) == -1) {
-                const QPoint &&mouseCoordinate = ui->centralwidget->mapFromGlobal(QCursor::pos());
+                const QPoint &&mouseCoordinate = this->mapFromGlobal(QCursor::pos());
                 if (mouseCoordinate.x() < 6) {
                     if (mouseCoordinate.y() < 6) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                        setCursor(QCursor(Qt::SizeFDiagCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > 6 && mouseCoordinate.y() < (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                        setCursor(QCursor(Qt::SizeHorCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                        setCursor(QCursor(Qt::SizeBDiagCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QWidget::eventFilter(watched, event);
-                }
+                } else
                 if (mouseCoordinate.x() > 6 && mouseCoordinate.x() < (width() - 6)) {
                     if (mouseCoordinate.y() < 6 || mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeVerCursor));
+                        setCursor(QCursor(Qt::SizeVerCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QWidget::eventFilter(watched, event);
-                }
+                } else
                 if (mouseCoordinate.x() > (width() - 6)) {
                     if (mouseCoordinate.y() < 6) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeBDiagCursor));
+                        setCursor(QCursor(Qt::SizeBDiagCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > 6 && mouseCoordinate.y() < (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeHorCursor));
+                        setCursor(QCursor(Qt::SizeHorCursor));
                         return true;
-                    }
+                    } else
                     if (mouseCoordinate.y() > (height() - 6)) {
-                        QGuiApplication::setOverrideCursor(QCursor(Qt::SizeFDiagCursor));
+                        setCursor(QCursor(Qt::SizeFDiagCursor));
                         return true;
                     }
-                    QGuiApplication::restoreOverrideCursor();
-                    return QWidget::eventFilter(watched, event);
                 }
                 QGuiApplication::restoreOverrideCursor();
-                return QWidget::eventFilter(watched, event);
-
-            }
+            } else
             if (event->type() == QEvent::MouseButtonPress) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->button() == Qt::LeftButton) {
@@ -1620,61 +1621,56 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                     _oldWidth = this->width();
                     _oldHeight = this->height();
                     _globalMouseClickCoordinate = mouse_event->globalPos();
-                    const QPoint &&mouseClickCoordinate = mouse_event->pos();
+                    const QPoint mouseClickCoordinate = mouse_event->pos();
                     if (mouseClickCoordinate.x() < 6) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::LEFT_TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::LEFT] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::LEFT_BOTTOM] = true;
                             return true;
                         }
-                        return QWidget::eventFilter(watched, event);
-                    }
+                    } else
                     if (mouseClickCoordinate.x() > 6 && mouseClickCoordinate.x() < (_oldWidth - 6)) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::BOTTOM] = true;
                             return true;
                         }
-                        return QWidget::eventFilter(watched, event);
-                    }
+                    } else
                     if (mouseClickCoordinate.x() > (_oldWidth - 6)) {
                         if (mouseClickCoordinate.y() < 6) {
                             _clickPressedToResizeFlag[Resize::RIGHT_TOP] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > 6 && mouseClickCoordinate.y() < (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::RIGHT] = true;
                             return true;
-                        }
+                        } else
                         if (mouseClickCoordinate.y() > (_oldHeight - 6)) {
                             _clickPressedToResizeFlag[Resize::RIGHT_BOTTOM] = true;
                             return true;
                         }
-                        return QWidget::eventFilter(watched, event);
                     }
-                    return QWidget::eventFilter(watched, event);
                 }
-                return QWidget::eventFilter(watched, event);
-            }
+            } else
             if (event->type() == QEvent::MouseMove) {
                 QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
                 if (mouse_event->buttons() & Qt::LeftButton) {
-                    const int &&index = _clickPressedToResizeFlag.indexOf(true);
+                    const int index = _clickPressedToResizeFlag.indexOf(true);
                     if (index != -1) {
-                        const int &&deltaX = mouse_event->globalPos().x();
-                        const int &&deltaY = mouse_event->globalPos().y();
-                        const int &&deltaWidth = deltaX - _globalMouseClickCoordinate.x();
-                        const int &&deltaHeight = deltaY - _globalMouseClickCoordinate.y();
+                        const int deltaX = mouse_event->globalPos().x();
+                        const int deltaY = mouse_event->globalPos().y();
+                        const int deltaWidth = deltaX - _globalMouseClickCoordinate.x();
+                        const int deltaHeight = deltaY - _globalMouseClickCoordinate.y();
                         switch (index) {
                         case Resize::LEFT:
                             setGeometry(deltaX, _oldPosY, _oldWidth - deltaWidth, _oldHeight);
@@ -1703,33 +1699,27 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                         }
                         return true;
                     }
-                    return QWidget::eventFilter(watched, event);
                 }
-                return QWidget::eventFilter(watched, event);
             }
-            return QWidget::eventFilter(watched, event);
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->frame_main) {    // ***** Restore cursor realisation ******** //
         if (event->type() == QEvent::HoverMove) {
-            QGuiApplication::restoreOverrideCursor();
+            setCursor(QCursor(Qt::ArrowCursor));
             return true;
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->frame_top) {     // ********* Drag and expand window realisation ********* //
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                _mouseClickCoordinate = mouse_event->pos();
+                _mouseClickCoordinate = mouse_event->pos() + QPoint(7,7);
                 _clickPressedFlag = true;
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
-        }
+        } else
         if ((event->type() == QEvent::MouseMove) && _clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
@@ -1737,18 +1727,15 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                 this->move(mouse_event->globalPos() - _mouseClickCoordinate);
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
-        }
+        } else
         if (event->type() == QEvent::MouseButtonDblClick) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
                 on_expandWindow_clicked();
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == raiseThumb) {    // ********* Click thumb realisation ********** //
         if (event->type() == QEvent::MouseButtonPress) {
@@ -1757,10 +1744,8 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                 on_actionAdd_clicked();
                 return true;
             }
-            return QWidget::eventFilter(watched, event);
         }
-        return QWidget::eventFilter(watched, event);
-    }
+    } else
 
     if (watched == ui->labelThumb) {
         if (event->type() == QEvent::Resize) {
@@ -1770,9 +1755,14 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
                 ui->labelThumb->setPixmap(pix_scaled);
             }
         }
-        return QWidget::eventFilter(watched, event);
     }
     return QWidget::eventFilter(watched, event);
+}
+
+bool Widget::event(QEvent *event)
+{
+
+    return QWidget::event(event);
 }
 
 /************************************************
@@ -3186,7 +3176,7 @@ void Widget::setItemStyle(QTreeWidgetItem *item)
     case Theme::GRAY:
     case Theme::DARK:
     case Theme::WAVE:
-        foregroundChildColor.setRgb(qRgb(50, 100, 157));
+        foregroundChildColor.setRgb(qRgb(150, 190, 220));
         break;
     case Theme::DEFAULT:
         foregroundChildColor.setRgb(qRgb(30, 50, 150));
