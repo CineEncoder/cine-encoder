@@ -1,5 +1,8 @@
-# Hide builddir
+# Ignored folders:
 /builddir
 
-# Hide *.user
-/app/*.user
+# Ignored files:
+*.pro.user
+*.user
+*.stash
+Makefile
