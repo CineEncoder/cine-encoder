@@ -1446,25 +1446,24 @@ void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
 QString Widget::styleCreator(const QString &list)    /*** Parsing CSS ***/
 {
     QString style = list;
-    QStringList varDetect;
     QStringList splitList;
-    QStringList varSplitter;
+    QStringList varList;
     QStringList varNames;
     QStringList varValues;
-    splitList << list.split(";");
+    splitList << list.split(';');
 
-    for (int i = 0; i < splitList.size(); i++) {
-        if (splitList[i].indexOf("@") != -1 && splitList[i].indexOf("=") != -1) {
-            varDetect.append(splitList[i]);
+    foreach (const QString &row, splitList) {
+        const int first_symbol = row.indexOf('@');
+        if (first_symbol != -1 && row.indexOf('=') != -1) {
+            varList.append(row.mid(first_symbol));
         }
     }
-    for (int i = 0; i < varDetect.size(); i++) {
-
-        varNames.append(varDetect[i].split("=")[0].remove(" ").remove("\n"));
-        varValues.append(varDetect[i].split("=")[1].remove(" ").remove("\n"));
-        style = style.remove(varDetect[i] + QString(";"));
+    foreach (const QString &var, varList) {
+        varNames.append(var.split('=')[0].remove(' ').remove('\n'));
+        varValues.append(var.split('=')[1].remove(' ').remove('\n'));
+        style = style.remove(var + QString(";"));
     }
-    for (int i = 0; i < varNames.size(); i++) {
+    for (int i = 0; i < varNames.size() && i < varValues.size(); i++) {
         style = style.replace(varNames[i], varValues[i]);
     }
     //std::cout << style.toStdString() << std::endl;
