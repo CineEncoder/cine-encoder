@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: dialog.cpp
- MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 

@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: mainwindow.cpp
- MODIFIED: January, 2022
  COMMENT:
  LICENSE: GNU General Public License v3.0
 

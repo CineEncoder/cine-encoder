@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: main.cpp
- MODIFIED: December, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 

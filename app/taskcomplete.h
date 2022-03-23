@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: taskcomplete.h
- MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -36,7 +35,6 @@ class Taskcomplete : public QDialog
 public:
 
     explicit Taskcomplete(QWidget *parent = nullptr);
-
     ~Taskcomplete();
 
     void setMessage(const QString &_message, const bool &_timer_mode);
@@ -44,11 +42,8 @@ public:
 private slots:
 
     void on_closeWindow_clicked();
-
     void on_buttonCancel_clicked();
-
     void repeatHandler();
-
     bool eventFilter(QObject *watched, QEvent *event);
 
 private:

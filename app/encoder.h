@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: encoder.h
- MODIFIED: February, 2022
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -18,6 +17,7 @@
 #include <QProcess>
 #include <QDir>
 #include <QMap>
+#include <QVector>
 #include <iostream>
 #include <math.h>
 #include "constants.h"
@@ -36,7 +36,6 @@ class Encoder : public QObject
 public:
 
     explicit Encoder(QObject *parent = nullptr);
-
     ~Encoder();
 
     void initEncoding(const QString  &temp_file,
@@ -62,31 +61,20 @@ public:
                       int      *_fr_count);
 
     QProcess::ProcessState getEncodingState();
-
     void pauseEncoding();
-
     void resumeEncoding();
-
     void stopEncoding();
-
     void killEncoding();
 
     signals:
 
     void onEncodingMode(const QString &mode);
-
     void onEncodingStarted();
-
     void onEncodingInitError(const QString &_message);
-
     void onEncodingProgress(const int &percent, const float &rem_time);
-
     void onEncodingLog(const QString &log);
-
     void onEncodingAborted();
-
     void onEncodingError(const QString &_error_message);
-
     void onEncodingCompleted();
 
 private:
@@ -117,17 +105,11 @@ private:
 private slots:
 
     void encode();
-
     void add_metadata();
-
     void progress_1();
-
     void progress_2();
-
     void completed();
-
     void abort();
-
     void error();    
 };
 

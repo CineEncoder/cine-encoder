@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: encoder.cpp
- MODIFIED: February, 2022
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -59,7 +58,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     fr_count = _fr_count;
     int _CODEC = _cur_param[CurParamIndex::CODEC].toInt();
     int _MODE = _cur_param[CurParamIndex::MODE].toInt();
-    int _CONTAINER = _cur_param[CurParamIndex::CONTAINER].toInt();
+    //int _CONTAINER = _cur_param[CurParamIndex::CONTAINER].toInt();
     QString _BQR = _cur_param[CurParamIndex::BQR];
     QString _MINRATE = _cur_param[CurParamIndex::MINRATE];
     QString _MAXRATE = _cur_param[CurParamIndex::MAXRATE];

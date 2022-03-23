@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: openingfiles.h
- MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -31,13 +30,10 @@ class OpeningFiles : public QDialog
 public:
 
     explicit OpeningFiles(QWidget *parent = nullptr);
-
     ~OpeningFiles();
 
     void setParameters(const bool &show, const QPoint &position);
-
     void setText(const QString &text);
-
     void setPercent(const int &percent);
 
 private:
