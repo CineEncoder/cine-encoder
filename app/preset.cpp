@@ -517,6 +517,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"Intel QSV, VP9, ",      tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"Intel QSV, VP9, ",      tr("YUV, 4:2:0, 8  bit, "), ""},
         {"Intel QSV, MPEG-2, ",   tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"Intel VAAPI, AVC, ",      tr("YUV, 4:2:0, 8 bit, "),  ""}, // Intel VAAPI h264
         {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"NVENC, AVC, ",          tr("YUV, 4:2:0, 8 bit, "),  ""},
@@ -570,10 +571,11 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"ABR", "CRF", "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
-        {"VBR", "",    "",    "",    ""},
+        {"VBR", "CQP", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
+        {"VBR", "CQP", "",    "",    ""}, // Intel VAAPI h264
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
@@ -615,6 +617,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""}, // Intel VAAPI h264
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
@@ -653,6 +656,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"",       ""},
         {"",       ""},
         {"",       ""},
+        {"",       ""}, // Intel VAAPI h264
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
@@ -693,6 +697,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""}, // Intel VAAPI h264
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
@@ -1201,13 +1206,13 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == tr("Intel QSV H.264/AVC 4:2:0 8 bit")) {
         ui->comboBoxAspectRatio->setCurrentIndex(0);
-        ui->comboBoxAspectRatio->setEnabled(false);
-        ui->comboBox_width->setEnabled(false);
-        ui->comboBox_height->setEnabled(false);
-        ui->comboBoxFrameRate->setEnabled(false);
+        ui->comboBoxAspectRatio->setEnabled(true);
+        ui->comboBox_width->setEnabled(true);
+        ui->comboBox_height->setEnabled(true);
+        ui->comboBoxFrameRate->setEnabled(true);
         ui->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui->comboBox_container->setCurrentIndex(2);
-        ui->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui->comboBox_mode->addItems({tr("Variable Bitrate"), tr("Constant QP")});
         ui->comboBox_pass->addItems({tr("Auto")});
         ui->comboBox_profile->setCurrentIndex(Profile::HIGH);
         ui->comboBox_preset->addItems(presetsH264QSV);
@@ -1215,7 +1220,7 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui->comboBox_level->addItems(levelsH264);
         ui->comboBox_level->setCurrentIndex(0);
         ui->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
-        ui->comboBox_mode->setEnabled(false);
+        ui->comboBox_mode->setEnabled(true);
         ui->comboBox_pass->setEnabled(false);
         ui->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
@@ -1280,6 +1285,28 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui->comboBox_mode->setEnabled(false);
         ui->comboBox_pass->setEnabled(false);
         ui->comboBox_level->setEnabled(false);
+        ui->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
+        disableHDR();
+    }
+
+    else if (arg1 == tr("Intel VAAPI H.264/AVC 4:2:0 8 bit")) {
+        ui->comboBoxAspectRatio->setCurrentIndex(0);
+        ui->comboBoxAspectRatio->setEnabled(true);
+        ui->comboBox_width->setEnabled(true);
+        ui->comboBox_height->setEnabled(true);
+        ui->comboBoxFrameRate->setEnabled(true);
+        ui->comboBox_container->addItems({"MKV", "MOV", "MP4"});
+        ui->comboBox_container->setCurrentIndex(2);
+        ui->comboBox_mode->addItems({tr("Variable Bitrate"), tr("Constant QP")});
+        ui->comboBox_pass->addItems({tr("Auto")});
+        ui->comboBox_profile->setCurrentIndex(Profile::HIGH);
+        ui->comboBox_preset->addItems(presetsH264QSV);
+        ui->comboBox_preset->setCurrentIndex(4);
+        ui->comboBox_level->addItems(levelsH264);
+        ui->comboBox_level->setCurrentIndex(0);
+        ui->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
+        ui->comboBox_mode->setEnabled(true);
+        ui->comboBox_pass->setEnabled(false);
         ui->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }

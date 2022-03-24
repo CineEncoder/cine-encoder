@@ -116,14 +116,18 @@ void Encoder::initEncoding(const QString  &temp_file,
     };
 
     QString resize_vf = "";
-    if ((width[_WIDTH] != "Source") && (height[_HEIGHT] != "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(width[_WIDTH], height[_HEIGHT]);
-    }
-    else if ((width[_WIDTH] != "Source") && (height[_HEIGHT] == "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(width[_WIDTH], _height);
-    }
-    else if ((width[_WIDTH] == "Source") && (height[_HEIGHT] != "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(_width, height[_HEIGHT]);
+    QString new_width = (width[_WIDTH] != "Source") ? width[_WIDTH] : _width;
+    QString new_height = (height[_HEIGHT] != "Source") ? height[_HEIGHT] : _height;
+    if ((width[_WIDTH] != "Source") || (height[_HEIGHT] != "Source")) {
+        if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
+            resize_vf = QString("scale_qsv=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
+        }
+        else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
+            resize_vf = QString("scale_vaapi=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
+        }
+        else {
+            resize_vf = QString("scale=%1:%2,setsar=1:1").arg(new_width, new_height);
+        }
     }
 
     /******************************************* FPS *****************************************/
@@ -142,18 +146,26 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     if (frame_rate[_FRAME_RATE] != "Source") {
         fps_dest = frame_rate[_FRAME_RATE].toDouble();
-        if (blending[_BLENDING] == "Simple") {
+        if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
+            fps_vf = QString("vpp_qsv=framerate=%1").arg(frame_rate[_FRAME_RATE]);
+        }
+        else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
             fps_vf = QString("fps=fps=%1").arg(frame_rate[_FRAME_RATE]);
         }
-        else if (blending[_BLENDING] == "Interpolated") {
-            fps_vf = QString("framerate=fps=%1").arg(frame_rate[_FRAME_RATE]);
-        }
-        else if (blending[_BLENDING] == "MCI") {
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
-                    .arg(frame_rate[_FRAME_RATE]);
-        }
-        else if (blending[_BLENDING] == "Blend") {
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(frame_rate[_FRAME_RATE]);
+        else {
+            if (blending[_BLENDING] == "Simple") {
+                fps_vf = QString("fps=fps=%1").arg(frame_rate[_FRAME_RATE]);
+            }
+            else if (blending[_BLENDING] == "Interpolated") {
+                fps_vf = QString("framerate=fps=%1").arg(frame_rate[_FRAME_RATE]);
+            }
+            else if (blending[_BLENDING] == "MCI") {
+                fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
+                        .arg(frame_rate[_FRAME_RATE]);
+            }
+            else if (blending[_BLENDING] == "Blend") {
+                fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(frame_rate[_FRAME_RATE]);
+            }
         }
     } else {
         fps_dest = _fps.toDouble();
@@ -289,6 +301,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"-c:v vp9_qsv -profile:v 2 ",                                  intelQSVhwaccel,   "1", intelQSV_filter},
         {"-pix_fmt qsv -c:v vp9_qsv ",                                  intelQSVhwaccel,   "0", intelQSV_filter},
         {"-pix_fmt qsv -c:v mpeg2_qsv -profile:v high ",                intelQSVhwaccel,   "0", intelQSV_filter},
+        {"-c:v h264_vaapi -profile:v high ",                 " -hwaccel vaapi -hwaccel_output_format vaapi",   "0", "format=nv12|vaapi,hwupload"}, // Intel VAAPI h264
         {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda",       "1", ""},
         {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda",       "0", ""},
         {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda",       "0", ""},
@@ -327,6 +340,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"}, // Intel VAAPI h264
         {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
         {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
@@ -363,10 +377,11 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"ABR",    "CRF", "",    "",    ""},
         {"VBR",    "",    "",    "",    ""},
         {"VBR",    "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
+        {"VBR",    "CQP", "",    "",    ""},
         {"ABR",    "CRF", "",    "",    ""},
         {"ABR",    "CRF", "",    "",    ""},
         {"VBR",    "",    "",    "",    ""},
+        {"VBR",    "CQP", "",    "",    ""}, // Intel VAAPI
         {"VBR_NV", "",    "",    "",    ""},
         {"VBR_NV", "",    "",    "",    ""},
         {"VBR_NV", "",    "",    "",    ""},
@@ -408,7 +423,13 @@ void Encoder::initEncoding(const QString  &temp_file,
         mode = QString("-crf %1 ").arg(_BQR);
     }
     else if (selected_mode == "CQP") {
-        mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
+        if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
+            mode = QString("-global_quality %1 -look_ahead 1 ").arg(_BQR);
+        } else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
+            mode = QString("-qp %1 -rc_mode 4 ").arg(_BQR);
+        } else {
+            mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
+        }
     }
 
     /************************************* Preset module ***************************************/
@@ -426,6 +447,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
         {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
         {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
+        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""}, // Intel VAAPI h264
         {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
         {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
         {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
@@ -465,6 +487,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"",                     ""},
         {"",                     ""},
         {"",                     ""},
+        {"",                     ""}, // Intel VAAPI h264
         {"-2pass 1 ",            ""},
         {"-2pass 1 ",            ""},
         {"-2pass 1 ",            ""},
@@ -509,6 +532,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"Opus",  "Vorbis", "Source", "",       "",     ""},
         {"Opus",  "Vorbis", "Source", "",       "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
+        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // Intel VAAPI h264
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
         {"AAC",   "AC3",    "DTS",    "Source", "",     ""},

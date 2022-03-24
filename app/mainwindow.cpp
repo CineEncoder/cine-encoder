@@ -3282,6 +3282,7 @@ QString Widget::updateFieldCodec(int &codec)
         tr("Intel QSV VP9 4:2:0 10 bit"),
         tr("Intel QSV VP9 4:2:0 8 bit"),
         tr("Intel QSV MPEG-2 4:2:0 8 bit"),
+        tr("Intel VAAPI H.264/AVC 4:2:0 8 bit"), // Intel VAAPI h264
         tr("NVENC H.265/HEVC 4:2:0 10 bit"),
         tr("NVENC H.265/HEVC 4:2:0 8 bit"),
         tr("NVENC H.264/AVC 4:2:0 8 bit"),
@@ -3314,10 +3315,11 @@ QString Widget::updateFieldMode(int &codec, int &mode)
         {"ABR",      "CRF", "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "CQP", "",    "",    ""},
         {"ABR",      "CRF", "",    "",    ""},
         {"ABR",      "CRF", "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "CQP", "",    "",    ""}, // Intel VAAPI h264
         {"VBR",      "",    "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
@@ -3354,6 +3356,7 @@ QString Widget::updateFieldPreset(int &codec, int &preset)
         {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""}, // Intel VAAPI h264
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
@@ -3390,6 +3393,7 @@ QString Widget::updateFieldPass(int &codec, int &pass)
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
+        {tr("Auto"),   ""}, // Intel VAAPI h264
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
@@ -3426,6 +3430,7 @@ QString Widget::updateFieldAcodec(int &codec, int &acodec)
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""}, // Intel VAAPI h264
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
@@ -3462,6 +3467,7 @@ QString Widget::updateFieldContainer(int &codec, int &container)
         {"WebM", "MKV", "",    "",     ""},
         {"WebM", "MKV", "",    "",     ""},
         {"MKV",  "MPG", "AVI", "M2TS", "TS"},
+        {"MKV",  "MOV", "MP4", "",     ""}, // Intel VAAPI h264
         {"MKV",  "MOV", "MP4", "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},

@@ -2575,6 +2575,11 @@
                               </item>
                               <item>
                                <property name="text">
+                                <string>Intel VAAPI H.264/AVC 4:2:0 8 bit</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
                                 <string>NVENC H.265/HEVC 4:2:0 10 bit</string>
                                </property>
                               </item>
