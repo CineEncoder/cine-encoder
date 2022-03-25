@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: about.h
- MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -33,7 +32,6 @@ class About : public QDialog
 public:
 
     explicit About(QWidget *parent = nullptr);
-
     ~About();
 
     void setParameters();
@@ -41,9 +39,7 @@ public:
 private slots:
 
     void on_buttonCancel_clicked();
-
     void on_closeWindow_clicked();
-
     bool eventFilter(QObject *watched, QEvent *event);
 
 private:

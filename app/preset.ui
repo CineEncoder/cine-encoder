@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>610</width>
-    <height>709</height>
+    <height>778</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -586,7 +586,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>414</width>
-                     <height>581</height>
+                     <height>648</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_27">
@@ -1819,7 +1819,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>414</width>
-                     <height>581</height>
+                     <height>648</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
@@ -2081,9 +2081,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -2443,9 +2440,6 @@
                                 <height>16</height>
                                </size>
                               </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
-                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
@@ -2506,9 +2500,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -2723,9 +2714,6 @@
                                 <height>16</height>
                                </size>
                               </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
-                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
@@ -2858,9 +2846,6 @@
                                 <height>16</height>
                                </size>
                               </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
-                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
@@ -2985,9 +2970,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -3167,9 +3149,6 @@
                                 <height>16</height>
                                </size>
                               </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
-                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
@@ -3252,9 +3231,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -3429,8 +3405,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>414</width>
-                     <height>581</height>
+                     <width>417</width>
+                     <height>634</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_32">
@@ -3533,9 +3509,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -3701,9 +3674,6 @@
                                 <height>16</height>
                                </size>
                               </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
-                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
@@ -3782,9 +3752,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -3960,7 +3927,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>414</width>
-                     <height>581</height>
+                     <height>648</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_33">
@@ -4085,9 +4052,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -4661,9 +4625,6 @@
                                 <height>16</height>
                                </size>
                               </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
-                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
@@ -4802,9 +4763,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>
@@ -4945,9 +4903,6 @@
                                 <height>16</height>
                                </size>
                               </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
-                              </property>
                               <property name="frame">
                                <bool>true</bool>
                               </property>
@@ -5046,9 +5001,6 @@
                                 <width>16</width>
                                 <height>16</height>
                                </size>
-                              </property>
-                              <property name="placeholderText">
-                               <string notr="true"/>
                               </property>
                               <property name="frame">
                                <bool>true</bool>

@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: settings.h
- MODIFIED: December, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -40,7 +39,6 @@ class Settings : public QDialog
 public:
 
     explicit Settings(QWidget *parent = nullptr);
-
     ~Settings();
 
     void setParameters(QByteArray *ptr_settingsWindowGeometry,
@@ -62,31 +60,18 @@ public:
 private slots:
 
     void closeEvent(QCloseEvent *event);
-
-    void on_closeWindow_clicked();
-
-    void on_buttonCancel_clicked();
-
-    void on_buttonApply_clicked();
-
-    void on_buttonReset_clicked();
-
-    void on_buttonOutputPath_clicked();
-
-    void on_buttonTempPath_clicked();
-
-    void on_checkBox_protection_clicked();
-
-    void on_comboBoxPrefixType_currentIndexChanged(int index);
-
-    void on_comboBoxSuffixType_currentIndexChanged(int index);
-
-    void on_comboBox_font_currentIndexChanged(const QString &arg1);
-
     bool eventFilter(QObject *watched, QEvent *event);
-
+    void on_closeWindow_clicked();
+    void on_buttonCancel_clicked();
+    void on_buttonApply_clicked();
+    void on_buttonReset_clicked();
+    void on_buttonOutputPath_clicked();
+    void on_buttonTempPath_clicked();
+    void on_checkBox_protection_clicked();
+    void on_comboBoxPrefixType_currentIndexChanged(int index);
+    void on_comboBoxSuffixType_currentIndexChanged(int index);
+    void on_comboBox_font_currentIndexChanged(const QString &arg1);
     void on_buttonTab_1_clicked();
-
     void on_buttonTab_2_clicked();
 
 private:
@@ -130,7 +115,6 @@ private:
             _oldHeight;
 
     void on_expandWindow_clicked();
-
     QString callFileDialog(const QString title);
 };
 

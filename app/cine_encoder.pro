@@ -23,11 +23,11 @@ TEMPLATE = app
 VERSION = 3.5.3
 
 # DIRS
-OBJECTS_DIR = ../builddir/obj
-MOC_DIR = ../builddir/moc
-UI_DIR = ../builddir/ui
-RCC_DIR = ../builddir/rcc
-DESTDIR = ../builddir
+#OBJECTS_DIR = ../builddir/obj
+#MOC_DIR = ../builddir/moc
+#UI_DIR = ../builddir/ui
+#RCC_DIR = ../builddir/rcc
+#DESTDIR = ../builddir
 
 # DEFINES
 DEFINES += QT_DEPRECATED_X

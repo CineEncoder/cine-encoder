@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: preset.h
- MODIFIED: November, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -39,7 +38,6 @@ class Preset : public QDialog
 public:
 
     explicit Preset(QWidget *parent = nullptr);
-
     ~Preset();
 
     void setParameters(QByteArray *ptr_presetWindowGeometry, QVector<QString> *_old_param);
@@ -47,55 +45,30 @@ public:
 private slots:
 
     void closeEvent(QCloseEvent *close_preset);
-
     bool eventFilter(QObject *watched, QEvent *event);
-
     void on_closeWindow_clicked();
-
     void on_buttonCancel_clicked();
-
     void on_buttonApply_clicked();
-
     void on_buttonTab_1_clicked();
-
     void on_buttonTab_2_clicked();
-
     void on_buttonTab_3_clicked();
-
     void on_buttonTab_4_clicked();
-
     void change_preset_name();
-
     void on_comboBoxAspectRatio_currentIndexChanged(int index);
-
     void on_comboBox_width_currentTextChanged(const QString &arg1);
-
     void on_comboBox_height_currentTextChanged(const QString &arg1);
-
     void calculateDAR(QString width, QString height);
-
     void on_comboBoxFrameRate_currentIndexChanged(int index);
-
     void repeat_handler();
-
     void disableHDR();
-
     void on_comboBox_codec_currentTextChanged(const QString &arg1);
-
     void on_comboBox_mode_currentTextChanged(const QString &arg1);
-
     void on_comboBox_preset_currentIndexChanged(int index);
-
     void on_comboBox_pass_currentIndexChanged(int index);
-
     void on_comboBox_container_currentTextChanged();
-
     void on_lineEdit_bitrate_editingFinished();
-
     void on_comboBox_audio_codec_currentTextChanged(const QString &arg1);
-
     void on_comboBox_audio_bitrate_currentTextChanged();
-
     void on_comboBox_master_disp_currentTextChanged(const QString &arg1);
 
 private:
@@ -127,9 +100,7 @@ private:
 
     QVector<bool> _clickPressedToResizeFlag;
 
-
     void on_expandWindow_clicked();
-
     void lockSignals(bool status);
 
 };

@@ -5,7 +5,6 @@
                             COPYRIGHT (C) 2020
 
  FILE: donate.h
- MODIFIED: September, 2021
  COMMENT:
  LICENSE: GNU General Public License v3.0
 
@@ -33,7 +32,6 @@ class Donate : public QDialog
 public:
 
     explicit Donate(QWidget *parent = nullptr);
-
     ~Donate();
 
     void setParameters();
@@ -41,13 +39,9 @@ public:
 private slots:
 
     void on_buttonCancel_clicked();
-
     void on_buttonPayPal_clicked();
-
     void on_buttonBitcoin_clicked();
-
     void on_closeWindow_clicked();
-
     bool eventFilter(QObject *watched, QEvent *event);
 
 private:
