@@ -401,7 +401,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 ").arg(bitrate, minrate, maxrate, bufsize);
     }
     else if (selected_mode == "VBR_NV") {
-        mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 -rc vbr_hq ").arg(bitrate, minrate, maxrate, bufsize);
+        mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 -rc vbr ").arg(bitrate, minrate, maxrate, bufsize);
     }
     else if (selected_mode == "CRF") {
         mode = QString("-crf %1 ").arg(_BQR);
