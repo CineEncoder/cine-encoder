@@ -3571,21 +3571,21 @@ bool Widget::call_dialog(const QString &_message)  /*** Call dialog ***/
 
 void Widget::call_task_complete(const QString &_message, const bool &_timer_mode)  /*** Call task complete ***/
 {
+    auto showTaskMessage = [this, _message, _timer_mode](){
+        Taskcomplete taskcomplete(this);
+        taskcomplete.setMessage(_message, _timer_mode);
+        taskcomplete.setModal(true);
+        taskcomplete.exec();
+    };
     if (this->isHidden()) {
         if (_hideInTrayFlag && !_timer_mode) {
             trayIcon->showMessage(_message, tr("Task"), QSystemTrayIcon::Information, 151000);
         }
         else if (_timer_mode) {
             this->show();
-            Taskcomplete taskcomplete(this);
-            taskcomplete.setMessage(_message, _timer_mode);
-            taskcomplete.setModal(true);
-            taskcomplete.exec();
+            showTaskMessage();
         }
     } else {
-        Taskcomplete taskcomplete(this);
-        taskcomplete.setMessage(_message, _timer_mode);
-        taskcomplete.setModal(true);
-        taskcomplete.exec();
+        showTaskMessage();
     }
 }
