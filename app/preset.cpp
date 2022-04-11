@@ -477,9 +477,6 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
     int c12 = ui->comboBox_preset->currentIndex();
     int c21 = ui->comboBox_audio_codec->currentIndex();
     int c22 = ui->comboBox_audio_bitrate->currentIndex();
-    QString container = ui->comboBox_container->currentText();
-    QString codec, fps, res, mode, clrspace, preset, pass, hdr, acodec, abitrate;
-
     if ((c1 == -1) || (c2 == -1)) {
         return;
     }
@@ -492,19 +489,20 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
     /************************************* Codec module ***************************************/
 
-    QString arr_codec[NUMBER_PRESETS][3] = {
+    const QString arr_codec[NUMBER_PRESETS][3] = {
         {"HEVC, ",                tr("YUV, 4:2:0, 12 bit, "), "HDR: "},
         {"HEVC, ",                tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"HEVC, ",                tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"AVC, ",                 tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"VP9, ",                 tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"VP9, ",                 tr("YUV, 4:2:0, 8  bit, "), ""},
-        {"Intel QSV, HEVC, ",     tr("YUV, 4:2:0, 10 bit, "),  "HDR: "},
+        {"Intel QSV, HEVC, ",     tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"Intel QSV, HEVC, ",     tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"Intel QSV, AVC, ",      tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"Intel QSV, VP9, ",      tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"Intel QSV, VP9, ",      tr("YUV, 4:2:0, 8  bit, "), ""},
         {"Intel QSV, MPEG-2, ",   tr("YUV, 4:2:0, 8 bit, "),  ""},
+        {"Intel VAAPI, AVC, ",    tr("YUV, 4:2:0, 8 bit, "),  ""}, // Intel VAAPI h264
         {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 10 bit, "), "HDR: "},
         {"NVENC, HEVC, ",         tr("YUV, 4:2:0, 8 bit, "),  ""},
         {"NVENC, AVC, ",          tr("YUV, 4:2:0, 8 bit, "),  ""},
@@ -523,13 +521,14 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"XAVC 4:2:2, ",          tr("YUV, 4:2:2, 8 bit, "),  ""},
         {tr("From source, "),     "",                         "HDR: "}
     };
-    codec = arr_codec[c1][0];
-    clrspace = arr_codec[c1][1];
+    const QString codec = arr_codec[c1][0];
+    const QString clrspace = arr_codec[c1][1];
 
     /************************************* Resize module ***************************************/
 
-    QString w = ui->comboBox_width->currentText();
-    QString h = ui->comboBox_height->currentText();
+    QString res("");
+    const QString w = ui->comboBox_width->currentText();
+    const QString h = ui->comboBox_height->currentText();
     if (w != tr("Source") && h != tr("Source")) {
         res = w + "x" + h + ", ";
     } else if (w == tr("Source") && h == tr("Source")) {
@@ -540,16 +539,12 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
     /************************************* FPS module ***************************************/
 
-    QString f = ui->comboBoxFrameRate->currentText();
-    if (f == tr("Source")) {
-        fps = QString("Fps: %1, ").arg(tr("Source"));
-    } else {
-        fps = f + " fps, ";
-    }
+    const QString f = ui->comboBoxFrameRate->currentText();
+    const QString  fps = (f == tr("Source")) ? QString("Fps: %1, ").arg(tr("Source")) : f + " fps, ";
 
     /************************************* Mode module ***************************************/
 
-    QString arr_mode[NUMBER_PRESETS][5] = {
+    const QString arr_mode[NUMBER_PRESETS][5] = {
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
         {"CBR", "ABR", "VBR", "CRF", "CQP"},
@@ -558,10 +553,11 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"ABR", "CRF", "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
-        {"VBR", "",    "",    "",    ""},
+        {"VBR", "CQP", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"ABR", "CRF", "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
+        {"VBR", "CQP", "",    "",    ""}, // Intel VAAPI h264
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
         {"VBR", "",    "",    "",    ""},
@@ -580,6 +576,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"CBR", "",    "",    "",    ""},
         {"",    "",    "",    "",    ""}
     };
+    QString mode("");
     QString selected_mode = arr_mode[c1][c2];
     if (selected_mode != "" && (selected_mode == "CRF" || selected_mode == "CQP")) {
         mode = selected_mode + " " + ui->lineEdit_bitrate->text() + ", ";
@@ -590,7 +587,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
     /************************************* Preset module ***************************************/
 
-    QString arr_preset[NUMBER_PRESETS][10] = {
+    const QString arr_preset[NUMBER_PRESETS][10] = {
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
@@ -603,6 +600,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""}, // Intel VAAPI h264
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
@@ -621,6 +619,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {"",         "",              "",              "",             "",           "",         "",           "",             "",           ""}
     };
+    QString preset("");
     QString p = arr_preset[c1][c12];
     if (p != "" && p != tr("None")) {
         preset = tr("Preset: ") + p + ", ";
@@ -628,7 +627,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
     /************************************* Pass module ***************************************/
 
-    QString arr_pass[NUMBER_PRESETS][2] = {
+    const QString arr_pass[NUMBER_PRESETS][2] = {
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
@@ -641,6 +640,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"",       ""},
         {"",       ""},
         {"",       ""},
+        {"",       ""}, // Intel VAAPI h264
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
@@ -659,16 +659,18 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"",       ""},
         {"",       ""}
     };
+    QString pass("");
     if (arr_pass[c1][c11] != "") {
         pass = arr_pass[c1][c11] + ", ";
     }
+    QString hdr("");
     if (arr_codec[c1][2] != "") {
         hdr = arr_codec[c1][2] + tr("Enabled, ");
     }
 
     /************************************* Audio module ***************************************/
 
-    QString arr_acodec[NUMBER_PRESETS][6] = {
+    const QString arr_acodec[NUMBER_PRESETS][6] = {
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
@@ -681,6 +683,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""}, // Intel VAAPI h264
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
@@ -699,34 +702,37 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        "Vorbis",     "Opus", tr("Source")}
     };
+    QString acodec("");
     if (arr_acodec[c1][c21] != "") {
         acodec = tr("Audio: ") + arr_acodec[c1][c21] + ", ";
     }
-    QString arr_bitrate[5][17] = {
+    const QString arr_bitrate[5][17] = {
         {"384k",  "320k",  "256k",  "192k",  "128k",  "96k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AAC
         {"640k",  "448k",  "384k",  "256k",  "",      "",      "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AC3
         {"3840k", "3072k", "2048k", "1920k", "1536k", "1472k", "1344k", "1280k", "1152k", "1024k", "960k", "768k", "640k", "576k", "512k", "448k", "384k"}, // DTS
         {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // Vorbis
         {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""} // Opus
     };
+    QString abitrate("");
     if (arr_acodec[c1][c21] == "AAC") {
         abitrate = arr_bitrate[0][c22] + ", ";
-    }
+    } else
     if (arr_acodec[c1][c21] == "AC3") {
         abitrate = arr_bitrate[1][c22] + ", ";
-    }
+    } else
     if (arr_acodec[c1][c21] == "DTS") {
         abitrate = arr_bitrate[2][c22] + ", ";
-    }
+    } else
     if (arr_acodec[c1][c21] == "Vorbis") {
         abitrate = arr_bitrate[3][c22] + ", ";
-    }
+    } else
     if (arr_acodec[c1][c21] == "Opus") {
         abitrate = arr_bitrate[4][c22] + ", ";
     }
 
     /************************************* Result module ***************************************/
 
+    const QString container = ui->comboBox_container->currentText();
     QString cur_preset_name = codec + res + fps + clrspace + mode + preset + pass + hdr
             + acodec + abitrate + container;
     ui->textBrowser_presetname->setText(cur_preset_name);
@@ -734,7 +740,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
 void Preset::on_comboBoxAspectRatio_currentIndexChanged(int index)
 {
-    QString aspect_ratio[34][2] = {
+    const QString aspect_ratio[34][2] = {
         {tr("Source"), tr("Source")}, // Source
         {"640",    "480"},    // 640x480
         {"720",    "480"},    // 720x480
@@ -771,11 +777,10 @@ void Preset::on_comboBoxAspectRatio_currentIndexChanged(int index)
         {tr("Custom"), tr("Custom")}  // Custom
     };
 
-    QString width = aspect_ratio[index][0];
-    QString height = aspect_ratio[index][1];
-
-    int widthIndex = ui->comboBox_width->findText(width, Qt::MatchCaseSensitive);
-    int heightIndex = ui->comboBox_height->findText(height, Qt::MatchCaseSensitive);
+    const QString width = aspect_ratio[index][0];
+    const QString height = aspect_ratio[index][1];
+    const int widthIndex = ui->comboBox_width->findText(width, Qt::MatchCaseSensitive);
+    const int heightIndex = ui->comboBox_height->findText(height, Qt::MatchCaseSensitive);
 
     if (widthIndex >= 0) {
         ui->comboBox_width->setCurrentIndex(widthIndex);
@@ -783,15 +788,9 @@ void Preset::on_comboBoxAspectRatio_currentIndexChanged(int index)
     if (heightIndex >= 0) {
         ui->comboBox_height->setCurrentIndex(heightIndex);
     }
-
-    float width_= width.toFloat();
-    float height_ = height.toFloat();
-
-    if (height_ != 0.0f ) {
-        _aspectRatio = round(10000 * width_ / height_)/10000;
-    } else {
-        _aspectRatio = 0.0f;
-    }
+    const float width_= width.toFloat();
+    const float height_ = height.toFloat();
+    _aspectRatio = (height_ != 0.0f ) ? round(10000 * width_ / height_)/10000 : 0.0f;
     //std::cout << ">>>>>>>>>>>>>> ASPECT RATIO : " << _aspectRatio << std::endl;
     _repeat++;
 }
@@ -800,7 +799,7 @@ void Preset::on_comboBox_width_currentTextChanged(const QString &arg1)
 {
     lockSignals(true);
 
-    QString aspect_ratio[34][2] = {
+    const QString aspect_ratio[34][2] = {
         {tr("Source"), tr("Source")}, // Source
         {"640",    "480"},    // 640x480
         {"720",    "480"},    // 720x480
@@ -856,7 +855,7 @@ void Preset::on_comboBox_height_currentTextChanged(const QString &arg1)
 {
     lockSignals(true);
 
-    QString aspect_ratio[34][2] = {
+    const QString aspect_ratio[34][2] = {
         {tr("Source"), tr("Source")}, // Source
         {"640",    "480"},    // 640x480
         {"720",    "480"},    // 720x480
@@ -910,11 +909,19 @@ void Preset::on_comboBox_height_currentTextChanged(const QString &arg1)
 
 void Preset::on_comboBoxFrameRate_currentIndexChanged(int index)
 {
+    int codec = ui->comboBox_codec->currentIndex();
+    bool blendingFlag = (codec >= CODEC_QSV_FIRST && codec <= CODEC_QSV_LAST) ||
+            (codec >= CODEC_VAAPI_FIRST && codec <= CODEC_VAAPI_LAST) ? true : false;
     if (index == 0) {
         ui->comboBoxBlending->setCurrentIndex(0);
         ui->comboBoxBlending->setEnabled(false);
     } else {
-        ui->comboBoxBlending->setEnabled(true);
+        if (blendingFlag) {
+            ui->comboBoxBlending->setCurrentIndex(0);
+            ui->comboBoxBlending->setEnabled(false);
+        } else {
+            ui->comboBoxBlending->setEnabled(true);
+        }
     }
     _repeat++;
 }
@@ -1189,13 +1196,13 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
 
     else if (arg1 == tr("Intel QSV H.264/AVC 4:2:0 8 bit")) {
         ui->comboBoxAspectRatio->setCurrentIndex(0);
-        ui->comboBoxAspectRatio->setEnabled(false);
-        ui->comboBox_width->setEnabled(false);
-        ui->comboBox_height->setEnabled(false);
-        ui->comboBoxFrameRate->setEnabled(false);
+        ui->comboBoxAspectRatio->setEnabled(true);
+        ui->comboBox_width->setEnabled(true);
+        ui->comboBox_height->setEnabled(true);
+        ui->comboBoxFrameRate->setEnabled(true);
         ui->comboBox_container->addItems({"MKV", "MOV", "MP4"});
         ui->comboBox_container->setCurrentIndex(2);
-        ui->comboBox_mode->addItems({tr("Variable Bitrate")});
+        ui->comboBox_mode->addItems({tr("Variable Bitrate"), tr("Constant QP")});
         ui->comboBox_pass->addItems({tr("Auto")});
         ui->comboBox_profile->setCurrentIndex(Profile::HIGH);
         ui->comboBox_preset->addItems(presetsH264QSV);
@@ -1203,7 +1210,7 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui->comboBox_level->addItems(levelsH264);
         ui->comboBox_level->setCurrentIndex(0);
         ui->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
-        ui->comboBox_mode->setEnabled(false);
+        ui->comboBox_mode->setEnabled(true);
         ui->comboBox_pass->setEnabled(false);
         ui->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
@@ -1268,6 +1275,28 @@ void Preset::on_comboBox_codec_currentTextChanged(const QString &arg1)  /*** Cha
         ui->comboBox_mode->setEnabled(false);
         ui->comboBox_pass->setEnabled(false);
         ui->comboBox_level->setEnabled(false);
+        ui->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
+        disableHDR();
+    }
+
+    else if (arg1 == tr("Intel VAAPI H.264/AVC 4:2:0 8 bit")) {
+        ui->comboBoxAspectRatio->setCurrentIndex(0);
+        ui->comboBoxAspectRatio->setEnabled(true);
+        ui->comboBox_width->setEnabled(true);
+        ui->comboBox_height->setEnabled(true);
+        ui->comboBoxFrameRate->setEnabled(true);
+        ui->comboBox_container->addItems({"MKV", "MOV", "MP4"});
+        ui->comboBox_container->setCurrentIndex(2);
+        ui->comboBox_mode->addItems({tr("Variable Bitrate"), tr("Constant QP")});
+        ui->comboBox_pass->addItems({tr("Auto")});
+        ui->comboBox_profile->setCurrentIndex(Profile::HIGH);
+        ui->comboBox_preset->addItems(presetsH264QSV);
+        ui->comboBox_preset->setCurrentIndex(4);
+        ui->comboBox_level->addItems(levelsH264);
+        ui->comboBox_level->setCurrentIndex(0);
+        ui->comboBox_pixfmt->setCurrentIndex(Pixformat::PIXFORMAT_AUTO);
+        ui->comboBox_mode->setEnabled(true);
+        ui->comboBox_pass->setEnabled(false);
         ui->comboBox_audio_codec->addItems({"AAC", "AC3", "DTS", tr("Source")});
         disableHDR();
     }

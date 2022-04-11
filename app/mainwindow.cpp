@@ -2331,26 +2331,14 @@ void Widget::on_tableWidget_itemSelectionChanged()
         _fr_count = 0;
         _startTime = 0.0;
         _endTime = 0.0;
-
-        _hdr[CUR_COLOR_RANGE] = "";    // color range
-        _hdr[CUR_COLOR_PRIMARY] = "";  // color primary
-        _hdr[CUR_COLOR_MATRIX] = "";   // color matrix
-        _hdr[CUR_TRANSFER] = "";       // transfer
-        _hdr[CUR_MAX_LUM] = "";        // max lum
-        _hdr[CUR_MIN_LUM] = "";        // min lum
-        _hdr[CUR_MAX_CLL] = "";        // max cll
-        _hdr[CUR_MAX_FALL] = "";       // max fall
-        _hdr[CUR_MASTER_DISPLAY] = ""; // master display
-        _hdr[CUR_CHROMA_COORD] = "";   // chr coord
-        _hdr[CUR_WHITE_COORD] = "";    // white coord
+        for (int i = 0; i < 11; i++) {
+            _hdr[i] = "";
+        }
 
         // **************************** Reset metadata variables ***********************************//
-        _videoMetadata[VIDEO_TITLE] = "";
-        _videoMetadata[VIDEO_AUTHOR] = "";
-        _videoMetadata[VIDEO_YEAR] = "";
-        _videoMetadata[VIDEO_PERFORMER] = "";
-        _videoMetadata[VIDEO_DESCRIPTION] = "";
-        _videoMetadata[VIDEO_MOVIENAME] = "";
+        for (int i = 0; i < 6; i++) {
+            _videoMetadata[i] = "";
+        }
 
         // **************************** Reset audio variables ***********************************//
         for (int i = 0; i < AMOUNT_AUDIO_STREAMS; i++) {
@@ -2907,7 +2895,7 @@ void Widget::set_defaults() /*** Set default presets ***/
         in.setVersion(QDataStream::Qt_4_0);
         int ver;
         in >> ver;
-        if (ver == PRESETS_VERSION) {
+        if (ver == PRESETS_VERSION) { // Replace to open the old version
             in >> _cur_param >> _pos_top >> _pos_cld >> _preset_table;
         }
         _prs_file.close();
@@ -3062,7 +3050,12 @@ void Widget::add_preset()  /*** Add preset ***/
         return;
     }
 
-    QVector<QString> cur_param;
+    QVector<QString> cur_param = {
+        "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
+        "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
+        "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
+        "0", "0"
+    };
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
         QDataStream in(&_prs_file);
@@ -3070,36 +3063,37 @@ void Widget::add_preset()  /*** Add preset ***/
         int ver;
         in >> ver;
         if (ver == PRESETS_VERSION) {
+            cur_param.clear();
             in >> cur_param;
-            QTreeWidgetItem *item = ui->treeWidget->currentItem();
-            QTreeWidgetItem *parentItem = item->parent();
-            QTreeWidgetItem *child = new QTreeWidgetItem();
-            for (int k = 0; k < PARAMETERS_COUNT; k++) {
-                child->setText(k + 7, cur_param[k]);
-            }
-            updateInfoFields(cur_param[1], cur_param[2], cur_param[3], cur_param[4],
-                             cur_param[11], cur_param[12], cur_param[21], child, true);
-            setItemStyle(child);
-            if (parentItem != nullptr) {
-                // Item is child...
-                parentItem->addChild(child);
-
-                int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
-                int index_child = parentItem->indexOfChild(child);
-                updateCurPresetPos(index_top, index_child);
-            } else {
-                // Item is parent...
-                item->addChild(child);
-                ui->treeWidget->expandItem(item);
-
-                int index_top = ui->treeWidget->indexOfTopLevelItem(item);
-                int index_child = item->indexOfChild(child);
-                updateCurPresetPos(index_top, index_child);
-            }
-            updatePresetTable();
-        }
+        } else {std::cout << "Added energercy params..." << std::endl;}
         _prs_file.close();
     }
+    QTreeWidgetItem *item = ui->treeWidget->currentItem();
+    QTreeWidgetItem *parentItem = item->parent();
+    QTreeWidgetItem *child = new QTreeWidgetItem();
+    for (int k = 0; k < PARAMETERS_COUNT; k++) {
+        child->setText(k + 7, cur_param[k]);
+    }
+    updateInfoFields(cur_param[1], cur_param[2], cur_param[3], cur_param[4],
+                     cur_param[11], cur_param[12], cur_param[21], child, true);
+    setItemStyle(child);
+    if (parentItem != nullptr) {
+        // Item is child...
+        parentItem->addChild(child);
+
+        int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
+        int index_child = parentItem->indexOfChild(child);
+        updateCurPresetPos(index_top, index_child);
+    } else {
+        // Item is parent...
+        item->addChild(child);
+        ui->treeWidget->expandItem(item);
+
+        int index_top = ui->treeWidget->indexOfTopLevelItem(item);
+        int index_child = item->indexOfChild(child);
+        updateCurPresetPos(index_top, index_child);
+    }
+    updatePresetTable();
 }
 
 void Widget::renameSectionPreset()
@@ -3218,7 +3212,7 @@ void Widget::updatePresetTable()
 
 QString Widget::updateFieldCodec(int &codec)
 {
-    QString arr_codec[NUMBER_PRESETS] = {
+    const QString arr_codec[NUMBER_PRESETS] = {
         tr("H.265/HEVC 4:2:0 12 bit"),
         tr("H.265/HEVC 4:2:0 10 bit"),
         tr("H.265/HEVC 4:2:0 8 bit"),
@@ -3231,6 +3225,7 @@ QString Widget::updateFieldCodec(int &codec)
         tr("Intel QSV VP9 4:2:0 10 bit"),
         tr("Intel QSV VP9 4:2:0 8 bit"),
         tr("Intel QSV MPEG-2 4:2:0 8 bit"),
+        tr("Intel VAAPI H.264/AVC 4:2:0 8 bit"), // Intel VAAPI h264
         tr("NVENC H.265/HEVC 4:2:0 10 bit"),
         tr("NVENC H.265/HEVC 4:2:0 8 bit"),
         tr("NVENC H.264/AVC 4:2:0 8 bit"),
@@ -3254,7 +3249,7 @@ QString Widget::updateFieldCodec(int &codec)
 
 QString Widget::updateFieldMode(int &codec, int &mode)
 {
-    QString arr_mode[NUMBER_PRESETS][5] = {
+    const QString arr_mode[NUMBER_PRESETS][5] = {
         {"CBR",      "ABR", "VBR", "CRF", "CQP"},
         {"CBR",      "ABR", "VBR", "CRF", "CQP"},
         {"CBR",      "ABR", "VBR", "CRF", "CQP"},
@@ -3263,10 +3258,11 @@ QString Widget::updateFieldMode(int &codec, int &mode)
         {"ABR",      "CRF", "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "CQP", "",    "",    ""},
         {"ABR",      "CRF", "",    "",    ""},
         {"ABR",      "CRF", "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
+        {"VBR",      "CQP", "",    "",    ""}, // Intel VAAPI h264
         {"VBR",      "",    "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
         {"VBR",      "",    "",    "",    ""},
@@ -3290,7 +3286,7 @@ QString Widget::updateFieldMode(int &codec, int &mode)
 
 QString Widget::updateFieldPreset(int &codec, int &preset)
 {
-    QString arr_preset[NUMBER_PRESETS][10] = {
+    const QString arr_preset[NUMBER_PRESETS][10] = {
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
@@ -3303,6 +3299,7 @@ QString Widget::updateFieldPreset(int &codec, int &preset)
         {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
+        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""}, // Intel VAAPI h264
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
@@ -3326,7 +3323,7 @@ QString Widget::updateFieldPreset(int &codec, int &preset)
 
 QString Widget::updateFieldPass(int &codec, int &pass)
 {
-    QString arr_pass[NUMBER_PRESETS][2] = {
+    const QString arr_pass[NUMBER_PRESETS][2] = {
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
@@ -3339,6 +3336,7 @@ QString Widget::updateFieldPass(int &codec, int &pass)
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
+        {tr("Auto"),   ""}, // Intel VAAPI h264
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
         {tr("2 Pass"), ""},
@@ -3362,7 +3360,7 @@ QString Widget::updateFieldPass(int &codec, int &pass)
 
 QString Widget::updateFieldAcodec(int &codec, int &acodec)
 {
-    QString arr_acodec[NUMBER_PRESETS][6] = {
+    const QString arr_acodec[NUMBER_PRESETS][6] = {
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
@@ -3375,6 +3373,7 @@ QString Widget::updateFieldAcodec(int &codec, int &acodec)
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
+        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""}, // Intel VAAPI h264
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
         {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
@@ -3398,7 +3397,7 @@ QString Widget::updateFieldAcodec(int &codec, int &acodec)
 
 QString Widget::updateFieldContainer(int &codec, int &container)
 {
-    QString arr_container[NUMBER_PRESETS][5] = {
+    const QString arr_container[NUMBER_PRESETS][5] = {
         {"MKV",  "MOV", "MP4", "",     ""},
         {"MKV",  "MOV", "MP4", "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
@@ -3411,6 +3410,7 @@ QString Widget::updateFieldContainer(int &codec, int &container)
         {"WebM", "MKV", "",    "",     ""},
         {"WebM", "MKV", "",    "",     ""},
         {"MKV",  "MPG", "AVI", "M2TS", "TS"},
+        {"MKV",  "MOV", "MP4", "",     ""}, // Intel VAAPI h264
         {"MKV",  "MOV", "MP4", "",     ""},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
         {"MKV",  "MOV", "MP4", "M2TS", "TS"},
