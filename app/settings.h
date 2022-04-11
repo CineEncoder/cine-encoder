@@ -13,7 +13,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QDialog>
+#include "framelesswindow.h"
 #include <QFileDialog>
 #include <QCloseEvent>
 #include <QMouseEvent>
@@ -32,7 +32,7 @@ namespace Ui
 }
 
 
-class Settings : public QDialog
+class Settings : public FramelessWindow
 {
     Q_OBJECT
 

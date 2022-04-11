@@ -13,9 +13,9 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
-#include <QDialog>
 #include <QSound>
 #include <QMouseEvent>
+#include "framelesswindow.h"
 
 
 namespace Ui
@@ -23,7 +23,7 @@ namespace Ui
     class Dialog;
 }
 
-class Dialog : public QDialog
+class Dialog : public FramelessWindow
 {
     Q_OBJECT
 

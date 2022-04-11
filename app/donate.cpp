@@ -12,25 +12,14 @@
 
 #include "donate.h"
 #include "ui_donate.h"
-#include <QGraphicsDropShadowEffect>
 
 
 Donate::Donate(QWidget *parent):
-    QDialog(parent),
+    FramelessWindow(parent),
     ui(new Ui::Donate),
     _clickPressedFlag(false)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
-    this->setMouseTracking(true);
-    this->setAttribute(Qt::WA_TranslucentBackground);
-
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_main);
-    shadow->setBlurRadius(10.0);
-    shadow->setColor(QColor(0, 0, 0, 160));
-    shadow->setOffset(0.0);
-    ui->widget_main->setGraphicsEffect(shadow);
-
     ui->frame_top->installEventFilter(this);
 }
 

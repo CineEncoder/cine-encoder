@@ -59,7 +59,7 @@
 #include "openingfiles.h"
 #include "encoder.h"
 #include "constants.h"
-
+#include "framelesswindow.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -70,14 +70,13 @@ namespace Ui
 QT_END_NAMESPACE
 
 
-class Widget : public QWidget
+class Widget : public FramelessWindow
 {
     Q_OBJECT
 
 public:
 
     Widget(QWidget *parent = nullptr);
-
     ~Widget();
 
     // ============= Settings ================
@@ -129,7 +128,6 @@ private slots:
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
     bool eventFilter(QObject *watched, QEvent *event);
-    bool event(QEvent *event);
     void dragEnterEvent(QDragEnterEvent* event);
     void dragMoveEvent(QDragMoveEvent* event);
     void dragLeaveEvent(QDragLeaveEvent* event);

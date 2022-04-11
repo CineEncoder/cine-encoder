@@ -13,9 +13,9 @@
 #ifndef OPENINGFILES_H
 #define OPENINGFILES_H
 
-#include <QDialog>
 #include <QFontMetrics>
 #include <math.h>
+#include "framelesswindow.h"
 
 
 namespace Ui
@@ -23,7 +23,7 @@ namespace Ui
     class OpeningFiles;
 }
 
-class OpeningFiles : public QDialog
+class OpeningFiles : public FramelessWindow
 {
     Q_OBJECT
 

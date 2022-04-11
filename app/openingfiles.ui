@@ -25,18 +25,22 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="files.qrc">
+    <normaloff>:/resources/icons/svg/cine-encoder.svg</normaloff>:/resources/icons/svg/cine-encoder.svg</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="topMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="bottomMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -260,6 +264,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="files.qrc"/>
+ </resources>
  <connections/>
 </ui>

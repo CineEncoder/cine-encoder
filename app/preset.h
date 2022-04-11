@@ -13,7 +13,6 @@
 #ifndef PRESET_H
 #define PRESET_H
 
-#include <QDialog>
 #include <QTimer>
 #include <QListView>
 #include <QMouseEvent>
@@ -23,7 +22,7 @@
 #include <iostream>
 #include <math.h>
 #include "constants.h"
-
+#include "framelesswindow.h"
 
 namespace Ui
 {
@@ -31,7 +30,7 @@ namespace Ui
 }
 
 
-class Preset : public QDialog
+class Preset : public FramelessWindow
 {
     Q_OBJECT
 

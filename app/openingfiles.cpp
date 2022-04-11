@@ -12,22 +12,13 @@
 
 #include "openingfiles.h"
 #include "ui_openingfiles.h"
-#include <QGraphicsDropShadowEffect>
 
 
 OpeningFiles::OpeningFiles(QWidget *parent):
-    QDialog(parent),
+    FramelessWindow(parent),
     ui(new Ui::OpeningFiles)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow);
-    this->setAttribute(Qt::WA_TranslucentBackground);
-
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_main);
-    shadow->setBlurRadius(10.0);
-    shadow->setColor(QColor(0, 0, 0, 160));
-    shadow->setOffset(0.0);
-    ui->widget_main->setGraphicsEffect(shadow);
 }
 
 OpeningFiles::~OpeningFiles()

@@ -413,18 +413,16 @@ QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {
 }
 QTreeWidget::branch:has-children:!has-siblings:closed,
 QTreeWidget::branch:closed:has-children:has-siblings {
-    padding-bottom: 2px 0;
-    padding-top: 2px 0;
-    padding-left: 4px 0;
-    border-image: none;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    padding-left: 4px;
     image: url(:/resources/icons/16x16/cil-arrow-right-.png);
 }
 QTreeWidget::branch:open:has-children:!has-siblings,
 QTreeWidget::branch:open:has-children:has-siblings {
-    padding-bottom: 2px 0;
-    padding-top: 2px 0;
-    padding-left: 4px 0;
-    border-image: none;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    padding-left: 4px;
     image: url(:/resources/icons/16x16/cil-arrow-bottom.png);
 }
 
@@ -604,12 +602,18 @@ QComboBox::drop-down {
     background-repeat: no-reperat;
 }
 QComboBox QAbstractItemView {
-    margin-top: 3px;
-    margin-bottom: 3px;
-    padding: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
     color: @elementsTextAbstractItem;
     background-color: @elementsBackgroundAbstractItem;
-    selection-background-color: @elementsBackgroundSelectedAbstractItem;
+    /*selection-background-color: @elementsBackgroundSelectedAbstractItem;*/
+}
+QComboBox QAbstractItemView::item {
+    color: @elementsTextAbstractItem;
+    background-color: @elementsBackgroundAbstractItem;
+    /*selection-background-color: @elementsBackgroundSelectedAbstractItem;*/
 }
 QComboBox QListView::item {
     min-height: 16px;
@@ -867,9 +871,12 @@ QPushButton#hideWindow {
 }
 QPushButton#expandWindow {
         border: none;
-        /*image: url(:/resources/icons/16x16/cil-media-stop.png);*/
+        image: url(:/resources/icons/16x16/cil-media-stop.png);
         color: @elementsTextColor;
         background-color: transparent;
+}
+QPushButton#expandWindow[expanded=true] {
+        image: url(:/resources/icons/16x16/cil-clone.png);
 }
 QPushButton#closeWindow {
         border: none;
@@ -883,6 +890,15 @@ QPushButton#buttonCloseTaskWindow {
         image: url(:/resources/icons/16x16/cil-x.png);
         color: @elementsTextColor;
         background-color: transparent;
+}
+QPushButton#actionEncode {
+    icon: url(:/resources/icons/svg/play.svg);
+}
+QPushButton#actionEncode[status="1"] {
+    icon: url(:/resources/icons/svg/pause.svg);
+}
+QPushButton#actionEncode[status="2"] {
+    icon: url(:/resources/icons/svg/forward.svg);
 }
 QPushButton:hover#actionResetLabels,
 QPushButton:hover#actionClearAudioTitles,

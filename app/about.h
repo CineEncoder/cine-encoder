@@ -13,10 +13,10 @@
 #ifndef ABOUT_H
 #define ABOUT_H
 
-#include <QDialog>
 #include <QMouseEvent>
 #include <QDesktopServices>
 #include <QUrl>
+#include "framelesswindow.h"
 
 
 namespace Ui
@@ -25,7 +25,7 @@ namespace Ui
 }
 
 
-class About : public QDialog
+class About : public FramelessWindow
 {
     Q_OBJECT
 

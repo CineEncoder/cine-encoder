@@ -36,7 +36,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="files.qrc">
-    <normaloff>:/resources/icons/64x64/cine-encoder.png</normaloff>:/resources/icons/64x64/cine-encoder.png</iconset>
+    <normaloff>:/resources/icons/svg/cine-encoder.svg</normaloff>:/resources/icons/svg/cine-encoder.svg</iconset>
   </property>
   <property name="toolTip">
    <string/>
@@ -46,16 +46,16 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <property name="leftMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="topMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="bottomMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -342,7 +342,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Cancel</string>
+                 <string>CANCEL</string>
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
@@ -376,7 +376,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Apply</string>
+                 <string>APPLY</string>
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
@@ -585,8 +585,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>414</width>
-                     <height>648</height>
+                     <width>408</width>
+                     <height>644</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_27">
@@ -1818,8 +1818,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>414</width>
-                     <height>648</height>
+                     <width>408</width>
+                     <height>644</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
@@ -3405,8 +3405,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>417</width>
-                     <height>634</height>
+                     <width>408</width>
+                     <height>644</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_32">
@@ -3926,8 +3926,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>414</width>
-                     <height>648</height>
+                     <width>408</width>
+                     <height>644</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_33">

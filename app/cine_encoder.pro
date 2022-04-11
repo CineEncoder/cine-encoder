@@ -16,7 +16,7 @@ QT += multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 CODECFORSRC = UTF-8
-
+#CONFIG += console
 # GENERAL
 TARGET = cine_encoder
 TEMPLATE = app
@@ -39,6 +39,7 @@ SOURCES += \
     dialog.cpp \
     donate.cpp \
     encoder.cpp \
+    framelesswindow.cpp \
     main.cpp \
     mainwindow.cpp \
     openingfiles.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     dialog.h \
     donate.h \
     encoder.h \
+    framelesswindow.h \
     mainwindow.h \
     openingfiles.h \
     preset.h \

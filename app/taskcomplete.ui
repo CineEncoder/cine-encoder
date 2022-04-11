@@ -35,24 +35,24 @@
    <string>Task</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/20x20/icons/20x20/cil-comment-square.png</normaloff>:/20x20/icons/20x20/cil-comment-square.png</iconset>
+   <iconset resource="files.qrc">
+    <normaloff>:/resources/icons/svg/cine-encoder.svg</normaloff>:/resources/icons/svg/cine-encoder.svg</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="topMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="bottomMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -280,8 +280,8 @@
              <rect>
               <x>100</x>
               <y>100</y>
-              <width>80</width>
-              <height>30</height>
+              <width>90</width>
+              <height>25</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -292,12 +292,18 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>80</width>
-              <height>30</height>
+              <width>90</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>90</width>
+              <height>25</height>
              </size>
             </property>
             <property name="text">
-             <string>Ok</string>
+             <string>OK</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -363,6 +369,8 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="files.qrc"/>
+ </resources>
  <connections/>
 </ui>

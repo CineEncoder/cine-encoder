@@ -33,20 +33,20 @@
   </property>
   <property name="windowIcon">
    <iconset resource="files.qrc">
-    <normaloff>:/resources/icons/16x16/cil-cart.png</normaloff>:/resources/icons/16x16/cil-cart.png</iconset>
+    <normaloff>:/resources/icons/svg/cine-encoder.svg</normaloff>:/resources/icons/svg/cine-encoder.svg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="topMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="bottomMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -356,8 +356,14 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>80</width>
-                <height>30</height>
+                <width>90</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>90</width>
+                <height>25</height>
                </size>
               </property>
               <property name="text">

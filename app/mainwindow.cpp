@@ -18,7 +18,7 @@
 #include "preset.h"
 #include "taskcomplete.h"
 #include "dialog.h"
-#include <QGraphicsDropShadowEffect>
+
 
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE
@@ -43,7 +43,7 @@
 
 
 Widget::Widget(QWidget *parent):
-    QWidget(parent),
+    FramelessWindow(parent),
     ui(new Ui::Widget),
     _windowActivated(false),
     _expandWindowsState(false),
@@ -51,21 +51,6 @@ Widget::Widget(QWidget *parent):
     _clickPressedToResizeFlag(8, false)
 {
     ui->setupUi(this);
-#ifdef Q_OS_WIN64
-    this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint |
-                         Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
-#else
-    this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-#endif
-    this->setMouseTracking(true);
-    this->setAcceptDrops(true);
-    this->setAttribute(Qt::WA_TranslucentBackground);
-
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->centralwidget);
-    shadow->setBlurRadius(10.0);
-    shadow->setColor(QColor(0, 0, 0, 160));
-    shadow->setOffset(0.0);
-    ui->centralwidget->setGraphicsEffect(shadow);
     // **************************** Set front label ***********************************//
 
     QHBoxLayout *raiseLayout = new QHBoxLayout(ui->tableWidget);
@@ -107,10 +92,10 @@ Widget::Widget(QWidget *parent):
     centralWidget->setObjectName("centralwidget");
     window->setCentralWidget(centralWidget);
 
-    //window->setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
-    //window->setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
-    //window->setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
-    //window->setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
+    /*window->setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    window->setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    window->setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    window->setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);*/
 
     QGridLayout *centralwidgetLayout = new QGridLayout(centralWidget);
     centralWidget->setLayout(centralwidgetLayout);
@@ -147,8 +132,7 @@ Widget::Widget(QWidget *parent):
     }
 
     // **************************** Set Event Filters ***********************************//
-    this->setAttribute(Qt::WA_Hover, true);
-    this->installEventFilter(this);
+
 
     ui->centralwidget->setAttribute(Qt::WA_Hover, true);
     ui->centralwidget->setAttribute(Qt::WA_NoMousePropagation, true);
@@ -313,7 +297,7 @@ void Widget::setTrayIconActions()
 void Widget::showTrayIcon()
 {
     trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/resources/icons/64x64/cine-encoder.png"));
+    trayIcon->setIcon(QIcon(QPixmap(":/resources/icons/svg/cine-encoder.svg")));
     trayIcon->setContextMenu(trayIconMenu);
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 }
@@ -740,7 +724,7 @@ void Widget::setParameters()    /*** Set parameters ***/
     ui->comboBoxPreset->setVisible(false);
     ui->comboBoxView->setVisible(false);
     animation = new QMovie(this);
-    animation->setFileName(":/resources/icons/Animated/cil-spinner-circle.gif");
+    animation->setFileName(":/resources/icons/gif/cil-spinner-circle.gif");
     animation->setScaledSize(QSize(18, 18));
     processThumbCreation = new QProcess(this);
 
@@ -752,9 +736,11 @@ void Widget::setParameters()    /*** Set parameters ***/
     ui->label_RemTime->hide();
     ui->progressBar->hide();
     ui->tableWidget->setRowCount(0);
+    ui->tableWidget->setShowGrid(false);
     ui->tableWidget->horizontalHeader()->setVisible(true);
+    ui->tableWidget->verticalHeader()->setVisible(true);
     ui->tableWidget->setAlternatingRowColors(true);
-    ui->tableWidget->verticalHeader()->setFixedWidth(0);
+    //ui->tableWidget->verticalHeader()->setFixedWidth(0);
     ui->tableWidget->setColumnWidth(ColumnIndex::FILENAME, 250);
     ui->tableWidget->setColumnWidth(ColumnIndex::FORMAT, 80);
     ui->tableWidget->setColumnWidth(ColumnIndex::RESOLUTION, 85);
@@ -1022,22 +1008,8 @@ void Widget::on_closeWindow_clicked()    /*** Close window signal ***/
 
 void Widget::setExpandIcon()
 {
-    switch (_theme) {
-    case Theme::GRAY:
-    case Theme::DARK:
-    case Theme::WAVE:
-        if (_expandWindowsState) {
-            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone.png"));
-        } else {
-            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop.png"));}
-        break;
-    case Theme::DEFAULT:
-        if (_expandWindowsState) {
-            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-clone_black.png"));
-        } else {
-            ui->expandWindow->setIcon(QIcon(":/resources/icons/16x16/cil-media-stop_black.png"));}
-        break;
-    }
+    ui->expandWindow->setProperty("expanded", _expandWindowsState);
+    ui->expandWindow->style()->polish(ui->expandWindow);
 }
 
 void Widget::on_expandWindow_clicked()    /*** Expand window ***/
@@ -1405,38 +1377,19 @@ void Widget::get_current_data() /*** Get current data ***/
 
 void Widget::setTheme(int &ind_theme)   /*** Set theme ***/
 {
-    QFile file;
-    QString list("");
-    switch (ind_theme) {
-    case Theme::GRAY:
-        file.setFileName(":/resources/css/style_0.css");
-        break;
-    case Theme::DARK:
-        file.setFileName(":/resources/css/style_1.css");
-        break;
-    case Theme::WAVE:
-        file.setFileName(":/resources/css/style_2.css");
-        break;
-    case Theme::DEFAULT:
-        file.setFileName(":/resources/css/style_3.css");
-        break;
-    }
+    const QString themePath = QString(":/resources/css/style_%1.css")
+            .arg(QString::number(ind_theme));
+    QFile file(themePath);
     if (file.open(QFile::ReadOnly)) {
-        list = QString::fromUtf8(file.readAll());
+        const QString list = QString::fromUtf8(file.readAll());
+        this->setStyleSheet(styleCreator(list));
         file.close();
     }
-    this->setStyleSheet(styleCreator(list));
-    int i = 11;
-    if (!_showHDR_mode)
-    {
-        while (i <= 19) {
+    for (int i = 11; i <= 19; i++) {
+        if (!_showHDR_mode) {
             ui->tableWidget->hideColumn(i);
-            i++;
-        }
-    } else {
-        while (i <= 19) {
+        } else {
             ui->tableWidget->showColumn(i);
-            i++;
         }
     }
     setExpandIcon();
@@ -1542,7 +1495,9 @@ void Widget::restore_initial_state()    /*** Restore initial state ***/
     ui->actionResetLabels->setEnabled(true);
     ui->actionSettings->setEnabled(true);
     _status_encode_btn = EncodingStatus::START;
-    ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
+    ui->actionEncode->setProperty("status", _status_encode_btn);
+    ui->actionEncode->style()->polish(ui->actionEncode);
+    //ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/svg/play.svg")));
     ui->actionEncode->setToolTip(tr("Encode"));
 }
 
@@ -1757,12 +1712,6 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
     return QWidget::eventFilter(watched, event);
 }
 
-bool Widget::event(QEvent *event)
-{
-
-    return QWidget::event(event);
-}
-
 /************************************************
 ** Encoder
 ************************************************/
@@ -1878,7 +1827,7 @@ void Widget::onEncodingInitError(const QString &message)
     restore_initial_state();
     call_task_complete(message, false);
     /*_status_encode_btn = "start";
-    ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-play.png"));
+    ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/16x16/play.svg"));
     ui->actionEncode->setToolTip(tr("Encode"));
     call_task_complete(_message, false);*/
 }
@@ -2063,8 +2012,7 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
             return;
         }
         _status_encode_btn = EncodingStatus::PAUSE;
-        ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-pause.png"));
-        ui->actionEncode->setToolTip(tr("Pause"));
+        //ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/svg/pause.svg")));
         _strt_t = time(nullptr);
         if (_protection == true) {
             timer->start();
@@ -2076,21 +2024,23 @@ void Widget::on_actionEncode_clicked()  /*** Encode button ***/
         std::cout << "Status encode btn: pause" << std::endl;  // Debug info //
         pause();
         _status_encode_btn = EncodingStatus::RESUME;
-        ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-forward.png"));
-        ui->actionEncode->setToolTip(tr("Resume"));
+        //ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/svg/forward.svg")));
         break;
     }
     case EncodingStatus::RESUME: {
         std::cout << "Status encode btn: resume" << std::endl;  // Debug info //
         resume();
         _status_encode_btn = EncodingStatus::PAUSE;
-        ui->actionEncode->setIcon(QIcon(":/resources/icons/16x16/cil-pause.png"));
-        ui->actionEncode->setToolTip(tr("Pause"));
+        //ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/svg/pause.svg")));
         break;
     }
     default:
-        break;
+        return;
     }
+    QString status[] = {tr("Pause"), tr("Resume"), tr("Pause")};
+    ui->actionEncode->setToolTip(status[_status_encode_btn]);
+    ui->actionEncode->setProperty("status", _status_encode_btn);
+    ui->actionEncode->style()->polish(ui->actionEncode);
 }
 
 void Widget::on_actionStop_clicked()    /*** Stop ***/
@@ -2557,7 +2507,7 @@ QString Widget::setThumbnail(QString curFilename,
         processThumbCreation->start("ffmpeg", cmd);
         processThumbCreation->waitForFinished();
     }
-    if (!tmb.exists()) tmb_file = ":/resources/images/no_preview.png";
+    if (!tmb.exists()) tmb_file = ":/resources/icons/svg/no_preview.png";
     preview_pixmap = QPixmap(tmb_file);
     QPixmap pix_scaled;
     if (destination == PreviewDest::PREVIEW) {
@@ -3177,7 +3127,7 @@ void Widget::setItemStyle(QTreeWidgetItem *item)
         foregroundChildColor.setRgb(qRgb(150, 190, 220));
         break;
     case Theme::DEFAULT:
-        foregroundChildColor.setRgb(qRgb(30, 50, 150));
+        foregroundChildColor.setRgb(qRgb(50, 50, 80));
         break;
     }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);

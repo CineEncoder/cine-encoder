@@ -13,7 +13,7 @@
 #ifndef TASKCOMPLETE_H
 #define TASKCOMPLETE_H
 
-#include <QDialog>
+#include "framelesswindow.h"
 #include <QTimer>
 #include <QSound>
 #include <QMouseEvent>
@@ -28,7 +28,7 @@ namespace Ui
 }
 
 
-class Taskcomplete : public QDialog
+class Taskcomplete : public FramelessWindow
 {
     Q_OBJECT
 

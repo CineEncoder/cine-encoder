@@ -13,10 +13,10 @@
 #ifndef DONATE_H
 #define DONATE_H
 
-#include <QDialog>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QMouseEvent>
+#include "framelesswindow.h"
 
 
 namespace Ui
@@ -25,7 +25,7 @@ namespace Ui
 }
 
 
-class Donate : public QDialog
+class Donate : public FramelessWindow
 {
     Q_OBJECT
 
