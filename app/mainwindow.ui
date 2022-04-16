@@ -4863,12 +4863,18 @@
                  </property>
                 </spacer>
                </item>
-               <item row="2" column="6">
+               <item row="2" column="6" alignment="Qt::AlignVCenter">
                 <widget class="Line" name="line_4">
+                 <property name="minimumSize">
+                  <size>
+                   <width>1</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>1</width>
-                   <height>20</height>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="frameShadow">
@@ -4879,12 +4885,18 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="12">
+               <item row="2" column="12" alignment="Qt::AlignVCenter">
                 <widget class="Line" name="line_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>1</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>1</width>
-                   <height>20</height>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="frameShadow">
@@ -6785,7 +6797,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="14" alignment="Qt::AlignBottom">
+            <item row="0" column="14" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuPreferencesButton">
               <property name="minimumSize">
                <size>
@@ -6820,7 +6832,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="12" alignment="Qt::AlignBottom">
+            <item row="0" column="12" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuViewButton">
               <property name="minimumSize">
                <size>
@@ -6992,7 +7004,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="10" alignment="Qt::AlignBottom">
+            <item row="0" column="10" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuToolsButton">
               <property name="minimumSize">
                <size>
@@ -7040,7 +7052,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="20" alignment="Qt::AlignBottom">
+            <item row="0" column="20" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuAboutButton">
               <property name="minimumSize">
                <size>
@@ -7094,7 +7106,7 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="8" alignment="Qt::AlignBottom">
+            <item row="0" column="8" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuEditButton">
               <property name="minimumSize">
                <size>
@@ -7132,7 +7144,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="5" alignment="Qt::AlignBottom">
+            <item row="0" column="5" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuFileButton">
               <property name="minimumSize">
                <size>

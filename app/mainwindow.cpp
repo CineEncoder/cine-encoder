@@ -18,6 +18,7 @@
 #include "preset.h"
 #include "taskcomplete.h"
 #include "dialog.h"
+#include "tables.h"
 
 
 #if defined (Q_OS_UNIX)
@@ -3212,224 +3213,38 @@ void Widget::updatePresetTable()
 
 QString Widget::updateFieldCodec(int &codec)
 {
-    const QString arr_codec[NUMBER_PRESETS] = {
-        tr("H.265/HEVC 4:2:0 12 bit"),
-        tr("H.265/HEVC 4:2:0 10 bit"),
-        tr("H.265/HEVC 4:2:0 8 bit"),
-        tr("H.264/AVC 4:2:0 8 bit"),
-        tr("VP9 4:2:0 10 bit"),
-        tr("VP9 4:2:0 8 bit"),
-        tr("Intel QSV H.265/HEVC 4:2:0 10 bit"),
-        tr("Intel QSV H.265/HEVC 4:2:0 8 bit"),
-        tr("Intel QSV H.264/AVC 4:2:0 8 bit"),
-        tr("Intel QSV VP9 4:2:0 10 bit"),
-        tr("Intel QSV VP9 4:2:0 8 bit"),
-        tr("Intel QSV MPEG-2 4:2:0 8 bit"),
-        tr("Intel VAAPI H.264/AVC 4:2:0 8 bit"), // Intel VAAPI h264
-        tr("NVENC H.265/HEVC 4:2:0 10 bit"),
-        tr("NVENC H.265/HEVC 4:2:0 8 bit"),
-        tr("NVENC H.264/AVC 4:2:0 8 bit"),
-        tr("ProRes Proxy"),
-        "ProRes LT",
-        tr("ProRes Standard"),
-        "ProRes HQ",
-        "ProRes 4444",
-        "ProRes 4444XQ",
-        "DNxHR LB",
-        "DNxHR SQ",
-        "DNxHR HQ",
-        "DNxHR HQX",
-        "DNxHR 444",
-        "XDCAM HD422",
-        "XAVC 4:2:2",
-        tr("From source")
-    };
-    return arr_codec[codec];
+    Tables t;
+    return t.arr_codec[codec][0];
 }
 
 QString Widget::updateFieldMode(int &codec, int &mode)
 {
-    const QString arr_mode[NUMBER_PRESETS][5] = {
-        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",      "ABR", "VBR", "CRF", "CQP"},
-        {"ABR",      "CRF", "",    "",    ""},
-        {"ABR",      "CRF", "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
-        {"VBR",      "CQP", "",    "",    ""},
-        {"ABR",      "CRF", "",    "",    ""},
-        {"ABR",      "CRF", "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
-        {"VBR",      "CQP", "",    "",    ""}, // Intel VAAPI h264
-        {"VBR",      "",    "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""},
-        {"VBR",      "",    "",    "",    ""},
-        {"CBR",      "",    "",    "",    ""},
-        {tr("Auto"), "",    "",    "",    ""}
-    };
-    return arr_mode[codec][mode];
+    Tables t;
+    return t.getMode(codec, mode);
 }
 
 QString Widget::updateFieldPreset(int &codec, int &preset)
 {
-    const QString arr_preset[NUMBER_PRESETS][10] = {
-        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""},
-        {tr("None"), tr("Veryfast"),  tr("Faster"),    tr("Fast"),     tr("Medium"), tr("Slow"), tr("Slower"), tr("Veryslow"), "",           ""}, // Intel VAAPI h264
-        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), tr("Slow"),      "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
-        {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""}
-    };
-    return arr_preset[codec][preset];
+    Tables t;
+    return t.arr_preset[codec][preset];
 }
 
 QString Widget::updateFieldPass(int &codec, int &pass)
 {
-    const QString arr_pass[NUMBER_PRESETS][2] = {
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""}, // Intel VAAPI h264
-        {tr("2 Pass"), ""},
-        {tr("2 Pass"), ""},
-        {tr("2 Pass"), ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""},
-        {tr("Auto"),   ""}
-    };
-    return arr_pass[codec][pass];
+    Tables t;
+    return t.arr_pass[codec][pass];
 }
 
 QString Widget::updateFieldAcodec(int &codec, int &acodec)
 {
-    const QString arr_acodec[NUMBER_PRESETS][6] = {
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
-        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
-        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""}, // Intel VAAPI h264
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"AAC",        "AC3",        "DTS",        tr("Source"), "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"PCM 16 bit", "",           "",           "",           "",     ""},
-        {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Vorbis",     "Opus", tr("Source")}
-    };
-    return arr_acodec[codec][acodec];
+    Tables t;
+    return t.arr_acodec[codec][acodec];
 }
 
 QString Widget::updateFieldContainer(int &codec, int &container)
 {
-    const QString arr_container[NUMBER_PRESETS][5] = {
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"WebM", "MKV", "",    "",     ""},
-        {"WebM", "MKV", "",    "",     ""},
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"WebM", "MKV", "",    "",     ""},
-        {"WebM", "MKV", "",    "",     ""},
-        {"MKV",  "MPG", "AVI", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "",     ""}, // Intel VAAPI h264
-        {"MKV",  "MOV", "MP4", "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MOV",  "",    "",    "",     ""},
-        {"MXF",  "",    "",    "",     ""},
-        {"MXF",  "",    "",    "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"}
-    };
-    return arr_container[codec][container];
+    Tables t;
+    return t.arr_container[codec][container];
 }
 
 void Widget::setPresetIcon(QTreeWidgetItem *item, bool collapsed)

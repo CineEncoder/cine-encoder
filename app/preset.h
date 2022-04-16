@@ -21,8 +21,8 @@
 #include <QResizeEvent>
 #include <iostream>
 #include <math.h>
-#include "constants.h"
 #include "framelesswindow.h"
+
 
 namespace Ui
 {
@@ -48,10 +48,6 @@ private slots:
     void on_closeWindow_clicked();
     void on_buttonCancel_clicked();
     void on_buttonApply_clicked();
-    void on_buttonTab_1_clicked();
-    void on_buttonTab_2_clicked();
-    void on_buttonTab_3_clicked();
-    void on_buttonTab_4_clicked();
     void change_preset_name();
     void on_comboBoxAspectRatio_currentIndexChanged(int index);
     void on_comboBox_width_currentTextChanged(const QString &arg1);

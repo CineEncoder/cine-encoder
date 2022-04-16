@@ -11,6 +11,9 @@
 ***********************************************************************/
 
 #include "encoder.h"
+//#include "constants.h"
+#include "tables.h"
+
 
 Encoder::Encoder(QObject *parent) :
     QObject(parent)
@@ -52,6 +55,7 @@ void Encoder::initEncoding(const QString  &temp_file,
                            int      *_fr_count)
 {
     std::cout << "Make preset..." << std::endl;                       // Debug information //
+    Tables t;
     _temp_file = temp_file;
     _input_file = input_file;
     _output_file = output_file;
@@ -100,24 +104,11 @@ void Encoder::initEncoding(const QString  &temp_file,
     _mux_mode = false;
     *fr_count = 0;
 
-    /****************************************** Resize ****************************************/
-
-    const QString width[16] = {
-        "Source", "7680", "4520", "4096", "3840", "3656", "2048", "1920",
-        "1828",   "1440", "1280", "1024", "768",  "720",  "640",  "320"
-    };
-
-    const QString height[32] = {
-        "Source", "4320", "3112", "3072", "2664", "2540", "2468", "2304",
-        "2214",   "2204", "2160", "2056", "1976", "1744", "1556", "1536",
-        "1332",   "1234", "1152", "1107", "1102", "1080", "1028", "988",
-        "872",    "768",  "720",  "576",  "540",  "486",  "480",  "240"
-    };
-
+    /****************************************** Resize ****************************************/   
     QString resize_vf = "";
-    const QString new_width = (width[_WIDTH] != "Source") ? width[_WIDTH] : _width;
-    const QString new_height = (height[_HEIGHT] != "Source") ? height[_HEIGHT] : _height;
-    if ((width[_WIDTH] != "Source") || (height[_HEIGHT] != "Source")) {
+    const QString new_width = (t.arr_width[_WIDTH] != "Source") ? t.arr_width[_WIDTH] : _width;
+    const QString new_height = (t.arr_height[_HEIGHT] != "Source") ? t.arr_height[_HEIGHT] : _height;
+    if ((t.arr_width[_WIDTH] != "Source") || (t.arr_height[_HEIGHT] != "Source")) {
         if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
             resize_vf = QString("scale_qsv=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
         }
@@ -131,40 +122,31 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /******************************************* FPS *****************************************/
 
-    const QString frame_rate[14] = {
-        "Source", "120", "60", "59.940", "50", "48", "30",
-        "29.970", "25",  "24", "23.976", "20", "18", "16"
-    };
-
-    const QString blending[4] = {
-        "Simple", "Interpolated", "MCI", "Blend"
-    };
-
     QString fps_vf = "";
     double fps_dest;
 
-    if (frame_rate[_FRAME_RATE] != "Source") {
-        fps_dest = frame_rate[_FRAME_RATE].toDouble();
-        if (blending[_BLENDING] == "Simple") {
+    if (t.frame_rate[_FRAME_RATE] != "Source") {
+        fps_dest = t.frame_rate[_FRAME_RATE].toDouble();
+        if (t.blending[_BLENDING] == "Simple") {
             if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
-                fps_vf = QString("vpp_qsv=framerate=%1").arg(frame_rate[_FRAME_RATE]);
+                fps_vf = QString("vpp_qsv=framerate=%1").arg(t.frame_rate[_FRAME_RATE]);
             }
             else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
-                fps_vf = QString("fps=fps=%1").arg(frame_rate[_FRAME_RATE]);
+                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
             }
             else {
-                fps_vf = QString("fps=fps=%1").arg(frame_rate[_FRAME_RATE]);
+                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
             }
         }
-        else if (blending[_BLENDING] == "Interpolated") {
-            fps_vf = QString("framerate=fps=%1").arg(frame_rate[_FRAME_RATE]);
+        else if (t.blending[_BLENDING] == "Interpolated") {
+            fps_vf = QString("framerate=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
         }
-        else if (blending[_BLENDING] == "MCI") {
+        else if (t.blending[_BLENDING] == "MCI") {
             fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
-                    .arg(frame_rate[_FRAME_RATE]);
+                    .arg(t.frame_rate[_FRAME_RATE]);
         }
-        else if (blending[_BLENDING] == "Blend") {
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(frame_rate[_FRAME_RATE]);
+        else if (t.blending[_BLENDING] == "Blend") {
+            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(t.frame_rate[_FRAME_RATE]);
         }
     } else {
         fps_dest = _fps.toDouble();
@@ -269,63 +251,11 @@ void Encoder::initEncoding(const QString  &temp_file,
         _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k];
     }
 
-    /*********************************** Intel QSV presets ************************************/
-    const QString intelQSV_filter = "hwmap=derive_device=qsv,format=qsv";
-    const QString vaapi_filter = "format=nv12|vaapi,hwupload";
-#if defined (Q_OS_WIN64)
-    const QString intelQSVhwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
-    const QString vaapiHwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
-#elif defined (Q_OS_UNIX)
-    const QString intelQSVhwaccel = " -hwaccel vaapi -hwaccel_output_format vaapi";
-    const QString vaapiHwaccel = " -hwaccel vaapi -hwaccel_output_format vaapi";
-#endif
-
-    /************************************* XDCAM presets **************************************/
-    const QString xdcam_preset = "-pix_fmt yuv422p -c:v mpeg2video -profile:v 0 -flags ilme -top 1 "
-                                 "-metadata creation_time=now -vtag xd5c -timecode 01:00:00:00 ";
-
-    /************************************* XAVC presets **************************************/
-    const QString xavc_preset = "-pix_fmt yuv422p -c:v libx264 -me_method tesa -subq 9 -partitions all -direct-pred auto "
-                                "-psy 0 -g 0 -keyint_min 0 -x264opts filler -x264opts force-cfr -tune fastdecode ";
-
     /************************************* Codec module ***************************************/
 
-    const QString arr_codec[NUMBER_PRESETS][4] = {
-        {"-pix_fmt yuv420p12le -c:v libx265 -profile:v main12 ",        "",                     "1", ""},
-        {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",                     "1", ""},
-        {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",                     "0", ""},
-        {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",                     "0", ""},
-        {"-pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", "",                     "1", ""},
-        {"-pix_fmt yuv420p -c:v libvpx-vp9 -speed 4 ",                  "",                     "0", ""},
-        {"-c:v hevc_qsv -profile:v main10 ",                            intelQSVhwaccel,   "1", intelQSV_filter},
-        {"-pix_fmt qsv -c:v hevc_qsv -profile:v main ",                 intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt qsv -c:v h264_qsv -profile:v high ",                 intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-c:v vp9_qsv -profile:v 2 ",                                  intelQSVhwaccel,   "1", intelQSV_filter},
-        {"-pix_fmt qsv -c:v vp9_qsv ",                                  intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt qsv -c:v mpeg2_qsv -profile:v high ",                intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-c:v h264_vaapi -profile:v high ",                            vaapiHwaccel,      "0", vaapi_filter}, // Intel VAAPI h264
-        {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda",       "1", ""},
-        {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda",       "0", ""},
-        {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda",       "0", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 0 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 1 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 2 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 4 ",           "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 5 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_lb ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_sq ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",                     "1", ""},
-        {xdcam_preset,                                                  "",                     "0", ""},
-        {xavc_preset,                                                   " -guess_layout_max 0", "0", ""},
-        {"-movflags +write_colr -c:v copy ",                            "",                     "1", ""}
-    };
-
-    const QString hwaccel = arr_codec[_CODEC][1];
-    const QString hwaccel_filter_vf = arr_codec[_CODEC][3];
-    _flag_hdr = static_cast<bool>(arr_codec[_CODEC][2].toInt());
+    const QString hwaccel = t.arr_params[_CODEC][1];
+    const QString hwaccel_filter_vf = t.arr_params[_CODEC][3];
+    _flag_hdr = static_cast<bool>(t.arr_params[_CODEC][2].toInt());
 
     /************************************* Level module **************************************/
 
@@ -367,44 +297,12 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************* Mode module ***************************************/
 
-    const QString arr_mode[NUMBER_PRESETS][5] = {
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"}, // H265
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"}, // H265
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"}, // H265
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"}, // H264
-        {"ABR",    "CRF", "",    "",    ""}, // VP9
-        {"ABR",    "CRF", "",    "",    ""}, // VP9
-        {"VBR",    "",    "",    "",    ""}, // QSV H265
-        {"VBR",    "",    "",    "",    ""}, // QSV H265
-        {"VBR",    "CQP", "",    "",    ""}, // QSV H264
-        {"ABR",    "CRF", "",    "",    ""}, // QSV VP9
-        {"ABR",    "CRF", "",    "",    ""}, // QSV VP9
-        {"VBR",    "",    "",    "",    ""}, // QSV MPEG2
-        {"VBR",    "CQP", "",    "",    ""}, // Intel VAAPI H264
-        {"VBR_NV", "",    "",    "",    ""}, // NVENC H265
-        {"VBR_NV", "",    "",    "",    ""}, // NVENC H265
-        {"VBR_NV", "",    "",    "",    ""}, // NVENC H264
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""}, // XDCAM
-        {"CBR",    "",    "",    "",    ""}, // XAVC
-        {"",       "",    "",    "",    ""}  // Source
-    };
     QString mode = "";
     const QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 0);
     const QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 0);
     const QString maxrate = QString::number(1000000.0*_MAXRATE.toDouble(), 'f', 0);
     const QString bufsize = QString::number(1000000.0*_BUFSIZE.toDouble(), 'f', 0);
-    const QString selected_mode = arr_mode[_CODEC][_MODE];
+    const QString selected_mode = t.arr_mode[_CODEC][_MODE];
 
     if (selected_mode == "CBR") {
         mode = QString("-b:v %1 -minrate %1 -maxrate %1 -bufsize %2 ").arg(bitrate, bufsize);
@@ -422,13 +320,13 @@ void Encoder::initEncoding(const QString  &temp_file,
         mode = QString("-crf %1 ").arg(_BQR);
     }
     else if (selected_mode == "CQP") {
-        if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
-            mode = QString("-global_quality %1 -look_ahead 1 ").arg(_BQR);
-        } else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
-            mode = QString("-qp %1 -rc_mode 4 ").arg(_BQR);
-        } else {
-            mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
-        }
+        mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
+    }
+    else if (selected_mode == "CQP_QS") {
+        mode = QString("-global_quality %1 -look_ahead 1 ").arg(_BQR);
+    }
+    else if (selected_mode == "CQP_VA") {
+        mode = QString("-qp %1 -rc_mode 4 ").arg(_BQR);
     }
 
     /************************************* Preset module ***************************************/
@@ -518,103 +416,52 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************* Audio module ***************************************/
 
-    const QString arr_acodec[NUMBER_PRESETS][6] = {
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // H265
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // H265
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // H265
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // H264
-        {"Opus",  "Vorbis", "Source", "",       "",     ""}, // VP9
-        {"Opus",  "Vorbis", "Source", "",       "",     ""}, // VP9
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // QSV H265
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // QSV H265
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // QSV H264
-        {"Opus",  "Vorbis", "Source", "",       "",     ""}, // QSV VP9
-        {"Opus",  "Vorbis", "Source", "",       "",     ""}, // QSV VP9
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // QSV MPEG2
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // Intel VAAPI h264
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // NVENC H265
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // NVENC H265
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""}, // NVENC H264
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "",       "",       "",       "",     ""}, // XDCAM
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""}, // XAVC
-        {"AAC",   "AC3",    "DTS",    "Vorbis", "Opus", "Source"} // Source
-    };
-
-    const QString arr_bitrate[5][17] = {
-        {"384k",  "320k",  "256k",  "192k",  "128k",  "96k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AAC
-        {"640k",  "448k",  "384k",  "256k",  "",      "",      "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AC3
-        {"3840k", "3072k", "2048k", "1920k", "1536k", "1472k", "1344k", "1280k", "1152k", "1024k", "960k", "768k", "640k", "576k", "512k", "448k", "384k"}, // DTS
-        {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // Vorbis
-        {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""} // Opus
-    };
-
-    const QString arr_sampling[12] = {
-        "Source", "8000",  "11025", "16000", "22050",  "32000",
-        "44100",  "48000", "88200", "96000", "176400", "192000"
-    };
-
-    const QString arr_channels[3] = {
-        "Source", "1", "2"
-    };
-
     QString acodec = "";
-    const QString selected_acodec = arr_acodec[_CODEC][_AUDIO_CODEC];
+    const QString selected_acodec = t.arr_acodec[_CODEC][_AUDIO_CODEC];
     QString selected_bitrate = "";
 
     QString sampling = "";
-    const QString selected_sampling = arr_sampling[_AUDIO_SAMPLING];
+    const QString selected_sampling = t.arr_sampling[_AUDIO_SAMPLING];
     if (selected_sampling != "Source") {
         sampling = QString("-af aresample=%1:resampler=soxr ").arg(selected_sampling);
     }
 
     QString channels = "";
-    const QString selected_channels = arr_channels[_AUDIO_CHANNELS];
+    const QString selected_channels = t.arr_channels[_AUDIO_CHANNELS];
     if (selected_channels != "Source") {
         channels = QString(" -ac %1").arg(selected_channels);
     }
 
-
     if (selected_acodec == "AAC") {
-        selected_bitrate = arr_bitrate[0][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[0][_AUDIO_BITRATE];
         acodec = QString("-c:a aac -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "AC3") {
-        selected_bitrate = arr_bitrate[1][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[1][_AUDIO_BITRATE];
         acodec = QString("-c:a ac3 -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "DTS") {
-        selected_bitrate = arr_bitrate[2][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[2][_AUDIO_BITRATE];
         acodec = QString("-strict -2 -c:a dca -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "Vorbis") {
-        selected_bitrate = arr_bitrate[3][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[3][_AUDIO_BITRATE];
         acodec = QString("-c:a libvorbis -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "Opus") {
-        selected_bitrate = arr_bitrate[4][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[4][_AUDIO_BITRATE];
         acodec = QString("-c:a libopus -b:a %1").arg(selected_bitrate);
     }
-    else if (selected_acodec == "PCM16") {
+    else if (selected_acodec == "PCM 16 bit") {
         acodec = "-c:a pcm_s16le";
     }
-    else if (selected_acodec == "PCM24") {
+    else if (selected_acodec == "PCM 24 bit") {
         acodec = "-c:a pcm_s24le";
     }
-    else if (selected_acodec == "PCM32") {
+    else if (selected_acodec == "PCM 32 bit") {
         acodec = "-c:a pcm_s32le";
     }
-    else if (selected_acodec == "Source") {
+    else if (selected_acodec == tr("Source")) {
         acodec = "-c:a copy";
     }
     const QString audio_param = sampling + acodec + channels;
@@ -810,7 +657,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     const QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
                     QString("-map_metadata -1 ") + _videoMetadataParam + _audioMetadataParam +
-                    _subtitleMetadataParam + transform + arr_codec[_CODEC][0];
+                    _subtitleMetadataParam + transform + t.arr_params[_CODEC][0];
 
     /************************************* HDR module ***************************************/
 

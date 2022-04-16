@@ -20,7 +20,7 @@ CODECFORSRC = UTF-8
 # GENERAL
 TARGET = cine_encoder
 TEMPLATE = app
-VERSION = 3.5.3
+VERSION = 3.5.4
 
 # DIRS
 CONFIG -= debug_and_release debug_and_release_target
@@ -58,6 +58,7 @@ HEADERS += \
     openingfiles.h \
     preset.h \
     settings.h \
+    tables.h \
     taskcomplete.h
 
 FORMS += \
