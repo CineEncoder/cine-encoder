@@ -3220,7 +3220,7 @@ QString Widget::updateFieldCodec(int &codec)
 QString Widget::updateFieldMode(int &codec, int &mode)
 {
     Tables t;
-    return t.getMode(codec, mode);
+    return t.getCurrentMode(codec, mode);
 }
 
 QString Widget::updateFieldPreset(int &codec, int &preset)

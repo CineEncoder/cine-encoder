@@ -2,6 +2,7 @@
 #define TABLES_H
 
 #include <QObject>
+#include <QMap>
 #include "constants.h"
 
 
@@ -219,6 +220,39 @@ public:
         {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""}
     };
 
+    const QString arr_level[NUMBER_PRESETS][21] = {
+        {tr("Auto"), "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},    // H265
+        {tr("Auto"), "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},    // H265
+        {tr("Auto"), "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},    // H265
+        {tr("Auto"), "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"}, // H264
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},    // VP9
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},    // VP9
+        {tr("Auto"), "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},    // QSV H265
+        {tr("Auto"), "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},    // QSV H265
+        {tr("Auto"), "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"}, // QSV H264
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},    // QSV VP9
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},    // QSV VP9
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},    // QSV MPEG2
+        {tr("Auto"), "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"}, // Intel VAAPI h264
+        {tr("Auto"), "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},    // NVENC H265
+        {tr("Auto"), "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},    // NVENC H265
+        {tr("Auto"), "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"}, // NVENC H264
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
+        {"2",        "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}, // XDCAM
+        {"5.2",      "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}, // XAVC
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}  // Source
+    };
+
     const QString arr_pass[NUMBER_PRESETS][2] = {
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
@@ -233,9 +267,9 @@ public:
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""}, // Intel VAAPI h264
-        {tr("2 Pass"), ""},
-        {tr("2 Pass"), ""},
-        {tr("2 Pass"), ""},
+        {tr("2 Pass Optimisation"), ""},
+        {tr("2 Pass Optimisation"), ""},
+        {tr("2 Pass Optimisation"), ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
@@ -335,7 +369,7 @@ public:
         {"MKV",  "MOV", "MP4", "M2TS", "TS"}
     };
 
-    QString getCodecName(int row)
+    QString getCodecName(int row) const
     {
         if (row >= 0 && row < NUMBER_PRESETS) {
             QString codec = arr_codec[row][0];
@@ -348,7 +382,7 @@ public:
         return QString();
     }
 
-    QString getMode(int row, int column)
+    QString getCurrentMode(int row, int column) const
     {
         if (row >= 0 && row < NUMBER_PRESETS && column >= 0 && column < 5) {
             QString mode = arr_mode[row][column];
@@ -359,7 +393,66 @@ public:
             return mode;
         }
         return QString();
+    }  
+
+    QStringList getModesListByRow(int row) const
+    {
+        return getListByRow<NUMBER_PRESETS, 5>(row, arr_mode);
     }
+
+    QStringList getPresetsListByRow(int row) const
+    {
+        return getListByRow<NUMBER_PRESETS, 10>(row, arr_preset);
+    }
+
+    QStringList getContainersListByRow(int row) const
+    {
+        return getListByRow<NUMBER_PRESETS, 5>(row, arr_container);
+    }
+
+    QStringList getLevelsListByRow(int row) const
+    {
+        return getListByRow<NUMBER_PRESETS, 21>(row, arr_level);
+    }
+
+    QStringList getPassesListByRow(int row) const
+    {
+        return getListByRow<NUMBER_PRESETS, 2>(row, arr_pass);
+    }
+
+    QStringList getAudioCodecsListByRow(int row) const
+    {
+        return getListByRow<NUMBER_PRESETS, 6>(row, arr_acodec);
+    }
+
+private:
+    template<const int r, const int c>
+    QStringList getListByRow(const int row, const QString (&arr)[r][c]) const
+    {
+        Q_ASSERT(row < r);
+        QStringList list;
+        const QMap<QString, QString> modeImpl = {
+            {"CBR", tr("Constant Bitrate")},
+            {"ABR", tr("Average Bitrate")},
+            {"VBR", tr("Variable Bitrate")},
+            {"CRF", tr("Constant Rate Factor")},
+            {"CQP", tr("Constant QP")}
+        };
+        for (int i = 0; i < c; i++) {
+            QString val = arr[row][i];
+            if (val != "") {
+                const int pos = val.indexOf("_");
+                if (pos != -1) {
+                    val = val.left(pos);
+                }
+                if (modeImpl.contains(val)) {
+                    list << modeImpl[val];
+                } else list << val;
+            }
+        }
+        return list;
+    }
+
 };
 
 #endif // TABLES_H
