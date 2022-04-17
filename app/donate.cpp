@@ -82,7 +82,7 @@ bool Donate::eventFilter(QObject *watched, QEvent *event)
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                _mouseClickCoordinate = mouse_event->pos() + QPoint(7,7);
+                _mouseClickCoordinate = mouse_event->pos() + QPoint(10,10);
                 _clickPressedFlag = true;
                 return true;
             }

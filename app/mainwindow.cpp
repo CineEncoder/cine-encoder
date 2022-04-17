@@ -82,7 +82,7 @@ Widget::Widget(QWidget *parent):
     ui->frame_middle->setLayout(layout);
     window = new QMainWindow(ui->frame_middle);
     layout->addWidget(window);
-    layout->setContentsMargins(6, 2, 6, 2);
+    layout->setContentsMargins(2, 2, 2, 2);
     layout->setVerticalSpacing(0);
     layout->setHorizontalSpacing(0);
     window->setObjectName("CentralWindow");
@@ -1669,7 +1669,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)    /*** Resize and mov
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->button() == Qt::LeftButton) {
-                _mouseClickCoordinate = mouse_event->pos() + QPoint(7,7);
+                _mouseClickCoordinate = mouse_event->pos() + QPoint(10,10);
                 _clickPressedFlag = true;
                 return true;
             }
