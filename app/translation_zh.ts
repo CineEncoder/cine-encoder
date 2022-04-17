@@ -21,7 +21,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="about.ui" line="191"/>
         <source>CLOSE</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="about.ui" line="292"/>
@@ -101,12 +101,12 @@ Cine Encoder 2021 ver. 3.4
     <message>
         <location filename="dialog.ui" line="333"/>
         <source>CANCEL</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="dialog.ui" line="386"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -130,23 +130,23 @@ p, li { white-space: pre-wrap; }
     <name>Donate</name>
     <message>
         <location filename="donate.ui" line="32"/>
-        <location filename="donate.ui" line="235"/>
+        <location filename="donate.ui" line="424"/>
         <source>Donate</source>
         <translation>捐赠</translation>
     </message>
     <message>
-        <location filename="donate.ui" line="206"/>
-        <location filename="donate.ui" line="398"/>
+        <location filename="donate.ui" line="257"/>
+        <location filename="donate.ui" line="395"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="donate.ui" line="370"/>
+        <location filename="donate.ui" line="223"/>
         <source>PayPal</source>
         <translation>PayPal</translation>
     </message>
     <message>
-        <location filename="donate.ui" line="424"/>
+        <location filename="donate.ui" line="283"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -155,7 +155,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="donate.ui" line="297"/>
+        <location filename="donate.ui" line="150"/>
         <source>Bitcoin</source>
         <translation>比特币</translation>
     </message>
@@ -173,55 +173,80 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Encoder</name>
     <message>
-        <location filename="encoder.cpp" line="661"/>
+        <location filename="encoder.cpp" line="263"/>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
+        <location filename="encoder.cpp" line="345"/>
+        <source>2 Pass_x265</source>
+        <translation>2 遍_x265</translation>
+    </message>
+    <message>
+        <location filename="encoder.cpp" line="350"/>
+        <source>2 Pass</source>
+        <translation>2 遍</translation>
+    </message>
+    <message>
+        <location filename="encoder.cpp" line="355"/>
+        <source>2 Pass Optimisation</source>
+        <translation>2道次优化</translation>
+    </message>
+    <message>
+        <location filename="encoder.cpp" line="406"/>
+        <source>Source</source>
+        <translation>来源</translation>
+    </message>
+    <message>
+        <location filename="encoder.cpp" line="460"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
         <translation>在源图中找不到颜色原色%1。</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="706"/>
+        <location filename="encoder.cpp" line="505"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
         <translation>在源映射中找不到颜色矩阵%1。</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="755"/>
+        <location filename="encoder.cpp" line="554"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
         <translation>在源映射中找不到传输特性%1。</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="912"/>
+        <location filename="encoder.cpp" line="711"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
         <translation>主显示色度坐标源参数不正确！</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="921"/>
+        <location filename="encoder.cpp" line="720"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
         <translation>错误的主显示白点坐标源参数！</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="1022"/>
+        <location filename="encoder.cpp" line="821"/>
         <source>Muxing:</source>
         <translation>混合:</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="1029"/>
+        <location filename="encoder.cpp" line="828"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
         <translation>该文件不包含FPS信息！
 选择正确的输入文件！</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="1038"/>
-        <location filename="encoder.cpp" line="1044"/>
+        <location filename="encoder.cpp" line="837"/>
+        <location filename="encoder.cpp" line="843"/>
         <source>Encoding:</source>
         <translation>编码:</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="1050"/>
+        <location filename="encoder.cpp" line="849"/>
         <source>1-st pass:</source>
         <translation>第一通过:</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="1060"/>
+        <location filename="encoder.cpp" line="859"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
@@ -229,12 +254,12 @@ Select the correct input file!</source>
 可能没有安装FFMPEG。</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="1072"/>
+        <location filename="encoder.cpp" line="871"/>
         <source>Add data:</source>
         <translation>添加数据:</translation>
     </message>
     <message>
-        <location filename="encoder.cpp" line="1081"/>
+        <location filename="encoder.cpp" line="880"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
@@ -283,13 +308,13 @@ Select the correct input file!</source>
         <location filename="preset.ui" line="345"/>
         <source>CANCEL</source>
         <oldsource>Cancel</oldsource>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="preset.ui" line="379"/>
         <source>APPLY</source>
         <oldsource>Apply</oldsource>
-        <translation type="unfinished">应用</translation>
+        <translation>应用</translation>
     </message>
     <message>
         <location filename="preset.ui" line="465"/>
@@ -367,38 +392,21 @@ Select the correct input file!</source>
         <location filename="preset.ui" line="4900"/>
         <location filename="preset.ui" line="4916"/>
         <location filename="preset.ui" line="5015"/>
-        <location filename="preset.cpp" line="477"/>
-        <location filename="preset.cpp" line="479"/>
+        <location filename="preset.cpp" line="478"/>
         <location filename="preset.cpp" line="480"/>
-        <location filename="preset.cpp" line="488"/>
-        <location filename="preset.cpp" line="627"/>
-        <location filename="preset.cpp" line="628"/>
+        <location filename="preset.cpp" line="481"/>
+        <location filename="preset.cpp" line="489"/>
+        <location filename="preset.cpp" line="629"/>
         <location filename="preset.cpp" line="630"/>
-        <location filename="preset.cpp" line="633"/>
-        <location filename="preset.cpp" line="636"/>
-        <location filename="preset.cpp" line="773"/>
-        <location filename="preset.cpp" line="788"/>
-        <location filename="preset.cpp" line="803"/>
-        <location filename="preset.cpp" line="819"/>
-        <location filename="preset.cpp" line="833"/>
-        <location filename="preset.cpp" line="846"/>
-        <location filename="preset.cpp" line="868"/>
-        <location filename="preset.cpp" line="889"/>
-        <location filename="preset.cpp" line="911"/>
-        <location filename="preset.cpp" line="932"/>
-        <location filename="preset.cpp" line="952"/>
-        <location filename="preset.cpp" line="974"/>
-        <location filename="preset.cpp" line="996"/>
-        <location filename="preset.cpp" line="1013"/>
-        <location filename="preset.cpp" line="1029"/>
-        <location filename="preset.cpp" line="1046"/>
-        <location filename="preset.cpp" line="1266"/>
-        <location filename="preset.cpp" line="1291"/>
-        <location filename="preset.cpp" line="1441"/>
-        <location filename="preset.cpp" line="1442"/>
-        <location filename="preset.cpp" line="1509"/>
-        <location filename="preset.cpp" line="1510"/>
-        <location filename="preset.cpp" line="1511"/>
+        <location filename="preset.cpp" line="632"/>
+        <location filename="preset.cpp" line="635"/>
+        <location filename="preset.cpp" line="638"/>
+        <location filename="preset.cpp" line="1084"/>
+        <location filename="preset.cpp" line="1255"/>
+        <location filename="preset.cpp" line="1256"/>
+        <location filename="preset.cpp" line="1323"/>
+        <location filename="preset.cpp" line="1324"/>
+        <location filename="preset.cpp" line="1325"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
@@ -891,8 +899,8 @@ Select the correct input file!</source>
     <message>
         <location filename="preset.ui" line="1699"/>
         <location filename="preset.ui" line="4091"/>
-        <location filename="preset.cpp" line="482"/>
-        <location filename="preset.cpp" line="1515"/>
+        <location filename="preset.cpp" line="483"/>
+        <location filename="preset.cpp" line="1329"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
@@ -910,10 +918,10 @@ Select the correct input file!</source>
         <location filename="preset.ui" line="1906"/>
         <location filename="preset.ui" line="2204"/>
         <location filename="preset.ui" line="3839"/>
-        <location filename="preset.cpp" line="1309"/>
-        <location filename="preset.cpp" line="1330"/>
-        <location filename="preset.cpp" line="1345"/>
-        <location filename="preset.cpp" line="1359"/>
+        <location filename="preset.cpp" line="1123"/>
+        <location filename="preset.cpp" line="1144"/>
+        <location filename="preset.cpp" line="1159"/>
+        <location filename="preset.cpp" line="1173"/>
         <source>Bitrate</source>
         <translation>比特率</translation>
     </message>
@@ -926,10 +934,10 @@ Select the correct input file!</source>
         <location filename="preset.ui" line="1988"/>
         <location filename="preset.ui" line="2004"/>
         <location filename="preset.ui" line="2153"/>
-        <location filename="preset.cpp" line="1313"/>
-        <location filename="preset.cpp" line="1331"/>
-        <location filename="preset.cpp" line="1349"/>
-        <location filename="preset.cpp" line="1360"/>
+        <location filename="preset.cpp" line="1127"/>
+        <location filename="preset.cpp" line="1145"/>
+        <location filename="preset.cpp" line="1163"/>
+        <location filename="preset.cpp" line="1174"/>
         <source>MBps</source>
         <translation>MBps</translation>
     </message>
@@ -940,71 +948,31 @@ Select the correct input file!</source>
     </message>
     <message>
         <location filename="preset.ui" line="2090"/>
-        <location filename="preset.cpp" line="764"/>
-        <location filename="preset.cpp" line="779"/>
-        <location filename="preset.cpp" line="794"/>
-        <location filename="preset.cpp" line="810"/>
-        <location filename="preset.cpp" line="1250"/>
-        <location filename="preset.cpp" line="1329"/>
+        <location filename="preset.cpp" line="1143"/>
         <source>Constant Bitrate</source>
         <translation>恒定比特率</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2095"/>
-        <location filename="preset.cpp" line="764"/>
-        <location filename="preset.cpp" line="779"/>
-        <location filename="preset.cpp" line="794"/>
-        <location filename="preset.cpp" line="810"/>
-        <location filename="preset.cpp" line="825"/>
-        <location filename="preset.cpp" line="838"/>
-        <location filename="preset.cpp" line="923"/>
-        <location filename="preset.cpp" line="943"/>
-        <location filename="preset.cpp" line="1344"/>
+        <location filename="preset.cpp" line="1158"/>
         <source>Average Bitrate</source>
         <translation>平均比特率</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2100"/>
-        <location filename="preset.cpp" line="764"/>
-        <location filename="preset.cpp" line="779"/>
-        <location filename="preset.cpp" line="794"/>
-        <location filename="preset.cpp" line="810"/>
-        <location filename="preset.cpp" line="858"/>
-        <location filename="preset.cpp" line="879"/>
-        <location filename="preset.cpp" line="901"/>
-        <location filename="preset.cpp" line="964"/>
-        <location filename="preset.cpp" line="986"/>
-        <location filename="preset.cpp" line="1003"/>
-        <location filename="preset.cpp" line="1019"/>
-        <location filename="preset.cpp" line="1036"/>
-        <location filename="preset.cpp" line="1232"/>
-        <location filename="preset.cpp" line="1358"/>
+        <location filename="preset.cpp" line="1172"/>
         <source>Variable Bitrate</source>
         <translation>可变比特率</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2105"/>
-        <location filename="preset.cpp" line="765"/>
-        <location filename="preset.cpp" line="780"/>
-        <location filename="preset.cpp" line="795"/>
-        <location filename="preset.cpp" line="811"/>
-        <location filename="preset.cpp" line="825"/>
-        <location filename="preset.cpp" line="838"/>
-        <location filename="preset.cpp" line="923"/>
-        <location filename="preset.cpp" line="943"/>
-        <location filename="preset.cpp" line="1375"/>
+        <location filename="preset.cpp" line="1189"/>
         <source>Constant Rate Factor</source>
         <translation>恒定速率因子</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2110"/>
-        <location filename="preset.cpp" line="765"/>
-        <location filename="preset.cpp" line="780"/>
-        <location filename="preset.cpp" line="795"/>
-        <location filename="preset.cpp" line="811"/>
-        <location filename="preset.cpp" line="901"/>
-        <location filename="preset.cpp" line="986"/>
-        <location filename="preset.cpp" line="1389"/>
+        <location filename="preset.cpp" line="1203"/>
         <source>Constant QP</source>
         <translation>恒定 QP</translation>
     </message>
@@ -1052,103 +1020,103 @@ Select the correct input file!</source>
     </message>
     <message>
         <location filename="preset.ui" line="2509"/>
-        <location filename="preset.cpp" line="761"/>
+        <location filename="preset.cpp" line="759"/>
         <source>H.265/HEVC 4:2:0 12 bit</source>
         <translation>H.265/HEVC 4:2:0 12 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2514"/>
-        <location filename="preset.cpp" line="776"/>
+        <location filename="preset.cpp" line="767"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
         <translation>H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2519"/>
-        <location filename="preset.cpp" line="791"/>
+        <location filename="preset.cpp" line="775"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
         <translation>H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2524"/>
-        <location filename="preset.cpp" line="807"/>
+        <location filename="preset.cpp" line="784"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
         <translation>H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2539"/>
-        <location filename="preset.cpp" line="850"/>
+        <location filename="preset.cpp" line="808"/>
         <source>Intel QSV H.265/HEVC 4:2:0 10 bit</source>
         <translation>Intel QSV H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2544"/>
-        <location filename="preset.cpp" line="871"/>
+        <location filename="preset.cpp" line="823"/>
         <source>Intel QSV H.265/HEVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2549"/>
-        <location filename="preset.cpp" line="893"/>
+        <location filename="preset.cpp" line="839"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2554"/>
-        <location filename="preset.cpp" line="915"/>
+        <location filename="preset.cpp" line="855"/>
         <source>Intel QSV VP9 4:2:0 10 bit</source>
         <translation>Intel QSV VP9 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2559"/>
-        <location filename="preset.cpp" line="935"/>
+        <location filename="preset.cpp" line="868"/>
         <source>Intel QSV VP9 4:2:0 8 bit</source>
         <translation>Intel QSV VP9 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2564"/>
-        <location filename="preset.cpp" line="956"/>
+        <location filename="preset.cpp" line="882"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
         <translation>Intel QSV MPEG-2 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2569"/>
-        <location filename="preset.cpp" line="978"/>
+        <location filename="preset.cpp" line="898"/>
         <source>Intel VAAPI H.264/AVC 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>Intel VAAPI H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2574"/>
-        <location filename="preset.cpp" line="1000"/>
+        <location filename="preset.cpp" line="914"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2579"/>
-        <location filename="preset.cpp" line="1016"/>
+        <location filename="preset.cpp" line="924"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2584"/>
-        <location filename="preset.cpp" line="1033"/>
+        <location filename="preset.cpp" line="935"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation>NVENC H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2529"/>
-        <location filename="preset.cpp" line="823"/>
+        <location filename="preset.cpp" line="793"/>
         <source>VP9 4:2:0 10 bit</source>
         <translation>VP9 4:2:0 10 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2534"/>
-        <location filename="preset.cpp" line="836"/>
+        <location filename="preset.cpp" line="800"/>
         <source>VP9 4:2:0 8 bit</source>
         <translation>VP9 4:2:0 8 位</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2589"/>
-        <location filename="preset.cpp" line="1050"/>
+        <location filename="preset.cpp" line="946"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
     </message>
@@ -1159,7 +1127,7 @@ Select the correct input file!</source>
     </message>
     <message>
         <location filename="preset.ui" line="2599"/>
-        <location filename="preset.cpp" line="1082"/>
+        <location filename="preset.cpp" line="966"/>
         <source>ProRes Standard</source>
         <translation>ProRes Standard</translation>
     </message>
@@ -1302,88 +1270,27 @@ Select the correct input file!</source>
         <location filename="preset.ui" line="2802"/>
         <location filename="preset.ui" line="3197"/>
         <location filename="preset.ui" line="3245"/>
-        <location filename="preset.cpp" line="721"/>
-        <location filename="preset.cpp" line="723"/>
-        <location filename="preset.cpp" line="831"/>
-        <location filename="preset.cpp" line="844"/>
-        <location filename="preset.cpp" line="859"/>
-        <location filename="preset.cpp" line="880"/>
-        <location filename="preset.cpp" line="902"/>
-        <location filename="preset.cpp" line="924"/>
-        <location filename="preset.cpp" line="927"/>
-        <location filename="preset.cpp" line="944"/>
-        <location filename="preset.cpp" line="947"/>
-        <location filename="preset.cpp" line="965"/>
-        <location filename="preset.cpp" line="969"/>
-        <location filename="preset.cpp" line="987"/>
-        <location filename="preset.cpp" line="1052"/>
-        <location filename="preset.cpp" line="1053"/>
-        <location filename="preset.cpp" line="1056"/>
-        <location filename="preset.cpp" line="1068"/>
-        <location filename="preset.cpp" line="1069"/>
-        <location filename="preset.cpp" line="1072"/>
-        <location filename="preset.cpp" line="1084"/>
-        <location filename="preset.cpp" line="1085"/>
-        <location filename="preset.cpp" line="1088"/>
-        <location filename="preset.cpp" line="1100"/>
-        <location filename="preset.cpp" line="1101"/>
-        <location filename="preset.cpp" line="1104"/>
-        <location filename="preset.cpp" line="1116"/>
-        <location filename="preset.cpp" line="1117"/>
-        <location filename="preset.cpp" line="1120"/>
-        <location filename="preset.cpp" line="1132"/>
-        <location filename="preset.cpp" line="1133"/>
+        <location filename="preset.cpp" line="494"/>
+        <location filename="preset.cpp" line="497"/>
+        <location filename="preset.cpp" line="511"/>
+        <location filename="preset.cpp" line="1122"/>
+        <location filename="preset.cpp" line="1134"/>
+        <location filename="preset.cpp" line="1135"/>
         <location filename="preset.cpp" line="1136"/>
-        <location filename="preset.cpp" line="1148"/>
-        <location filename="preset.cpp" line="1149"/>
-        <location filename="preset.cpp" line="1152"/>
-        <location filename="preset.cpp" line="1165"/>
-        <location filename="preset.cpp" line="1166"/>
-        <location filename="preset.cpp" line="1169"/>
-        <location filename="preset.cpp" line="1182"/>
-        <location filename="preset.cpp" line="1183"/>
-        <location filename="preset.cpp" line="1186"/>
-        <location filename="preset.cpp" line="1199"/>
-        <location filename="preset.cpp" line="1200"/>
-        <location filename="preset.cpp" line="1203"/>
-        <location filename="preset.cpp" line="1215"/>
-        <location filename="preset.cpp" line="1216"/>
-        <location filename="preset.cpp" line="1219"/>
-        <location filename="preset.cpp" line="1233"/>
-        <location filename="preset.cpp" line="1253"/>
-        <location filename="preset.cpp" line="1275"/>
-        <location filename="preset.cpp" line="1276"/>
-        <location filename="preset.cpp" line="1279"/>
-        <location filename="preset.cpp" line="1308"/>
-        <location filename="preset.cpp" line="1320"/>
-        <location filename="preset.cpp" line="1321"/>
-        <location filename="preset.cpp" line="1322"/>
-        <location filename="preset.cpp" line="1323"/>
-        <location filename="preset.cpp" line="1471"/>
-        <location filename="preset.cpp" line="1475"/>
-        <location filename="preset.cpp" line="1479"/>
+        <location filename="preset.cpp" line="1137"/>
+        <location filename="preset.cpp" line="1285"/>
+        <location filename="preset.cpp" line="1289"/>
+        <location filename="preset.cpp" line="1293"/>
         <source>Auto</source>
         <translation>自动</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2859"/>
-        <location filename="preset.cpp" line="766"/>
-        <location filename="preset.cpp" line="781"/>
-        <location filename="preset.cpp" line="796"/>
-        <location filename="preset.cpp" line="812"/>
-        <location filename="preset.cpp" line="826"/>
-        <location filename="preset.cpp" line="839"/>
         <source>1 Pass</source>
         <translation>1 遍</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2864"/>
-        <location filename="preset.cpp" line="766"/>
-        <location filename="preset.cpp" line="781"/>
-        <location filename="preset.cpp" line="796"/>
-        <location filename="preset.cpp" line="812"/>
-        <location filename="preset.cpp" line="826"/>
-        <location filename="preset.cpp" line="839"/>
         <source>2 Pass</source>
         <translation>2 遍</translation>
     </message>
@@ -1396,119 +1303,52 @@ Select the correct input file!</source>
         <location filename="preset.ui" line="2984"/>
         <location filename="preset.ui" line="4025"/>
         <location filename="preset.ui" line="4130"/>
-        <location filename="preset.cpp" line="503"/>
-        <location filename="preset.cpp" line="725"/>
-        <location filename="preset.cpp" line="727"/>
-        <location filename="preset.cpp" line="729"/>
-        <location filename="preset.cpp" line="731"/>
-        <location filename="preset.cpp" line="733"/>
-        <location filename="preset.cpp" line="828"/>
-        <location filename="preset.cpp" line="841"/>
-        <location filename="preset.cpp" line="926"/>
-        <location filename="preset.cpp" line="946"/>
-        <location filename="preset.cpp" line="1006"/>
-        <location filename="preset.cpp" line="1022"/>
-        <location filename="preset.cpp" line="1039"/>
-        <location filename="preset.cpp" line="1055"/>
-        <location filename="preset.cpp" line="1071"/>
-        <location filename="preset.cpp" line="1087"/>
-        <location filename="preset.cpp" line="1103"/>
-        <location filename="preset.cpp" line="1119"/>
-        <location filename="preset.cpp" line="1135"/>
-        <location filename="preset.cpp" line="1151"/>
-        <location filename="preset.cpp" line="1168"/>
-        <location filename="preset.cpp" line="1185"/>
-        <location filename="preset.cpp" line="1202"/>
-        <location filename="preset.cpp" line="1218"/>
-        <location filename="preset.cpp" line="1235"/>
-        <location filename="preset.cpp" line="1278"/>
+        <location filename="preset.cpp" line="504"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2989"/>
-        <location filename="preset.cpp" line="725"/>
-        <location filename="preset.cpp" line="727"/>
         <source>Ultrafast</source>
         <translation>超级快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2994"/>
-        <location filename="preset.cpp" line="725"/>
-        <location filename="preset.cpp" line="727"/>
         <source>Superfast</source>
         <translation>超快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="2999"/>
-        <location filename="preset.cpp" line="725"/>
-        <location filename="preset.cpp" line="727"/>
-        <location filename="preset.cpp" line="729"/>
-        <location filename="preset.cpp" line="731"/>
-        <location filename="preset.cpp" line="733"/>
         <source>Veryfast</source>
         <translation>非常快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3004"/>
-        <location filename="preset.cpp" line="725"/>
-        <location filename="preset.cpp" line="727"/>
-        <location filename="preset.cpp" line="729"/>
-        <location filename="preset.cpp" line="731"/>
-        <location filename="preset.cpp" line="733"/>
         <source>Faster</source>
         <translation>快速</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3009"/>
-        <location filename="preset.cpp" line="726"/>
-        <location filename="preset.cpp" line="728"/>
-        <location filename="preset.cpp" line="729"/>
-        <location filename="preset.cpp" line="731"/>
-        <location filename="preset.cpp" line="733"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3014"/>
-        <location filename="preset.cpp" line="726"/>
-        <location filename="preset.cpp" line="728"/>
-        <location filename="preset.cpp" line="729"/>
-        <location filename="preset.cpp" line="731"/>
-        <location filename="preset.cpp" line="733"/>
         <source>Medium</source>
         <translation>中等</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3019"/>
-        <location filename="preset.cpp" line="726"/>
-        <location filename="preset.cpp" line="728"/>
-        <location filename="preset.cpp" line="730"/>
-        <location filename="preset.cpp" line="732"/>
-        <location filename="preset.cpp" line="734"/>
-        <location filename="preset.cpp" line="1006"/>
-        <location filename="preset.cpp" line="1022"/>
-        <location filename="preset.cpp" line="1039"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3024"/>
-        <location filename="preset.cpp" line="726"/>
-        <location filename="preset.cpp" line="728"/>
-        <location filename="preset.cpp" line="730"/>
-        <location filename="preset.cpp" line="732"/>
-        <location filename="preset.cpp" line="734"/>
         <source>Slower</source>
         <translation>较慢</translation>
     </message>
     <message>
         <location filename="preset.ui" line="3029"/>
-        <location filename="preset.cpp" line="726"/>
-        <location filename="preset.cpp" line="728"/>
-        <location filename="preset.cpp" line="730"/>
-        <location filename="preset.cpp" line="732"/>
-        <location filename="preset.cpp" line="734"/>
         <source>Veryslow</source>
         <oldsource>Very slow</oldsource>
         <translation>非常慢</translation>
@@ -1735,13 +1575,13 @@ Select the correct input file!</source>
     </message>
     <message>
         <location filename="preset.ui" line="4071"/>
-        <location filename="preset.cpp" line="1519"/>
+        <location filename="preset.cpp" line="1333"/>
         <source>Display P3</source>
         <translation>显示 P3</translation>
     </message>
     <message>
         <location filename="preset.ui" line="4076"/>
-        <location filename="preset.cpp" line="1525"/>
+        <location filename="preset.cpp" line="1339"/>
         <source>DCI P3</source>
         <translation>DCI P3</translation>
     </message>
@@ -2005,22 +1845,22 @@ Select the correct input file!</source>
         <translation type="vanished">来源,</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="497"/>
+        <location filename="preset.cpp" line="498"/>
         <source> MBps, </source>
         <translation> MBps, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="504"/>
+        <location filename="preset.cpp" line="505"/>
         <source>Preset: </source>
         <translation>预设:</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="514"/>
+        <location filename="preset.cpp" line="516"/>
         <source>Enabled, </source>
         <translation>已启用,</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="520"/>
+        <location filename="preset.cpp" line="522"/>
         <source>Audio: </source>
         <translation>音频:</translation>
     </message>
@@ -2053,32 +1893,29 @@ Select the correct input file!</source>
         <translation type="vanished">YUV, 4:2:2, 8 位, </translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="631"/>
-        <location filename="preset.cpp" line="634"/>
+        <location filename="preset.cpp" line="633"/>
+        <location filename="preset.cpp" line="636"/>
         <source>Undef</source>
         <translation>未定义</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1004"/>
-        <location filename="preset.cpp" line="1020"/>
-        <location filename="preset.cpp" line="1037"/>
         <source>2 Pass Optimisation</source>
-        <translation>2道次优化</translation>
+        <translation type="vanished">2道次优化</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1376"/>
+        <location filename="preset.cpp" line="1190"/>
         <source>Rate factor</source>
         <translation>率因子</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1390"/>
+        <location filename="preset.cpp" line="1204"/>
         <source>Quantizer</source>
         <translation>量化器</translation>
     </message>
     <message>
-        <location filename="preset.cpp" line="1503"/>
-        <location filename="preset.cpp" line="1504"/>
-        <location filename="preset.cpp" line="1505"/>
+        <location filename="preset.cpp" line="1317"/>
+        <location filename="preset.cpp" line="1318"/>
+        <location filename="preset.cpp" line="1319"/>
         <source>Unsprt</source>
         <translation>不支持</translation>
     </message>
@@ -2324,13 +2161,13 @@ Select the correct input file!</source>
         <location filename="settings.ui" line="1725"/>
         <source>CANCEL</source>
         <oldsource>Cancel</oldsource>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="settings.ui" line="1759"/>
         <source>APPLY</source>
         <oldsource>Apply</oldsource>
-        <translation type="unfinished">应用</translation>
+        <translation>应用</translation>
     </message>
     <message>
         <source>Settings file not found!
@@ -2341,7 +2178,222 @@ Select the correct input file!</source>
 <context>
     <name>Tables</name>
     <message>
-        <location filename="tables.h" line="14"/>
+        <location filename="tables.h" line="15"/>
+        <location filename="tables.h" line="102"/>
+        <location filename="tables.h" line="290"/>
+        <location filename="tables.h" line="291"/>
+        <location filename="tables.h" line="292"/>
+        <location filename="tables.h" line="293"/>
+        <location filename="tables.h" line="294"/>
+        <location filename="tables.h" line="295"/>
+        <location filename="tables.h" line="296"/>
+        <location filename="tables.h" line="297"/>
+        <location filename="tables.h" line="298"/>
+        <location filename="tables.h" line="299"/>
+        <location filename="tables.h" line="300"/>
+        <location filename="tables.h" line="301"/>
+        <location filename="tables.h" line="302"/>
+        <location filename="tables.h" line="303"/>
+        <location filename="tables.h" line="304"/>
+        <location filename="tables.h" line="305"/>
+        <location filename="tables.h" line="319"/>
+        <source>Source</source>
+        <translation>来源</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="48"/>
+        <source>Custom</source>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>YUV, 4:2:0, 12 bit, </source>
+        <translation type="obsolete">YUV, 4:2:0, 12 位, </translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="75"/>
+        <location filename="tables.h" line="76"/>
+        <location filename="tables.h" line="78"/>
+        <location filename="tables.h" line="80"/>
+        <location filename="tables.h" line="81"/>
+        <location filename="tables.h" line="83"/>
+        <location filename="tables.h" line="84"/>
+        <location filename="tables.h" line="85"/>
+        <location filename="tables.h" line="87"/>
+        <location filename="tables.h" line="88"/>
+        <source>YUV, 4:2:0, 8 bit</source>
+        <oldsource>YUV, 4:2:0, 10 bit, </oldsource>
+        <translation>YUV, 4:2:0, 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="74"/>
+        <source>H.265/HEVC 4:2:0 10 bit</source>
+        <oldsource>YUV, 4:2:0, 8 bit, </oldsource>
+        <translation>H.265/HEVC 4:2:0 10 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="73"/>
+        <source>H.265/HEVC 4:2:0 12 bit</source>
+        <oldsource>YUV, 4:2:0, 8  bit, </oldsource>
+        <translation>H.265/HEVC 4:2:0 12 位</translation>
+    </message>
+    <message>
+        <source>ProRes Proxy, </source>
+        <translation type="obsolete">ProRes Proxy, </translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="74"/>
+        <location filename="tables.h" line="77"/>
+        <location filename="tables.h" line="79"/>
+        <location filename="tables.h" line="82"/>
+        <location filename="tables.h" line="86"/>
+        <source>YUV, 4:2:0, 10 bit</source>
+        <oldsource>YUV, 4:2:2, 10 bit, </oldsource>
+        <translation>YUV, 4:2:0, 10 位</translation>
+    </message>
+    <message>
+        <source>ProRes Standard, </source>
+        <translation type="obsolete">ProRes Standard, </translation>
+    </message>
+    <message>
+        <source>From source, </source>
+        <translation type="obsolete">来源,</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="79"/>
+        <source>Intel QSV H.265/HEVC 4:2:0 10 bit</source>
+        <translation>Intel QSV H.265/HEVC 4:2:0 10 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="80"/>
+        <source>Intel QSV H.265/HEVC 4:2:0 8 bit</source>
+        <translation>Intel QSV H.265/HEVC 4:2:0 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="81"/>
+        <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
+        <translation>Intel QSV H.264/AVC 4:2:0 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="83"/>
+        <source>Intel QSV VP9 4:2:0 8 bit</source>
+        <translation>Intel QSV VP9 4:2:0 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="84"/>
+        <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
+        <translation>Intel QSV MPEG-2 4:2:0 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="85"/>
+        <source>Intel VAAPI H.264/AVC 4:2:0 8 bit</source>
+        <translation>Intel VAAPI H.264/AVC 4:2:0 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="86"/>
+        <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
+        <translation>NVENC H.265/HEVC 4:2:0 10 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="88"/>
+        <source>NVENC H.264/AVC 4:2:0 8 bit</source>
+        <translation>NVENC H.264/AVC 4:2:0 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="89"/>
+        <source>ProRes Proxy</source>
+        <translation>ProRes Proxy</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="91"/>
+        <source>ProRes Standard</source>
+        <translation>ProRes Standard</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="93"/>
+        <location filename="tables.h" line="94"/>
+        <location filename="tables.h" line="99"/>
+        <source>YUV, 4:4:4, 10 bit</source>
+        <translation>YUV, 4:4:4, 10 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="95"/>
+        <location filename="tables.h" line="96"/>
+        <location filename="tables.h" line="97"/>
+        <location filename="tables.h" line="100"/>
+        <location filename="tables.h" line="101"/>
+        <source>YUV, 4:2:2, 8 bit</source>
+        <translation>YUV, 4:2:2, 8 位</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="174"/>
+        <location filename="tables.h" line="175"/>
+        <location filename="tables.h" line="176"/>
+        <location filename="tables.h" line="177"/>
+        <location filename="tables.h" line="178"/>
+        <location filename="tables.h" line="179"/>
+        <location filename="tables.h" line="180"/>
+        <location filename="tables.h" line="181"/>
+        <location filename="tables.h" line="182"/>
+        <location filename="tables.h" line="183"/>
+        <location filename="tables.h" line="184"/>
+        <location filename="tables.h" line="187"/>
+        <location filename="tables.h" line="224"/>
+        <location filename="tables.h" line="225"/>
+        <location filename="tables.h" line="226"/>
+        <location filename="tables.h" line="227"/>
+        <location filename="tables.h" line="228"/>
+        <location filename="tables.h" line="229"/>
+        <location filename="tables.h" line="230"/>
+        <location filename="tables.h" line="231"/>
+        <location filename="tables.h" line="232"/>
+        <location filename="tables.h" line="233"/>
+        <location filename="tables.h" line="234"/>
+        <location filename="tables.h" line="235"/>
+        <location filename="tables.h" line="236"/>
+        <location filename="tables.h" line="237"/>
+        <location filename="tables.h" line="238"/>
+        <location filename="tables.h" line="239"/>
+        <location filename="tables.h" line="240"/>
+        <location filename="tables.h" line="241"/>
+        <location filename="tables.h" line="242"/>
+        <location filename="tables.h" line="243"/>
+        <location filename="tables.h" line="244"/>
+        <location filename="tables.h" line="245"/>
+        <location filename="tables.h" line="246"/>
+        <location filename="tables.h" line="247"/>
+        <location filename="tables.h" line="248"/>
+        <location filename="tables.h" line="249"/>
+        <location filename="tables.h" line="250"/>
+        <location filename="tables.h" line="253"/>
+        <location filename="tables.h" line="263"/>
+        <location filename="tables.h" line="264"/>
+        <location filename="tables.h" line="265"/>
+        <location filename="tables.h" line="266"/>
+        <location filename="tables.h" line="267"/>
+        <location filename="tables.h" line="268"/>
+        <location filename="tables.h" line="269"/>
+        <location filename="tables.h" line="273"/>
+        <location filename="tables.h" line="274"/>
+        <location filename="tables.h" line="275"/>
+        <location filename="tables.h" line="276"/>
+        <location filename="tables.h" line="277"/>
+        <location filename="tables.h" line="278"/>
+        <location filename="tables.h" line="279"/>
+        <location filename="tables.h" line="280"/>
+        <location filename="tables.h" line="281"/>
+        <location filename="tables.h" line="282"/>
+        <location filename="tables.h" line="283"/>
+        <location filename="tables.h" line="284"/>
+        <location filename="tables.h" line="285"/>
+        <location filename="tables.h" line="286"/>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
         <location filename="tables.h" line="195"/>
         <location filename="tables.h" line="196"/>
         <location filename="tables.h" line="197"/>
@@ -2358,245 +2410,193 @@ Select the correct input file!</source>
         <location filename="tables.h" line="208"/>
         <location filename="tables.h" line="209"/>
         <location filename="tables.h" line="210"/>
-        <location filename="tables.h" line="224"/>
-        <source>Source</source>
-        <translation type="unfinished">来源</translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="47"/>
-        <source>Custom</source>
-        <translation type="unfinished">自定义</translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="63"/>
-        <source>YUV, 4:2:0, 12 bit, </source>
-        <translation type="unfinished">YUV, 4:2:0, 12 位, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="64"/>
-        <location filename="tables.h" line="67"/>
-        <location filename="tables.h" line="69"/>
-        <location filename="tables.h" line="72"/>
-        <location filename="tables.h" line="76"/>
-        <source>YUV, 4:2:0, 10 bit, </source>
-        <translation type="unfinished">YUV, 4:2:0, 10 位, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="65"/>
-        <location filename="tables.h" line="66"/>
-        <location filename="tables.h" line="70"/>
-        <location filename="tables.h" line="71"/>
-        <location filename="tables.h" line="74"/>
-        <location filename="tables.h" line="75"/>
-        <location filename="tables.h" line="77"/>
-        <location filename="tables.h" line="78"/>
-        <source>YUV, 4:2:0, 8 bit, </source>
-        <translation type="unfinished">YUV, 4:2:0, 8 位, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="68"/>
-        <location filename="tables.h" line="73"/>
-        <source>YUV, 4:2:0, 8  bit, </source>
-        <translation type="unfinished">YUV, 4:2:0, 8  位, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="79"/>
-        <source>ProRes Proxy, </source>
-        <translation type="unfinished">ProRes Proxy, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="79"/>
-        <location filename="tables.h" line="80"/>
-        <location filename="tables.h" line="81"/>
-        <location filename="tables.h" line="82"/>
-        <location filename="tables.h" line="88"/>
-        <source>YUV, 4:2:2, 10 bit, </source>
-        <translation type="unfinished">YUV, 4:2:2, 10 位, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="81"/>
-        <source>ProRes Standard, </source>
-        <translation type="unfinished">ProRes Standard, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="83"/>
-        <location filename="tables.h" line="84"/>
-        <location filename="tables.h" line="89"/>
-        <source>YUV, 4:4:4, 10 bit, </source>
-        <translation type="unfinished">YUV, 4:4:4, 10 位, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="85"/>
-        <location filename="tables.h" line="86"/>
-        <location filename="tables.h" line="87"/>
-        <location filename="tables.h" line="90"/>
-        <location filename="tables.h" line="91"/>
-        <source>YUV, 4:2:2, 8 bit, </source>
-        <translation type="unfinished">YUV, 4:2:2, 8 位, </translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="92"/>
-        <source>From source, </source>
-        <translation type="unfinished">来源,</translation>
-    </message>
-    <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="142"/>
-        <location filename="tables.h" line="143"/>
-        <location filename="tables.h" line="144"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="211"/>
+        <location filename="tables.h" line="212"/>
+        <location filename="tables.h" line="213"/>
+        <location filename="tables.h" line="214"/>
+        <location filename="tables.h" line="215"/>
+        <location filename="tables.h" line="216"/>
+        <location filename="tables.h" line="217"/>
+        <location filename="tables.h" line="218"/>
+        <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="220"/>
         <source>None</source>
-        <translation type="unfinished">无</translation>
+        <translation>无</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="219"/>
         <source>Ultrafast</source>
-        <translation type="unfinished">超级快</translation>
+        <translation>超级快</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="219"/>
         <source>Superfast</source>
-        <translation type="unfinished">超快</translation>
+        <translation>超快</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="197"/>
+        <location filename="tables.h" line="198"/>
+        <location filename="tables.h" line="199"/>
+        <location filename="tables.h" line="202"/>
+        <location filename="tables.h" line="203"/>
+        <location filename="tables.h" line="219"/>
         <source>Veryfast</source>
-        <translation type="unfinished">非常快</translation>
+        <translation>非常快</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="197"/>
+        <location filename="tables.h" line="198"/>
+        <location filename="tables.h" line="199"/>
+        <location filename="tables.h" line="202"/>
+        <location filename="tables.h" line="203"/>
+        <location filename="tables.h" line="219"/>
         <source>Faster</source>
-        <translation type="unfinished">快速</translation>
+        <translation>快速</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="197"/>
+        <location filename="tables.h" line="198"/>
+        <location filename="tables.h" line="199"/>
+        <location filename="tables.h" line="202"/>
+        <location filename="tables.h" line="203"/>
+        <location filename="tables.h" line="219"/>
         <source>Fast</source>
-        <translation type="unfinished">快</translation>
+        <translation>快</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="197"/>
+        <location filename="tables.h" line="198"/>
+        <location filename="tables.h" line="199"/>
+        <location filename="tables.h" line="202"/>
+        <location filename="tables.h" line="203"/>
+        <location filename="tables.h" line="219"/>
         <source>Medium</source>
-        <translation type="unfinished">中等</translation>
+        <translation>中等</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="142"/>
-        <location filename="tables.h" line="143"/>
-        <location filename="tables.h" line="144"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="197"/>
+        <location filename="tables.h" line="198"/>
+        <location filename="tables.h" line="199"/>
+        <location filename="tables.h" line="202"/>
+        <location filename="tables.h" line="203"/>
+        <location filename="tables.h" line="204"/>
+        <location filename="tables.h" line="205"/>
+        <location filename="tables.h" line="206"/>
+        <location filename="tables.h" line="219"/>
         <source>Slow</source>
-        <translation type="unfinished">慢</translation>
+        <translation>慢</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="197"/>
+        <location filename="tables.h" line="198"/>
+        <location filename="tables.h" line="199"/>
+        <location filename="tables.h" line="202"/>
+        <location filename="tables.h" line="203"/>
+        <location filename="tables.h" line="219"/>
         <source>Slower</source>
-        <translation type="unfinished">较慢</translation>
+        <translation>较慢</translation>
     </message>
     <message>
-        <location filename="tables.h" line="129"/>
-        <location filename="tables.h" line="130"/>
-        <location filename="tables.h" line="131"/>
-        <location filename="tables.h" line="132"/>
-        <location filename="tables.h" line="135"/>
-        <location filename="tables.h" line="136"/>
-        <location filename="tables.h" line="137"/>
-        <location filename="tables.h" line="140"/>
-        <location filename="tables.h" line="141"/>
-        <location filename="tables.h" line="157"/>
+        <location filename="tables.h" line="191"/>
+        <location filename="tables.h" line="192"/>
+        <location filename="tables.h" line="193"/>
+        <location filename="tables.h" line="194"/>
+        <location filename="tables.h" line="197"/>
+        <location filename="tables.h" line="198"/>
+        <location filename="tables.h" line="199"/>
+        <location filename="tables.h" line="202"/>
+        <location filename="tables.h" line="203"/>
+        <location filename="tables.h" line="219"/>
         <source>Veryslow</source>
-        <translation type="unfinished"></translation>
+        <translation>非常慢</translation>
     </message>
     <message>
-        <location filename="tables.h" line="162"/>
-        <location filename="tables.h" line="163"/>
-        <location filename="tables.h" line="164"/>
-        <location filename="tables.h" line="165"/>
-        <location filename="tables.h" line="166"/>
-        <location filename="tables.h" line="167"/>
+        <location filename="tables.h" line="257"/>
+        <location filename="tables.h" line="258"/>
+        <location filename="tables.h" line="259"/>
+        <location filename="tables.h" line="260"/>
+        <location filename="tables.h" line="261"/>
+        <location filename="tables.h" line="262"/>
         <source>1 Pass</source>
-        <translation type="unfinished">1 遍</translation>
+        <translation>1 遍</translation>
     </message>
     <message>
-        <location filename="tables.h" line="162"/>
-        <location filename="tables.h" line="163"/>
-        <location filename="tables.h" line="164"/>
-        <location filename="tables.h" line="165"/>
-        <location filename="tables.h" line="166"/>
-        <location filename="tables.h" line="167"/>
-        <location filename="tables.h" line="175"/>
-        <location filename="tables.h" line="176"/>
-        <location filename="tables.h" line="177"/>
+        <location filename="tables.h" line="257"/>
+        <location filename="tables.h" line="258"/>
+        <location filename="tables.h" line="259"/>
+        <source>2 Pass_x265</source>
+        <translation>2 遍_x265</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="260"/>
+        <location filename="tables.h" line="261"/>
+        <location filename="tables.h" line="262"/>
         <source>2 Pass</source>
-        <translation type="unfinished">2 遍</translation>
+        <translation>2 遍</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="270"/>
+        <location filename="tables.h" line="271"/>
+        <location filename="tables.h" line="272"/>
+        <source>2 Pass Optimisation</source>
+        <translation>2道次优化</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="452"/>
+        <source>Constant Bitrate</source>
+        <translation>恒定比特率</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="453"/>
+        <source>Average Bitrate</source>
+        <translation>平均比特率</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="454"/>
+        <source>Variable Bitrate</source>
+        <translation>可变比特率</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="455"/>
+        <source>Constant Rate Factor</source>
+        <translation>恒定速率因子</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="456"/>
+        <source>Constant QP</source>
+        <translation>恒定 QP</translation>
     </message>
 </context>
 <context>
@@ -2612,9 +2612,9 @@ Select the correct input file!</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="taskcomplete.ui" line="306"/>
+        <location filename="taskcomplete.ui" line="300"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="taskcomplete.ui" line="217"/>
@@ -2626,7 +2626,7 @@ Select the correct input file!</source>
         <translation type="vanished">确定</translation>
     </message>
     <message>
-        <location filename="taskcomplete.ui" line="352"/>
+        <location filename="taskcomplete.ui" line="366"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2682,13 +2682,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="345"/>
-        <location filename="mainwindow.cpp" line="371"/>
+        <location filename="mainwindow.cpp" line="372"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="474"/>
-        <location filename="mainwindow.cpp" line="452"/>
+        <location filename="mainwindow.cpp" line="453"/>
         <source>Apply</source>
         <translation>应用</translation>
     </message>
@@ -2696,7 +2696,7 @@ p, li { white-space: pre-wrap; }
         <location filename="mainwindow.ui" line="505"/>
         <location filename="mainwindow.ui" line="7118"/>
         <location filename="mainwindow.ui" line="7124"/>
-        <location filename="mainwindow.cpp" line="453"/>
+        <location filename="mainwindow.cpp" line="454"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -2707,7 +2707,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="606"/>
-        <location filename="mainwindow.cpp" line="446"/>
+        <location filename="mainwindow.cpp" line="447"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
@@ -2841,7 +2841,7 @@ p, li { white-space: pre-wrap; }
         <translation>扩展视图</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="106"/>
+        <location filename="mainwindow.cpp" line="107"/>
         <source>Metadata</source>
         <translation>元数据</translation>
     </message>
@@ -2993,7 +2993,7 @@ p, li { white-space: pre-wrap; }
         <translation>字幕 #8：</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="106"/>
+        <location filename="mainwindow.cpp" line="107"/>
         <source>Split</source>
         <translation>分割</translation>
     </message>
@@ -3030,15 +3030,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="3346"/>
-        <location filename="mainwindow.cpp" line="105"/>
-        <location filename="mainwindow.cpp" line="2295"/>
+        <location filename="mainwindow.cpp" line="106"/>
+        <location filename="mainwindow.cpp" line="2296"/>
         <source>Preview</source>
         <translation>预览</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="3481"/>
         <location filename="mainwindow.ui" line="4947"/>
-        <location filename="mainwindow.cpp" line="350"/>
+        <location filename="mainwindow.cpp" line="351"/>
         <source>Add files</source>
         <translation>添加文件</translation>
     </message>
@@ -3604,7 +3604,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="5071"/>
-        <location filename="mainwindow.cpp" line="1501"/>
+        <location filename="mainwindow.cpp" line="1502"/>
         <source>Encode</source>
         <translation>编码</translation>
     </message>
@@ -3625,14 +3625,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="4741"/>
-        <location filename="mainwindow.cpp" line="351"/>
+        <location filename="mainwindow.cpp" line="352"/>
         <source>Remove from the list</source>
         <translation>从列表中删除</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="4782"/>
-        <location filename="mainwindow.cpp" line="358"/>
-        <location filename="mainwindow.cpp" line="1898"/>
+        <location filename="mainwindow.cpp" line="359"/>
+        <location filename="mainwindow.cpp" line="1899"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -3677,13 +3677,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.ui" line="6869"/>
-        <location filename="mainwindow.cpp" line="276"/>
+        <location filename="mainwindow.cpp" line="277"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="6922"/>
-        <location filename="mainwindow.cpp" line="352"/>
+        <location filename="mainwindow.cpp" line="353"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -3711,7 +3711,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="7064"/>
         <location filename="mainwindow.ui" line="7067"/>
-        <location filename="mainwindow.cpp" line="377"/>
+        <location filename="mainwindow.cpp" line="378"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -3722,49 +3722,32 @@ p, li { white-space: pre-wrap; }
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="62"/>
+        <location filename="mainwindow.cpp" line="63"/>
         <source>No media</source>
         <translation>没有媒体</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="69"/>
+        <location filename="mainwindow.cpp" line="70"/>
         <source>No audio</source>
         <translation>没有音频</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="76"/>
+        <location filename="mainwindow.cpp" line="77"/>
         <source>No subtitle</source>
         <translation>没有字幕</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="105"/>
+        <location filename="mainwindow.cpp" line="106"/>
         <source>Presets</source>
         <translation>预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="105"/>
-        <location filename="mainwindow.cpp" line="3364"/>
-        <location filename="mainwindow.cpp" line="3365"/>
-        <location filename="mainwindow.cpp" line="3366"/>
-        <location filename="mainwindow.cpp" line="3367"/>
-        <location filename="mainwindow.cpp" line="3368"/>
-        <location filename="mainwindow.cpp" line="3369"/>
-        <location filename="mainwindow.cpp" line="3370"/>
-        <location filename="mainwindow.cpp" line="3371"/>
-        <location filename="mainwindow.cpp" line="3372"/>
-        <location filename="mainwindow.cpp" line="3373"/>
-        <location filename="mainwindow.cpp" line="3374"/>
-        <location filename="mainwindow.cpp" line="3375"/>
-        <location filename="mainwindow.cpp" line="3376"/>
-        <location filename="mainwindow.cpp" line="3377"/>
-        <location filename="mainwindow.cpp" line="3378"/>
-        <location filename="mainwindow.cpp" line="3379"/>
-        <location filename="mainwindow.cpp" line="3393"/>
+        <location filename="mainwindow.cpp" line="106"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="105"/>
+        <location filename="mainwindow.cpp" line="106"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
@@ -3773,108 +3756,108 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">选项</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="106"/>
+        <location filename="mainwindow.cpp" line="107"/>
         <source>Log</source>
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="106"/>
+        <location filename="mainwindow.cpp" line="107"/>
         <source>Streams</source>
         <translation>溪流</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="166"/>
+        <location filename="mainwindow.cpp" line="167"/>
         <source>Quit program?</source>
         <translation>退出程序？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="277"/>
+        <location filename="mainwindow.cpp" line="278"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="278"/>
+        <location filename="mainwindow.cpp" line="279"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="357"/>
+        <location filename="mainwindow.cpp" line="358"/>
         <source>Encode/Pause</source>
         <translation>编码/暂停</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="362"/>
+        <location filename="mainwindow.cpp" line="363"/>
         <source>Edit metadata</source>
         <translation>编辑元数据</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="363"/>
+        <location filename="mainwindow.cpp" line="364"/>
         <source>Select audio streams</source>
         <translation>选择音频流</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="364"/>
+        <location filename="mainwindow.cpp" line="365"/>
         <source>Select subtitles</source>
         <translation>选择字幕</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="365"/>
+        <location filename="mainwindow.cpp" line="366"/>
         <source>Split video</source>
         <translation>分割视频</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="374"/>
+        <location filename="mainwindow.cpp" line="375"/>
         <source>Reset state</source>
         <translation>复位状态</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="378"/>
+        <location filename="mainwindow.cpp" line="379"/>
         <source>Donate</source>
         <translation>捐赠</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="443"/>
-        <location filename="mainwindow.cpp" line="475"/>
+        <location filename="mainwindow.cpp" line="444"/>
+        <location filename="mainwindow.cpp" line="476"/>
         <source>Add section</source>
         <translation>添加部分</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="444"/>
+        <location filename="mainwindow.cpp" line="445"/>
         <source>Add preset</source>
         <translation>添加预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="445"/>
+        <location filename="mainwindow.cpp" line="446"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="476"/>
+        <location filename="mainwindow.cpp" line="477"/>
         <source>Add new preset</source>
         <translation>添加新预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1085"/>
+        <location filename="mainwindow.cpp" line="1086"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>您需要重新启动程序才能使设置生效。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1265"/>
+        <location filename="mainwindow.cpp" line="1266"/>
         <source> bit, </source>
         <translation> 位, </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1268"/>
+        <location filename="mainwindow.cpp" line="1269"/>
         <source> kbps; </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1280"/>
+        <location filename="mainwindow.cpp" line="1281"/>
         <source>Audio #</source>
         <translation>音频 #</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1295"/>
+        <location filename="mainwindow.cpp" line="1296"/>
         <source>Undefined</source>
         <translation>未定义</translation>
     </message>
@@ -3909,8 +3892,8 @@ Select the correct input file!</source>
 选择正确的输入文件！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1753"/>
-        <location filename="mainwindow.cpp" line="1937"/>
+        <location filename="mainwindow.cpp" line="1754"/>
+        <location filename="mainwindow.cpp" line="1938"/>
         <source>Encoding</source>
         <translation>编码</translation>
     </message>
@@ -3941,13 +3924,13 @@ Select the correct input file!</source>
 可能没有安装mkvtoolnix。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1849"/>
+        <location filename="mainwindow.cpp" line="1850"/>
         <source>Done!</source>
         <translation>完成！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1872"/>
-        <location filename="mainwindow.cpp" line="1885"/>
+        <location filename="mainwindow.cpp" line="1873"/>
+        <location filename="mainwindow.cpp" line="1886"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -3956,56 +3939,56 @@ Select the correct input file!</source>
 经过时间:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1927"/>
-        <location filename="mainwindow.cpp" line="1947"/>
-        <location filename="mainwindow.cpp" line="2040"/>
+        <location filename="mainwindow.cpp" line="1928"/>
+        <location filename="mainwindow.cpp" line="1948"/>
+        <location filename="mainwindow.cpp" line="2041"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1904"/>
+        <location filename="mainwindow.cpp" line="1905"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>当前的编码过程已被取消！
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1913"/>
+        <location filename="mainwindow.cpp" line="1914"/>
         <source>Error!</source>
         <translation>错误！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1916"/>
+        <location filename="mainwindow.cpp" line="1917"/>
         <source>An error occurred: </source>
         <translation>发生了一个错误: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1918"/>
+        <location filename="mainwindow.cpp" line="1919"/>
         <source>Unexpected error occurred!</source>
         <translation>发生意外错误！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1966"/>
+        <location filename="mainwindow.cpp" line="1967"/>
         <source>Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)</source>
         <translation>视频文件: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2005"/>
+        <location filename="mainwindow.cpp" line="2006"/>
         <source>Select input file first!</source>
         <translation>首先选择输入文件！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2010"/>
+        <location filename="mainwindow.cpp" line="2011"/>
         <source>Select preset first!</source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2040"/>
+        <location filename="mainwindow.cpp" line="2041"/>
         <source>Resume</source>
         <translation>简历</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2050"/>
+        <location filename="mainwindow.cpp" line="2051"/>
         <source>Stop encoding?</source>
         <translation>停止编码？</translation>
     </message>
@@ -4014,352 +3997,168 @@ Select the correct input file!</source>
         <translation type="vanished">尝试执行文件名检测时出现意外错误。</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2585"/>
+        <location filename="mainwindow.cpp" line="2586"/>
         <source>Select output folder</source>
         <translation>选择输出文件夹</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2909"/>
-        <location filename="mainwindow.cpp" line="2923"/>
-        <location filename="mainwindow.cpp" line="2984"/>
-        <location filename="mainwindow.cpp" line="3024"/>
+        <location filename="mainwindow.cpp" line="2910"/>
+        <location filename="mainwindow.cpp" line="2924"/>
+        <location filename="mainwindow.cpp" line="2985"/>
+        <location filename="mainwindow.cpp" line="3025"/>
         <source>Select preset first!
 </source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2946"/>
+        <location filename="mainwindow.cpp" line="2947"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2974"/>
+        <location filename="mainwindow.cpp" line="2975"/>
         <source>Delete presets first!
 </source>
         <translation>先删除预设！</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3145"/>
+        <location filename="mainwindow.cpp" line="3146"/>
         <source>Preset not selected</source>
         <translation>未选择预设</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3217"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
-        <translation>H.265/HEVC 4:2:0 10 位</translation>
+        <translation type="vanished">H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3218"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
-        <translation>H.265/HEVC 4:2:0 8 位</translation>
+        <translation type="vanished">H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3219"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
-        <translation>H.264/AVC 4:2:0 8 位</translation>
+        <translation type="vanished">H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3224"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
-        <translation>Intel QSV H.264/AVC 4:2:0 8 位</translation>
+        <translation type="vanished">Intel QSV H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3227"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
-        <translation>Intel QSV MPEG-2 4:2:0 8 位</translation>
+        <translation type="vanished">Intel QSV MPEG-2 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3229"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
-        <translation>NVENC H.265/HEVC 4:2:0 10 位</translation>
+        <translation type="vanished">NVENC H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3230"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
-        <translation>NVENC H.265/HEVC 4:2:0 8 位</translation>
+        <translation type="vanished">NVENC H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3231"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
-        <translation>NVENC H.264/AVC 4:2:0 8 位</translation>
+        <translation type="vanished">NVENC H.264/AVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3220"/>
         <source>VP9 4:2:0 10 bit</source>
-        <translation>VP9 4:2:0 10 位</translation>
+        <translation type="vanished">VP9 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3048"/>
+        <location filename="mainwindow.cpp" line="3049"/>
         <source>First add a section!
 </source>
         <translation>首先添加一个部分！
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3216"/>
         <source>H.265/HEVC 4:2:0 12 bit</source>
-        <translation>H.265/HEVC 4:2:0 12 位</translation>
+        <translation type="vanished">H.265/HEVC 4:2:0 12 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3221"/>
         <source>VP9 4:2:0 8 bit</source>
-        <translation>VP9 4:2:0 8 位</translation>
+        <translation type="vanished">VP9 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3222"/>
         <source>Intel QSV H.265/HEVC 4:2:0 10 bit</source>
-        <translation>Intel QSV H.265/HEVC 4:2:0 10 位</translation>
+        <translation type="vanished">Intel QSV H.265/HEVC 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3223"/>
         <source>Intel QSV H.265/HEVC 4:2:0 8 bit</source>
-        <translation>Intel QSV H.265/HEVC 4:2:0 8 位</translation>
+        <translation type="vanished">Intel QSV H.265/HEVC 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3225"/>
         <source>Intel QSV VP9 4:2:0 10 bit</source>
-        <translation>Intel QSV VP9 4:2:0 10 位</translation>
+        <translation type="vanished">Intel QSV VP9 4:2:0 10 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3226"/>
         <source>Intel QSV VP9 4:2:0 8 bit</source>
-        <translation>Intel QSV VP9 4:2:0 8 位</translation>
+        <translation type="vanished">Intel QSV VP9 4:2:0 8 位</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3228"/>
-        <source>Intel VAAPI H.264/AVC 4:2:0 8 bit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="3232"/>
         <source>ProRes Proxy</source>
-        <translation>ProRes Proxy</translation>
+        <translation type="vanished">ProRes Proxy</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3234"/>
         <source>ProRes Standard</source>
-        <translation>ProRes Standard</translation>
+        <translation type="vanished">ProRes Standard</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3245"/>
         <source>From source</source>
-        <translation>来源</translation>
+        <translation type="vanished">来源</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3269"/>
-        <location filename="mainwindow.cpp" line="3270"/>
-        <location filename="mainwindow.cpp" line="3271"/>
-        <location filename="mainwindow.cpp" line="3272"/>
-        <location filename="mainwindow.cpp" line="3273"/>
-        <location filename="mainwindow.cpp" line="3274"/>
-        <location filename="mainwindow.cpp" line="3275"/>
-        <location filename="mainwindow.cpp" line="3276"/>
-        <location filename="mainwindow.cpp" line="3277"/>
-        <location filename="mainwindow.cpp" line="3278"/>
-        <location filename="mainwindow.cpp" line="3279"/>
-        <location filename="mainwindow.cpp" line="3282"/>
-        <location filename="mainwindow.cpp" line="3333"/>
-        <location filename="mainwindow.cpp" line="3334"/>
-        <location filename="mainwindow.cpp" line="3335"/>
-        <location filename="mainwindow.cpp" line="3336"/>
-        <location filename="mainwindow.cpp" line="3337"/>
-        <location filename="mainwindow.cpp" line="3338"/>
-        <location filename="mainwindow.cpp" line="3339"/>
-        <location filename="mainwindow.cpp" line="3343"/>
-        <location filename="mainwindow.cpp" line="3344"/>
-        <location filename="mainwindow.cpp" line="3345"/>
-        <location filename="mainwindow.cpp" line="3346"/>
-        <location filename="mainwindow.cpp" line="3347"/>
-        <location filename="mainwindow.cpp" line="3348"/>
-        <location filename="mainwindow.cpp" line="3349"/>
-        <location filename="mainwindow.cpp" line="3350"/>
-        <location filename="mainwindow.cpp" line="3351"/>
-        <location filename="mainwindow.cpp" line="3352"/>
-        <location filename="mainwindow.cpp" line="3353"/>
-        <location filename="mainwindow.cpp" line="3354"/>
-        <location filename="mainwindow.cpp" line="3355"/>
-        <location filename="mainwindow.cpp" line="3356"/>
         <source>Auto</source>
-        <translation>自动</translation>
+        <translation type="vanished">自动</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3294"/>
-        <location filename="mainwindow.cpp" line="3295"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3299"/>
-        <location filename="mainwindow.cpp" line="3300"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3303"/>
-        <location filename="mainwindow.cpp" line="3304"/>
-        <location filename="mainwindow.cpp" line="3305"/>
-        <location filename="mainwindow.cpp" line="3306"/>
-        <location filename="mainwindow.cpp" line="3307"/>
-        <location filename="mainwindow.cpp" line="3308"/>
-        <location filename="mainwindow.cpp" line="3309"/>
-        <location filename="mainwindow.cpp" line="3310"/>
-        <location filename="mainwindow.cpp" line="3311"/>
-        <location filename="mainwindow.cpp" line="3312"/>
-        <location filename="mainwindow.cpp" line="3313"/>
-        <location filename="mainwindow.cpp" line="3314"/>
-        <location filename="mainwindow.cpp" line="3315"/>
-        <location filename="mainwindow.cpp" line="3316"/>
-        <location filename="mainwindow.cpp" line="3317"/>
-        <location filename="mainwindow.cpp" line="3318"/>
-        <location filename="mainwindow.cpp" line="3319"/>
         <source>None</source>
-        <translation>无</translation>
+        <translation type="vanished">无</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Ultrafast</source>
-        <translation>超级快</translation>
+        <translation type="vanished">超级快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Superfast</source>
-        <translation>超快</translation>
+        <translation type="vanished">超快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Veryfast</source>
-        <translation>非常快</translation>
+        <translation type="vanished">非常快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Faster</source>
-        <translation>快速</translation>
+        <translation type="vanished">快速</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Fast</source>
-        <translation>快</translation>
+        <translation type="vanished">快</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Medium</source>
-        <translation>中等</translation>
+        <translation type="vanished">中等</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3303"/>
-        <location filename="mainwindow.cpp" line="3304"/>
-        <location filename="mainwindow.cpp" line="3305"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Slow</source>
-        <translation>慢</translation>
+        <translation type="vanished">慢</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Slower</source>
-        <translation>较慢</translation>
+        <translation type="vanished">较慢</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3290"/>
-        <location filename="mainwindow.cpp" line="3291"/>
-        <location filename="mainwindow.cpp" line="3292"/>
-        <location filename="mainwindow.cpp" line="3293"/>
-        <location filename="mainwindow.cpp" line="3296"/>
-        <location filename="mainwindow.cpp" line="3297"/>
-        <location filename="mainwindow.cpp" line="3298"/>
-        <location filename="mainwindow.cpp" line="3301"/>
-        <location filename="mainwindow.cpp" line="3302"/>
-        <location filename="mainwindow.cpp" line="3318"/>
         <source>Veryslow</source>
-        <translation>很慢</translation>
+        <translation type="vanished">很慢</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3327"/>
-        <location filename="mainwindow.cpp" line="3328"/>
-        <location filename="mainwindow.cpp" line="3329"/>
-        <location filename="mainwindow.cpp" line="3330"/>
-        <location filename="mainwindow.cpp" line="3331"/>
-        <location filename="mainwindow.cpp" line="3332"/>
         <source>1 Pass</source>
-        <translation>1 遍</translation>
+        <translation type="vanished">1 遍</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3327"/>
-        <location filename="mainwindow.cpp" line="3328"/>
-        <location filename="mainwindow.cpp" line="3329"/>
-        <location filename="mainwindow.cpp" line="3330"/>
-        <location filename="mainwindow.cpp" line="3331"/>
-        <location filename="mainwindow.cpp" line="3332"/>
-        <location filename="mainwindow.cpp" line="3340"/>
-        <location filename="mainwindow.cpp" line="3341"/>
-        <location filename="mainwindow.cpp" line="3342"/>
         <source>2 Pass</source>
-        <translation>2 遍</translation>
+        <translation type="vanished">2 遍</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3532"/>
+        <location filename="mainwindow.cpp" line="3347"/>
         <source>Task</source>
         <translation>任务</translation>
     </message>
