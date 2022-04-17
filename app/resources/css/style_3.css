@@ -328,48 +328,29 @@ QTableWidget::item:selected {
 
 QTreeWidget {
     outline: none;
-    /*padding: 0px;
-    border-radius: 0px;*/
     color: @headerTextColor;
     background-color: @tableBackground;
     alternate-background-color: @tableAlternateBackground;
 }
 QTreeWidget::item {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
     margin-top: 2px;
     border-right: 1px solid @tableBorder;
-    /*border: none;*/
 }
 QTreeWidget::item:selected {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
 QTreeWidget::item:selected:active {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
 QTreeWidget::item:selected:!active {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;

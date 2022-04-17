@@ -332,7 +332,6 @@
         <file>resources/icons/gif/cil-spinner-circle.gif</file>
         <file>resources/icons/svg/cine-encoder.svg</file>
         <file>resources/icons/svg/no_preview.svg</file>
-        <file>resources/icons/svg/no_preview.png</file>
         <file>resources/icons/svg/pause.svg</file>
         <file>resources/icons/svg/play.svg</file>
         <file>resources/icons/svg/forward.svg</file>
@@ -341,5 +340,8 @@
         <file>resources/icons/svg/close_black.svg</file>
         <file>resources/icons/svg/close.svg</file>
         <file>resources/icons/svg/minimize_black.svg</file>
+        <file>resources/icons/svg/expand.svg</file>
+        <file>resources/icons/svg/minimize.svg</file>
+        <file>resources/icons/svg/restore.svg</file>
     </qresource>
 </RCC>

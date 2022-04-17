@@ -5,6 +5,7 @@
 
 @mainBackground = #FFFFFF;
 
+@tableBorder = #E9E9E9;
 @tableBackground = #F9F9F9;
 @tableAlternateBackground = #F3F3F3;
 @tableRowSelectedBackground = #D0D0D0;
@@ -13,10 +14,10 @@
 @tableGrid = #CCCCCC;
 
 @frameEdgingBackground = #FFFFFF;
-@frameMiddleBorder = #B6B6B6;
+@frameMiddleBorder = #E9E9E9;
 @frameMiddleBackground = #FFFFFF;
 @frameTextColor = #000000;
-@frameEdgeBorder = #B6B6B6;
+@frameEdgeBorder = #E9E9E9;
 @frameTopBackground = #F8F8F8;
 @frameBottomBackground = #FFFFFF;
 @frameHeaderBackground = #E3E3E3;
@@ -248,19 +249,24 @@ QHeaderView {
     color: @headerTextColor;
     background-color: transparent;
 }
-QHeaderView::section:horizontal {
-    height: 28px;
-    border-top: 1px solid @headerBorder;
-    border-bottom: 1px solid @headerBorder;
-    border-right: 1px solid @headerBorder;
+QHeaderView::section {
     border-radius: 0px;
     background-color: @headerBackground;
 }
+QHeaderView::section:horizontal {
+    height: 28px;
+    border-left: 0px;
+    border-top: 0px solid @headerBorder;
+    border-bottom: 0px solid @headerBorder;
+    border-right: 1px solid @headerBorder;
+}
 QHeaderView::section:vertical {
-    border-bottom: 1px solid @headerBorder;
-    /*border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;*/
-    background-color: @headerBackground;
+    width: 0px;
+    border-left: 0px;
+    border-top: 0px;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 0px;
+    background-color: transparent;
 }
 QHeaderView::up-arrow {
     width: 13px;
@@ -286,18 +292,27 @@ QTableWidget {
     border-radius: 0px;
     color: @headerTextColor;
     background-color: @tableBackground;
-    selection-background-color: #1C252F;
-    /*gridline-style: solid;*/
-    gridline-color: @tableGrid;
     alternate-background-color: @tableAlternateBackground;
 }
+QTableWidget QTableCornerButton {}
+QTableWidget QTableCornerButton::section {
+    border-left: 0px;
+    border-top: 0px;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 0px;
+}
 QTableWidget::item {
-    margin-left: 0px;
-    margin-right: 0px;
+    padding-left: -3px;
+    padding-right: 5px;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 1px solid @tableBorder;
 }
 QTableWidget::item:selected {
-    margin: 0px;
+    padding-left: -3px;
+    padding-right: 5px;
     color: @tableTextSelected;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 1px solid @tableBorder;
     background-color: @tableRowSelectedBackground;
 }
 
@@ -311,49 +326,30 @@ QTableWidget::item:selected {
 
 QTreeWidget {
     outline: none;
-    /*padding: 0px;
-    border-radius: 0px;*/
     color: @headerTextColor;
     background-color: @tableBackground;
     alternate-background-color: @tableAlternateBackground;
 }
 QTreeWidget::item {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
     margin-top: 2px;
-    border-right: 1px solid @headerBorder;
-    /*border: none;*/
+    border-right: 1px solid @tableBorder;
 }
 QTreeWidget::item:selected {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
-    border: none;
+    border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
 QTreeWidget::item:selected:active {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
-    border: none;
+    border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
 QTreeWidget::item:selected:!active {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
-    border: none;
+    border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
@@ -405,15 +401,15 @@ QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {
 }
 QTreeWidget::branch:has-children:!has-siblings:closed,
 QTreeWidget::branch:closed:has-children:has-siblings {
-    padding-bottom: 6px;
-    padding-top: 6px;
+    padding-bottom: 7px;
+    padding-top: 7px;
     padding-left: 4px;
     image: url(:/resources/icons/16x16/cil-arrow-right_black.png);
 }
 QTreeWidget::branch:open:has-children:!has-siblings,
 QTreeWidget::branch:open:has-children:has-siblings {
-    padding-bottom: 6px;
-    padding-top: 6px;
+    padding-bottom: 7px;
+    padding-top: 7px;
     padding-left: 4px;
     image: url(:/resources/icons/16x16/cil-arrow-bottom_black.png);
 }
@@ -857,22 +853,22 @@ QPushButton#actionSettings {
 }
 QPushButton#hideWindow {
         border: none;
-        image: url(:/resources/icons/16x16/cil-window-minimize_black.png);
+        icon: url(:/resources/icons/svg/minimize_black.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow {
         border: none;
-        image: url(:/resources/icons/16x16/cil-media-stop_black.png);
+        icon: url(:/resources/icons/svg/restore_black.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow[expanded=true] {
-        image: url(:/resources/icons/16x16/cil-clone_black.png);
+        icon: url(:/resources/icons/svg/expand_black.svg);
 }
 QPushButton#closeWindow {
         border: none;
-        image: url(:/resources/icons/16x16/cil-x_black.png);
+        icon: url(:/resources/icons/svg/close_black.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
@@ -917,7 +913,7 @@ QPushButton:hover#buttonCloseTaskWindow {
     background-color: #D9D9D9;
 }
 QPushButton:hover#closeWindow {
-    image: url(:/resources/icons/16x16/cil-x.png);
+    icon: url(:/resources/icons/svg/close.svg);
     background-color: #EE0000;
 }
 QPushButton:pressed#actionResetLabels,

@@ -2496,7 +2496,7 @@ QString Widget::setThumbnail(QString curFilename,
         processThumbCreation->start("ffmpeg", cmd);
         processThumbCreation->waitForFinished();
     }
-    if (!tmb.exists()) tmb_file = ":/resources/icons/svg/no_preview.png";
+    if (!tmb.exists()) tmb_file = ":/resources/images/no_preview.png";
     preview_pixmap = QPixmap(tmb_file);
     QPixmap pix_scaled;
     if (destination == PreviewDest::PREVIEW) {
@@ -3232,7 +3232,7 @@ QString Widget::updateFieldPreset(int &codec, int &preset)
 QString Widget::updateFieldPass(int &codec, int &pass)
 {
     Tables t;
-    return t.arr_pass[codec][pass];
+    return t.getCurrentPass(codec, pass);
 }
 
 QString Widget::updateFieldAcodec(int &codec, int &acodec)

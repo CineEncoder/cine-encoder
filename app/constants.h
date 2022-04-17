@@ -77,7 +77,7 @@ enum Resize {
 };
 
 enum Theme {
-    GRAY, DARK, WAVE, DEFAULT, WINDOWS
+    GRAY, DARK, WAVE, DEFAULT, LIGHT
 };
 
 enum PreviewDest {

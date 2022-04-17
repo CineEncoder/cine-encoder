@@ -490,7 +490,7 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
     /************************************* Mode module ***************************************/    
     QString mode("");
-    QString selected_mode = t.getCurrentMode(c1, c2);
+    const QString selected_mode = t.getCurrentMode(c1, c2);
     if ((selected_mode != "" && selected_mode != tr("Auto")) && (selected_mode == "CRF" || selected_mode == "CQP")) {
         mode = selected_mode + " " + ui->lineEdit_bitrate->text() + ", ";
     }
@@ -507,8 +507,9 @@ void Preset::change_preset_name()  /*** Call Change preset name ***/
 
     /************************************* Pass module ***************************************/  
     QString pass("");
-    if (t.arr_pass[c1][c11] != "" && t.arr_pass[c1][c11] != tr("Auto")) {
-        pass = t.arr_pass[c1][c11] + ", ";
+    const QString selected_pass = t.getCurrentPass(c1, c11);
+    if (selected_pass != "" && selected_pass != tr("Auto")) {
+        pass = selected_pass + ", ";
     }
     QString hdr("");
     if (t.arr_codec[c1][2] != "") {

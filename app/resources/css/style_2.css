@@ -5,6 +5,7 @@
 
 @mainBackground = #272C36;
 
+@tableBorder = #27272C;
 @tableBackground = #192327;
 @tableAlternateBackground = #182123;
 @tableRowSelectedBackground = #1C252F;
@@ -256,19 +257,24 @@ QHeaderView {
     color: @headerTextColor;
     background-color: transparent;
 }
-QHeaderView::section:horizontal {
-    height: 28px;
-    border-top: 1px solid @headerBorder;
-    border-bottom: 1px solid @headerBorder;
-    border-right: 1px solid @headerBorder;
+QHeaderView::section {
     border-radius: 0px;
     background-color: @headerBackground;
 }
+QHeaderView::section:horizontal {
+    height: 28px;
+    border-left: 0px;
+    border-top: 0px solid @headerBorder;
+    border-bottom: 0px solid @headerBorder;
+    border-right: 1px solid @headerBorder;
+}
 QHeaderView::section:vertical {
-    border-bottom: 1px solid @headerBorder;
-    /*border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;*/
-    background-color: @headerBackground;
+    width: 0px;
+    border-left: 0px;
+    border-top: 0px;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 0px;
+    background-color: transparent;
 }
 QHeaderView::up-arrow {
     width: 13px;
@@ -294,18 +300,27 @@ QTableWidget {
     border-radius: 0px;
     color: @headerTextColor;
     background-color: @tableBackground;
-    selection-background-color: #1C252F;
-    /*gridline-style: solid;*/
-    gridline-color: @tableGrid;
     alternate-background-color: @tableAlternateBackground;
 }
+QTableWidget QTableCornerButton {}
+QTableWidget QTableCornerButton::section {
+    border-left: 0px;
+    border-top: 0px;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 0px;
+}
 QTableWidget::item {
-    margin-left: 0px;
-    margin-right: 0px;
+    padding-left: -3px;
+    padding-right: 5px;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 1px solid @tableBorder;
 }
 QTableWidget::item:selected {
-    margin: 0px;
+    padding-left: -3px;
+    padding-right: 5px;
     color: @tableTextSelected;
+    border-right: 1px solid @tableBorder;
+    border-bottom: 1px solid @tableBorder;
     background-color: @tableRowSelectedBackground;
 }
 
@@ -319,49 +334,30 @@ QTableWidget::item:selected {
 
 QTreeWidget {
     outline: none;
-    /*padding: 0px;
-    border-radius: 0px;*/
     color: @headerTextColor;
     background-color: @tableBackground;
     alternate-background-color: @tableAlternateBackground;
 }
 QTreeWidget::item {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
     margin-top: 2px;
-    border-right: 1px solid @headerBorder;
-    /*border: none;*/
+    border-right: 1px solid @tableBorder;
 }
 QTreeWidget::item:selected {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
-    border: none;
+    border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: #1C252F;
 }
 QTreeWidget::item:selected:active {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
-    border: none;
+    border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: #1C252F;
 }
 QTreeWidget::item:selected:!active {
     min-height: 22px;
-    /*margin-top: 2px 0;
-    margin-bottom: 2px 0;
-    margin-left: 0px 0;
-    margin-right: 0px 0;*/
-    border: none;
+    border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
     background-color: #1C252F;
 }
@@ -413,15 +409,15 @@ QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {
 }
 QTreeWidget::branch:has-children:!has-siblings:closed,
 QTreeWidget::branch:closed:has-children:has-siblings {
-    padding-bottom: 6px;
-    padding-top: 6px;
+    padding-bottom: 7px;
+    padding-top: 7px;
     padding-left: 4px;
     image: url(:/resources/icons/16x16/cil-arrow-right-.png);
 }
 QTreeWidget::branch:open:has-children:!has-siblings,
 QTreeWidget::branch:open:has-children:has-siblings {
-    padding-bottom: 6px;
-    padding-top: 6px;
+    padding-bottom: 7px;
+    padding-top: 7px;
     padding-left: 4px;
     image: url(:/resources/icons/16x16/cil-arrow-bottom.png);
 }
@@ -865,22 +861,22 @@ QPushButton#actionSettings {
 }
 QPushButton#hideWindow {
         border: none;
-        image: url(:/resources/icons/16x16/cil-window-minimize.png);
+        icon: url(:/resources/icons/svg/minimize.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow {
         border: none;
-        image: url(:/resources/icons/16x16/cil-media-stop.png);
+        icon: url(:/resources/icons/svg/restore.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow[expanded=true] {
-        image: url(:/resources/icons/16x16/cil-clone.png);
+        icon: url(:/resources/icons/svg/expand.svg);
 }
 QPushButton#closeWindow {
         border: none;
-        image: url(:/resources/icons/16x16/cil-x.png);
+        icon: url(:/resources/icons/svg/close.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
@@ -1062,19 +1058,16 @@ QPushButton#buttonApplyPreset {
     color: @frameTextColor;
     background-color: transparent;
 }
-QPushButton:disabled#buttonApplyPreset
-{
+QPushButton:disabled#buttonApplyPreset {
     border-radius: 0px;
     border: 1px solid #373C46;
     color: #62676F;
     background-color: transparent;
 }
-QPushButton:hover#buttonApplyPreset
-{
+QPushButton:hover#buttonApplyPreset {
     background-color: #343B48;
 }
-QPushButton:pressed#buttonApplyPreset
-{
+QPushButton:pressed#buttonApplyPreset {
     background-color: #55AAFF;
 }
 
@@ -1084,8 +1077,8 @@ QPushButton#buttonCancel,
 QPushButton#buttonApply,
 QPushButton#buttonPayPal,
 QPushButton#buttonBitcoin {
-    border-radius: 0px;
-    border: 1px solid #646464;
+    border-radius: 1px;
+    border: 1px solid #1E2F50;
     color: #FFFFFF;
     background-color: #1E2F50;
 }

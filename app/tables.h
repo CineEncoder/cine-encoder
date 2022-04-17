@@ -254,9 +254,9 @@ public:
     };
 
     const QString arr_pass[NUMBER_PRESETS][2] = {
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
-        {tr("1 Pass"), tr("2 Pass")},
+        {tr("1 Pass"), tr("2 Pass_x265")},
+        {tr("1 Pass"), tr("2 Pass_x265")},
+        {tr("1 Pass"), tr("2 Pass_x265")},
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
         {tr("1 Pass"), tr("2 Pass")},
@@ -369,6 +369,8 @@ public:
         {"MKV",  "MOV", "MP4", "M2TS", "TS"}
     };
 
+    /** Get Current **/
+
     QString getCodecName(int row) const
     {
         if (row >= 0 && row < NUMBER_PRESETS) {
@@ -378,6 +380,19 @@ public:
                 codec = codec.left(pos - 1);
             }
             return codec;
+        }
+        return QString();
+    }
+
+    QString getCurrentPass(int row, int column) const
+    {
+        if (row >= 0 && row < NUMBER_PRESETS && column >= 0 && column < 2) {
+            QString pass = arr_pass[row][column];
+            const int pos = pass.indexOf("_");
+            if (pos != -1) {
+                pass = pass.left(pos);
+            }
+            return pass;
         }
         return QString();
     }
@@ -394,6 +409,8 @@ public:
         }
         return QString();
     }  
+
+    /** Get List **/
 
     QStringList getModesListByRow(int row) const
     {

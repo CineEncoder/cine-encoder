@@ -339,47 +339,21 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************* Pass module ***************************************/
 
-    const QString arr_pass[NUMBER_PRESETS][2] = {
-        {"",          "-x265-params pass=2 "}, // H265
-        {"",          "-x265-params pass=2 "}, // H265
-        {"",          "-x265-params pass=2 "}, // H265
-        {"",          "-pass 2 "}, // H264
-        {"",          "-pass 2 "}, // VP9
-        {"",          "-pass 2 "}, // VP9
-        {"",          ""}, // QSV H265
-        {"",          ""}, // QSV H265
-        {"",          ""}, // QSV H264
-        {"",          ""}, // QSV VP9
-        {"",          ""}, // QSV VP9
-        {"",          ""}, // QSV MPEG2
-        {"",          ""}, // Intel VAAPI h264
-        {"-2pass 1 ", ""}, // NVENC H265
-        {"-2pass 1 ", ""}, // NVENC H265
-        {"-2pass 1 ", ""}, // NVENC H264
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""},
-        {"",          ""}  // Source
-    };
+    const QString selected_pass = t.arr_pass[_CODEC][_PASS];
+    QString pass = "";
     QString pass1 = "";
-    const QString pass = arr_pass[_CODEC][_PASS];
-    if (pass == "-x265-params pass=2 ") {
+    if (selected_pass == tr("2 Pass_x265")) {
+        pass = "-x265-params pass=2 ";
         pass1 = "-x265-params pass=1 ";
         _flag_two_pass = true;
     }
-    if (pass == "-pass 2 ") {
+    else if (selected_pass == tr("2 Pass")) {
+        pass = "-pass 2 ";
         pass1 = "-pass 1 ";
         _flag_two_pass = true;
+    }
+    else if (selected_pass == tr("2 Pass Optimisation")) {
+        pass = "-2pass 1 ";
     }
 
     /************************************* Audio module ***************************************/
