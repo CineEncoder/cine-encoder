@@ -209,6 +209,11 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
         <translation>Auto</translation>
     </message>
     <message>
+        <location filename="encoder.cpp" line="336"/>
+        <source>None</source>
+        <translation>Kein</translation>
+    </message>
+    <message>
         <location filename="encoder.cpp" line="345"/>
         <source>2 Pass_x265</source>
         <translation>2 Übergeben_x265</translation>
@@ -2292,6 +2297,31 @@ Mögliche mkvtoolnix nicht installiert.
         <translation type="obsolete">Von der Quelle, </translation>
     </message>
     <message>
+        <location filename="tables.h" line="73"/>
+        <source>YUV, 4:2:0, 12 bit</source>
+        <translation>YUV, 4:2:0, 12 bit</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="75"/>
+        <source>H.265/HEVC 4:2:0 8 bit</source>
+        <translation>H.265/HEVC 4:2:0 8 bit</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="76"/>
+        <source>H.264/AVC 4:2:0 8 bit</source>
+        <translation>H.264/AVC 4:2:0 8 bit</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="77"/>
+        <source>VP9 4:2:0 10 bit</source>
+        <translation>VP9 4:2:0 10 bit</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="78"/>
+        <source>VP9 4:2:0 8 bit</source>
+        <translation>VP9 4:2:0 8 bit</translation>
+    </message>
+    <message>
         <location filename="tables.h" line="79"/>
         <source>Intel QSV H.265/HEVC 4:2:0 10 bit</source>
         <translation>Intel QSV H.265/HEVC 4:2:0 10 bit</translation>
@@ -2305,6 +2335,11 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="81"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.264/AVC 4:2:0 8 bit</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="82"/>
+        <source>Intel QSV VP9 4:2:0 10 bit</source>
+        <translation>Intel QSV VP9 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="tables.h" line="83"/>
@@ -2327,6 +2362,11 @@ Mögliche mkvtoolnix nicht installiert.
         <translation>NVENC H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
+        <location filename="tables.h" line="87"/>
+        <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
+        <translation>NVENC H.265/HEVC 4:2:0 8 bit</translation>
+    </message>
+    <message>
         <location filename="tables.h" line="88"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation>NVENC H.264/AVC 4:2:0 8 bit</translation>
@@ -2335,6 +2375,15 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="89"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
+    </message>
+    <message>
+        <location filename="tables.h" line="89"/>
+        <location filename="tables.h" line="90"/>
+        <location filename="tables.h" line="91"/>
+        <location filename="tables.h" line="92"/>
+        <location filename="tables.h" line="98"/>
+        <source>YUV, 4:2:2, 10 bit</source>
+        <translation>YUV, 4:2:2, 10 bit</translation>
     </message>
     <message>
         <location filename="tables.h" line="91"/>
@@ -2462,6 +2511,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="193"/>
         <location filename="tables.h" line="194"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="391"/>
         <source>Ultrafast</source>
         <translation>Ultraschnell</translation>
     </message>
@@ -2471,6 +2521,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="193"/>
         <location filename="tables.h" line="194"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="392"/>
         <source>Superfast</source>
         <translation>Superschnell</translation>
     </message>
@@ -2485,6 +2536,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="202"/>
         <location filename="tables.h" line="203"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="393"/>
         <source>Veryfast</source>
         <translation>Sehrschnell</translation>
     </message>
@@ -2499,6 +2551,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="202"/>
         <location filename="tables.h" line="203"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="394"/>
         <source>Faster</source>
         <translation>Schneller</translation>
     </message>
@@ -2513,6 +2566,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="202"/>
         <location filename="tables.h" line="203"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="395"/>
         <source>Fast</source>
         <translation>Schnell</translation>
     </message>
@@ -2527,6 +2581,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="202"/>
         <location filename="tables.h" line="203"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="396"/>
         <source>Medium</source>
         <translation>Medium</translation>
     </message>
@@ -2544,6 +2599,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="205"/>
         <location filename="tables.h" line="206"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="397"/>
         <source>Slow</source>
         <translation>Langsam</translation>
     </message>
@@ -2558,6 +2614,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="202"/>
         <location filename="tables.h" line="203"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="398"/>
         <source>Slower</source>
         <translation>Langsamer</translation>
     </message>
@@ -2572,6 +2629,7 @@ Mögliche mkvtoolnix nicht installiert.
         <location filename="tables.h" line="202"/>
         <location filename="tables.h" line="203"/>
         <location filename="tables.h" line="219"/>
+        <location filename="tables.h" line="399"/>
         <source>Veryslow</source>
         <translation>Sehrlangsam</translation>
     </message>
@@ -2607,27 +2665,27 @@ Mögliche mkvtoolnix nicht installiert.
         <translation>2 Über Optimierung</translation>
     </message>
     <message>
-        <location filename="tables.h" line="452"/>
+        <location filename="tables.h" line="479"/>
         <source>Constant Bitrate</source>
         <translation>Konstante Bitrate</translation>
     </message>
     <message>
-        <location filename="tables.h" line="453"/>
+        <location filename="tables.h" line="480"/>
         <source>Average Bitrate</source>
         <translation>Durchschnittliche Bitrate</translation>
     </message>
     <message>
-        <location filename="tables.h" line="454"/>
+        <location filename="tables.h" line="481"/>
         <source>Variable Bitrate</source>
         <translation>Variable Bitrate</translation>
     </message>
     <message>
-        <location filename="tables.h" line="455"/>
+        <location filename="tables.h" line="482"/>
         <source>Constant Rate Factor</source>
         <translation>Faktor mit konstanter Rate</translation>
     </message>
     <message>
-        <location filename="tables.h" line="456"/>
+        <location filename="tables.h" line="483"/>
         <source>Constant QP</source>
         <translation>Konstante QP</translation>
     </message>

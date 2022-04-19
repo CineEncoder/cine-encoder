@@ -384,6 +384,33 @@ public:
         return QString();
     }
 
+    QString getCurrentPreset(int row, int column) const
+    {
+        if (row >= 0 && row < NUMBER_PRESETS && column >= 0 && column < 10) {
+            const QMap<QString, QString> presetImpl = {
+                {tr("Ultrafast"), "Ultrafast"},
+                {tr("Superfast"), "Superfast"},
+                {tr("Veryfast"),  "Veryfast"},
+                {tr("Faster"),    "Faster"},
+                {tr("Fast"),      "Fast"},
+                {tr("Medium"),    "Medium"},
+                {tr("Slow"),      "Slow"},
+                {tr("Slower"),    "Slower"},
+                {tr("Veryslow"),  "Veryslow"}
+            };
+            QString preset = arr_preset[row][column];
+            const int pos = preset.indexOf("_");
+            if (pos != -1) {
+                preset = preset.left(pos - 1);
+            }
+            if (presetImpl.contains(preset)) {
+                preset = presetImpl[preset];
+            }
+            return preset;
+        }
+        return QString();
+    }
+
     QString getCurrentPass(int row, int column) const
     {
         if (row >= 0 && row < NUMBER_PRESETS && column >= 0 && column < 2) {

@@ -299,41 +299,9 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************* Preset module ***************************************/
 
-    const QString arr_preset[NUMBER_PRESETS][10] = {
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"}, // H265
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"}, // H265
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"}, // H265
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"}, // H264
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}, // VP9
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}, // VP9
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""}, // QSV H265
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""}, // QSV H265
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""}, // QSV H264
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}, // QSV VP9
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}, // QSV VP9
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""}, // QSV MPEG2
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""}, // Intel VAAPI h264
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""}, // NVENC H265
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""}, // NVENC H265
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""}, // NVENC H264
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"}, // XAVC
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}   // Source
-    };
     QString preset = "";
-    const QString selected_preset = arr_preset[_CODEC][_PRESET];
-    if (selected_preset != "" && selected_preset != "None") {
+    const QString selected_preset = t.getCurrentPreset(_CODEC, _PRESET);
+    if (selected_preset != "" && selected_preset != tr("None")) {
         preset = QString("-preset ") + selected_preset.toLower() + QString(" ");
     }
 
