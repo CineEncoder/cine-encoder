@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200mm"
+   height="200mm"
+   viewBox="0 0 200 200"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   sodipodi:docname="pause.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     width="200mm"
+     inkscape:zoom="0.19842738"
+     inkscape:cx="-234.34266"
+     inkscape:cy="778.6224"
+     inkscape:window-width="1920"
+     inkscape:window-height="1019"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="rect3824"
+       style="opacity:1;fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#0000e3;stroke-width:14.138"
+       d="m 117.18851,34.477718 h 42.28793 c 0.95407,0 1.72214,0.768076 1.72214,1.722144 V 161.6075 c 0,0.95407 -0.76807,1.72215 -1.72214,1.72215 h -42.28793 c -0.95407,0 -1.72215,-0.76808 -1.72215,-1.72215 V 36.199862 c 0,-0.954068 0.76808,-1.722144 1.72215,-1.722144 z" />
+    <path
+       id="rect952"
+       style="opacity:1;fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#0000e3;stroke-width:14.138"
+       d="m 41.532141,34.477718 h 42.287932 c 0.954068,0 1.722144,0.768076 1.722144,1.722144 V 161.6075 c 0,0.95407 -0.768076,1.72215 -1.722144,1.72215 H 41.532141 c -0.954067,0 -1.722143,-0.76808 -1.722143,-1.72215 V 36.199862 c 0,-0.954068 0.768076,-1.722144 1.722143,-1.722144 z" />
+  </g>
+</svg>

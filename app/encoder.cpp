@@ -11,6 +11,9 @@
 ***********************************************************************/
 
 #include "encoder.h"
+//#include "constants.h"
+#include "tables.h"
+
 
 Encoder::Encoder(QObject *parent) :
     QObject(parent)
@@ -52,6 +55,7 @@ void Encoder::initEncoding(const QString  &temp_file,
                            int      *_fr_count)
 {
     std::cout << "Make preset..." << std::endl;                       // Debug information //
+    Tables t;
     _temp_file = temp_file;
     _input_file = input_file;
     _output_file = output_file;
@@ -100,59 +104,49 @@ void Encoder::initEncoding(const QString  &temp_file,
     _mux_mode = false;
     *fr_count = 0;
 
-    /****************************************** Resize ****************************************/
-
-    QString width[16] = {
-        "Source", "7680", "4520", "4096", "3840", "3656", "2048", "1920",
-        "1828",   "1440", "1280", "1024", "768",  "720",  "640",  "320"
-    };
-
-    QString height[32] = {
-        "Source", "4320", "3112", "3072", "2664", "2540", "2468", "2304",
-        "2214",   "2204", "2160", "2056", "1976", "1744", "1556", "1536",
-        "1332",   "1234", "1152", "1107", "1102", "1080", "1028", "988",
-        "872",    "768",  "720",  "576",  "540",  "486",  "480",  "240"
-    };
-
+    /****************************************** Resize ****************************************/   
     QString resize_vf = "";
-    if ((width[_WIDTH] != "Source") && (height[_HEIGHT] != "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(width[_WIDTH], height[_HEIGHT]);
-    }
-    else if ((width[_WIDTH] != "Source") && (height[_HEIGHT] == "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(width[_WIDTH], _height);
-    }
-    else if ((width[_WIDTH] == "Source") && (height[_HEIGHT] != "Source")) {
-        resize_vf = QString("scale=%1:%2,setsar=1:1").arg(_width, height[_HEIGHT]);
+    const QString new_width = (t.arr_width[_WIDTH] != "Source") ? t.arr_width[_WIDTH] : _width;
+    const QString new_height = (t.arr_height[_HEIGHT] != "Source") ? t.arr_height[_HEIGHT] : _height;
+    if ((t.arr_width[_WIDTH] != "Source") || (t.arr_height[_HEIGHT] != "Source")) {
+        if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
+            resize_vf = QString("scale_qsv=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
+        }
+        else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
+            resize_vf = QString("scale_vaapi=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
+        }
+        else {
+            resize_vf = QString("scale=%1:%2,setsar=1:1").arg(new_width, new_height);
+        }
     }
 
     /******************************************* FPS *****************************************/
 
-    QString frame_rate[14] = {
-        "Source", "120", "60", "59.940", "50", "48", "30",
-        "29.970", "25",  "24", "23.976", "20", "18", "16"
-    };
-
-    QString blending[4] = {
-        "Simple", "Interpolated", "MCI", "Blend"
-    };
-
     QString fps_vf = "";
     double fps_dest;
 
-    if (frame_rate[_FRAME_RATE] != "Source") {
-        fps_dest = frame_rate[_FRAME_RATE].toDouble();
-        if (blending[_BLENDING] == "Simple") {
-            fps_vf = QString("fps=fps=%1").arg(frame_rate[_FRAME_RATE]);
+    if (t.frame_rate[_FRAME_RATE] != "Source") {
+        fps_dest = t.frame_rate[_FRAME_RATE].toDouble();
+        if (t.blending[_BLENDING] == "Simple") {
+            if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
+                fps_vf = QString("vpp_qsv=framerate=%1").arg(t.frame_rate[_FRAME_RATE]);
+            }
+            else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
+                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
+            }
+            else {
+                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
+            }
         }
-        else if (blending[_BLENDING] == "Interpolated") {
-            fps_vf = QString("framerate=fps=%1").arg(frame_rate[_FRAME_RATE]);
+        else if (t.blending[_BLENDING] == "Interpolated") {
+            fps_vf = QString("framerate=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
         }
-        else if (blending[_BLENDING] == "MCI") {
+        else if (t.blending[_BLENDING] == "MCI") {
             fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
-                    .arg(frame_rate[_FRAME_RATE]);
+                    .arg(t.frame_rate[_FRAME_RATE]);
         }
-        else if (blending[_BLENDING] == "Blend") {
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(frame_rate[_FRAME_RATE]);
+        else if (t.blending[_BLENDING] == "Blend") {
+            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(t.frame_rate[_FRAME_RATE]);
         }
     } else {
         fps_dest = _fps.toDouble();
@@ -257,139 +251,26 @@ void Encoder::initEncoding(const QString  &temp_file,
         _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k];
     }
 
-    /*********************************** Intel QSV presets ************************************/
-    QString intelQSV_filter = "hwmap=derive_device=qsv,format=qsv";
-#if defined (Q_OS_WIN64)
-    QString intelQSVhwaccel = " -hwaccel dxva2 -hwaccel_output_format dxva2_vld";
-#elif defined (Q_OS_UNIX)
-    QString intelQSVhwaccel = " -hwaccel vaapi -hwaccel_output_format vaapi";
-#endif
-
-    /************************************* XDCAM presets **************************************/
-    QString xdcam_preset = "-pix_fmt yuv422p -c:v mpeg2video -profile:v 0 -flags ilme -top 1 "
-                           "-metadata creation_time=now -vtag xd5c -timecode 01:00:00:00 ";
-
-    /************************************* XAVC presets **************************************/
-    QString xavc_preset = "-pix_fmt yuv422p -c:v libx264 -me_method tesa -subq 9 -partitions all -direct-pred auto "
-                          "-psy 0 -g 0 -keyint_min 0 -x264opts filler -x264opts force-cfr -tune fastdecode ";
-
     /************************************* Codec module ***************************************/
 
-    QString arr_codec[NUMBER_PRESETS][4] = {
-        {"-pix_fmt yuv420p12le -c:v libx265 -profile:v main12 ",        "",                     "1", ""},
-        {"-pix_fmt yuv420p10le -c:v libx265 -profile:v main10 ",        "",                     "1", ""},
-        {"-pix_fmt yuv420p -c:v libx265 -profile:v main ",              "",                     "0", ""},
-        {"-pix_fmt yuv420p -c:v libx264 -profile:v high ",              "",                     "0", ""},
-        {"-pix_fmt yuv420p10le -c:v libvpx-vp9 -speed 4 -profile:v 2 ", "",                     "1", ""},
-        {"-pix_fmt yuv420p -c:v libvpx-vp9 -speed 4 ",                  "",                     "0", ""},
-        {"-c:v hevc_qsv -profile:v main10 ",                            intelQSVhwaccel,   "1", intelQSV_filter},
-        {"-pix_fmt qsv -c:v hevc_qsv -profile:v main ",                 intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt qsv -c:v h264_qsv -profile:v high ",                 intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-c:v vp9_qsv -profile:v 2 ",                                  intelQSVhwaccel,   "1", intelQSV_filter},
-        {"-pix_fmt qsv -c:v vp9_qsv ",                                  intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt qsv -c:v mpeg2_qsv -profile:v high ",                intelQSVhwaccel,   "0", intelQSV_filter},
-        {"-pix_fmt p010le -c:v hevc_nvenc -profile:v main10 ",          " -hwaccel cuda",       "1", ""},
-        {"-pix_fmt yuv420p -c:v hevc_nvenc -profile:v main ",           " -hwaccel cuda",       "0", ""},
-        {"-pix_fmt yuv420p -c:v h264_nvenc -profile:v high ",           " -hwaccel cuda",       "0", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 0 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 1 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 2 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p10le -c:v prores_ks -profile:v 3 ",           "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 4 ",           "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v prores_ks -profile:v 5 ",           "",                     "1", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_lb ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_sq ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p -c:v dnxhd -profile:v dnxhr_hq ",            "",                     "0", ""},
-        {"-pix_fmt yuv422p10le -c:v dnxhd -profile:v dnxhr_hqx ",       "",                     "1", ""},
-        {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",                     "1", ""},
-        {xdcam_preset,                                                  "",                     "0", ""},
-        {xavc_preset,                                                   " -guess_layout_max 0", "0", ""},
-        {"-movflags +write_colr -c:v copy ",                            "",                     "1", ""}
-    };
-
-    QString hwaccel = arr_codec[_CODEC][1];
-    QString hwaccel_filter_vf = arr_codec[_CODEC][3];
-    _flag_hdr = static_cast<bool>(arr_codec[_CODEC][2].toInt());
+    const QString hwaccel = t.arr_params[_CODEC][1];
+    const QString hwaccel_filter_vf = t.arr_params[_CODEC][3];
+    _flag_hdr = static_cast<bool>(t.arr_params[_CODEC][2].toInt());
 
     /************************************* Level module **************************************/
 
-    QString arr_level[NUMBER_PRESETS][21] = {
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "2",  "2.1", "3",   "3.1", "4", "4.1", "5",   "5.1", "5.2", "6",   "6.1", "6.2", "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3",   "3.1", "3.2", "4",   "4.1", "4.2", "5", "5.1", "5.2", "6", "6.1", "6.2"},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"2",    "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"5.2",  "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
-        {"Auto", "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}
-    };
-
-    QString level = "";
-    QString selected_level = arr_level[_CODEC][_LEVEL];
-    if (selected_level != "" && selected_level != "Auto") {
-        level = QString("-level:v %1 ").arg(selected_level);
-    }
+    const QString selected_level = t.arr_level[_CODEC][_LEVEL];
+    const QString level = (selected_level != "" && selected_level != tr("Auto")) ?
+                QString("-level:v %1 ").arg(selected_level) : "";
 
     /************************************* Mode module ***************************************/
 
-    QString arr_mode[NUMBER_PRESETS][5] = {
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"CBR",    "ABR", "VBR", "CRF", "CQP"},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"ABR",    "CRF", "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"VBR_NV", "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""},
-        {"VBR",    "",    "",    "",    ""},
-        {"CBR",    "",    "",    "",    ""},
-        {"",       "",    "",    "",    ""}
-    };
     QString mode = "";
-    QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 0);
-    QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 0);
-    QString maxrate = QString::number(1000000.0*_MAXRATE.toDouble(), 'f', 0);
-    QString bufsize = QString::number(1000000.0*_BUFSIZE.toDouble(), 'f', 0);
-    QString selected_mode = arr_mode[_CODEC][_MODE];
+    const QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 0);
+    const QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 0);
+    const QString maxrate = QString::number(1000000.0*_MAXRATE.toDouble(), 'f', 0);
+    const QString bufsize = QString::number(1000000.0*_BUFSIZE.toDouble(), 'f', 0);
+    const QString selected_mode = t.arr_mode[_CODEC][_MODE];
 
     if (selected_mode == "CBR") {
         mode = QString("-b:v %1 -minrate %1 -maxrate %1 -bufsize %2 ").arg(bitrate, bufsize);
@@ -409,191 +290,91 @@ void Encoder::initEncoding(const QString  &temp_file,
     else if (selected_mode == "CQP") {
         mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
     }
+    else if (selected_mode == "CQP_QS") {
+        mode = QString("-global_quality %1 -look_ahead 1 ").arg(_BQR);
+    }
+    else if (selected_mode == "CQP_VA") {
+        mode = QString("-qp %1 -rc_mode 4 ").arg(_BQR);
+    }
 
     /************************************* Preset module ***************************************/
 
-    QString arr_preset[NUMBER_PRESETS][10] = {
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Veryfast",  "Faster",    "Fast",     "Medium", "Slow", "Slower", "Veryslow", "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Slow",      "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""},
-        {"None", "Ultrafast", "Superfast", "Veryfast", "Faster", "Fast", "Medium", "Slow",     "Slower", "Veryslow"},
-        {"",     "",          "",          "",         "",       "",     "",       "",         "",       ""}
-    };
     QString preset = "";
-    QString selected_preset = arr_preset[_CODEC][_PRESET];
-    if (selected_preset != "" && selected_preset != "None") {
+    const QString selected_preset = t.getCurrentPreset(_CODEC, _PRESET);
+    if (selected_preset != "" && selected_preset != tr("None")) {
         preset = QString("-preset ") + selected_preset.toLower() + QString(" ");
     }
 
     /************************************* Pass module ***************************************/
 
-    QString arr_pass[NUMBER_PRESETS][2] = {
-        {"",                     "-x265-params pass=2 "},
-        {"",                     "-x265-params pass=2 "},
-        {"",                     "-x265-params pass=2 "},
-        {"",                     "-pass 2 "},
-        {"",                     "-pass 2 "},
-        {"",                     "-pass 2 "},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"-2pass 1 ",            ""},
-        {"-2pass 1 ",            ""},
-        {"-2pass 1 ",            ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""},
-        {"",                     ""}
-    };
+    const QString selected_pass = t.arr_pass[_CODEC][_PASS];
+    QString pass = "";
     QString pass1 = "";
-    QString pass = arr_pass[_CODEC][_PASS];
-    if (pass == "-x265-params pass=2 ") {
+    if (selected_pass == tr("2 Pass_x265")) {
+        pass = "-x265-params pass=2 ";
         pass1 = "-x265-params pass=1 ";
         _flag_two_pass = true;
     }
-    if (pass == "-pass 2 ") {
+    else if (selected_pass == tr("2 Pass")) {
+        pass = "-pass 2 ";
         pass1 = "-pass 1 ";
         _flag_two_pass = true;
+    }
+    else if (selected_pass == tr("2 Pass Optimisation")) {
+        pass = "-2pass 1 ";
     }
 
     /************************************* Audio module ***************************************/
 
-    QString arr_acodec[NUMBER_PRESETS][6] = {
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"Opus",  "Vorbis", "Source", "",       "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Source", "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"PCM16", "",       "",       "",       "",     ""},
-        {"PCM16", "PCM24",  "PCM32",  "",       "",     ""},
-        {"AAC",   "AC3",    "DTS",    "Vorbis", "Opus", "Source"}
-    };
-
-    QString arr_bitrate[5][17] = {
-        {"384k",  "320k",  "256k",  "192k",  "128k",  "96k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AAC
-        {"640k",  "448k",  "384k",  "256k",  "",      "",      "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // AC3
-        {"3840k", "3072k", "2048k", "1920k", "1536k", "1472k", "1344k", "1280k", "1152k", "1024k", "960k", "768k", "640k", "576k", "512k", "448k", "384k"}, // DTS
-        {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""}, // Vorbis
-        {"448k",  "384k",  "256k",  "128k",  "96k",   "64k",   "",      "",      "",      "",      "",     "",     "",     "",     "",     "",     ""} // Opus
-    };
-
-    QString arr_sampling[12] = {
-        "Source", "8000",  "11025", "16000", "22050",  "32000",
-        "44100",  "48000", "88200", "96000", "176400", "192000"
-    };
-
-    QString arr_channels[3] = {
-        "Source", "1", "2"
-    };
-
     QString acodec = "";
-    QString selected_acodec = arr_acodec[_CODEC][_AUDIO_CODEC];
+    const QString selected_acodec = t.arr_acodec[_CODEC][_AUDIO_CODEC];
     QString selected_bitrate = "";
 
     QString sampling = "";
-    QString selected_sampling = arr_sampling[_AUDIO_SAMPLING];
+    const QString selected_sampling = t.arr_sampling[_AUDIO_SAMPLING];
     if (selected_sampling != "Source") {
         sampling = QString("-af aresample=%1:resampler=soxr ").arg(selected_sampling);
     }
 
     QString channels = "";
-    QString selected_channels = arr_channels[_AUDIO_CHANNELS];
+    const QString selected_channels = t.arr_channels[_AUDIO_CHANNELS];
     if (selected_channels != "Source") {
         channels = QString(" -ac %1").arg(selected_channels);
     }
 
-
     if (selected_acodec == "AAC") {
-        selected_bitrate = arr_bitrate[0][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[0][_AUDIO_BITRATE];
         acodec = QString("-c:a aac -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "AC3") {
-        selected_bitrate = arr_bitrate[1][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[1][_AUDIO_BITRATE];
         acodec = QString("-c:a ac3 -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "DTS") {
-        selected_bitrate = arr_bitrate[2][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[2][_AUDIO_BITRATE];
         acodec = QString("-strict -2 -c:a dca -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "Vorbis") {
-        selected_bitrate = arr_bitrate[3][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[3][_AUDIO_BITRATE];
         acodec = QString("-c:a libvorbis -b:a %1").arg(selected_bitrate);
     }
     else if (selected_acodec == "Opus") {
-        selected_bitrate = arr_bitrate[4][_AUDIO_BITRATE];
+        selected_bitrate = t.arr_bitrate[4][_AUDIO_BITRATE];
         acodec = QString("-c:a libopus -b:a %1").arg(selected_bitrate);
     }
-    else if (selected_acodec == "PCM16") {
+    else if (selected_acodec == "PCM 16 bit") {
         acodec = "-c:a pcm_s16le";
     }
-    else if (selected_acodec == "PCM24") {
+    else if (selected_acodec == "PCM 24 bit") {
         acodec = "-c:a pcm_s24le";
     }
-    else if (selected_acodec == "PCM32") {
+    else if (selected_acodec == "PCM 32 bit") {
         acodec = "-c:a pcm_s32le";
     }
-    else if (selected_acodec == "Source") {
+    else if (selected_acodec == tr("Source")) {
         acodec = "-c:a copy";
     }
-    QString audio_param = sampling + acodec + channels;
+    const QString audio_param = sampling + acodec + channels;
 
     /************************************ Subtitle module *************************************/
 
@@ -622,11 +403,11 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     // color primaries
 
-    QString arr_colorprim[11] = {
+    const QString arr_colorprim[11] = {
         "Source",    "bt470m",   "bt470bg",  "bt709",    "bt2020", "smpte170m",
         "smpte240m", "smpte428", "smpte431", "smpte432", "film"
     };
-    QMap<QString, QString> curr_colorprim = {
+    const QMap<QString, QString> curr_colorprim = {
         {"BT709",           "bt709"},
         {"BT2020",          "bt2020"},
         {"BT601 NTSC",      "smpte170m"},
@@ -642,7 +423,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QString colorprim = "";
     QString colorprim_vf = "";
-    QString selected_colorprim = arr_colorprim[_PRIMARY];
+    const QString selected_colorprim = arr_colorprim[_PRIMARY];
     if (!curr_colorprim.contains(_hdr[CUR_COLOR_PRIMARY])) {
         _message = tr("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
         emit onEncodingInitError(_message);
@@ -664,11 +445,11 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     // color matrix
 
-    QString arr_colormatrix[14] = {
+    const QString arr_colormatrix[14] = {
         "Source", "bt470bg", "bt709", "bt2020nc", "bt2020c", "smpte170m", "smpte240m",
         "smpte2085", "chroma-derived-nc", "chroma-derived-c", "fcc", "GBR", "ICtCp", "YCgCo"
     };
-    QMap<QString, QString> curr_colormatrix = {
+    const QMap<QString, QString> curr_colormatrix = {
         {"BT709",                   "bt709"},
         {"BT2020nc",                "bt2020nc"},
         {"BT2020c",                 "bt2020c"},
@@ -687,7 +468,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QString colormatrix = "";
     QString colormatrix_vf = "";
-    QString selected_colormatrix = arr_colormatrix[_MATRIX];
+    const QString selected_colormatrix = arr_colormatrix[_MATRIX];
     if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
         _message = tr("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
         emit onEncodingInitError(_message);
@@ -709,12 +490,12 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     // transfer characteristics
 
-    QString arr_trc[17] = {
+    const QString arr_trc[17] = {
         "Source", "bt470m", "bt470bg", "bt709", "bt1361e", "bt2020-10", "bt2020-12", "smpte170m",
         "smpte240m", "smpte428", "smpte2084", "arib-std-b67", "linear", "log100", "log316",
         "iec61966-2-1", "iec61966-2-4"
     };
-    QMap<QString, QString> curr_transfer = {
+    const QMap<QString, QString> curr_transfer = {
         {"BT709",                    "bt709"},
         {"PQ",                       "smpte2084"},
         {"HLG",                      "arib-std-b67"},
@@ -736,7 +517,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QString transfer = "";
     QString transfer_vf = "";
-    QString selected_transfer = arr_trc[_TRC];
+    const QString selected_transfer = arr_trc[_TRC];
     if (!curr_transfer.contains(_hdr[CUR_TRANSFER])) {
         _message = tr("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
         emit onEncodingInitError(_message);
@@ -757,7 +538,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
 
     const int vf_size = 6;
-    QString vf_transform_arr[vf_size] = {
+    const QString vf_transform_arr[vf_size] = {
         hwaccel_filter_vf,
         fps_vf,
         resize_vf,
@@ -784,9 +565,9 @@ void Encoder::initEncoding(const QString  &temp_file,
         transform = QString("-vf %1 ").arg(vf);
     }
 
-    QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
+    const QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
                     QString("-map_metadata -1 ") + _videoMetadataParam + _audioMetadataParam +
-                    _subtitleMetadataParam + transform + arr_codec[_CODEC][0];
+                    _subtitleMetadataParam + transform + t.arr_params[_CODEC][0];
 
     /************************************* HDR module ***************************************/
 
@@ -860,73 +641,49 @@ void Encoder::initEncoding(const QString  &temp_file,
 
         /************************************* Display module ***************************************/
 
-        QString chroma_coord_curr_red_x = "";
-        QString chroma_coord_curr_red_y = "";
-        QString chroma_coord_curr_green_x = "";
-        QString chroma_coord_curr_green_y = "";
-        QString chroma_coord_curr_blue_x = "";
-        QString chroma_coord_curr_blue_y = "";
-        QString white_coord_curr_x = "";
-        QString white_coord_curr_y = "";
-        if (_MASTER_DISPLAY == 0) {     // From source
+        enum Display {Display_P3, Dci_P3, Bt_2020, Bt_709};
+        enum Coord {red_x, red_y, green_x, green_y, blue_x, blue_y, white_x, white_y};
+        const QString arr_coord[4][8] = {
+            {"0.680", "0.320", "0.265", "0.690", "0.150", "0.060", "0.3127", "0.3290"}, // Display_P3
+            {"0.680", "0.320", "0.265", "0.690", "0.150", "0.060", "0.314",  "0.3510"}, // DCI_P3
+            {"0.708", "0.292", "0.170", "0.797", "0.131", "0.046", "0.3127", "0.3290"}, // BT.2020
+            {"0.640", "0.330", "0.30",  "0.60",  "0.150", "0.060", "0.3127", "0.3290"}  // BT.709
+        };
+        QString current_coord[8] = {"", "", "", "", "", "", "", ""};
+
+        auto fill_coord = [&current_coord, &arr_coord](int display){
+            for (int i = red_x; i <= white_y; i++) {
+                current_coord[i] = arr_coord[display][i];
+            }
+        };
+        if (_MASTER_DISPLAY == MasterDisplay::SOURCE) {     // From source
             if (_hdr[CUR_MASTER_DISPLAY] == "Display P3") {
-                chroma_coord_curr_red_x = "0.680";
-                chroma_coord_curr_red_y = "0.320";
-                chroma_coord_curr_green_x = "0.265";
-                chroma_coord_curr_green_y = "0.690";
-                chroma_coord_curr_blue_x = "0.150";
-                chroma_coord_curr_blue_y = "0.060";
-                white_coord_curr_x = "0.3127";
-                white_coord_curr_y = "0.3290";
-            }
+                fill_coord(Display::Display_P3);
+            } else
             if (_hdr[CUR_MASTER_DISPLAY] == "DCI P3") {
-                chroma_coord_curr_red_x = "0.680";
-                chroma_coord_curr_red_y = "0.320";
-                chroma_coord_curr_green_x = "0.265";
-                chroma_coord_curr_green_y = "0.690";
-                chroma_coord_curr_blue_x = "0.150";
-                chroma_coord_curr_blue_y = "0.060";
-                white_coord_curr_x = "0.314";
-                white_coord_curr_y = "0.3510";
-            }
+                fill_coord(Display::Dci_P3);
+            } else
             if (_hdr[CUR_MASTER_DISPLAY] == "BT.2020") {
-                chroma_coord_curr_red_x = "0.708";
-                chroma_coord_curr_red_y = "0.292";
-                chroma_coord_curr_green_x = "0.170";
-                chroma_coord_curr_green_y = "0.797";
-                chroma_coord_curr_blue_x = "0.131";
-                chroma_coord_curr_blue_y = "0.046";
-                white_coord_curr_x = "0.3127";
-                white_coord_curr_y = "0.3290";
-            }
+                fill_coord(Display::Bt_2020);
+            } else
             if (_hdr[CUR_MASTER_DISPLAY] == "BT.709") {
-                chroma_coord_curr_red_x = "0.640";
-                chroma_coord_curr_red_y = "0.330";
-                chroma_coord_curr_green_x = "0.30";
-                chroma_coord_curr_green_y = "0.60";
-                chroma_coord_curr_blue_x = "0.150";
-                chroma_coord_curr_blue_y = "0.060";
-                white_coord_curr_x = "0.3127";
-                white_coord_curr_y = "0.3290";
-            }
+                fill_coord(Display::Bt_709);
+            } else
             if (_hdr[CUR_MASTER_DISPLAY] == "Undefined") {
-                QStringList chr = _hdr[CUR_CHROMA_COORD].split(",");
+                const QStringList chr = _hdr[CUR_CHROMA_COORD].split(",");
                 if (chr.size() == 6) {
-                    chroma_coord_curr_red_x = chr[0];
-                    chroma_coord_curr_red_y = chr[1];
-                    chroma_coord_curr_green_x = chr[2];
-                    chroma_coord_curr_green_y = chr[3];
-                    chroma_coord_curr_blue_x = chr[4];
-                    chroma_coord_curr_blue_y = chr[5];
+                    for (int i = red_x; i <= blue_y; i++) {
+                        current_coord[i] = chr[i];
+                    }
                 } else {
                     _message = tr("Incorrect master display chroma coordinates source parameters!");
                     emit onEncodingInitError(_message);
                     return;
                 }
-                QStringList wht = _hdr[CUR_WHITE_COORD].split(",");
+                const QStringList wht = _hdr[CUR_WHITE_COORD].split(",");
                 if (wht.size() == 2) {
-                    white_coord_curr_x = wht[0];
-                    white_coord_curr_y = wht[1];
+                    current_coord[white_x] = wht[0];
+                    current_coord[white_y] = wht[1];
                 } else {
                     _message = tr("Incorrect master display white point coordinates source parameters!");
                     emit onEncodingInitError(_message);
@@ -934,64 +691,33 @@ void Encoder::initEncoding(const QString  &temp_file,
                 }
             }
         }
-        if (_MASTER_DISPLAY == 1) {     // Display P3
-            chroma_coord_curr_red_x = "0.680";
-            chroma_coord_curr_red_y = "0.320";
-            chroma_coord_curr_green_x = "0.265";
-            chroma_coord_curr_green_y = "0.690";
-            chroma_coord_curr_blue_x = "0.150";
-            chroma_coord_curr_blue_y = "0.060";
-            white_coord_curr_x = "0.3127";
-            white_coord_curr_y = "0.3290";
-        }
-        if (_MASTER_DISPLAY == 2) {     // DCI P3
-            chroma_coord_curr_red_x = "0.680";
-            chroma_coord_curr_red_y = "0.320";
-            chroma_coord_curr_green_x = "0.265";
-            chroma_coord_curr_green_y = "0.690";
-            chroma_coord_curr_blue_x = "0.150";
-            chroma_coord_curr_blue_y = "0.060";
-            white_coord_curr_x = "0.314";
-            white_coord_curr_y = "0.3510";
-        }
-        if (_MASTER_DISPLAY == 3) {     // BT.2020
-            chroma_coord_curr_red_x = "0.708";
-            chroma_coord_curr_red_y = "0.292";
-            chroma_coord_curr_green_x = "0.170";
-            chroma_coord_curr_green_y = "0.797";
-            chroma_coord_curr_blue_x = "0.131";
-            chroma_coord_curr_blue_y = "0.046";
-            white_coord_curr_x = "0.3127";
-            white_coord_curr_y = "0.3290";
-        }
-        if (_MASTER_DISPLAY == 4) {     // BT.709
-            chroma_coord_curr_red_x = "0.640";
-            chroma_coord_curr_red_y = "0.330";
-            chroma_coord_curr_green_x = "0.30";
-            chroma_coord_curr_green_y = "0.60";
-            chroma_coord_curr_blue_x = "0.150";
-            chroma_coord_curr_blue_y = "0.060";
-            white_coord_curr_x = "0.3127";
-            white_coord_curr_y = "0.3290";
-        }
-        if (_MASTER_DISPLAY == 5) {     // Custom
+        if (_MASTER_DISPLAY == MasterDisplay::DISPLAY_P3) {     // Display P3
+            fill_coord(Display::Display_P3);
+        } else
+        if (_MASTER_DISPLAY == MasterDisplay::DCI_P3) {     // DCI P3
+            fill_coord(Display::Dci_P3);
+        } else
+        if (_MASTER_DISPLAY == MasterDisplay::BT_2020) {     // BT.2020
+            fill_coord(Display::Bt_2020);
+        } else
+        if (_MASTER_DISPLAY == MasterDisplay::BT_709) {     // BT.709
+            fill_coord(Display::Bt_709);
+        } else
+        if (_MASTER_DISPLAY == MasterDisplay::CUSTOM) {     // Custom
             QStringList chr = _CHROMA_COORD.split(",");
             if (chr.size() == 6) {
-                chroma_coord_curr_red_x = chr[0];
-                chroma_coord_curr_red_y = chr[1];
-                chroma_coord_curr_green_x = chr[2];
-                chroma_coord_curr_green_y = chr[3];
-                chroma_coord_curr_blue_x = chr[4];
-                chroma_coord_curr_blue_y = chr[5];
+                for (int i = red_x; i <= blue_y; i++) {
+                    current_coord[i] = chr[i];
+                }
             }
             QStringList wht = _WHITE_COORD.split(",");
             if (wht.size() == 2) {
-                white_coord_curr_x = wht[0];
-                white_coord_curr_y = wht[1];
+                current_coord[white_x] = wht[0];
+                current_coord[white_y] = wht[1];
             }
         }
 
-        if (chroma_coord_curr_red_x == "") {
+        if (current_coord[red_x] == "") {
             chroma_coord = "-d chromaticity-coordinates-red-x -d chromaticity-coordinates-red-y "
                            "-d chromaticity-coordinates-green-x -d chromaticity-coordinates-green-y "
                            "-d chromaticity-coordinates-blue-x -d chromaticity-coordinates-blue-y ";
@@ -999,13 +725,13 @@ void Encoder::initEncoding(const QString  &temp_file,
             chroma_coord = QString("-s chromaticity-coordinates-red-x=%1 -s chromaticity-coordinates-red-y=%2 "
                                    "-s chromaticity-coordinates-green-x=%3 -s chromaticity-coordinates-green-y=%4 "
                                    "-s chromaticity-coordinates-blue-x=%5 -s chromaticity-coordinates-blue-y=%6 ")
-                                   .arg(chroma_coord_curr_red_x, chroma_coord_curr_red_y, chroma_coord_curr_green_x,
-                                        chroma_coord_curr_green_y, chroma_coord_curr_blue_x, chroma_coord_curr_blue_y);
+                                   .arg(current_coord[red_x], current_coord[red_y], current_coord[green_x],
+                                        current_coord[green_y], current_coord[blue_x], current_coord[blue_y]);
         }
-        if (white_coord_curr_x == "") {
+        if (current_coord[white_x] == "") {
             white_coord = "-d white-coordinates-x -d white-coordinates-y ";
         } else {
-            white_coord = QString("-s white-coordinates-x=%1 -s white-coordinates-y=%2 ").arg(white_coord_curr_x, white_coord_curr_y);
+            white_coord = QString("-s white-coordinates-x=%1 -s white-coordinates-y=%2 ").arg(current_coord[white_x], current_coord[white_y]);
         }
     }
 

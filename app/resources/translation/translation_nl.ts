@@ -93,7 +93,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="dialog.ui" line="210"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="dialog.ui" line="226"/>
@@ -103,7 +103,7 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
     <message>
         <location filename="dialog.ui" line="288"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="dialog.ui" line="334"/>

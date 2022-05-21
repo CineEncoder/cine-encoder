@@ -20,7 +20,7 @@
 #include <QVector>
 #include <iostream>
 #include <math.h>
-#include "constants.h"
+
 #if defined (Q_OS_UNIX)
     #include <unistd.h>
     #include <signal.h>

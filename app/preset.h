@@ -13,16 +13,12 @@
 #ifndef PRESET_H
 #define PRESET_H
 
-#include <QDialog>
-#include <QTimer>
-#include <QListView>
-#include <QMouseEvent>
-#include <QHoverEvent>
-#include <QCloseEvent>
-#include <QResizeEvent>
-#include <iostream>
-#include <math.h>
-#include "constants.h"
+#include <QtGlobal>
+#ifdef Q_OS_WIN
+    #include "platform_win/basewindow.h"
+#else
+    #include "platform_unix/basewindow.h"
+#endif
 
 
 namespace Ui
@@ -30,79 +26,46 @@ namespace Ui
     class Preset;
 }
 
-
-class Preset : public QDialog
+class Preset : public BaseWindow
 {
     Q_OBJECT
-
 public:
-
-    explicit Preset(QWidget *parent = nullptr);
+    explicit Preset(QWidget *parent, QVector<QString> *pOld_param);
     ~Preset();
 
-    void setParameters(QByteArray *ptr_presetWindowGeometry, QVector<QString> *_old_param);
-
-private slots:
-
-    void closeEvent(QCloseEvent *close_preset);
-    bool eventFilter(QObject *watched, QEvent *event);
-    void on_closeWindow_clicked();
-    void on_buttonCancel_clicked();
-    void on_buttonApply_clicked();
-    void on_buttonTab_1_clicked();
-    void on_buttonTab_2_clicked();
-    void on_buttonTab_3_clicked();
-    void on_buttonTab_4_clicked();
-    void change_preset_name();
-    void on_comboBoxAspectRatio_currentIndexChanged(int index);
-    void on_comboBox_width_currentTextChanged(const QString &arg1);
-    void on_comboBox_height_currentTextChanged(const QString &arg1);
-    void calculateDAR(QString width, QString height);
-    void on_comboBoxFrameRate_currentIndexChanged(int index);
-    void repeat_handler();
-    void disableHDR();
-    void on_comboBox_codec_currentTextChanged(const QString &arg1);
-    void on_comboBox_mode_currentTextChanged(const QString &arg1);
-    void on_comboBox_preset_currentIndexChanged(int index);
-    void on_comboBox_pass_currentIndexChanged(int index);
-    void on_comboBox_container_currentTextChanged();
-    void on_lineEdit_bitrate_editingFinished();
-    void on_comboBox_audio_codec_currentTextChanged(const QString &arg1);
-    void on_comboBox_audio_bitrate_currentTextChanged();
-    void on_comboBox_master_disp_currentTextChanged(const QString &arg1);
-
 private:
+    void onCloseWindow();
+    void onButtonApply();
+    void lockSignals(bool status);
+    virtual void showEvent(QShowEvent*) final;
+    virtual bool eventFilter(QObject*, QEvent*) final;
+    // Transform
+    void repeat_handler();
+    void change_preset_name();
+    void onComboBoxAspectRatio_indexChanged(int);
+    void onComboBox_width_textChanged(const QString&);
+    void onComboBox_height_textChanged(const QString&);
+    void onComboBoxFrameRate_indexChanged(int);
+    void calculateDAR(QString, QString);
+    // Video
+    void disableHDR();
+    void onComboBox_codec_textChanged(const QString&);
+    void onComboBox_mode_textChanged(const QString&);
+    void onComboBox_preset_indexChanged(int);
+    void onComboBox_pass_indexChanged(int);
+    void onComboBox_container_textChanged();
+    void onLineEdit_bitrate_editingFinished();
+    // Audio
+    void onComboBox_audio_codec_textChanged(const QString&);
+    void onComboBox_audio_bitrate_textChanged();
+    // Metadata
+    void onComboBox_master_disp_textChanged(const QString&);
 
     Ui::Preset *ui;
-
-    QVector<QString> *_new_param;
-
-    QTimer *timer;
-
-    int _repeat;
-
-    float _aspectRatio;
-
-    /**************** Geometry **************************/
-
-    bool        _expandWindowsState,
-                _clickPressedFlag;
-
-    int         _oldPosX,
-                _oldPosY,
-                _oldWidth,
-                _oldHeight;
-
-    QPoint      _mouseClickCoordinate,
-                _globalMouseClickCoordinate;
-
-    QByteArray  *_ptr_presetWindowGeometry;
-
-    QVector<bool> _clickPressedToResizeFlag;
-
-    void on_expandWindow_clicked();
-    void lockSignals(bool status);
-
+    QVector<QString> *m_pNew_param;
+    float m_aspectRatio;
+    int   m_repeat;
+    bool  m_windowActivated;
 };
 
 #endif // PRESET_H

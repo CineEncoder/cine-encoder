@@ -268,7 +268,6 @@
         <file>resources/icons/16x16/cil-stop.png</file>
         <file>resources/icons/16x16/cil-sort-ascending.png</file>
         <file>resources/icons/16x16/cil-sort-descending.png</file>
-        <file>resources/icons/Animated/cil-spinner-circle.gif</file>
         <file>resources/icons/12x12/cil-input.png</file>
         <file>resources/icons/12x12/cil-output.png</file>
         <file>resources/icons/16x16/cil-edit-pencil.png</file>
@@ -329,5 +328,20 @@
         <file>resources/icons/16x16/cil-cursor-center.png</file>
         <file>resources/data/default_presets.ini</file>
         <file>resources/data/default_settings.ini</file>
+        <file>resources/css/style_4.css</file>
+        <file>resources/icons/gif/cil-spinner-circle.gif</file>
+        <file>resources/icons/svg/cine-encoder.svg</file>
+        <file>resources/icons/svg/no_preview.svg</file>
+        <file>resources/icons/svg/pause.svg</file>
+        <file>resources/icons/svg/play.svg</file>
+        <file>resources/icons/svg/forward.svg</file>
+        <file>resources/icons/svg/expand_black.svg</file>
+        <file>resources/icons/svg/restore_black.svg</file>
+        <file>resources/icons/svg/close_black.svg</file>
+        <file>resources/icons/svg/close.svg</file>
+        <file>resources/icons/svg/minimize_black.svg</file>
+        <file>resources/icons/svg/expand.svg</file>
+        <file>resources/icons/svg/minimize.svg</file>
+        <file>resources/icons/svg/restore.svg</file>
     </qresource>
 </RCC>

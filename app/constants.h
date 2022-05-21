@@ -13,21 +13,28 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <QSettings>
+#include <QDir>
+#define SETTINGS(settings) QSettings settings(QDir::homePath() + \
+                            QString("/CineEncoder/settings.ini"), \
+                            QSettings::IniFormat);
 
 // ******************* Constants *****************************//
 
-#define PRESETS_VERSION 352
-
+#define PRESETS_VERSION 354
 #define SETTINGS_VERSION 352
 
 #define PARAMETERS_COUNT 34
+#define NUMBER_PRESETS 30
 
-#define NUMBER_PRESETS 29
+#define CODEC_QSV_FIRST 6
+#define CODEC_QSV_LAST 11
+#define CODEC_VAAPI_FIRST 12
+#define CODEC_VAAPI_LAST 12
 
 #define DOCKS_COUNT 8
 
 #define AMOUNT_AUDIO_STREAMS 9
-
 #define AMOUNT_SUBTITLES 9
 
 #define MAXIMUM_ALLOWED_TIME 359999.0f
@@ -72,7 +79,7 @@ enum Resize {
 };
 
 enum Theme {
-    GRAY, DARK, WAVE, DEFAULT
+    GRAY, DARK, WAVE, DEFAULT, LIGHT
 };
 
 enum PreviewDest {
@@ -86,8 +93,8 @@ enum PreviewRes {
 // ******************** Metadata *****************************//
 
 enum VideoMetadataIndex {
-    VIDEO_TITLE,        VIDEO_AUTHOR,       VIDEO_YEAR,
-    VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME, ENUM_END_LABEL
+    VIDEO_TITLE,  VIDEO_MOVIENAME, VIDEO_YEAR,
+    VIDEO_AUTHOR, VIDEO_PERFORMER, VIDEO_DESCRIPTION
 };
 
 // ******************* Presets *****************************//
@@ -111,6 +118,10 @@ enum CurHDRIndex {
     CUR_TRANSFER,       CUR_MAX_LUM,        CUR_MIN_LUM,
     CUR_MAX_CLL,        CUR_MAX_FALL,       CUR_MASTER_DISPLAY,
     CUR_CHROMA_COORD,   CUR_WHITE_COORD
+};
+
+enum MasterDisplay {
+    SOURCE, DISPLAY_P3, DCI_P3, BT_2020, BT_709, CUSTOM
 };
 
 enum CurParamIndex {

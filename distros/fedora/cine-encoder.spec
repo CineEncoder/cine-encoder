@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 BuildRequires: libmediainfo-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: qt5-qtmultimedia-devel
-Requires: ffmpeg, mkvtoolnix
+Requires: ffmpeg, mkvtoolnix, intel-media-driver, libva-intel-driver
 
 %description
 Cine Encoder is an application, uses the FFmpeg, MKVToolNix and MediaInfo

@@ -13,22 +13,18 @@
   <property name="windowTitle">
    <string>Cine Encoder</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="files.qrc">
-    <normaloff>:/resources/icons/64x64/cine-encoder.png</normaloff>:/resources/icons/64x64/cine-encoder.png</iconset>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -3899,7 +3895,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -3986,10 +3982,10 @@
                   <enum>QAbstractItemView::ScrollPerPixel</enum>
                  </property>
                  <property name="showGrid">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <property name="gridStyle">
-                  <enum>Qt::DotLine</enum>
+                  <enum>Qt::SolidLine</enum>
                  </property>
                  <property name="sortingEnabled">
                   <bool>false</bool>
@@ -4007,7 +4003,7 @@
                   <number>107</number>
                  </property>
                  <attribute name="horizontalHeaderVisible">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </attribute>
                  <attribute name="horizontalHeaderCascadingSectionResizes">
                   <bool>true</bool>
@@ -4028,7 +4024,7 @@
                   <bool>true</bool>
                  </attribute>
                  <attribute name="verticalHeaderVisible">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </attribute>
                  <attribute name="verticalHeaderCascadingSectionResizes">
                   <bool>false</bool>
@@ -4863,12 +4859,18 @@
                  </property>
                 </spacer>
                </item>
-               <item row="2" column="6">
+               <item row="2" column="6" alignment="Qt::AlignVCenter">
                 <widget class="Line" name="line_4">
+                 <property name="minimumSize">
+                  <size>
+                   <width>1</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>1</width>
-                   <height>20</height>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="frameShadow">
@@ -4879,12 +4881,18 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="12">
+               <item row="2" column="12" alignment="Qt::AlignVCenter">
                 <widget class="Line" name="line_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>1</width>
+                   <height>16</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>1</width>
-                   <height>20</height>
+                   <height>16</height>
                   </size>
                  </property>
                  <property name="frameShadow">
@@ -5060,10 +5068,6 @@
                  </property>
                  <property name="text">
                   <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-play.png</normaloff>:/resources/icons/16x16/cil-play.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -6789,7 +6793,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="14">
+            <item row="0" column="14" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuPreferencesButton">
               <property name="minimumSize">
                <size>
@@ -6824,7 +6828,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="12">
+            <item row="0" column="12" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuViewButton">
               <property name="minimumSize">
                <size>
@@ -6996,7 +7000,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="10">
+            <item row="0" column="10" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuToolsButton">
               <property name="minimumSize">
                <size>
@@ -7044,7 +7048,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="20">
+            <item row="0" column="20" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuAboutButton">
               <property name="minimumSize">
                <size>
@@ -7098,7 +7102,7 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="8">
+            <item row="0" column="8" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuEditButton">
               <property name="minimumSize">
                <size>
@@ -7130,13 +7134,13 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>22</width>
+                <width>14</width>
                 <height>20</height>
                </size>
               </property>
              </spacer>
             </item>
-            <item row="0" column="5">
+            <item row="0" column="5" alignment="Qt::AlignVCenter">
              <widget class="QPushButton" name="menuFileButton">
               <property name="minimumSize">
                <size>

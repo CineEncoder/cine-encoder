@@ -91,7 +91,7 @@ See [LICENSE.md](https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE)
 
 If you wish to support this project, you can make a donation for $0.5 or more via PayPal. Your contributions will help keep the project alive and support future development.
 
-[![PayPal](./images/PayPal.png)](https://paypal.me/KozhukharenkoOleg?locale.x=ru_RU)
+[![PayPal](./images/PayPal.png)](https://paypal.me/CineEncoder?country.x=MD&locale.x=en_US)
 
 ##### Bitcoin
 You can send bitcoins at this address or by scanning the QR code below:
