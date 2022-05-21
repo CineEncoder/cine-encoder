@@ -24,7 +24,8 @@
 
 BaseWindow::BaseWindow(QWidget *parent, bool isReizable) :
     QMainWindow(parent, Qt::Window | Qt::FramelessWindowHint |
-                Qt::WindowSystemMenuHint | Qt::WindowMaximizeButtonHint),
+                Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint |
+                Qt::WindowMaximizeButtonHint),
     m_titlebar(nullptr),
     m_whiteList(QList<QWidget*>()),
     m_isResizeable(isReizable),
