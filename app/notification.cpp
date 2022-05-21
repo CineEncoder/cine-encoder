@@ -88,7 +88,7 @@ void Notification::onCloseWindow()
 
 void Notification::onButtonPayPal()   /*** Open browser PayPal ***/
 {
-    QDesktopServices::openUrl(QUrl("https://paypal.me/KozhukharenkoOleg?locale.x=ru_RU", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("https://paypal.me/CineEncoder?country.x=MD&locale.x=en_US", QUrl::TolerantMode));
 }
 
 void Notification::onButtonBitcoin()   /*** Open browser Bitcoin ***/

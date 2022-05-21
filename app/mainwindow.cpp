@@ -177,8 +177,6 @@ void MainWindow::showEvent(QShowEvent *event)
     BaseWindow::showEvent(event);
     if (!_windowActivated) {
         _windowActivated = true;
-        std::cout << "Window Activated ..." << std::endl;
-
         setParameters();
     }
 }
