@@ -40,7 +40,7 @@
      id="layer1">
     <path
        id="rect896"
-       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#262626;stroke-width:15;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:normal;stroke-opacity:1"
-       d="M 40.025373,37.5185 H 161.97458 c 0.83481,0 1.50688,0.679824 1.50688,1.524267 V 160.95719 c 0,0.84443 -0.67207,1.52426 -1.50688,1.52426 H 40.025373 c -0.834807,0 -1.506873,-0.67983 -1.506873,-1.52426 V 39.042767 c 0,-0.844443 0.672066,-1.524267 1.506873,-1.524267 z" />
+       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#262626;stroke-width:14.0891;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="M 43.758017,41.044296 H 158.08498 c 0.78263,0 1.4127,0.639746 1.4127,1.434404 v 114.72705 c 0,0.79465 -0.63007,1.4344 -1.4127,1.4344 H 43.758017 c -0.78263,0 -1.412689,-0.63975 -1.412689,-1.4344 V 42.4787 c 0,-0.794658 0.630059,-1.434404 1.412689,-1.434404 z" />
   </g>
 </svg>

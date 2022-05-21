@@ -14,12 +14,12 @@ stop:0 #EDEDEE, stop:0.5 #F3F3F4, stop:1 #EDEDEE);
 @tableTextSelected = #000000;
 @tableGrid = #CCCCCC;
 
-@frameEdgingBackground = #FFFFFF;
+@frameEdgingBackground = #FCFCFC;
 @frameMiddleBorder = #E9E9E9;
 @frameMiddleBackground = #FFFFFF;
 @frameTextColor = #000000;
 @frameEdgeBorder = #E9E9E9;
-@frameTopBackground = #EEEEEE;
+@frameTopBackground = #FCFCFC;
 @frameBottomBackground = #FFFFFF;
 @frameHeaderBackground = #E9E9E9;
 
@@ -143,7 +143,7 @@ QToolTip {
 **************************************************************************/
 
 QMenu {
-    background-color: #FFFFFF;
+    background-color: #F5F5F5;
 }
 QMenu::item {
     color: #000000;
@@ -151,6 +151,12 @@ QMenu::item {
 }
 QMenu::item:selected {
     background-color: #DDDDDD;
+}
+QMenu::separator {
+    height: 1px;
+    margin-top: 2px; margin-bottom: 2px;
+    margin-left: 10px; margin-right: 10px;
+    background-color: #CCCCCC;
 }
 
 
@@ -684,7 +690,7 @@ QLabel#labelThumb {
     color: @frameHeaderBackground;
     font: 24pt;
     font-style: oblique;
-    background-color: @frameMiddleBackground;
+    background-color: @frameEdgingBackground;
 }
 
 QLabel#labelSplitPreview {

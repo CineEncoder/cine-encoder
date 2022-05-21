@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.19842738"
-     inkscape:cx="-73.074593"
-     inkscape:cy="662.71096"
+     inkscape:zoom="0.56123738"
+     inkscape:cx="298.44769"
+     inkscape:cy="535.42406"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
@@ -40,11 +40,11 @@
      id="layer1">
     <path
        id="rect896"
-       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#ffffff;stroke-width:15;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 178.79693,143.57603 c 0.83755,0 1.51154,-0.67451 1.51154,-1.51205 V 21.145771 c 0,-0.837541 -0.67399,-1.511535 -1.51154,-1.511535 H 56.447816 c -0.837541,0 -1.511535,0.673994 -1.511535,1.511535 v 33.942631 h 88.935649 c 0.83755,0 1.51154,0.67451 1.51154,1.512051 v 86.975577 z" />
+       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#ffffff;stroke-width:14.3378;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 174.96601,141.98746 c 0.80058,0 1.44481,-0.64472 1.44481,-1.44529 V 24.962249 c 0,-0.800565 -0.64423,-1.444804 -1.44481,-1.444804 H 58.018359 c -0.800566,0 -1.444804,0.644239 -1.444804,1.444804 v 32.444135 h 85.009325 c 0.80058,0 1.44481,0.644731 1.44481,1.445297 v 83.135779 z" />
     <path
-       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#ffffff;stroke-width:15;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 143.80165,179.40301 H 21.452712 c -0.83754,0 -1.51181,-0.67426 -1.51181,-1.51181 V 56.973092 c 0,-0.83754 0.67427,-1.51181 1.51181,-1.51181 H 143.80165 c 0.83754,0 1.51181,0.67427 1.51181,1.51181 V 177.8912 c 0,0.83755 -0.67427,1.51181 -1.51181,1.51181 z"
+       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#ffffff;stroke-width:14.3378;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 141.5157,176.23276 H 24.568216 c -0.800564,0 -1.445067,-0.6445 -1.445067,-1.44507 V 59.207868 c 0,-0.800564 0.644503,-1.445067 1.445067,-1.445067 H 141.5157 c 0.80056,0 1.44507,0.644503 1.44507,1.445067 V 174.78769 c 0,0.80057 -0.64451,1.44507 -1.44507,1.44507 z"
        id="path893-6" />
   </g>
 </svg>
