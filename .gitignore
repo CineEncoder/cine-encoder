@@ -4,5 +4,6 @@
 # Ignored files:
 *.pro.user
 *.user
+*.user.*
 *.stash
 Makefile
