@@ -124,18 +124,18 @@ bool BaseWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
     }
 
     case WM_SYSCOMMAND: {
-        if (GET_SC_WPARAM(msg->wParam) == SC_RESTORE) {
+        if (GET_SC_WPARAM(msg->wParam) == SC_RESTORE)
             return false;
-        } else
-        if (GET_SC_WPARAM(msg->wParam) == SC_MINIMIZE) {
+        else
+        if (GET_SC_WPARAM(msg->wParam) == SC_MINIMIZE)
             return false;
-        }
         break;
     }
 
     case WM_NCCALCSIZE: {
-        NCCALCSIZE_PARAMS& params = *reinterpret_cast<NCCALCSIZE_PARAMS*>(msg->lParam);
-        if (params.rgrc[0].top != 0) params.rgrc[0].top -= 1;
+        NCCALCSIZE_PARAMS& prms = *reinterpret_cast<NCCALCSIZE_PARAMS*>(msg->lParam);
+        if (prms.rgrc[0].top != 0)
+            prms.rgrc[0].top -= 1;
         *result = WVR_REDRAW;
         return true;
     }
@@ -143,64 +143,50 @@ bool BaseWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
     case WM_NCHITTEST: {
         *result = 0;
         RECT rect;
-        GetWindowRect(HWND(winId()), &rect);
-        long x = GET_X_LPARAM(msg->lParam);
-        long y = GET_Y_LPARAM(msg->lParam);
+        GetWindowRect(msg->hwnd, &rect);
+        const long x = GET_X_LPARAM(msg->lParam);
+        const long y = GET_Y_LPARAM(msg->lParam);
         if (m_isResizeable) {
-            bool resizeWidth = minimumWidth() != maximumWidth();
-            bool resizeHeight = minimumHeight() != maximumHeight();
-
-            if (resizeWidth) {
-                if (x >= rect.left && x < rect.left + RESIZABLE_AREA) {
-                    *result = HTLEFT;
-                }
-                if (x < rect.right && x >= rect.right - RESIZABLE_AREA) {
-                    *result = HTRIGHT;
-                }
-            }
-            if (resizeHeight) {
-                if (y < rect.bottom && y >= rect.bottom - RESIZABLE_AREA) {
-                    *result = HTBOTTOM;
-                }
-                if (y >= rect.top && y < rect.top + RESIZABLE_AREA) {
-                    *result = HTTOP;
-                }
-            }
-            if (resizeWidth && resizeHeight) {
-                if (x >= rect.left && x < rect.left + RESIZABLE_AREA &&
-                        y < rect.bottom && y >= rect.bottom - RESIZABLE_AREA) {
-                    *result = HTBOTTOMLEFT;
-                }
-                if (x < rect.right && x >= rect.right - RESIZABLE_AREA &&
-                        y < rect.bottom && y >= rect.bottom - RESIZABLE_AREA) {
-                    *result = HTBOTTOMRIGHT;
-                }
-                if (x >= rect.left && x < rect.left + RESIZABLE_AREA &&
-                        y >= rect.top && y < rect.top + RESIZABLE_AREA) {
+            if (x < rect.left + RESIZABLE_AREA) {
+                if (y < rect.top + RESIZABLE_AREA)
                     *result = HTTOPLEFT;
-                }
-                if (x < rect.right && x >= rect.right - RESIZABLE_AREA &&
-                        y >= rect.top && y < rect.top + RESIZABLE_AREA) {
+                else
+                if (y > rect.top + RESIZABLE_AREA && y < rect.bottom - RESIZABLE_AREA)
+                    *result = HTLEFT;
+                else
+                if (y > rect.bottom - RESIZABLE_AREA)
+                    *result = HTBOTTOMLEFT;
+            } else
+            if (x > rect.left + RESIZABLE_AREA && x < rect.right - RESIZABLE_AREA) {
+                if (y < rect.top + RESIZABLE_AREA)
+                    *result = HTTOP;
+                else
+                if (y > rect.bottom - RESIZABLE_AREA)
+                    *result = HTBOTTOM;
+            } else
+            if (x > rect.right - RESIZABLE_AREA) {
+                if (y < rect.top + RESIZABLE_AREA)
                     *result = HTTOPRIGHT;
-                }
+                else
+                if (y > rect.top + RESIZABLE_AREA && y < rect.bottom - RESIZABLE_AREA)
+                    *result = HTRIGHT;
+                else
+                if (y > rect.bottom - RESIZABLE_AREA)
+                    *result = HTBOTTOMRIGHT;
             }
         }
         if (*result != 0)
             return true;
-        if (!m_titlebar)
-            return false;
-        const double dpr = devicePixelRatioF();
-        QPoint pos = m_titlebar->mapFromGlobal(QPoint(int(x/dpr), int(y/dpr)));
-        if (!m_titlebar->rect().contains(pos))
-            return false;
-        QWidget* child = m_titlebar->childAt(pos);
-        if (!child) {
-            *result = HTCAPTION;
-            return true;
-        } else {
-            if (m_whiteList.contains(child)) {
-                *result = HTCAPTION;
-                return true;
+        if (m_titlebar) {
+            const double dpr = devicePixelRatioF();
+            const QPoint pos = m_titlebar->mapFromGlobal(
+                            QPoint(int(double(x)/dpr), int(double(y)/dpr)));
+            if (m_titlebar->rect().contains(pos)) {
+                QWidget* child = m_titlebar->childAt(pos);
+                if (!child || m_whiteList.contains(child)) {
+                    *result = HTCAPTION;
+                    return true;
+                }
             }
         }
         return false;

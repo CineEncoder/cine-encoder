@@ -144,7 +144,7 @@ bool BaseDialog::eventFilter(QObject *watched, QEvent *event)
                 return true;
             } else*/
             if (event->type() == QEvent::HoverMove && m_clickPressedToResizeFlag.indexOf(true) == -1) {
-                const QPoint &&mouseCoordinate = this->mapFromGlobal(QCursor::pos());
+                const QPoint mouseCoordinate = this->mapFromGlobal(QCursor::pos());
                 if (mouseCoordinate.x() < BORDER) {
                     if (mouseCoordinate.y() < BORDER) {
                         setCursor(QCursor(Qt::SizeFDiagCursor));
