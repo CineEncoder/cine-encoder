@@ -13,10 +13,12 @@
 QT += core
 QT += gui
 QT += multimedia
+QT += svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
-CODECFORSRC = UTF-8
 #CONFIG += console
+CODECFORSRC = UTF-8
+
 # GENERAL
 TARGET = cine_encoder
 TEMPLATE = app
@@ -24,67 +26,84 @@ VERSION = 3.5.4
 
 # DIRS
 CONFIG -= debug_and_release debug_and_release_target
-DESTDIR = ../builddir
+DESTDIR =     ../builddir
 OBJECTS_DIR = ../builddir/obj
-MOC_DIR = ../builddir/moc
-UI_DIR = ../builddir/ui
-RCC_DIR = ../builddir/rcc
+MOC_DIR =     ../builddir/moc
+UI_DIR =      ../builddir/ui
+RCC_DIR =     ../builddir/rcc
 
 # DEFINES
-DEFINES += QT_DEPRECATED_X
+#DEFINES += QT_DEPRECATED_X
 
 # FILES
 SOURCES += \
-    about.cpp \
-    dialog.cpp \
-    donate.cpp \
+    basedialog.cpp \
     encoder.cpp \
-    framelesswindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    openingfiles.cpp \
+    message.cpp \
+    notification.cpp \
     preset.cpp \
-    settings.cpp \
-    taskcomplete.cpp
+    progress.cpp \
+    settings.cpp
 
 HEADERS += \
-    about.h \
+    basedialog.h \
     constants.h \
-    dialog.h \
-    donate.h \
     encoder.h \
-    framelesswindow.h \
     mainwindow.h \
-    openingfiles.h \
+    message.h \
+    notification.h \
     preset.h \
+    progress.h \
     settings.h \
-    tables.h \
-    taskcomplete.h
+    tables.h
 
 FORMS += \
-    about.ui \
-    dialog.ui \
-    donate.ui \
     mainwindow.ui \
-    openingfiles.ui \
+    message.ui \
+    notification.ui \
     preset.ui \
-    settings.ui \
-    taskcomplete.ui
+    progress.ui \
+    settings.ui
 
-RESOURCES += \
-    files.qrc
+unix:!macx {
+    SOURCES += \
+        platform_unix/basewindow.cpp \
+        platform_unix/xutil.cpp
+
+    HEADERS += \
+        platform_unix/basewindow.h \
+        platform_unix/xutil.h
+}
 
 win32 {
     RC_FILE = icon.rc
+    SOURCES += \
+        platform_win/basewindow.cpp
+
+    HEADERS += \
+        platform_win/basewindow.h
 }
 
-TRANSLATIONS += translation_de.ts \
-                translation_ru.ts \
-                translation_zh.ts
+TRANSLATIONS += $$PWD/resources/translation/translation_de.ts \
+                $$PWD/resources/translation/translation_ru.ts \
+                $$PWD/resources/translation/translation_zh.ts
+
+RESOURCES += files.qrc
 
 # LIBS
 unix:!macx {
-    LIBS += -lmediainfo
+    QT += x11extras dbus
+    CONFIG += link_pkgconfig
+    PKGCONFIG += xext
+    LIBS += -lX11 \
+            -lmediainfo
+}
+
+win32 {
+    LIBS += -luser32 \
+            -ldwmapi
 }
 
 # INSTALLS

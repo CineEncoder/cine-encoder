@@ -13,17 +13,12 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "framelesswindow.h"
-#include <QFileDialog>
-#include <QCloseEvent>
-#include <QMouseEvent>
-#include <QHoverEvent>
-#include <QListView>
-#include <QMap>
-#include <QFontDatabase>
-#include <QStringListModel>
-#include "constants.h"
-
+#include <QtGlobal>
+#ifdef Q_OS_WIN
+    #include "platform_win/basewindow.h"
+#else
+    #include "platform_unix/basewindow.h"
+#endif
 
 
 namespace Ui
@@ -31,18 +26,14 @@ namespace Ui
     class Settings;
 }
 
-
-class Settings : public FramelessWindow
+class Settings : public BaseWindow
 {
     Q_OBJECT
-
 public:
-
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
 
-    void setParameters(QByteArray *ptr_settingsWindowGeometry,
-                       QString    *ptr_output_folder,
+    void setParameters(QString    *ptr_output_folder,
                        QString    *ptr_temp_folder,
                        bool       *ptr_protection,
                        bool       *ptr_showHDR_mode,
@@ -57,27 +48,24 @@ public:
                        const QString &_desktopEnv,
                        int        *ptr_fontSize,
                        QString    *ptr_font);
-private slots:
-
-    void closeEvent(QCloseEvent *event);
-    bool eventFilter(QObject *watched, QEvent *event);
-    void on_closeWindow_clicked();
-    void on_buttonCancel_clicked();
-    void on_buttonApply_clicked();
-    void on_buttonReset_clicked();
-    void on_buttonOutputPath_clicked();
-    void on_buttonTempPath_clicked();
-    void on_checkBox_protection_clicked();
-    void on_comboBoxPrefixType_currentIndexChanged(int index);
-    void on_comboBoxSuffixType_currentIndexChanged(int index);
-    void on_comboBox_font_currentIndexChanged(const QString &arg1);
-    void on_buttonTab_1_clicked();
-    void on_buttonTab_2_clicked();
 
 private:
+    void onCloseWindow();
+    void onButtonApply();
+    void onButtonReset();
+    void onButtonTab_1();
+    void onButtonTab_2();
+    virtual bool eventFilter(QObject*, QEvent*) final;
+
+    QString callFileDialog(const QString&);
+    void onButtonOutputPath();
+    void onButtonTempPath();
+    void onCheckBox_protection_clicked();
+    void onComboBoxPrefixType_indexChanged(int);
+    void onComboBoxSuffixType_indexChanged(int);
+    void onComboBox_font_indexChanged(int);
 
     Ui::Settings *ui;
-
     QString desktopEnv;
 
     QString *_ptr_output_folder,
@@ -96,26 +84,6 @@ private:
     bool    *_ptr_showHDR_mode,
             *_ptr_protection,
             *_ptr_hideInTrayFlag;
-
-    /**************** Geometry **************************/
-
-    QByteArray *_ptr_settingsWindowGeometry;
-
-    bool    _expandWindowsState,
-            _clickPressedFlag;
-
-    QVector<bool> _clickPressedToResizeFlag;
-
-    QPoint  _mouseClickCoordinate,
-            _globalMouseClickCoordinate;
-
-    int     _oldPosX,
-            _oldPosY,
-            _oldWidth,
-            _oldHeight;
-
-    void on_expandWindow_clicked();
-    QString callFileDialog(const QString title);
 };
 
 #endif // SETTINGS_H

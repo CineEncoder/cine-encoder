@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Preset</class>
- <widget class="QDialog" name="Preset">
-  <property name="windowModality">
-   <enum>Qt::NonModal</enum>
-  </property>
+ <widget class="QWidget" name="Preset">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,49 +10,21 @@
     <height>778</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>400</width>
-    <height>490</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>3840</width>
-    <height>2160</height>
-   </size>
-  </property>
-  <property name="mouseTracking">
-   <bool>true</bool>
-  </property>
-  <property name="tabletTracking">
-   <bool>true</bool>
-  </property>
   <property name="windowTitle">
-   <string>Preset</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="files.qrc">
-    <normaloff>:/resources/icons/svg/cine-encoder.svg</normaloff>:/resources/icons/svg/cine-encoder.svg</iconset>
-  </property>
-  <property name="toolTip">
-   <string/>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
+   <string>EDIT PRESET</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <property name="leftMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="bottomMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -82,8 +51,8 @@
        <widget class="QFrame" name="frame_main">
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>0</height>
+          <width>400</width>
+          <height>490</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -165,7 +134,7 @@
             <property name="spacing">
              <number>0</number>
             </property>
-            <item row="1" column="5">
+            <item row="1" column="6">
              <spacer name="verticalSpacer_17">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -178,7 +147,33 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="5">
+            <item row="0" column="2">
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="4">
+             <spacer name="horizontalSpacer_16">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="6">
              <widget class="QPushButton" name="closeWindow">
               <property name="enabled">
                <bool>true</bool>
@@ -215,38 +210,12 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <spacer name="horizontalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="2">
+            <item row="0" column="3">
              <widget class="QLabel" name="label_title">
               <property name="text">
-               <string>Edit preset</string>
+               <string>EDIT PRESET</string>
               </property>
              </widget>
-            </item>
-            <item row="0" column="3">
-             <spacer name="horizontalSpacer_16">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
             <item row="0" column="0">
              <spacer name="horizontalSpacer_7">
@@ -258,11 +227,36 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>12</width>
                 <height>20</height>
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_5">
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap resource="files.qrc">:/resources/icons/64x64/cine-encoder.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -585,8 +579,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>408</width>
-                     <height>644</height>
+                     <width>424</width>
+                     <height>660</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_27">
@@ -1818,8 +1812,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>408</width>
-                     <height>644</height>
+                     <width>424</width>
+                     <height>660</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
@@ -3410,8 +3404,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>408</width>
-                     <height>644</height>
+                     <width>424</width>
+                     <height>660</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_32">
@@ -3931,8 +3925,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>408</width>
-                     <height>644</height>
+                     <width>424</width>
+                     <height>660</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_33">

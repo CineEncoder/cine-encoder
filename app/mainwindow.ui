@@ -13,22 +13,18 @@
   <property name="windowTitle">
    <string>Cine Encoder</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="files.qrc">
-    <normaloff>:/resources/icons/svg/cine-encoder.svg</normaloff>:/resources/icons/svg/cine-encoder.svg</iconset>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="spacing">
     <number>0</number>
@@ -3899,7 +3895,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -7138,7 +7134,7 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>22</width>
+                <width>14</width>
                 <height>20</height>
                </size>
               </property>
