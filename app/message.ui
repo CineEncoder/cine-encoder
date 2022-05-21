@@ -1,64 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Taskcomplete</class>
- <widget class="QDialog" name="Taskcomplete">
-  <property name="windowModality">
-   <enum>Qt::NonModal</enum>
-  </property>
+ <class>Message</class>
+ <widget class="QWidget" name="Message">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>292</width>
-    <height>192</height>
+    <width>272</width>
+    <height>170</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>292</width>
-    <height>192</height>
+    <width>272</width>
+    <height>170</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>292</width>
-    <height>192</height>
+    <width>272</width>
+    <height>170</height>
    </size>
   </property>
-  <property name="mouseTracking">
-   <bool>true</bool>
-  </property>
-  <property name="tabletTracking">
-   <bool>true</bool>
-  </property>
   <property name="windowTitle">
-   <string>Task</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="files.qrc">
-    <normaloff>:/resources/icons/svg/cine-encoder.svg</normaloff>:/resources/icons/svg/cine-encoder.svg</iconset>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
+   <string>Cine Encoder</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="bottomMargin">
-    <number>9</number>
+    <number>1</number>
    </property>
    <property name="spacing">
     <number>0</number>
    </property>
    <item row="0" column="0">
     <widget class="QWidget" name="widget_main" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <property name="leftMargin">
        <number>1</number>
@@ -77,16 +73,22 @@
       </property>
       <item row="0" column="0">
        <widget class="QFrame" name="frame_main">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>20</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>278</width>
-          <height>178</height>
+          <width>3840</width>
+          <height>2160</height>
          </size>
         </property>
         <property name="frameShape">
@@ -113,6 +115,12 @@
          </property>
          <item row="0" column="0">
           <widget class="QFrame" name="frame_top">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -156,7 +164,20 @@
             <property name="spacing">
              <number>0</number>
             </property>
-            <item row="1" column="5">
+            <item row="0" column="2">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>5</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="6">
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -169,56 +190,7 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="3">
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="1">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="0">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="label_title">
-              <property name="text">
-               <string>Cine Encoder</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="5">
+            <item row="0" column="6">
              <widget class="QPushButton" name="closeWindow">
               <property name="enabled">
                <bool>true</bool>
@@ -255,15 +227,91 @@
               </property>
              </widget>
             </item>
+            <item row="0" column="4">
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>5</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="0">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>12</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_title">
+              <property name="text">
+               <string>CINE  ENCODER</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap resource="files.qrc">:/resources/icons/64x64/cine-encoder.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
          <item row="1" column="0" rowspan="2">
           <widget class="QFrame" name="frame">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>0</height>
+             <height>20</height>
             </size>
            </property>
            <property name="frameShape">
@@ -273,13 +321,22 @@
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="1" column="1">
+            <property name="topMargin">
+             <number>18</number>
+            </property>
+            <property name="horizontalSpacing">
+             <number>0</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>12</number>
+            </property>
+            <item row="1" column="3">
              <widget class="QPushButton" name="buttonCancel">
               <property name="enabled">
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -296,6 +353,65 @@
                 <height>25</height>
                </size>
               </property>
+              <property name="baseSize">
+               <size>
+                <width>90</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>CANCEL</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <spacer name="spacerApply">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="buttonApply">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>90</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>90</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>90</width>
+                <height>25</height>
+               </size>
+              </property>
               <property name="text">
                <string>OK</string>
               </property>
@@ -303,38 +419,38 @@
                <bool>false</bool>
               </property>
               <property name="flat">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
+            <item row="1" column="2">
              <spacer name="horizontalSpacer_3">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
-                <height>5</height>
+                <width>40</width>
+                <height>20</height>
                </size>
               </property>
              </spacer>
             </item>
-            <item row="1" column="2">
-             <spacer name="horizontalSpacer_4">
+            <item row="1" column="4">
+             <spacer name="spacerCancel">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
-                <height>5</height>
+                <width>40</width>
+                <height>20</height>
                </size>
               </property>
              </spacer>
             </item>
-            <item row="0" column="0" colspan="3">
-             <widget class="QTextBrowser" name="textBrowser_task">
+            <item row="0" column="0" colspan="5">
+             <widget class="QTextBrowser" name="textBrowser">
               <property name="enabled">
                <bool>true</bool>
               </property>
