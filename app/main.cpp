@@ -17,32 +17,33 @@
 #include <QFontDatabase>
 #include <QStyleFactory>
 #include <QMessageBox>
+#include <QTranslator>
 #include <QMap>
 #include "mainwindow.h"
-
+#include "constants.h"
 
 
 int checkForDuplicates();
 
 int main(int argc, char *argv[])
 {
-    setlocale(LC_ALL, "");
+    std::setlocale(LC_ALL, "");
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("CineEncoder");
     QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     app.setStyle(QStyleFactory::create("Fusion"));
     if (checkForDuplicates() == 1) return 1;
 
     /******************* Read Settings ****************************/
-    const QString _settings_path = QDir::homePath() + QString("/CineEncoder");
-    QSettings *_settings = new QSettings(_settings_path + QString("/settings.ini"), QSettings::IniFormat, nullptr);
-    _settings->beginGroup("Settings");
-    int _fontSize = _settings->value("Settings/font_size").toInt();
-    QString _fontFamily = _settings->value("Settings/font").toString();
-    QString _language = _settings->value("Settings/language").toString();
-    _settings->endGroup();
-    delete _settings;
+    SETTINGS(_settings);
+    _settings.beginGroup("Settings");
+    int _fontSize = _settings.value("Settings/font_size").toInt();
+    QString _fontFamily = _settings.value("Settings/font").toString();
+    QString _language = _settings.value("Settings/language").toString();
+    _settings.endGroup();
 
     /********************* Set Font ******************************/
     QFont font = app.font();
@@ -91,7 +92,7 @@ int main(int argc, char *argv[])
     }
 
     /******************* Set Window *******************************/
-    Widget window;
+    MainWindow window;
     window.show();
     splash->finish(&window);
     delete splash;

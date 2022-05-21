@@ -13,15 +13,18 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <QSettings>
+#include <QDir>
+#define SETTINGS(settings) QSettings settings(QDir::homePath() + \
+                            QString("/CineEncoder/settings.ini"), \
+                            QSettings::IniFormat);
 
 // ******************* Constants *****************************//
 
 #define PRESETS_VERSION 354
-
 #define SETTINGS_VERSION 352
 
 #define PARAMETERS_COUNT 34
-
 #define NUMBER_PRESETS 30
 
 #define CODEC_QSV_FIRST 6
@@ -32,7 +35,6 @@
 #define DOCKS_COUNT 8
 
 #define AMOUNT_AUDIO_STREAMS 9
-
 #define AMOUNT_SUBTITLES 9
 
 #define MAXIMUM_ALLOWED_TIME 359999.0f
@@ -91,8 +93,8 @@ enum PreviewRes {
 // ******************** Metadata *****************************//
 
 enum VideoMetadataIndex {
-    VIDEO_TITLE,        VIDEO_AUTHOR,       VIDEO_YEAR,
-    VIDEO_PERFORMER,    VIDEO_DESCRIPTION,  VIDEO_MOVIENAME, ENUM_END_LABEL
+    VIDEO_TITLE,  VIDEO_MOVIENAME, VIDEO_YEAR,
+    VIDEO_AUTHOR, VIDEO_PERFORMER, VIDEO_DESCRIPTION
 };
 
 // ******************* Presets *****************************//
