@@ -10,37 +10,29 @@
 
 ***********************************************************************/
 
-#include "openingfiles.h"
-#include "ui_openingfiles.h"
+#include "progress.h"
+#include "ui_progress.h"
+#include <QFontMetrics>
+#include <math.h>
 
 
-OpeningFiles::OpeningFiles(QWidget *parent):
-    FramelessWindow(parent),
-    ui(new Ui::OpeningFiles)
+Progress::Progress(QWidget *parent, const QString &title):
+    BaseDialog(parent, false),
+    ui(new Ui::Progress)
 {
-    ui->setupUi(this);
+    QWidget *ui_widget = new QWidget(this);
+    layout()->addWidget(ui_widget);
+    ui->setupUi(ui_widget);
+    setMaskWidget(ui_widget);
+    ui->label_title->setText(title);
 }
 
-OpeningFiles::~OpeningFiles()
+Progress::~Progress()
 {
     delete ui;
 }
 
-void OpeningFiles::setParameters(const bool &show, const QPoint &position)
-{
-    QSize sizeWindow = this->size();
-    int x_pos = position.x() - static_cast<int>(round(static_cast<float>(sizeWindow.width())/2));
-    int y_pos = position.y() - static_cast<int>(round(static_cast<float>(sizeWindow.height())/2));
-    this->setGeometry(x_pos, y_pos, sizeWindow.width(), sizeWindow.height());
-    if (show) {
-        this->show();
-    }
-    else {
-        this->hide();
-    }
-}
-
-void OpeningFiles::setText(const QString &text)
+void Progress::setText(const QString &text)
 {
     QFontMetrics fm = ui->label_filename->fontMetrics();
 #if (QT_VERSION < QT_VERSION_CHECK(5,11,0))
@@ -53,7 +45,7 @@ void OpeningFiles::setText(const QString &text)
     ui->label_filename->setText(elidedText);
 }
 
-void OpeningFiles::setPercent(const int &percent)
+void Progress::setPercent(const int &percent)
 {
     ui->progressBar_opening->setValue(percent);
 }

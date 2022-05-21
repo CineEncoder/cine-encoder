@@ -10,35 +10,28 @@
 
 ***********************************************************************/
 
-#ifndef OPENINGFILES_H
-#define OPENINGFILES_H
+#ifndef PROGRESS_H
+#define PROGRESS_H
 
-#include <QFontMetrics>
-#include <math.h>
-#include "framelesswindow.h"
+#include "basedialog.h"
 
 
 namespace Ui
 {
-    class OpeningFiles;
+    class Progress;
 }
 
-class OpeningFiles : public FramelessWindow
+class Progress : public BaseDialog
 {
     Q_OBJECT
-
 public:
-
-    explicit OpeningFiles(QWidget *parent = nullptr);
-    ~OpeningFiles();
-
-    void setParameters(const bool &show, const QPoint &position);
+    explicit Progress(QWidget *parent, const QString &title);
+    ~Progress();
     void setText(const QString &text);
     void setPercent(const int &percent);
 
 private:
-
-    Ui::OpeningFiles *ui;
+    Ui::Progress *ui;
 };
 
-#endif // OPENINGFILES_H
+#endif // PROGRESS_H
