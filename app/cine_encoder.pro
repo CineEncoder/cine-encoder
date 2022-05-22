@@ -39,6 +39,7 @@ RCC_DIR =     ../builddir/rcc
 SOURCES += \
     basedialog.cpp \
     encoder.cpp \
+    helper.cpp \
     main.cpp \
     mainwindow.cpp \
     message.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     basedialog.h \
     constants.h \
     encoder.h \
+    helper.h \
     mainwindow.h \
     message.h \
     notification.h \
