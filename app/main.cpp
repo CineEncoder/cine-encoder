@@ -40,44 +40,40 @@ int main(int argc, char *argv[])
         return 1;
 
     /******************* Read Settings ****************************/
-    SETTINGS(_settings);
-    _settings.beginGroup("Settings");
-    int _fontSize = _settings.value("Settings/font_size").toInt();
-    QString _fontFamily = _settings.value("Settings/font").toString();
-    QString _language = _settings.value("Settings/language").toString();
-    _settings.endGroup();
+    SETTINGS(stn);
+    stn.beginGroup("Settings");
+    const int fntSize = stn.value("Settings/font_size", FONTSIZE).toInt();
+    const QString fntFamily = stn.value("Settings/font").toString();
+    const QString savedLang = stn.value("Settings/language").toString();
+    stn.endGroup();
 
     /********************* Set Font ******************************/
-    QFont font = app.font();
-    if (_fontSize == 0) {
-        _fontSize = 8;
-    }
-    if (_fontFamily != "") {
-        font.setFamily(_fontFamily);
-    }
-    font.setPointSize(_fontSize);
-    app.setFont(font);
+    QFont fnt = app.font();
+    if (fntFamily != "")
+        fnt.setFamily(fntFamily);
+    fnt.setPointSize(fntSize);
+    app.setFont(fnt);
 
     /******************* Set Translate ****************************/
-    QString language = "";
-    QLocale locale = QLocale::system();
-    QMap<int, QString> langIndex;
-    langIndex[QLocale::Chinese] = "zh";
-    langIndex[QLocale::German] = "de";
-    langIndex[QLocale::Russian] = "ru";
-    if (langIndex.contains(locale.language())) {
-        language = langIndex.value(locale.language());
-    }
 
-    QTranslator qtTranslator;
-    if (_language == "" && language != "") {
-        if (qtTranslator.load(":/resources/translation/translation_" + language + ".qm")) {
-            app.installTranslator(&qtTranslator);
+    auto sysLang = QLocale::system().language();
+    QMap<int, QString> langMap = {
+        {QLocale::Chinese, "zh"},
+        {QLocale::German,  "de"},
+        {QLocale::Russian, "ru"}
+    };
+    const QString currLang = (langMap.contains(sysLang)) ?
+                langMap.value(sysLang) : "";
+
+    QTranslator tran;
+    if (savedLang == "" && currLang != "") {
+        if (tran.load(QString(":/resources/translation/translation_%1.qm").arg(currLang))) {
+            app.installTranslator(&tran);
         }
     }
-    else if (_language != "" && _language != "en") {
-        if (qtTranslator.load(":/resources/translation/translation_" + _language + ".qm")) {
-            app.installTranslator(&qtTranslator);
+    else if (savedLang != "" && savedLang != "en") {
+        if (tran.load(QString(":/resources/translation/translation_%1.qm").arg(savedLang))) {
+            app.installTranslator(&tran);
         }
     }
 
@@ -117,9 +113,9 @@ int checkForDuplicates()
 #endif
     process.start(cmd,  arguments);
     if (process.waitForFinished(1000)) {
-        QString list = QString(process.readAllStandardOutput());
-        int lindex = list.indexOf("cine_encoder");
-        int rindex = list.lastIndexOf("cine_encoder");
+        const QString list = QString(process.readAllStandardOutput());
+        const int lindex = list.indexOf("cine_encoder");
+        const int rindex = list.lastIndexOf("cine_encoder");
         //qDebug() << list << "\n" << lindex << rindex;
         if (lindex != rindex) {
             QMessageBox msgBox(nullptr);

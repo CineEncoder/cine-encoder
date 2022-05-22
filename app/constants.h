@@ -15,8 +15,9 @@
 
 #include <QSettings>
 #include <QDir>
-#define SETTINGS(settings) QSettings settings(QDir::homePath() + \
-                            QString("/CineEncoder/settings.ini"), \
+#define SETTINGSPATH QDir::homePath() + QString("/CineEncoder")
+#define SETTINGSFILE SETTINGSPATH + QString("/settings.ini")
+#define SETTINGS(settings) QSettings settings(SETTINGSFILE, \
                             QSettings::IniFormat);
 
 // ******************* Constants *****************************//
@@ -38,6 +39,7 @@
 #define AMOUNT_SUBTITLES 9
 
 #define MAXIMUM_ALLOWED_TIME 359999.0f
+#define FONTSIZE 8
 
 // ***************** Table Widget Columns *********************//
 

@@ -67,13 +67,31 @@
 #endif
 
 #define WINDOW_SIZE QSize(1024, 650)
+#define ROWHEIGHT 25
+#define DEFAULTTIMER 30
+#define DEFAULTPATH QDir::homePath()
+#define PRESETFILE SETTINGSPATH + QString("/presets.ini")
+#define THUMBNAILPATH SETTINGSPATH + QString("/thumbnails")
 
 
 MainWindow::MainWindow(QWidget *parent):
     BaseWindow(parent),
+    _hideInTrayFlag(false),
+    _showHDR_mode(false),
+    _protection(false),
+    _fontSize(FONTSIZE),
+    _timer_interval(DEFAULTTIMER),
+    _prefixName("output"),
+    _suffixName("_encoded_"),
     ui(new Ui::Widget),
+    _openDir(DEFAULTPATH),
+    _theme(Theme::DEFAULT),
+    _batch_mode(false),
+    _status_encode_btn(EncodingStatus::START),
+    _curTime(0),
     _windowActivated(false),
-    _expandWindowsState(false)
+    _expandWindowsState(false),
+    m_rowHeight(ROWHEIGHT)
 {
     QWidget *ui_widget = new QWidget(this);
     setCentralWidget(ui_widget);
@@ -186,11 +204,12 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
 {
     event->ignore();
     if (showDialogMessage(tr("Quit program?"))) {
+        if (m_pEncoder->getEncodingState() != QProcess::NotRunning)
+            m_pEncoder->killEncoding();
+        if (processThumbCreation->state() != QProcess::NotRunning)
+            processThumbCreation->kill();
 
-        if (encoder->getEncodingState() != QProcess::NotRunning) encoder->killEncoding();
-        if (processThumbCreation->state() != QProcess::NotRunning) processThumbCreation->kill();
-
-        QFile _prs_file(_preset_file);
+        QFile _prs_file(PRESETFILE);
         if (_prs_file.open(QIODevice::WriteOnly)) {
             QDataStream out(&_prs_file);
             out.setVersion(QDataStream::Qt_4_0);
@@ -244,7 +263,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         _settings.setValue("Settings/language", _language);
         _settings.setValue("Settings/font", _font);
         _settings.setValue("Settings/font_size", _fontSize);
-        _settings.setValue("Settings/row_size", _rowSize);
+        _settings.setValue("Settings/row_size", m_rowHeight);
         _settings.endGroup();
 
         if (_hideInTrayFlag) {
@@ -302,7 +321,8 @@ void MainWindow::showTrayIcon()
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(QIcon(QPixmap(":/resources/icons/svg/cine-encoder.svg")));
     trayIcon->setContextMenu(trayIconMenu);
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
+            SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 }
 
 void MainWindow::createConnections()
@@ -318,7 +338,8 @@ void MainWindow::createConnections()
     connect(ui->actionEncode, &QPushButton::clicked, this, &MainWindow::onActionEncode);
     connect(ui->actionSettings, &QPushButton::clicked, this, &MainWindow::onActionSettings);
 
-    connect(ui->tableWidget, &QTableWidget::itemSelectionChanged, this, &MainWindow::onTableWidget_itemSelectionChanged);
+    connect(ui->tableWidget, &QTableWidget::itemSelectionChanged, this,
+            &MainWindow::onTableWidget_itemSelectionChanged);
 
     QLineEdit *lineEditVideoMetadata[6] = {
         ui->lineEditTitleVideo, ui->lineEditMovieNameVideo, ui->lineEditYearVideo,
@@ -368,15 +389,15 @@ void MainWindow::createConnections()
     connect(ui->comboBoxMode, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboBoxMode_currentIndexChanged(int)));
     connect(ui->actionResetLabels, &QPushButton::clicked, this, &MainWindow::onActionResetLabels);
 
-    encoder = new Encoder(this);
-    connect(encoder, &Encoder::onEncodingMode, this, &MainWindow::onEncodingMode);
-    connect(encoder, &Encoder::onEncodingStarted, this, &MainWindow::onEncodingStarted);
-    connect(encoder, &Encoder::onEncodingInitError, this, &MainWindow::onEncodingInitError);
-    connect(encoder, &Encoder::onEncodingProgress, this, &MainWindow::onEncodingProgress);
-    connect(encoder, &Encoder::onEncodingLog, this, &MainWindow::onEncodingLog);
-    connect(encoder, &Encoder::onEncodingCompleted, this, &MainWindow::onEncodingCompleted);
-    connect(encoder, &Encoder::onEncodingAborted, this, &MainWindow::onEncodingAborted);
-    connect(encoder, &Encoder::onEncodingError, this, &MainWindow::onEncodingError);
+    m_pEncoder = new Encoder(this);
+    connect(m_pEncoder, &Encoder::onEncodingMode, this, &MainWindow::onEncodingMode);
+    connect(m_pEncoder, &Encoder::onEncodingStarted, this, &MainWindow::onEncodingStarted);
+    connect(m_pEncoder, &Encoder::onEncodingInitError, this, &MainWindow::onEncodingInitError);
+    connect(m_pEncoder, &Encoder::onEncodingProgress, this, &MainWindow::onEncodingProgress);
+    connect(m_pEncoder, &Encoder::onEncodingLog, this, &MainWindow::onEncodingLog);
+    connect(m_pEncoder, &Encoder::onEncodingCompleted, this, &MainWindow::onEncodingCompleted);
+    connect(m_pEncoder, &Encoder::onEncodingAborted, this, &MainWindow::onEncodingAborted);
+    connect(m_pEncoder, &Encoder::onEncodingError, this, &MainWindow::onEncodingError);
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_1()));
@@ -711,16 +732,10 @@ void MainWindow::setParameters()    /*** Set parameters ***/
       _preset_table[i].resize(5);
 
     // ****************************** Initialize variables ************************************//
-    _openDir = QDir::homePath();
-    _settings_path = QDir::homePath() + QString("/CineEncoder");
-    _thumb_path = _settings_path + QString("/thumbnails");
-    _preset_file = _settings_path + QString("/presets.ini");
-    _status_encode_btn = EncodingStatus::START;
-    _timer_interval = 30;
-    _curTime = 0;
+
     _language = "";
     _font = "";
-    _fontSize = 8;
+
     _curFilename = "";
     _curPath = "";
     _input_file = "";
@@ -728,19 +743,12 @@ void MainWindow::setParameters()    /*** Set parameters ***/
     _output_file = "";
     _temp_folder = "";
     _temp_file = "";
-    _prefixName = "output";
-    _suffixName = "_encoded_";
     _prefxType = 0;
     _suffixType = 0;
     _pos_top = -1;
     _pos_cld = -1;
-    _rowSize = 25;
-    _hideInTrayFlag = false;
-    _protection = false;
-    _batch_mode = false;
-    _showHDR_mode = false;
     _row = -1;
-    _theme = 3;
+
     QListView *comboboxPresetListView = new QListView(ui->comboBoxPreset);
     QListView *comboboxModeListView = new QListView(ui->comboBoxMode);
     QListView *comboboxViewListView = new QListView(ui->comboBoxView);
@@ -766,7 +774,6 @@ void MainWindow::setParameters()    /*** Set parameters ***/
     ui->tableWidget->horizontalHeader()->setVisible(true);
     ui->tableWidget->verticalHeader()->setVisible(true);
     ui->tableWidget->setAlternatingRowColors(true);
-    //ui->tableWidget->verticalHeader()->setFixedWidth(0);
     ui->tableWidget->setColumnWidth(ColumnIndex::FILENAME, 250);
     ui->tableWidget->setColumnWidth(ColumnIndex::FORMAT, 80);
     ui->tableWidget->setColumnWidth(ColumnIndex::RESOLUTION, 85);
@@ -789,25 +796,25 @@ void MainWindow::setParameters()    /*** Set parameters ***/
     }
 
     // ****************************** Create folders ************************************//
-    if (!QDir(_settings_path).exists()) {
-        QDir().mkdir(_settings_path);
+    if (!QDir(SETTINGSPATH).exists()) {
+        QDir().mkdir(SETTINGSPATH);
         std::cout << "Setting path not existed and was created ..." << std::endl;  // Debug info //
     }
-    if (QDir(_thumb_path).exists()) {
-        unsigned int count_thumb = QDir(_thumb_path).count();
+    if (QDir(THUMBNAILPATH).exists()) {
+        unsigned int count_thumb = QDir(THUMBNAILPATH).count();
         std::cout << "Number of thumbnails: " << count_thumb << std::endl; // Debug info //
         if (count_thumb > 300) {
-            QDir(_thumb_path).removeRecursively();
+            QDir(THUMBNAILPATH).removeRecursively();
             std::cout << "Thumbnails removed... " << std::endl; // Debug info //
         }
     }
-    if (!QDir(_thumb_path).exists()) {
-        QDir().mkdir(_thumb_path);
+    if (!QDir(THUMBNAILPATH).exists()) {
+        QDir().mkdir(THUMBNAILPATH);
         std::cout << "Thumbnail path not existed and was created ..." << std::endl;  // Debug info //
     }
 
     // ****************************** Read presets ************************************//
-    QFile _prs_file(_preset_file);
+    QFile _prs_file(PRESETFILE);
     if (_prs_file.open(QIODevice::ReadOnly)) {
         QDataStream in(&_prs_file);
         in.setVersion(QDataStream::Qt_4_0);
@@ -873,7 +880,7 @@ void MainWindow::setParameters()    /*** Set parameters ***/
         _language = _settings.value("Settings/language").toString();
         _font = _settings.value("Settings/font").toString();
         _fontSize = _settings.value("Settings/font_size").toInt();
-        _rowSize = _settings.value("Settings/row_size").toInt();
+        m_rowHeight = _settings.value("Settings/row_size").toInt();
         _settings.endGroup();
 
     } else {
@@ -955,12 +962,15 @@ void MainWindow::setParameters()    /*** Set parameters ***/
         setDocksParameters(dockSizesX, dockSizesY);
     });
 
-    if (_timer_interval < 15) _timer_interval = 30;
+    if (_timer_interval < 15)
+        _timer_interval = 30;
     timer->setInterval(_timer_interval*1000);
 
-    if (_rowSize != 0) ui->horizontalSlider_resize->setValue(_rowSize);
+    if (m_rowHeight != 0)
+        ui->horizontalSlider_resize->setValue(m_rowHeight);
 
-    if (_fontSize == 0) _fontSize = 8;
+    if (_fontSize == 0)
+        _fontSize = 8;
 
     if (_language == "") {
         QLocale locale = QLocale::system();
@@ -1071,8 +1081,7 @@ void MainWindow::onActionSettings()
         if (_row != -1) {
             get_output_filename();
         }
-        _message = tr("You need to restart the program for the settings to take effect.");
-        showInfoMessage(_message);
+        showInfoMessage(tr("You need to restart the program for the settings to take effect."));
     }
 }
 
@@ -1177,7 +1186,7 @@ void MainWindow::get_current_data() /*** Get current data ***/
     QString tmb_file = setThumbnail(_curFilename, halfTime, PreviewRes::RES_HIGH, PreviewDest::PREVIEW);
 
     QSize imageSize = QSize(85, 48);
-    if (_rowSize == 25) {
+    if (m_rowHeight == ROWHEIGHT) {
         QString icons[4][5] = {
             {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
             {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
@@ -1487,7 +1496,7 @@ void MainWindow::initEncoding()
 {
     ui->textBrowser_log->clear();
     const QString globalTitle = ui->lineEditGlobalTitle->text();
-    encoder->initEncoding(_temp_file,
+    m_pEncoder->initEncoding(_temp_file,
                           _input_file,
                           _output_file,
                           _width,
@@ -1593,10 +1602,6 @@ void MainWindow::onEncodingInitError(const QString &message)
 {
     restore_initial_state();
     showInfoMessage(message);
-    /*_status_encode_btn = "start";
-    ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/16x16/play.svg"));
-    ui->actionEncode->setToolTip(tr("Encode"));
-    showInfoMessage(_message, false);*/
 }
 
 void MainWindow::onEncodingProgress(const int &percent, const float &rem_time)
@@ -1636,8 +1641,8 @@ void MainWindow::onEncodingCompleted()
             if (_protection == true) {
                 timer->stop();
             }
-            _message = tr("Task completed!\n\n Elapsed time: ") + Helper::timeConverter(elps_t);
-            showInfoMessage(_message);
+            showInfoMessage(tr("Task completed!\n\n Elapsed time: ") +
+                            Helper::timeConverter(elps_t));
         }
     } else {
         restore_initial_state();
@@ -1649,8 +1654,8 @@ void MainWindow::onEncodingCompleted()
         if (_protection == true) {
             timer->stop();
         }
-        _message = tr("Task completed!\n\n Elapsed time: ") + Helper::timeConverter(elps_t);
-        showInfoMessage(_message);
+        showInfoMessage(tr("Task completed!\n\n Elapsed time: ") +
+                        Helper::timeConverter(elps_t));
     }
     QDir().remove(QDir::homePath() + QString("/ffmpeg2pass-0.log"));
     QDir().remove(QDir::homePath() + QString("/ffmpeg2pass-0.log.mbtree"));
@@ -1668,9 +1673,8 @@ void MainWindow::onEncodingAborted()
     ui->label_RemTime->hide();
     ui->labelAnimation->hide();
     ui->progressBar->hide();
-    _message = tr("The current encoding process has been canceled!\n");
     restore_initial_state();
-    showInfoMessage(_message);
+    showInfoMessage(tr("The current encoding process has been canceled!\n"));
 }
 
 void MainWindow::onEncodingError(const QString &error_message)
@@ -1680,19 +1684,19 @@ void MainWindow::onEncodingError(const QString &error_message)
         timer->stop();
     setStatus(tr("Error!"));
     restore_initial_state();
-    _message = (error_message != "") ? tr("An error occurred: ") + error_message :
-                                       tr("Unexpected error occurred!");
-    showInfoMessage(_message);
+    const QString msg = (error_message != "") ? tr("An error occurred: ") + error_message :
+                                                tr("Unexpected error occurred!");
+    showInfoMessage(msg);
 }
 
 void MainWindow::pause()    // Pause encoding
 {
     if (_protection)
         timer->stop();
-    if (encoder->getEncodingState() != QProcess::NotRunning) {
+    if (m_pEncoder->getEncodingState() != QProcess::NotRunning) {
         setStatus(tr("Pause"));
         animation->stop();
-        encoder->pauseEncoding();
+        m_pEncoder->pauseEncoding();
     }
 }
 
@@ -1700,10 +1704,10 @@ void MainWindow::resume()   // Resume encoding
 {
     if (_protection)
         timer->start();
-    if (encoder->getEncodingState() != QProcess::NotRunning) {
+    if (m_pEncoder->getEncodingState() != QProcess::NotRunning) {
         setStatus(tr("Encoding"));
         animation->start();
-        encoder->resumeEncoding();
+        m_pEncoder->resumeEncoding();
     }
 }
 
@@ -1760,17 +1764,14 @@ void MainWindow::onActionEncode()  /*** Encode button ***/
         std::cout << "Status encode btn: start" << std::endl;  // Debug info //
         int cnt = ui->tableWidget->rowCount();
         if (cnt == 0) {
-            _message = tr("Select input file first!");
-            showInfoMessage(_message);
+            showInfoMessage(tr("Select input file first!"));
             return;
         }
         if (_pos_cld == -1) {
-            _message = tr("Select preset first!");
-            showInfoMessage(_message);
+            showInfoMessage(tr("Select preset first!"));
             return;
         }
         _status_encode_btn = EncodingStatus::PAUSE;
-        //ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/svg/pause.svg")));
         _strt_t = time(nullptr);
         if (_protection == true) {
             timer->start();
@@ -1782,14 +1783,12 @@ void MainWindow::onActionEncode()  /*** Encode button ***/
         std::cout << "Status encode btn: pause" << std::endl;  // Debug info //
         pause();
         _status_encode_btn = EncodingStatus::RESUME;
-        //ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/svg/forward.svg")));
         break;
     }
     case EncodingStatus::RESUME: {
         std::cout << "Status encode btn: resume" << std::endl;  // Debug info //
         resume();
         _status_encode_btn = EncodingStatus::PAUSE;
-        //ui->actionEncode->setIcon(QIcon(QPixmap(":/resources/icons/svg/pause.svg")));
         break;
     }
     default:
@@ -1804,11 +1803,10 @@ void MainWindow::onActionEncode()  /*** Encode button ***/
 void MainWindow::onActionStop()    /*** Stop ***/
 {
     std::cout << "Call Stop ..." << std::endl;  //  Debug info //
-    if (encoder->getEncodingState() != QProcess::NotRunning) {
-        _message = tr("Stop encoding?");
-        bool confirm = showDialogMessage(_message);
+    if (m_pEncoder->getEncodingState() != QProcess::NotRunning) {
+        bool confirm = showDialogMessage(tr("Stop encoding?"));
         if (confirm) {
-            encoder->stopEncoding();
+            m_pEncoder->stopEncoding();
         }
     }
 }
@@ -2218,7 +2216,7 @@ void MainWindow::onComboBoxMode_currentIndexChanged(int index)
 
 void MainWindow::onIconResizeSlider_valueChanged(int value)
 {
-    _rowSize = value;
+    m_rowHeight = value;
     resizeTableRows(value);
 }
 
@@ -2236,7 +2234,7 @@ QString MainWindow::setThumbnail(QString curFilename,
         qualityParam = QString("-vf scale=144:-1,format=pal8,dctdnoiz=4.5");
     const QString time_qstr = QString::number(time, 'f', 3);
     const QString tmb_name = curFilename.replace(".", "_").replace(" ", "_") + time_qstr;
-    QString tmb_file = _thumb_path + QString("/") + tmb_name + QString(".png");
+    QString tmb_file = THUMBNAILPATH + QString("/") + tmb_name + QString(".png");
     QFile tmb(tmb_file);
     if (!tmb.exists()) {
         QStringList cmd;
@@ -2549,8 +2547,7 @@ void MainWindow::onApplyPreset()  /*** Apply preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        _message = tr("Select preset first!\n");
-        showInfoMessage(_message);
+        showInfoMessage(tr("Select preset first!\n"));
         return;
     }
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
@@ -2563,8 +2560,7 @@ void MainWindow::onApplyPreset()  /*** Apply preset ***/
 
     } else {
         // Item is parent...
-        _message = tr("Select preset first!\n");
-        showInfoMessage(_message);
+        showInfoMessage(tr("Select preset first!\n"));
         return;
     }
     _pos_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
@@ -2586,9 +2582,8 @@ void MainWindow::onActionRemovePreset()  /*** Remove preset ***/
     QTreeWidgetItem *parentItem = item->parent();
     if (parentItem != nullptr) {
         // Item is child...
-        _message = tr("Delete?");
-        bool confirm = showDialogMessage(_message);
-        if (confirm == true) {
+        bool confirm = showDialogMessage(tr("Delete?"));
+        if (confirm) {
             int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
             int index_child = parentItem->indexOfChild(item);
             updateCurPresetPos(index_top, index_child);
@@ -2613,8 +2608,7 @@ void MainWindow::onActionRemovePreset()  /*** Remove preset ***/
             updatePresetTable();
 
         } else {
-            _message = tr("Delete presets first!\n");
-            showInfoMessage(_message);
+            showInfoMessage(tr("Delete presets first!\n"));
         }
     }
 }
@@ -2623,8 +2617,7 @@ void MainWindow::onActionEditPreset()  /*** Edit preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        _message = tr("Select preset first!\n");
-        showInfoMessage(_message);
+        showInfoMessage(tr("Select preset first!\n"));
         return;
     }
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
@@ -2662,8 +2655,7 @@ void MainWindow::onActionEditPreset()  /*** Edit preset ***/
         }
     } else {
         // Item is parent...
-        _message = tr("Select preset first!\n");
-        showInfoMessage(_message);
+        showInfoMessage(tr("Select preset first!\n"));
     }
 }
 
@@ -2686,8 +2678,7 @@ void MainWindow::add_preset()  /*** Add preset ***/
 {
     int index = ui->treeWidget->currentIndex().row();
     if (index < 0) {
-        _message = tr("First add a section!\n");
-        showInfoMessage(_message);
+        showInfoMessage(tr("First add a section!\n"));
         return;
     }
 
@@ -2960,25 +2951,25 @@ void MainWindow::providePresetContextMenu(const QPoint &position)     /*** Call 
 ** Message Windows
 ************************************************/
 
-bool MainWindow::showDialogMessage(const QString &_message)
+bool MainWindow::showDialogMessage(const QString &message)
 {
-    Message msg(this, MessType::DIALOG, _message);
+    Message msg(this, MessType::DIALOG, message);
     if (msg.exec() == Dialog::Accept)
         return true;
     return false;
 }
 
-void MainWindow::showInfoMessage(const QString &_message, const bool _timer_mode)
+void MainWindow::showInfoMessage(const QString &message, const bool timer_mode)
 {
-    auto showMessage = [this, _message, _timer_mode](){
-        Message msg(this, MessType::INFO, _message, _timer_mode);
+    auto showMessage = [this, message, timer_mode](){
+        Message msg(this, MessType::INFO, message, timer_mode);
         msg.exec();
     };
     if (isHidden()) {
-        if (_hideInTrayFlag && !_timer_mode) {
-            trayIcon->showMessage(_message, tr("Task"), QSystemTrayIcon::Information, 151000);
+        if (_hideInTrayFlag && !timer_mode) {
+            trayIcon->showMessage(message, tr("Task"), QSystemTrayIcon::Information, 151000);
         } else
-        if (_timer_mode) {
+        if (timer_mode) {
             show();
             showMessage();
         }

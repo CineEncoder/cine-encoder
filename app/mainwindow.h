@@ -82,14 +82,14 @@ private slots:
     void setParameters();
     void setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY);
 
-    void showEvent(QShowEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent*);
+    void closeEvent(QCloseEvent*);
     void changeEvent(QEvent*);
-    bool eventFilter(QObject *watched, QEvent *event);
-    void dragEnterEvent(QDragEnterEvent* event);
-    void dragMoveEvent(QDragMoveEvent* event);
-    void dragLeaveEvent(QDragLeaveEvent* event);
-    void dropEvent(QDropEvent* event);   
+    bool eventFilter(QObject*, QEvent*);
+    void dragEnterEvent(QDragEnterEvent*);
+    void dragMoveEvent(QDragMoveEvent*);
+    void dragLeaveEvent(QDragLeaveEvent*);
+    void dropEvent(QDropEvent*);
 
     void onTableWidget_itemSelectionChanged();
 
@@ -149,7 +149,7 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    Encoder *encoder;
+    Encoder *m_pEncoder;
     QVector<QString> _cur_param;
     QVector<QVector<QString>> _preset_table;
     QPixmap preview_pixmap;
@@ -254,15 +254,11 @@ private:
                 _startTime,
                 _endTime;
 
-    QString     _message,
-                _curFilename,
+    QString     _curFilename,
                 _curPath,
                 _temp_file,
                 _input_file,
                 _output_file,
-                _settings_path,
-                _thumb_path,
-                _preset_file,
                 _fmt,
                 _width,
                 _height,
@@ -274,7 +270,7 @@ private:
     bool        _windowActivated,
                 _expandWindowsState;
 
-    int         _rowSize;
+    int         m_rowHeight;
 
     // ====================================
     void createConnections();
@@ -285,8 +281,8 @@ private:
     void get_output_filename();
     void setStatus(QString status);
     void restore_initial_state();
-    void showInfoMessage(const QString &_message, const bool _timer_mode = false);
-    bool showDialogMessage(const QString &_message);
+    void showInfoMessage(const QString &message, const bool timer_mode = false);
+    bool showDialogMessage(const QString &message);
 
     void setTheme(int &ind_theme);
     QString setThumbnail(QString curFilename,
