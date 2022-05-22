@@ -4,6 +4,10 @@
 #include <iostream>
 #include <math.h>
 
+#define trc(num) static_cast<int>(trunc(num))
+#define rnd(num) static_cast<int>(round(num))
+#define intToStr(num, offset) QString::number(num).rightJustified(offset, '0')
+
 
 Helper::Helper()
 {
@@ -40,7 +44,7 @@ DesktopEnv Helper::getEnv()
     return m_desktopEnv;
 }
 
-QString Helper::getParsedCss(const QString &list)    /*** Parsing CSS ***/
+QString Helper::getParsedCss(const QString &list)    // Parsing CSS
 {
     QString style = list;
     QStringList varList;
@@ -100,26 +104,19 @@ void Helper::openFileDialog(FileDialogType dialogType,
     }
 }
 
-QString Helper::timeConverter(const float time)     /*** Time converter to hh:mm:ss ***/
+QString Helper::timeConverter(const float time)     // Time converter to hh:mm:ss
 {
-    const int h = static_cast<int>(trunc(time / 3600));
-    const int m = static_cast<int>(trunc((time - float(h * 3600)) / 60));
-    const int s = static_cast<int>(round(time - float(h * 3600) - float(m * 60)));
-    const QString hrs = QString::number(h).rightJustified(2, '0');
-    const QString min = QString::number(m).rightJustified(2, '0');
-    const QString sec = QString::number(s).rightJustified(2, '0');
-    return QString("%1:%2:%3").arg(hrs, min, sec);
+    const int h = trc(time / 3600);
+    const int m = trc((time - float(h * 3600)) / 60);
+    const int s = rnd(time - float(h * 3600) - float(m * 60));
+    return QString("%1:%2:%3").arg(intToStr(h,2), intToStr(m,2), intToStr(s,2));
 }
 
-QString Helper::timeConverter(const double time)     /*** Time converter to hh:mm:ss.msc ***/
+QString Helper::timeConverter(const double time)     // Time converter to hh:mm:ss.msc
 {
-    const int h = static_cast<int>(trunc(time / 3600));
-    const int m = static_cast<int>(trunc((time - double(h * 3600)) / 60));
-    const int s = static_cast<int>(trunc(time - double(h * 3600) - double(m * 60)));
-    const int ms = static_cast<int>(round(1000 * (time - double(h * 3600) - double(m * 60) - double(s))));
-    const QString hrs = QString::number(h).rightJustified(2, '0');
-    const QString min = QString::number(m).rightJustified(2, '0');
-    const QString sec = QString::number(s).rightJustified(2, '0');
-    const QString msec = QString::number(ms).rightJustified(3, '0');
-    return QString("%1:%2:%3.%4").arg(hrs, min, sec, msec);
+    const int h = trc(time / 3600);
+    const int m = trc((time - double(h * 3600)) / 60);
+    const int s = trc(time - double(h * 3600) - double(m * 60));
+    const int ms = rnd(1000 * (time - double(h * 3600) - double(m * 60) - double(s)));
+    return QString("%1:%2:%3.%4").arg(intToStr(h,2), intToStr(m,2), intToStr(s,2), intToStr(ms,3));
 }
