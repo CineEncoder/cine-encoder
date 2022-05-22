@@ -75,14 +75,12 @@ void Settings::setParameters(QString    *ptr_output_folder,
                              int        *ptr_suffixType,
                              bool       *ptr_hideInTrayFlag,
                              QString    *ptr_language,
-                             const QString &_desktopEnv,
                              int        *ptr_fontSize,
                              QString    *ptr_font)
 {
     QFont title_font;
     title_font.setPointSize(10);
     ui->label_title->setFont(title_font);
-    desktopEnv = _desktopEnv;
     _ptr_showHDR_mode = ptr_showHDR_mode;
     _ptr_output_folder = ptr_output_folder;
     _ptr_temp_folder = ptr_temp_folder;
@@ -275,38 +273,28 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
     return BaseWindow::eventFilter(watched, event);
 }
 
-QString Settings::callFileDialog(const QString &title)
-{
-    QFileDialog selectFolderWindow(nullptr);
-    selectFolderWindow.setWindowTitle(title);
-    selectFolderWindow.setMinimumWidth(600);
-    selectFolderWindow.setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    if (desktopEnv == "gnome") selectFolderWindow.setOption(QFileDialog::DontUseNativeDialog, true);
-    selectFolderWindow.setFileMode(QFileDialog::DirectoryOnly);
-    selectFolderWindow.setAcceptMode(QFileDialog::AcceptOpen);
-    selectFolderWindow.setDirectory(QDir::homePath());
-    if (selectFolderWindow.exec() == QFileDialog::Accepted) {
-        return selectFolderWindow.selectedFiles().at(0);
-    }
-    return QString("");
-}
-
 void Settings::onButtonOutputPath()
 {
-    const QString output_folder_name = callFileDialog("Select output folder");
-    if (output_folder_name.isEmpty()) {
-        return;
+    QStringList result;
+    Helper::openFileDialog(FileDialogType::SELECTFOLDER,
+                           tr("Select output folder"),
+                           *_ptr_output_folder,
+                           result);
+    if (!result.isEmpty()) {
+        ui->lineEdit_outPath->setText(result.at(0));
     }
-    ui->lineEdit_outPath->setText(output_folder_name);
 }
 
 void Settings::onButtonTempPath()
 {
-    const QString temp_folder_name = callFileDialog("Select temp folder");
-    if (temp_folder_name.isEmpty()) {
-        return;
+    QStringList result;
+    Helper::openFileDialog(FileDialogType::SELECTFOLDER,
+                           tr("Select temp folder"),
+                           *_ptr_temp_folder,
+                           result);
+    if (!result.isEmpty()) {
+        ui->lineEdit_tempPath->setText(result.at(0));
     }
-    ui->lineEdit_tempPath->setText(temp_folder_name);
 }
 
 void Settings::onCheckBox_protection_clicked()

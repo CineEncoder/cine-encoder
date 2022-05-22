@@ -19,6 +19,7 @@
 #else
     #include "platform_unix/basewindow.h"
 #endif
+#include "helper.h"
 
 
 namespace Ui
@@ -45,7 +46,6 @@ public:
                        int        *ptr_suffixType,
                        bool       *ptr_hideInTrayFlag,
                        QString    *ptr_language,
-                       const QString &_desktopEnv,
                        int        *ptr_fontSize,
                        QString    *ptr_font);
 
@@ -57,7 +57,6 @@ private:
     void onButtonTab_2();
     virtual bool eventFilter(QObject*, QEvent*) final;
 
-    QString callFileDialog(const QString&);
     void onButtonOutputPath();
     void onButtonTempPath();
     void onCheckBox_protection_clicked();
@@ -66,7 +65,6 @@ private:
     void onComboBox_font_indexChanged(int);
 
     Ui::Settings *ui;
-    QString desktopEnv;
 
     QString *_ptr_output_folder,
             *_ptr_temp_folder,

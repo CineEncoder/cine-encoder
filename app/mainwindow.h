@@ -56,8 +56,7 @@ public:
                 _pos_cld,
                 _timer_interval;
 
-    QString     _desktopEnv,
-                _language,
+    QString     _language,
                 _output_folder,
                 _temp_folder,
                 _prefixName,
@@ -93,7 +92,6 @@ private slots:
     void dropEvent(QDropEvent* event);   
 
     void onTableWidget_itemSelectionChanged();
-    QString callFileDialog(const QString title);
 
     // ============= Encoder ================
     void initEncoding();
@@ -147,7 +145,6 @@ private slots:
     void onButtonCloseTaskWindow();
     void paintEvent(QPaintEvent *event);
     void onComboBoxMode_currentIndexChanged(int index);
-    void desktopEnvDetection();
     void onActionResetLabels();
 
 private:
@@ -292,9 +289,6 @@ private:
     bool showDialogMessage(const QString &_message);
 
     void setTheme(int &ind_theme);
-    QString styleCreator(const QString &list);
-    QString timeConverter(double &time);
-    QString timeConverter(const float &time);
     QString setThumbnail(QString curFilename,
                          const double &time,
                          const int &quality,

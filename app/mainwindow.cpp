@@ -18,6 +18,7 @@
 #include "message.h"
 #include "progress.h"
 #include "tables.h"
+#include "helper.h"
 #include <QDesktopWidget>
 #include <QPaintEvent>
 #include <QDragEnterEvent>
@@ -43,7 +44,6 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include <math.h>
 
 
 #if defined (Q_OS_UNIX)
@@ -66,6 +66,7 @@
     using namespace MediaInfoDLL;
 #endif
 
+#define WINDOW_SIZE QSize(1024, 650)
 
 
 MainWindow::MainWindow(QWidget *parent):
@@ -243,7 +244,6 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         _settings.setValue("Settings/language", _language);
         _settings.setValue("Settings/font", _font);
         _settings.setValue("Settings/font_size", _fontSize);
-        _settings.setValue("Settings/enviroment", _desktopEnv);
         _settings.setValue("Settings/row_size", _rowSize);
         _settings.endGroup();
 
@@ -303,30 +303,6 @@ void MainWindow::showTrayIcon()
     trayIcon->setIcon(QIcon(QPixmap(":/resources/icons/svg/cine-encoder.svg")));
     trayIcon->setContextMenu(trayIconMenu);
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-}
-
-void MainWindow::desktopEnvDetection()
-{
-#if defined (Q_OS_UNIX)
-    QProcess process_env;
-    process_env.setProcessChannelMode(QProcess::MergedChannels);
-    QStringList arguments;
-    arguments << "XDG_CURRENT_DESKTOP";
-    process_env.start("printenv", arguments);
-    if (process_env.waitForFinished(1500)) {
-        QString line = QString(process_env.readAllStandardOutput());
-        if (line.indexOf("GNOME") != -1) {
-            _desktopEnv = "gnome";
-        } else {
-            _desktopEnv = "other";
-        }
-    } else {
-        std::cout << "printenv not found" << std::endl;
-        _desktopEnv = "other";
-    }
-#else
-    _desktopEnv = "other";
-#endif
 }
 
 void MainWindow::createConnections()
@@ -731,24 +707,14 @@ void MainWindow::setParameters()    /*** Set parameters ***/
     _new_param.resize(PARAMETERS_COUNT);
     _cur_param.resize(PARAMETERS_COUNT);
     _preset_table.resize(PARAMETERS_COUNT+1);
-    for (int i = 0; i < PARAMETERS_COUNT+1; i++) {
+    for (int i = 0; i < PARAMETERS_COUNT+1; i++)
       _preset_table[i].resize(5);
-    }
 
     // ****************************** Initialize variables ************************************//
-    QDesktopWidget *screenSize = QApplication::desktop();
-    int screenWidth = screenSize->width();
-    int screenHeight = screenSize->height();
-    int widthMainWindow = 1024;
-    int heightMainWindow = 650;
-    int x_pos = static_cast<int>(round(static_cast<float>(screenWidth - widthMainWindow)/2));
-    int y_pos = static_cast<int>(round(static_cast<float>(screenHeight - heightMainWindow)/2));
-    _desktopEnv = "default";
     _openDir = QDir::homePath();
     _settings_path = QDir::homePath() + QString("/CineEncoder");
     _thumb_path = _settings_path + QString("/thumbnails");
     _preset_file = _settings_path + QString("/presets.ini");
-    //_settings = new QSettings(_settings_path + QString("/settings.ini"), QSettings::IniFormat, this);
     _status_encode_btn = EncodingStatus::START;
     _timer_interval = 30;
     _curTime = 0;
@@ -907,12 +873,14 @@ void MainWindow::setParameters()    /*** Set parameters ***/
         _language = _settings.value("Settings/language").toString();
         _font = _settings.value("Settings/font").toString();
         _fontSize = _settings.value("Settings/font_size").toInt();
-        _desktopEnv = _settings.value("Settings/enviroment").toString();
         _rowSize = _settings.value("Settings/row_size").toInt();
         _settings.endGroup();
 
     } else {
-        setGeometry(x_pos, y_pos, widthMainWindow, heightMainWindow);
+        const QSize delta = QApplication::desktop()->size() - WINDOW_SIZE;
+        const QPointF topLeft(float(delta.width())/2, float(delta.height())/2);
+        const QRect rect(topLeft.toPoint(), WINDOW_SIZE);
+        setGeometry(rect);
     }
 
     // ***************************** Preset parameters ***********************************//
@@ -977,8 +945,8 @@ void MainWindow::setParameters()    /*** Set parameters ***/
         float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
         float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
         for (int ind = 0; ind < DOCKS_COUNT; ind++) {
-            int dockWidth = static_cast<int>(coeffX[ind] * widthMainWindow);
-            int dockHeight = static_cast<int>(coeffY[ind] * heightMainWindow);
+            int dockWidth = static_cast<int>(coeffX[ind] * WINDOW_SIZE.width());
+            int dockHeight = static_cast<int>(coeffY[ind] * WINDOW_SIZE.height());
             dockSizesX.append(dockWidth);
             dockSizesY.append(dockHeight);
         }
@@ -1007,15 +975,8 @@ void MainWindow::setParameters()    /*** Set parameters ***/
         }
     }
 
-    if (_desktopEnv == "default") {
-        std::cout << "Detect desktop env. ..." << std::endl;
-        desktopEnvDetection();
-    }
-    std::cout << "Desktop env.: " << _desktopEnv.toStdString() << std::endl;
-
-    if (this->isMaximized()) {
+    if (isMaximized())
         _expandWindowsState = true;
-    }
 
     if (_batch_mode) {
         ui->comboBoxMode->blockSignals(true);
@@ -1024,8 +985,10 @@ void MainWindow::setParameters()    /*** Set parameters ***/
     }
     setTrayIconActions();
     showTrayIcon();
-    if (_hideInTrayFlag) trayIcon->show();
+    if (_hideInTrayFlag)
+        trayIcon->show();
     setTheme(_theme);
+    std::cout << "Desktop env.: " << short(Helper::getEnv()) << std::endl;
 }
 
 void MainWindow::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY)
@@ -1094,7 +1057,6 @@ void MainWindow::onActionSettings()
                            &_suffixType,
                            &_hideInTrayFlag,
                            &_language,
-                           _desktopEnv,
                            &_fontSize,
                            &_font);
     //settings.setModal(true);
@@ -1306,8 +1268,8 @@ void MainWindow::get_current_data() /*** Get current data ***/
     //******************************** Set time widgets *****************************//
 
     ui->horizontalSlider->setMaximum(_fr_count);
-    ui->lineEditStartTime->setText(timeConverter(_startTime));
-    ui->lineEditEndTime->setText(timeConverter(_endTime));
+    ui->lineEditStartTime->setText(Helper::timeConverter(_startTime));
+    ui->lineEditEndTime->setText(Helper::timeConverter(_endTime));
 
     //******************************** Set video widgets *****************************//
 
@@ -1387,44 +1349,14 @@ void MainWindow::setTheme(int &ind_theme)   /*** Set theme ***/
     QFile file(themePath);
     if (file.open(QFile::ReadOnly)) {
         const QString list = QString::fromUtf8(file.readAll());
-        this->setStyleSheet(styleCreator(list));
+        setStyleSheet(Helper::getParsedCss(list));
         file.close();
     }
     for (int i = 11; i <= 19; i++) {
-        if (!_showHDR_mode) {
-            ui->tableWidget->hideColumn(i);
-        } else {
-            ui->tableWidget->showColumn(i);
-        }
+        _showHDR_mode ? ui->tableWidget->showColumn(i) :
+                        ui->tableWidget->hideColumn(i);
     }
     setExpandIcon();
-}
-
-QString MainWindow::styleCreator(const QString &list)    /*** Parsing CSS ***/
-{
-    QString style = list;
-    QStringList splitList;
-    QStringList varList;
-    QStringList varNames;
-    QStringList varValues;
-    splitList << list.split(';');
-
-    foreach (const QString &row, splitList) {
-        const int first_symbol = row.indexOf('@');
-        if (first_symbol != -1 && row.indexOf('=') != -1) {
-            varList.append(row.mid(first_symbol));
-        }
-    }
-    foreach (const QString &var, varList) {
-        varNames.append(var.split('=')[0].remove(' ').remove('\n'));
-        varValues.append(var.split('=')[1].remove(' ').remove('\n'));
-        style = style.remove(var + QString(";"));
-    }
-    for (int i = 0; i < varNames.size() && i < varValues.size(); i++) {
-        style = style.replace(varNames[i], varValues[i]);
-    }
-    //std::cout << style.toStdString() << std::endl;
-    return style;
 }
 
 void MainWindow::setStatus(QString status)
@@ -1670,7 +1602,7 @@ void MainWindow::onEncodingInitError(const QString &message)
 void MainWindow::onEncodingProgress(const int &percent, const float &rem_time)
 {
     ui->progressBar->setValue(percent);
-    ui->label_RemTime->setText(timeConverter(rem_time));
+    ui->label_RemTime->setText(Helper::timeConverter(rem_time));
 }
 
 void MainWindow::onEncodingLog(const QString &log)
@@ -1704,7 +1636,7 @@ void MainWindow::onEncodingCompleted()
             if (_protection == true) {
                 timer->stop();
             }
-            _message = tr("Task completed!\n\n Elapsed time: ") + timeConverter(elps_t);
+            _message = tr("Task completed!\n\n Elapsed time: ") + Helper::timeConverter(elps_t);
             showInfoMessage(_message);
         }
     } else {
@@ -1717,7 +1649,7 @@ void MainWindow::onEncodingCompleted()
         if (_protection == true) {
             timer->stop();
         }
-        _message = tr("Task completed!\n\n Elapsed time: ") + timeConverter(elps_t);
+        _message = tr("Task completed!\n\n Elapsed time: ") + Helper::timeConverter(elps_t);
         showInfoMessage(_message);
     }
     QDir().remove(QDir::homePath() + QString("/ffmpeg2pass-0.log"));
@@ -1744,20 +1676,19 @@ void MainWindow::onEncodingAborted()
 void MainWindow::onEncodingError(const QString &error_message)
 {
     std::cout << "Error_1 ..." << std::endl;  //  Debug info //
-    if (_protection) timer->stop();
+    if (_protection)
+        timer->stop();
     setStatus(tr("Error!"));
     restore_initial_state();
-    if (error_message != "") {
-        _message = tr("An error occurred: ") + error_message;
-    } else {
-        _message = tr("Unexpected error occurred!");
-    }
+    _message = (error_message != "") ? tr("An error occurred: ") + error_message :
+                                       tr("Unexpected error occurred!");
     showInfoMessage(_message);
 }
 
 void MainWindow::pause()    // Pause encoding
 {
-    if (_protection) timer->stop();
+    if (_protection)
+        timer->stop();
     if (encoder->getEncodingState() != QProcess::NotRunning) {
         setStatus(tr("Pause"));
         animation->stop();
@@ -1767,7 +1698,8 @@ void MainWindow::pause()    // Pause encoding
 
 void MainWindow::resume()   // Resume encoding
 {
-    if (_protection) timer->start();
+    if (_protection)
+        timer->start();
     if (encoder->getEncodingState() != QProcess::NotRunning) {
         setStatus(tr("Encoding"));
         animation->start();
@@ -1789,22 +1721,13 @@ void MainWindow::repeatHandler_Type_1()  /*** Repeat handler ***/
 
 void MainWindow::onActionAdd() /*** Add files ***/
 {
-    QFileDialog openFilesWindow(nullptr);
-    openFilesWindow.setWindowTitle("Open Files");
-    openFilesWindow.setMinimumWidth(600);
-    openFilesWindow.setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    openFilesWindow.setOption(QFileDialog::DontResolveSymlinks, true);
-    if (_desktopEnv == "gnome") openFilesWindow.setOption(QFileDialog::DontUseNativeDialog, true);
-    openFilesWindow.setFileMode(QFileDialog::ExistingFiles);
-    openFilesWindow.setAcceptMode(QFileDialog::AcceptOpen);
-    openFilesWindow.setDirectory(_openDir);
-    openFilesWindow.setNameFilter(tr("Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, "
-                                     "*.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v "
-                                     "*.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)"));
-    if (openFilesWindow.exec() == QFileDialog::Accepted) {
-        const QStringList openFileNames = openFilesWindow.selectedFiles();
-        openFiles(openFileNames);
-    }
+    QStringList result;
+    Helper::openFileDialog(FileDialogType::OPENVFILES,
+                           tr("Open Files"),
+                           _openDir,
+                           result);
+    if (!result.isEmpty())
+        openFiles(result);
 }
 
 void MainWindow::onActionRemove()  /*** Remove file from table ***/
@@ -1913,7 +1836,8 @@ void MainWindow::openFiles(const QStringList &openFileNames)    /*** Open files 
         prg.setText(inputFile);
         prg.setPercent(0);
         QApplication::processEvents();
-        if (i == 1) _openDir = inputFolder;
+        if (i == 1)
+            _openDir = inputFolder;
         MI.Open(file.toStdWString());
         QString fmt_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Format"));
         QString width_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Width"));
@@ -1922,7 +1846,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    /*** Open files 
         QString duration_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"Duration"));
         double duration_double = 0.001 * duration_qstr.toDouble();
         float duration_float = static_cast<float>(duration_double);
-        QString durationTime = timeConverter(duration_float);
+        QString durationTime = Helper::timeConverter(duration_float);
         QString fps_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"FrameRate"));
         const QString status("");
         const QString bitrate_qstr = QString::fromStdWString(MI.Get(Stream_Video, 0, L"BitRate"));
@@ -2287,17 +2211,6 @@ void MainWindow::dropEvent(QDropEvent* event)     /*** Drag & Drop ***/
     event->ignore();
 }
 
-QString MainWindow::timeConverter(const float &time)     /*** Time converter to hh:mm:ss ***/
-{    
-    const int h = static_cast<int>(trunc(time / 3600));
-    const int m = static_cast<int>(trunc((time - float(h * 3600)) / 60));
-    const int s = static_cast<int>(round(time - float(h * 3600) - float(m * 60)));
-    const QString hrs = QString::number(h).rightJustified(2, '0');
-    const QString min = QString::number(m).rightJustified(2, '0');
-    const QString sec = QString::number(s).rightJustified(2, '0');
-    return QString("%1:%2:%3").arg(hrs, min, sec);
-}
-
 void MainWindow::onComboBoxMode_currentIndexChanged(int index)
 {
     _batch_mode = (index == 0) ? false : true;
@@ -2319,7 +2232,8 @@ QString MainWindow::setThumbnail(QString curFilename,
                              const int &destination)
 {
     QString qualityParam("-vf scale=480:-1 -compression_level 10 -pix_fmt rgb24");
-    if (quality == PreviewRes::RES_LOW) qualityParam = QString("-vf scale=144:-1,format=pal8,dctdnoiz=4.5");
+    if (quality == PreviewRes::RES_LOW)
+        qualityParam = QString("-vf scale=144:-1,format=pal8,dctdnoiz=4.5");
     const QString time_qstr = QString::number(time, 'f', 3);
     const QString tmb_name = curFilename.replace(".", "_").replace(" ", "_") + time_qstr;
     QString tmb_file = _thumb_path + QString("/") + tmb_name + QString(".png");
@@ -2331,7 +2245,8 @@ QString MainWindow::setThumbnail(QString curFilename,
         processThumbCreation->start("ffmpeg", cmd);
         processThumbCreation->waitForFinished();
     }
-    if (!tmb.exists()) tmb_file = ":/resources/images/no_preview.png";
+    if (!tmb.exists())
+        tmb_file = ":/resources/images/no_preview.png";
     preview_pixmap = QPixmap(tmb_file);
     QPixmap pix_scaled;
     if (destination == PreviewDest::PREVIEW) {
@@ -2348,7 +2263,8 @@ QString MainWindow::setThumbnail(QString curFilename,
 void MainWindow::repeatHandler_Type_2()
 {
     //std::cout << "Call by timer... " << std::endl;
-    if (_row != -1) setThumbnail(_curFilename, _curTime, PreviewRes::RES_HIGH, PreviewDest::SPLITTER);
+    if (_row != -1)
+        setThumbnail(_curFilename, _curTime, PreviewRes::RES_HIGH, PreviewDest::SPLITTER);
 }
 
 /************************************************
@@ -2418,28 +2334,16 @@ void MainWindow::get_output_filename()  /*** Get output data ***/
 
 void MainWindow::onButtonHotOutputFile()
 {
-    const QString output_folder_name = callFileDialog(tr("Select output folder"));
-    if (output_folder_name.isEmpty()) return;
-    _output_folder = output_folder_name;
-    if (_row != -1) get_output_filename();
-}
-
-QString MainWindow::callFileDialog(const QString title)  /*** Call file dialog ***/
-{
-    QFileDialog selectFolderWindow(nullptr);
-    selectFolderWindow.setWindowTitle(title);
-    selectFolderWindow.setMinimumWidth(600);
-    selectFolderWindow.setWindowFlags(Qt::Dialog | Qt::SubWindow);
-    if (_desktopEnv == "gnome") selectFolderWindow.setOption(QFileDialog::DontUseNativeDialog, true);
-    selectFolderWindow.setFileMode(QFileDialog::DirectoryOnly);
-    selectFolderWindow.setAcceptMode(QFileDialog::AcceptOpen);
-    QString directory = QDir::homePath();
-    if (_output_folder != "") directory = _output_folder;
-    selectFolderWindow.setDirectory(directory);
-    if (selectFolderWindow.exec() == QFileDialog::Accepted) {
-        return selectFolderWindow.selectedFiles().at(0);
+    QStringList result;
+    Helper::openFileDialog(FileDialogType::SELECTFOLDER,
+                           tr("Select output folder"),
+                           _output_folder,
+                           result);
+    if (!result.isEmpty()) {
+        _output_folder = result.at(0);
+        if (_row != -1)
+            get_output_filename();
     }
-    return QString("");
 }
 
 /************************************************
@@ -2550,7 +2454,7 @@ void MainWindow::onSplitSlider_valueChanged(int value)
         } else {
             _curTime = 0.0;
         }
-        ui->lineEditCurTime->setText(timeConverter(_curTime));
+        ui->lineEditCurTime->setText(Helper::timeConverter(_curTime));
         timerCallSetThumbnail->stop();
         timerCallSetThumbnail->start();
     }
@@ -2579,7 +2483,7 @@ void MainWindow::onButtonSetStartTime()
         if (_startTime > _endTime && _endTime != 0.0) {
             _startTime = _endTime;
         }
-        ui->lineEditStartTime->setText(timeConverter(_startTime));
+        ui->lineEditStartTime->setText(Helper::timeConverter(_startTime));
         QTableWidgetItem *newItem_startTime = new QTableWidgetItem(QString::number(_startTime, 'f', 3));
         ui->tableWidget->setItem(_row, ColumnIndex::T_STARTTIME, newItem_startTime);
     }
@@ -2592,7 +2496,7 @@ void MainWindow::onButtonSetEndTime()
         if (_endTime < _startTime) {
             _endTime =_startTime;
         }
-        ui->lineEditEndTime->setText(timeConverter(_endTime));
+        ui->lineEditEndTime->setText(Helper::timeConverter(_endTime));
         QTableWidgetItem *newItem_endTime = new QTableWidgetItem(QString::number(_endTime, 'f', 3));
         ui->tableWidget->setItem(_row, ColumnIndex::T_ENDTIME, newItem_endTime);
     }
@@ -2607,31 +2511,18 @@ void MainWindow::onActionResetLabels()
         ui->horizontalSlider->blockSignals(false);
 
         _curTime = 0.0;
-        ui->lineEditCurTime->setText(timeConverter(_curTime));
+        ui->lineEditCurTime->setText(Helper::timeConverter(_curTime));
 
         _startTime = 0.0;
-        ui->lineEditStartTime->setText(timeConverter(_startTime));
+        ui->lineEditStartTime->setText(Helper::timeConverter(_startTime));
         QTableWidgetItem *newItem_startTime = new QTableWidgetItem(QString::number(_startTime, 'f', 3));
         ui->tableWidget->setItem(_row, ColumnIndex::T_STARTTIME, newItem_startTime);
 
         _endTime = 0.0;
-        ui->lineEditEndTime->setText(timeConverter(_endTime));
+        ui->lineEditEndTime->setText(Helper::timeConverter(_endTime));
         QTableWidgetItem *newItem_endTime = new QTableWidgetItem(QString::number(_endTime, 'f', 3));
         ui->tableWidget->setItem(_row, ColumnIndex::T_ENDTIME, newItem_endTime);
     }
-}
-
-QString MainWindow::timeConverter(double &time)     /*** Time converter to hh:mm:ss.msc ***/
-{
-    const int h = static_cast<int>(trunc(time / 3600));
-    const int m = static_cast<int>(trunc((time - double(h * 3600)) / 60));
-    const int s = static_cast<int>(trunc(time - double(h * 3600) - double(m * 60)));
-    const int ms = static_cast<int>(round(1000 * (time - double(h * 3600) - double(m * 60) - double(s))));
-    const QString hrs = QString::number(h).rightJustified(2, '0');
-    const QString min = QString::number(m).rightJustified(2, '0');
-    const QString sec = QString::number(s).rightJustified(2, '0');
-    const QString msec = QString::number(ms).rightJustified(3, '0');
-    return QString("%1:%2:%3.%4").arg(hrs, min, sec, msec);
 }
 
 /************************************************
@@ -2697,8 +2588,7 @@ void MainWindow::onActionRemovePreset()  /*** Remove preset ***/
         // Item is child...
         _message = tr("Delete?");
         bool confirm = showDialogMessage(_message);
-        if (confirm == true)
-        {
+        if (confirm == true) {
             int index_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
             int index_child = parentItem->indexOfChild(item);
             updateCurPresetPos(index_top, index_child);
@@ -2743,7 +2633,7 @@ void MainWindow::onActionEditPreset()  /*** Edit preset ***/
         // Item is child...
         for (int k = 0; k < PARAMETERS_COUNT; k++) {
             _new_param[k] = item->text(k+7);
-        };
+        }
         Preset presetWindow(this, &_new_param);
         //presetWindow.setModal(true);
         if (presetWindow.exec() == Dialog::Accept) {
@@ -2999,25 +2889,22 @@ QString MainWindow::updateFieldContainer(int &codec, int &container)
 
 void MainWindow::setPresetIcon(QTreeWidgetItem *item, bool collapsed)
 {
-    QIcon sectionIcon;
-    QString path;
+    QString file;
     switch (_theme) {
     case Theme::GRAY:
     case Theme::DARK:
     case Theme::WAVE:
-        if (collapsed) {
-            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder.png");
-        } else {
-            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open.png");}
+        file = (collapsed) ? QString::fromUtf8("cil-folder.png") :
+                             QString::fromUtf8("cil-folder-open.png");
         break;
     case Theme::DEFAULT:
-        if (collapsed) {
-            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder_light.png");
-        } else {
-            path = QString::fromUtf8(":/resources/icons/16x16/cil-folder-open_light.png");}
+        file = (collapsed) ? QString::fromUtf8("cil-folder_light.png") :
+                             QString::fromUtf8("cil-folder-open_light.png");
         break;
     }
-    sectionIcon.addFile(path, QSize(), QIcon::Normal, QIcon::Off);
+    QIcon sectionIcon;
+    sectionIcon.addFile(QString::fromUtf8(":/resources/icons/16x16/") + file,
+                        QSize(), QIcon::Normal, QIcon::Off);
     item->setIcon(0, sectionIcon);
 }
 

@@ -21,6 +21,7 @@
 #include <QMap>
 #include "mainwindow.h"
 #include "constants.h"
+#include "helper.h"
 
 
 int checkForDuplicates();
@@ -35,7 +36,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     app.setStyle(QStyleFactory::create("Fusion"));
-    if (checkForDuplicates() == 1) return 1;
+    if (checkForDuplicates() == 1)
+        return 1;
 
     /******************* Read Settings ****************************/
     SETTINGS(_settings);
@@ -92,6 +94,7 @@ int main(int argc, char *argv[])
     }
 
     /******************* Set Window *******************************/
+    Helper::detectEnv();
     MainWindow window;
     window.show();
     splash->finish(&window);
