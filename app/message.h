@@ -13,10 +13,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-
 #include <QTimer>
-#include <QSound>
-#include <QMouseEvent>
 #ifdef Q_OS_WIN
     #include "platform_win/basewindow.h"
 #else

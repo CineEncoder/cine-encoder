@@ -1,4 +1,5 @@
 #include "helper.h"
+#include <QLocale>
 #include <QProcess>
 #include <QFileDialog>
 #include <iostream>
@@ -19,7 +20,7 @@ Helper::~Helper()
 
 }
 
-DesktopEnv Helper::m_desktopEnv = DesktopEnv::UNDEF;
+Helper::DesktopEnv Helper::m_desktopEnv = Helper::DesktopEnv::UNDEF;
 
 void Helper::detectEnv()
 {
@@ -39,7 +40,7 @@ void Helper::detectEnv()
 #endif
 }
 
-DesktopEnv Helper::getEnv()
+Helper::DesktopEnv Helper::getEnv()
 {
     return m_desktopEnv;
 }
@@ -119,4 +120,16 @@ QString Helper::timeConverter(const double time)     // Time converter to hh:mm:
     const int s = trc(time - double(h * 3600) - double(m * 60));
     const int ms = rnd(1000 * (time - double(h * 3600) - double(m * 60) - double(s)));
     return QString("%1:%2:%3.%4").arg(intToStr(h,2), intToStr(m,2), intToStr(s,2), intToStr(ms,3));
+}
+
+QString Helper::getSysLanguage()
+{
+    auto _sysLang = QLocale::system().language();
+    QMap<int, QString> langMap = {
+        {QLocale::English, "en"},
+        {QLocale::Chinese, "zh"},
+        {QLocale::German,  "de"},
+        {QLocale::Russian, "ru"}
+    };
+    return (langMap.contains(_sysLang)) ? langMap.value(_sysLang) : "en";
 }

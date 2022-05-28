@@ -12,9 +12,11 @@
 
 #include "message.h"
 #include "ui_message.h"
-#include <math.h>
+#include "helper.h"
+#include <QSound>
 
 #define ELAPSED_TIME 25
+
 
 Message::Message(QWidget *parent, MessType mess_type,
                  const QString &message, const bool timer_flag) :
@@ -103,16 +105,10 @@ void Message::show_message()
 
 void Message::repeatHandler()
 {
-    if (m_elps_t == 0) {
-        this->close();
-    }
-    const int h = static_cast<int>(trunc(float(m_elps_t) / 3600));
-    const int m = static_cast<int>(trunc((float(m_elps_t) - float(h * 3600)) / 60));
-    const int s = m_elps_t - (h * 3600) - (m * 60);
-    QString hrs = QString::number(h).rightJustified(2, '0');
-    QString min = QString::number(m).rightJustified(2, '0');
-    QString sec = QString::number(s).rightJustified(2, '0');
-    m_message = tr("Pause\n\n Resume after: ") + QString("%1:%2:%3").arg(hrs, min, sec);
+    if (m_elps_t == 0)
+        close();
+    m_message = QString("%1\n\n %2: %3").arg(tr("Pause"), tr("Resume after:"),
+                Helper::timeConverter(float(m_elps_t)));
     show_message();
     m_elps_t--;
 }

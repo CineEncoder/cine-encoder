@@ -28,7 +28,7 @@ public:
     explicit Progress(QWidget *parent, const QString &title);
     ~Progress();
     void setText(const QString &text);
-    void setPercent(const int &percent);
+    void setPercent(const int percent);
 
 private:
     Ui::Progress *ui;

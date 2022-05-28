@@ -45,7 +45,7 @@ void Progress::setText(const QString &text)
     ui->label_filename->setText(elidedText);
 }
 
-void Progress::setPercent(const int &percent)
+void Progress::setPercent(const int percent)
 {
     ui->progressBar_opening->setValue(percent);
 }
