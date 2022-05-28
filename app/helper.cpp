@@ -8,6 +8,7 @@
 #define trc(num) static_cast<int>(trunc(num))
 #define rnd(num) static_cast<int>(round(num))
 #define intToStr(num, offset) QString::number(num).rightJustified(offset, '0')
+#define Dump(a) std::cout << a << std::endl
 
 
 Helper::Helper()
@@ -35,7 +36,7 @@ void Helper::detectEnv()
         m_desktopEnv = (line.indexOf("GNOME") != -1) ?
                     DesktopEnv::GNOME : DesktopEnv::OTHER;
     } else {
-        std::cout << "printenv not found" << std::endl;
+        Dump("printenv not found");
     }
 #endif
 }
@@ -66,7 +67,7 @@ QString Helper::getParsedCss(const QString &list)    // Parsing CSS
     }
     for (int i = 0; i < varNames.size() && i < varValues.size(); i++)
         style = style.replace(varNames[i], varValues[i]);
-    //std::cout << style.toStdString() << std::endl;
+    //Dump(style.toStdString());
     return style;
 }
 

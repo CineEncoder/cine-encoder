@@ -45,16 +45,16 @@ public:
     ~MainWindow();
 
     // ============= Settings ================
-    bool        _hideInTrayFlag,
-                _showHDR_mode,
-                _protection;
+    bool        m_hideInTrayFlag,
+                m_showHdrFlag,
+                m_protectFlag;
 
-    int         _fontSize,
-                _prefxType,
-                _suffixType,
+    int         m_fontSize,
+                m_prefxType,
+                m_suffixType,
                 _pos_top,
                 _pos_cld,
-                _timer_interval;
+                m_timerInterval;
 
     QString     _language,
                 _output_folder,
@@ -98,7 +98,7 @@ private slots:
     void onEncodingMode(const QString &mode);
     void onEncodingStarted();
     void onEncodingInitError(const QString &_message);
-    void onEncodingProgress(const int &percent, const float &rem_time);
+    void onEncodingProgress(const int percent, const float rem_time);
     void onEncodingLog(const QString &log);
     void onEncodingCompleted();
     void onEncodingAborted();
@@ -155,14 +155,14 @@ private:
     QPixmap preview_pixmap;
 
     // ============= Dock area =============
-    QMainWindow *window;
-    QWidget     *centralWidget;
-    QDockWidget *docks[DOCKS_COUNT];
+    QMainWindow *m_pDocksContainer;
+    QWidget     *m_pCentralDock;
+    QDockWidget *m_pDocks[DOCKS_COUNT];
 
     // ============= Top label =============
-    QLabel      *raiseThumb,
-                *audioThumb,
-                *subtitleThumb;
+    QLabel      *m_pTableLabel,
+                *m_pAudioLabel,
+                *m_pSubtitleLabel;
 
     // ============= Progress animation =============
     QMovie      *animation;
@@ -171,10 +171,6 @@ private:
     QSystemTrayIcon *trayIcon;
 
     QMenu       *trayIconMenu;
-
-    QAction     *minimizeAction,
-                *restoreAction,
-                *quitAction;
 
     // ============= Top menu actions =============
     QAction     *add_files,
@@ -279,43 +275,43 @@ private:
     void openFiles(const QStringList &file_name_open);
     void get_current_data();
     void get_output_filename();
-    void setStatus(QString status);
+    void setStatus(const QString &status);
     void restore_initial_state();
     void showInfoMessage(const QString &message, const bool timer_mode = false);
     bool showDialogMessage(const QString &message);
 
-    void setTheme(int &ind_theme);
+    void setTheme(const int ind_theme);
     QString setThumbnail(QString curFilename,
-                         const double &time,
-                         const int &quality,
-                         const int &destination);
+                         const double time,
+                         const int quality,
+                         const int destination);
 
     void provideContextMenu(const QPoint &position);
     void providePresetContextMenu(const QPoint &position);
-    void resizeTableRows(int rows_height);
+    void resizeTableRows(const int rows_height);
     void resetView();
 
     // ============= Preset Window =============
     void set_defaults();
     void setItemStyle(QTreeWidgetItem *item);
-    void updateCurPresetPos(int &index_top, int &index_child);
-    void updateInfoFields(QString &codec_qstr,
-                          QString &mode_qstr,
-                          QString &container_qstr,
-                          QString &bqr_qstr,
-                          QString &pass_qstr,
-                          QString &preset_qstr,
-                          QString &acodec_qstr,
+    void updateCurPresetPos(const int index_top, const int index_child);
+    void updateInfoFields(const QString &codec_qstr,
+                          const QString &mode_qstr,
+                          const QString &container_qstr,
+                          const QString &bqr_qstr,
+                          const QString &pass_qstr,
+                          const QString &preset_qstr,
+                          const QString &acodec_qstr,
                           QTreeWidgetItem *item,
-                          bool defaultNameFlag);
+                          const bool defaultNameFlag);
 
     void updatePresetTable();
-    QString updateFieldCodec(int &codec);
-    QString updateFieldMode(int &codec, int &mode);
-    QString updateFieldPreset(int &codec, int &preset);
-    QString updateFieldPass(int &codec, int &pass);
-    QString updateFieldAcodec(int &codec, int &acodec);
-    QString updateFieldContainer(int &codec, int &container);
+    QString updateFieldCodec(const int codec);
+    QString updateFieldMode(const int codec, const int mode);
+    QString updateFieldPreset(const int codec, const int preset);
+    QString updateFieldPass(const int codec, const int pass);
+    QString updateFieldAcodec(const int codec, const int acodec);
+    QString updateFieldContainer(const int codec, const int container);
 
 };
 

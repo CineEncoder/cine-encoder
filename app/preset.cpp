@@ -106,7 +106,7 @@ void Preset::onCloseWindow()
     closeDialog();
 }
 
-void Preset::onButtonApply()  /*** Apply preset ***/
+void Preset::onButtonApply()  // Apply preset
 {
     (*m_pNew_param)[CurParamIndex::OUTPUT_PARAM] = ui->textBrowser_presetname->toPlainText();
     (*m_pNew_param)[CurParamIndex::CODEC] = QString::number(ui->comboBox_codec->currentIndex());
@@ -171,56 +171,13 @@ void Preset::showEvent(QShowEvent *event)
         connect(timer, &QTimer::timeout, this, &Preset::repeat_handler);
         timer->start();
 
-        QList<QComboBox*> comboBoxes = findChildren<QComboBox*>();
+        auto comboBoxes = findChildren<QComboBox*>();
         foreach (auto combo, comboBoxes) {
-            //std::cout << combo->objectName().toStdString() << std::endl;
+            //Dump(combo->objectName().toStdString());
             QListView *_view = new QListView(combo);
             _view->setTextElideMode(Qt::ElideMiddle);
             combo->setView(_view);
         }
-
-        /*QListView *comboboxAspectRatioListView = new QListView(ui->comboBoxAspectRatio);
-        QListView *comboboxWidthListView = new QListView(ui->comboBox_width);
-        QListView *comboboxHeightListView = new QListView(ui->comboBox_height);
-        QListView *comboboxFrameRateListView = new QListView(ui->comboBoxFrameRate);
-        QListView *comboboxBlendingListView = new QListView(ui->comboBoxBlending);
-        QListView *comboboxCodecListView = new QListView(ui->comboBox_codec);
-        QListView *comboboxModeListView = new QListView(ui->comboBox_mode);
-        QListView *comboboxContainerListView = new QListView(ui->comboBox_container);
-        QListView *comboboxPassListView = new QListView(ui->comboBox_pass);
-        QListView *comboboxPresetListView = new QListView(ui->comboBox_preset);
-        QListView *comboboxLevelListView = new QListView(ui->comboBox_level);
-        QListView *comboboxACodecListView = new QListView(ui->comboBox_audio_codec);
-        QListView *comboboxABitrateListView = new QListView(ui->comboBox_audio_bitrate);
-        QListView *comboboxASamplingListView = new QListView(ui->comboBox_audio_sampling);
-        QListView *comboboxAChannelsListView = new QListView(ui->comboBox_audio_channels);
-        QListView *comboboxColorRangeListView = new QListView(ui->comboBox_color_range);
-        QListView *comboboxColorPrimListView = new QListView(ui->comboBox_color_prim);
-        QListView *comboboxColorMatrixListView = new QListView(ui->comboBox_color_matrix);
-        QListView *comboboxTransferListView = new QListView(ui->comboBox_transfer);
-        QListView *comboboxMasterDisplayListView = new QListView(ui->comboBox_master_disp);
-        comboboxAspectRatioListView->setTextElideMode(Qt::ElideMiddle);
-        ui->comboBoxAspectRatio->setView(comboboxAspectRatioListView);
-        ui->comboBox_width->setView(comboboxWidthListView);
-        ui->comboBox_height->setView(comboboxHeightListView);
-        ui->comboBoxFrameRate->setView(comboboxFrameRateListView);
-        ui->comboBoxBlending->setView(comboboxBlendingListView);
-        comboboxCodecListView->setTextElideMode(Qt::ElideMiddle);
-        ui->comboBox_codec->setView(comboboxCodecListView);
-        ui->comboBox_mode->setView(comboboxModeListView);
-        ui->comboBox_container->setView(comboboxContainerListView);
-        ui->comboBox_pass->setView(comboboxPassListView);
-        ui->comboBox_preset->setView(comboboxPresetListView);
-        ui->comboBox_level->setView(comboboxLevelListView);
-        ui->comboBox_audio_codec->setView(comboboxACodecListView);
-        ui->comboBox_audio_bitrate->setView(comboboxABitrateListView);
-        ui->comboBox_audio_sampling->setView(comboboxASamplingListView);
-        ui->comboBox_audio_channels->setView(comboboxAChannelsListView);
-        ui->comboBox_color_range->setView(comboboxColorRangeListView);
-        ui->comboBox_color_prim->setView(comboboxColorPrimListView);
-        ui->comboBox_color_matrix->setView(comboboxColorMatrixListView);
-        ui->comboBox_transfer->setView(comboboxTransferListView);
-        ui->comboBox_master_disp->setView(comboboxMasterDisplayListView);*/
 
         QDoubleValidator *doubleValidator = new QDoubleValidator(0.0, 10000.0, 3, this);
         doubleValidator->setNotation(QDoubleValidator::StandardNotation);
@@ -300,7 +257,7 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
 
 void Preset::repeat_handler()
 {
-    //std::cout << "Call by timer... Repeat count: " << m_repeat << std::endl;
+    //Dump("Call by timer... Repeat count: " << m_repeat);
     if (m_repeat > 0) {
         m_repeat = 0;
         change_preset_name();
@@ -309,7 +266,7 @@ void Preset::repeat_handler()
 
 void Preset::change_preset_name()
 {
-    //std::cout << "Call change preset name..." << std::endl;
+    //Dump("Call change preset name...");
     const int _ind_codec = ui->comboBox_codec->currentIndex();
     const int _ind_mode = ui->comboBox_mode->currentIndex();
     const int _ind_pass = ui->comboBox_pass->currentIndex();
@@ -421,7 +378,7 @@ void Preset::onComboBoxAspectRatio_indexChanged(int index)
     const float width_= width.toFloat();
     const float height_ = height.toFloat();
     m_aspectRatio = (height_ != 0.0f ) ? round(10000 * width_ / height_)/10000 : 0.0f;
-    //std::cout << "AR: " << m_aspectRatio << std::endl;
+    //Dump("AR: " << m_aspectRatio);
     m_repeat++;
 }
 
@@ -486,13 +443,16 @@ void Preset::calculateDAR(QString width, QString height)
     if (width == tr("Source") && height == tr("Source")) {
         ui->lineEdit_DAR->setText(tr("Source"));
     }
-    else if (width == tr("Source") && height != tr("Source")) {
+    else
+    if (width == tr("Source") && height != tr("Source")) {
         ui->lineEdit_DAR->setText(tr("Undef"));
     }
-    else if (width != tr("Source") && height == tr("Source")) {
+    else
+    if (width != tr("Source") && height == tr("Source")) {
         ui->lineEdit_DAR->setText(tr("Undef"));
     }
-    else if (width != tr("Source") && height != tr("Source")) {
+    else
+    if (width != tr("Source") && height != tr("Source")) {
         int width_int = width.toInt();
         int height_int = height.toInt();
 
@@ -564,13 +524,13 @@ void Preset::disableHDR()
     ui->comboBox_master_disp->setEnabled(false);
 }
 
-void Preset::onComboBox_codec_textChanged(const QString &arg1)  /*** Change current codec ***/
+void Preset::onComboBox_codec_textChanged(const QString &arg1)  // Change current codec
 {
     const int row = ui->comboBox_codec->currentIndex();
     if (row != -1) {
         Tables t;
         lockSignals(true);
-        std::cout << "Curr codec... " << row << std::endl;
+        //Dump("Curr codec... " << row);
         ui->comboBoxAspectRatio->setEnabled(true);
         ui->comboBox_width->setEnabled(true);
         ui->comboBox_height->setEnabled(true);
@@ -955,10 +915,10 @@ void Preset::onComboBox_codec_textChanged(const QString &arg1)  /*** Change curr
 
 }
 
-void Preset::onComboBox_mode_textChanged(const QString &arg1)  /*** Change curret mode ***/
+void Preset::onComboBox_mode_textChanged(const QString &arg1)  // Change curret mode
 {
     lockSignals(true);
-    std::cout << "Change current mode..." << std::endl;
+    //Dump("Change current mode...");
     ui->lineEdit_bitrate->clear();
     ui->lineEdit_minrate->clear();
     ui->lineEdit_maxrate->clear();
@@ -1066,15 +1026,17 @@ void Preset::onComboBox_mode_textChanged(const QString &arg1)  /*** Change curre
     m_repeat++;
 }
 
-void Preset::onComboBox_preset_indexChanged(int index) /*** Preset index changed ***/
+void Preset::onComboBox_preset_indexChanged(int index) // Preset index changed
 {
-    std::cout << "Index of Preset: " << index << std::endl;
+    //Dump("Index of Preset: " << index);
+    Q_UNUSED(index)
     m_repeat++;
 }
 
-void Preset::onComboBox_pass_indexChanged(int index)  /*** Pass index changed ***/
+void Preset::onComboBox_pass_indexChanged(int index)  // Pass index changed
 {
-    std::cout << "Index of Pass: " << index << std::endl;
+    //Dump("Index of Pass: " << index);
+    Q_UNUSED(index)
     m_repeat++;
 }
 
@@ -1092,10 +1054,10 @@ void Preset::onLineEdit_bitrate_editingFinished()
 ** Audio
 ************************************************/
 
-void Preset::onComboBox_audio_codec_textChanged(const QString &arg1) /*** Change current audio codec ***/
+void Preset::onComboBox_audio_codec_textChanged(const QString &arg1) // Change current audio codec
 {
     lockSignals(true);
-    std::cout << "Change current audio codec..." << std::endl;
+    //Dump("Change current audio codec...");
     ui->comboBox_audio_bitrate->setEnabled(true);
     ui->comboBox_audio_bitrate->clear();
     ui->comboBox_audio_sampling->setEnabled(true);
@@ -1145,7 +1107,7 @@ void Preset::onComboBox_audio_codec_textChanged(const QString &arg1) /*** Change
     lockSignals(false);
 }
 
-void Preset::onComboBox_audio_bitrate_textChanged()  /*** Abitrate currentText changed ***/
+void Preset::onComboBox_audio_bitrate_textChanged()  // Abitrate currentText changed
 {
     m_repeat++;
 }
@@ -1154,53 +1116,43 @@ void Preset::onComboBox_audio_bitrate_textChanged()  /*** Abitrate currentText c
 ** HDR Metadata
 ************************************************/
 
-void Preset::onComboBox_master_disp_textChanged(const QString &arg1)  /*** Change current master display ***/
+void Preset::onComboBox_master_disp_textChanged(const QString &arg1)  // Change current master display
 {
     lockSignals(true);
-    std::cout << "Change current master display..." << std::endl;
+    //Dump("Change current master display...");
     ui->lineEdit_chroma_coord->clear();
     ui->lineEdit_white_coord->clear();
-    ui->lineEdit_chroma_coord->setEnabled(true);
-    ui->lineEdit_white_coord->setEnabled(true);
+    ui->lineEdit_chroma_coord->setEnabled(false);
+    ui->lineEdit_white_coord->setEnabled(false);
     if (arg1 == tr("Unsprt")) {
         ui->lineEdit_chroma_coord->setText(tr("Unsprt"));
         ui->lineEdit_white_coord->setText(tr("Unsprt"));
-        ui->lineEdit_chroma_coord->setEnabled(false);
-        ui->lineEdit_white_coord->setEnabled(false);
     }
     else if (arg1 == tr("Source")) {
         ui->lineEdit_chroma_coord->setText(tr("Source"));
         ui->lineEdit_white_coord->setText(tr("Source"));
-        ui->lineEdit_chroma_coord->setEnabled(false);
-        ui->lineEdit_white_coord->setEnabled(false);
     }
     else if (arg1 == tr("Custom")) {
         ui->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui->lineEdit_white_coord->setText("0.3127,0.3290");
+        ui->lineEdit_chroma_coord->setEnabled(true);
+        ui->lineEdit_white_coord->setEnabled(true);
     }
     else if (arg1 == tr("Display P3")) {
         ui->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui->lineEdit_white_coord->setText("0.3127,0.3290");
-        ui->lineEdit_chroma_coord->setEnabled(false);
-        ui->lineEdit_white_coord->setEnabled(false);
     }
     else if (arg1 == tr("DCI P3")) {
         ui->lineEdit_chroma_coord->setText("0.680,0.320,0.265,0.690,0.150,0.060");
         ui->lineEdit_white_coord->setText("0.314,0.3510");
-        ui->lineEdit_chroma_coord->setEnabled(false);
-        ui->lineEdit_white_coord->setEnabled(false);
     }
     else if (arg1 == "BT.2020") {
         ui->lineEdit_chroma_coord->setText("0.708,0.292,0.170,0.797,0.131,0.046");
         ui->lineEdit_white_coord->setText("0.3127,0.3290");
-        ui->lineEdit_chroma_coord->setEnabled(false);
-        ui->lineEdit_white_coord->setEnabled(false);
     }
     else if (arg1 == "BT.709") {
         ui->lineEdit_chroma_coord->setText("0.640,0.330,0.30,0.60,0.150,0.060");
         ui->lineEdit_white_coord->setText("0.3127,0.3290");
-        ui->lineEdit_chroma_coord->setEnabled(false);
-        ui->lineEdit_white_coord->setEnabled(false);
     }
     lockSignals(false);
 }

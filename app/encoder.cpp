@@ -18,7 +18,6 @@
 #include <math.h>
 
 #define rnd(num) static_cast<int>(round(num))
-#define Dump(a) std::cout << a << std::endl
 
 
 Encoder::Encoder(QObject *parent) :

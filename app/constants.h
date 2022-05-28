@@ -16,6 +16,7 @@
 #include <QSettings>
 #include <QDir>
 
+#define Dump(a) std::cout << a << std::endl
 #define SETTINGSPATH QDir::homePath() + QString("/CineEncoder")
 #define SETTINGSFILE SETTINGSPATH + QString("/settings.ini")
 #define SETTINGS(settings) QSettings settings(SETTINGSFILE, \

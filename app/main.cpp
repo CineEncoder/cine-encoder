@@ -41,6 +41,11 @@ int main(int argc, char *argv[])
         return 1;
 
     const QString sysLang = Helper::getSysLanguage();
+    /*const int id = QFontDatabase::addApplicationFont(":/resources/fonts/interregular.otf");
+    QString sysFamily = app.font().family();
+    if (!QFontDatabase::applicationFontFamilies(id).isEmpty())
+        sysFamily = QFontDatabase::applicationFontFamilies(id).at(0);*/
+
     /******************* Read Settings ****************************/
     SETTINGS(stn);
     stn.beginGroup("Settings");
@@ -111,7 +116,7 @@ int checkForDuplicates()
             return 1;
         }
     } else {
-        std::cout << "Command \""<< cmd.toStdString() << "\" not found." << std::endl;
+        Dump("Command \""<< cmd.toStdString() << "\" not found.");
     }
     return 0;
 }
