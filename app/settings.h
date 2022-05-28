@@ -34,54 +34,52 @@ public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
 
-    void setParameters(QString    *ptr_output_folder,
-                       QString    *ptr_temp_folder,
-                       bool       *ptr_protection,
-                       bool       *ptr_showHDR_mode,
-                       int        *ptr_timer_interval,
-                       int        *ptr_theme,
-                       QString    *ptr_prefixName,
-                       QString    *ptr_suffixName,
-                       int        *ptr_prefxType,
-                       int        *ptr_suffixType,
-                       bool       *ptr_hideInTrayFlag,
-                       QString    *ptr_language,
-                       int        *ptr_fontSize,
-                       QString    *ptr_font);
+    void setParameters(QString    *pOutputFolder,
+                       QString    *pTempFolder,
+                       bool       *pProtectFlag,
+                       bool       *pShowHdrFlag,
+                       int        *pTimerInterval,
+                       int        *pTheme,
+                       QString    *pPrefixName,
+                       QString    *pSuffixName,
+                       int        *pPrefxType,
+                       int        *pSuffixType,
+                       bool       *pHideInTrayFlag,
+                       QString    *pLanguage,
+                       int        *pFontSize,
+                       QString    *pFont);
 
 private:
     void onCloseWindow();
     void onButtonApply();
     void onButtonReset();
-    void onButtonTab_1();
-    void onButtonTab_2();
     virtual bool eventFilter(QObject*, QEvent*) final;
 
     void onButtonOutputPath();
     void onButtonTempPath();
-    void onCheckBox_protection_clicked();
+    void onCheckBoxProtectFlag_clicked();
     void onComboBoxPrefixType_indexChanged(int);
     void onComboBoxSuffixType_indexChanged(int);
-    void onComboBox_font_indexChanged(int);
+    void onComboBoxFont_indexChanged(int);
 
     Ui::Settings *ui;
 
-    QString *_ptr_output_folder,
-            *_ptr_temp_folder,
-            *_ptr_prefixName,
-            *_ptr_suffixName,
-            *_ptr_language,
-            *_ptr_font;
+    QString *m_pOutputFolder,
+            *m_pTempFolder,
+            *m_pPrefixName,
+            *m_pSuffixName,
+            *m_pLanguage,
+            *m_pFont;
 
-    int     *_ptr_fontSize,
-            *_ptr_prefxType,
-            *_ptr_suffixType,
-            *_ptr_timer_interval,
-            *_ptr_theme;
+    int     *m_pFontSize,
+            *m_pPrefxType,
+            *m_pSuffixType,
+            *m_pTimerInterval,
+            *m_pTheme;
 
-    bool    *_ptr_showHDR_mode,
-            *_ptr_protection,
-            *_ptr_hideInTrayFlag;
+    bool    *m_pShowHdrFlag,
+            *m_pProtectFlag,
+            *m_pHideInTrayFlag;
 };
 
 #endif // SETTINGS_H

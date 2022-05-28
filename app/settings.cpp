@@ -20,6 +20,9 @@
 #include <QStringListModel>
 #include "constants.h"
 
+typedef void(Settings::*FunctionClick)(void);
+typedef void(Settings::*FunctionIndexChanged)(int);
+
 
 Settings::Settings(QWidget *parent):
     BaseWindow(parent, true),
@@ -32,29 +35,52 @@ Settings::Settings(QWidget *parent):
 #ifdef Q_OS_UNIX
     setMaskWidget(ui_widget);
 #endif
-    ui->frame_middle->setFocusPolicy(Qt::StrongFocus);
+    ui->frameMiddle->setFocusPolicy(Qt::StrongFocus);
 
-    connect(ui->closeWindow, &QPushButton::clicked, this, &Settings::onCloseWindow);
-    connect(ui->buttonCancel, &QPushButton::clicked, this, &Settings::onCloseWindow);
-    connect(ui->buttonApply, &QPushButton::clicked, this, &Settings::onButtonApply);
-    connect(ui->buttonReset, &QPushButton::clicked, this, &Settings::onButtonReset);
-    connect(ui->buttonTab_1, &QPushButton::clicked, this, &Settings::onButtonTab_1);
-    connect(ui->buttonTab_2, &QPushButton::clicked, this, &Settings::onButtonTab_2);
-    connect(ui->buttonOutputPath, &QPushButton::clicked, this, &Settings::onButtonOutputPath);
-    connect(ui->buttonTempPath, &QPushButton::clicked, this, &Settings::onButtonTempPath);
-    connect(ui->checkBox_protection, &QCheckBox::clicked, this, &Settings::onCheckBox_protection_clicked);
-    connect(ui->comboBoxPrefixType, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &Settings::onComboBoxPrefixType_indexChanged);
-    connect(ui->comboBoxSuffixType, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &Settings::onComboBoxSuffixType_indexChanged);
-    connect(ui->comboBox_font, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &Settings::onComboBox_font_indexChanged);
+    // Buttons
+    QPushButton *btns[] = {
+        ui->closeWindow, ui->buttonCancel, ui->buttonApply, ui->buttonReset,
+        ui->buttonOutputPath, ui->buttonTempPath
+    };
+    FunctionClick btn_methods[] = {
+        &Settings::onCloseWindow, &Settings::onCloseWindow, &Settings::onButtonApply,
+        &Settings::onButtonReset, &Settings::onButtonOutputPath, &Settings::onButtonTempPath
+    };
+    for (int i = 0; i < 6; i++)
+        connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
 
+    // Tab buttons
+    QList<QPushButton*> tabButtons = {ui->buttonTab_1, ui->buttonTab_2};
+    for (int i = 0; i < tabButtons.size(); i++) {
+        connect(tabButtons[i], &QPushButton::clicked, this, [this, i, tabButtons]() {
+            for (int j = 0; j < tabButtons.size(); j++)
+                tabButtons[j]->setEnabled(i != j);
+            ui->tabWidgetSettings->setCurrentIndex(i);
+        });
+    }
+
+    // Check boxes
+    connect(ui->checkBox_protection, &QCheckBox::clicked, this,
+            &Settings::onCheckBoxProtectFlag_clicked);
+
+    // Combo boxes
+    QComboBox *boxes[] = {
+        ui->comboBoxPrefixType, ui->comboBoxSuffixType, ui->comboBox_font
+    };
+    FunctionIndexChanged boxes_methods[] = {
+        &Settings::onComboBoxPrefixType_indexChanged, &Settings::onComboBoxSuffixType_indexChanged,
+        &Settings::onComboBoxFont_indexChanged
+    };
+    for (int i = 0; i < 3; i++)
+        connect(boxes[i], static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                this, boxes_methods[i]);
+
+    // On close
     connect(this, &Settings::destroyed, this, [this]() {
-        SETTINGS(_settings);
-        _settings.beginGroup("SettingsWidget");
-        _settings.setValue("SettingsWidget/geometry", this->saveGeometry());
-        _settings.endGroup();
+        SETTINGS(stn);
+        stn.beginGroup("SettingsWidget");
+        stn.setValue("SettingsWidget/geometry", this->saveGeometry());
+        stn.endGroup();
     });
 }
 
@@ -63,65 +89,65 @@ Settings::~Settings()
     delete ui;
 }
 
-void Settings::setParameters(QString    *ptr_output_folder,
-                             QString    *ptr_temp_folder,
-                             bool       *ptr_protection,
-                             bool       *ptr_showHDR_mode,
-                             int        *ptr_timer_interval,
-                             int        *ptr_theme,
-                             QString    *ptr_prefixName,
-                             QString    *ptr_suffixName,
-                             int        *ptr_prefxType,
-                             int        *ptr_suffixType,
-                             bool       *ptr_hideInTrayFlag,
-                             QString    *ptr_language,
-                             int        *ptr_fontSize,
-                             QString    *ptr_font)
+void Settings::setParameters(QString    *pOutputFolder,
+                             QString    *pTempFolder,
+                             bool       *pProtectFlag,
+                             bool       *pShowHdrFlag,
+                             int        *pTimerInterval,
+                             int        *pTheme,
+                             QString    *pPrefixName,
+                             QString    *pSuffixName,
+                             int        *pPrefxType,
+                             int        *pSuffixType,
+                             bool       *pHideInTrayFlag,
+                             QString    *pLanguage,
+                             int        *pFontSize,
+                             QString    *pFont)
 {
     QFont title_font;
     title_font.setPointSize(10);
     ui->label_title->setFont(title_font);
-    _ptr_showHDR_mode = ptr_showHDR_mode;
-    _ptr_output_folder = ptr_output_folder;
-    _ptr_temp_folder = ptr_temp_folder;
-    _ptr_protection = ptr_protection;
-    _ptr_timer_interval = ptr_timer_interval;
-    _ptr_theme = ptr_theme;
-    _ptr_prefixName = ptr_prefixName;
-    _ptr_suffixName = ptr_suffixName;
-    _ptr_prefxType = ptr_prefxType;
-    _ptr_suffixType = ptr_suffixType;
-    _ptr_hideInTrayFlag = ptr_hideInTrayFlag;
-    _ptr_language = ptr_language;
-    _ptr_font = ptr_font;
-    _ptr_fontSize = ptr_fontSize;
+    m_pShowHdrFlag = pShowHdrFlag;
+    m_pOutputFolder = pOutputFolder;
+    m_pTempFolder = pTempFolder;
+    m_pProtectFlag = pProtectFlag;
+    m_pTimerInterval = pTimerInterval;
+    m_pTheme = pTheme;
+    m_pPrefixName = pPrefixName;
+    m_pSuffixName = pSuffixName;
+    m_pPrefxType = pPrefxType;
+    m_pSuffixType = pSuffixType;
+    m_pHideInTrayFlag = pHideInTrayFlag;
+    m_pLanguage = pLanguage;
+    m_pFont = pFont;
+    m_pFontSize = pFontSize;
 
-    SETTINGS(_settings);
-    _settings.beginGroup("SettingsWidget");
-    this->restoreGeometry(_settings.value("SettingsWidget/geometry", geometry()).toByteArray());
-    _settings.endGroup();
+    SETTINGS(stn);
+    stn.beginGroup("SettingsWidget");
+    restoreGeometry(stn.value("SettingsWidget/geometry", geometry()).toByteArray());
+    stn.endGroup();
 
-    ui->lineEdit_tempPath->setText(*_ptr_temp_folder);
-    ui->lineEdit_outPath->setText(*_ptr_output_folder);
-    ui->spinBox_protection_timer->setValue(*_ptr_timer_interval);
+    ui->lineEdit_tempPath->setText(*m_pTempFolder);
+    ui->lineEdit_outPath->setText(*m_pOutputFolder);
+    ui->spinBox_protectionTimer->setValue(*m_pTimerInterval);
 
-    if (*_ptr_showHDR_mode == true) {
+    if (*m_pShowHdrFlag == true) {
         ui->checkBox_showHDR->setChecked(true);
     }
-    if (*_ptr_hideInTrayFlag == true) {
+    if (*m_pHideInTrayFlag == true) {
         ui->checkBox_tray->setChecked(true);
     }
-    if (*_ptr_protection == true) {
+    if (*m_pProtectFlag == true) {
         ui->checkBox_protection->setChecked(true);
-        ui->spinBox_protection_timer->setEnabled(true);
+        ui->spinBox_protectionTimer->setEnabled(true);
     }
     QMap<QString, int> langIndex;
     langIndex["en"] = 0;
     langIndex["zh"] = 1;
     langIndex["de"] = 2;
     langIndex["ru"] = 3;
-    if (langIndex.contains(*_ptr_language)) {
-        ui->comboBox_lang->setCurrentIndex(langIndex.value(*_ptr_language));
+    if (langIndex.contains(*m_pLanguage)) {
+        ui->comboBox_lang->setCurrentIndex(langIndex.value(*m_pLanguage));
     }
     QMap<int, int> fontSizeIndex;
     fontSizeIndex[8] = 0;
@@ -129,26 +155,26 @@ void Settings::setParameters(QString    *ptr_output_folder,
     fontSizeIndex[10] = 2;
     fontSizeIndex[11] = 3;
     fontSizeIndex[12] = 4;
-    if (fontSizeIndex.contains(*_ptr_fontSize)) {
-        ui->comboBox_fontsize->setCurrentIndex(fontSizeIndex.value(*_ptr_fontSize));
+    if (fontSizeIndex.contains(*m_pFontSize)) {
+        ui->comboBox_fontsize->setCurrentIndex(fontSizeIndex.value(*m_pFontSize));
     }
 
-    ui->comboBox_theme->setCurrentIndex(*_ptr_theme);
-    ui->comboBoxPrefixType->setCurrentIndex(*_ptr_prefxType);
-    ui->comboBoxSuffixType->setCurrentIndex(*_ptr_suffixType);
-    if (*_ptr_suffixType == 0) {
-        ui->lineEditSuffix->setText(*_ptr_suffixName);
+    ui->comboBox_theme->setCurrentIndex(*m_pTheme);
+    ui->comboBoxPrefixType->setCurrentIndex(*m_pPrefxType);
+    ui->comboBoxSuffixType->setCurrentIndex(*m_pSuffixType);
+    if (*m_pSuffixType == 0) {
+        ui->lineEditSuffix->setText(*m_pSuffixName);
     }
 
     QFontDatabase database;
     QFontDatabase::WritingSystem values = QFontDatabase::WritingSystem::Latin;
     const QStringList fontFamilies = database.families(values);
-    QStringListModel *fontModel = new QStringListModel(this);
+    QStringListModel *fontModel = new QStringListModel(ui->comboBox_font);
     fontModel->setStringList(fontFamilies);
     ui->comboBox_font->blockSignals(true);
     ui->comboBox_font->setModel(fontModel);
-    QString appFontFamily = qApp->font().family();
-    int fontInd = ui->comboBox_font->findText(appFontFamily);
+    const QString appFontFamily = qApp->font().family();
+    const int fontInd = ui->comboBox_font->findText(appFontFamily);
     if (fontInd != -1) {
         ui->comboBox_font->setCurrentIndex(fontInd);
     }
@@ -181,44 +207,44 @@ void Settings::onCloseWindow()
 void Settings::onButtonApply()
 {
     /*===================== Font ==================*/
-    *_ptr_font = ui->comboBox_font->currentText();
+    *m_pFont = ui->comboBox_font->currentText();
 
     const int font_size_index = ui->comboBox_fontsize->currentIndex();
     int arrFontSize[5] = {8, 9, 10, 11, 12};
-    *_ptr_fontSize = arrFontSize[font_size_index];
+    *m_pFontSize = arrFontSize[font_size_index];
     /*===================== Theme =================*/
-    *_ptr_theme = ui->comboBox_theme->currentIndex();
+    *m_pTheme = ui->comboBox_theme->currentIndex();
 
     /*===================== Lang ==================*/
     const int lang_index = ui->comboBox_lang->currentIndex();
     QString arrLang[4] = {"en", "zh", "de", "ru"};
-    *_ptr_language = arrLang[lang_index];
+    *m_pLanguage = arrLang[lang_index];
 
     /*==================== Paths ==================*/
-    *_ptr_temp_folder = ui->lineEdit_tempPath->text();
-    *_ptr_output_folder = ui->lineEdit_outPath->text();
+    *m_pTempFolder = ui->lineEdit_tempPath->text();
+    *m_pOutputFolder = ui->lineEdit_outPath->text();
 
     /*==================== Tray  ==================*/
     int stts_tray = ui->checkBox_tray->checkState();
-    *_ptr_hideInTrayFlag = (stts_tray == 2) ? true : false;
+    *m_pHideInTrayFlag = (stts_tray == 2) ? true : false;
 
     /*================= HDR Info  =================*/
     int stts_hdr_info = ui->checkBox_showHDR->checkState();
-    *_ptr_showHDR_mode = (stts_hdr_info == 2) ? true : false;
+    *m_pShowHdrFlag = (stts_hdr_info == 2) ? true : false;
 
     /*================ Protection ================*/
-    *_ptr_timer_interval = ui->spinBox_protection_timer->value();
+    *m_pTimerInterval = ui->spinBox_protectionTimer->value();
     int stts_protect = ui->checkBox_protection->checkState();
-    *_ptr_protection = (stts_protect == 2) ? true : false;
+    *m_pProtectFlag = (stts_protect == 2) ? true : false;
 
     /*============== Pref and Suff ===============*/
-    *_ptr_prefxType = ui->comboBoxPrefixType->currentIndex();
-    *_ptr_suffixType = ui->comboBoxSuffixType->currentIndex();
-    if (*_ptr_prefxType != 0) {
-        *_ptr_prefixName = ui->lineEditPrefix->text();
+    *m_pPrefxType = ui->comboBoxPrefixType->currentIndex();
+    *m_pSuffixType = ui->comboBoxSuffixType->currentIndex();
+    if (*m_pPrefxType != 0) {
+        *m_pPrefixName = ui->lineEditPrefix->text();
     }
-    if (*_ptr_suffixType == 0) {
-        *_ptr_suffixName = ui->lineEditSuffix->text();
+    if (*m_pSuffixType == 0) {
+        *m_pSuffixName = ui->lineEditSuffix->text();
     }
 
     acceptDialog();
@@ -231,13 +257,13 @@ void Settings::onButtonReset()
     ui->checkBox_showHDR->setChecked(false);
     ui->checkBox_tray->setChecked(false);
     ui->checkBox_protection->setChecked(false);
-    ui->spinBox_protection_timer->setEnabled(false);
+    ui->spinBox_protectionTimer->setEnabled(false);
     ui->comboBox_theme->setCurrentIndex(3);
     ui->comboBox_lang->setCurrentIndex(0);
     ui->comboBoxPrefixType->setCurrentIndex(0);
     ui->comboBoxSuffixType->setCurrentIndex(0);
-    ui->lineEditPrefix->setText("output");
-    ui->lineEditSuffix->setText("_encoded_");
+    ui->lineEditPrefix->setText(DEFAULTPREFIX);
+    ui->lineEditSuffix->setText(DEFAULTSUFFIX);
     ui->comboBox_fontsize->setCurrentIndex(0);
     QFont font;
     QString appFontFamily = font.defaultFamily();
@@ -247,26 +273,12 @@ void Settings::onButtonReset()
     }
 }
 
-void Settings::onButtonTab_1()
-{
-    ui->buttonTab_1->setEnabled(false);
-    ui->buttonTab_2->setEnabled(true);
-    ui->tabWidgetSettings->setCurrentIndex(0);
-}
-
-void Settings::onButtonTab_2()
-{
-    ui->buttonTab_1->setEnabled(true);
-    ui->buttonTab_2->setEnabled(false);
-    ui->tabWidgetSettings->setCurrentIndex(1);
-}
-
 bool Settings::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
-            ui->frame_middle->setFocus();
+            ui->frameMiddle->setFocus();
             return true;
         }
     }
@@ -276,9 +288,9 @@ bool Settings::eventFilter(QObject *watched, QEvent *event)
 void Settings::onButtonOutputPath()
 {
     QStringList result;
-    Helper::openFileDialog(FileDialogType::SELECTFOLDER,
+    Helper::openFileDialog(Helper::FileDialogType::SELECTFOLDER,
                            tr("Select output folder"),
-                           *_ptr_output_folder,
+                           *m_pOutputFolder,
                            result);
     if (!result.isEmpty()) {
         ui->lineEdit_outPath->setText(result.at(0));
@@ -288,19 +300,19 @@ void Settings::onButtonOutputPath()
 void Settings::onButtonTempPath()
 {
     QStringList result;
-    Helper::openFileDialog(FileDialogType::SELECTFOLDER,
+    Helper::openFileDialog(Helper::FileDialogType::SELECTFOLDER,
                            tr("Select temp folder"),
-                           *_ptr_temp_folder,
+                           *m_pTempFolder,
                            result);
     if (!result.isEmpty()) {
         ui->lineEdit_tempPath->setText(result.at(0));
     }
 }
 
-void Settings::onCheckBox_protection_clicked()
+void Settings::onCheckBoxProtectFlag_clicked()
 {
     int stts_protect = ui->checkBox_protection->checkState();
-    ui->spinBox_protection_timer->setEnabled(stts_protect == 2);
+    ui->spinBox_protectionTimer->setEnabled(stts_protect == 2);
 }
 
 void Settings::onComboBoxPrefixType_indexChanged(int index)
@@ -310,7 +322,7 @@ void Settings::onComboBoxPrefixType_indexChanged(int index)
         ui->lineEditPrefix->setText(tr("None"));
     } else {
         ui->lineEditPrefix->setEnabled(true);
-        ui->lineEditPrefix->setText(*_ptr_prefixName);
+        ui->lineEditPrefix->setText(*m_pPrefixName);
     }
 }
 
@@ -318,14 +330,14 @@ void Settings::onComboBoxSuffixType_indexChanged(int index)
 {
     if (index == 0) {
         ui->lineEditSuffix->setEnabled(true);
-        ui->lineEditSuffix->setText(*_ptr_suffixName);
+        ui->lineEditSuffix->setText(*m_pSuffixName);
     } else {
         ui->lineEditSuffix->setEnabled(false);
         ui->lineEditSuffix->setText("_hhmmss_MMddyyyy");
     }
 }
 
-void Settings::onComboBox_font_indexChanged(int index)
+void Settings::onComboBoxFont_indexChanged(int index)
 {
     QFont font;
     const QString family = ui->comboBox_font->itemText(index);

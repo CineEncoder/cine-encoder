@@ -77,12 +77,12 @@ QFrame {
 QFrame#frameSplit,
 QFrame#frameMetadata,
 QFrame#frameLog,
-QFrame#frameLeft,
-QFrame#frameRight,
-QFrame#frame_preview,
-QFrame#frame_source,
-QFrame#frame_output,
-QFrame#frame_task {
+QFrame#framePreset,
+QFrame#frameStreams,
+QFrame#framePreview,
+QFrame#frameSource,
+QFrame#frameOutput,
+QFrame#frameTask {
     border-left: 1px solid @frameEdgeBorder;
     border-bottom: 1px solid @frameEdgeBorder;
     border-right: 1px solid @frameEdgeBorder;
@@ -95,7 +95,7 @@ QFrame#frameTaskHeader {
     background-color: @frameHeaderBackground;
 }
 
-QFrame#frame_middle,
+QFrame#frameMiddle,
 QFrame#frameAltTab_1,
 QFrame#frameAltTab_2
 {
@@ -111,7 +111,7 @@ QFrame#frame_top {
     border: none;
     background-color: @frameTopBackground;
 }
-QFrame#frameTab_1, QFrame#frameTab_2, QFrame#frameTab_3, QFrame#frameTab_4,
+QFrame#frameTab_1, QFrame#frameAudio, QFrame#frameSubtitle, QFrame#frameTab_4,
 QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
     background-color: @tableBackground;
 }
@@ -678,7 +678,7 @@ QLabel:disabled {
     background-color: transparent;
 }
 
-QLabel#labelThumb {
+QLabel#labelPreview {
     color: @frameHeaderBackground;
     font: 24pt;
     font-style: oblique;

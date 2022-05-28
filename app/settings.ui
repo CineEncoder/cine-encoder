@@ -93,7 +93,7 @@
           <number>0</number>
          </property>
          <item row="1" column="0">
-          <widget class="QFrame" name="frame_middle">
+          <widget class="QFrame" name="frameMiddle">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1306,7 +1306,7 @@
                          <number>0</number>
                         </property>
                         <item row="2" column="2">
-                         <widget class="QSpinBox" name="spinBox_protection_timer">
+                         <widget class="QSpinBox" name="spinBox_protectionTimer">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>

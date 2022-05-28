@@ -15,6 +15,7 @@
 
 #include <QSettings>
 #include <QDir>
+
 #define SETTINGSPATH QDir::homePath() + QString("/CineEncoder")
 #define SETTINGSFILE SETTINGSPATH + QString("/settings.ini")
 #define SETTINGS(settings) QSettings settings(SETTINGSFILE, \
@@ -32,6 +33,9 @@
 #define CODEC_QSV_LAST 11
 #define CODEC_VAAPI_FIRST 12
 #define CODEC_VAAPI_LAST 12
+
+#define DEFAULTPREFIX QString("output")
+#define DEFAULTSUFFIX QString("_encoded_")
 
 #define DOCKS_COUNT 8
 

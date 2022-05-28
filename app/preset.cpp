@@ -41,7 +41,7 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param):
     QFont font;
     font.setPointSize(10);
     ui->label_title->setFont(font);
-    ui->frame_middle->setFocusPolicy(Qt::StrongFocus);
+    ui->frameMiddle->setFocusPolicy(Qt::StrongFocus);
 
     connect(ui->closeWindow, &QPushButton::clicked, this, &Preset::onCloseWindow);
     connect(ui->buttonCancel, &QPushButton::clicked, this, &Preset::onCloseWindow);
@@ -89,10 +89,10 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param):
             this, &Preset::onComboBox_master_disp_textChanged);
 
     connect(this, &Preset::destroyed, this, [this]() {
-        SETTINGS(_settings);
-        _settings.beginGroup("PresetWidget");
-        _settings.setValue("PresetWidget/geometry", this->saveGeometry());
-        _settings.endGroup();
+        SETTINGS(stn);
+        stn.beginGroup("PresetWidget");
+        stn.setValue("PresetWidget/geometry", this->saveGeometry());
+        stn.endGroup();
     });
 }
 
@@ -161,10 +161,10 @@ void Preset::showEvent(QShowEvent *event)
     if (!m_windowActivated) {
         m_windowActivated = true;
 
-        SETTINGS(_settings);
-        _settings.beginGroup("PresetWidget");
-        restoreGeometry(_settings.value("PresetWidget/geometry", geometry()).toByteArray());
-        _settings.endGroup();
+        SETTINGS(stn);
+        stn.beginGroup("PresetWidget");
+        restoreGeometry(stn.value("PresetWidget/geometry", geometry()).toByteArray());
+        stn.endGroup();
 
         QTimer *timer = new QTimer(this);
         timer->setInterval(450);
@@ -287,7 +287,7 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
-            ui->frame_middle->setFocus();
+            ui->frameMiddle->setFocus();
             return true;
         }
     }
