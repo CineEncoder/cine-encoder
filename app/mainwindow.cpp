@@ -258,18 +258,18 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         SETTINGS(stn);
         // Save Version
         stn.setValue("Version", SETTINGS_VERSION);
-        // Save Main Widget
-        stn.beginGroup("MainWidget");
-        stn.setValue("MainWidget/geometry", this->saveGeometry());
+        // Save Window
+        stn.beginGroup("Window");
+        stn.setValue("Window/geometry", this->saveGeometry());
         stn.endGroup();
-        // Save Main Window
-        stn.beginGroup("MainWindow");
-        stn.setValue("MainWindow/state", m_pDocksContainer->saveState());
-        stn.setValue("MainWindow/geometry", m_pDocksContainer->saveGeometry());
-        stn.beginWriteArray("MainWindow/docks_geometry");
+        // Save DocksContainer
+        stn.beginGroup("DocksContainer");
+        stn.setValue("DocksContainer/state", m_pDocksContainer->saveState());
+        stn.setValue("DocksContainer/geometry", m_pDocksContainer->saveGeometry());
+        stn.beginWriteArray("DocksContainer/docks_geometry");
             for (int i = 0; i < DOCKS_COUNT; i++) {
                 stn.setArrayIndex(i);
-                stn.setValue("MainWindow/docks_geometry/dock_size", m_pDocks[i]->size());
+                stn.setValue("DocksContainer/docks_geometry/dock_size", m_pDocks[i]->size());
             }
             stn.endArray();
         stn.endGroup();
@@ -802,17 +802,17 @@ void MainWindow::setParameters()    // Set parameters
     QList<int> dockSizesY = {};
     SETTINGS(stn);
     if (stn.value("Version").toInt() == SETTINGS_VERSION) {
-        // Restore Main Widget
-        stn.beginGroup("MainWidget");
-        restoreGeometry(stn.value("MainWidget/geometry").toByteArray());
+        // Restore Window
+        stn.beginGroup("Window");
+        restoreGeometry(stn.value("Window/geometry").toByteArray());
         stn.endGroup();
-        // Restore Main Window
-        stn.beginGroup("MainWindow");
-        m_pDocksContainer->restoreState(stn.value("MainWindow/state").toByteArray());
-        int arraySize = stn.beginReadArray("MainWindow/docks_geometry");
+        // Restore DocksContainer
+        stn.beginGroup("DocksContainer");
+        m_pDocksContainer->restoreState(stn.value("DocksContainer/state").toByteArray());
+        int arraySize = stn.beginReadArray("DocksContainer/docks_geometry");
             for (int i = 0; i < arraySize && i < DOCKS_COUNT; i++) {
                 stn.setArrayIndex(i);
-                QSize size = stn.value("MainWindow/docks_geometry/dock_size").toSize();
+                QSize size = stn.value("DocksContainer/docks_geometry/dock_size").toSize();
                 dockSizesX.append(size.width());
                 dockSizesY.append(size.height());
             }
@@ -2005,9 +2005,9 @@ void MainWindow::resetView()
     const QString defaultSettings(":/resources/data/default_settings.ini");
     QSettings stn(defaultSettings, QSettings::IniFormat, this);
     if (stn.value("Version").toInt() == SETTINGS_VERSION) {
-        // Restore Main Window
-        stn.beginGroup("MainWindow");
-        m_pDocksContainer->restoreState(stn.value("MainWindow/state").toByteArray());
+        // Restore DocksContainer
+        stn.beginGroup("DocksContainer");
+        m_pDocksContainer->restoreState(stn.value("DocksContainer/state").toByteArray());
         stn.endGroup();
     }
 
