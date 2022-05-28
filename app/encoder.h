@@ -15,11 +15,8 @@
 
 #include <QObject>
 #include <QProcess>
-#include <QDir>
-#include <QMap>
 #include <QVector>
-#include <iostream>
-#include <math.h>
+
 
 #if defined (Q_OS_UNIX)
     #include <unistd.h>
@@ -32,9 +29,7 @@
 class Encoder : public QObject
 {
     Q_OBJECT
-
 public:
-
     explicit Encoder(QObject *parent = nullptr);
     ~Encoder();
 
@@ -67,18 +62,16 @@ public:
     void killEncoding();
 
     signals:
-
     void onEncodingMode(const QString &mode);
     void onEncodingStarted();
     void onEncodingInitError(const QString &_message);
-    void onEncodingProgress(const int &percent, const float &rem_time);
+    void onEncodingProgress(const int percent, const float rem_time);
     void onEncodingLog(const QString &log);
     void onEncodingAborted();
     void onEncodingError(const QString &_error_message);
     void onEncodingCompleted();
 
 private:
-
     bool    _flag_two_pass,
             _flag_hdr,
             _mux_mode,
@@ -103,7 +96,6 @@ private:
     QProcess *processEncoding;
 
 private slots:
-
     void encode();
     void add_metadata();
     void progress_1();

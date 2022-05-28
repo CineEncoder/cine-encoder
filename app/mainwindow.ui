@@ -349,7 +349,7 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QFrame" name="frame_middle">
+          <widget class="QFrame" name="frameMiddle">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -371,7 +371,7 @@
            <property name="styleSheet">
             <string notr="true"/>
            </property>
-           <widget class="QFrame" name="frameLeft">
+           <widget class="QFrame" name="framePreset">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -1133,7 +1133,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QFrame" name="frameRight">
+           <widget class="QFrame" name="frameStreams">
             <property name="geometry">
              <rect>
               <x>640</x>
@@ -1285,7 +1285,7 @@
                      <property name="widgetResizable">
                       <bool>true</bool>
                      </property>
-                     <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                     <widget class="QWidget" name="scrollAreaWidgetContents_2">
                       <property name="geometry">
                        <rect>
                         <x>0</x>
@@ -1311,7 +1311,7 @@
                         <number>0</number>
                        </property>
                        <item row="0" column="0">
-                        <widget class="QFrame" name="frameTab_2">
+                        <widget class="QFrame" name="frameAudio">
                          <property name="minimumSize">
                           <size>
                            <width>250</width>
@@ -2176,7 +2176,7 @@
                      <property name="widgetResizable">
                       <bool>true</bool>
                      </property>
-                     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+                     <widget class="QWidget" name="scrollAreaWidgetContents_3">
                       <property name="geometry">
                        <rect>
                         <x>0</x>
@@ -2202,7 +2202,7 @@
                         <number>0</number>
                        </property>
                        <item row="0" column="0">
-                        <widget class="QFrame" name="frameTab_3">
+                        <widget class="QFrame" name="frameSubtitle">
                          <property name="minimumSize">
                           <size>
                            <width>250</width>
@@ -3225,7 +3225,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QFrame" name="frame_preview">
+           <widget class="QFrame" name="framePreview">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -3304,7 +3304,7 @@
                 <number>0</number>
                </property>
                <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                <widget class="QLabel" name="labelThumb">
+                <widget class="QLabel" name="labelPreview">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -3359,7 +3359,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QFrame" name="frame_source">
+           <widget class="QFrame" name="frameSource">
             <property name="geometry">
              <rect>
               <x>180</x>
@@ -3495,7 +3495,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QFrame" name="frame_output">
+           <widget class="QFrame" name="frameOutput">
             <property name="geometry">
              <rect>
               <x>570</x>
@@ -3631,7 +3631,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QFrame" name="frame_task">
+           <widget class="QFrame" name="frameTask">
             <property name="geometry">
              <rect>
               <x>280</x>

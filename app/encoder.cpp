@@ -11,8 +11,14 @@
 ***********************************************************************/
 
 #include "encoder.h"
-//#include "constants.h"
 #include "tables.h"
+#include <QDir>
+#include <QMap>
+#include <iostream>
+#include <math.h>
+
+#define rnd(num) static_cast<int>(round(num))
+#define Dump(a) std::cout << a << std::endl
 
 
 Encoder::Encoder(QObject *parent) :
@@ -54,7 +60,7 @@ void Encoder::initEncoding(const QString  &temp_file,
                            int      *_subtitleCheckState,
                            int      *_fr_count)
 {
-    std::cout << "Make preset..." << std::endl;                       // Debug information //
+    Dump("Make preset...");
     Tables t;
     _temp_file = temp_file;
     _input_file = input_file;
@@ -112,7 +118,8 @@ void Encoder::initEncoding(const QString  &temp_file,
         if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
             resize_vf = QString("scale_qsv=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
         }
-        else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
+        else
+        if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
             resize_vf = QString("scale_vaapi=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
         }
         else {
@@ -131,21 +138,25 @@ void Encoder::initEncoding(const QString  &temp_file,
             if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) { // QSV
                 fps_vf = QString("vpp_qsv=framerate=%1").arg(t.frame_rate[_FRAME_RATE]);
             }
-            else if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
+            else
+            if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) { // VAAPI
                 fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
             }
             else {
                 fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
             }
         }
-        else if (t.blending[_BLENDING] == "Interpolated") {
+        else
+        if (t.blending[_BLENDING] == "Interpolated") {
             fps_vf = QString("framerate=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
         }
-        else if (t.blending[_BLENDING] == "MCI") {
+        else
+        if (t.blending[_BLENDING] == "MCI") {
             fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
                     .arg(t.frame_rate[_FRAME_RATE]);
         }
-        else if (t.blending[_BLENDING] == "Blend") {
+        else
+        if (t.blending[_BLENDING] == "Blend") {
             fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(t.frame_rate[_FRAME_RATE]);
         }
     } else {
@@ -159,14 +170,14 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     if (_endTime > 0 && _startTime < _endTime) {
         double duration = _endTime - _startTime;
-        *fr_count = static_cast<int>(round(duration * fps_dest));
-        int startFrame = static_cast<int>(round(_startTime * fps_dest));
-        int endFrame = static_cast<int>(round(_endTime * fps_dest));
+        *fr_count = rnd(duration * fps_dest);
+        int startFrame = rnd(_startTime * fps_dest);
+        int endFrame = rnd(_endTime * fps_dest);
         int amountFrames = endFrame - startFrame;
         _splitStartParam = QString(" -ss %1").arg(QString::number(_startTime, 'f', 3));
         _splitParam = QString("-vframes %1 ").arg(QString::number(amountFrames));
     } else {
-        *fr_count = static_cast<int>(round(_dur * fps_dest));
+        *fr_count = rnd(_dur * fps_dest);
     }
 
     /************************************** Video metadata ************************************/
@@ -275,25 +286,32 @@ void Encoder::initEncoding(const QString  &temp_file,
     if (selected_mode == "CBR") {
         mode = QString("-b:v %1 -minrate %1 -maxrate %1 -bufsize %2 ").arg(bitrate, bufsize);
     }
-    else if (selected_mode == "ABR") {
+    else
+    if (selected_mode == "ABR") {
         mode = QString("-b:v %1 ").arg(bitrate);
     }
-    else if (selected_mode == "VBR") {
+    else
+    if (selected_mode == "VBR") {
         mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 ").arg(bitrate, minrate, maxrate, bufsize);
     }
-    else if (selected_mode == "VBR_NV") {
+    else
+    if (selected_mode == "VBR_NV") {
         mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 -rc vbr ").arg(bitrate, minrate, maxrate, bufsize);
     }
-    else if (selected_mode == "CRF") {
+    else
+    if (selected_mode == "CRF") {
         mode = QString("-crf %1 ").arg(_BQR);
     }
-    else if (selected_mode == "CQP") {
+    else
+    if (selected_mode == "CQP") {
         mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
     }
-    else if (selected_mode == "CQP_QS") {
+    else
+    if (selected_mode == "CQP_QS") {
         mode = QString("-global_quality %1 -look_ahead 1 ").arg(_BQR);
     }
-    else if (selected_mode == "CQP_VA") {
+    else
+    if (selected_mode == "CQP_VA") {
         mode = QString("-qp %1 -rc_mode 4 ").arg(_BQR);
     }
 
@@ -315,12 +333,14 @@ void Encoder::initEncoding(const QString  &temp_file,
         pass1 = "-x265-params pass=1 ";
         _flag_two_pass = true;
     }
-    else if (selected_pass == tr("2 Pass")) {
+    else
+    if (selected_pass == tr("2 Pass")) {
         pass = "-pass 2 ";
         pass1 = "-pass 1 ";
         _flag_two_pass = true;
     }
-    else if (selected_pass == tr("2 Pass Optimisation")) {
+    else
+    if (selected_pass == tr("2 Pass Optimisation")) {
         pass = "-2pass 1 ";
     }
 
@@ -346,32 +366,40 @@ void Encoder::initEncoding(const QString  &temp_file,
         selected_bitrate = t.arr_bitrate[0][_AUDIO_BITRATE];
         acodec = QString("-c:a aac -b:a %1").arg(selected_bitrate);
     }
-    else if (selected_acodec == "AC3") {
+    else
+    if (selected_acodec == "AC3") {
         selected_bitrate = t.arr_bitrate[1][_AUDIO_BITRATE];
         acodec = QString("-c:a ac3 -b:a %1").arg(selected_bitrate);
     }
-    else if (selected_acodec == "DTS") {
+    else
+    if (selected_acodec == "DTS") {
         selected_bitrate = t.arr_bitrate[2][_AUDIO_BITRATE];
         acodec = QString("-strict -2 -c:a dca -b:a %1").arg(selected_bitrate);
     }
-    else if (selected_acodec == "Vorbis") {
+    else
+    if (selected_acodec == "Vorbis") {
         selected_bitrate = t.arr_bitrate[3][_AUDIO_BITRATE];
         acodec = QString("-c:a libvorbis -b:a %1").arg(selected_bitrate);
     }
-    else if (selected_acodec == "Opus") {
+    else
+    if (selected_acodec == "Opus") {
         selected_bitrate = t.arr_bitrate[4][_AUDIO_BITRATE];
         acodec = QString("-c:a libopus -b:a %1").arg(selected_bitrate);
     }
-    else if (selected_acodec == "PCM 16 bit") {
+    else
+    if (selected_acodec == "PCM 16 bit") {
         acodec = "-c:a pcm_s16le";
     }
-    else if (selected_acodec == "PCM 24 bit") {
+    else
+    if (selected_acodec == "PCM 24 bit") {
         acodec = "-c:a pcm_s24le";
     }
-    else if (selected_acodec == "PCM 32 bit") {
+    else
+    if (selected_acodec == "PCM 32 bit") {
         acodec = "-c:a pcm_s32le";
     }
-    else if (selected_acodec == tr("Source")) {
+    else
+    if (selected_acodec == tr("Source")) {
         acodec = "-c:a copy";
     }
     const QString audio_param = sampling + acodec + channels;
@@ -382,10 +410,12 @@ void Encoder::initEncoding(const QString  &temp_file,
     if (container == "MKV") {
         _sub_mux_param = QString("-c:s copy");
     }
-    else if (container == "WebM") {
+    else
+    if (container == "WebM") {
         _sub_mux_param = QString("-c:s webvtt");
     }
-    else if (container == "MP4" || container == "MOV") {
+    else
+    if (container == "MP4" || container == "MOV") {
         _sub_mux_param = QString("-c:s mov_text");
     }
     else {
@@ -583,17 +613,18 @@ void Encoder::initEncoding(const QString  &temp_file,
         /********************************* Color range module **********************************/
 
         if (_COLOR_RANGE == 0) {                             // color range
-            if (_hdr[CUR_COLOR_RANGE] == "Limited") {
+            if (_hdr[CUR_COLOR_RANGE] == "Limited")
                 color_range = "-color_range tv ";
-            }
-            else if (_hdr[CUR_COLOR_RANGE] == "Full") {
+            else
+            if (_hdr[CUR_COLOR_RANGE] == "Full")
                 color_range = "-color_range pc ";
-            }
         }
-        else if (_COLOR_RANGE == 1) {
+        else
+        if (_COLOR_RANGE == 1) {
             color_range = "-color_range pc ";
         }
-        else if (_COLOR_RANGE == 2) {
+        else
+        if (_COLOR_RANGE == 2) {
             color_range = "-color_range tv ";
         }
 
@@ -743,49 +774,57 @@ void Encoder::initEncoding(const QString  &temp_file,
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
             + colorprim + colormatrix + transfer + audio_param + sub_param;
     _preset_mkvmerge = QString("%1%2%3%4%5%6 ").arg(max_cll, max_fall, max_lum, min_lum, chroma_coord, white_coord);
-    std::cout << "Flag two-pass: " << _flag_two_pass << std::endl;
-    std::cout << "Flag HDR: " << _flag_hdr << std::endl;
-    std::cout << "preset_0: " << _preset_0.toStdString() << std::endl;
+    Dump("Flag two-pass: " << _flag_two_pass);
+    Dump("Flag HDR: " << _flag_hdr);
+    Dump("preset_0: " << _preset_0.toStdString());
+
     QString log("");
-    if ((_flag_two_pass == true) && (_flag_hdr == true)) {
-        std::cout << "preset_pass1: " << _preset_pass1.toStdString() << std::endl;
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        std::cout << "preset_mkvpropedit: " << _preset_mkvmerge.toStdString() << std::endl;
-        log = QString("Preset pass 1: ") + _preset_0 + QString(" -i <input file> ") + _preset_pass1 + QString("\n") +
-              QString("Preset pass 2: ") + _preset_0 + QString(" -i <input file> ") + _preset  + QString(" -y <output file>\n") +
-              QString("Preset mkvpropedit: ") + _preset_mkvmerge  + QString("\n");
+    if (_flag_two_pass && _flag_hdr) {
+        Dump("preset_pass1: " << _preset_pass1.toStdString());
+        Dump("preset: " << _preset.toStdString());
+        Dump("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
+        log = QString("Preset pass 1: %1 -i <input file> %2\n"
+                      "Preset pass 2: %3 -i <input file> %4 -y <output file>\n"
+                      "Preset mkvpropedit: %5\n")
+                .arg(_preset_0, _preset_pass1, _preset_0, _preset, _preset_mkvmerge);
     }
-    else if ((_flag_two_pass == true) && (_flag_hdr == false)) {
-        std::cout << "preset_pass1: " << _preset_pass1.toStdString() << std::endl;
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        log = QString("Preset pass 1: ") + _preset_0 + QString(" -i <input file> ") + _preset_pass1 + QString("\n") +
-              QString("Preset pass 2: ") + _preset_0 + QString(" -i <input file> ") + _preset  + QString(" -y <output file>\n");
+    else
+    if (_flag_two_pass && !_flag_hdr) {
+        Dump("preset_pass1: " << _preset_pass1.toStdString());
+        Dump("preset: " << _preset.toStdString());
+        log = QString("Preset pass 1: %1 -i <input file> %2\n"
+                      "Preset pass 2: %3 -i <input file> %4 -y <output file>\n")
+                .arg(_preset_0, _preset_pass1, _preset_0, _preset);
     }
-    else if ((_flag_two_pass == false) && (_flag_hdr == true)) {
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        std::cout << "preset_mkvpropedit: " << _preset_mkvmerge.toStdString() << std::endl;
-        log = QString("Preset: ") + _preset_0 + QString(" -i <input file> ") + _preset  + QString(" -y <output file>\n") +
-              QString("Preset mkvpropedit: ") + _preset_mkvmerge  + QString("\n");
+    else
+    if (!_flag_two_pass && _flag_hdr) {
+        Dump("preset: " << _preset.toStdString());
+        Dump("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
+        log = QString("Preset: %1 -i <input file> %2 -y <output file>\n"
+                      "Preset mkvpropedit: %3\n")
+                .arg(_preset_0, _preset, _preset_mkvmerge);
     }
-    else if ((_flag_two_pass == false) && (_flag_hdr == false)) {
-        std::cout << "preset: " << _preset.toStdString() << std::endl;
-        log = QString("Preset: ") + _preset_0 + QString(" -i <input file> ") + _preset  + QString(" -y <output file>\n");
+    else
+    if (!_flag_two_pass && !_flag_hdr) {
+        Dump("preset: " << _preset.toStdString());
+        log = QString("Preset: %1 -i <input file> %2 -y <output file>\n")
+                .arg(_preset_0, _preset);
     }
     emit onEncodingLog(log);
     encode();
 }
 
-void Encoder::encode()   /*** Encode ***/
+void Encoder::encode()   // Encode
 {
-    std::cout << "Encode ..." << std::endl;  //  Debug info //
+    Dump("Encode ...");
     QStringList arguments;
     _calling_pr_1 = true;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
     emit onEncodingProgress(0, 0.0f);
-    if (_mux_mode == true) {
-        std::cout << "Muxing mode ..." << std::endl;  //  Debug info //
+    if (_mux_mode) {
+        Dump("Muxing mode ...");
         _encoding_mode = tr("Muxing:");
         emit onEncodingMode(_encoding_mode);
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
@@ -800,20 +839,22 @@ void Encoder::encode()   /*** Encode ***/
         emit onEncodingStarted();
 
         _loop_start = time(nullptr);
-        if (_flag_two_pass == false && _flag_hdr == false) {
-            std::cout << "Encode non HDR..." << std::endl;  //  Debug info //
+        if (!_flag_two_pass && !_flag_hdr) {
+            Dump("Encode non HDR...");
             _encoding_mode = tr("Encoding:");
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _output_file;
         }
-        else if (_flag_two_pass == false && _flag_hdr == true) {
-            std::cout << "Encode HDR..." << std::endl;  //  Debug info //
+        else
+        if (!_flag_two_pass && _flag_hdr) {
+            Dump("Encode HDR...");
             _encoding_mode = tr("Encoding:");
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file << _preset.split(" ") << "-y" << _temp_file;
         }
-        else if (_flag_two_pass == true) {
-            std::cout << "Encode 1-st pass..." << std::endl;  //  Debug info //
+        else
+        if (_flag_two_pass) {
+            Dump("Encode 1-st pass...");
             _encoding_mode = tr("1-st pass:");
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file << _preset_pass1.split(" ");
@@ -822,7 +863,7 @@ void Encoder::encode()   /*** Encode ***/
     //qDebug() << arguments;
     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {
-        std::cout << "cmd command not found!!!" << std::endl;
+        Dump("cmd command not found!!!");
         processEncoding->disconnect();
         _message = tr("An unknown error occurred!\n Possible FFMPEG not installed.\n");
         emit onEncodingInitError(_message);
@@ -831,7 +872,7 @@ void Encoder::encode()   /*** Encode ***/
 
 void Encoder::add_metadata() /*** Add metedata ***/
 {
-    std::cout << "Add metadata ..." << std::endl;  //  Debug info //
+    Dump("Add metadata ...");
     _calling_pr_1 = true;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_2()));
@@ -843,76 +884,70 @@ void Encoder::add_metadata() /*** Add metedata ***/
     arguments << "--edit" << "track:1" << _preset_mkvmerge.split(" ") << _temp_file;
     processEncoding->start("mkvpropedit", arguments);
     if (!processEncoding->waitForStarted()) {
-        std::cout << "cmd command not found!!!" << std::endl;
+        Dump("cmd command not found!!!");
         processEncoding->disconnect();
         _message = tr("An unknown error occured!\n Possible mkvtoolnix not installed.\n");
         emit onEncodingInitError(_message);
     }
 }
 
-void Encoder::progress_1()   /*** Progress 1 ***/
+void Encoder::progress_1()   // Progress
 {
-    QString line = processEncoding->readAllStandardOutput();
-    QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
+    QString line = QString(processEncoding->readAllStandardOutput());
+    const QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
     emit onEncodingLog(line_mod6);
-    int pos_err_1 = line_mod6.indexOf("[error]:");
-    int pos_err_2 = line_mod6.indexOf("Error");
-    int pos_err_3 = line_mod6.indexOf(" @ ");
+    const int pos_err_1 = line_mod6.indexOf("[error]:");
+    const int pos_err_2 = line_mod6.indexOf("Error");
+    const int pos_err_3 = line_mod6.indexOf(" @ ");
     if (pos_err_1 != -1) {
-        QStringList error = line_mod6.split(":");
-        if (error.size() >= 2) {
+        const QStringList error = line_mod6.split(":");
+        if (error.size() >= 2)
             _error_message = error[1];
-        }
     }
     if (pos_err_2 != -1) {
         _error_message = line_mod6;
     }
     if (pos_err_3 != -1) {
-        QStringList error = line_mod6.split("]");
-        if (error.size() >= 2) {
+        const QStringList error = line_mod6.split("]");
+        if (error.size() >= 2)
             _error_message = error[1];
-        }
     }
-    int pos_st = line_mod6.indexOf("frame=");
+    const int pos_st = line_mod6.indexOf("frame=");
     if (pos_st == 0) {
         QStringList data = line_mod6.split(" ");
-        QString frame_qstr = data[0].replace("frame=", "");
+        const QString frame_qstr = data[0].replace("frame=", "");
         int frame = frame_qstr.toInt();
-        if (frame == 0) {
+        if (frame == 0)
             frame = 1;
-        }
-        time_t iter_start = time(nullptr);
-        int timer = static_cast<int>(iter_start - _loop_start);
-        float full_time = static_cast<float>(timer * (*fr_count)) / (frame);
+        const time_t iter_start = time(nullptr);
+        const int timer = static_cast<int>(iter_start - _loop_start);
+        const float full_time = static_cast<float>(timer * (*fr_count)) / (frame);
         float rem_time = full_time - static_cast<float>(timer);
-        if (rem_time < 0.0f) {
+        if (rem_time < 0.0f)
             rem_time = 0.0f;
-        }
-        if (rem_time > MAXIMUM_ALLOWED_TIME) {
+        if (rem_time > MAXIMUM_ALLOWED_TIME)
             rem_time = MAXIMUM_ALLOWED_TIME;
-        }
 
-        float percent = static_cast<float>(frame * 100) / *fr_count;
-        int percent_int = static_cast<int>(round(percent));
-        if (percent_int > 100) {
+        float percent = static_cast<float>(frame * 100) / (*fr_count);
+        int percent_int = rnd(percent);
+        if (percent_int > 100)
             percent_int = 100;
-        }
         emit onEncodingProgress(percent_int, rem_time);
 
-        if ((percent_int >= 95) && (_calling_pr_1 == true)) {
+        if ((percent_int >= 95) && _calling_pr_1) {
              disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
-             if (_mux_mode == true) {
+             if (_mux_mode) {
                  connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed()));
              } else {
-                 if (_flag_two_pass == false && _flag_hdr == true) {
+                 if (!_flag_two_pass && _flag_hdr) {
                      disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
                      connect(processEncoding, SIGNAL(finished(int)), this, SLOT(add_metadata()));
-                 }
-                 if (_flag_two_pass == false && _flag_hdr == false) {
+                 } else
+                 if (!_flag_two_pass && !_flag_hdr) {
                      disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
                      connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed()));
-                 }
-                 if (_flag_two_pass == true) {
+                 } else
+                 if (_flag_two_pass) {
                      connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
                      _flag_two_pass = false;
                  }
@@ -922,16 +957,16 @@ void Encoder::progress_1()   /*** Progress 1 ***/
     }
 }
 
-void Encoder::progress_2()   /*** Progress 2 ***/
+void Encoder::progress_2()   // Progress mkvpropedit
 {
-    QString line = processEncoding->readAllStandardOutput();
+    const QString line = QString(processEncoding->readAllStandardOutput());
     emit onEncodingLog(line);
-    int pos_st = line.indexOf("Done.");
-    int pos_nf = line.indexOf("Nothing to do.");
-    if ((pos_st != -1) or (pos_nf != -1)) {
+    const int pos_st = line.indexOf("Done.");
+    const int pos_nf = line.indexOf("Nothing to do.");
+    if ((pos_st != -1) || (pos_nf != -1)) {
         int percent = 100;
         emit onEncodingProgress(percent, 0.0f);
-        if ((percent == 100) && (_calling_pr_1 == true)) {
+        if (_calling_pr_1) {
             disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
             _mux_mode = true;
             _loop_start = time(nullptr);
@@ -981,26 +1016,23 @@ void Encoder::killEncoding()
 void Encoder::completed()
 {
     processEncoding->disconnect();
-    if (_flag_hdr == true) {
+    if (_flag_hdr)
         QDir().remove(_temp_file);
-    }
     emit onEncodingCompleted();
 }
 
 void Encoder::abort()
 {
     processEncoding->disconnect();
-    if (_flag_hdr == true) {
+    if (_flag_hdr)
         QDir().remove(_temp_file);
-    }
     emit onEncodingAborted();
 }
 
 void Encoder::error()
 {
     processEncoding->disconnect();
-    if (_flag_hdr == true) {
+    if (_flag_hdr)
         QDir().remove(_temp_file);
-    }
     emit onEncodingError(_error_message);
 }

@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include <QTranslator>
 #include <QMap>
+#include <iostream>
 #include "mainwindow.h"
 #include "constants.h"
 #include "helper.h"
@@ -39,13 +40,19 @@ int main(int argc, char *argv[])
     if (checkForDuplicates() == 1)
         return 1;
 
+    const QString sysLang = Helper::getSysLanguage();
     /******************* Read Settings ****************************/
     SETTINGS(stn);
     stn.beginGroup("Settings");
     const int fntSize = stn.value("Settings/font_size", FONTSIZE).toInt();
     const QString fntFamily = stn.value("Settings/font").toString();
-    const QString savedLang = stn.value("Settings/language").toString();
+    const QString currLang = stn.value("Settings/language", sysLang).toString();
     stn.endGroup();
+
+    /******************* Set Translate ****************************/
+    QTranslator trns;
+    if (currLang != "en" && trns.load(QString(":/resources/translation/translation_%1.qm").arg(currLang)))
+        app.installTranslator(&trns);
 
     /********************* Set Font ******************************/
     QFont fnt = app.font();
@@ -53,29 +60,6 @@ int main(int argc, char *argv[])
         fnt.setFamily(fntFamily);
     fnt.setPointSize(fntSize);
     app.setFont(fnt);
-
-    /******************* Set Translate ****************************/
-
-    auto sysLang = QLocale::system().language();
-    QMap<int, QString> langMap = {
-        {QLocale::Chinese, "zh"},
-        {QLocale::German,  "de"},
-        {QLocale::Russian, "ru"}
-    };
-    const QString currLang = (langMap.contains(sysLang)) ?
-                langMap.value(sysLang) : "";
-
-    QTranslator tran;
-    if (savedLang == "" && currLang != "") {
-        if (tran.load(QString(":/resources/translation/translation_%1.qm").arg(currLang))) {
-            app.installTranslator(&tran);
-        }
-    }
-    else if (savedLang != "" && savedLang != "en") {
-        if (tran.load(QString(":/resources/translation/translation_%1.qm").arg(savedLang))) {
-            app.installTranslator(&tran);
-        }
-    }
 
     /******************* Set Splash *******************************/
     const QPixmap pixmap(":/resources/images/splash.png");
@@ -122,7 +106,7 @@ int checkForDuplicates()
             msgBox.setWindowTitle("Cine Encoder");
             msgBox.setWindowIcon(QIcon(":/resources/icons/64x64/cine-encoder.png"));
             msgBox.setIcon(QMessageBox::Critical);
-            msgBox.setText("The program is already running!");
+            msgBox.setText(QObject::tr("The program is already running!"));
             msgBox.exec();
             return 1;
         }
