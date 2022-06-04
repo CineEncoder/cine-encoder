@@ -3,42 +3,42 @@
 **************************************************************************/
 
 
-@mainBackground = #272C36;
+@mainBackground = #252525;
 
-@tableBorder = #27272C;
-@tableBackground = #192327;
-@tableAlternateBackground = #182123;
-@tableRowSelectedBackground = #1C252F;
+@tableBorder = #292929;
+@tableBackground = #262626;
+@tableAlternateBackground = #272727;
+@tableRowSelectedBackground = #302828;
 @tableTextColor = #B4B4B4;
 @tableTextSelected = #D2D2D2;
 @tableGrid = #373C47;
 
-@frameEdgingBackground = #242932;
-@frameMiddleBorder = #32363F;
-@frameMiddleBackground = #192327;
+@frameEdgingBackground = #262626;
+@frameMiddleBorder = #292929;
+@frameMiddleBackground = #262626;
 @frameTextColor = #A0A5AA;
-@frameEdgeBorder = #32363F;
-@frameTopBackground = #202A30;
-@frameBottomBackground = #202A30;
-@frameHeaderBackground = #25272C;
+@frameEdgeBorder = #292929;
+@frameTopBackground = #292929;
+@frameBottomBackground = #292929;
+@frameHeaderBackground = #292929;
 
-@scrollBackground = #1A1C24;
-@scrollHandle = #1C1E26;
-@scrollAddLineSubLine = #1C1E26;
+@scrollBackground = #272727;
+@scrollHandle = #222222;
+@scrollAddLineSubLine = #272727;
 
 @headerTextColor = #A0A5AA;
-@headerBackground = #1C2026;
-@headerBorder = #27272C;
+@headerBackground = #303030;
+@headerBorder = #292929;
 
 @elementsTextColor = #B4B4B4;
 @elementsTextDisabled = #62676F;
-@elementsTextAbstractItem = #55AAFF;
-@elementsBackgroundColor = #1B1D23;
-@elementsBackgroundAbstractItem = #1B1D23;
-@elementsBackgroundSelectedAbstractItem = #272C36;
-@elementsBorderColor = #1B1D23;
+@elementsTextAbstractItem = #B4B4B4;
+@elementsBackgroundColor = #303030;
+@elementsBackgroundAbstractItem = #404040;
+@elementsBackgroundSelectedAbstractItem = #363636;
+@elementsBorderColor = #303030;
 @elementsBorderHover = #404758;
-@elementsBorderDropDown = #22262E;
+@elementsBorderDropDown = #292929;
 @elementsBorderRadius = 5px;
 
 
@@ -137,10 +137,10 @@ QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
 **************************************************************************/
 
 QToolTip {
-    border: 1px solid #282828;
+    border: 1px solid @elementsBorderColor;
     border-radius: 2px;
-    color: #ffffff;
-    background-color: #1B1D23;
+    color: @elementsTextAbstractItem;
+    background-color: @elementsBackgroundAbstractItem;
 }
 
 
@@ -149,14 +149,14 @@ QToolTip {
 **************************************************************************/
 
 QMenu {
-    background-color: #1B1D23;
+    background-color: @elementsBackgroundAbstractItem;
 }
 QMenu::item {
-    color: #EFEFEF;
+    color: @elementsTextAbstractItem;
     background-color: transparent;
 }
 QMenu::item:selected {
-    background-color: #05282D;
+    background-color: @elementsBackgroundSelectedAbstractItem;
 }
 
 
@@ -347,19 +347,19 @@ QTreeWidget::item:selected {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: #1C252F;
+    background-color: @tableRowSelectedBackground;
 }
 QTreeWidget::item:selected:active {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: #1C252F;
+    background-color: @tableRowSelectedBackground;
 }
 QTreeWidget::item:selected:!active {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: #1C252F;
+    background-color: @tableRowSelectedBackground;
 }
 
 
@@ -624,17 +624,17 @@ QSpinBox, QDoubleSpinBox {
     padding: 0px;
     padding-left: 5px;
     border-radius: 0px;
-    border: 2px solid #1B1D23;
-    color: #B4B4B4;
-    background-color: #1B1D23;
+    border: 2px solid @elementsBorderColor;
+    color: @elementsTextColor;
+    background-color: @elementsBackgroundColor;
 }
 QSpinBox:disabled, QDoubleSpinBox:disabled {
     padding: 0px;
     padding-left: 5px;
     border-radius: 0px;
-    border: 2px solid #1B1D23;
-    color: #62676F;
-    background-color: #1B1D23;
+    border: 2px solid @elementsBorderColor;
+    color: @elementsTextDisabled;
+    background-color: @elementsBackgroundColor;
 }
 QSpinBox:hover, QDoubleSpinBox:hover {
     border: 2px solid #404758;
@@ -798,7 +798,7 @@ QTextBrowser#textBrowser_presetname {
     border-radius: 2px;
     border: none;
     color: #D2D2D2;
-    background-color: #1B1D23;
+    background-color: @elementsBackgroundColor;
 }
 QTextBrowser#textBrowser_log {
     padding-left: 3px;
@@ -841,19 +841,19 @@ QPushButton#buttonReset {
         color: @elementsTextColor;
         background-color: transparent;
 }
-QPushButton#buttonHotInputFile {
+QPushButton#addFilesHot {
         border: none;
         image: url(:/resources/icons/12x12/cil-input.png);
         color: @elementsTextColor;
         background-color: transparent;
 }
-QPushButton#buttonHotOutputFile {
+QPushButton#setOutFolder {
         border: none;
         image: url(:/resources/icons/12x12/cil-output.png);
         color: @elementsTextColor;
         background-color: transparent;
 }
-QPushButton#actionSettings {
+QPushButton#settings {
         border: none;
         image: url(:/resources/icons/16x16/cil-settings.png);
         color: @elementsTextColor;
@@ -880,72 +880,72 @@ QPushButton#closeWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
-QPushButton#buttonCloseTaskWindow {
+QPushButton#closeTWindow {
         border: none;
         padding: 5px;
         image: url(:/resources/icons/16x16/cil-x.png);
         color: @elementsTextColor;
         background-color: transparent;
 }
-QPushButton#actionEncode {
+QPushButton#start {
     icon: url(:/resources/icons/svg/play.svg);
 }
-QPushButton#actionEncode[status="1"] {
+QPushButton#start[status="1"] {
     icon: url(:/resources/icons/svg/pause.svg);
 }
-QPushButton#actionEncode[status="2"] {
+QPushButton#start[status="2"] {
     icon: url(:/resources/icons/svg/forward.svg);
 }
-QPushButton:hover#actionResetLabels,
-QPushButton:hover#actionClearAudioTitles,
-QPushButton:hover#actionClearSubtitleTitles,
-QPushButton:hover#actionUndoTitles,
-QPushButton:hover#actionClearMetadata,
-QPushButton:hover#actionUndoMetadata,
-QPushButton:hover#actionAdd_preset,
-QPushButton:hover#actionRemove_preset,
-QPushButton:hover#actionEdit_preset,
-QPushButton:hover#actionAdd,
-QPushButton:hover#actionRemove,
-QPushButton:hover#buttonSortUp,
-QPushButton:hover#buttonSortDown,
-QPushButton:hover#actionStop,
-QPushButton:hover#actionEncode,
+QPushButton:hover#resetLabels,
+QPushButton:hover#clearATitles,
+QPushButton:hover#clearSTitles,
+QPushButton:hover#undoTitles,
+QPushButton:hover#clearMetadata,
+QPushButton:hover#undoMetadata,
+QPushButton:hover#addPreset,
+QPushButton:hover#removePreset,
+QPushButton:hover#editPreset,
+QPushButton:hover#addFiles,
+QPushButton:hover#removeFile,
+QPushButton:hover#sortUp,
+QPushButton:hover#sortDown,
+QPushButton:hover#stop,
+QPushButton:hover#start,
 QPushButton:hover#buttonReset,
-QPushButton:hover#buttonHotInputFile,
-QPushButton:hover#buttonHotOutputFile,
-QPushButton:hover#actionSettings,
+QPushButton:hover#addFilesHot,
+QPushButton:hover#setOutFolder,
+QPushButton:hover#settings,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
-QPushButton:hover#buttonCloseTaskWindow {
+QPushButton:hover#closeTWindow {
     background-color: #343B48;
 }
 QPushButton:hover#closeWindow {
     background-color: #EE0000;
 }
-QPushButton:pressed#actionResetLabels,
-QPushButton:pressed#actionClearAudioTitles,
-QPushButton:pressed#actionClearSubtitleTitles,
-QPushButton:pressed#actionUndoTitles,
-QPushButton:pressed#actionClearMetadata,
-QPushButton:pressed#actionUndoMetadata,
-QPushButton:pressed#actionAdd_preset,
-QPushButton:pressed#actionRemove_preset,
-QPushButton:pressed#actionEdit_preset,
-QPushButton:pressed#actionAdd,
-QPushButton:pressed#actionRemove,
-QPushButton:pressed#buttonSortUp,
-QPushButton:pressed#buttonSortDown,
-QPushButton:pressed#actionStop,
-QPushButton:pressed#actionEncode,
+QPushButton:pressed#resetLabels,
+QPushButton:pressed#clearATitles,
+QPushButton:pressed#clearSTitles,
+QPushButton:pressed#undoTitles,
+QPushButton:pressed#clearMetadata,
+QPushButton:pressed#undoMetadata,
+QPushButton:pressed#addPreset,
+QPushButton:pressed#removePreset,
+QPushButton:pressed#editPreset,
+QPushButton:pressed#addFiles,
+QPushButton:pressed#removeFile,
+QPushButton:pressed#sortUp,
+QPushButton:pressed#sortDown,
+QPushButton:pressed#stop,
+QPushButton:pressed#start,
 QPushButton:pressed#buttonReset,
-QPushButton:pressed#buttonHotInputFile,
-QPushButton:pressed#buttonHotOutputFile,
-QPushButton:pressed#actionSettings,
+QPushButton:pressed#addFilesHot,
+QPushButton:pressed#setOutFolder,
+QPushButton:pressed#settings,
 QPushButton:pressed#hideWindow,
 QPushButton:pressed#expandWindow,
 QPushButton:pressed#closeWindow,
-QPushButton:pressed#buttonCloseTaskWindow {
+QPushButton:pressed#closeTWindow {
     background-color: #55AAFF;
 }
 
@@ -968,7 +968,7 @@ QPushButton:disabled#buttonTab_3,
 QPushButton:disabled#buttonTab_4 {
     border: none;
     color: #D2D2D2;
-    background-color: #1B1D23;
+    background-color: #323232;
 }
 QPushButton:hover#buttonTab_1,
 QPushButton:hover#buttonTab_2,
@@ -985,7 +985,7 @@ QPushButton:pressed#buttonTab_4 {
 
 /*********************************************/
 
-QPushButton#buttonFramePrevious {
+QPushButton#framePrev {
     padding-left: 2px;
     padding-right: 2px;
     text-align: right center;
@@ -995,7 +995,7 @@ QPushButton#buttonFramePrevious {
     image: url(:/resources/icons/16x16/cil-frame-left.png);
     image-position: center;
 }
-QPushButton#buttonFrameNext {
+QPushButton#frameNext {
     padding-left: 2px;
     padding-right: 2px;
     text-align: left center;
@@ -1013,17 +1013,17 @@ QPushButton#buttonOutputPath {
     image: url(:/resources/icons/16x16/cil-options-horizontal.png);
     image-position: center;
 }
-QPushButton#buttonSetStartTime,
-QPushButton#buttonSetEndTime,
+QPushButton#setStartTime,
+QPushButton#setEndTime,
 QPushButton#buttonConfigure {
     border: 1px solid #373C46;
     color: #D2D2D2;
     background-color: transparent;
 }
-QPushButton:disabled#buttonFramePrevious,
-QPushButton:disabled#buttonFrameNext,
-QPushButton:disabled#buttonSetStartTime,
-QPushButton:disabled#buttonSetEndTime,
+QPushButton:disabled#framePrev,
+QPushButton:disabled#frameNext,
+QPushButton:disabled#setStartTime,
+QPushButton:disabled#setEndTime,
 QPushButton:disabled#buttonConfigure,
 QPushButton:disabled#buttonTempPath,
 QPushButton:disabled#buttonOutputPath {
@@ -1031,19 +1031,19 @@ QPushButton:disabled#buttonOutputPath {
     color: #62676F;
     background-color: transparent;
 }
-QPushButton:hover#buttonFramePrevious,
-QPushButton:hover#buttonFrameNext,
-QPushButton:hover#buttonSetStartTime,
-QPushButton:hover#buttonSetEndTime,
+QPushButton:hover#framePrev,
+QPushButton:hover#frameNext,
+QPushButton:hover#setStartTime,
+QPushButton:hover#setEndTime,
 QPushButton:hover#buttonConfigure,
 QPushButton:hover#buttonTempPath,
 QPushButton:hover#buttonOutputPath {
     background-color: #343B48;
 }
-QPushButton:pressed#buttonFramePrevious,
-QPushButton:pressed#buttonFrameNext,
-QPushButton:pressed#buttonSetStartTime,
-QPushButton:pressed#buttonSetEndTime,
+QPushButton:pressed#framePrev,
+QPushButton:pressed#frameNext,
+QPushButton:pressed#setStartTime,
+QPushButton:pressed#setEndTime,
 QPushButton:pressed#buttonConfigure,
 QPushButton:pressed#buttonTempPath,
 QPushButton:pressed#buttonOutputPath {
@@ -1052,22 +1052,22 @@ QPushButton:pressed#buttonOutputPath {
 
 /*********************************************/
 
-QPushButton#buttonApplyPreset {
+QPushButton#applyPreset {
     border-radius: 0px;
     border: 1px solid #373C46;
     color: @frameTextColor;
     background-color: transparent;
 }
-QPushButton:disabled#buttonApplyPreset {
+QPushButton:disabled#applyPreset {
     border-radius: 0px;
     border: 1px solid #373C46;
     color: #62676F;
     background-color: transparent;
 }
-QPushButton:hover#buttonApplyPreset {
+QPushButton:hover#applyPreset {
     background-color: #343B48;
 }
-QPushButton:pressed#buttonApplyPreset {
+QPushButton:pressed#applyPreset {
     background-color: #55AAFF;
 }
 
@@ -1078,9 +1078,9 @@ QPushButton#buttonApply,
 QPushButton#buttonPayPal,
 QPushButton#buttonBitcoin {
     border-radius: 1px;
-    border: 1px solid #1E2F50;
+    border: 1px solid #474747;
     color: #FFFFFF;
-    background-color: #1E2F50;
+    background-color: #3b3b3b;
 }
 
 QPushButton:hover#buttonCancel,
@@ -1194,7 +1194,7 @@ QSlider::handle:horizontal:disabled {
 
 /*********************************************/
 
-QSlider#horizontalSlider_resize {
+QSlider#sliderResize {
     padding-left: 22px;
     padding-right: 5px;
     border: 1px dotted #082028;
@@ -1204,7 +1204,7 @@ QSlider#horizontalSlider_resize {
     background-repeat: no-repeat;
     background-position: left;
 }
-QSlider::groove:horizontal#horizontalSlider_resize {
+QSlider::groove:horizontal#sliderResize {
     height: 2px;
     padding-left: 3px;
     padding-right: 3px;
@@ -1212,12 +1212,12 @@ QSlider::groove:horizontal#horizontalSlider_resize {
     border-radius: 2px;
     background-color: #082028;
 }
-QSlider::sub-page:horizontal#horizontalSlider_resize {
+QSlider::sub-page:horizontal#sliderResize {
     border: 0px solid #08283C;
     border-radius: 2px;
     background-color: #08283C;
 }
-QSlider::handle:horizontal#horizontalSlider_resize {
+QSlider::handle:horizontal#sliderResize {
     image: none;
     width: 8px;
     padding: 0px;
@@ -1226,12 +1226,12 @@ QSlider::handle:horizontal#horizontalSlider_resize {
     border-radius: 4px;
     background-color: #175C7F;
 }
-QSlider::sub-page:horizontal:disabled#horizontalSlider_resize {
+QSlider::sub-page:horizontal:disabled#sliderResize {
     border: 0px solid #082028;
     border-radius: 2px;
     background-color: #082028;
 }
-QSlider::handle:horizontal:disabled#horizontalSlider_resize {
+QSlider::handle:horizontal:disabled#sliderResize {
     width: 8px;
     padding: 0px;
     margin: -4px;

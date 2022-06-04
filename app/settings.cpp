@@ -20,8 +20,8 @@
 #include <QStringListModel>
 #include "constants.h"
 
-typedef void(Settings::*FunctionClick)(void);
-typedef void(Settings::*FunctionIndexChanged)(int);
+typedef void(Settings::*FnVoidVoid)(void);
+typedef void(Settings::*FnVoidInt)(int);
 
 
 Settings::Settings(QWidget *parent):
@@ -37,7 +37,7 @@ Settings::Settings(QWidget *parent):
         ui->closeWindow, ui->buttonCancel, ui->buttonApply, ui->buttonReset,
         ui->buttonOutputPath, ui->buttonTempPath
     };
-    FunctionClick btn_methods[] = {
+    FnVoidVoid btn_methods[] = {
         &Settings::onCloseWindow, &Settings::onCloseWindow, &Settings::onButtonApply,
         &Settings::onButtonReset, &Settings::onButtonOutputPath, &Settings::onButtonTempPath
     };
@@ -62,7 +62,7 @@ Settings::Settings(QWidget *parent):
     QComboBox *boxes[] = {
         ui->comboBoxPrefixType, ui->comboBoxSuffixType, ui->comboBox_font
     };
-    FunctionIndexChanged boxes_methods[] = {
+    FnVoidInt boxes_methods[] = {
         &Settings::onComboBoxPrefixType_indexChanged, &Settings::onComboBoxSuffixType_indexChanged,
         &Settings::onComboBoxFont_indexChanged
     };

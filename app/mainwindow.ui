@@ -315,7 +315,7 @@
              </spacer>
             </item>
             <item alignment="Qt::AlignRight">
-             <widget class="QPushButton" name="actionSettings">
+             <widget class="QPushButton" name="settings">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -447,7 +447,7 @@
                 <number>3</number>
                </property>
                <item row="0" column="10" alignment="Qt::AlignRight|Qt::AlignVCenter">
-                <widget class="QPushButton" name="buttonApplyPreset">
+                <widget class="QPushButton" name="applyPreset">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -475,7 +475,7 @@
                 </widget>
                </item>
                <item row="0" column="6">
-                <widget class="QPushButton" name="actionEdit_preset">
+                <widget class="QPushButton" name="editPreset">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -532,7 +532,7 @@
                 </spacer>
                </item>
                <item row="0" column="2">
-                <widget class="QPushButton" name="actionAdd_preset">
+                <widget class="QPushButton" name="addPreset">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -576,7 +576,7 @@
                 </widget>
                </item>
                <item row="0" column="4">
-                <widget class="QPushButton" name="actionRemove_preset">
+                <widget class="QPushButton" name="removePreset">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -1200,7 +1200,7 @@
                 <number>3</number>
                </property>
                <item row="0" column="3">
-                <widget class="QPushButton" name="actionClearSubtitleTitles">
+                <widget class="QPushButton" name="clearSTitles">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -3026,7 +3026,7 @@
                 </widget>
                </item>
                <item row="0" column="1" alignment="Qt::AlignLeft">
-                <widget class="QPushButton" name="actionClearAudioTitles">
+                <widget class="QPushButton" name="clearATitles">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -3180,7 +3180,7 @@
                 </spacer>
                </item>
                <item row="0" column="5">
-                <widget class="QPushButton" name="actionUndoTitles">
+                <widget class="QPushButton" name="undoTitles">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>
@@ -3460,7 +3460,7 @@
               </layout>
              </item>
              <item row="2" column="0" alignment="Qt::AlignRight">
-              <widget class="QPushButton" name="buttonHotInputFile">
+              <widget class="QPushButton" name="addFilesHot">
                <property name="minimumSize">
                 <size>
                  <width>18</width>
@@ -3596,7 +3596,7 @@
               </layout>
              </item>
              <item row="2" column="0" alignment="Qt::AlignRight">
-              <widget class="QPushButton" name="buttonHotOutputFile">
+              <widget class="QPushButton" name="setOutFolder">
                <property name="minimumSize">
                 <size>
                  <width>18</width>
@@ -3741,7 +3741,7 @@
                    </spacer>
                   </item>
                   <item row="0" column="5">
-                   <widget class="QPushButton" name="buttonCloseTaskWindow">
+                   <widget class="QPushButton" name="closeTWindow">
                     <property name="minimumSize">
                      <size>
                       <width>20</width>
@@ -4711,7 +4711,7 @@
                 </widget>
                </item>
                <item row="2" column="4">
-                <widget class="QPushButton" name="actionRemove">
+                <widget class="QPushButton" name="removeFile">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -4752,7 +4752,7 @@
                 </widget>
                </item>
                <item row="2" column="14">
-                <widget class="QPushButton" name="actionStop">
+                <widget class="QPushButton" name="stop">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -4803,7 +4803,7 @@
                 </spacer>
                </item>
                <item row="2" column="10">
-                <widget class="QPushButton" name="buttonSortDown">
+                <widget class="QPushButton" name="sortDown">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -4917,7 +4917,7 @@
                 </spacer>
                </item>
                <item row="2" column="1" colspan="2">
-                <widget class="QPushButton" name="actionAdd">
+                <widget class="QPushButton" name="addFiles">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -5000,7 +5000,7 @@
                 </spacer>
                </item>
                <item row="2" column="8">
-                <widget class="QPushButton" name="buttonSortUp">
+                <widget class="QPushButton" name="sortUp">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -5041,7 +5041,7 @@
                 </widget>
                </item>
                <item row="2" column="16">
-                <widget class="QPushButton" name="actionEncode">
+                <widget class="QPushButton" name="start">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -5129,7 +5129,7 @@
                 </spacer>
                </item>
                <item row="5" column="1" colspan="8">
-                <widget class="QSlider" name="horizontalSlider_resize">
+                <widget class="QSlider" name="sliderResize">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -5446,7 +5446,7 @@
                          <number>3</number>
                         </property>
                         <item row="9" column="1">
-                         <widget class="QLineEdit" name="lineEditAuthorVideo">
+                         <widget class="QLineEdit" name="lineVAuthor">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -5480,7 +5480,7 @@
                          </widget>
                         </item>
                         <item row="5" column="1">
-                         <widget class="QLineEdit" name="lineEditMovieNameVideo">
+                         <widget class="QLineEdit" name="lineVName">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -5514,7 +5514,7 @@
                          </widget>
                         </item>
                         <item row="11" column="1">
-                         <widget class="QLineEdit" name="lineEditPerfVideo">
+                         <widget class="QLineEdit" name="lineVPerf">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -5548,7 +5548,7 @@
                          </widget>
                         </item>
                         <item row="3" column="1">
-                         <widget class="QLineEdit" name="lineEditTitleVideo">
+                         <widget class="QLineEdit" name="lineVTitle">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -5582,7 +5582,7 @@
                          </widget>
                         </item>
                         <item row="13" column="1">
-                         <widget class="QLineEdit" name="lineEditDescriptionVideo">
+                         <widget class="QLineEdit" name="lineVDescript">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -5825,7 +5825,7 @@
                          </widget>
                         </item>
                         <item row="7" column="1">
-                         <widget class="QLineEdit" name="lineEditYearVideo">
+                         <widget class="QLineEdit" name="lineVYear">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -6001,7 +6001,7 @@
                 </spacer>
                </item>
                <item row="0" column="1" alignment="Qt::AlignLeft|Qt::AlignVCenter">
-                <widget class="QPushButton" name="actionClearMetadata">
+                <widget class="QPushButton" name="clearMetadata">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -6052,7 +6052,7 @@
                 </spacer>
                </item>
                <item row="0" column="3" alignment="Qt::AlignLeft">
-                <widget class="QPushButton" name="actionUndoMetadata">
+                <widget class="QPushButton" name="undoMetadata">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -6219,7 +6219,7 @@
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>0</y>
+                    <y>-122</y>
                     <width>407</width>
                     <height>325</height>
                    </rect>
@@ -6313,7 +6313,7 @@
                          </widget>
                         </item>
                         <item row="2" column="1">
-                         <widget class="QPushButton" name="buttonFramePrevious">
+                         <widget class="QPushButton" name="framePrev">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                             <horstretch>0</horstretch>
@@ -6378,7 +6378,7 @@
                          </widget>
                         </item>
                         <item row="2" column="2" colspan="3" alignment="Qt::AlignHCenter">
-                         <widget class="QSlider" name="horizontalSlider">
+                         <widget class="QSlider" name="sliderTimeline">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                             <horstretch>0</horstretch>
@@ -6418,7 +6418,7 @@
                          </widget>
                         </item>
                         <item row="2" column="5" alignment="Qt::AlignVCenter">
-                         <widget class="QPushButton" name="buttonFrameNext">
+                         <widget class="QPushButton" name="frameNext">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                             <horstretch>0</horstretch>
@@ -6511,7 +6511,7 @@
                          </widget>
                         </item>
                         <item row="5" column="1" colspan="2">
-                         <widget class="QPushButton" name="buttonSetStartTime">
+                         <widget class="QPushButton" name="setStartTime">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                             <horstretch>0</horstretch>
@@ -6539,7 +6539,7 @@
                          </widget>
                         </item>
                         <item row="5" column="4" colspan="2">
-                         <widget class="QPushButton" name="buttonSetEndTime">
+                         <widget class="QPushButton" name="setEndTime">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                             <horstretch>0</horstretch>
@@ -6618,7 +6618,7 @@
                 </widget>
                </item>
                <item row="0" column="1" alignment="Qt::AlignLeft|Qt::AlignVCenter">
-                <widget class="QPushButton" name="actionResetLabels">
+                <widget class="QPushButton" name="resetLabels">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>

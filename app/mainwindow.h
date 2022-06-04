@@ -52,8 +52,8 @@ public:
     int         m_fontSize,
                 m_prefxType,
                 m_suffixType,
-                _pos_top,
-                _pos_cld,
+                m_pos_top,
+                m_pos_cld,
                 m_timerInterval;
 
     QString     _language,
@@ -66,17 +66,16 @@ public:
     QVector<QString> _new_param;
 
 private slots:
-    void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
-    void setTrayIconActions();
-    void showTrayIcon();
+    void setTrayIcon();
     void setExpandIcon();
     void onCloseWindow();
     void onHideWindow();
-    void onActionSettings();
-    void onActionAdd();
-    void onActionRemove();
-    void onActionEncode();
-    void onActionStop();
+    void onRestoreWindowState();
+    void onSettings();
+    void onAddFiles();
+    void onRemoveFile();
+    void onStart();
+    void onStop();
     void onSortDown();
     void onSortUp();
     void setParameters();
@@ -91,7 +90,7 @@ private slots:
     void dragLeaveEvent(QDragLeaveEvent*);
     void dropEvent(QDropEvent*);
 
-    void onTableWidget_itemSelectionChanged();
+    void onTableSelectionChanged();
 
     // ============= Encoder ================
     void initEncoding();
@@ -107,45 +106,43 @@ private slots:
     void resume();
 
     // ============= Video Metadata ================
-    void onActionClearMetadata();
-    void onActionUndoMetadata();
+    void onClearMetadata();
+    void onUndoMetadata();
 
     // ============ Streams Metadata ===============
-    void onActionClearAudioTitles();
-    void onActionClearSubtitleTitles();
-    void onActionUndoTitles();
+    void onClearATitles();
+    void onClearSTitles();
+    void onUndoTitles();
 
     // ============== Split Video ==================
-    void onSplitSlider_valueChanged(int value);
-    void onButtonFramePrevious();
-    void onButtonFrameNext();
-    void onButtonSetStartTime();
-    void onButtonSetEndTime();
+    void onSliderTimelineChanged(int value);
+    void onFramePrev();
+    void onFrameNext();
+    void onSetStartTime();
+    void onSetEndTime();
 
     void showMetadataEditor();
-    void showAudioStreamsSelection();
-    void showSubtitlesSelection();
+    void showAudioStreams();
+    void showSubtitles();
     void showVideoSplitter();
     void repeatHandler_Type_1();
     void repeatHandler_Type_2();
     void onApplyPreset();
-    void onActionRemovePreset();
-    void onActionEditPreset();
-    void add_section();
-    void add_preset();
-    void renameSectionPreset();
+    void onRemovePreset();
+    void onEditPreset();
+    void onAddSection();
+    void onAddPreset();
+    void onRenamePreset();
     void setPresetIcon(QTreeWidgetItem *item, bool collapsed);
-    void onTreeWidget_itemCollapsed(QTreeWidgetItem *item);
-    void onTreeWidget_itemExpanded(QTreeWidgetItem *item);
-    void onTreeWidget_itemChanged(QTreeWidgetItem *item, int column);
-    void onTreeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
-    void onIconResizeSlider_valueChanged(int value);
-    void onButtonHotInputFile();
-    void onButtonHotOutputFile();
-    void onButtonCloseTaskWindow();
+    void onTreeCollapsed(QTreeWidgetItem *item);
+    void onTreeExpanded(QTreeWidgetItem *item);
+    void onTreeChanged(QTreeWidgetItem *item, int column);
+    void onTreeDblClicked(QTreeWidgetItem *item, int column);
+    void onSliderResizeChanged(int value);
+    void onSetOutFolder();
     void paintEvent(QPaintEvent *event);
-    void onComboBoxMode_currentIndexChanged(int index);
-    void onActionResetLabels();
+    void onComboModeChanged(int index);
+    void onResetLabels();
 
 private:
     Ui::Widget *ui;
@@ -170,33 +167,24 @@ private:
     // ============= Tray menu actions =============
     QSystemTrayIcon *trayIcon;
 
-    QMenu       *trayIconMenu;
-
     // ============= Top menu actions =============
-    QAction     *add_files,
-                *remove_files,
-                *close_prog;
+    QAction     *actAddFiles,
+                *actRemoveFile,
+                *actCloseWindow;
 
     QAction     *select_preset,
-                *encode_files,
-                *stop_encode;
+                *actStart,
+                *actStop;
 
-    QAction     *edit_metadata,
-                *select_audio,
-                *select_subtitles,
-                *split_video;
+    QAction     *actEditMetadata,
+                *actSelectAudio,
+                *actSelectSubtitles,
+                *actSplitVideo;
 
-    QAction     *settings,
-                *reset_view,
-                *about,
-                *donate;
-
-    QMenu       *menuFiles,
-                *menuEdit,
-                *menuTools,
-                *menuView,
-                *menuPreferences,
-                *menuAbout;
+    QAction     *actSettings,
+                *actResetView,
+                *actAbout,
+                *actDonate;
 
     // ============= Table menu actions =============
     QMenu       *itemMenu;
@@ -205,14 +193,8 @@ private:
     QMenu       *sectionMenu,
                 *presetMenu;
 
-    // ============= Preset menu actions =============
-    QAction     *addsection,
-                *addpreset;
-
-    QMenu       *menu;
-
     // ============= Processes =============
-    QProcess    *processThumbCreation;
+    QProcess    *m_pProcessThumbCreation;
 
     // ============= Timers =============
     QTimer      *timer,
@@ -263,9 +245,7 @@ private:
                 extension;
 
     // ============= Geometry =============
-    bool        _windowActivated,
-                _expandWindowsState;
-
+    bool        _expandWindowsState;
     int         m_rowHeight;
 
     // ====================================
@@ -306,13 +286,6 @@ private:
                           const bool defaultNameFlag);
 
     void updatePresetTable();
-    QString updateFieldCodec(const int codec);
-    QString updateFieldMode(const int codec, const int mode);
-    QString updateFieldPreset(const int codec, const int preset);
-    QString updateFieldPass(const int codec, const int pass);
-    QString updateFieldAcodec(const int codec, const int acodec);
-    QString updateFieldContainer(const int codec, const int container);
-
 };
 
 #endif // WIDGET_H
