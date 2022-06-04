@@ -33,6 +33,8 @@ BaseWindow::BaseWindow(QWidget *parent, bool isReizable) :
 {
     setAttribute(Qt::WA_ShowModal);
     setWindowIcon(QIcon(QPixmap(":/resources/icons/svg/cine-encoder.svg")));
+    QWidget *ui_widget = new QWidget(this);
+    setCentralWidget(ui_widget);
 }
 
 BaseWindow::~BaseWindow()

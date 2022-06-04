@@ -29,6 +29,9 @@ BaseWindow::BaseWindow(QWidget *parent, bool isReizable) :
 {
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_ShowModal);
+    QWidget *ui_widget = new QWidget(this);
+    setCentralWidget(ui_widget);
+    setMaskWidget(ui_widget);
     m_resizingCornerEdge = XUtils::CornerEdge::kInvalid;
     installEventFilter(this);
     setMouseTracking(true);

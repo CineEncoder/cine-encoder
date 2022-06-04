@@ -28,13 +28,8 @@ Message::Message(QWidget *parent, MessType mess_type,
     m_windowActivated(false),
     m_timer_flag(timer_flag)
 {
-    QWidget *ui_widget = new QWidget(this);
-    setCentralWidget(ui_widget);
-    ui->setupUi(ui_widget);
+    ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
-#ifdef Q_OS_UNIX
-    setMaskWidget(ui_widget);
-#endif
     connect(ui->closeWindow, &QPushButton::clicked, this, &Message::onCloseWindow);
     connect(ui->buttonApply, &QPushButton::clicked, this, &Message::onButtonApply);
     if (m_mess_type == MessType::INFO) {

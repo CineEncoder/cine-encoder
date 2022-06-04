@@ -21,13 +21,8 @@ Notification::Notification(QWidget *parent, MessConf mess_conf, const QString &t
     ui(new Ui::Notification),
     m_mess_conf(mess_conf)
 {
-    QWidget *ui_widget = new QWidget(this);
-    setCentralWidget(ui_widget);
-    ui->setupUi(ui_widget);
+    ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
-#ifdef Q_OS_UNIX
-    setMaskWidget(ui_widget);
-#endif
     QFont font;
     font.setPointSize(10);
     ui->label_title->setFont(font);
@@ -56,7 +51,6 @@ Notification::~Notification()
 void Notification::setMessage()
 {
     QString text("");
-    QString mod_text("");
     QString fileName = (m_mess_conf == MessConf::AllBtns) ?
                 ":/resources/html/donate.html" : ":/resources/html/about.html";
     QFile file(fileName);
@@ -65,19 +59,19 @@ void Notification::setMessage()
         file.close();
     }
     if (m_mess_conf == MessConf::AllBtns) {
-        mod_text = text.arg(tr("This software is free for personal and commercial use. "
-                               "It is distributed in the hope that it is useful but without "
-                               "any warranty. See the GNU General Public Licence v3 for more "
-                               "information."), tr("If you find this application useful, "
-                               "consider making a donation to support the development."));
+        text = text.arg(tr("This software is free for personal and commercial use. "
+                           "It is distributed in the hope that it is useful but without "
+                           "any warranty. See the GNU General Public Licence v3 for more "
+                           "information."), tr("If you find this application useful, "
+                           "consider making a donation to support the development."));
     } else {
-        mod_text = text.arg(tr("Program for encoding HDR and SDR video."), tr("This software is free "
-                               "for personal and commercial use. It is distributed in the hope that it"
-                               " is useful but without any warranty. See the GNU General Public Licence"
-                               " v3 for more information."), tr("License: GNU General Public License "
-                               "Version 3"), tr("Copyright"));
+        text = text.arg(tr("Program for encoding HDR and SDR video."), tr("This software is free "
+                           "for personal and commercial use. It is distributed in the hope that it"
+                           " is useful but without any warranty. See the GNU General Public Licence"
+                           " v3 for more information."), tr("License: GNU General Public License "
+                           "Version 3"), tr("Copyright"));
     }
-    ui->textBrowser->setHtml(mod_text);
+    ui->textBrowser->setHtml(text);
     ui->textBrowser->setOpenExternalLinks(true);
 }
 

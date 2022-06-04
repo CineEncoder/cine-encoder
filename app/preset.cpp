@@ -31,13 +31,8 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param):
     m_repeat(0),
     m_windowActivated(false)
 {
-    QWidget *ui_widget = new QWidget(this);
-    setCentralWidget(ui_widget);
-    ui->setupUi(ui_widget);
+    ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
-#ifdef Q_OS_UNIX
-    setMaskWidget(ui_widget);
-#endif
     QFont font;
     font.setPointSize(10);
     ui->label_title->setFont(font);

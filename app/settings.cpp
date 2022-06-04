@@ -28,13 +28,8 @@ Settings::Settings(QWidget *parent):
     BaseWindow(parent, true),
     ui(new Ui::Settings)
 {
-    QWidget *ui_widget = new QWidget(this);
-    setCentralWidget(ui_widget);
-    ui->setupUi(ui_widget);
+    ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
-#ifdef Q_OS_UNIX
-    setMaskWidget(ui_widget);
-#endif
     ui->frameMiddle->setFocusPolicy(Qt::StrongFocus);
 
     // Buttons
