@@ -343,5 +343,9 @@
         <file>resources/icons/svg/expand.svg</file>
         <file>resources/icons/svg/minimize.svg</file>
         <file>resources/icons/svg/restore.svg</file>
+        <file>resources/icons/svg/folder.svg</file>
+        <file>resources/icons/svg/folder_open_light.svg</file>
+        <file>resources/icons/svg/folder_open.svg</file>
+        <file>resources/icons/svg/folder_light.svg</file>
     </qresource>
 </RCC>
