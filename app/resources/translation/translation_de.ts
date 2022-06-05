@@ -160,85 +160,85 @@ Copyright (C) 2020-2021 Oleg Kozhukharenko
 <context>
     <name>Encoder</name>
     <message>
-        <location filename="../../encoder.cpp" line="263"/>
+        <location filename="../../encoder.cpp" line="273"/>
         <source>Auto</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="304"/>
+        <location filename="../../encoder.cpp" line="321"/>
         <source>None</source>
         <translation>Kein</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="313"/>
+        <location filename="../../encoder.cpp" line="330"/>
         <source>2 Pass_x265</source>
         <translation>2 Übergeben_x265</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="318"/>
+        <location filename="../../encoder.cpp" line="336"/>
         <source>2 Pass</source>
         <translation>2 Übergeben</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="323"/>
+        <location filename="../../encoder.cpp" line="342"/>
         <source>2 Pass Optimisation</source>
         <translation>2 Über Optimierung</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="374"/>
+        <location filename="../../encoder.cpp" line="401"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="428"/>
+        <location filename="../../encoder.cpp" line="457"/>
         <source>Can&apos;t find color primaries %1 in source map.</source>
         <translation>Farbvorwahlen %1 können in der Quellkarte nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="473"/>
+        <location filename="../../encoder.cpp" line="502"/>
         <source>Can&apos;t find color matrix %1 in source map.</source>
         <translation>Die Farbmatrix %1 kann in der Quellkarte nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="522"/>
+        <location filename="../../encoder.cpp" line="551"/>
         <source>Can&apos;t find transfer characteristics %1 in source map.</source>
         <translation>Übertragungsmerkmale %1 können in der Quellzuordnung nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="679"/>
+        <location filename="../../encoder.cpp" line="709"/>
         <source>Incorrect master display chroma coordinates source parameters!</source>
         <translation>Falsche master display chroma koordinaten quelle parameter!</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="688"/>
+        <location filename="../../encoder.cpp" line="718"/>
         <source>Incorrect master display white point coordinates source parameters!</source>
         <translation>Falsche master display weiß punkt koordinaten quelle parameter!</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="789"/>
+        <location filename="../../encoder.cpp" line="827"/>
         <source>Muxing:</source>
         <translation>Muxen:</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="796"/>
+        <location filename="../../encoder.cpp" line="834"/>
         <source>The file does not contain FPS information!
 Select the correct input file!</source>
         <translation>Die Datei enthält keine FPS-Informationen!
 Wählen Sie die richtige Eingabedatei!</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="805"/>
-        <location filename="../../encoder.cpp" line="811"/>
+        <location filename="../../encoder.cpp" line="843"/>
+        <location filename="../../encoder.cpp" line="850"/>
         <source>Encoding:</source>
         <translation>Encoding:</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="817"/>
+        <location filename="../../encoder.cpp" line="857"/>
         <source>1-st pass:</source>
         <translation>1-st übergeben:</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="827"/>
+        <location filename="../../encoder.cpp" line="867"/>
         <source>An unknown error occurred!
  Possible FFMPEG not installed.
 </source>
@@ -247,12 +247,12 @@ Möglich FFMPEG nicht installiert.
 </translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="839"/>
+        <location filename="../../encoder.cpp" line="879"/>
         <source>Add data:</source>
         <translation>Daten hinzufügen:</translation>
     </message>
     <message>
-        <location filename="../../encoder.cpp" line="848"/>
+        <location filename="../../encoder.cpp" line="888"/>
         <source>An unknown error occured!
  Possible mkvtoolnix not installed.
 </source>
@@ -262,239 +262,253 @@ Mögliche mkvtoolnix nicht installiert.
     </message>
 </context>
 <context>
+    <name>Helper</name>
+    <message>
+        <location filename="../../helper.cpp" line="95"/>
+        <source>Video Files:</source>
+        <translation>Videodateien:</translation>
+    </message>
+    <message>
+        <location filename="../../helper.cpp" line="98"/>
+        <source>All files</source>
+        <translation>Alle Dateien</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="93"/>
+        <location filename="../../mainwindow.cpp" line="151"/>
         <source>No media</source>
         <translation>Keine Medien</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="100"/>
+        <location filename="../../mainwindow.cpp" line="153"/>
         <source>No audio</source>
         <translation>Kein audio</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="107"/>
+        <location filename="../../mainwindow.cpp" line="155"/>
         <source>No subtitle</source>
         <translation>Kein Untertitel</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="135"/>
+        <location filename="../../mainwindow.cpp" line="184"/>
         <source>Presets</source>
         <translation>Voreinstellungen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="135"/>
-        <location filename="../../mainwindow.cpp" line="2133"/>
+        <location filename="../../mainwindow.cpp" line="184"/>
+        <location filename="../../mainwindow.cpp" line="1892"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="135"/>
+        <location filename="../../mainwindow.cpp" line="184"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="135"/>
+        <location filename="../../mainwindow.cpp" line="184"/>
         <source>Output</source>
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="136"/>
+        <location filename="../../mainwindow.cpp" line="185"/>
         <source>Streams</source>
         <translation>Datenströme</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="136"/>
+        <location filename="../../mainwindow.cpp" line="185"/>
         <source>Log</source>
         <translation>Log</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="136"/>
+        <location filename="../../mainwindow.cpp" line="185"/>
         <source>Metadata</source>
         <translation>Metadaten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="136"/>
+        <location filename="../../mainwindow.cpp" line="185"/>
         <source>Split</source>
         <translation>Split</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="189"/>
+        <location filename="../../mainwindow.cpp" line="235"/>
         <source>Quit program?</source>
         <translation>Programm beenden?</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="286"/>
+        <location filename="../../mainwindow.cpp" line="319"/>
         <source>Hide</source>
         <translation>Verstecken</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="287"/>
+        <location filename="../../mainwindow.cpp" line="319"/>
         <source>Show</source>
         <translation>Karte</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="288"/>
+        <location filename="../../mainwindow.cpp" line="319"/>
         <source>Exit</source>
         <translation>Ausfahrt</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="416"/>
+        <location filename="../../mainwindow.cpp" line="422"/>
         <source>Add files</source>
         <translation>Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="417"/>
+        <location filename="../../mainwindow.cpp" line="423"/>
         <source>Remove from the list</source>
         <translation>Aus der Liste entfernen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="418"/>
+        <location filename="../../mainwindow.cpp" line="424"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="423"/>
+        <location filename="../../mainwindow.cpp" line="435"/>
         <source>Encode/Pause</source>
         <translation>Kodieren/Pause</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="424"/>
-        <location filename="../../mainwindow.cpp" line="1735"/>
+        <location filename="../../mainwindow.cpp" line="436"/>
+        <location filename="../../mainwindow.cpp" line="1553"/>
         <source>Stop</source>
         <translation>Anhalten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="428"/>
+        <location filename="../../mainwindow.cpp" line="444"/>
         <source>Edit metadata</source>
         <translation>Metadaten bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="429"/>
+        <location filename="../../mainwindow.cpp" line="445"/>
         <source>Select audio streams</source>
         <translation>Wählen Sie audio-streams</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="430"/>
+        <location filename="../../mainwindow.cpp" line="446"/>
         <source>Select subtitles</source>
         <translation>Untertitel auswählen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="431"/>
+        <location filename="../../mainwindow.cpp" line="447"/>
         <source>Split video</source>
         <translation>Split video</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="437"/>
+        <location filename="../../mainwindow.cpp" line="461"/>
         <source>Settings</source>
         <translation>Einstellung</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="440"/>
+        <location filename="../../mainwindow.cpp" line="467"/>
         <source>Reset state</source>
         <translation>Zustand zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="443"/>
+        <location filename="../../mainwindow.cpp" line="479"/>
         <source>About</source>
         <translation>Über das Programm</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="444"/>
+        <location filename="../../mainwindow.cpp" line="480"/>
         <source>Donate</source>
         <translation>Donat</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="509"/>
-        <location filename="../../mainwindow.cpp" line="541"/>
+        <location filename="../../mainwindow.cpp" line="505"/>
+        <location filename="../../mainwindow.cpp" line="536"/>
         <source>Add section</source>
         <translation>Abschnitt hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="510"/>
+        <location filename="../../mainwindow.cpp" line="506"/>
         <source>Add preset</source>
         <translation>Voreinstellung hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="511"/>
+        <location filename="../../mainwindow.cpp" line="507"/>
         <source>Rename</source>
         <translation>Umbenennen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="512"/>
+        <location filename="../../mainwindow.cpp" line="508"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="518"/>
+        <location filename="../../mainwindow.cpp" line="509"/>
         <source>Apply</source>
         <translation>Gelten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="519"/>
+        <location filename="../../mainwindow.cpp" line="510"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="542"/>
+        <location filename="../../mainwindow.cpp" line="537"/>
         <source>Add new preset</source>
         <translation>Neues Preset hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1074"/>
+        <location filename="../../mainwindow.cpp" line="965"/>
         <source>ABOUT</source>
         <translation>ABOUT</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1080"/>
+        <location filename="../../mainwindow.cpp" line="971"/>
         <source>DONATE</source>
         <translation>DONATE</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1114"/>
+        <location filename="../../mainwindow.cpp" line="998"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>Sie müssen das Programm neu starten, damit die Einstellungen wirksam werden.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1272"/>
+        <location filename="../../mainwindow.cpp" line="1613"/>
+        <source>Open Files</source>
+        <translation>Dateien öffnen</translation>
+    </message>
+    <message>
         <source> bit, </source>
-        <translation> bit, </translation>
+        <translation type="vanished"> bit, </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1275"/>
         <source> kbps; </source>
-        <translation> kbps; </translation>
+        <translation type="vanished"> kbps; </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1287"/>
         <source>Audio #</source>
-        <translation>Audio #</translation>
+        <translation type="vanished">Audio #</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1302"/>
+        <location filename="../../mainwindow.cpp" line="1169"/>
         <source>Undefined</source>
         <translation>Undefiniert</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1508"/>
+        <location filename="../../mainwindow.cpp" line="1339"/>
         <source>Encode</source>
         <translation>Codieren</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1590"/>
-        <location filename="../../mainwindow.cpp" line="1774"/>
+        <location filename="../../mainwindow.cpp" line="1420"/>
+        <location filename="../../mainwindow.cpp" line="1591"/>
         <source>Encoding</source>
         <translation>Encoding</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1686"/>
+        <location filename="../../mainwindow.cpp" line="1520"/>
         <source>Done!</source>
         <translation>Fertig!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1709"/>
-        <location filename="../../mainwindow.cpp" line="1722"/>
+        <location filename="../../mainwindow.cpp" line="1516"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -503,105 +517,119 @@ Mögliche mkvtoolnix nicht installiert.
 Verstrichene Zeit:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1741"/>
+        <location filename="../../mainwindow.cpp" line="1142"/>
+        <source>bit</source>
+        <translation>bit</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="1145"/>
+        <source>kbps</source>
+        <translation>kbps</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="1156"/>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="1560"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>Der aktuelle Kodierungsprozess wurde abgebrochen!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1750"/>
+        <location filename="../../mainwindow.cpp" line="1568"/>
         <source>Error!</source>
         <translation>Error!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1753"/>
+        <location filename="../../mainwindow.cpp" line="1570"/>
         <source>An error occurred: </source>
         <translation>Ein Fehler ist aufgetreten: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1755"/>
+        <location filename="../../mainwindow.cpp" line="1571"/>
         <source>Unexpected error occurred!</source>
         <translation>Unerwarteter Fehler aufgetreten!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1764"/>
-        <location filename="../../mainwindow.cpp" line="1784"/>
-        <location filename="../../mainwindow.cpp" line="1877"/>
+        <location filename="../../mainwindow.cpp" line="1580"/>
+        <location filename="../../mainwindow.cpp" line="1601"/>
+        <location filename="../../mainwindow.cpp" line="1672"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1803"/>
         <source>Video Files: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;All files (*.*)</source>
-        <translation>Videodateien: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;Alle Dateien (*.*)</translation>
+        <translation type="vanished">Videodateien: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1842"/>
+        <location filename="../../mainwindow.cpp" line="1643"/>
         <source>Select input file first!</source>
         <translation>Wählen Sie zuerst Eingabedatei!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1847"/>
+        <location filename="../../mainwindow.cpp" line="1647"/>
         <source>Select preset first!</source>
         <translation>Wählen Sie voreingestellte erste!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1877"/>
+        <location filename="../../mainwindow.cpp" line="1672"/>
         <source>Resume</source>
         <translation>Lebenslauf</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1887"/>
+        <location filename="../../mainwindow.cpp" line="1682"/>
         <source>Stop encoding?</source>
         <translation>Hör auf zu kodieren?</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1897"/>
+        <location filename="../../mainwindow.cpp" line="1690"/>
         <source>OPENING FILES</source>
         <translation>OPENING FILES</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2423"/>
+        <location filename="../../mainwindow.cpp" line="2147"/>
         <source>Select output folder</source>
         <translation>Ausgabeordner auswählen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2663"/>
-        <location filename="../../mainwindow.cpp" line="2677"/>
-        <location filename="../../mainwindow.cpp" line="2738"/>
-        <location filename="../../mainwindow.cpp" line="2777"/>
+        <location filename="../../mainwindow.cpp" line="2321"/>
+        <location filename="../../mainwindow.cpp" line="2332"/>
+        <location filename="../../mainwindow.cpp" line="2382"/>
+        <location filename="../../mainwindow.cpp" line="2415"/>
         <source>Select preset first!
 </source>
         <translation>Wählen Sie voreingestellte erste!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2700"/>
+        <location filename="../../mainwindow.cpp" line="2349"/>
         <source>Delete?</source>
         <translation>Löschen?</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2728"/>
+        <location filename="../../mainwindow.cpp" line="2374"/>
         <source>Delete presets first!
 </source>
         <translation>Löschen Sie Presets zuerst!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2801"/>
+        <location filename="../../mainwindow.cpp" line="2438"/>
         <source>First add a section!
 </source>
         <translation>Fügen Sie zuerst einen Abschnitt hinzu!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2898"/>
+        <location filename="../../mainwindow.cpp" line="2531"/>
         <source>Preset not selected</source>
         <translation>Preset nicht aktiviert</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="3094"/>
+        <location filename="../../mainwindow.cpp" line="2666"/>
         <source>Task</source>
         <translation>Task</translation>
     </message>
@@ -643,13 +671,22 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../../message.cpp" line="115"/>
         <source>Pause
 
  Resume after: </source>
-        <translation>Pause
+        <translation type="vanished">Pause
 
 Fortsetzen nach:</translation>
+    </message>
+    <message>
+        <location filename="../../message.cpp" line="105"/>
+        <source>Pause</source>
+        <translation>Pause</translation>
+    </message>
+    <message>
+        <location filename="../../message.cpp" line="105"/>
+        <source>Resume after:</source>
+        <translation>Fortsetzen nach:</translation>
     </message>
 </context>
 <context>
@@ -695,28 +732,28 @@ hr { height: 1px; border-width: 0; }
         <translation>NOTIFICATION</translation>
     </message>
     <message>
+        <location filename="../../notification.cpp" line="62"/>
         <location filename="../../notification.cpp" line="68"/>
-        <location filename="../../notification.cpp" line="74"/>
         <source>This software is free for personal and commercial use. It is distributed in the hope that it is useful but without any warranty. See the GNU General Public Licence v3 for more information.</source>
         <translation>Diese Software ist für den persönlichen und kommerziellen Gebrauch kostenlos. Es wird in der Hoffnung verteilt, dass es nützlich ist, aber ohne Garantie. Weitere Informationen finden Sie in der GNU General Public License v3.</translation>
     </message>
     <message>
-        <location filename="../../notification.cpp" line="71"/>
+        <location filename="../../notification.cpp" line="65"/>
         <source>If you find this application useful, consider making a donation to support the development.</source>
         <translation>Wenn Sie diese Anwendung nützlich finden, erwägen Sie, eine Spende zu machen, um die Entwicklung zu unterstützen.</translation>
     </message>
     <message>
-        <location filename="../../notification.cpp" line="74"/>
+        <location filename="../../notification.cpp" line="68"/>
         <source>Program for encoding HDR and SDR video.</source>
         <translation>Programm zum Kodieren von HDR - und SDR-Videos.</translation>
     </message>
     <message>
-        <location filename="../../notification.cpp" line="77"/>
+        <location filename="../../notification.cpp" line="71"/>
         <source>License: GNU General Public License Version 3</source>
         <translation>Lizenz: GNU General Public License, Version 3</translation>
     </message>
     <message>
-        <location filename="../../notification.cpp" line="78"/>
+        <location filename="../../notification.cpp" line="72"/>
         <source>Copyright</source>
         <translation>Urheberrecht</translation>
     </message>
@@ -841,92 +878,75 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../preset.ui" line="4894"/>
         <location filename="../../preset.ui" line="4910"/>
         <location filename="../../preset.ui" line="5009"/>
-        <location filename="../../preset.cpp" line="335"/>
-        <location filename="../../preset.cpp" line="337"/>
-        <location filename="../../preset.cpp" line="338"/>
-        <location filename="../../preset.cpp" line="346"/>
-        <location filename="../../preset.cpp" line="486"/>
-        <location filename="../../preset.cpp" line="487"/>
-        <location filename="../../preset.cpp" line="489"/>
-        <location filename="../../preset.cpp" line="492"/>
-        <location filename="../../preset.cpp" line="495"/>
-        <location filename="../../preset.cpp" line="932"/>
-        <location filename="../../preset.cpp" line="1103"/>
-        <location filename="../../preset.cpp" line="1104"/>
-        <location filename="../../preset.cpp" line="1171"/>
-        <location filename="../../preset.cpp" line="1172"/>
-        <location filename="../../preset.cpp" line="1173"/>
+        <location filename="../../preset.cpp" line="287"/>
+        <location filename="../../preset.cpp" line="289"/>
+        <location filename="../../preset.cpp" line="290"/>
+        <location filename="../../preset.cpp" line="298"/>
+        <location filename="../../preset.cpp" line="438"/>
+        <location filename="../../preset.cpp" line="439"/>
+        <location filename="../../preset.cpp" line="442"/>
+        <location filename="../../preset.cpp" line="446"/>
+        <location filename="../../preset.cpp" line="450"/>
+        <location filename="../../preset.cpp" line="887"/>
+        <location filename="../../preset.cpp" line="1060"/>
+        <location filename="../../preset.cpp" line="1061"/>
+        <location filename="../../preset.cpp" line="1126"/>
+        <location filename="../../preset.cpp" line="1127"/>
+        <location filename="../../preset.cpp" line="1128"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="893"/>
         <source>120</source>
-        <translation>120</translation>
+        <translation type="vanished">120</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="898"/>
         <source>60</source>
-        <translation>60</translation>
+        <translation type="vanished">60</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="903"/>
         <source>59.940</source>
-        <translation>59.940</translation>
+        <translation type="vanished">59.940</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="908"/>
-        <location filename="../../preset.ui" line="2011"/>
-        <location filename="../../preset.ui" line="2024"/>
-        <location filename="../../preset.ui" line="2118"/>
-        <location filename="../../preset.ui" line="2131"/>
         <source>50</source>
-        <translation>50</translation>
+        <translation type="vanished">50</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="913"/>
         <source>48</source>
-        <translation>48</translation>
+        <translation type="vanished">48</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="918"/>
         <source>30</source>
-        <translation>30</translation>
+        <translation type="vanished">30</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="923"/>
         <source>29.970</source>
-        <translation>29.970</translation>
+        <translation type="vanished">29.970</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="928"/>
         <source>25</source>
-        <translation>25</translation>
+        <translation type="vanished">25</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="933"/>
         <source>24</source>
-        <translation>24</translation>
+        <translation type="vanished">24</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="938"/>
         <source>23.976</source>
-        <translation>23.976</translation>
+        <translation type="vanished">23.976</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="943"/>
         <source>20</source>
-        <translation>20</translation>
+        <translation type="vanished">20</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="948"/>
         <source>18</source>
-        <translation>18</translation>
+        <translation type="vanished">18</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="953"/>
         <source>16</source>
-        <translation>16</translation>
+        <translation type="vanished">16</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="976"/>
@@ -944,81 +964,64 @@ hr { height: 1px; border-width: 0; }
         <translation>Auflösung</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1082"/>
         <source>7680</source>
-        <translation>7680</translation>
+        <translation type="vanished">7680</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1087"/>
         <source>4520</source>
-        <translation>4520</translation>
+        <translation type="vanished">4520</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1092"/>
         <source>4096</source>
-        <translation>4096</translation>
+        <translation type="vanished">4096</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1097"/>
         <source>3840</source>
-        <translation>3840</translation>
+        <translation type="vanished">3840</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1102"/>
         <source>3656</source>
-        <translation>3656</translation>
+        <translation type="vanished">3656</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1107"/>
         <source>2048</source>
-        <translation>2048</translation>
+        <translation type="vanished">2048</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1112"/>
         <source>1920</source>
-        <translation>1920</translation>
+        <translation type="vanished">1920</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1117"/>
         <source>1828</source>
-        <translation>1828</translation>
+        <translation type="vanished">1828</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1122"/>
         <source>1440</source>
-        <translation>1440</translation>
+        <translation type="vanished">1440</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1127"/>
         <source>1280</source>
-        <translation>1280</translation>
+        <translation type="vanished">1280</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1132"/>
         <source>1024</source>
-        <translation>1024</translation>
+        <translation type="vanished">1024</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1137"/>
-        <location filename="../../preset.ui" line="1430"/>
         <source>768</source>
-        <translation>768</translation>
+        <translation type="vanished">768</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1142"/>
-        <location filename="../../preset.ui" line="1435"/>
         <source>720</source>
-        <translation>720</translation>
+        <translation type="vanished">720</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1147"/>
         <source>640</source>
-        <translation>640</translation>
+        <translation type="vanished">640</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1152"/>
         <source>320</source>
-        <translation>320</translation>
+        <translation type="vanished">320</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="1169"/>
@@ -1036,149 +1039,120 @@ hr { height: 1px; border-width: 0; }
         <translation>   Breite  </translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1310"/>
         <source>4320</source>
-        <translation>4320</translation>
+        <translation type="vanished">4320</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1315"/>
         <source>3112</source>
-        <translation>3112</translation>
+        <translation type="vanished">3112</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1320"/>
         <source>3072</source>
-        <translation>3072</translation>
+        <translation type="vanished">3072</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1325"/>
         <source>2664</source>
-        <translation>2664</translation>
+        <translation type="vanished">2664</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1330"/>
         <source>2540</source>
-        <translation>2540</translation>
+        <translation type="vanished">2540</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1335"/>
         <source>2468</source>
-        <translation>2468</translation>
+        <translation type="vanished">2468</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1340"/>
         <source>2304</source>
-        <translation>2304</translation>
+        <translation type="vanished">2304</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1345"/>
         <source>2214</source>
-        <translation>2214</translation>
+        <translation type="vanished">2214</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1350"/>
         <source>2204</source>
-        <translation>2204</translation>
+        <translation type="vanished">2204</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1355"/>
         <source>2160</source>
-        <translation>2160</translation>
+        <translation type="vanished">2160</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1360"/>
         <source>2056</source>
-        <translation>2056</translation>
+        <translation type="vanished">2056</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1365"/>
         <source>1976</source>
-        <translation>1976</translation>
+        <translation type="vanished">1976</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1370"/>
         <source>1744</source>
-        <translation>1744</translation>
+        <translation type="vanished">1744</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1375"/>
         <source>1556</source>
-        <translation>1556</translation>
+        <translation type="vanished">1556</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1380"/>
         <source>1536</source>
-        <translation>1536</translation>
+        <translation type="vanished">1536</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1385"/>
         <source>1332</source>
-        <translation>1332</translation>
+        <translation type="vanished">1332</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1390"/>
         <source>1234</source>
-        <translation>1234</translation>
+        <translation type="vanished">1234</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1395"/>
         <source>1152</source>
-        <translation>1152</translation>
+        <translation type="vanished">1152</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1400"/>
         <source>1107</source>
-        <translation>1107</translation>
+        <translation type="vanished">1107</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1405"/>
         <source>1102</source>
-        <translation>1102</translation>
+        <translation type="vanished">1102</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1410"/>
         <source>1080</source>
-        <translation>1080</translation>
+        <translation type="vanished">1080</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1415"/>
         <source>1028</source>
-        <translation>1028</translation>
+        <translation type="vanished">1028</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1420"/>
         <source>988</source>
-        <translation>988</translation>
+        <translation type="vanished">988</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1425"/>
         <source>872</source>
-        <translation>872</translation>
+        <translation type="vanished">872</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1440"/>
         <source>576</source>
-        <translation>576</translation>
+        <translation type="vanished">576</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1445"/>
         <source>540</source>
-        <translation>540</translation>
+        <translation type="vanished">540</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1450"/>
         <source>486</source>
-        <translation>486</translation>
+        <translation type="vanished">486</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1455"/>
         <source>480</source>
-        <translation>480</translation>
+        <translation type="vanished">480</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1460"/>
         <source>240</source>
-        <translation>240</translation>
+        <translation type="vanished">240</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="1496"/>
@@ -1186,177 +1160,144 @@ hr { height: 1px; border-width: 0; }
         <translation>  Höhe  </translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1533"/>
         <source>NTSC 4:3</source>
-        <translation>NTSC 4:3</translation>
+        <translation type="vanished">NTSC 4:3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1538"/>
         <source>DV NTSC 3:2</source>
-        <translation>DV NTSC 3:2</translation>
+        <translation type="vanished">DV NTSC 3:2</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1543"/>
         <source>DV PAL 1,25:1</source>
-        <translation>DV PAL 1,25:1</translation>
+        <translation type="vanished">DV PAL 1,25:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1548"/>
         <source>CCIR 601 NTSC 1,48:1</source>
-        <translation>CCIR 601 NTSC 1,48:1</translation>
+        <translation type="vanished">CCIR 601 NTSC 1,48:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1553"/>
         <source>CCIR 601 Sq. NTSC 4:3</source>
-        <translation>CCIR 601 Sq. NTSC 4:3</translation>
+        <translation type="vanished">CCIR 601 Sq. NTSC 4:3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1558"/>
         <source>CCIR 601 Sq. PAL 4:3</source>
-        <translation>CCIR 601 Sq. PAL 4:3</translation>
+        <translation type="vanished">CCIR 601 Sq. PAL 4:3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1563"/>
         <source>HDTV 720 16:9</source>
-        <translation>HDTV 720 16:9</translation>
+        <translation type="vanished">HDTV 720 16:9</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1568"/>
         <source>HDTV 1080 16:9</source>
-        <translation>HDTV 1080 16:9</translation>
+        <translation type="vanished">HDTV 1080 16:9</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1573"/>
         <source>HDV 1080 16:9</source>
-        <translation>HDV 1080 16:9</translation>
+        <translation type="vanished">HDV 1080 16:9</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1578"/>
         <source>2K Academy 185</source>
-        <translation>2K Academy 185</translation>
+        <translation type="vanished">2K Academy 185</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1583"/>
         <source>2K Academy 178</source>
-        <translation>2K Academy 178</translation>
+        <translation type="vanished">2K Academy 178</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1588"/>
         <source>2K Academy 166</source>
-        <translation>2K Academy 166</translation>
+        <translation type="vanished">2K Academy 166</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1593"/>
         <source>2K Academy 1,37:1</source>
-        <translation>2K Academy 1,37:1</translation>
+        <translation type="vanished">2K Academy 1,37:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1598"/>
         <source>2K Academy Scope 1,17:1</source>
-        <translation>2K Academy Scope 1,17:1</translation>
+        <translation type="vanished">2K Academy Scope 1,17:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1603"/>
         <source>2K Super 35 2,35:1</source>
-        <translation>2K Super 35 2,35:1</translation>
+        <translation type="vanished">2K Super 35 2,35:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1608"/>
         <source>2K Super 185</source>
-        <translation>2K Super 185</translation>
+        <translation type="vanished">2K Super 185</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1613"/>
         <source>2K Super 178</source>
-        <translation>2K Super 178</translation>
+        <translation type="vanished">2K Super 178</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1618"/>
         <source>2K Super 166</source>
-        <translation>2K Super 166</translation>
+        <translation type="vanished">2K Super 166</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1623"/>
         <source>2K Full Aperture 4:3</source>
-        <translation>2K Full Aperture 4:3</translation>
+        <translation type="vanished">2K Full Aperture 4:3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1628"/>
         <source>4K Academy 185</source>
-        <translation>4K Academy 185</translation>
+        <translation type="vanished">4K Academy 185</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1633"/>
         <source>4K Academy 178</source>
-        <translation>4K Academy 178</translation>
+        <translation type="vanished">4K Academy 178</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1638"/>
         <source>4K Academy 166</source>
-        <translation>4K Academy 166</translation>
+        <translation type="vanished">4K Academy 166</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1643"/>
         <source>4K Academy 1,37:1</source>
-        <translation>4K Academy 1,37:1</translation>
+        <translation type="vanished">4K Academy 1,37:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1648"/>
         <source>4K Academy Scope 1,17:1</source>
-        <translation>4K Academy Scope 1,17:1</translation>
+        <translation type="vanished">4K Academy Scope 1,17:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1653"/>
         <source>4K Super 35 2,35:1</source>
-        <translation>4K Super 35 2,35:1</translation>
+        <translation type="vanished">4K Super 35 2,35:1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1658"/>
         <source>4K Super 185</source>
-        <translation>4K Super 185</translation>
+        <translation type="vanished">4K Super 185</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1663"/>
         <source>4K Super 178</source>
-        <translation>4K Super 178</translation>
+        <translation type="vanished">4K Super 178</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1668"/>
         <source>4K Super 166</source>
-        <translation>4K Super 166</translation>
+        <translation type="vanished">4K Super 166</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1673"/>
         <source>4K Full Aperture 4:3</source>
-        <translation>4K Full Aperture 4:3</translation>
+        <translation type="vanished">4K Full Aperture 4:3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1678"/>
         <source>4K Ultra HD 16:9</source>
-        <translation>4K Ultra HD 16:9</translation>
+        <translation type="vanished">4K Ultra HD 16:9</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1683"/>
         <source>RED 2540p 16:9</source>
-        <translation>RED 2540p 16:9</translation>
+        <translation type="vanished">RED 2540p 16:9</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1688"/>
         <source>8K Ultra HD 16:9</source>
-        <translation>8K Ultra HD 16:9</translation>
+        <translation type="vanished">8K Ultra HD 16:9</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="1693"/>
         <location filename="../../preset.ui" line="4085"/>
-        <location filename="../../preset.cpp" line="340"/>
-        <location filename="../../preset.cpp" line="1177"/>
+        <location filename="../../preset.cpp" line="292"/>
+        <location filename="../../preset.cpp" line="1130"/>
         <source>Custom</source>
         <translation>Benutzerdefinierte</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="1716"/>
         <source>1:1</source>
-        <translation>1:1</translation>
+        <translation type="vanished">1:1</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="1732"/>
@@ -1367,10 +1308,10 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../preset.ui" line="1900"/>
         <location filename="../../preset.ui" line="2198"/>
         <location filename="../../preset.ui" line="3833"/>
-        <location filename="../../preset.cpp" line="971"/>
-        <location filename="../../preset.cpp" line="992"/>
-        <location filename="../../preset.cpp" line="1007"/>
-        <location filename="../../preset.cpp" line="1021"/>
+        <location filename="../../preset.cpp" line="926"/>
+        <location filename="../../preset.cpp" line="947"/>
+        <location filename="../../preset.cpp" line="962"/>
+        <location filename="../../preset.cpp" line="976"/>
         <source>Bitrate</source>
         <translation>Bitrate</translation>
     </message>
@@ -1383,10 +1324,10 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../preset.ui" line="1982"/>
         <location filename="../../preset.ui" line="1998"/>
         <location filename="../../preset.ui" line="2147"/>
-        <location filename="../../preset.cpp" line="975"/>
-        <location filename="../../preset.cpp" line="993"/>
-        <location filename="../../preset.cpp" line="1011"/>
-        <location filename="../../preset.cpp" line="1022"/>
+        <location filename="../../preset.cpp" line="930"/>
+        <location filename="../../preset.cpp" line="948"/>
+        <location filename="../../preset.cpp" line="966"/>
+        <location filename="../../preset.cpp" line="977"/>
         <source>MBps</source>
         <translation>MBps</translation>
     </message>
@@ -1397,31 +1338,31 @@ hr { height: 1px; border-width: 0; }
     </message>
     <message>
         <location filename="../../preset.ui" line="2084"/>
-        <location filename="../../preset.cpp" line="991"/>
+        <location filename="../../preset.cpp" line="946"/>
         <source>Constant Bitrate</source>
         <translation>Konstante Bitrate</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2089"/>
-        <location filename="../../preset.cpp" line="1006"/>
+        <location filename="../../preset.cpp" line="961"/>
         <source>Average Bitrate</source>
         <translation>Durchschnittliche Bitrate</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2094"/>
-        <location filename="../../preset.cpp" line="1020"/>
+        <location filename="../../preset.cpp" line="975"/>
         <source>Variable Bitrate</source>
         <translation>Variable Bitrate</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2099"/>
-        <location filename="../../preset.cpp" line="1037"/>
+        <location filename="../../preset.cpp" line="992"/>
         <source>Constant Rate Factor</source>
         <translation>Faktor mit konstanter Rate</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2104"/>
-        <location filename="../../preset.cpp" line="1051"/>
+        <location filename="../../preset.cpp" line="1006"/>
         <source>Constant QP</source>
         <translation>Konstante QP</translation>
     </message>
@@ -1453,107 +1394,104 @@ hr { height: 1px; border-width: 0; }
         <translation>Container</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2442"/>
         <source>MKV</source>
-        <translation>MKV</translation>
+        <translation type="vanished">MKV</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2447"/>
         <source>MOV</source>
-        <translation>MOV</translation>
+        <translation type="vanished">MOV</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2452"/>
         <source>MP4</source>
-        <translation>MP4</translation>
+        <translation type="vanished">MP4</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2503"/>
-        <location filename="../../preset.cpp" line="607"/>
+        <location filename="../../preset.cpp" line="562"/>
         <source>H.265/HEVC 4:2:0 12 bit</source>
         <translation>H.265/HEVC 4:2:0 12 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2508"/>
-        <location filename="../../preset.cpp" line="615"/>
+        <location filename="../../preset.cpp" line="570"/>
         <source>H.265/HEVC 4:2:0 10 bit</source>
         <translation>H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2513"/>
-        <location filename="../../preset.cpp" line="623"/>
+        <location filename="../../preset.cpp" line="578"/>
         <source>H.265/HEVC 4:2:0 8 bit</source>
         <translation>H.265/HEVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2518"/>
-        <location filename="../../preset.cpp" line="632"/>
+        <location filename="../../preset.cpp" line="587"/>
         <source>H.264/AVC 4:2:0 8 bit</source>
         <translation>H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2533"/>
-        <location filename="../../preset.cpp" line="656"/>
+        <location filename="../../preset.cpp" line="611"/>
         <source>Intel QSV H.265/HEVC 4:2:0 10 bit</source>
         <translation>Intel QSV H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2538"/>
-        <location filename="../../preset.cpp" line="671"/>
+        <location filename="../../preset.cpp" line="626"/>
         <source>Intel QSV H.265/HEVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.265/HEVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2543"/>
-        <location filename="../../preset.cpp" line="687"/>
+        <location filename="../../preset.cpp" line="642"/>
         <source>Intel QSV H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel QSV H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2548"/>
-        <location filename="../../preset.cpp" line="703"/>
+        <location filename="../../preset.cpp" line="658"/>
         <source>Intel QSV VP9 4:2:0 10 bit</source>
         <translation>Intel QSV VP9 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2553"/>
-        <location filename="../../preset.cpp" line="716"/>
+        <location filename="../../preset.cpp" line="671"/>
         <source>Intel QSV VP9 4:2:0 8 bit</source>
         <translation>Intel QSV VP9 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2558"/>
-        <location filename="../../preset.cpp" line="730"/>
+        <location filename="../../preset.cpp" line="685"/>
         <source>Intel QSV MPEG-2 4:2:0 8 bit</source>
         <translation>Intel QSV MPEG-2 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2563"/>
-        <location filename="../../preset.cpp" line="746"/>
+        <location filename="../../preset.cpp" line="701"/>
         <source>Intel VAAPI H.264/AVC 4:2:0 8 bit</source>
         <translation>Intel VAAPI H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2568"/>
-        <location filename="../../preset.cpp" line="762"/>
+        <location filename="../../preset.cpp" line="717"/>
         <source>NVENC H.265/HEVC 4:2:0 10 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 10 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2573"/>
-        <location filename="../../preset.cpp" line="772"/>
+        <location filename="../../preset.cpp" line="727"/>
         <source>NVENC H.265/HEVC 4:2:0 8 bit</source>
         <translation>NVENC H.265/HEVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2578"/>
-        <location filename="../../preset.cpp" line="783"/>
+        <location filename="../../preset.cpp" line="738"/>
         <source>NVENC H.264/AVC 4:2:0 8 bit</source>
         <translation>NVENC H.264/AVC 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2523"/>
-        <location filename="../../preset.cpp" line="641"/>
+        <location filename="../../preset.cpp" line="596"/>
         <source>VP9 4:2:0 10 bit</source>
         <translation>VP9 4:2:0 10 bit</translation>
     </message>
@@ -1565,13 +1503,13 @@ hr { height: 1px; border-width: 0; }
     </message>
     <message>
         <location filename="../../preset.ui" line="2528"/>
-        <location filename="../../preset.cpp" line="648"/>
+        <location filename="../../preset.cpp" line="603"/>
         <source>VP9 4:2:0 8 bit</source>
         <translation>VP9 4:2:0 8 bit</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2583"/>
-        <location filename="../../preset.cpp" line="794"/>
+        <location filename="../../preset.cpp" line="749"/>
         <source>ProRes Proxy</source>
         <translation>ProRes Proxy</translation>
     </message>
@@ -1582,7 +1520,7 @@ hr { height: 1px; border-width: 0; }
     </message>
     <message>
         <location filename="../../preset.ui" line="2593"/>
-        <location filename="../../preset.cpp" line="814"/>
+        <location filename="../../preset.cpp" line="769"/>
         <source>ProRes Standard</source>
         <translation>ProRes Standard</translation>
     </message>
@@ -1642,100 +1580,80 @@ hr { height: 1px; border-width: 0; }
         <translation>Durchtr</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2721"/>
         <source>High</source>
-        <translation>High</translation>
+        <translation type="vanished">High</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2726"/>
         <source>Main</source>
-        <translation>Main</translation>
+        <translation type="vanished">Main</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2731"/>
         <source>Main10</source>
-        <translation>Main10</translation>
+        <translation type="vanished">Main10</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2736"/>
         <source>Main12</source>
-        <translation>Main12</translation>
+        <translation type="vanished">Main12</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2741"/>
         <source>0</source>
-        <translation>0</translation>
+        <translation type="vanished">0</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2746"/>
-        <location filename="../../preset.ui" line="3244"/>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="vanished">1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2751"/>
-        <location filename="../../preset.ui" line="3249"/>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="vanished">2</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2756"/>
-        <location filename="../../preset.ui" line="3259"/>
         <source>3</source>
-        <translation>3</translation>
+        <translation type="vanished">3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2761"/>
-        <location filename="../../preset.ui" line="3269"/>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="vanished">4</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2766"/>
-        <location filename="../../preset.ui" line="3279"/>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="vanished">5</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2771"/>
         <source>dnxhr_lb</source>
-        <translation>dnxhr_lb</translation>
+        <translation type="vanished">dnxhr_lb</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2776"/>
         <source>dnxhr_sq</source>
-        <translation>dnxhr_sq</translation>
+        <translation type="vanished">dnxhr_sq</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2781"/>
         <source>dnxhr_hq</source>
-        <translation>dnxhr_hq</translation>
+        <translation type="vanished">dnxhr_hq</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2786"/>
         <source>dnxhr_hqx</source>
-        <translation>dnxhr_hqx</translation>
+        <translation type="vanished">dnxhr_hqx</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="2791"/>
         <source>dnxhr_444</source>
-        <translation>dnxhr_444</translation>
+        <translation type="vanished">dnxhr_444</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="2796"/>
         <location filename="../../preset.ui" line="3191"/>
         <location filename="../../preset.ui" line="3239"/>
-        <location filename="../../preset.cpp" line="351"/>
-        <location filename="../../preset.cpp" line="354"/>
-        <location filename="../../preset.cpp" line="368"/>
-        <location filename="../../preset.cpp" line="970"/>
-        <location filename="../../preset.cpp" line="982"/>
-        <location filename="../../preset.cpp" line="983"/>
-        <location filename="../../preset.cpp" line="984"/>
-        <location filename="../../preset.cpp" line="985"/>
-        <location filename="../../preset.cpp" line="1133"/>
-        <location filename="../../preset.cpp" line="1137"/>
-        <location filename="../../preset.cpp" line="1141"/>
+        <location filename="../../preset.cpp" line="303"/>
+        <location filename="../../preset.cpp" line="306"/>
+        <location filename="../../preset.cpp" line="320"/>
+        <location filename="../../preset.cpp" line="925"/>
+        <location filename="../../preset.cpp" line="937"/>
+        <location filename="../../preset.cpp" line="938"/>
+        <location filename="../../preset.cpp" line="939"/>
+        <location filename="../../preset.cpp" line="940"/>
+        <location filename="../../preset.cpp" line="1090"/>
+        <location filename="../../preset.cpp" line="1094"/>
+        <location filename="../../preset.cpp" line="1098"/>
         <source>Auto</source>
         <translation>Auto</translation>
     </message>
@@ -1758,7 +1676,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../preset.ui" line="2978"/>
         <location filename="../../preset.ui" line="4019"/>
         <location filename="../../preset.ui" line="4124"/>
-        <location filename="../../preset.cpp" line="361"/>
+        <location filename="../../preset.cpp" line="313"/>
         <source>None</source>
         <translation>Kein</translation>
     </message>
@@ -1819,79 +1737,64 @@ hr { height: 1px; border-width: 0; }
         <translation>   Pix fmt</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3156"/>
         <source>yuv420p12le</source>
-        <translation>yuv420p12le</translation>
+        <translation type="vanished">yuv420p12le</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3161"/>
         <source>yuv444p10le</source>
-        <translation>yuv444p10le</translation>
+        <translation type="vanished">yuv444p10le</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3166"/>
         <source>yuv422p10le</source>
-        <translation>yuv422p10le</translation>
+        <translation type="vanished">yuv422p10le</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3171"/>
         <source>yuv420p10le</source>
-        <translation>yuv420p10le</translation>
+        <translation type="vanished">yuv420p10le</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3176"/>
         <source>yuv422p</source>
-        <translation>yuv422p</translation>
+        <translation type="vanished">yuv422p</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3181"/>
         <source>yuv420p</source>
-        <translation>yuv420p</translation>
+        <translation type="vanished">yuv420p</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3186"/>
         <source>p010le</source>
-        <translation>p010le</translation>
+        <translation type="vanished">p010le</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3254"/>
         <source>2.1</source>
-        <translation>2.1</translation>
+        <translation type="vanished">2.1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3264"/>
         <source>3.1</source>
-        <translation>3.1</translation>
+        <translation type="vanished">3.1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3274"/>
         <source>4.1</source>
-        <translation>4.1</translation>
+        <translation type="vanished">4.1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3284"/>
         <source>5.1</source>
-        <translation>5.1</translation>
+        <translation type="vanished">5.1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3289"/>
         <source>5.2</source>
-        <translation>5.2</translation>
+        <translation type="vanished">5.2</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3294"/>
         <source>6</source>
-        <translation>6</translation>
+        <translation type="vanished">6</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3299"/>
         <source>6.1</source>
-        <translation>6.1</translation>
+        <translation type="vanished">6.1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3304"/>
         <source>6.2</source>
-        <translation>6.2</translation>
+        <translation type="vanished">6.2</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="3327"/>
@@ -1899,74 +1802,60 @@ hr { height: 1px; border-width: 0; }
         <translation>Ebene</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3522"/>
         <source>8000</source>
-        <translation>8000</translation>
+        <translation type="vanished">8000</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3527"/>
         <source>11025</source>
-        <translation>11025</translation>
+        <translation type="vanished">11025</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3532"/>
         <source>16000</source>
-        <translation>16000</translation>
+        <translation type="vanished">16000</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3537"/>
         <source>22050</source>
-        <translation>22050</translation>
+        <translation type="vanished">22050</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3542"/>
         <source>32000</source>
-        <translation>32000</translation>
+        <translation type="vanished">32000</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3547"/>
         <source>44100</source>
-        <translation>44100</translation>
+        <translation type="vanished">44100</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3552"/>
         <source>48000</source>
-        <translation>48000</translation>
+        <translation type="vanished">48000</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3557"/>
         <source>88200</source>
-        <translation>88200</translation>
+        <translation type="vanished">88200</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3562"/>
         <source>96000</source>
-        <translation>96000</translation>
+        <translation type="vanished">96000</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3567"/>
         <source>176400</source>
-        <translation>176400</translation>
+        <translation type="vanished">176400</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3572"/>
         <source>192000</source>
-        <translation>192000</translation>
+        <translation type="vanished">192000</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3681"/>
         <source>AAC</source>
-        <translation>AAC</translation>
+        <translation type="vanished">AAC</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3686"/>
         <source>AC3</source>
-        <translation>AC3</translation>
+        <translation type="vanished">AC3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3691"/>
         <source>DTS</source>
-        <translation>DTS</translation>
+        <translation type="vanished">DTS</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="3713"/>
@@ -1974,34 +1863,28 @@ hr { height: 1px; border-width: 0; }
         <translation>Kan</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3760"/>
         <source>384k</source>
-        <translation>384k</translation>
+        <translation type="vanished">384k</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3765"/>
         <source>320k</source>
-        <translation>320k</translation>
+        <translation type="vanished">320k</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3770"/>
         <source>256k</source>
-        <translation>256k</translation>
+        <translation type="vanished">256k</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3775"/>
         <source>192k</source>
-        <translation>192k</translation>
+        <translation type="vanished">192k</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3780"/>
         <source>128k</source>
-        <translation>128k</translation>
+        <translation type="vanished">128k</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="3785"/>
         <source>96k</source>
-        <translation>96k</translation>
+        <translation type="vanished">96k</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="3808"/>
@@ -2029,26 +1912,22 @@ hr { height: 1px; border-width: 0; }
         <translation>Master-Anzeige</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4065"/>
-        <location filename="../../preset.cpp" line="1181"/>
+        <location filename="../../preset.cpp" line="1136"/>
         <source>Display P3</source>
         <translation>Display P3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4070"/>
-        <location filename="../../preset.cpp" line="1187"/>
+        <location filename="../../preset.cpp" line="1140"/>
         <source>DCI P3</source>
         <translation>DCI P3</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4075"/>
         <source>BT.2020</source>
-        <translation>BT.2020</translation>
+        <translation type="vanished">BT.2020</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4080"/>
         <source>BT.709</source>
-        <translation>BT.709</translation>
+        <translation type="vanished">BT.709</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="4155"/>
@@ -2101,77 +1980,56 @@ hr { height: 1px; border-width: 0; }
         <translation>Matrix</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4637"/>
-        <location filename="../../preset.ui" line="4781"/>
-        <location filename="../../preset.ui" line="5019"/>
         <source>bt470bg</source>
-        <translation>bt470bg</translation>
+        <translation type="vanished">bt470bg</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4642"/>
-        <location filename="../../preset.ui" line="4786"/>
-        <location filename="../../preset.ui" line="5024"/>
         <source>bt709</source>
-        <translation>bt709</translation>
+        <translation type="vanished">bt709</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4647"/>
         <source>bt2020nc</source>
-        <translation>bt2020nc</translation>
+        <translation type="vanished">bt2020nc</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4652"/>
         <source>bt2020c</source>
-        <translation>bt2020c</translation>
+        <translation type="vanished">bt2020c</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4657"/>
-        <location filename="../../preset.ui" line="4796"/>
-        <location filename="../../preset.ui" line="5044"/>
         <source>smpte170m</source>
-        <translation>smpte170m</translation>
+        <translation type="vanished">smpte170m</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4662"/>
-        <location filename="../../preset.ui" line="4801"/>
-        <location filename="../../preset.ui" line="5049"/>
         <source>smpte240m</source>
-        <translation>smpte240m</translation>
+        <translation type="vanished">smpte240m</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4667"/>
         <source>smpte2085</source>
-        <translation>smpte2085</translation>
+        <translation type="vanished">smpte2085</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4672"/>
         <source>chroma-derived-nc</source>
-        <translation>chroma-derived-nc</translation>
+        <translation type="vanished">chroma-derived-nc</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4677"/>
         <source>chroma-derived-c</source>
-        <translation>chroma-derived-c</translation>
+        <translation type="vanished">chroma-derived-c</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4682"/>
         <source>fcc</source>
-        <translation>fcc</translation>
+        <translation type="vanished">fcc</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4687"/>
         <source>GBR</source>
-        <translation>GBR</translation>
+        <translation type="vanished">GBR</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4692"/>
         <source>ICtCp</source>
-        <translation>ICtCp</translation>
+        <translation type="vanished">ICtCp</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4697"/>
         <source>YCgCo</source>
-        <translation>YCgCo</translation>
+        <translation type="vanished">YCgCo</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="4705"/>
@@ -2186,36 +2044,28 @@ hr { height: 1px; border-width: 0; }
         <translation>Primär</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4776"/>
-        <location filename="../../preset.ui" line="5014"/>
         <source>bt470m</source>
-        <translation>bt470m</translation>
+        <translation type="vanished">bt470m</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4791"/>
         <source>bt2020</source>
-        <translation>bt2020</translation>
+        <translation type="vanished">bt2020</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4806"/>
-        <location filename="../../preset.ui" line="5054"/>
         <source>smpte428</source>
-        <translation>smpte428</translation>
+        <translation type="vanished">smpte428</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4811"/>
         <source>smpte431</source>
-        <translation>smpte431</translation>
+        <translation type="vanished">smpte431</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4816"/>
         <source>smpte432</source>
-        <translation>smpte432</translation>
+        <translation type="vanished">smpte432</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="4821"/>
         <source>film</source>
-        <translation>film</translation>
+        <translation type="vanished">film</translation>
     </message>
     <message>
         <location filename="../../preset.ui" line="4857"/>
@@ -2238,54 +2088,44 @@ hr { height: 1px; border-width: 0; }
         <translation>     Transfer</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5029"/>
         <source>bt1361e</source>
-        <translation>bt1361e</translation>
+        <translation type="vanished">bt1361e</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5034"/>
         <source>bt2020-10</source>
-        <translation>bt2020-10</translation>
+        <translation type="vanished">bt2020-10</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5039"/>
         <source>bt2020-12</source>
-        <translation>bt2020-12</translation>
+        <translation type="vanished">bt2020-12</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5059"/>
         <source>smpte2084</source>
-        <translation>smpte2084</translation>
+        <translation type="vanished">smpte2084</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5064"/>
         <source>arib-std-b67</source>
-        <translation>arib-std-b67</translation>
+        <translation type="vanished">arib-std-b67</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5069"/>
         <source>linear</source>
-        <translation>linear</translation>
+        <translation type="vanished">linear</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5074"/>
         <source>log100</source>
-        <translation>log100</translation>
+        <translation type="vanished">log100</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5079"/>
         <source>log316</source>
-        <translation>log316</translation>
+        <translation type="vanished">log316</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5084"/>
         <source>iec61966-2-1</source>
-        <translation>iec61966-2-1</translation>
+        <translation type="vanished">iec61966-2-1</translation>
     </message>
     <message>
-        <location filename="../../preset.ui" line="5089"/>
         <source>iec61966-2-4</source>
-        <translation>iec61966-2-4</translation>
+        <translation type="vanished">iec61966-2-4</translation>
     </message>
     <message>
         <source>ProRes Proxy, </source>
@@ -2300,27 +2140,27 @@ hr { height: 1px; border-width: 0; }
         <translation type="vanished">Von der Quelle, </translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="243"/>
+        <location filename="../../preset.cpp" line="195"/>
         <source>An unexpected error has occurred:                             the number of parameters does not match. The window will be closed.</source>
         <translation>Ein unerwarteter Fehler ist aufgetreten: Die Anzahl der Parameter stimmt nicht überein. Das Fenster wird geschlossen.</translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="355"/>
+        <location filename="../../preset.cpp" line="307"/>
         <source> MBps, </source>
         <translation> MBps, </translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="362"/>
+        <location filename="../../preset.cpp" line="314"/>
         <source>Preset: </source>
         <translation>Preset: </translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="373"/>
+        <location filename="../../preset.cpp" line="325"/>
         <source>Enabled, </source>
         <translation>Aktiviert, </translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="379"/>
+        <location filename="../../preset.cpp" line="331"/>
         <source>Audio: </source>
         <translation>Audio: </translation>
     </message>
@@ -2353,8 +2193,8 @@ hr { height: 1px; border-width: 0; }
         <translation type="vanished">YUV, 4:2:2, 8 bit, </translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="490"/>
-        <location filename="../../preset.cpp" line="493"/>
+        <location filename="../../preset.cpp" line="443"/>
+        <location filename="../../preset.cpp" line="447"/>
         <source>Undef</source>
         <translation>Undef</translation>
     </message>
@@ -2363,19 +2203,19 @@ hr { height: 1px; border-width: 0; }
         <translation type="vanished">2 Über Optimierung</translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="1038"/>
+        <location filename="../../preset.cpp" line="993"/>
         <source>Rate factor</source>
         <translation>Rate faktor</translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="1052"/>
+        <location filename="../../preset.cpp" line="1007"/>
         <source>Quantizer</source>
         <translation>Quantisierer</translation>
     </message>
     <message>
-        <location filename="../../preset.cpp" line="1165"/>
-        <location filename="../../preset.cpp" line="1166"/>
-        <location filename="../../preset.cpp" line="1167"/>
+        <location filename="../../preset.cpp" line="1122"/>
+        <location filename="../../preset.cpp" line="1123"/>
+        <location filename="../../preset.cpp" line="1124"/>
         <source>Unsprt</source>
         <translation>Unsprt</translation>
     </message>
@@ -2396,6 +2236,14 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../progress.ui" line="223"/>
         <source>Filename:</source>
         <translation>Dateinamen:</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../../main.cpp" line="114"/>
+        <source>The program is already running!</source>
+        <translation>Das Programm läuft bereits!</translation>
     </message>
 </context>
 <context>
@@ -2458,7 +2306,7 @@ hr { height: 1px; border-width: 0; }
     </message>
     <message>
         <location filename="../../settings.ui" line="457"/>
-        <location filename="../../settings.cpp" line="322"/>
+        <location filename="../../settings.cpp" line="317"/>
         <source>None</source>
         <translation>Kein</translation>
     </message>
@@ -2495,11 +2343,13 @@ hr { height: 1px; border-width: 0; }
     </message>
     <message>
         <location filename="../../settings.ui" line="700"/>
+        <location filename="../../settings.cpp" line="299"/>
         <source>Select temp folder</source>
         <translation>Wählen Sie temp-Ordner</translation>
     </message>
     <message>
         <location filename="../../settings.ui" line="764"/>
+        <location filename="../../settings.cpp" line="287"/>
         <source>Select output folder</source>
         <translation>Ausgabeordner auswählen</translation>
     </message>
@@ -2559,29 +2409,24 @@ hr { height: 1px; border-width: 0; }
         <translation>Sprachlich</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1187"/>
         <source>8</source>
-        <translation>8</translation>
+        <translation type="vanished">8</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1192"/>
         <source>9</source>
-        <translation>9</translation>
+        <translation type="vanished">9</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1197"/>
         <source>10</source>
-        <translation>10</translation>
+        <translation type="vanished">10</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1202"/>
         <source>11</source>
-        <translation>11</translation>
+        <translation type="vanished">11</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1207"/>
         <source>12</source>
-        <translation>12</translation>
+        <translation type="vanished">12</translation>
     </message>
     <message>
         <location filename="../../settings.ui" line="1234"/>
@@ -2609,44 +2454,44 @@ hr { height: 1px; border-width: 0; }
         <translation>Überhitzungsschutz</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1373"/>
+        <location filename="../../settings.ui" line="1382"/>
         <source>      Every</source>
         <translation>         Jeder</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1383"/>
+        <location filename="../../settings.ui" line="1392"/>
         <source>sec</source>
         <translation>sek.</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1411"/>
+        <location filename="../../settings.ui" line="1420"/>
         <source>Enable overheating protection (for 25 sec)</source>
         <translation>Überhitzungsschutz aktivieren (für 25 sek.)</translation>
     </message>
     <message>
         <location filename="../../settings.ui" line="14"/>
-        <location filename="../../settings.ui" line="1552"/>
+        <location filename="../../settings.ui" line="1561"/>
         <source>SETTINGS</source>
         <translation>SETTINGS</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1580"/>
+        <location filename="../../settings.ui" line="1589"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1687"/>
+        <location filename="../../settings.ui" line="1696"/>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1731"/>
+        <location filename="../../settings.ui" line="1740"/>
         <source>CANCEL</source>
         <oldsource>Cancel</oldsource>
         <translation>Annullierung</translation>
     </message>
     <message>
-        <location filename="../../settings.ui" line="1765"/>
+        <location filename="../../settings.ui" line="1774"/>
         <source>APPLY</source>
         <oldsource>Apply</oldsource>
         <translation>Gelten</translation>

@@ -1184,27 +1184,27 @@
                           </property>
                           <item>
                            <property name="text">
-                            <string>8</string>
+                            <string notr="true">8</string>
                            </property>
                           </item>
                           <item>
                            <property name="text">
-                            <string>9</string>
+                            <string notr="true">9</string>
                            </property>
                           </item>
                           <item>
                            <property name="text">
-                            <string>10</string>
+                            <string notr="true">10</string>
                            </property>
                           </item>
                           <item>
                            <property name="text">
-                            <string>11</string>
+                            <string notr="true">11</string>
                            </property>
                           </item>
                           <item>
                            <property name="text">
-                            <string>12</string>
+                            <string notr="true">12</string>
                            </property>
                           </item>
                          </widget>
@@ -1329,6 +1329,15 @@
                            </size>
                           </property>
                           <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="specialValueText">
+                           <string notr="true"/>
+                          </property>
+                          <property name="suffix">
+                           <string notr="true"/>
+                          </property>
+                          <property name="prefix">
                            <string notr="true"/>
                           </property>
                           <property name="minimum">

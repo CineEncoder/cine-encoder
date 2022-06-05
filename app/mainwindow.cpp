@@ -2185,10 +2185,10 @@ void MainWindow::onUndoMetadata()
 void MainWindow::onClearATitles()
 {
     if (_row != -1) {
-        for (int i = 0; i < AMOUNT_AUDIO_STREAMS; i++) {
-            QLineEdit *lineEditTitleAudio = ui->frameAudio->findChild<QLineEdit *>("lineEditTitleAudio_"
+        Q_LOOP(i, 0, AMOUNT_AUDIO_STREAMS) {
+            QLineEdit *lineEdit = ui->frameAudio->findChild<QLineEdit*>("lineEditTitleAudio_"
                 + QString::number(i + 1), Qt::FindDirectChildrenOnly);
-            clearLineEdit(lineEditTitleAudio);
+            clearLineEdit(lineEdit);
         }
         ui->frameMiddle->setFocus();
     }
@@ -2197,10 +2197,10 @@ void MainWindow::onClearATitles()
 void MainWindow::onClearSTitles()
 {
     if (_row != -1) {
-        for (int i = 0; i < AMOUNT_SUBTITLES; i++) {
-            QLineEdit *lineEditTitleSubtitle = ui->frameSubtitle->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+        Q_LOOP(i, 0, AMOUNT_SUBTITLES) {
+            QLineEdit *lineEdit = ui->frameSubtitle->findChild<QLineEdit*>("lineEditTitleSubtitle_"
                 + QString::number(i + 1), Qt::FindDirectChildrenOnly);
-            clearLineEdit(lineEditTitleSubtitle);
+            clearLineEdit(lineEdit);
         }
         ui->frameMiddle->setFocus();
     }
@@ -2209,15 +2209,15 @@ void MainWindow::onClearSTitles()
 void MainWindow::onUndoTitles()
 {
     if (_row != -1) {
-        for (int i = 0; i < AMOUNT_AUDIO_STREAMS; i++) {
-            QLineEdit *lineEditTitleAudio = ui->frameAudio->findChild<QLineEdit *>("lineEditTitleAudio_"
+        Q_LOOP(i, 0, AMOUNT_AUDIO_STREAMS) {
+            QLineEdit *lineEdit = ui->frameAudio->findChild<QLineEdit *>("lineEditTitleAudio_"
                 + QString::number(i + 1), Qt::FindDirectChildrenOnly);
-            undoLineEdit(lineEditTitleAudio);
+            undoLineEdit(lineEdit);
         }
-        for (int i = 0; i < AMOUNT_SUBTITLES; i++) {
-            QLineEdit *lineEditTitleSubtitle = ui->frameSubtitle->findChild<QLineEdit *>("lineEditTitleSubtitle_"
+        Q_LOOP(i, 0, AMOUNT_SUBTITLES) {
+            QLineEdit *lineEdit = ui->frameSubtitle->findChild<QLineEdit *>("lineEditTitleSubtitle_"
                 + QString::number(i + 1), Qt::FindDirectChildrenOnly);
-            undoLineEdit(lineEditTitleSubtitle);
+            undoLineEdit(lineEdit);
         }
         ui->frameMiddle->setFocus();
     }

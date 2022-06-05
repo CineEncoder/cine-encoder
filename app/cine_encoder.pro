@@ -90,7 +90,8 @@ win32 {
 
 TRANSLATIONS += $$PWD/resources/translation/translation_de.ts \
                 $$PWD/resources/translation/translation_ru.ts \
-                $$PWD/resources/translation/translation_zh.ts
+                $$PWD/resources/translation/translation_zh.ts \
+                $$PWD/resources/translation/translation_nl.ts
 
 RESOURCES += files.qrc
 
