@@ -157,9 +157,15 @@ void Preset::showEvent(QShowEvent *event)
         m_windowActivated = true;
 
         SETTINGS(stn);
-        stn.beginGroup("PresetWidget");
-        restoreGeometry(stn.value("PresetWidget/geometry", geometry()).toByteArray());
-        stn.endGroup();
+        if (stn.childGroups().contains("PresetWidget")) {
+            stn.beginGroup("PresetWidget");
+            restoreGeometry(stn.value("PresetWidget/geometry", geometry()).toByteArray());
+            stn.endGroup();
+        } else {
+            QSizeF size(this->size());
+            QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
+            move(parentWidget()->geometry().center() - center);
+        }
 
         QTimer *timer = new QTimer(this);
         timer->setInterval(450);

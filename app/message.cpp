@@ -61,7 +61,9 @@ void Message::showEvent(QShowEvent *event)
     BaseWindow::showEvent(event);
     if (!m_windowActivated) {
         m_windowActivated = true;
-        move(parentWidget()->geometry().center() - geometry().center());
+        QSizeF size(this->size());
+        QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
+        move(parentWidget()->geometry().center() - center);
         setMessage();
     }
 }

@@ -118,9 +118,15 @@ void Settings::setParameters(QString    *pOutputFolder,
     m_pFontSize = pFontSize;
 
     SETTINGS(stn);
-    stn.beginGroup("SettingsWidget");
-    restoreGeometry(stn.value("SettingsWidget/geometry", geometry()).toByteArray());
-    stn.endGroup();
+    if (stn.childGroups().contains("SettingsWidget")) {
+        stn.beginGroup("SettingsWidget");
+        restoreGeometry(stn.value("SettingsWidget/geometry", geometry()).toByteArray());
+        stn.endGroup();
+    } else {
+        QSizeF size(this->size());
+        QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
+        move(parentWidget()->geometry().center() - center);
+    }
 
     ui->lineEdit_tempPath->setText(*m_pTempFolder);
     ui->lineEdit_outPath->setText(*m_pOutputFolder);
