@@ -41,11 +41,13 @@ private slots:
     void onButtonPayPal();
     void onButtonBitcoin();
     void onCloseWindow();
+    virtual void showEvent(QShowEvent*) final;
 
 private:
     void setMessage();
     Ui::Notification *ui;
     MessConf m_mess_conf;
+    bool m_windowActivated;
 };
 
 #endif // NOTIFICATION_H

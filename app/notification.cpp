@@ -19,7 +19,8 @@
 Notification::Notification(QWidget *parent, MessConf mess_conf, const QString &title):
     BaseWindow(parent, false),
     ui(new Ui::Notification),
-    m_mess_conf(mess_conf)
+    m_mess_conf(mess_conf),
+    m_windowActivated(false)
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
@@ -40,7 +41,6 @@ Notification::Notification(QWidget *parent, MessConf mess_conf, const QString &t
         ui->buttonBitcoin->hide();
         ui->buttonBitcoin->setFixedWidth(0);
     }
-    setMessage();
 }
 
 Notification::~Notification()
@@ -80,12 +80,22 @@ void Notification::onCloseWindow()
     closeDialog();
 }
 
-void Notification::onButtonPayPal()   /*** Open browser PayPal ***/
+void Notification::showEvent(QShowEvent *event)
+{
+    BaseWindow::showEvent(event);
+    if (!m_windowActivated) {
+        m_windowActivated = true;
+        move(parentWidget()->geometry().center() - geometry().center());
+        setMessage();
+    }
+}
+
+void Notification::onButtonPayPal()   // Open browser PayPal
 {
     QDesktopServices::openUrl(QUrl("https://paypal.me/CineEncoder?country.x=MD&locale.x=en_US", QUrl::TolerantMode));
 }
 
-void Notification::onButtonBitcoin()   /*** Open browser Bitcoin ***/
+void Notification::onButtonBitcoin()   // Open browser Bitcoin
 {
     QDesktopServices::openUrl(QUrl("https://github.com/CineEncoder/cine-encoder", QUrl::TolerantMode));
 }
