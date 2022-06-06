@@ -7,8 +7,10 @@ pkgdesc="Cine Encoder 2022"
 arch=(x86_64)
 url="https://github.com/CineEncoder/cine-encoder.git"
 license=('GPL3')
-depends=('qt5-base>=5.15' 'qt5-multimedia>=5.15' 'libmediainfo>=20.03'
-  'mkvtoolnix-cli>=49.0' 'ffmpeg>=4.2' 'intel-media-driver>=22.2' 'libva-intel-driver>=2.4')
+depends=('gcc' 'qt5-base>=5.15' 'qt5-multimedia>=5.15' 'qt5-svg>=5.15'
+  'qt5-x11extras>=5.15' 'libmediainfo>=20.03' 'libxext'
+  'ffmpeg>=4.2' 'mkvtoolnix-cli>=49.0' 'intel-media-driver>=22.2'
+  'libva-intel-driver>=2.4')
 source=("https://github.com/CineEncoder/cine-encoder/archive/3.5.4.tar.gz")
 md5sums=('')
 
