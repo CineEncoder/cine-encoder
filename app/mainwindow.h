@@ -249,6 +249,7 @@ private:
     int         m_rowHeight;
 
     // ====================================
+    void setFloating(const int index, const QPoint &offset, const QSize &size);
     void createConnections();
     void onActionAbout();
     void onActionDonate();

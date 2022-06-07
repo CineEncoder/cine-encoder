@@ -436,16 +436,16 @@ QTabWidget::pane {
 
 /*********************************************/
 
-QTabWidget#tabWidgetRight {
+QTabWidget#tabWidgetStreams {
     qproperty-tabPosition: North;
     color: @frameTextColor;
     background-color: @frameMiddleBackground;
 }
-QTabWidget::tab-bar#tabWidgetRight {
+QTabWidget::tab-bar#tabWidgetStreams {
     alignment: left;
     background-color: @frameMiddleBackground;
 }
-QTabWidget::pane#tabWidgetRight {
+QTabWidget::pane#tabWidgetStreams {
     top:-1px;
     border: 1px solid @frameMiddleBorder;
     background-color: @frameMiddleBackground;
