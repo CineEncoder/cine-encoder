@@ -895,34 +895,35 @@ void MainWindow::onSettings()
     }
 }
 
+void MainWindow::setFloating(const int index, const QPoint &offset, const QSize &size)
+{
+    if (!m_pDocks[index]->isVisible())
+        m_pDocks[index]->setVisible(true);
+    m_pDocks[index]->setFloating(true);
+    m_pDocks[index]->move(this->geometry().center() + offset);
+    m_pDocks[index]->resize(size);
+}
+
 void MainWindow::showMetadataEditor()
 {
-    if (!m_pDocks[DockIndex::METADATA_DOCK]->isVisible())
-        m_pDocks[DockIndex::METADATA_DOCK]->setVisible(true);
-    m_pDocks[DockIndex::METADATA_DOCK]->setFloating(true);
+    setFloating(DockIndex::METADATA_DOCK, QPoint(200,-200), QSize(300,500));
 }
 
 void MainWindow::showAudioStreams()
 {
-    if (!m_pDocks[DockIndex::STREAMS_DOCK]->isVisible())
-        m_pDocks[DockIndex::STREAMS_DOCK]->setVisible(true);
-    m_pDocks[DockIndex::STREAMS_DOCK]->setFloating(true);
-    ui->tabWidgetRight->setCurrentIndex(0);
+    setFloating(DockIndex::STREAMS_DOCK, QPoint(220,-180), QSize(300,500));
+    ui->tabWidgetStreams->setCurrentIndex(0);
 }
 
 void MainWindow::showSubtitles()
 {
-    if (!m_pDocks[DockIndex::STREAMS_DOCK]->isVisible())
-        m_pDocks[DockIndex::STREAMS_DOCK]->setVisible(true);
-    m_pDocks[DockIndex::STREAMS_DOCK]->setFloating(true);
-    ui->tabWidgetRight->setCurrentIndex(1);
+    setFloating(DockIndex::STREAMS_DOCK, QPoint(220,-180), QSize(300,500));
+    ui->tabWidgetStreams->setCurrentIndex(1);
 }
 
 void MainWindow::showVideoSplitter()
 {
-    if (!m_pDocks[DockIndex::SPLIT_DOCK]->isVisible())
-        m_pDocks[DockIndex::SPLIT_DOCK]->setVisible(true);
-    m_pDocks[DockIndex::SPLIT_DOCK]->setFloating(true);
+    setFloating(DockIndex::SPLIT_DOCK, QPoint(240,-160), QSize(400,410));
 }
 
 void MainWindow::get_current_data() // Get current data
