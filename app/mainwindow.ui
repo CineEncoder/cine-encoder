@@ -568,7 +568,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-primary-edit-add.png</normaloff>:/resources/icons/16x16/cil-primary-edit-add.png</iconset>
+                   <normaloff>:/resources/icons/svg/add.svg</normaloff>:/resources/icons/svg/add.svg</iconset>
                  </property>
                  <property name="flat">
                   <bool>false</bool>
@@ -606,7 +606,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-primary-edit-minus.png</normaloff>:/resources/icons/16x16/cil-primary-edit-minus.png</iconset>
+                   <normaloff>:/resources/icons/svg/remove.svg</normaloff>:/resources/icons/svg/remove.svg</iconset>
                  </property>
                  <property name="default">
                   <bool>false</bool>
@@ -1200,7 +1200,7 @@
                 <number>3</number>
                </property>
                <item row="0" column="3">
-                <widget class="QPushButton" name="clearSTitles">
+                <widget class="QPushButton" name="clearTitles">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1220,14 +1220,14 @@
                   </size>
                  </property>
                  <property name="toolTip">
-                  <string>Clear all subtitle titles</string>
+                  <string>Clear titles</string>
                  </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-clear-subt.png</normaloff>:/resources/icons/16x16/cil-clear-subt.png</iconset>
+                   <normaloff>:/resources/icons/svg/broomstick.svg</normaloff>:/resources/icons/svg/broomstick.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -1281,7 +1281,7 @@
                     <number>0</number>
                    </property>
                    <item row="0" column="0">
-                    <widget class="QScrollArea" name="scrollArea_2">
+                    <widget class="QScrollArea" name="scrollArea_Audio">
                      <property name="widgetResizable">
                       <bool>true</bool>
                      </property>
@@ -1291,7 +1291,7 @@
                         <x>0</x>
                         <y>0</y>
                         <width>313</width>
-                        <height>371</height>
+                        <height>550</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_11">
@@ -1314,8 +1314,8 @@
                         <widget class="QFrame" name="frameAudio">
                          <property name="minimumSize">
                           <size>
-                           <width>250</width>
-                           <height>371</height>
+                           <width>300</width>
+                           <height>550</height>
                           </size>
                          </property>
                          <property name="maximumSize">
@@ -1340,13 +1340,13 @@
                           <property name="rightMargin">
                            <number>9</number>
                           </property>
-                          <item row="0" column="0">
-                           <spacer name="horizontalSpacer_53">
+                          <item row="1" column="2">
+                           <spacer name="horizontalSpacer_58">
                             <property name="orientation">
                              <enum>Qt::Horizontal</enum>
                             </property>
                             <property name="sizeType">
-                             <enum>QSizePolicy::Maximum</enum>
+                             <enum>QSizePolicy::Expanding</enum>
                             </property>
                             <property name="sizeHint" stdset="0">
                              <size>
@@ -1357,6 +1357,57 @@
                            </spacer>
                           </item>
                           <item row="1" column="1">
+                           <layout class="QGridLayout" name="gridLayoutAudio">
+                            <property name="sizeConstraint">
+                             <enum>QLayout::SetDefaultConstraint</enum>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="horizontalSpacing">
+                             <number>6</number>
+                            </property>
+                            <property name="verticalSpacing">
+                             <number>16</number>
+                            </property>
+                            <item row="1" column="0">
+                             <widget class="QStreamView" name="streamAudio" native="true">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>200</width>
+                                <height>24</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="2" column="0">
+                             <widget class="QStreamViewExtern" name="streamAudioExtern" native="true">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>200</width>
+                                <height>24</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="2" column="1">
                            <spacer name="verticalSpacer_3">
                             <property name="orientation">
                              <enum>Qt::Vertical</enum>
@@ -1367,772 +1418,18 @@
                             <property name="sizeHint" stdset="0">
                              <size>
                               <width>20</width>
-                              <height>40</height>
+                              <height>20</height>
                              </size>
                             </property>
                            </spacer>
                           </item>
-                          <item row="0" column="1">
-                           <layout class="QGridLayout" name="gridLayoutAudio">
-                            <property name="sizeConstraint">
-                             <enum>QLayout::SetDefaultConstraint</enum>
-                            </property>
-                            <property name="topMargin">
-                             <number>0</number>
-                            </property>
-                            <property name="horizontalSpacing">
-                             <number>6</number>
-                            </property>
-                            <property name="verticalSpacing">
-                             <number>16</number>
-                            </property>
-                            <item row="1" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #5:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="0" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #1:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="0" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="0" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>35</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #8:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #6:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #4:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #3:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #9:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="2">
-                             <widget class="QLabel" name="labelTitleAudio_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #7:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="0" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="0">
-                             <widget class="QCheckBox" name="checkBoxAudio_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Audio #2:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleAudio_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="1">
-                             <widget class="QLineEdit" name="lineEditLangAudio_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
-                          </item>
-                          <item row="0" column="2">
-                           <spacer name="horizontalSpacer_58">
+                          <item row="1" column="0">
+                           <spacer name="horizontalSpacer_53">
                             <property name="orientation">
                              <enum>Qt::Horizontal</enum>
                             </property>
                             <property name="sizeType">
-                             <enum>QSizePolicy::Maximum</enum>
+                             <enum>QSizePolicy::Expanding</enum>
                             </property>
                             <property name="sizeHint" stdset="0">
                              <size>
@@ -2172,7 +1469,7 @@
                     <number>0</number>
                    </property>
                    <item row="0" column="0">
-                    <widget class="QScrollArea" name="scrollArea_3">
+                    <widget class="QScrollArea" name="scrollArea_Subt">
                      <property name="widgetResizable">
                       <bool>true</bool>
                      </property>
@@ -2223,7 +1520,7 @@
                          </property>
                          <layout class="QGridLayout" name="gridLayout_28">
                           <property name="leftMargin">
-                           <number>15</number>
+                           <number>9</number>
                           </property>
                           <property name="topMargin">
                            <number>18</number>
@@ -2231,7 +1528,7 @@
                           <property name="bottomMargin">
                            <number>9</number>
                           </property>
-                          <item row="0" column="0">
+                          <item row="0" column="1">
                            <layout class="QGridLayout" name="gridLayoutSubtitle">
                             <property name="sizeConstraint">
                              <enum>QLayout::SetDefaultConstraint</enum>
@@ -2245,763 +1542,25 @@
                             <property name="verticalSpacing">
                              <number>16</number>
                             </property>
-                            <item row="3" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #5:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="0" column="2">
-                             <widget class="QLabel" name="labelTitleSub_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>35</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="0" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #7:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="2">
-                             <widget class="QLabel" name="labelTitleSub_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
                             <item row="0" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
+                             <widget class="QStreamView" name="streamSubtitle" native="true">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #1:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #8:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #9:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #4:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="2">
-                             <widget class="QLabel" name="labelTitleSub_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
                               </property>
                               <property name="minimumSize">
                                <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="2">
-                             <widget class="QLabel" name="labelTitleSub_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
                                 <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="8" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_9">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="2">
-                             <widget class="QLabel" name="labelTitleSub_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
                                 <height>24</height>
                                </size>
                               </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
                              </widget>
-                            </item>
-                            <item row="0" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_1">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="2">
-                             <widget class="QLabel" name="labelTitleSub_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="2">
-                             <widget class="QLabel" name="labelTitleSub_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="5" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_6">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #6:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_5">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="6" column="1">
-                             <widget class="QLineEdit" name="lineEditLangSubtitle_7">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>30</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #2:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="0">
-                             <widget class="QCheckBox" name="checkBoxSubtitle_3">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="text">
-                               <string>Subtitle #3:</string>
-                              </property>
-                              <property name="checked">
-                               <bool>false</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="2">
-                             <widget class="QLabel" name="labelTitleSub_4">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="3">
-                             <widget class="QLineEdit" name="lineEditTitleSubtitle_2">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>200</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="clearButtonEnabled">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="7" column="2">
-                             <widget class="QLabel" name="labelTitleSub_8">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>3840</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="autoFillBackground">
-                               <bool>false</bool>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Plain</enum>
-                              </property>
-                              <property name="text">
-                               <string>Title:</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="0" column="4">
-                             <spacer name="horizontalSpacer_54">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeType">
-                               <enum>QSizePolicy::Maximum</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>10</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
                             </item>
                            </layout>
                           </item>
-                          <item row="1" column="0">
+                          <item row="1" column="1">
                            <spacer name="verticalSpacer_5">
                             <property name="orientation">
                              <enum>Qt::Vertical</enum>
@@ -3010,6 +1569,32 @@
                              <size>
                               <width>20</width>
                               <height>40</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item row="0" column="0">
+                           <spacer name="horizontalSpacer_54">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>40</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item row="0" column="2">
+                           <spacer name="horizontalSpacer_59">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>40</width>
+                              <height>20</height>
                              </size>
                             </property>
                            </spacer>
@@ -3026,7 +1611,7 @@
                 </widget>
                </item>
                <item row="0" column="1" alignment="Qt::AlignLeft">
-                <widget class="QPushButton" name="clearATitles">
+                <widget class="QPushButton" name="addExtStream">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -3046,14 +1631,14 @@
                   </size>
                  </property>
                  <property name="toolTip">
-                  <string>Clear all audio titles</string>
+                  <string>Add external stream</string>
                  </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-clear-audio.png</normaloff>:/resources/icons/16x16/cil-clear-audio.png</iconset>
+                   <normaloff>:/resources/icons/svg/add.svg</normaloff>:/resources/icons/svg/add.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -3194,7 +1779,7 @@
                   </size>
                  </property>
                  <property name="toolTip">
-                  <string>Undo all titles</string>
+                  <string>Undo titles</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -4000,7 +2585,7 @@
                   <number>12</number>
                  </property>
                  <property name="columnCount">
-                  <number>107</number>
+                  <number>30</number>
                  </property>
                  <attribute name="horizontalHeaderVisible">
                   <bool>true</bool>
@@ -4163,7 +2748,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 21 - TECHNICAL INFO: Duration</string>
+                   <string notr="true">ID 21 - TECHNICAL INFO: Duration</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4171,7 +2756,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 22 - TECHNICAL INFO: Chroma coord</string>
+                   <string notr="true">ID 22 - TECHNICAL INFO: Chroma coord</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4179,7 +2764,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 23 - TECHNICAL INFO: White coord</string>
+                   <string notr="true">ID 23 - TECHNICAL INFO: White coord</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4187,7 +2772,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 24 - TECHNICAL INFO: Stream size</string>
+                   <string notr="true">ID 24 - TECHNICAL INFO: Stream size</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4195,7 +2780,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 25 - TECHNICAL INFO: Width</string>
+                   <string notr="true">ID 25 - TECHNICAL INFO: Width</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4203,7 +2788,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 26 - TECHNICAL INFO: Height</string>
+                   <string notr="true">ID 26 - TECHNICAL INFO: Height</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4211,7 +2796,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 27 - TECHNICAL INFO: VideoTitle</string>
+                   <string notr="true">ID 27 - TECHNICAL INFO: Start Time</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4219,7 +2804,7 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 28 - TECHNICAL INFO: Video Movie Name</string>
+                   <string notr="true">ID 28 - TECHNICAL INFO: End Time</string>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4227,485 +2812,16 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 29 - TECHNICAL INFO: Video Year</string>
+                   <string notr="true">ID 29 - TECHNICAL INFO: ID</string>
+                  </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 30 - TECHNICAL INFO: Video Author</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 31 - TECHNICAL INFO: Video Performer</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 32 - TECHNICAL INFO: Video Description</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 33 - TECHNICAL INFO: Audio #1</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 34 - TECHNICAL INFO: Audio #2</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 35 - TECHNICAL INFO: Audio #3</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 36 - TECHNICAL INFO: Audio #4</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 37 - TECHNICAL INFO: Audio #5</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 38 - TECHNICAL INFO: Audio #6</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 39 - TECHNICAL INFO: Audio #7</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 40 - TECHNICAL INFO: Audio #8</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 41 - TECHNICAL INFO: Audio #9</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 42 - TECHNICAL INFO: Audio Lang #1</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 43 - TECHNICAL INFO: Audio Lang #2</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 44 - TECHNICAL INFO: Audio Lang #3</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 45 - TECHNICAL INFO: Audio Lang #4</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 46 - TECHNICAL INFO: Audio Lang #5</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 47 - TECHNICAL INFO: Audio Lang #6</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 48 - TECHNICAL INFO: Audio Lang #7</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 49 - TECHNICAL INFO: Audio Lang #8</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 50 - TECHNICAL INFO: Audio Lang #9</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 51 - TECHNICAL INFO: Audio Title #1</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 52 - TECHNICAL INFO: Audio Title #2</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 53 - TECHNICAL INFO: Audio Title #3</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 54 - TECHNICAL INFO: Audio Title #4</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 55 - TECHNICAL INFO: Audio Title #5</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 56 - TECHNICAL INFO: Audio Title #6</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 57 - TECHNICAL INFO: Audio Title #7</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 58 - TECHNICAL INFO: Audio Title #8</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 59 - TECHNICAL INFO: Audio Title #9</string>
-                  </property>
-                  <property name="textAlignment">
-                   <set>AlignLeading|AlignVCenter</set>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 60 - TECHNICAL INFO: Audio #1 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 61 - TECHNICAL INFO: Audio #2 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 62 - TECHNICAL INFO: Audio #3 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 63 - TECHNICAL INFO: Audio #4 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 64 - TECHNICAL INFO: Audio #5 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 65 - TECHNICAL INFO: Audio #6 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 66 - TECHNICAL INFO: Audio #7 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 67 - TECHNICAL INFO: Audio #8 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 68 - TECHNICAL INFO: Audio #9 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 69 - TECHNICAL INFO: Subtitle #1</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 70 - TECHNICAL INFO: Subtitle #2</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 71 - TECHNICAL INFO: Subtitle #3</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 72 - TECHNICAL INFO: Subtitle #4</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 73 - TECHNICAL INFO: Subtitle #5</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 74 - TECHNICAL INFO: Subtitle #6</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 75 - TECHNICAL INFO: Subtitle #7</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 76 - TECHNICAL INFO: Subtitle #8</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 77 - TECHNICAL INFO: Subtitle #9</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 78 - TECHNICAL INFO: Subtitle Lang #1</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 79 - TECHNICAL INFO: Subtitle Lang #2</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 80 - TECHNICAL INFO: Subtitle Lang #3</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 81 - TECHNICAL INFO: Subtitle Lang #4</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 82 - TECHNICAL INFO: Subtitle Lang #5</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 83 - TECHNICAL INFO: Subtitle Lang #6</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 84 - TECHNICAL INFO: Subtitle Lang #7</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 85 - TECHNICAL INFO: Subtitle Lang #8</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 86 - TECHNICAL INFO: Subtitle Lang #9</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 87 - TECHNICAL INFO: Subtitle Title #1</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 88 - TECHNICAL INFO: Subtitle Title #2</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 89 - TECHNICAL INFO: Subtitle Title #3</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 90 - TECHNICAL INFO: Subtitle Title #4</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 91 - TECHNICAL INFO: Subtitle Title #5</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 92 - TECHNICAL INFO: Subtitle Title #6</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 93 - TECHNICAL INFO: Subtitle Title #7</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 94 - TECHNICAL INFO: Subtitle Title #8</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 95 - TECHNICAL INFO: Subtitle Title #9</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 96 - TECHNICAL INFO: Subtitle #1 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 97 - TECHNICAL INFO: Subtitle #2 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 98 - TECHNICAL INFO: Subtitle #3 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 99 - TECHNICAL INFO: Subtitle #4 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 100 - TECHNICAL INFO: Subtitle #5 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 101 - TECHNICAL INFO: Subtitle #6 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 102 - TECHNICAL INFO: Subtitle #7 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 103 - TECHNICAL INFO: Subtitle #8 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 104 - TECHNICAL INFO: Subtitle #9 Check State</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 105 - TECHNICAL INFO: Start Time</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>ID 106 - TECHNICAL INFO: End Time</string>
                   </property>
                  </column>
                 </widget>
@@ -5459,81 +3575,13 @@
                           <property name="minimumSize">
                            <size>
                             <width>235</width>
-                            <height>0</height>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
                             <width>370</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                          <property name="readOnly">
-                           <bool>false</bool>
-                          </property>
-                          <property name="placeholderText">
-                           <string/>
-                          </property>
-                          <property name="clearButtonEnabled">
-                           <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="5" column="1">
-                         <widget class="QLineEdit" name="lineVName">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>235</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>370</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                          <property name="readOnly">
-                           <bool>false</bool>
-                          </property>
-                          <property name="placeholderText">
-                           <string/>
-                          </property>
-                          <property name="clearButtonEnabled">
-                           <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="11" column="1">
-                         <widget class="QLineEdit" name="lineVPerf">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>235</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>370</width>
-                            <height>20</height>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="readOnly">
@@ -5561,13 +3609,13 @@
                           <property name="minimumSize">
                            <size>
                             <width>235</width>
-                            <height>0</height>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
                             <width>370</width>
-                            <height>20</height>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="readOnly">
@@ -5578,80 +3626,6 @@
                           </property>
                           <property name="clearButtonEnabled">
                            <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="13" column="1">
-                         <widget class="QLineEdit" name="lineVDescript">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>235</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>370</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                          <property name="readOnly">
-                           <bool>false</bool>
-                          </property>
-                          <property name="placeholderText">
-                           <string/>
-                          </property>
-                          <property name="clearButtonEnabled">
-                           <bool>true</bool>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="8" column="1">
-                         <widget class="QLabel" name="label_credits_25">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>235</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>370</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="autoFillBackground">
-                           <bool>false</bool>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="frameShadow">
-                           <enum>QFrame::Plain</enum>
-                          </property>
-                          <property name="text">
-                           <string>   Author:</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -5688,14 +3662,14 @@
                            <enum>QFrame::Plain</enum>
                           </property>
                           <property name="text">
-                           <string>   Description:</string>
+                           <string>  Description:</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
-                        <item row="2" column="1">
+                        <item row="1" column="1">
                          <widget class="QLabel" name="label_credits_28">
                           <property name="enabled">
                            <bool>false</bool>
@@ -5737,95 +3711,15 @@
                            <enum>QFrame::Plain</enum>
                           </property>
                           <property name="text">
-                           <string>   Title:</string>
+                           <string>  Title:</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
-                        <item row="6" column="1">
-                         <widget class="QLabel" name="label_credits_27">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>235</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>370</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="autoFillBackground">
-                           <bool>false</bool>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="frameShadow">
-                           <enum>QFrame::Plain</enum>
-                          </property>
-                          <property name="text">
-                           <string>   Year:</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="4" column="1">
-                         <widget class="QLabel" name="label_credits_29">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>235</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>370</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="autoFillBackground">
-                           <bool>false</bool>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="frameShadow">
-                           <enum>QFrame::Plain</enum>
-                          </property>
-                          <property name="text">
-                           <string>   Name:</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="7" column="1">
-                         <widget class="QLineEdit" name="lineVYear">
+                        <item row="13" column="1">
+                         <widget class="QLineEdit" name="lineVDescript">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -5838,13 +3732,13 @@
                           <property name="minimumSize">
                            <size>
                             <width>235</width>
-                            <height>0</height>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
                             <width>370</width>
-                            <height>20</height>
+                            <height>22</height>
                            </size>
                           </property>
                           <property name="readOnly">
@@ -5891,7 +3785,229 @@
                            <enum>QFrame::Plain</enum>
                           </property>
                           <property name="text">
-                           <string>   Performer:</string>
+                           <string>  Performer:</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="11" column="1">
+                         <widget class="QLineEdit" name="lineVPerf">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>235</width>
+                            <height>22</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>370</width>
+                            <height>22</height>
+                           </size>
+                          </property>
+                          <property name="readOnly">
+                           <bool>false</bool>
+                          </property>
+                          <property name="placeholderText">
+                           <string/>
+                          </property>
+                          <property name="clearButtonEnabled">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="6" column="1">
+                         <widget class="QLabel" name="label_credits_27">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>235</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>370</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="autoFillBackground">
+                           <bool>false</bool>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Plain</enum>
+                          </property>
+                          <property name="text">
+                           <string>  Year:</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="5" column="1">
+                         <widget class="QLineEdit" name="lineVName">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>235</width>
+                            <height>22</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>370</width>
+                            <height>22</height>
+                           </size>
+                          </property>
+                          <property name="readOnly">
+                           <bool>false</bool>
+                          </property>
+                          <property name="placeholderText">
+                           <string/>
+                          </property>
+                          <property name="clearButtonEnabled">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="7" column="1">
+                         <widget class="QLineEdit" name="lineVYear">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>235</width>
+                            <height>22</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>370</width>
+                            <height>22</height>
+                           </size>
+                          </property>
+                          <property name="readOnly">
+                           <bool>false</bool>
+                          </property>
+                          <property name="placeholderText">
+                           <string/>
+                          </property>
+                          <property name="clearButtonEnabled">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="8" column="1">
+                         <widget class="QLabel" name="label_credits_25">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>235</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>370</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="autoFillBackground">
+                           <bool>false</bool>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Plain</enum>
+                          </property>
+                          <property name="text">
+                           <string>  Author:</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="4" column="1">
+                         <widget class="QLabel" name="label_credits_29">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>235</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>370</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="autoFillBackground">
+                           <bool>false</bool>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Plain</enum>
+                          </property>
+                          <property name="text">
+                           <string>  Name:</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -6031,7 +4147,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-list-clear-1.png</normaloff>:/resources/icons/16x16/cil-list-clear-1.png</iconset>
+                   <normaloff>:/resources/icons/svg/broomstick.svg</normaloff>:/resources/icons/svg/broomstick.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -6219,7 +4335,7 @@
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>-122</y>
+                    <y>0</y>
                     <width>407</width>
                     <height>325</height>
                    </rect>
@@ -7186,6 +5302,20 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QStreamView</class>
+   <extends>QWidget</extends>
+   <header>widgets/qstreamview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QStreamViewExtern</class>
+   <extends>QWidget</extends>
+   <header>widgets/qstreamviewextern.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="files.qrc"/>
  </resources>

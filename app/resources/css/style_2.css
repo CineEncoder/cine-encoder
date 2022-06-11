@@ -897,8 +897,8 @@ QPushButton#start[status="2"] {
     icon: url(:/resources/icons/svg/forward.svg);
 }
 QPushButton:hover#resetLabels,
-QPushButton:hover#clearATitles,
-QPushButton:hover#clearSTitles,
+QPushButton:hover#addExtStream,
+QPushButton:hover#clearTitles,
 QPushButton:hover#undoTitles,
 QPushButton:hover#clearMetadata,
 QPushButton:hover#undoMetadata,
@@ -924,8 +924,8 @@ QPushButton:hover#closeWindow {
     background-color: #EE0000;
 }
 QPushButton:pressed#resetLabels,
-QPushButton:pressed#clearATitles,
-QPushButton:pressed#clearSTitles,
+QPushButton:pressed#addExtStream,
+QPushButton:pressed#clearTitles,
 QPushButton:pressed#undoTitles,
 QPushButton:pressed#clearMetadata,
 QPushButton:pressed#undoMetadata,

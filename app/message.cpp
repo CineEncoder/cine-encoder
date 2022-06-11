@@ -80,13 +80,15 @@ void Message::setMessage()
         m_timer->setInterval(1000);
         connect(m_timer, &QTimer::timeout, this, &Message::repeatHandler);
         m_timer->start();
-    }
-    else {
+    } else
+    if (m_mess_type == MessType::INFO && !m_timer_flag) {
 #if defined (Q_OS_WIN64)
         QSound::play("./cine-encoder.wav");
 #elif defined (Q_OS_UNIX)
         QSound::play("/usr/share/sounds/cine-encoder.wav");
 #endif
+        show_message();
+    } else {
         show_message();
     }
 }

@@ -30,6 +30,8 @@
     #include "platform_unix/basewindow.h"
 #endif
 
+typedef QVector<QVector<QString>> TableString;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class Widget;
@@ -45,6 +47,7 @@ public:
     ~MainWindow();
 
     // ============= Settings ================
+
     bool        m_hideInTrayFlag,
                 m_showHdrFlag,
                 m_protectFlag;
@@ -56,14 +59,14 @@ public:
                 m_pos_cld,
                 m_timerInterval;
 
-    QString     _language,
-                _output_folder,
-                _temp_folder,
-                _prefixName,
-                _suffixName,
-                _font;
+    QString     m_language,
+                m_output_folder,
+                m_temp_folder,
+                m_prefixName,
+                m_suffixName,
+                m_font;
 
-    QVector<QString> _new_param;
+    QVector<QString> m_newParams;
 
 private slots:
     void setTrayIcon();
@@ -76,6 +79,7 @@ private slots:
     void onRemoveFile();
     void onStart();
     void onStop();
+    void onSort(const bool up);
     void onSortDown();
     void onSortUp();
     void setParameters();
@@ -110,8 +114,8 @@ private slots:
     void onUndoMetadata();
 
     // ============ Streams Metadata ===============
-    void onClearATitles();
-    void onClearSTitles();
+    void onAddExtStream();
+    void onClearTitles();
     void onUndoTitles();
 
     // ============== Split Video ==================
@@ -146,10 +150,10 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    Encoder *m_pEncoder;
-    QVector<QString> _cur_param;
-    QVector<QVector<QString>> _preset_table;
-    QPixmap preview_pixmap;
+    Encoder    *m_pEncoder;
+    QVector<QString> m_curParams;
+    TableString      m_preset_table;
+    QPixmap          m_preview_pixmap;
 
     // ============= Dock area =============
     QMainWindow *m_pDocksContainer;
@@ -162,10 +166,10 @@ private:
                 *m_pSubtitleLabel;
 
     // ============= Progress animation =============
-    QMovie      *animation;
+    QMovie      *m_animation;
 
     // ============= Tray menu actions =============
-    QSystemTrayIcon *trayIcon;
+    QSystemTrayIcon *m_trayIcon;
 
     // ============= Top menu actions =============
     QAction     *actAddFiles,
@@ -197,55 +201,45 @@ private:
     QProcess    *m_pProcessThumbCreation;
 
     // ============= Timers =============
-    QTimer      *timer,
-                *timerCallSetThumbnail;
+    QTimer      *m_timer,
+                *m_timerCallSetThumbnail;
 
     // ============= Initialization =============
-    QFile       _wind_file;
-
-    QString     _openDir;
-
-    int         _theme;
+    QString     m_openDir;
+    int         m_theme;
 
     // ============= Metadata =============
-    int         _audioStreamCheckState[AMOUNT_AUDIO_STREAMS],
-                _subtitleCheckState[AMOUNT_SUBTITLES];
-
-    QString     _hdr[11],
-                _videoMetadata[6],
-                _audioLang[AMOUNT_AUDIO_STREAMS],
-                _audioTitle[AMOUNT_AUDIO_STREAMS],
-                _subtitleLang[AMOUNT_SUBTITLES],
-                _subtitleTitle[AMOUNT_SUBTITLES];
+    QString       m_hdr[AMOUNT_HDR_PARAMS];
+    QVector<Data> m_data;
 
     // ============= Encoding =============
-    bool        _batch_mode;
+    bool        m_batch_mode;
 
-    int         _fr_count,
-                _status_encode_btn,
-                _row;
+    int         m_fr_count,
+                m_status_encode_btn,
+                m_row;
 
-    time_t      _strt_t;
+    time_t      m_strt_t;
 
-    double      _dur,
-                _curTime,
-                _startTime,
-                _endTime;
+    double      m_dur,
+                m_curTime,
+                m_startTime,
+                m_endTime;
 
-    QString     _curFilename,
-                _curPath,
-                _temp_file,
-                _input_file,
-                _output_file,
-                _fmt,
-                _width,
-                _height,
-                _fps,
-                _stream_size,
+    QString     m_curFilename,
+                m_curPath,
+                m_temp_file,
+                m_input_file,
+                m_output_file,
+                m_fmt,
+                m_width,
+                m_height,
+                m_fps,
+                m_stream_size,
                 extension;
 
     // ============= Geometry =============
-    bool        _expandWindowsState;
+    bool        m_expandWindowsState;
     int         m_rowHeight;
 
     // ====================================
@@ -284,7 +278,6 @@ private:
                           const QString &acodec_qstr,
                           QTreeWidgetItem *item,
                           const bool defaultNameFlag);
-
     void updatePresetTable();
 };
 

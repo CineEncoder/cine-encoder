@@ -26,17 +26,18 @@ VERSION = 3.5.4
 
 # DIRS
 CONFIG -= debug_and_release debug_and_release_target
-DESTDIR =     ../builddir
-OBJECTS_DIR = ../builddir/obj
-MOC_DIR =     ../builddir/moc
-UI_DIR =      ../builddir/ui
-RCC_DIR =     ../builddir/rcc
+DESTDIR =     $$PWD/../builddir
+OBJECTS_DIR = $$PWD/../builddir/obj
+MOC_DIR =     $$PWD/../builddir/moc
+UI_DIR =      $$PWD/../builddir/ui
+RCC_DIR =     $$PWD/../builddir/rcc
 
 # DEFINES
 #DEFINES += QT_DEPRECATED_X
 
 # FILES
 SOURCES += \
+    widgets/qstreamview.cpp \
     basedialog.cpp \
     encoder.cpp \
     helper.cpp \
@@ -46,9 +47,11 @@ SOURCES += \
     notification.cpp \
     preset.cpp \
     progress.cpp \
-    settings.cpp
+    settings.cpp \
+    widgets/qstreamviewextern.cpp
 
 HEADERS += \
+    widgets/qstreamview.h \
     basedialog.h \
     constants.h \
     encoder.h \
@@ -59,7 +62,8 @@ HEADERS += \
     preset.h \
     progress.h \
     settings.h \
-    tables.h
+    tables.h \
+    widgets/qstreamviewextern.h
 
 FORMS += \
     mainwindow.ui \

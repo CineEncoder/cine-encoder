@@ -12,7 +12,7 @@ public:
     ~Helper();
 
     enum class FileDialogType : uint8_t {
-        OPENVFILES, SELECTFOLDER
+        OPENVFILES, OPENAFILES, SELECTFOLDER
     };
 
     enum class DesktopEnv : uint8_t {
@@ -29,9 +29,33 @@ public:
     static QString timeConverter(const float time);
     static QString timeConverter(const double time);
     static QString getSysLanguage();
+    template<class T>
+    static void eraseRow(QVector<T> &v, const int row);
+    template<class T>
+    static void reorder(QVector<T> &v, QVector<int> const &order);
 
 private:
     static DesktopEnv m_desktopEnv;
 };
+
+template<class T>
+void Helper::eraseRow(QVector<T> &v, const int row)
+{
+    auto it = v.begin();
+    std::advance(it, row);
+    v.erase(it);
+}
+
+template<class T>
+void Helper::reorder(QVector<T> &v, QVector<int> const &order)
+{
+    for (int s = 1, d; s < order.size(); ++s) {
+        for (d = order[s]; d < s; d = order[d]);
+        if (d == s)
+            while (d = order[d], d != s)
+                std::swap(v[s], v[d]);
+
+    }
+}
 
 #endif // HELPER_H

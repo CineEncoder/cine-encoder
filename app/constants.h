@@ -17,6 +17,7 @@
 #include <QDir>
 
 #define Dump(a) std::cout << a << std::endl
+#define Q_LOOP(i, start, end) for(int i = start; i < end; i++)
 #define SETTINGSPATH QDir::homePath() + QString("/CineEncoder")
 #define SETTINGSFILE SETTINGSPATH + QString("/settings.ini")
 #define SETTINGS(settings) QSettings settings(SETTINGSFILE, \
@@ -40,8 +41,10 @@
 
 #define DOCKS_COUNT 8
 
-#define AMOUNT_AUDIO_STREAMS 9
-#define AMOUNT_SUBTITLES 9
+#define AMOUNT_HDR_PARAMS 11
+#define AMOUNT_VIDEO_METADATA 6
+#define MAX_AUDIO_STREAMS 100
+#define MAX_SUBTITLES 100
 
 #define MAXIMUM_ALLOWED_TIME 359999.0f
 #define FONTSIZE 8
@@ -49,28 +52,12 @@
 // ***************** Table Widget Columns *********************//
 
 enum ColumnIndex {
-    FILENAME,       FORMAT,         RESOLUTION,     DURATION,           FPS,
-    AR,             STATUS,         BITRATE,        SUBSAMPLING,        BITDEPTH,
-    COLORSPACE,     COLORRANGE,     COLORPRIM,      COLORMATRIX,        TRANSFER,
-    MAXLUM,         MINLUM,         MAXCLL,         MAXFALL,            MASTERDISPLAY,
-    PATH,           T_DUR,          T_CHROMACOORD,  T_WHITECOORD,       T_STREAMSIZE,
-    T_WIDTH,        T_HEIGHT,       T_VIDEOTITLE,   T_VIDEOMOVIENAME,   T_VIDEOYEAR,
-    T_VIDEOAUTHOR,  T_VIDEOPERF,    T_VIDEODESCR,   T_AUDIO_1,          T_AUDIO_2,
-    T_AUDIO_3,      T_AUDIO_4,      T_AUDIO_5,      T_AUDIO_6,          T_AUDIO_7,
-    T_AUDIO_8,      T_AUDIO_9,      T_AUDIOLANG_1,  T_AUDIOLANG_2,      T_AUDIOLANG_3,
-    T_AUDIOLANG_4,  T_AUDIOLANG_5,  T_AUDIOLANG_6,  T_AUDIOLANG_7,      T_AUDIOLANG_8,
-    T_AUDIOLANG_9,  T_AUDIOTITLE_1, T_AUDIOTITLE_2, T_AUDIOTITLE_3,     T_AUDIOTITLE_4,
-    T_AUDIOTITLE_5, T_AUDIOTITLE_6, T_AUDIOTITLE_7, T_AUDIOTITLE_8,     T_AUDIOTITLE_9,
-    T_AUDIOCHECK_1, T_AUDIOCHECK_2, T_AUDIOCHECK_3, T_AUDIOCHECK_4,     T_AUDIOCHECK_5,
-    T_AUDIOCHECK_6, T_AUDIOCHECK_7, T_AUDIOCHECK_8, T_AUDIOCHECK_9,     T_SUBTITLE_1,
-    T_SUBTITLE_2,   T_SUBTITLE_3,   T_SUBTITLE_4,   T_SUBTITLE_5,       T_SUBTITLE_6,
-    T_SUBTITLE_7,   T_SUBTITLE_8,   T_SUBTITLE_9,   T_SUBLANG_1,        T_SUBLANG_2,
-    T_SUBLANG_3,    T_SUBLANG_4,    T_SUBLANG_5,    T_SUBLANG_6,        T_SUBLANG_7,
-    T_SUBLANG_8,    T_SUBLANG_9,    T_TITLESUB_1,   T_TITLESUB_2,       T_TITLESUB_3,
-    T_TITLESUB_4,   T_TITLESUB_5,   T_TITLESUB_6,   T_TITLESUB_7,       T_TITLESUB_8,
-    T_TITLESUB_9,   T_SUBCHECK_1,   T_SUBCHECK_2,   T_SUBCHECK_3,       T_SUBCHECK_4,
-    T_SUBCHECK_5,   T_SUBCHECK_6,   T_SUBCHECK_7,   T_SUBCHECK_8,       T_SUBCHECK_9,
-    T_STARTTIME,    T_ENDTIME
+    FILENAME,   FORMAT,     RESOLUTION,    DURATION,     FPS,
+    AR,         STATUS,     BITRATE,       SUBSAMPLING,  BITDEPTH,
+    COLORSPACE, COLORRANGE, COLORPRIM,     COLORMATRIX,  TRANSFER,
+    MAXLUM,     MINLUM,     MAXCLL,        MAXFALL,      MASTERDISPLAY,
+    PATH,       T_DUR,      T_CHROMACOORD, T_WHITECOORD, T_STREAMSIZE,
+    T_WIDTH,    T_HEIGHT,   T_STARTTIME,   T_ENDTIME,    T_ID
 };
 
 // **************** Geometry and Themes *********************//
@@ -78,11 +65,6 @@ enum ColumnIndex {
 enum DockIndex {
     PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
     STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK
-};
-
-enum Resize {
-    LEFT,   LEFT_TOP,   LEFT_BOTTOM,   TOP,
-    RIGHT,  RIGHT_TOP,  RIGHT_BOTTOM,  BOTTOM
 };
 
 enum Theme {
@@ -98,6 +80,23 @@ enum PreviewRes {
 };
 
 // ******************** Metadata *****************************//
+
+struct Data {
+    QVector<QString> videoMetadata;
+    QVector<bool>    audioChecks;
+    QVector<QString> audioFormats;
+    QVector<QString> audioLangs;
+    QVector<QString> audioTitles;
+    QVector<bool>    subtChecks;
+    QVector<QString> subtFormats;
+    QVector<QString> subtLangs;
+    QVector<QString> subtTitles;
+    QVector<bool>    externAudioChecks;
+    QVector<QString> externAudioFormats;
+    QVector<QString> externAudioLangs;
+    QVector<QString> externAudioTitles;
+    QVector<QString> externAudioPath;
+};
 
 enum VideoMetadataIndex {
     VIDEO_TITLE,  VIDEO_MOVIENAME, VIDEO_YEAR,
