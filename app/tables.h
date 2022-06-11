@@ -65,8 +65,8 @@ public:
         "29.970", "25",  "24", "23.976", "20", "18", "16"
     };
 
-    const QString blending[4] = {
-        "Simple", "Interpolated", "MCI", "Blend"
+    enum Blending {
+        Simple, Interpolated, MCI, Blend
     };
 
     const QString arr_codec[NUMBER_PRESETS][3] = {

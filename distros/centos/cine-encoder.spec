@@ -6,10 +6,8 @@ License:    GPLv3
 URL:        https://github.com/CineEncoder/%{name}
 Source0:    %{name}-%{version}.tar.xz
 
-BuildRequires: gcc-c++
-BuildRequires: libmediainfo-devel
-BuildRequires: qt5-qtbase-devel
-BuildRequires: qt5-qtmultimedia-devel
+BuildRequires: gcc-c++, qt5-qtbase-devel, qt5-qtmultimedia-devel, qt5-qtsvg-devel,
+ qt5-qtx11extras-devel, libmediainfo-devel, libXext-devel
 Requires: ffmpeg, mkvtoolnix, intel-media-driver, libva-intel-driver
 
 %description

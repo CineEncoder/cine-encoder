@@ -76,6 +76,48 @@ void Helper::openFileDialog(FileDialogType dialogType,
                             const QString  &path,
                             QStringList    &result)
 {
+    const QVector<QString> audioFilters = {
+        QString("%1: *.wma, *.ac3, *.aac, *.alac, *.mka, *.dts, *.thd, *.eac3, *.mp3, *.wav, *.vorbis, *.ogg, *.flac, *.opus \
+               (*.wma *.ac3 *.aac *.alac *.mka *.dts *.thd *.eac3 *.mp3 *.wav *.vorbis *.ogg *.flac *.opus)").arg(tr("Audio Files")),
+        "Windows Media Audio *.wma (*.wma)",
+        "Dolby Digital *.ac3 (*.ac3)",
+        "Advanced Audio Coding *.aac (*.aac)",
+        "Apple Lossless Audio Codec *.alac (*.alac)",
+        "Matroska Audio *.mka (*.mka)",
+        "Dolby TrueHD *.dts, *.thd (*.dts *.thd)",
+        "Dolby Digital Plus *.eac3 (*.eac3)",
+        "MPEG-1 Audio Layer III, MPEG-2 Audio Layer III *.mp3 (*.mp3)",
+        "Waveform Audio File Format *.wav (*.wav)",
+        "Ogg Vorbis *.vorbis, *.ogg (*.vorbis *.ogg)",
+        "Free Lossless Audio Codec *.flac (*.flac)",
+        "Opus Audio Format *.opus (*.opus)",
+        QString("%1 (*.*)").arg(tr("All files"))
+    };
+    const QVector<QString> videoFilters = {
+        QString("%1: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.wmv, *.ts, *.webm \
+               (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.wmv *.ts *.webm)").arg(tr("Video Files")),
+        "Audio Video Interleave *.avi (*.avi)",
+        "Blu-ray BDAV Video *.m2ts (*.m2ts)",
+        "iTunes Video *.m4v (*.m4v)",
+        "Matroska *.mkv (*.mkv)",
+        "QuickTime *.mov (*.mov)",
+        "MPEG-4 *.mp4 (*.mp4)",
+        "MPEG *.mpeg, *.mpg (*.mpeg *.mpg)",
+        "Material Exchange Format *.mxf (*.mxf)",
+        "Windows Media Video *.wmv (*.wmv)",
+        "Video Transport Stream *.ts (*.ts)",
+        "WebM *.webm (*.webm)",
+        QString("%1 (*.*)").arg(tr("All files"))
+    };
+    auto getFilter = [](QVector<QString> filters)->QString {
+        QString filter;
+        foreach (auto flt, filters) {
+            filter += flt;
+            if (flt != filters.back())
+                filter += ";;";
+        }
+        return filter;
+    };
     result.clear();
     QFileDialog dlg(nullptr);
     dlg.setWindowTitle(title);
@@ -86,16 +128,17 @@ void Helper::openFileDialog(FileDialogType dialogType,
         opt |= QFileDialog::DontUseNativeDialog;
     dlg.setOptions(opt);
     dlg.setAcceptMode(QFileDialog::AcceptOpen);
-    const QString dir = (path != QString("")) ? path : QDir::homePath();
+    const QString dir = (!path.isEmpty()) ? path : QDir::homePath();
     dlg.setDirectory(dir);
 
     switch(dialogType) {
     case FileDialogType::OPENVFILES:
         dlg.setFileMode(QFileDialog::ExistingFiles);
-        dlg.setNameFilter(tr("Video Files:") + " *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, \
-                             *.mpeg, *.mpg, *.mxf, *.ts, *.webm (*.avi *.m2ts *.m4v \
-                             *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.ts *.webm);;" +
-                             tr("All files") + " (*.*)");
+        dlg.setNameFilter(getFilter(videoFilters));
+        break;
+    case FileDialogType::OPENAFILES:
+        dlg.setFileMode(QFileDialog::ExistingFiles);
+        dlg.setNameFilter(getFilter(audioFilters));
         break;
     case FileDialogType::SELECTFOLDER:
         dlg.setFileMode(QFileDialog::DirectoryOnly);

@@ -2,11 +2,14 @@ Source: cine-encoder
 Section: video
 Priority: optional
 Maintainer: Oleg Kozhukharenko <depositmail@rambler.ru>
-Build-Depends:	qt5-qmake,
+Build-Depends:	gcc,
+                qt5-qmake,
                 qtbase5-dev,
-                qtbase5-dev-tools,
                 qtmultimedia5-dev,
-                libmediainfo-dev
+                libqt5svg5-dev,
+                libqt5x11extras5-dev,
+                libmediainfo-dev,
+                libxext-dev
 Standards-Version: 4.5.0
 Homepage: https://github.com/CineEncoder/cine-encoder
 
