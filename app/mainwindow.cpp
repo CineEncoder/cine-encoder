@@ -1076,8 +1076,10 @@ void MainWindow::get_current_data() // Get current data
         m_pAudioLabel->setVisible(false);
         ui->streamAudio->setList(m_data[m_row]);
     }
-    if (m_data[m_row].externAudioFormats.size() > 0)
+    if (m_data[m_row].externAudioFormats.size() > 0) {
+        m_pAudioLabel->setVisible(false);
         ui->streamAudioExtern->setList(m_data[m_row]);
+    }
 
     //********* Set subtitle widgets ***************//
     if (countSubtitles > 0) {
@@ -2012,8 +2014,10 @@ void MainWindow::onAddExtStream()
                     showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(path));
                 }
             }
-            if (m_data[m_row].externAudioFormats.size() > 0)
+            if (m_data[m_row].externAudioFormats.size() > 0) {
+                m_pAudioLabel->setVisible(false);
                 ui->streamAudioExtern->setList(m_data[m_row]);
+            }
         }
     }
 }
