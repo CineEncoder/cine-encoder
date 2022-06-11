@@ -923,7 +923,7 @@ void MainWindow::showSubtitles()
 
 void MainWindow::showVideoSplitter()
 {
-    setFloating(DockIndex::SPLIT_DOCK, QPoint(240,-160), QSize(400,410));
+    setFloating(DockIndex::SPLIT_DOCK, QPoint(240,-160), QSize(400,395));
 }
 
 void MainWindow::get_current_data() // Get current data
@@ -2021,7 +2021,7 @@ void MainWindow::onAddExtStream()
 void MainWindow::onClearTitles()
 {
     if (m_row != -1) {
-        const int ind = ui->tabWidgetRight->currentIndex();
+        const int ind = ui->tabWidgetStreams->currentIndex();
         ind == 0 ? ui->streamAudio->clearTitles() :
                    ui->streamSubtitle->clearTitles();
     }
@@ -2030,7 +2030,7 @@ void MainWindow::onClearTitles()
 void MainWindow::onUndoTitles()
 {
     if (m_row != -1) {
-        const int ind = ui->tabWidgetRight->currentIndex();
+        const int ind = ui->tabWidgetStreams->currentIndex();
         ind == 0 ? ui->streamAudio->undoTitles() :
                    ui->streamSubtitle->undoTitles();
     }

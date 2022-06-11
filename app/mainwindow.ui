@@ -1384,7 +1384,7 @@
                               <property name="minimumSize">
                                <size>
                                 <width>200</width>
-                                <height>24</height>
+                                <height>5</height>
                                </size>
                               </property>
                              </widget>
@@ -1400,7 +1400,7 @@
                               <property name="minimumSize">
                                <size>
                                 <width>200</width>
-                                <height>24</height>
+                                <height>5</height>
                                </size>
                               </property>
                              </widget>
@@ -4337,7 +4337,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>407</width>
-                    <height>325</height>
+                    <height>305</height>
                    </rect>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_35">
@@ -4361,7 +4361,7 @@
                      <property name="minimumSize">
                       <size>
                        <width>380</width>
-                       <height>325</height>
+                       <height>305</height>
                       </size>
                      </property>
                      <property name="maximumSize">
@@ -4381,7 +4381,7 @@
                        <number>9</number>
                       </property>
                       <property name="topMargin">
-                       <number>30</number>
+                       <number>15</number>
                       </property>
                       <property name="rightMargin">
                        <number>9</number>
