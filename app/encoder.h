@@ -16,6 +16,7 @@
 #include <QObject>
 #include <QProcess>
 #include <QVector>
+#include "constants.h"
 
 
 #if defined (Q_OS_UNIX)
@@ -43,17 +44,11 @@ public:
                       const double   &_endTime,
                       const double   &_dur,
                       const QString  &container,
-                      QString  globalTitle,
+                      QString        globalTitle,
                       QVector<QString>  _cur_param,
-                      QString  *_hdr,
-                      QString  *_videoMetadata,
-                      QString  *_audioLang,
-                      QString  *_audioTitle,
-                      QString  *_subtitleLang,
-                      QString  *_subtitleTitle,
-                      int      *_audioStreamCheckState,
-                      int      *_subtitleCheckState,
-                      int      *_fr_count);
+                      const QString  (&_hdr)[11],
+                      Data           data,
+                      int            *_fr_count);
 
     QProcess::ProcessState getEncodingState();
     void pauseEncoding();
@@ -81,6 +76,7 @@ private:
 
     time_t  _loop_start;
 
+    QStringList _extAudioPaths;
     QString _temp_file,
             _input_file,
             _output_file,

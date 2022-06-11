@@ -347,5 +347,8 @@
         <file>resources/icons/svg/folder_open_light.svg</file>
         <file>resources/icons/svg/folder_open.svg</file>
         <file>resources/icons/svg/folder_light.svg</file>
+        <file>resources/icons/svg/add.svg</file>
+        <file>resources/icons/svg/remove.svg</file>
+        <file>resources/icons/svg/broomstick.svg</file>
     </qresource>
 </RCC>
