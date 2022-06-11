@@ -34,33 +34,46 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 Install dependencies:
 
 ##### - Arch Linux / Manjaro Linux:
-    - ffmpeg>=4.2
-    - mkvtoolnix-cli>=49.0
-    - qt5-base>=5.15
-    - qt5-multimedia>=5.15
-    - libmediainfo>=20.03
+    - gcc
+    - qt5-base
+    - qt5-multimedia
+    - qt5-svg
+    - qt5-x11extras
+    - libmediainfo
+    - libxext
 
-##### - Debian 10.6 / Ubuntu 20.04 / Linux Mint 20:
-    - ffmpeg>=4.1.6
-    - mkvtoolnix>=31.0
-    - qt5-qmake>=5.11.3
-    - qtbase5-dev>=5.11.3
-    - qtmultimedia5-dev>=5.11.3
-    - libmediainfo-dev>=18.12
+    - ffmpeg
+    - mkvtoolnix-cli
+    - intel-media-driver
+    - libva-intel-driver
 
-##### - Fedora 33:
-    - ffmpeg>=4.3.2
-    - mkvtoolnix>=53.0.0
-    - qt5-qtbase-devel>=5.15
-    - qt5-qtmultimedia-devel>=5.15
-    - libmediainfo-devel>=20.09
+##### - Debian / Ubuntu / Linux Mint:
+    - gcc
+    - qt5-qmake
+    - qtbase5-dev
+    - qtmultimedia5-dev
+    - libqt5svg5-dev
+    - libqt5x11extras5-dev
+    - libmediainfo-dev
+    - libxext-dev
 
-##### - CentOS 7.8:
-    - ffmpeg>=3.4.8
-    - mkvtoolnix>=46.0.0
-    - qt5-qtbase-devel>=5.9.7
-    - qt5-qtmultimedia-devel>=5.9.7
-    - libmediainfo-devel>=21.03
+    - ffmpeg
+    - mkvtoolnix
+    - i965-va-driver
+
+##### - Fedora / CentOS:
+    - gcc-c++
+    - qt5-qtbase-devel
+    - qt5-qtmultimedia-devel
+    - qt5-qtsvg-devel
+    - qt5-qtx11extras-devel
+    - libmediainfo-devel
+    - libXext-devel
+
+    - ffmpeg
+    - mkvtoolnix
+    - intel-media-driver
+    - libva-intel-driver
 
 Buld package:
 
@@ -77,7 +90,7 @@ make
 
 ### Tracking the development of the project
 
-Next release version: 3.5. Estimated release date: Dec 1 2021.
+Next release version: 3.5. Estimated release date: Jun 18 2022.
 To tracking the development of the project see [Project page](https://github.com/CineEncoder/cine-encoder/projects/1?fullscreen=true)
 
 
