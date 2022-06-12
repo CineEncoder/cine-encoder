@@ -505,7 +505,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-edit-pencil.png</normaloff>:/resources/icons/16x16/cil-edit-pencil.png</iconset>
+                   <normaloff>:/resources/icons/svg/pencil.svg</normaloff>:/resources/icons/svg/pencil.svg</iconset>
                  </property>
                  <property name="default">
                   <bool>false</bool>

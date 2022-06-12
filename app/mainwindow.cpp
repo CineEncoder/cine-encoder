@@ -67,7 +67,7 @@
     using namespace MediaInfoDLL;
 #endif
 
-#define WINDOW_SIZE QSize(1024, 650)
+#define WINDOW_SIZE QSize(1200, 750)
 #define ROWHEIGHT 25
 #define DEFAULTTIMER 30
 #define DEFAULTPATH QDir::homePath()
@@ -779,11 +779,11 @@ void MainWindow::setParameters()    // Set parameters
 
     //*********** Other parameters *****************//
     if (dockSizesX.count() < DOCKS_COUNT || dockSizesY.count() < DOCKS_COUNT) {
-        float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
+        float coeffX[DOCKS_COUNT] = {0.35f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
         float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
-        for (int ind = 0; ind < DOCKS_COUNT; ind++) {
-            const int dockWidth = static_cast<int>(coeffX[ind] * WINDOW_SIZE.width());
-            const int dockHeight = static_cast<int>(coeffY[ind] * WINDOW_SIZE.height());
+        Q_LOOP(i, 0, DOCKS_COUNT) {
+            const int dockWidth = static_cast<int>(coeffX[i] * WINDOW_SIZE.width());
+            const int dockHeight = static_cast<int>(coeffY[i] * WINDOW_SIZE.height());
             dockSizesX.append(dockWidth);
             dockSizesY.append(dockHeight);
         }
@@ -1776,11 +1776,11 @@ void MainWindow::resetView()
 
     QList<int> dockSizesX = {};
     QList<int> dockSizesY = {};
-    float coeffX[DOCKS_COUNT] = {0.25f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
+    float coeffX[DOCKS_COUNT] = {0.35f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
     float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
-    for (int ind = 0; ind < DOCKS_COUNT; ind++) {
-        int dockWidth = static_cast<int>(coeffX[ind] * this->width());
-        int dockHeight = static_cast<int>(coeffY[ind] * this->height());
+    Q_LOOP(i, 0, DOCKS_COUNT) {
+        int dockWidth = static_cast<int>(coeffX[i] * this->width());
+        int dockHeight = static_cast<int>(coeffY[i] * this->height());
         dockSizesX.append(dockWidth);
         dockSizesY.append(dockHeight);
     }

@@ -350,5 +350,6 @@
         <file>resources/icons/svg/add.svg</file>
         <file>resources/icons/svg/remove.svg</file>
         <file>resources/icons/svg/broomstick.svg</file>
+        <file>resources/icons/svg/pencil.svg</file>
     </qresource>
 </RCC>
