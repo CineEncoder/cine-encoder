@@ -86,7 +86,11 @@ qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ CONFIG+=qtqu
 cd builddir
 make
 ```
+Run:
 
+```sh
+./cine_encoder -platform xcb
+```
 
 ### Tracking the development of the project
 
