@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QVector>
 
 
 class Helper : public QObject

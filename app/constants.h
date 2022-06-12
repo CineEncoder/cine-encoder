@@ -15,6 +15,7 @@
 
 #include <QSettings>
 #include <QDir>
+#include <QVector>
 
 #define Dump(a) std::cout << a << std::endl
 #define Q_LOOP(i, start, end) for(int i = start; i < end; i++)
