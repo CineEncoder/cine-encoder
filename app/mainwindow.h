@@ -24,11 +24,16 @@
 #include <ctime>
 #include "encoder.h"
 #include "constants.h"
-#ifdef Q_OS_WIN
-    #include "platform_win/basewindow.h"
+#ifdef WM_CUSTOM
+    #include "basewindow_cwm.h"
 #else
-    #include "platform_unix/basewindow.h"
+    #ifdef Q_OS_WIN
+        #include "platform_win/basewindow.h"
+    #else
+        #include "platform_unix/basewindow.h"
+    #endif
 #endif
+
 
 typedef QVector<QVector<QString>> TableString;
 
