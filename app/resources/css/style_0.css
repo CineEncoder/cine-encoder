@@ -861,22 +861,25 @@ QPushButton#settings {
 }
 QPushButton#hideWindow {
         border: none;
-        icon: url(:/resources/icons/svg/minimize.svg);
+        padding: 7px;
+        image: url(:/resources/icons/svg/minimize.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow {
         border: none;
-        icon: url(:/resources/icons/svg/restore.svg);
+        padding: 7px;
+        image: url(:/resources/icons/svg/restore.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow[expanded=true] {
-        icon: url(:/resources/icons/svg/expand.svg);
+        image: url(:/resources/icons/svg/expand.svg);
 }
 QPushButton#closeWindow {
         border: none;
-        icon: url(:/resources/icons/svg/close.svg);
+        padding: 7px;
+        image: url(:/resources/icons/svg/close.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
@@ -888,13 +891,14 @@ QPushButton#closeTWindow {
         background-color: transparent;
 }
 QPushButton#start {
-    icon: url(:/resources/icons/svg/play.svg);
+    padding: 3px;
+    image: url(:/resources/icons/svg/play.svg);
 }
 QPushButton#start[status="1"] {
-    icon: url(:/resources/icons/svg/pause.svg);
+    image: url(:/resources/icons/svg/pause.svg);
 }
 QPushButton#start[status="2"] {
-    icon: url(:/resources/icons/svg/forward.svg);
+    image: url(:/resources/icons/svg/forward.svg);
 }
 QPushButton:hover#resetLabels,
 QPushButton:hover#addExtStream,
