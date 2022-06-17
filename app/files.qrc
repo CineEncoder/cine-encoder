@@ -351,5 +351,7 @@
         <file>resources/icons/svg/remove.svg</file>
         <file>resources/icons/svg/broomstick.svg</file>
         <file>resources/icons/svg/pencil.svg</file>
+        <file>resources/icons/svg/spinner.svg</file>
+        <file>resources/icons/svg/spinner_black.svg</file>
     </qresource>
 </RCC>

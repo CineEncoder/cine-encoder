@@ -807,6 +807,7 @@ QTextBrowser#textBrowser_log {
 
 QPushButton {
         border: none;
+        border-radius: 3px;
         color: #000000;
         background-color: transparent;
 }
@@ -853,22 +854,28 @@ QPushButton#settings {
 }
 QPushButton#hideWindow {
         border: none;
-        icon: url(:/resources/icons/svg/minimize_black.svg);
+        border-radius: 0px;
+        padding: 7px;
+        image: url(:/resources/icons/svg/minimize_black.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow {
         border: none;
-        icon: url(:/resources/icons/svg/restore_black.svg);
+        border-radius: 0px;
+        padding: 7px;
+        image: url(:/resources/icons/svg/restore_black.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
 QPushButton#expandWindow[expanded=true] {
-        icon: url(:/resources/icons/svg/expand_black.svg);
+        image: url(:/resources/icons/svg/expand_black.svg);
 }
 QPushButton#closeWindow {
         border: none;
-        icon: url(:/resources/icons/svg/close_black.svg);
+        border-radius: 0px;
+        padding: 7px;
+        image: url(:/resources/icons/svg/close_black.svg);
         color: @elementsTextColor;
         background-color: transparent;
 }
@@ -880,13 +887,14 @@ QPushButton#closeTWindow {
         background-color: transparent;
 }
 QPushButton#start {
-    icon: url(:/resources/icons/svg/play.svg);
+    padding: 3px;
+    image: url(:/resources/icons/svg/play.svg);
 }
 QPushButton#start[status="1"] {
-    icon: url(:/resources/icons/svg/pause.svg);
+    image: url(:/resources/icons/svg/pause.svg);
 }
 QPushButton#start[status="2"] {
-    icon: url(:/resources/icons/svg/forward.svg);
+    image: url(:/resources/icons/svg/forward.svg);
 }
 QPushButton:hover#resetLabels,
 QPushButton:hover#addExtStream,
@@ -913,7 +921,7 @@ QPushButton:hover#closeTWindow {
     background-color: #D9D9D9;
 }
 QPushButton:hover#closeWindow {
-    icon: url(:/resources/icons/svg/close.svg);
+    image: url(:/resources/icons/svg/close.svg);
     background-color: #EE0000;
 }
 QPushButton:pressed#resetLabels,
@@ -952,6 +960,7 @@ QPushButton#buttonTab_4 {
     text-align: center right;
     padding-right: 12px;
     border: none;
+    border-radius: 0px;
     color: #000000;
     background-color: transparent;
 }
@@ -1333,6 +1342,7 @@ QDockWidget::float-button {
     padding-top: 0px;
     padding-bottom: 0px;
     border: none;
+    border-radius: 3px;
     background: @frameHeaderBackground;
 }
 QDockWidget::close-button:hover,

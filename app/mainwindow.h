@@ -17,18 +17,23 @@
 #include <QSystemTrayIcon>
 #include <QTreeWidgetItem>
 #include <QPixmap>
-#include <QMovie>
 #include <QProcess>
 #include <QLabel>
 #include <QTimer>
 #include <ctime>
 #include "encoder.h"
 #include "constants.h"
-#ifdef Q_OS_WIN
-    #include "platform_win/basewindow.h"
+#include "widgets/qanimatedsvg.h"
+#ifdef WM_CUSTOM
+    #include "basewindow_cwm.h"
 #else
-    #include "platform_unix/basewindow.h"
+    #ifdef Q_OS_WIN
+        #include "platform_win/basewindow.h"
+    #else
+        #include "platform_unix/basewindow.h"
+    #endif
 #endif
+
 
 typedef QVector<QVector<QString>> TableString;
 
@@ -44,10 +49,134 @@ class MainWindow : public BaseWindow
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow(); 
+
+private:
+    void setFloating(const int index, const QPoint &offset, const QSize &size);
+    void createConnections();
+    void onActionAbout();
+    void onActionDonate();
+    void openFiles(const QStringList &file_name_open);
+    void get_current_data();
+    void get_output_filename();
+    void setStatus(const QString &status);
+    void setWidgetsEnabled(bool);
+    void showInfoMessage(const QString &message, const bool timer_mode = false);
+    bool showDialogMessage(const QString &message);
+
+    void setTheme(const int ind_theme);
+    QString setThumbnail(QString curFilename,
+                         const double time,
+                         const int quality,
+                         const int destination);
+
+    void provideContextMenu(const QPoint &position);
+    void providePresetContextMenu(const QPoint &position);
+    void resizeTableRows(const int rows_height);
+    void resetView();
+
+    // ============= Preset Window =============
+    void setDefaultPresets();
+    void setItemStyle(QTreeWidgetItem *item);
+    void updateCurPresetPos(const int index_top, const int index_child);
+    void updateInfoFields(const QString &codec_qstr,
+                          const QString &mode_qstr,
+                          const QString &container_qstr,
+                          const QString &bqr_qstr,
+                          const QString &pass_qstr,
+                          const QString &preset_qstr,
+                          const QString &acodec_qstr,
+                          QTreeWidgetItem *item,
+                          const bool defaultNameFlag);
+    void updatePresetTable();
+
+    // ====================================
+    Ui::Widget *ui;
+    Encoder    *m_pEncoder;
+    QVector<QString> m_newParams,
+                     m_curParams;
+    TableString      m_preset_table;
+    QPixmap          m_preview_pixmap;
+
+    // ============= Dock area =============
+    QMainWindow *m_pDocksContainer;
+    QWidget     *m_pCentralDock;
+    QDockWidget *m_pDocks[DOCKS_COUNT];
+
+    // ============= Top label =============
+    QLabel      *m_pTableLabel,
+                *m_pAudioLabel,
+                *m_pSubtitleLabel;
+
+    // ============= Progress animation =============
+    QAnimatedSvg    *m_pAnimation;
+
+    // ============= Tray menu actions =============
+    QSystemTrayIcon *m_pTrayIcon;
+
+    // ============= Top menu actions =============
+    QAction     *m_pActAddFiles,
+                *m_pActRemoveFile,
+                *m_pActCloseWindow,
+                *m_pActSelectPreset,
+                *m_pActStart,
+                *m_pActStop,
+                *m_pActEditMetadata,
+                *m_pActSelectAudio,
+                *m_pActSelectSubtitles,
+                *m_pActSplitVideo,
+                *m_pActSettings,
+                *m_pActResetView,
+                *m_pActAbout,
+                *m_pActDonate;
+
+    // ============= Menu actions =============
+    QMenu       *m_pItemMenu,
+                *m_pSectionMenu,
+                *m_pPresetMenu;
+
+    // ============= Processes =============
+    QProcess    *m_pProcessThumbCreation;
+
+    // ============= Timers =============
+    QTimer      *m_pTimer,
+                *m_pTimerSetThumbnail;
+
+    // ============= Initialization =============
+    QString     m_openDir;
+    int         m_theme;
+
+    // ============= Metadata =============
+    QString       m_hdr[AMOUNT_HDR_PARAMS];
+    QVector<Data> m_data;
+
+    // ============= Encoding =============
+    bool        m_batch_mode;
+
+    int         m_fr_count,
+                m_status_encode_btn,
+                m_row;
+
+    time_t      m_strt_t;
+
+    double      m_dur,
+                m_curTime,
+                m_startTime,
+                m_endTime;
+
+    QString     m_curFilename,
+                m_curPath,
+                m_temp_file,
+                m_input_file,
+                m_output_file,
+                m_fmt,
+                m_width,
+                m_height,
+                m_fps,
+                m_stream_size,
+                extension;
 
     // ============= Settings ================
-
     bool        m_hideInTrayFlag,
                 m_showHdrFlag,
                 m_protectFlag;
@@ -66,7 +195,9 @@ public:
                 m_suffixName,
                 m_font;
 
-    QVector<QString> m_newParams;
+    // ============= Geometry =============
+    bool        m_expandWindowsState;
+    int         m_rowHeight;   
 
 private slots:
     void setTrayIcon();
@@ -147,139 +278,6 @@ private slots:
     void paintEvent(QPaintEvent *event);
     void onComboModeChanged(int index);
     void onResetLabels();
-
-private:
-    Ui::Widget *ui;
-    Encoder    *m_pEncoder;
-    QVector<QString> m_curParams;
-    TableString      m_preset_table;
-    QPixmap          m_preview_pixmap;
-
-    // ============= Dock area =============
-    QMainWindow *m_pDocksContainer;
-    QWidget     *m_pCentralDock;
-    QDockWidget *m_pDocks[DOCKS_COUNT];
-
-    // ============= Top label =============
-    QLabel      *m_pTableLabel,
-                *m_pAudioLabel,
-                *m_pSubtitleLabel;
-
-    // ============= Progress animation =============
-    QMovie      *m_animation;
-
-    // ============= Tray menu actions =============
-    QSystemTrayIcon *m_trayIcon;
-
-    // ============= Top menu actions =============
-    QAction     *actAddFiles,
-                *actRemoveFile,
-                *actCloseWindow;
-
-    QAction     *select_preset,
-                *actStart,
-                *actStop;
-
-    QAction     *actEditMetadata,
-                *actSelectAudio,
-                *actSelectSubtitles,
-                *actSplitVideo;
-
-    QAction     *actSettings,
-                *actResetView,
-                *actAbout,
-                *actDonate;
-
-    // ============= Table menu actions =============
-    QMenu       *itemMenu;
-
-    // ============= Tree menu actions =============
-    QMenu       *sectionMenu,
-                *presetMenu;
-
-    // ============= Processes =============
-    QProcess    *m_pProcessThumbCreation;
-
-    // ============= Timers =============
-    QTimer      *m_timer,
-                *m_timerCallSetThumbnail;
-
-    // ============= Initialization =============
-    QString     m_openDir;
-    int         m_theme;
-
-    // ============= Metadata =============
-    QString       m_hdr[AMOUNT_HDR_PARAMS];
-    QVector<Data> m_data;
-
-    // ============= Encoding =============
-    bool        m_batch_mode;
-
-    int         m_fr_count,
-                m_status_encode_btn,
-                m_row;
-
-    time_t      m_strt_t;
-
-    double      m_dur,
-                m_curTime,
-                m_startTime,
-                m_endTime;
-
-    QString     m_curFilename,
-                m_curPath,
-                m_temp_file,
-                m_input_file,
-                m_output_file,
-                m_fmt,
-                m_width,
-                m_height,
-                m_fps,
-                m_stream_size,
-                extension;
-
-    // ============= Geometry =============
-    bool        m_expandWindowsState;
-    int         m_rowHeight;
-
-    // ====================================
-    void setFloating(const int index, const QPoint &offset, const QSize &size);
-    void createConnections();
-    void onActionAbout();
-    void onActionDonate();
-    void openFiles(const QStringList &file_name_open);
-    void get_current_data();
-    void get_output_filename();
-    void setStatus(const QString &status);
-    void restore_initial_state();
-    void showInfoMessage(const QString &message, const bool timer_mode = false);
-    bool showDialogMessage(const QString &message);
-
-    void setTheme(const int ind_theme);
-    QString setThumbnail(QString curFilename,
-                         const double time,
-                         const int quality,
-                         const int destination);
-
-    void provideContextMenu(const QPoint &position);
-    void providePresetContextMenu(const QPoint &position);
-    void resizeTableRows(const int rows_height);
-    void resetView();
-
-    // ============= Preset Window =============
-    void set_defaults();
-    void setItemStyle(QTreeWidgetItem *item);
-    void updateCurPresetPos(const int index_top, const int index_child);
-    void updateInfoFields(const QString &codec_qstr,
-                          const QString &mode_qstr,
-                          const QString &container_qstr,
-                          const QString &bqr_qstr,
-                          const QString &pass_qstr,
-                          const QString &preset_qstr,
-                          const QString &acodec_qstr,
-                          QTreeWidgetItem *item,
-                          const bool defaultNameFlag);
-    void updatePresetTable();
 };
 
 #endif // WIDGET_H
