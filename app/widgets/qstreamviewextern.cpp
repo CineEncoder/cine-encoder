@@ -97,6 +97,7 @@ QWidget *QStreamViewExtern::createCell(bool &state,
     QWidget *cell = new QWidget(this);
     cell->setObjectName("Cell");
     cell->setMaximumWidth(350);
+    cell->setMinimumHeight(34);
     QHBoxLayout *lut = new QHBoxLayout(cell);
     lut->setContentsMargins(6,6,6,6);
     lut->setSpacing(6);
