@@ -37,6 +37,8 @@ RCC_DIR =     $$PWD/../builddir/rcc
 # FILES
 SOURCES += \
     widgets/qstreamview.cpp \
+    widgets/qstreamviewextern.cpp \
+    widgets/qanimatedsvg.cpp \
     basedialog.cpp \
     encoder.cpp \
     helper.cpp \
@@ -46,11 +48,12 @@ SOURCES += \
     notification.cpp \
     preset.cpp \
     progress.cpp \
-    settings.cpp \
-    widgets/qstreamviewextern.cpp
+    settings.cpp
 
 HEADERS += \
     widgets/qstreamview.h \
+    widgets/qstreamviewextern.h \
+    widgets/qanimatedsvg.h \
     basedialog.h \
     constants.h \
     encoder.h \
@@ -61,8 +64,7 @@ HEADERS += \
     preset.h \
     progress.h \
     settings.h \
-    tables.h \
-    widgets/qstreamviewextern.h
+    tables.h
 
 FORMS += \
     mainwindow.ui \
