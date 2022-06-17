@@ -815,6 +815,7 @@ QTextBrowser#textBrowser_log {
 
 QPushButton {
         border: none;
+        border-radius: 3px;
         color: #DCDCDC;
         background-color: transparent;
 }
@@ -861,6 +862,7 @@ QPushButton#settings {
 }
 QPushButton#hideWindow {
         border: none;
+        border-radius: 0px;
         padding: 7px;
         image: url(:/resources/icons/svg/minimize.svg);
         color: @elementsTextColor;
@@ -868,6 +870,7 @@ QPushButton#hideWindow {
 }
 QPushButton#expandWindow {
         border: none;
+        border-radius: 0px;
         padding: 7px;
         image: url(:/resources/icons/svg/restore.svg);
         color: @elementsTextColor;
@@ -878,6 +881,7 @@ QPushButton#expandWindow[expanded=true] {
 }
 QPushButton#closeWindow {
         border: none;
+        border-radius: 0px;
         padding: 7px;
         image: url(:/resources/icons/svg/close.svg);
         color: @elementsTextColor;
@@ -963,6 +967,7 @@ QPushButton#buttonTab_4 {
     text-align: center right;
     padding-right: 12px;
     border: none;
+    border-radius: 0px;
     color: #A0A5AA;
     background-color: transparent;
 }
@@ -1344,6 +1349,7 @@ QDockWidget::float-button {
     padding-top: 0px;
     padding-bottom: 0px;
     border: none;
+    border-radius: 3px;
     background: @frameHeaderBackground;
 }
 QDockWidget::close-button:hover,
