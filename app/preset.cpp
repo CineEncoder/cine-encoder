@@ -22,6 +22,12 @@
 #include <iostream>
 #include <math.h>
 
+#define SLT(method) &Preset::method
+
+typedef void(Preset::*FnVoidVoid)(void);
+typedef void(Preset::*FnVoidInt)(int);
+typedef void(Preset::*FnVoidStr)(const QString&);
+
 
 Preset::Preset(QWidget *parent, QVector<QString> *pOld_param):
     BaseWindow(parent, true),
@@ -46,42 +52,41 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param):
                                       ui->buttonTab_3, ui->buttonTab_4};
     for (int i = 0; i < tabButtons.size(); i++) {
         connect(tabButtons[i], &QPushButton::clicked, this, [this, i, tabButtons]() {
-            for (int j = 0; j < tabButtons.size(); j++) {
+            for (int j = 0; j < tabButtons.size(); j++)
                 tabButtons[j]->setEnabled(i != j);
-            }
             ui->tabWidgetSettings->setCurrentIndex(i);
         });
     }
-    // Transform
-    connect(ui->comboBoxAspectRatio, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &Preset::onComboBoxAspectRatio_indexChanged);
-    connect(ui->comboBoxFrameRate, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &Preset::onComboBoxFrameRate_indexChanged);
-    connect(ui->comboBox_width, &QComboBox::currentTextChanged,
-            this, &Preset::onComboBox_width_textChanged);
-    connect(ui->comboBox_height, &QComboBox::currentTextChanged,
-            this, &Preset::onComboBox_height_textChanged);
-    // Video
-    connect(ui->comboBox_codec, &QComboBox::currentTextChanged,
-            this, &Preset::onComboBox_codec_textChanged);
-    connect(ui->comboBox_mode, &QComboBox::currentTextChanged,
-            this, &Preset::onComboBox_mode_textChanged);
-    connect(ui->comboBox_preset, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &Preset::onComboBox_preset_indexChanged);
-    connect(ui->comboBox_pass, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &Preset::onComboBox_pass_indexChanged);
+
+    QComboBox *iboxes[] = {
+        ui->comboBoxAspectRatio, ui->comboBoxFrameRate,
+        ui->comboBox_preset, ui->comboBox_pass
+    };
+    FnVoidInt iboxes_methods[] = {
+        SLT(onComboBoxAspectRatio_indexChanged), SLT(onComboBoxFrameRate_indexChanged),
+        SLT(onComboBox_preset_indexChanged), SLT(onComboBox_pass_indexChanged)
+    };
+    for (int i = 0; i < 4; i++)
+        connect(iboxes[i], static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                this, iboxes_methods[i]);
+
+    QComboBox *boxes[] = {
+        ui->comboBox_width, ui->comboBox_height, ui->comboBox_codec,
+        ui->comboBox_mode, ui->comboBox_audio_codec, ui->comboBox_master_disp
+    };
+    FnVoidStr boxes_methods[] = {
+        SLT(onComboBox_width_textChanged), SLT(onComboBox_height_textChanged), SLT(onComboBox_codec_textChanged),
+        SLT(onComboBox_mode_textChanged), SLT(onComboBox_audio_codec_textChanged), SLT(onComboBox_master_disp_textChanged)
+    };
+    for (int i = 0; i < 6; i++)
+        connect(boxes[i], &QComboBox::currentTextChanged, this, boxes_methods[i]);
+
     connect(ui->comboBox_container, &QComboBox::currentTextChanged,
             this, &Preset::onComboBox_container_textChanged);
-    connect(ui->lineEdit_bitrate, &QLineEdit::editingFinished,
-            this, &Preset::onLineEdit_bitrate_editingFinished);
-    // Audio
-    connect(ui->comboBox_audio_codec, &QComboBox::currentTextChanged,
-            this, &Preset::onComboBox_audio_codec_textChanged);
     connect(ui->comboBox_audio_bitrate, &QComboBox::currentTextChanged,
             this, &Preset::onComboBox_audio_bitrate_textChanged);
-    // Metadata
-    connect(ui->comboBox_master_disp, &QComboBox::currentTextChanged,
-            this, &Preset::onComboBox_master_disp_textChanged);
+    connect(ui->lineEdit_bitrate, &QLineEdit::editingFinished,
+            this, &Preset::onLineEdit_bitrate_editingFinished);
 
     connect(this, &Preset::destroyed, this, [this]() {
         SETTINGS(stn);
@@ -928,6 +933,7 @@ void Preset::onComboBox_mode_textChanged(const QString &arg1)  // Change curret 
     ui->lineEdit_minrate->setEnabled(true);
     ui->lineEdit_maxrate->setEnabled(true);
     ui->lineEdit_bufsize->setEnabled(true);
+    ui->comboBox_pass->setEnabled(true);
     if (arg1 == tr("Auto")) {
         ui->label_bitrate->setText(tr("Bitrate"));
         ui->label_minrate->show();
@@ -1008,6 +1014,8 @@ void Preset::onComboBox_mode_textChanged(const QString &arg1)  // Change curret 
         ui->lineEdit_maxrate->hide();
         ui->lineEdit_bufsize->hide();
         ui->lineEdit_bitrate->setText("19");
+        ui->comboBox_pass->setEnabled(false);
+        ui->comboBox_pass->setCurrentIndex(0);
     }
     else if (arg1 == tr("Constant QP")) {
         ui->label_bitrate->setText(tr("Quantizer"));
@@ -1022,6 +1030,8 @@ void Preset::onComboBox_mode_textChanged(const QString &arg1)  // Change curret 
         ui->lineEdit_maxrate->hide();
         ui->lineEdit_bufsize->hide();
         ui->lineEdit_bitrate->setText("19");
+        ui->comboBox_pass->setEnabled(false);
+        ui->comboBox_pass->setCurrentIndex(0);
     }
     lockSignals(false);
     m_repeat++;
