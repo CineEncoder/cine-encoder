@@ -30,50 +30,50 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 
 *ver - current version
 
-### Buid instructions
+### Buid instruction for Linux
 Install dependencies:
 
 ##### - Arch Linux / Manjaro Linux:
-    - gcc
-    - qt5-base
-    - qt5-multimedia
-    - qt5-svg
-    - qt5-x11extras
-    - libmediainfo
-    - libxext
+    gcc
+    qt5-base
+    qt5-multimedia
+    qt5-svg
+    qt5-x11extras
+    libmediainfo
+    libxext
 
-    - ffmpeg
-    - mkvtoolnix-cli
-    - intel-media-driver
-    - libva-intel-driver
+    ffmpeg
+    mkvtoolnix-cli
+    intel-media-driver
+    libva-intel-driver
 
 ##### - Debian / Ubuntu / Linux Mint:
-    - gcc
-    - qt5-qmake
-    - qtbase5-dev
-    - qtmultimedia5-dev
-    - libqt5svg5-dev
-    - libqt5x11extras5-dev
-    - libmediainfo-dev
-    - libxext-dev
+    gcc
+    qt5-qmake
+    qtbase5-dev
+    qtmultimedia5-dev
+    libqt5svg5-dev
+    libqt5x11extras5-dev
+    libmediainfo-dev
+    libxext-dev
 
-    - ffmpeg
-    - mkvtoolnix
-    - i965-va-driver
+    ffmpeg
+    mkvtoolnix
+    i965-va-driver
 
 ##### - Fedora / CentOS:
-    - gcc-c++
-    - qt5-qtbase-devel
-    - qt5-qtmultimedia-devel
-    - qt5-qtsvg-devel
-    - qt5-qtx11extras-devel
-    - libmediainfo-devel
-    - libXext-devel
+    gcc-c++
+    qt5-qtbase-devel
+    qt5-qtmultimedia-devel
+    qt5-qtsvg-devel
+    qt5-qtx11extras-devel
+    libmediainfo-devel
+    libXext-devel
 
-    - ffmpeg
-    - mkvtoolnix
-    - intel-media-driver
-    - libva-intel-driver
+    ffmpeg
+    mkvtoolnix
+    intel-media-driver
+    libva-intel-driver
 
 Buld package:
 
@@ -92,6 +92,45 @@ Run:
 ./cine_encoder -platform xcb
 ```
 
+### Buid instruction for Windows
+
+```sh
+mkdir build
+cd build
+git clone https://github.com/CineEncoder/cine-encoder.git
+cd cine-encoder
+mkdir builddir
+```
+
+Install dependencies to builddir folder:
+
+    imageformats/qsvg.dll
+    platforms/qwindows.dll
+    plugins/audio/qtaudio_windows.dll
+    plugins/mediaservice/qtmedia_audioengine.dll
+    styles/qwindowsvistastyle.dll
+    ffmpeg.exe
+    libgcc_s_seh-1.dll
+    libstdc++-6.dll
+    libwinpthread-1.dll
+    MediaInfo.dll
+    MediaInfo_InfoTip.dll
+    mkvpropedit.exe
+    Qt5Core.dll
+    Qt5Gui.dll
+    Qt5Multimedia.dll
+    Qt5Network.dll
+    Qt5Widgets.dll
+    cine-encoder.ico
+
+Buld package:
+
+```sh
+cd builddir
+<path_to_qmake>/qmake.exe ../app/cine_encoder.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
+<path_to_make>/mingw32-make.exe
+```
+
 ### Tracking the development of the project
 
 Next release version: 3.5. Estimated release date: Jun 18 2022.
@@ -106,13 +145,11 @@ See [LICENSE.md](https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE)
 
 ### Donate
 
-If you wish to support this project, you can make a donation for $0.5 or more via PayPal. Your contributions will help keep the project alive and support future development.
+If you wish to support this project, you can make a donation  via PayPal or Ethereum. Your contributions will help keep the project alive and support future development.
 
 [![PayPal](./images/PayPal.png)](https://paypal.me/CineEncoder?country.x=MD&locale.x=en_US)
 
-##### Bitcoin
-You can send bitcoins at this address or by scanning the QR code below:
+You can send ethereum at the address below:
+0x3244195BEBabeF146F8B25369c48D90ECdcBCb8c
 
-![Bitcoin](./images/Bitcoin.png)
-
-bc1ql0f3xpj57szcnn3gzr8cwajwxj880k8j4m22qv
+![Ethereum](./images/Ethereum.png)
