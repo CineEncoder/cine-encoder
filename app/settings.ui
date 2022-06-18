@@ -295,7 +295,7 @@
                            <bool>false</bool>
                           </property>
                           <property name="text">
-                           <string>  Prefix</string>
+                           <string>  Suffix</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -389,7 +389,7 @@
                            <bool>false</bool>
                           </property>
                           <property name="text">
-                           <string>Custom prefix</string>
+                           <string>Custom suffix</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
