@@ -29,7 +29,7 @@ int checkForDuplicates();
 
 int main(int argc, char *argv[])
 {
-    std::setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "");
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("CineEncoder");
     QCoreApplication::setApplicationName("CineEncoder");

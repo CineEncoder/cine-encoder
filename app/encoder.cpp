@@ -16,6 +16,7 @@
 #include <QMap>
 #include <iostream>
 #include <math.h>
+#include <ctime>
 
 #define rnd(num) static_cast<int>(round(num))
 
