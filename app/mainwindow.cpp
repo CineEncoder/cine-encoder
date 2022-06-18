@@ -127,6 +127,7 @@ MainWindow::MainWindow(QWidget *parent):
     m_output_file(""),
     m_hideInTrayFlag(false),
     m_showHdrFlag(false),
+    m_multiInstances(false),
     m_protectFlag(false),
     m_fontSize(FONTSIZE),
     m_prefxType(0),
@@ -282,6 +283,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/timer_interval", m_timerInterval);
         stn.setValue("Settings/theme", m_theme);
         stn.setValue("Settings/protection", m_protectFlag);
+        stn.setValue("Settings/allow_duplicates", m_multiInstances);
         stn.setValue("Settings/show_hdr_mode", m_showHdrFlag);
         stn.setValue("Settings/temp_folder", m_temp_folder);
         stn.setValue("Settings/output_folder", m_output_folder);
@@ -697,6 +699,7 @@ void MainWindow::setParameters()    // Set parameters
         m_timerInterval = stn.value("Settings/timer_interval").toInt();
         m_theme = stn.value("Settings/theme").toInt();
         m_protectFlag = stn.value("Settings/protection").toBool();
+        m_multiInstances = stn.value("Settings/allow_duplicates", false).toBool();
         m_showHdrFlag = stn.value("Settings/show_hdr_mode").toBool();
         m_temp_folder = stn.value("Settings/temp_folder").toString();
         m_output_folder = stn.value("Settings/output_folder").toString();
@@ -871,6 +874,7 @@ void MainWindow::onSettings()
     settings.setParameters(&m_output_folder,
                            &m_temp_folder,
                            &m_protectFlag,
+                           &m_multiInstances,
                            &m_showHdrFlag,
                            &m_timerInterval,
                            &m_theme,

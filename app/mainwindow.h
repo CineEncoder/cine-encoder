@@ -179,6 +179,7 @@ private:
     // ============= Settings ================
     bool        m_hideInTrayFlag,
                 m_showHdrFlag,
+                m_multiInstances,
                 m_protectFlag;
 
     int         m_fontSize,

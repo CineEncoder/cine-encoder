@@ -41,6 +41,7 @@ public:
     void setParameters(QString    *pOutputFolder,
                        QString    *pTempFolder,
                        bool       *pProtectFlag,
+                       bool       *pMultiInstances,
                        bool       *pShowHdrFlag,
                        int        *pTimerInterval,
                        int        *pTheme,
@@ -83,6 +84,7 @@ private:
 
     bool    *m_pShowHdrFlag,
             *m_pProtectFlag,
+            *m_pMultiInstances,
             *m_pHideInTrayFlag;
 };
 

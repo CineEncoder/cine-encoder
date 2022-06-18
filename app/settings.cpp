@@ -87,6 +87,7 @@ Settings::~Settings()
 void Settings::setParameters(QString    *pOutputFolder,
                              QString    *pTempFolder,
                              bool       *pProtectFlag,
+                             bool       *pMultiInstances,
                              bool       *pShowHdrFlag,
                              int        *pTimerInterval,
                              int        *pTheme,
@@ -106,6 +107,7 @@ void Settings::setParameters(QString    *pOutputFolder,
     m_pOutputFolder = pOutputFolder;
     m_pTempFolder = pTempFolder;
     m_pProtectFlag = pProtectFlag;
+    m_pMultiInstances = pMultiInstances;
     m_pTimerInterval = pTimerInterval;
     m_pTheme = pTheme;
     m_pPrefixName = pPrefixName;
@@ -132,15 +134,18 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->lineEdit_outPath->setText(*m_pOutputFolder);
     ui->spinBox_protectionTimer->setValue(*m_pTimerInterval);
 
-    if (*m_pShowHdrFlag == true) {
+    if (*m_pShowHdrFlag) {
         ui->checkBox_showHDR->setChecked(true);
     }
-    if (*m_pHideInTrayFlag == true) {
+    if (*m_pHideInTrayFlag) {
         ui->checkBox_tray->setChecked(true);
     }
-    if (*m_pProtectFlag == true) {
+    if (*m_pProtectFlag) {
         ui->checkBox_protection->setChecked(true);
         ui->spinBox_protectionTimer->setEnabled(true);
+    }
+    if (*m_pMultiInstances) {
+        ui->checkBox_allowDuplicates->setChecked(true);
     }
     QMap<QString, int> langIndex;
     langIndex["en"] = 0;
@@ -238,6 +243,10 @@ void Settings::onButtonApply()
     int stts_protect = ui->checkBox_protection->checkState();
     *m_pProtectFlag = (stts_protect == 2) ? true : false;
 
+    /*============= Multi Instatces ==============*/
+    int stts_multiInst = ui->checkBox_allowDuplicates->checkState();
+    *m_pMultiInstances = (stts_multiInst == 2) ? true : false;
+
     /*============== Pref and Suff ===============*/
     *m_pPrefxType = ui->comboBoxPrefixType->currentIndex();
     *m_pSuffixType = ui->comboBoxSuffixType->currentIndex();
@@ -258,6 +267,7 @@ void Settings::onButtonReset()
     ui->checkBox_showHDR->setChecked(false);
     ui->checkBox_tray->setChecked(false);
     ui->checkBox_protection->setChecked(false);
+    ui->checkBox_allowDuplicates->setChecked(false);
     ui->spinBox_protectionTimer->setEnabled(false);
     ui->comboBox_theme->setCurrentIndex(3);
     ui->comboBox_lang->setCurrentIndex(0);
