@@ -29,17 +29,14 @@ int checkForDuplicates();
 
 int main(int argc, char *argv[])
 {
-    std::setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "");
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("CineEncoder");
     QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-    app.setStyle(QStyleFactory::create("Fusion"));
-    if (checkForDuplicates() == 1)
-        return 1;
-
+    app.setStyle(QStyleFactory::create("Fusion"));   
     const QString sysLang = Helper::getSysLanguage();
     /*const int id = QFontDatabase::addApplicationFont(":/resources/fonts/interregular.otf");
     QString sysFamily = app.font().family();
@@ -49,10 +46,16 @@ int main(int argc, char *argv[])
     /******************* Read Settings ****************************/
     SETTINGS(stn);
     stn.beginGroup("Settings");
+    const bool allowDuplicates = stn.value("Settings/allow_duplicates", false).toBool();
     const int fntSize = stn.value("Settings/font_size", FONTSIZE).toInt();
     const QString fntFamily = stn.value("Settings/font").toString();
     const QString currLang = stn.value("Settings/language", sysLang).toString();
     stn.endGroup();
+
+    /**************** Check for duplicates ************************/
+    if (!allowDuplicates)
+        if (checkForDuplicates() == 1)
+            return 1;
 
     /******************* Set Translate ****************************/
     QTranslator trns;

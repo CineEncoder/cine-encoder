@@ -117,11 +117,11 @@ QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
 }
 
 #AudioLabel {
-    color: #E3E3E3; font: 24pt; font-style: oblique;
+    color: #E3E3E3; font: 32pt; font-style: oblique;
 }
 
 #SubtitleLabel {
-    color: #E3E3E3; font: 24pt; font-style: oblique;
+    color: #E3E3E3; font: 32pt; font-style: oblique;
 }
 
 /**************************************************************************
@@ -191,7 +191,7 @@ QScrollBar::add-line:horizontal {
     background: @scrollAddLineSubLine;
     subcontrol-position: right;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-right_black.png);
+    image: url(:/resources/icons/svg/frame-right_black.svg);
 }
 QScrollBar::add-line:vertical {
     height: 14px;
@@ -201,7 +201,7 @@ QScrollBar::add-line:vertical {
     background: @scrollAddLineSubLine;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-bottom_black.png);
+    image: url(:/resources/icons/svg/frame-bottom_black.svg);
 }
 QScrollBar::sub-line:horizontal {
     width: 14px;
@@ -211,7 +211,7 @@ QScrollBar::sub-line:horizontal {
     background: @scrollAddLineSubLine;
     subcontrol-position: left;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-left_black.png);
+    image: url(:/resources/icons/svg/frame-left_black.svg);
 }
 QScrollBar::sub-line:vertical {
     height: 14px;
@@ -221,7 +221,7 @@ QScrollBar::sub-line:vertical {
     background: @scrollAddLineSubLine;
     subcontrol-position: top;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-top_black.png);
+    image: url(:/resources/icons/svg/frame-top_black.svg);
 }
 QScrollBar::up-arrow:horizontal,
 QScrollBar::down-arrow:horizontal {
@@ -238,6 +238,9 @@ QScrollBar::sub-page:horizontal {
 QScrollBar::add-page:vertical,
 QScrollBar::sub-page:vertical {
     background: none;
+}
+QAbstractScrollArea::corner {
+    background: transparent;
 }
 
 
@@ -317,7 +320,7 @@ QTableWidget::item:selected {
 }
 
 #TableWidgetLabel {
-    color: #E3E3E3; font: 64pt; font-style: oblique;
+    color: #E3E3E3; font: 48pt; font-style: oblique;
 }
 
 /**************************************************************************
@@ -1055,13 +1058,13 @@ QPushButton:pressed#buttonOutputPath {
 /*********************************************/
 
 QPushButton#applyPreset {
-    border-radius: 0px;
+    border-radius: 3px;
     border: 1px solid #DDDDDD;
     color: @frameTextColor;
     background-color: transparent;
 }
 QPushButton:disabled#applyPreset {
-    border-radius: 0px;
+    border-radius: 3px;
     border: 1px solid #DDDDDD;
     color: #62676F;
     background-color: transparent;

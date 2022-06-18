@@ -1,44 +1,44 @@
 /**************************************************************************
-**  WAVE THEME
+**  DARK THEME
 **************************************************************************/
 
 
-@mainBackground = #252525;
+@mainBackground = #05141C;
 
-@tableBorder = #292929;
-@tableBackground = #262626;
-@tableAlternateBackground = #272727;
-@tableRowSelectedBackground = #302828;
+@tableBorder = #141B23;
+@tableBackground = #05141C;
+@tableAlternateBackground = #09161E;
+@tableRowSelectedBackground = #1C252F;
 @tableTextColor = #B4B4B4;
 @tableTextSelected = #D2D2D2;
-@tableGrid = #373C47;
+@tableGrid = #1C252F;
 
-@frameEdgingBackground = #262626;
-@frameMiddleBorder = #292929;
-@frameMiddleBackground = #262626;
+@frameEdgingBackground = #09161E;
+@frameMiddleBorder = #141F2E;
+@frameMiddleBackground = #09161E;
 @frameTextColor = #A0A5AA;
-@frameEdgeBorder = #292929;
-@frameTopBackground = #292929;
-@frameBottomBackground = #292929;
-@frameHeaderBackground = #292929;
+@frameEdgeBorder = #141F2E;
+@frameTopBackground = #121921;
+@frameBottomBackground = #121921;
+@frameHeaderBackground = #05141C;
 
-@scrollBackground = #272727;
-@scrollHandle = #222222;
-@scrollAddLineSubLine = #272727;
+@scrollBackground = #041821;
+@scrollHandle = #0C1E28;
+@scrollAddLineSubLine = #041821;
 
-@headerTextColor = #A0A5AA;
-@headerBackground = #303030;
-@headerBorder = #292929;
+@headerTextColor = #B4B4B4;
+@headerBackground = #121921;
+@headerBorder = #141B23;
 
 @elementsTextColor = #B4B4B4;
 @elementsTextDisabled = #62676F;
-@elementsTextAbstractItem = #B4B4B4;
-@elementsBackgroundColor = #303030;
-@elementsBackgroundAbstractItem = #404040;
-@elementsBackgroundSelectedAbstractItem = #363636;
-@elementsBorderColor = #303030;
+@elementsTextAbstractItem = #55AAFF;
+@elementsBackgroundColor = #1B1D23;
+@elementsBackgroundAbstractItem = #1B1D23;
+@elementsBackgroundSelectedAbstractItem = #272C36;
+@elementsBorderColor = #1B1D23;
 @elementsBorderHover = #404758;
-@elementsBorderDropDown = #292929;
+@elementsBorderDropDown = #22262E;
 @elementsBorderRadius = 5px;
 
 
@@ -125,11 +125,11 @@ QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
 }
 
 #AudioLabel {
-    color: @frameHeaderBackground; font: 24pt; font-style: oblique;
+    color: #09161E; font: 32pt; font-style: oblique;
 }
 
 #SubtitleLabel {
-    color: @frameHeaderBackground; font: 24pt; font-style: oblique;
+    color: #09161E; font: 32pt; font-style: oblique;
 }
 
 /**************************************************************************
@@ -137,10 +137,10 @@ QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
 **************************************************************************/
 
 QToolTip {
-    border: 1px solid @elementsBorderColor;
+    border: 1px solid #282828;
     border-radius: 2px;
-    color: @elementsTextAbstractItem;
-    background-color: @elementsBackgroundAbstractItem;
+    color: #ffffff;
+    background-color: #1B1D23;
 }
 
 
@@ -149,14 +149,14 @@ QToolTip {
 **************************************************************************/
 
 QMenu {
-    background-color: @elementsBackgroundAbstractItem;
+    background-color: #1B1D23;
 }
 QMenu::item {
-    color: @elementsTextAbstractItem;
+    color: #EFEFEF;
     background-color: transparent;
 }
 QMenu::item:selected {
-    background-color: @elementsBackgroundSelectedAbstractItem;
+    background-color: #05282D;
 }
 
 
@@ -199,7 +199,7 @@ QScrollBar::add-line:horizontal {
     background: @scrollAddLineSubLine;
     subcontrol-position: right;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-right.png);
+    image: url(:/resources/icons/svg/frame-right.svg);
 }
 QScrollBar::add-line:vertical {
     height: 14px;
@@ -209,7 +209,7 @@ QScrollBar::add-line:vertical {
     background: @scrollAddLineSubLine;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-bottom.png);
+    image: url(:/resources/icons/svg/frame-bottom.svg);
 }
 QScrollBar::sub-line:horizontal {
     width: 14px;
@@ -219,7 +219,7 @@ QScrollBar::sub-line:horizontal {
     background: @scrollAddLineSubLine;
     subcontrol-position: left;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-left.png);
+    image: url(:/resources/icons/svg/frame-left.svg);
 }
 QScrollBar::sub-line:vertical {
     height: 14px;
@@ -229,7 +229,7 @@ QScrollBar::sub-line:vertical {
     background: @scrollAddLineSubLine;
     subcontrol-position: top;
     subcontrol-origin: margin;
-    image: url(:/resources/icons/16x16/cil-caret-top.png);
+    image: url(:/resources/icons/svg/frame-top.svg);
 }
 QScrollBar::up-arrow:horizontal,
 QScrollBar::down-arrow:horizontal {
@@ -246,6 +246,9 @@ QScrollBar::sub-page:horizontal {
 QScrollBar::add-page:vertical,
 QScrollBar::sub-page:vertical {
     background: none;
+}
+QAbstractScrollArea::corner {
+    background: transparent;
 }
 
 
@@ -325,7 +328,7 @@ QTableWidget::item:selected {
 }
 
 #TableWidgetLabel {
-    color: @frameHeaderBackground; font: 64pt; font-style: oblique;
+    color: #09161E; font: 48pt; font-style: oblique;
 }
 
 /**************************************************************************
@@ -347,19 +350,19 @@ QTreeWidget::item:selected {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: @tableRowSelectedBackground;
+    background-color: #1C252F;
 }
 QTreeWidget::item:selected:active {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: @tableRowSelectedBackground;
+    background-color: #1C252F;
 }
 QTreeWidget::item:selected:!active {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: @tableRowSelectedBackground;
+    background-color: #1C252F;
 }
 
 
@@ -624,17 +627,17 @@ QSpinBox, QDoubleSpinBox {
     padding: 0px;
     padding-left: 5px;
     border-radius: 0px;
-    border: 2px solid @elementsBorderColor;
-    color: @elementsTextColor;
-    background-color: @elementsBackgroundColor;
+    border: 2px solid #1B1D23;
+    color: #B4B4B4;
+    background-color: #1B1D23;
 }
 QSpinBox:disabled, QDoubleSpinBox:disabled {
     padding: 0px;
     padding-left: 5px;
     border-radius: 0px;
-    border: 2px solid @elementsBorderColor;
-    color: @elementsTextDisabled;
-    background-color: @elementsBackgroundColor;
+    border: 2px solid #1B1D23;
+    color: #62676F;
+    background-color: #1B1D23;
 }
 QSpinBox:hover, QDoubleSpinBox:hover {
     border: 2px solid #404758;
@@ -797,8 +800,8 @@ QTextBrowser#textBrowser_presetname {
     padding-right: 3px;
     border-radius: 2px;
     border: none;
-    color: #D2D2D2;
-    background-color: @elementsBackgroundColor;
+    color: #B2B2B2;
+    background-color: #1B1D23;
 }
 QTextBrowser#textBrowser_log {
     padding-left: 3px;
@@ -977,7 +980,7 @@ QPushButton:disabled#buttonTab_3,
 QPushButton:disabled#buttonTab_4 {
     border: none;
     color: #D2D2D2;
-    background-color: #323232;
+    background-color: #1B1D23;
 }
 QPushButton:hover#buttonTab_1,
 QPushButton:hover#buttonTab_2,
@@ -1062,14 +1065,14 @@ QPushButton:pressed#buttonOutputPath {
 /*********************************************/
 
 QPushButton#applyPreset {
-    border-radius: 0px;
-    border: 1px solid #373C46;
+    border-radius: 3px;
+    border: 1px solid @frameMiddleBorder;
     color: @frameTextColor;
     background-color: transparent;
 }
 QPushButton:disabled#applyPreset {
-    border-radius: 0px;
-    border: 1px solid #373C46;
+    border-radius: 3px;
+    border: 1px solid @frameMiddleBorder;
     color: #62676F;
     background-color: transparent;
 }
@@ -1087,9 +1090,9 @@ QPushButton#buttonApply,
 QPushButton#buttonPayPal,
 QPushButton#buttonBitcoin {
     border-radius: 1px;
-    border: 1px solid #474747;
+    border: 1px solid #1E2F50;
     color: #FFFFFF;
-    background-color: #3b3b3b;
+    background-color: #1E2F50;
 }
 
 QPushButton:hover#buttonCancel,
@@ -1436,3 +1439,4 @@ QTabBar::tab:bottom:selected, QDockWidget QTabBar::tab:bottom:selected {
 QTabBar::tab:bottom:!selected, QDockWidget QTabBar::tab:bottom:!selected {
     background-color: @frameMiddleBackground;
 }
+

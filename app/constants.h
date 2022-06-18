@@ -27,7 +27,7 @@
 // ******************* Constants *****************************//
 
 #define PRESETS_VERSION 354
-#define SETTINGS_VERSION 352
+#define SETTINGS_VERSION 354
 
 #define PARAMETERS_COUNT 34
 #define NUMBER_PRESETS 30
@@ -69,7 +69,7 @@ enum DockIndex {
 };
 
 enum Theme {
-    GRAY, DARK, WAVE, DEFAULT, LIGHT
+    DEFAULT, GRAY, DARK, WAVE, LIGHT
 };
 
 enum PreviewDest {
