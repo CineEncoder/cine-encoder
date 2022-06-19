@@ -4,7 +4,7 @@
                                 JULY, 2020
                             COPYRIGHT (C) 2020
 
- FILE: donate.h
+ FILE: notification.h
  COMMENT:
  LICENSE: GNU General Public License v3.0
 

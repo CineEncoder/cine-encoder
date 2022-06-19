@@ -361,5 +361,9 @@
         <file>resources/icons/svg/frame-left_black.svg</file>
         <file>resources/icons/svg/frame-right_black.svg</file>
         <file>resources/icons/svg/frame-top_black.svg</file>
+        <file>resources/icons/svg/popup.svg</file>
+        <file>resources/icons/svg/warning.svg</file>
+        <file>resources/icons/svg/info.svg</file>
+        <file>resources/icons/svg/error.svg</file>
     </qresource>
 </RCC>

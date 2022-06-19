@@ -892,7 +892,8 @@ void MainWindow::onSettings()
         m_hideInTrayFlag ? m_pTrayIcon->show() : m_pTrayIcon->hide();
         if (m_row != -1)
             get_output_filename();
-        showInfoMessage(tr("You need to restart the program for the settings to take effect."));
+        showPopup(tr("You need to restart the program for the settings to take effect."),
+                  PopupMessage::Icon::Warning);
     }
 }
 
@@ -1288,7 +1289,7 @@ void MainWindow::onEncodingCompleted()
         const float elps_t = (end_t >= m_strt_t) ? static_cast<float>(end_t - m_strt_t) : 0.0f;
         if (m_protectFlag)
             m_pTimer->stop();
-        showInfoMessage(tr("Task completed!\n\n Elapsed time: ") +
+        showPopup(tr("Task completed!\n\n Elapsed time: ") +
                         Helper::timeConverter(elps_t));
     };
     Dump("Completed ...");
@@ -1332,7 +1333,7 @@ void MainWindow::onEncodingAborted()
     ui->labelAnimation->hide();
     ui->progressBar->hide();
     setWidgetsEnabled(true);
-    showInfoMessage(tr("The current encoding process has been canceled!\n"));
+    showPopup(tr("The current encoding process has been canceled!\n"));
 }
 
 void MainWindow::onEncodingError(const QString &error_message)
@@ -1432,11 +1433,11 @@ void MainWindow::onStart()  // Encode button
     case EncodingStatus::START: {
         Dump("Status encode btn: start");
         if (ui->tableWidget->rowCount() == 0) {
-            showInfoMessage(tr("Select input file first!"));
+            showPopup(tr("Select input file first!"), PopupMessage::Icon::Warning);
             return;
         }
         if (m_pos_cld == -1) {
-            showInfoMessage(tr("Select preset first!"));
+            showPopup(tr("Select preset first!"), PopupMessage::Icon::Warning);
             return;
         }
         m_status_encode_btn = EncodingStatus::PAUSE;
@@ -2112,7 +2113,7 @@ void MainWindow::setDefaultPresets() // Set default presets
 void MainWindow::onApplyPreset()  // Apply preset
 {
     if (ui->treeWidget->currentIndex().row() < 0) {
-        showInfoMessage(tr("Select preset first!\n"));
+        showPopup(tr("Select preset first!\n"));
         return;
     }
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
@@ -2123,7 +2124,7 @@ void MainWindow::onApplyPreset()  // Apply preset
             m_curParams[k] = item->text(k+7);
     } else {
         // Item is parent...
-        showInfoMessage(tr("Select preset first!\n"));
+        showPopup(tr("Select preset first!\n"));
         return;
     }
     m_pos_top = ui->treeWidget->indexOfTopLevelItem(parentItem);
@@ -2165,7 +2166,7 @@ void MainWindow::onRemovePreset()  // Remove preset
             updatePresetTable();
 
         } else {
-            showInfoMessage(tr("Delete presets first!\n"));
+            showPopup(tr("Delete presets first!\n"), PopupMessage::Icon::Warning);
         }
     }
 }
@@ -2173,7 +2174,7 @@ void MainWindow::onRemovePreset()  // Remove preset
 void MainWindow::onEditPreset()  // Edit preset
 {
     if (ui->treeWidget->currentIndex().row() < 0) {
-        showInfoMessage(tr("Select preset first!\n"));
+        showPopup(tr("Select preset first!\n"));
         return;
     }
     QTreeWidgetItem *item = ui->treeWidget->currentItem();
@@ -2206,7 +2207,7 @@ void MainWindow::onEditPreset()  // Edit preset
         }
     } else {
         // Item is parent...
-        showInfoMessage(tr("Select preset first!\n"));
+        showPopup(tr("Select preset first!\n"));
     }
 }
 
@@ -2229,7 +2230,7 @@ void MainWindow::onAddSection()  // Add section
 void MainWindow::onAddPreset()  // Add preset
 {
     if (ui->treeWidget->currentIndex().row() < 0) {
-        showInfoMessage(tr("First add a section!\n"));
+        showPopup(tr("First add a section!\n"), PopupMessage::Icon::Warning);
         return;
     }
 
@@ -2449,9 +2450,15 @@ bool MainWindow::showDialogMessage(const QString &message)
     return false;
 }
 
+void MainWindow::showPopup(const QString &text, PopupMessage::Icon icon)
+{
+    PopupMessage *msg = new PopupMessage(this, icon, text);
+    msg->show();
+}
+
 void MainWindow::showInfoMessage(const QString &message, const bool timer_mode)
 {
-    auto showMessage = [this, message, timer_mode](){
+    auto showMessage = [this, message, timer_mode]() {
         Message msg(this, MessType::INFO, message, timer_mode);
         msg.exec();
     };

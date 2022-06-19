@@ -23,6 +23,7 @@
 #include <ctime>
 #include "encoder.h"
 #include "constants.h"
+#include "popupmessage.h"
 #include "widgets/qanimatedsvg.h"
 #ifdef WM_CUSTOM
     #include "basewindow_cwm.h"
@@ -63,7 +64,7 @@ private:
     void setWidgetsEnabled(bool);
     void showInfoMessage(const QString &message, const bool timer_mode = false);
     bool showDialogMessage(const QString &message);
-
+    void showPopup(const QString &text, PopupMessage::Icon icon = PopupMessage::Icon::Info);
     void setTheme(const int ind_theme);
     QString setThumbnail(QString curFilename,
                          const double time,

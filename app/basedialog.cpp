@@ -97,8 +97,6 @@ bool BaseDialog::eventFilter(QObject *watched, QEvent *event)
     if (watched == m_maskwidget) {
         if (event->type() == QEvent::HoverEnter) {
             setCursor(QCursor(Qt::ArrowCursor));
-            /*QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
-            QApplication::restoreOverrideCursor();*/
             return true;
         }
     } else
@@ -139,10 +137,6 @@ bool BaseDialog::eventFilter(QObject *watched, QEvent *event)
     } else
     if (watched == this) {
         if (!isMaximized() && m_isResizable) {
-            /*if (event->type() == QEvent::HoverLeave) {
-                QGuiApplication::restoreOverrideCursor();
-                return true;
-            } else*/
             if (event->type() == QEvent::HoverMove && m_clickPressedToResizeFlag.indexOf(true) == -1) {
                 const QPoint mouseCoordinate = this->mapFromGlobal(QCursor::pos());
                 if (mouseCoordinate.x() < BORDER) {
