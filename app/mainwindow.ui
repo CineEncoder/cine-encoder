@@ -1290,8 +1290,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>313</width>
-                        <height>550</height>
+                        <width>327</width>
+                        <height>190</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_11">
@@ -1314,8 +1314,8 @@
                         <widget class="QFrame" name="frameAudio">
                          <property name="minimumSize">
                           <size>
-                           <width>300</width>
-                           <height>550</height>
+                           <width>0</width>
+                           <height>0</height>
                           </size>
                          </property>
                          <property name="maximumSize">
@@ -1340,23 +1340,7 @@
                           <property name="rightMargin">
                            <number>9</number>
                           </property>
-                          <item row="1" column="2">
-                           <spacer name="horizontalSpacer_58">
-                            <property name="orientation">
-                             <enum>Qt::Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                             <enum>QSizePolicy::Expanding</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>3</width>
-                              <height>20</height>
-                             </size>
-                            </property>
-                           </spacer>
-                          </item>
-                          <item row="1" column="1">
+                          <item row="1" column="0">
                            <layout class="QGridLayout" name="gridLayoutAudio">
                             <property name="sizeConstraint">
                              <enum>QLayout::SetDefaultConstraint</enum>
@@ -1373,41 +1357,25 @@
                             <property name="verticalSpacing">
                              <number>16</number>
                             </property>
-                            <item row="1" column="0">
+                            <item row="1" column="0" alignment="Qt::AlignTop">
                              <widget class="QStreamView" name="streamAudio" native="true">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
                               </property>
                               <property name="minimumSize">
                                <size>
-                                <width>200</width>
-                                <height>5</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="0">
-                             <widget class="QStreamViewExtern" name="streamAudioExtern" native="true">
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>200</width>
-                                <height>5</height>
+                                <width>300</width>
+                                <height>20</height>
                                </size>
                               </property>
                              </widget>
                             </item>
                            </layout>
                           </item>
-                          <item row="2" column="1">
+                          <item row="2" column="0">
                            <spacer name="verticalSpacer_3">
                             <property name="orientation">
                              <enum>Qt::Vertical</enum>
@@ -1418,22 +1386,6 @@
                             <property name="sizeHint" stdset="0">
                              <size>
                               <width>20</width>
-                              <height>20</height>
-                             </size>
-                            </property>
-                           </spacer>
-                          </item>
-                          <item row="1" column="0">
-                           <spacer name="horizontalSpacer_53">
-                            <property name="orientation">
-                             <enum>Qt::Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                             <enum>QSizePolicy::Expanding</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>3</width>
                               <height>20</height>
                              </size>
                             </property>
@@ -1478,8 +1430,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>313</width>
-                        <height>371</height>
+                        <width>327</width>
+                        <height>190</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_14">
@@ -1502,8 +1454,8 @@
                         <widget class="QFrame" name="frameSubtitle">
                          <property name="minimumSize">
                           <size>
-                           <width>250</width>
-                           <height>371</height>
+                           <width>0</width>
+                           <height>0</height>
                           </size>
                          </property>
                          <property name="maximumSize">
@@ -1528,7 +1480,23 @@
                           <property name="bottomMargin">
                            <number>9</number>
                           </property>
-                          <item row="0" column="1">
+                          <item row="1" column="0">
+                           <spacer name="verticalSpacer_5">
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                             <enum>QSizePolicy::Expanding</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>20</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item row="0" column="0">
                            <layout class="QGridLayout" name="gridLayoutSubtitle">
                             <property name="sizeConstraint">
                              <enum>QLayout::SetDefaultConstraint</enum>
@@ -1545,59 +1513,20 @@
                             <item row="0" column="0">
                              <widget class="QStreamView" name="streamSubtitle" native="true">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
                               </property>
                               <property name="minimumSize">
                                <size>
-                                <width>200</width>
-                                <height>24</height>
+                                <width>300</width>
+                                <height>20</height>
                                </size>
                               </property>
                              </widget>
                             </item>
                            </layout>
-                          </item>
-                          <item row="1" column="1">
-                           <spacer name="verticalSpacer_5">
-                            <property name="orientation">
-                             <enum>Qt::Vertical</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>20</width>
-                              <height>40</height>
-                             </size>
-                            </property>
-                           </spacer>
-                          </item>
-                          <item row="0" column="0">
-                           <spacer name="horizontalSpacer_54">
-                            <property name="orientation">
-                             <enum>Qt::Horizontal</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>40</width>
-                              <height>20</height>
-                             </size>
-                            </property>
-                           </spacer>
-                          </item>
-                          <item row="0" column="2">
-                           <spacer name="horizontalSpacer_59">
-                            <property name="orientation">
-                             <enum>Qt::Horizontal</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>40</width>
-                              <height>20</height>
-                             </size>
-                            </property>
-                           </spacer>
                           </item>
                          </layout>
                         </widget>
@@ -1786,7 +1715,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-undo.png</normaloff>:/resources/icons/16x16/cil-undo.png</iconset>
+                   <normaloff>:/resources/icons/svg/undo.svg</normaloff>:/resources/icons/svg/undo.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -2857,7 +2786,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-file-delete.png</normaloff>:/resources/icons/16x16/cil-file-delete.png</iconset>
+                   <normaloff>:/resources/icons/svg/remove_file.svg</normaloff>:/resources/icons/svg/remove_file.svg</iconset>
                  </property>
                  <property name="default">
                   <bool>false</bool>
@@ -2946,7 +2875,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-sort-descending.png</normaloff>:/resources/icons/16x16/cil-sort-descending.png</iconset>
+                   <normaloff>:/resources/icons/svg/sort_up.svg</normaloff>:/resources/icons/svg/sort_up.svg</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -3066,7 +2995,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-file-add.png</normaloff>:/resources/icons/16x16/cil-file-add.png</iconset>
+                   <normaloff>:/resources/icons/svg/add_file.svg</normaloff>:/resources/icons/svg/add_file.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -3143,7 +3072,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/16x16/cil-sort-ascending.png</normaloff>:/resources/icons/16x16/cil-sort-ascending.png</iconset>
+                   <normaloff>:/resources/icons/svg/sort_down.svg</normaloff>:/resources/icons/svg/sort_down.svg</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -5307,12 +5236,6 @@
    <class>QStreamView</class>
    <extends>QWidget</extends>
    <header>widgets/qstreamview.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QStreamViewExtern</class>
-   <extends>QWidget</extends>
-   <header>widgets/qstreamviewextern.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

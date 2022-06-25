@@ -153,7 +153,7 @@ MainWindow::MainWindow(QWidget *parent):
     pTableLayout->addWidget(m_pTableLabel);
     m_pAudioLabel = createLabel(ui->frameAudio, "AudioLabel", tr("No audio"));
     ui->gridLayoutAudio->addWidget(m_pAudioLabel);
-    m_pSubtitleLabel = createLabel(ui->frameSubtitle, "SubtitleLabel", tr("No subtitle"));
+    m_pSubtitleLabel = createLabel(ui->frameSubtitle, "SubtitleLabel", tr("No subtitles"));
     ui->gridLayoutSubtitle->addWidget(m_pSubtitleLabel);
 
     //************** Create docks ******************//
@@ -209,8 +209,8 @@ MainWindow::MainWindow(QWidget *parent):
         m_pDocksContainer->addDockWidget(dockArea[i], m_pDocks[i]);
     }
 
-    ui->streamAudio->setTypeOfView(QStreamView::TypeOfView::Audio);
-    ui->streamSubtitle->setTypeOfView(QStreamView::TypeOfView::Subtitle);
+    ui->streamAudio->setContentType(QStreamView::Content::Audio);
+    ui->streamSubtitle->setContentType(QStreamView::Content::Subtitle);
     //*********** Set Event Filters ****************//
     m_pTableLabel->installEventFilter(this);
     ui->labelPreview->installEventFilter(this);
@@ -645,6 +645,11 @@ void MainWindow::setParameters()    // Set parameters
     ui->tableWidget->horizontalHeader()->setVisible(true);
     ui->tableWidget->verticalHeader()->setVisible(true);
     ui->tableWidget->setAlternatingRowColors(true);
+    ui->tableWidget->setDropIndicatorShown(true);
+    ui->tableWidget->setDragEnabled(true);
+    ui->tableWidget->setDragDropOverwriteMode(true);
+    ui->tableWidget->setDragDropMode(QAbstractItemView::DropOnly);
+    ui->tableWidget->setDefaultDropAction(Qt::TargetMoveAction);
     ui->tableWidget->setColumnWidth(ColumnIndex::FILENAME, 250);
     ui->tableWidget->setColumnWidth(ColumnIndex::FORMAT, 80);
     ui->tableWidget->setColumnWidth(ColumnIndex::RESOLUTION, 85);
@@ -1021,20 +1026,22 @@ void MainWindow::get_current_data() // Get current data
         curDepth += QString(" %1, ").arg(tr("bit"));
 
     if (curBitrate != "")
-        curBitrate += QString(" %1; ").arg(tr("kbps"));
+        curBitrate += QString(" %1").arg(tr("kbps"));
 
-    QString sourceParam = curCodec + curRes + curFps + curAr + curSpace +
-            curColorSampling + curDepth + curBitrate;
-
+    QString sourceParam = QString("%1: %2").arg(tr("Video"), curCodec +
+                                                curRes + curFps + curAr + curSpace +
+                                                curColorSampling + curDepth + curBitrate);
     int countAudioStreams = 0;
     while (countAudioStreams < m_data[m_row].audioFormats.size()
            && countAudioStreams < MAX_AUDIO_STREAMS) {
         const QString curAudioStream = m_data[m_row].audioFormats[countAudioStreams];
+        const QString curAudioLang = m_data[m_row].audioLangs[countAudioStreams];
+        const QString curAudioCh = m_data[m_row].audioChannels[countAudioStreams] + " ch";
         if (curAudioStream == "")
             break;
         countAudioStreams++;
-        sourceParam += QString("%1 #%2: %3; ").arg(tr("Audio"), QString::number(countAudioStreams),
-                                                   curAudioStream);
+        sourceParam += QString("\n%1 %2: %3, %4, %5").arg(tr("Audio"), QString::number(countAudioStreams),
+                                                   curAudioStream, curAudioCh, curAudioLang);
     }
 
     int countSubtitles = 0;
@@ -1074,13 +1081,9 @@ void MainWindow::get_current_data() // Get current data
         lineEdit->setCursorPosition(0);
 
     //********** Set audio widgets *****************//
-    if (countAudioStreams > 0) {
+    if (countAudioStreams > 0 || m_data[m_row].externAudioFormats.size() > 0) {
         m_pAudioLabel->setVisible(false);
         ui->streamAudio->setList(m_data[m_row]);
-    }
-    if (m_data[m_row].externAudioFormats.size() > 0) {
-        m_pAudioLabel->setVisible(false);
-        ui->streamAudioExtern->setList(m_data[m_row]);
     }
 
     //********* Set subtitle widgets ***************//
@@ -1167,7 +1170,7 @@ void MainWindow::setWidgetsEnabled(bool state)    // Set widgets states
     ui->undoTitles->setEnabled(state);
     ui->addExtStream->setEnabled(state);
     ui->streamAudio->setEnabled(state);
-    ui->streamAudioExtern->setEnabled(state);
+    //ui->streamAudioExtern->setEnabled(state);
     ui->clearTitles->setEnabled(state);
     ui->streamSubtitle->setEnabled(state);
 
@@ -1397,8 +1400,11 @@ void MainWindow::onRemoveFile()  // Remove file from table
 {
     const int row = ui->tableWidget->currentRow();
     if (row != -1) {
+        ui->tableWidget->blockSignals(true);
         ui->tableWidget->removeRow(row);
         Helper::eraseRow(m_data, row);
+        ui->tableWidget->blockSignals(false);
+        onTableSelectionChanged();
     }
 }
 
@@ -1594,15 +1600,21 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
 
         m_data[numRows].audioChecks.clear();
         m_data[numRows].audioFormats.clear();
+        m_data[numRows].audioChannels.clear();
+        m_data[numRows].audioChLayouts.clear();
         m_data[numRows].audioLangs.clear();
         m_data[numRows].audioTitles.clear();
         m_data[numRows].externAudioChecks.clear();
         m_data[numRows].externAudioFormats.clear();
+        m_data[numRows].externAudioChannels.clear();
+        m_data[numRows].externAudioChLayouts.clear();
         m_data[numRows].externAudioLangs.clear();
         m_data[numRows].externAudioTitles.clear();
         m_data[numRows].externAudioPath.clear();
         Q_LOOP(j, 0, MAX_AUDIO_STREAMS) {
             QString audioFormat = AINFO(size_t(j), "Format");
+            const QString audioChannels = AINFO(size_t(j), "Channels");
+            const QString audioChLayouts = AINFO(size_t(j), "ChannelLayout");
             const QString audioLang = AINFO(size_t(j), "Language");
             const QString audioTitle = AINFO(size_t(j), "Title");
             const QString smplrt_qstr = AINFO(size_t(j), "SamplingRate");
@@ -1612,6 +1624,8 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
                 audioFormat += QString("  %1 kHz").arg(smplrt);
                 m_data[numRows].audioChecks.push_back(true);
                 m_data[numRows].audioFormats.push_back(audioFormat);
+                m_data[numRows].audioChannels.push_back(audioChannels);
+                m_data[numRows].audioChLayouts.push_back(audioChLayouts);
                 m_data[numRows].audioLangs.push_back(audioLang);
                 m_data[numRows].audioTitles.push_back(audioTitle);
             } else {
@@ -1669,7 +1683,7 @@ void MainWindow::onTableSelectionChanged()
 
     //*********** Disable audio widgets ***************//
     ui->streamAudio->clearList();
-    ui->streamAudioExtern->clearList();
+    //ui->streamAudioExtern->clearList();
     m_pAudioLabel->setVisible(true);
 
     //*********** Disable subtitle widgets *************//
@@ -1971,6 +1985,8 @@ void MainWindow::onAddExtStream()
                     const int vcnt = GINFO(0, "VideoCount").toInt();
                     if (vcnt == 0 && acnt == 1) {
                         QString audioFormat = AINFO(0, "Format");
+                        const QString audioChannels = AINFO(0, "Channels");
+                        const QString audioChLayouts = AINFO(0, "ChannelsLayouts");
                         const QString audioLang = AINFO(0, "Language");
                         const QString audioTitle = AINFO(0, "Title");
                         const QString smplrt_qstr = AINFO(0, "SamplingRate");
@@ -1980,6 +1996,8 @@ void MainWindow::onAddExtStream()
                             audioFormat += QString("  %1 kHz").arg(smplrt);
                             m_data[m_row].externAudioChecks.push_back(true);
                             m_data[m_row].externAudioFormats.push_back(audioFormat);
+                            m_data[m_row].externAudioChannels.push_back(audioChannels);
+                            m_data[m_row].externAudioChLayouts.push_back(audioChLayouts);
                             m_data[m_row].externAudioLangs.push_back(audioLang);
                             m_data[m_row].externAudioTitles.push_back(audioTitle);
                             m_data[m_row].externAudioPath.push_back(path);
@@ -1992,9 +2010,9 @@ void MainWindow::onAddExtStream()
                     showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(path));
                 }
             }
-            if (m_data[m_row].externAudioFormats.size() > 0) {
+            if (m_data[m_row].audioFormats.size() > 0 || m_data[m_row].externAudioFormats.size() > 0) {
                 m_pAudioLabel->setVisible(false);
-                ui->streamAudioExtern->setList(m_data[m_row]);
+                ui->streamAudio->setList(m_data[m_row]);
             }
         }
     }

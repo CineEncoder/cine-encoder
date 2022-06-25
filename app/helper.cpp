@@ -2,6 +2,7 @@
 #include <QLocale>
 #include <QProcess>
 #include <QFileDialog>
+#include <QFontMetrics>
 #include <iostream>
 #include <math.h>
 
@@ -57,7 +58,7 @@ QString Helper::getParsedCss(const QString &list)    // Parsing CSS
 
     foreach (const QString &row, splitList) {
         const int first_symbol = row.indexOf('@');
-        if (first_symbol != -1 && row.indexOf('=') != -1)
+        if (first_symbol != -1 && row.indexOf('=') != -1 && row.indexOf('[') == -1)
             varList.append(row.mid(first_symbol));
     }
     foreach (const QString &var, varList) {
@@ -176,4 +177,18 @@ QString Helper::getSysLanguage()
         {QLocale::Russian, "ru"}
     };
     return (langMap.contains(_sysLang)) ? langMap.value(_sysLang) : "en";
+}
+
+QString Helper::elideText(QWidget *w,
+                          const QString &text,
+                          const Qt::TextElideMode elide)
+{
+    QFontMetrics fm = w->fontMetrics();
+#if (QT_VERSION < QT_VERSION_CHECK(5,11,0))
+    const int fwidth = fm.width(text);
+#else
+    const int fwidth = fm.horizontalAdvance(text);
+#endif
+    const int width = w->width();
+    return (fwidth > width) ? fm.elidedText(text, elide, width, 0) : text;
 }

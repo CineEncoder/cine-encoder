@@ -32,13 +32,28 @@ Message::Message(QWidget *parent, MessType mess_type,
     setTitleBar(ui->frame_top);
     connect(ui->closeWindow, &QPushButton::clicked, this, &Message::onCloseWindow);
     connect(ui->buttonApply, &QPushButton::clicked, this, &Message::onButtonApply);
+    Icon icon = Icon::Info;
     if (m_mess_type == MessType::INFO) {
         ui->spacerCancel->changeSize(0,0);
         ui->buttonCancel->hide();
         ui->buttonCancel->setFixedWidth(0);
+        icon = Icon::Warning;
     } else {
         connect(ui->buttonCancel, &QPushButton::clicked, this, &Message::onCloseWindow);
+    }    
+    QString iconPath(":/resources/icons/svg/info.svg");
+    switch (icon) {
+    case Icon::Warning:
+        iconPath = QString(":/resources/icons/svg/warning.svg");
+        break;
+    case Icon::Critical:
+        iconPath = QString(":/resources/icons/svg/error.svg");
+        break;
+    default:
+        break;
     }
+    QPixmap logo(iconPath);
+    ui->label->setPixmap(logo.scaled(QSize(20, 20), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 Message::~Message()

@@ -12,8 +12,7 @@
 
 #include "progress.h"
 #include "ui_progress.h"
-#include <QFontMetrics>
-#include <math.h>
+#include "helper.h"
 
 
 Progress::Progress(QWidget *parent, const QString &title):
@@ -34,14 +33,7 @@ Progress::~Progress()
 
 void Progress::setText(const QString &text)
 {
-    QFontMetrics fm = ui->label_filename->fontMetrics();
-#if (QT_VERSION < QT_VERSION_CHECK(5,11,0))
-    const int fwidth = fm.width(text);
-#else
-    const int fwidth = fm.horizontalAdvance(text);
-#endif
-    const int width = ui->label_filename->width();
-    const QString elidedText = (fwidth > width) ? fm.elidedText(text, Qt::ElideMiddle, width, 0) : text;
+    const QString elidedText = Helper::elideText(ui->label_filename, text, Qt::ElideMiddle);
     ui->label_filename->setText(elidedText);
 }
 
