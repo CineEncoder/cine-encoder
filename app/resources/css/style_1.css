@@ -126,10 +126,12 @@ QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
 
 #AudioLabel {
     color: @frameHeaderBackground; font: 32pt; font-style: oblique;
+    font-weight: 500;
 }
 
 #SubtitleLabel {
     color: @frameHeaderBackground; font: 32pt; font-style: oblique;
+    font-weight: 500;
 }
 
 /**************************************************************************
@@ -270,6 +272,8 @@ QHeaderView::section:horizontal {
     border-top: 0px solid @headerBorder;
     border-bottom: 0px solid @headerBorder;
     border-right: 1px solid @headerBorder;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 QHeaderView::section:vertical {
     width: 0px;
@@ -329,6 +333,7 @@ QTableWidget::item:selected {
 
 #TableWidgetLabel {
     color: @frameHeaderBackground; font: 48pt; font-style: oblique;
+    font-weight: 500;
 }
 
 /**************************************************************************
@@ -691,8 +696,7 @@ QLabel:disabled {
 
 QLabel#labelPreview {
     color: @frameHeaderBackground;
-    font: 24pt;
-    font-style: oblique;
+    font: 24pt; font-style: oblique; font-weight: 500;
     background-color: @frameMiddleBackground;
 }
 
@@ -863,6 +867,16 @@ QPushButton#settings {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton#audioExpandBtn {
+    border: none;
+    border-radius: 0px;
+    image: url(:/resources/icons/svg/frame-bottom_black.svg);
+    color: @elementsTextColor;
+    background-color: transparent;
+}
+QPushButton#audioExpandBtn[expanded=true] {
+    image: url(:/resources/icons/svg/frame-top_black.svg);
+}
 QPushButton#hideWindow {
         border: none;
         border-radius: 0px;
@@ -926,6 +940,7 @@ QPushButton:hover#buttonReset,
 QPushButton:hover#addFilesHot,
 QPushButton:hover#setOutFolder,
 QPushButton:hover#settings,
+QPushButton:hover#audioExpandBtn,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
 QPushButton:hover#closeTWindow {

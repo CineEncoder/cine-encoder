@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
-   sodipodi:docname="add.svg"
+   sodipodi:docname="sort_up.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@
      inkscape:document-units="mm"
      showgrid="false"
      height="210mm"
-     inkscape:zoom="0.28061869"
-     inkscape:cx="147.88751"
-     inkscape:cy="272.61192"
+     inkscape:zoom="0.1767767"
+     inkscape:cx="8.4852814"
+     inkscape:cy="1241.6795"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
@@ -39,15 +39,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#79ab7f;stroke-width:43.765;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 35.677953,106.01279 H 172.99572"
-       id="path947"
-       sodipodi:nodetypes="cc" />
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#79ab7f;stroke-width:43.765;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 103.62288,38.032202 V 175.34999"
-       id="path947-3"
-       sodipodi:nodetypes="cc" />
+    <g
+       id="g6216"
+       transform="rotate(180,104.07393,105.29796)">
+      <path
+         style="fill:#000000;fill-opacity:1;stroke:#5e9aae;stroke-width:39.6949;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 104.33684,33.47308 V 146.43776"
+         id="path947"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:#5e9aae;fill-opacity:1;stroke:#5e9aae;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 49.173591,141.99107 H 158.74844 L 103.95631,196.7832 49.173591,141.99107"
+         id="path4827"
+         sodipodi:nodetypes="cccc" />
+    </g>
   </g>
 </svg>

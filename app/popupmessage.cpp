@@ -87,7 +87,7 @@ void PopupMessage::showEvent(QShowEvent *event)
     BaseDialog::showEvent(event);
     if (!m_activated) {
         m_activated = true;
-        QPoint offset(390, -35);
+        QPoint offset(380, -35);
         move(parentWidget()->geometry().topRight() - offset);
         //showEffect(EffectType::Arise);
         QTimer::singleShot(5000, this, [this]() {

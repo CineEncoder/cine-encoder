@@ -38,6 +38,9 @@ class Message : public BaseWindow
 {
     Q_OBJECT
 public:
+    enum class Icon : uchar {
+        Info, Warning, Critical
+    };
     explicit Message(QWidget *parent, MessType mess_type,
                      const QString &message, const bool timer_flag = false);
     ~Message(); 

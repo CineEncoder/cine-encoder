@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("CineEncoder");
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     app.setStyle(QStyleFactory::create("Fusion"));   
     const QString sysLang = Helper::getSysLanguage();
     /*const int id = QFontDatabase::addApplicationFont(":/resources/fonts/interregular.otf");
@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
     if (fntFamily != "")
         fnt.setFamily(fntFamily);
     fnt.setPointSize(fntSize);
+    fnt.setWeight(QFont::Medium);
     app.setFont(fnt);
 
     /******************* Set Splash *******************************/

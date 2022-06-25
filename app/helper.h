@@ -30,6 +30,9 @@ public:
     static QString timeConverter(const float time);
     static QString timeConverter(const double time);
     static QString getSysLanguage();
+    static QString elideText(QWidget *w,
+                             const QString &text,
+                             const Qt::TextElideMode elide);
     template<class T>
     static void eraseRow(QVector<T> &v, const int row);
     template<class T>

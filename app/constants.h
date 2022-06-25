@@ -85,18 +85,22 @@ enum PreviewRes {
 struct Data {
     QVector<QString> videoMetadata;
     QVector<bool>    audioChecks;
-    QVector<QString> audioFormats;
-    QVector<QString> audioLangs;
-    QVector<QString> audioTitles;
-    QVector<bool>    subtChecks;
-    QVector<QString> subtFormats;
-    QVector<QString> subtLangs;
-    QVector<QString> subtTitles;
+    QVector<QString> audioFormats,
+                     audioChannels,
+                     audioChLayouts,
+                     audioLangs,
+                     audioTitles;
     QVector<bool>    externAudioChecks;
-    QVector<QString> externAudioFormats;
-    QVector<QString> externAudioLangs;
-    QVector<QString> externAudioTitles;
-    QVector<QString> externAudioPath;
+    QVector<QString> externAudioFormats,
+                     externAudioChannels,
+                     externAudioChLayouts,
+                     externAudioLangs,
+                     externAudioTitles,
+                     externAudioPath;
+    QVector<bool>    subtChecks;
+    QVector<QString> subtFormats,
+                     subtLangs,
+                     subtTitles;
 };
 
 enum VideoMetadataIndex {

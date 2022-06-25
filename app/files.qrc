@@ -365,5 +365,10 @@
         <file>resources/icons/svg/warning.svg</file>
         <file>resources/icons/svg/info.svg</file>
         <file>resources/icons/svg/error.svg</file>
+        <file>resources/icons/svg/remove_file.svg</file>
+        <file>resources/icons/svg/add_file.svg</file>
+        <file>resources/icons/svg/sort_up.svg</file>
+        <file>resources/icons/svg/sort_down.svg</file>
+        <file>resources/icons/svg/undo.svg</file>
     </qresource>
 </RCC>
