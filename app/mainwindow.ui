@@ -214,7 +214,7 @@
                <bool>false</bool>
               </property>
               <property name="format">
-               <string>%p%</string>
+               <string notr="true">%p%</string>
               </property>
              </widget>
             </item>
@@ -291,7 +291,7 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>00:00:00</string>
+               <string notr="true">00:00:00</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -984,57 +984,57 @@
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 23 - TECHNICAL INFO: Minrate</string>
+                   <string notr="true">ID 23 - TECHNICAL INFO: Minrate</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 24 - TECHNICAL INFO: Level</string>
+                   <string notr="true">ID 24 - TECHNICAL INFO: Level</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 25 - TECHNICAL INFO: Asample Rate</string>
+                   <string notr="true">ID 25 - TECHNICAL INFO: Asample Rate</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 26 - TECHNICAL INFO: Achannels</string>
+                   <string notr="true">ID 26 - TECHNICAL INFO: Achannels</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 27 - TECHNICAL INFO: Matrix</string>
+                   <string notr="true">ID 27 - TECHNICAL INFO: Matrix</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 28 - TECHNICAL INFO: Primary</string>
+                   <string notr="true">ID 28 - TECHNICAL INFO: Primary</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 29 - TECHNICAL INFO: TRC</string>
+                   <string notr="true">ID 29 - TECHNICAL INFO: TRC</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 30 - TECHNICAL INFO: Preset Name</string>
+                   <string notr="true">ID 30 - TECHNICAL INFO: Preset Name</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 31 - TECHNICAL INFO: REP_Primary</string>
+                   <string notr="true">ID 31 - TECHNICAL INFO: REP_Primary</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 32 - TECHNICAL INFO: REP_Matrix</string>
+                   <string notr="true">ID 32 - TECHNICAL INFO: REP_Matrix</string>
                   </property>
                  </column>
                  <column>
                   <property name="text">
-                   <string>ID 33 - TECHNICAL INFO: REP_TRC</string>
+                   <string notr="true">ID 33 - TECHNICAL INFO: REP_TRC</string>
                   </property>
                  </column>
                 </widget>
@@ -2679,6 +2679,12 @@
                   <property name="text">
                    <string notr="true">ID 21 - TECHNICAL INFO: Duration</string>
                   </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
+                  </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
                   </property>
@@ -2686,6 +2692,12 @@
                  <column>
                   <property name="text">
                    <string notr="true">ID 22 - TECHNICAL INFO: Chroma coord</string>
+                  </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -2695,6 +2707,12 @@
                   <property name="text">
                    <string notr="true">ID 23 - TECHNICAL INFO: White coord</string>
                   </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
+                  </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
                   </property>
@@ -2702,6 +2720,12 @@
                  <column>
                   <property name="text">
                    <string notr="true">ID 24 - TECHNICAL INFO: Stream size</string>
+                  </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -2711,6 +2735,12 @@
                   <property name="text">
                    <string notr="true">ID 25 - TECHNICAL INFO: Width</string>
                   </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
+                  </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
                   </property>
@@ -2718,6 +2748,12 @@
                  <column>
                   <property name="text">
                    <string notr="true">ID 26 - TECHNICAL INFO: Height</string>
+                  </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -2727,6 +2763,12 @@
                   <property name="text">
                    <string notr="true">ID 27 - TECHNICAL INFO: Start Time</string>
                   </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
+                  </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
                   </property>
@@ -2734,6 +2776,12 @@
                  <column>
                   <property name="text">
                    <string notr="true">ID 28 - TECHNICAL INFO: End Time</string>
+                  </property>
+                  <property name="toolTip">
+                   <string notr="true"/>
+                  </property>
+                  <property name="whatsThis">
+                   <string notr="true"/>
                   </property>
                   <property name="textAlignment">
                    <set>AlignLeading|AlignVCenter</set>
@@ -4349,11 +4397,29 @@
                             <height>25</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string notr="true"/>
+                          </property>
+                          <property name="statusTip">
+                           <string notr="true"/>
+                          </property>
+                          <property name="whatsThis">
+                           <string notr="true"/>
+                          </property>
+                          <property name="accessibleName">
+                           <string notr="true"/>
+                          </property>
+                          <property name="accessibleDescription">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string notr="true"/>
+                          </property>
                           <property name="readOnly">
                            <bool>true</bool>
                           </property>
                           <property name="placeholderText">
-                           <string>00:00:00.000</string>
+                           <string notr="true">00:00:00.000</string>
                           </property>
                          </widget>
                         </item>
@@ -4516,11 +4582,14 @@
                             <height>25</height>
                            </size>
                           </property>
+                          <property name="text">
+                           <string notr="true"/>
+                          </property>
                           <property name="readOnly">
                            <bool>true</bool>
                           </property>
                           <property name="placeholderText">
-                           <string>00:00:00.000</string>
+                           <string notr="true">00:00:00.000</string>
                           </property>
                          </widget>
                         </item>
@@ -4547,11 +4616,14 @@
                             <height>25</height>
                            </size>
                           </property>
+                          <property name="text">
+                           <string notr="true"/>
+                          </property>
                           <property name="readOnly">
                            <bool>true</bool>
                           </property>
                           <property name="placeholderText">
-                           <string>00:00:00.000</string>
+                           <string notr="true">00:00:00.000</string>
                           </property>
                          </widget>
                         </item>

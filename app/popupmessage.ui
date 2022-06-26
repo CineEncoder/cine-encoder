@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Message</string>
   </property>
   <property name="windowIcon">
    <iconset resource="files.qrc">

@@ -96,7 +96,7 @@ void QStreamView::setList(Data &data)
 {
     clearList();
     const QString columns[] = {
-        "Format", "Title", "Language"
+        tr("Format"), tr("Title"), tr("Language")
     };
     QStandardItemModel *model = new QStandardItemModel(this);
     Q_LOOP(i, 0, 3) {
@@ -148,7 +148,7 @@ void QStreamView::setList(Data &data)
                                        "", "", "");
             m_pLayout->addWidget(cell);
         }
-    }    
+    }
 }
 
 void QStreamView::clearTitles()
@@ -352,4 +352,3 @@ QWidget *QStreamView::createCell(bool &state,
 
     return cell;
 }
-
