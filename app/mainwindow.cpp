@@ -83,32 +83,34 @@
 typedef void(MainWindow::*FnVoidVoid)(void);
 typedef void(MainWindow::*FnVoidInt)(int);
 
-QLabel* createLabel(QWidget *parent, const char *name, const QString &text)
+namespace MainWindowPrivate
 {
-    QLabel *label = new QLabel(parent);
-    label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    label->setObjectName(QString::fromUtf8(name));
-    label->setAlignment(Qt::AlignCenter);
-    label->setText(text);
-    return label;
-}
+    QLabel* createLabel(QWidget *parent, const char *name, const QString &text)
+    {
+        QLabel *label = new QLabel(parent);
+        label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        label->setObjectName(QString::fromUtf8(name));
+        label->setAlignment(Qt::AlignCenter);
+        label->setText(text);
+        return label;
+    }
 
-void undoLineEdit(QLineEdit *line) {
-    line->undo();
-    if (line->text() != "") {
+    void undoLineEdit(QLineEdit *line) {
+        line->undo();
+        if (line->text() != "") {
+            line->setFocus();
+            line->setCursorPosition(0);
+            line->setModified(true);
+        }
+    };
+
+    void clearLineEdit(QLineEdit *line) {
+        line->clear();
+        line->insert("");
         line->setFocus();
-        line->setCursorPosition(0);
         line->setModified(true);
     }
-};
-
-void clearLineEdit(QLineEdit *line) {
-    line->clear();
-    line->insert("");
-    line->setFocus();
-    line->setModified(true);
 }
-
 
 MainWindow::MainWindow(QWidget *parent):
     BaseWindow(parent),
@@ -149,11 +151,11 @@ MainWindow::MainWindow(QWidget *parent):
     //*************** Set labels *****************//
     QHBoxLayout *pTableLayout = new QHBoxLayout(ui->tableWidget);
     ui->tableWidget->setLayout(pTableLayout);
-    m_pTableLabel = createLabel(ui->tableWidget, "TableWidgetLabel", tr("No media"));
+    m_pTableLabel = MainWindowPrivate::createLabel(ui->tableWidget, "TableWidgetLabel", tr("No media"));
     pTableLayout->addWidget(m_pTableLabel);
-    m_pAudioLabel = createLabel(ui->frameAudio, "AudioLabel", tr("No audio"));
+    m_pAudioLabel = MainWindowPrivate::createLabel(ui->frameAudio, "AudioLabel", tr("No audio"));
     ui->gridLayoutAudio->addWidget(m_pAudioLabel);
-    m_pSubtitleLabel = createLabel(ui->frameSubtitle, "SubtitleLabel", tr("No subtitles"));
+    m_pSubtitleLabel = MainWindowPrivate::createLabel(ui->frameSubtitle, "SubtitleLabel", tr("No subtitles"));
     ui->gridLayoutSubtitle->addWidget(m_pSubtitleLabel);
 
     //************** Create docks ******************//
@@ -1950,7 +1952,7 @@ void MainWindow::onClearMetadata()
     if (m_row != -1) {
         auto linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
         foreach (QLineEdit *lineEdit, linesEditMetadata)
-            clearLineEdit(lineEdit);
+            MainWindowPrivate::clearLineEdit(lineEdit);
         ui->frameMiddle->setFocus();
     }
 }
@@ -1960,7 +1962,7 @@ void MainWindow::onUndoMetadata()
     if (m_row != -1) {
         auto linesEditMetadata = ui->frameTab_1->findChildren<QLineEdit*>();
         foreach (QLineEdit *lineEdit, linesEditMetadata)
-            undoLineEdit(lineEdit);
+            MainWindowPrivate::undoLineEdit(lineEdit);
         ui->frameMiddle->setFocus();
     }
 }
