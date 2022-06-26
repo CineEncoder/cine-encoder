@@ -1229,13 +1229,13 @@
                           </property>
                           <property name="minimumSize">
                            <size>
-                            <width>160</width>
+                            <width>155</width>
                             <height>24</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
-                            <width>160</width>
+                            <width>155</width>
                             <height>30</height>
                            </size>
                           </property>
@@ -1273,7 +1273,7 @@
                           </property>
                          </spacer>
                         </item>
-                        <item row="10" column="2" colspan="2">
+                        <item row="10" column="2" colspan="3">
                          <widget class="QCheckBox" name="checkBox_allowDuplicates">
                           <property name="maximumSize">
                            <size>
