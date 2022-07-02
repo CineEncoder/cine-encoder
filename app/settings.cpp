@@ -23,6 +23,7 @@
 typedef void(Settings::*FnVoidVoid)(void);
 typedef void(Settings::*FnVoidInt)(int);
 
+using namespace Constants;
 
 Settings::Settings(QWidget *parent):
     BaseWindow(parent, true),
@@ -165,7 +166,7 @@ void Settings::setParameters(QString    *pOutputFolder,
         ui->comboBox_fontsize->setCurrentIndex(fontSizeIndex.value(*m_pFontSize));
     }
 
-    ui->comboBox_theme->setCurrentIndex(*m_pTheme);
+    ui->comboBox_theme->setCurrentIndex(*m_pTheme < 2 ? *m_pTheme : 0);
     ui->comboBoxPrefixType->setCurrentIndex(*m_pPrefxType);
     ui->comboBoxSuffixType->setCurrentIndex(*m_pSuffixType);
     if (*m_pSuffixType == 0) {

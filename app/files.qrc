@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/css/style_2.css</file>
-        <file>resources/css/style_1.css</file>
         <file>resources/css/style_3.css</file>
+        <file>resources/css/style_1.css</file>
         <file>resources/css/style_0.css</file>
         <file>resources/html/about.html</file>
         <file>resources/html/donate.html</file>
@@ -370,5 +370,11 @@
         <file>resources/icons/svg/sort_up.svg</file>
         <file>resources/icons/svg/sort_down.svg</file>
         <file>resources/icons/svg/undo.svg</file>
+        <file>resources/icons/svg/check.svg</file>
+        <file>resources/icons/svg/uncheck.svg</file>
+        <file>resources/icons/svg/history.svg</file>
+        <file>resources/icons/svg/order-history.svg</file>
+        <file>resources/icons/svg/undo_history.svg</file>
+        <file>resources/icons/svg/order-history_white.svg</file>
     </qresource>
 </RCC>

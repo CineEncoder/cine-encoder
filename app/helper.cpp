@@ -9,7 +9,7 @@
 #define trc(num) static_cast<int>(trunc(num))
 #define rnd(num) static_cast<int>(round(num))
 #define intToStr(num, offset) QString::number(num).rightJustified(offset, '0')
-#define Dump(a) std::cout << a << std::endl
+#define Print(a) std::cout << a << std::endl
 
 
 Helper::Helper()
@@ -37,7 +37,7 @@ void Helper::detectEnv()
         m_desktopEnv = (line.indexOf("GNOME") != -1) ?
                     DesktopEnv::GNOME : DesktopEnv::OTHER;
     } else {
-        Dump("printenv not found");
+        Print("printenv not found");
     }
 #endif
 }
@@ -68,7 +68,7 @@ QString Helper::getParsedCss(const QString &list)    // Parsing CSS
     }
     for (int i = 0; i < varNames.size() && i < varValues.size(); i++)
         style = style.replace(varNames[i], varValues[i]);
-    //Dump(style.toStdString());
+    //Print(style.toStdString());
     return style;
 }
 
@@ -77,6 +77,23 @@ void Helper::openFileDialog(FileDialogType dialogType,
                             const QString  &path,
                             QStringList    &result)
 {
+    const QVector<QString> videoFilters = {
+        QString("%1: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.wmv, *.ts, *.webm \
+               (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.wmv *.ts *.webm)").arg(tr("Video Files")),
+        "Audio Video Interleave *.avi (*.avi)",
+        "Blu-ray BDAV Video *.m2ts (*.m2ts)",
+        "iTunes Video *.m4v (*.m4v)",
+        "Matroska *.mkv (*.mkv)",
+        "QuickTime *.mov (*.mov)",
+        "MPEG-4 *.mp4 (*.mp4)",
+        "MPEG *.mpeg, *.mpg (*.mpeg *.mpg)",
+        "Material Exchange Format *.mxf (*.mxf)",
+        "Windows Media Video *.wmv (*.wmv)",
+        "Video Transport Stream *.ts (*.ts)",
+        "WebM *.webm (*.webm)",
+        QString("%1 (*.*)").arg(tr("All files"))
+    };
+
     const QVector<QString> audioFilters = {
         QString("%1: *.wma, *.ac3, *.aac, *.alac, *.mka, *.dts, *.thd, *.eac3, *.mp3, *.wav, *.vorbis, *.ogg, *.flac, *.opus \
                (*.wma *.ac3 *.aac *.alac *.mka *.dts *.thd *.eac3 *.mp3 *.wav *.vorbis *.ogg *.flac *.opus)").arg(tr("Audio Files")),
@@ -94,22 +111,28 @@ void Helper::openFileDialog(FileDialogType dialogType,
         "Opus Audio Format *.opus (*.opus)",
         QString("%1 (*.*)").arg(tr("All files"))
     };
-    const QVector<QString> videoFilters = {
-        QString("%1: *.avi, *.m2ts, *.m4v, *.mkv, *.mov, *.mp4, *.mpeg, *.mpg, *.mxf, *.wmv, *.ts, *.webm \
-               (*.avi *.m2ts *.m4v *.mkv *.mov *.mp4 *.mpeg *.mpg *.mxf *.wmv *.ts *.webm)").arg(tr("Video Files")),
-        "Audio Video Interleave *.avi (*.avi)",
-        "Blu-ray BDAV Video *.m2ts (*.m2ts)",
-        "iTunes Video *.m4v (*.m4v)",
-        "Matroska *.mkv (*.mkv)",
-        "QuickTime *.mov (*.mov)",
-        "MPEG-4 *.mp4 (*.mp4)",
-        "MPEG *.mpeg, *.mpg (*.mpeg *.mpg)",
-        "Material Exchange Format *.mxf (*.mxf)",
-        "Windows Media Video *.wmv (*.wmv)",
-        "Video Transport Stream *.ts (*.ts)",
-        "WebM *.webm (*.webm)",
+
+    const QVector<QString> subtitleFilters = {
+        QString("%1: *.srt, *.vtt, *.sbv, *.sub, *.ttml, *.rt, *.scc, *.ssa, *.txt, *.mks, *.ass, *.mpl, *.xml, *.stl, *.mmc \
+               (*.srt *.vtt *.sbv *.sub *.ttml *.rt *.scc *.ssa *.txt *.mks *.ass *.mpl *.xml *.stl *.mmc)").arg(tr("Subtitle Files")),
+        "SubRip Subtitle *.srt (*.srt)",
+        "Web Video Text Tracks *.vtt (*.vtt)",
+        "YouTube Captions *.sbv (*.sbv)",
+        "MicroDVD Subtitle *.sub (*.sub)",
+        "Timed Text Markup Language *.ttml (*.ttml)",
+        "RealText Streaming *.rt (*.rt)",
+        "Scenarist Closed Caption *.scc (*.scc)",
+        "Sub Station Alpha *.ssa (*.ssa)",
+        "Plain Text *.txt (*.txt)",
+        "Matroska Subtitle *.mks (*.mks)",
+        "Aegisub Advanced SubStation Alpha *.ass (*.ass)",
+        "AVCHD Playlist *.mpl (*.mpl)",
+        "XML File *.xml (*.xml)",
+        "Spruce Technologies Subtitle *.stl (*.stl)",
+        "Microsoft Media Catalog *.mmc (*.mmc)",
         QString("%1 (*.*)").arg(tr("All files"))
     };
+
     auto getFilter = [](QVector<QString> filters)->QString {
         QString filter;
         foreach (auto flt, filters) {
@@ -140,6 +163,10 @@ void Helper::openFileDialog(FileDialogType dialogType,
     case FileDialogType::OPENAFILES:
         dlg.setFileMode(QFileDialog::ExistingFiles);
         dlg.setNameFilter(getFilter(audioFilters));
+        break;
+    case FileDialogType::OPENSFILES:
+        dlg.setFileMode(QFileDialog::ExistingFiles);
+        dlg.setNameFilter(getFilter(subtitleFilters));
         break;
     case FileDialogType::SELECTFOLDER:
         dlg.setFileMode(QFileDialog::DirectoryOnly);
@@ -191,4 +218,18 @@ QString Helper::elideText(QWidget *w,
 #endif
     const int width = w->width();
     return (fwidth > width) ? fm.elidedText(text, elide, width, 0) : text;
+}
+
+QString Helper::recalcChannels(const QString &ch)
+{
+    return (ch == "6") ? "5.1" :
+           (ch == "8") ? "7.1" : ch;
+}
+
+bool Helper::isSupported(const QString &format)
+{
+    const QVector<QString> unspFormats = {
+        "Timed Text", "PGS"
+    };
+    return unspFormats.indexOf(format) == -1 ? true: false;
 }

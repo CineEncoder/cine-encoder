@@ -17,15 +17,17 @@
 #include <QDir>
 #include <QVector>
 
-#define Dump(a) std::cout << a << std::endl
+#define Print(a) std::cout << a << std::endl
+#define numToStr(num) QString::number(num)
 #define Q_LOOP(i, start, end) for(int i = start; i < end; i++)
+#define CHECKS(chk) data.checks[Data::chk]
+#define FIELDS(fld) data.fields[Data::fld]
 #define SETTINGSPATH QDir::homePath() + QString("/CineEncoder")
 #define SETTINGSFILE SETTINGSPATH + QString("/settings.ini")
 #define SETTINGS(settings) QSettings settings(SETTINGSFILE, \
                             QSettings::IniFormat);
 
 // ******************* Constants *****************************//
-
 #define PRESETS_VERSION 354
 #define SETTINGS_VERSION 354
 
@@ -50,109 +52,135 @@
 #define MAXIMUM_ALLOWED_TIME 359999.0f
 #define FONTSIZE 8
 
-// ***************** Table Widget Columns *********************//
 
-enum ColumnIndex {
-    FILENAME,   FORMAT,     RESOLUTION,    DURATION,     FPS,
-    AR,         STATUS,     BITRATE,       SUBSAMPLING,  BITDEPTH,
-    COLORSPACE, COLORRANGE, COLORPRIM,     COLORMATRIX,  TRANSFER,
-    MAXLUM,     MINLUM,     MAXCLL,        MAXFALL,      MASTERDISPLAY,
-    PATH,       T_DUR,      T_CHROMACOORD, T_WHITECOORD, T_STREAMSIZE,
-    T_WIDTH,    T_HEIGHT,   T_STARTTIME,   T_ENDTIME,    T_ID
-};
+namespace Constants {
+    // ***************** Table Widget Columns *********************//
+    enum ColumnIndex {
+        FILENAME,   FORMAT,     RESOLUTION,    DURATION,     FPS,
+        AR,         STATUS,     BITRATE,       SUBSAMPLING,  BITDEPTH,
+        COLORSPACE, COLORRANGE, COLORPRIM,     COLORMATRIX,  TRANSFER,
+        MAXLUM,     MINLUM,     MAXCLL,        MAXFALL,      MASTERDISPLAY,
+        PATH,       T_DUR,      T_CHROMACOORD, T_WHITECOORD, T_STREAMSIZE,
+        T_WIDTH,    T_HEIGHT,   T_STARTTIME,   T_ENDTIME,    T_ID
+    };
 
-// **************** Geometry and Themes *********************//
+    // **************** Geometry and Themes *********************//
+    enum DockIndex {
+        PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
+        STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK
+    };
 
-enum DockIndex {
-    PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
-    STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK
-};
+    enum Theme {
+        LIGHT, DARK, WAVE, GRAY
+    };
 
-enum Theme {
-    DEFAULT, GRAY, DARK, WAVE, LIGHT
-};
+    enum PreviewDest {
+        PREVIEW = 1, SPLITTER = 2
+    };
 
-enum PreviewDest {
-    PREVIEW = 1, SPLITTER = 2
-};
+    enum PreviewRes {
+        RES_LOW, RES_HIGH
+    };
 
-enum PreviewRes {
-    RES_LOW, RES_HIGH
-};
+    // ********************* Report ******************************//
+    struct ReportLog {
+        enum class Icon : uchar {
+            Info, Warning, Critical
+        };
+        Icon    reportIcon;
+        QString reportTime,
+                reportMsg;
+        ReportLog() :
+            reportIcon(Icon::Info),
+            reportTime(QString()),
+            reportMsg(QString())
+        {}
+    };
 
-// ******************** Metadata *****************************//
+    // ******************** Metadata *****************************//
+    struct Data {
+        enum StreamCheck {
+            audioChecks, externAudioChecks, subtChecks, externSubtChecks,
+            audioDef,    externAudioDef,    subtDef,    externSubtDef
+        };
+        enum StreamField {
+            audioFormats, audioChannels, audioChLayouts, audioDuration,
+            audioLangs,   audioTitles,
 
-struct Data {
-    QVector<QString> videoMetadata;
-    QVector<bool>    audioChecks;
-    QVector<QString> audioFormats,
-                     audioChannels,
-                     audioChLayouts,
-                     audioLangs,
-                     audioTitles;
-    QVector<bool>    externAudioChecks;
-    QVector<QString> externAudioFormats,
-                     externAudioChannels,
-                     externAudioChLayouts,
-                     externAudioLangs,
-                     externAudioTitles,
-                     externAudioPath;
-    QVector<bool>    subtChecks;
-    QVector<QString> subtFormats,
-                     subtLangs,
-                     subtTitles;
-};
+            externAudioFormats,  externAudioChannels, externAudioChLayouts,
+            externAudioDuration, externAudioLangs,    externAudioTitles,
+            externAudioPath,
 
-enum VideoMetadataIndex {
-    VIDEO_TITLE,  VIDEO_MOVIENAME, VIDEO_YEAR,
-    VIDEO_AUTHOR, VIDEO_PERFORMER, VIDEO_DESCRIPTION
-};
+            subtFormats, subtDuration, subtLangs, subtTitles,
 
-// ******************* Presets *****************************//
+            externSubtFormats, externSubtDuration, externSubtLangs,
+            externSubtTitles,  externSubtPath
+        };
 
-enum Profile {
-    HIGH,           MAIN,           MAIN10,
-    MAIN12,         PROFILE_0,      PROFILE_1,
-    PROFILE_2,      PROFILE_3,      PROFILE_4,
-    PROFILE_5,      DNXHR_LB,       DNXHR_SQ,
-    DNXHR_HQ,       DNXHR_HQX,      DNXHR_444,
-    PROFILE_AUTO
-};
-enum Pixformat {
-    YUV420P12LE,    YUV444P10LE,    YUV422P10LE,
-    YUV420P10LE,    YUV422p,        YUV420P,
-    P010LE,         PIXFORMAT_AUTO
-};
+        static const int CHECKS_COUNT = 8;
+        static const int FIELDS_COUNT = 22;
 
-enum CurHDRIndex {
-    CUR_COLOR_RANGE,    CUR_COLOR_PRIMARY,  CUR_COLOR_MATRIX,
-    CUR_TRANSFER,       CUR_MAX_LUM,        CUR_MIN_LUM,
-    CUR_MAX_CLL,        CUR_MAX_FALL,       CUR_MASTER_DISPLAY,
-    CUR_CHROMA_COORD,   CUR_WHITE_COORD
-};
+        QVector<QString> videoMetadata;
+        QVector<bool>    checks[CHECKS_COUNT];
+        QVector<QString> fields[FIELDS_COUNT];
+        void clear() {
+            videoMetadata.clear();
+            Q_LOOP(i, 0, CHECKS_COUNT)
+                checks[i].clear();
+            Q_LOOP(i, 0, FIELDS_COUNT)
+                fields[i].clear();
+        }
+    };
 
-enum MasterDisplay {
-    SOURCE, DISPLAY_P3, DCI_P3, BT_2020, BT_709, CUSTOM
-};
+    enum VideoMetadataIndex {
+        VIDEO_TITLE,  VIDEO_MOVIENAME, VIDEO_YEAR,
+        VIDEO_AUTHOR, VIDEO_PERFORMER, VIDEO_DESCRIPTION
+    };
 
-enum CurParamIndex {
-    OUTPUT_PARAM,   CODEC,          MODE,
-    CONTAINER,      BQR,            MAXRATE,
-    BUFSIZE,        FRAME_RATE,     BLENDING,
-    WIDTH,          HEIGHT,         PASS,
-    PRESET,         COLOR_RANGE,    MIN_LUM,
-    MAX_LUM,        MAX_CLL,        MAX_FALL,
-    MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
-    AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
-    LEVEL,          ASAMPLE_RATE,   ACHANNELS,
-    MATRIX,         PRIMARY,        TRC,
-    PRESET_NAME,    REP_PRIM,       REP_MATRIX,
-    REP_TRC
-};
+    // ******************* Presets *****************************//
+    enum Profile {
+        HIGH,           MAIN,           MAIN10,
+        MAIN12,         PROFILE_0,      PROFILE_1,
+        PROFILE_2,      PROFILE_3,      PROFILE_4,
+        PROFILE_5,      DNXHR_LB,       DNXHR_SQ,
+        DNXHR_HQ,       DNXHR_HQX,      DNXHR_444,
+        PROFILE_AUTO
+    };
+    enum Pixformat {
+        YUV420P12LE,    YUV444P10LE,    YUV422P10LE,
+        YUV420P10LE,    YUV422p,        YUV420P,
+        P010LE,         PIXFORMAT_AUTO
+    };
 
-enum EncodingStatus {
-    START, PAUSE, RESUME
-};
+    enum CurHDRIndex {
+        CUR_COLOR_RANGE,    CUR_COLOR_PRIMARY,  CUR_COLOR_MATRIX,
+        CUR_TRANSFER,       CUR_MAX_LUM,        CUR_MIN_LUM,
+        CUR_MAX_CLL,        CUR_MAX_FALL,       CUR_MASTER_DISPLAY,
+        CUR_CHROMA_COORD,   CUR_WHITE_COORD
+    };
 
+    enum MasterDisplay {
+        SOURCE, DISPLAY_P3, DCI_P3, BT_2020, BT_709, CUSTOM
+    };
+
+    enum CurParamIndex {
+        OUTPUT_PARAM,   CODEC,          MODE,
+        CONTAINER,      BQR,            MAXRATE,
+        BUFSIZE,        FRAME_RATE,     BLENDING,
+        WIDTH,          HEIGHT,         PASS,
+        PRESET,         COLOR_RANGE,    MIN_LUM,
+        MAX_LUM,        MAX_CLL,        MAX_FALL,
+        MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
+        AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
+        LEVEL,          ASAMPLE_RATE,   ACHANNELS,
+        MATRIX,         PRIMARY,        TRC,
+        PRESET_NAME,    REP_PRIM,       REP_MATRIX,
+        REP_TRC
+    };
+
+    enum EncodingStatus {
+        START, PAUSE, RESUME
+    };
+}
 
 #endif // CONSTANTS_H

@@ -37,6 +37,7 @@ RCC_DIR =     $$PWD/../builddir/rcc
 # FILES
 SOURCES += \
     popupmessage.cpp \
+    report.cpp \
     widgets/qstreamview.cpp \
     widgets/qanimatedsvg.cpp \
     basedialog.cpp \
@@ -52,6 +53,7 @@ SOURCES += \
 
 HEADERS += \
     popupmessage.h \
+    report.h \
     widgets/qstreamview.h \
     widgets/qanimatedsvg.h \
     basedialog.h \
@@ -73,6 +75,7 @@ FORMS += \
     popupmessage.ui \
     preset.ui \
     progress.ui \
+    report.ui \
     settings.ui
 
 

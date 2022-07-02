@@ -19,6 +19,7 @@
 #include "progress.h"
 #include "tables.h"
 #include "helper.h"
+#include "report.h"
 #include <QDesktopWidget>
 #include <QPaintEvent>
 #include <QDragEnterEvent>
@@ -77,8 +78,11 @@
 #define GINFO(a, b) QString::fromStdWString(MI.Get(Stream_General, a, __T(b), Info_Text, Info_Name))
 #define VINFO(a, b) QString::fromStdWString(MI.Get(Stream_Video, a, __T(b)))
 #define AINFO(a, b) QString::fromStdWString(MI.Get(Stream_Audio, a, __T(b)))
-#define GETTEXT(row, col) ui->tableWidget->item(row, col)->text()
+#define SINFO(a, b) QString::fromStdWString(MI.Get(Stream_Text, a, __T(b)))
+#define GETTEXT(row, col) ui->tableWidget->item(row, ColumnIndex::col)->text()
 #define SLT(method) &MainWindow::method
+#define _CHECKS(row, chk) m_data[row].checks[Data::chk]
+#define _FIELDS(row, fld) m_data[row].fields[Data::fld]
 
 typedef void(MainWindow::*FnVoidVoid)(void);
 typedef void(MainWindow::*FnVoidInt)(int);
@@ -117,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent):
     ui(new Ui::Widget),
     m_pProcessThumbCreation(nullptr),
     m_openDir(DEFAULTPATH),
-    m_theme(Theme::DEFAULT),
+    m_theme(Theme::LIGHT),
     m_batch_mode(false),
     m_status_encode_btn(EncodingStatus::START),
     m_row(-1),
@@ -347,7 +351,7 @@ void MainWindow::setTrayIcon()
 void MainWindow::createConnections()
 {
     // Buttons
-    const int BTN_COUNT = 26;
+    const int BTN_COUNT = 27;
     QPushButton *btns[BTN_COUNT] = {
         ui->closeWindow,  ui->hideWindow,    ui->expandWindow,
         ui->addFiles,     ui->removeFile,    ui->sortUp,
@@ -357,18 +361,18 @@ void MainWindow::createConnections()
         ui->framePrev,    ui->frameNext,     ui->setStartTime,
         ui->setEndTime,   ui->removePreset,  ui->editPreset,
         ui->applyPreset,  ui->addFilesHot,   ui->setOutFolder,
-        ui->closeTWindow, ui->resetLabels
+        ui->closeTWindow, ui->resetLabels,   ui->report
     };
     FnVoidVoid btn_methods[BTN_COUNT] = {
         SLT(onCloseWindow),  SLT(onHideWindow),    SLT(onExpandWindow),
         SLT(onAddFiles),     SLT(onRemoveFile),    SLT(onSortUp),
         SLT(onSortDown),     SLT(onStop),          SLT(onStart),
         SLT(onSettings),     SLT(onClearMetadata), SLT(onUndoMetadata),
-        SLT(onAddExtStream), SLT(onClearTitles),  SLT(onUndoTitles),
+        SLT(onAddExtStream), SLT(onClearTitles),   SLT(onUndoTitles),
         SLT(onFramePrev),    SLT(onFrameNext),     SLT(onSetStartTime),
         SLT(onSetEndTime),   SLT(onRemovePreset),  SLT(onEditPreset),
         SLT(onApplyPreset),  SLT(onAddFiles),      SLT(onSetOutFolder),
-        SLT(onCloseWindow),  SLT(onResetLabels)
+        SLT(onCloseWindow),  SLT(onResetLabels),   SLT(onReport)
     };
     Q_LOOP(i, 0, BTN_COUNT)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
@@ -583,6 +587,7 @@ void MainWindow::setParameters()    // Set parameters
       m_preset_table[i].resize(5);
 
     m_data.clear();
+    m_reportLog.clear();
 
     auto comboBoxes = findChildren<QComboBox*>();
     foreach (auto combo, comboBoxes) {
@@ -604,18 +609,18 @@ void MainWindow::setParameters()    // Set parameters
     //************ Create folders ******************//
     if (!QDir(SETTINGSPATH).exists()) {
         QDir().mkdir(SETTINGSPATH);
-        Dump("Setting path not existed and was created ...");
+        Print("Setting path not existed and was created ...");
     }
     if (QDir(THUMBNAILPATH).exists()) {
         unsigned int count_thumb = QDir(THUMBNAILPATH).count();
         if (count_thumb > 300) {
             QDir(THUMBNAILPATH).removeRecursively();
-            Dump("Thumbnails removed... ");
+            Print("Thumbnails removed... ");
         }
     }
     if (!QDir(THUMBNAILPATH).exists()) {
         QDir().mkdir(THUMBNAILPATH);
-        Dump("Thumbnail path not existed and was created ...");
+        Print("Thumbnail path not existed and was created ...");
     }
 
     //************** Read presets ******************//
@@ -780,7 +785,7 @@ void MainWindow::setParameters()    // Set parameters
         QTreeWidgetItem *__item = ui->treeWidget->topLevelItem(m_pos_top)->child(m_pos_cld);
         ui->treeWidget->setCurrentItem(__item);
     }
-    Dump(NUM_ROWS << " x " << NUM_COLUMNS);
+    Print(NUM_ROWS << " x " << NUM_COLUMNS);
     Q_LOOP(i, 7, 41)
         ui->treeWidget->hideColumn(i);
 
@@ -817,7 +822,7 @@ void MainWindow::setParameters()    // Set parameters
     if (m_hideInTrayFlag)
         m_pTrayIcon->show();
     setTheme(m_theme);
-    Dump("Desktop env.: " << short(Helper::getEnv()));
+    Print("Desktop env.: " << short(Helper::getEnv()));
 }
 
 void MainWindow::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY)
@@ -856,6 +861,12 @@ void MainWindow::setExpandIcon()
 void MainWindow::onHideWindow()    // Hide window
 {
     m_hideInTrayFlag ? hide() : showMinimized();
+}
+
+void MainWindow::onReport()
+{
+    Report *rpt = new Report(this, m_reportLog);
+    rpt->show();
 }
 
 void MainWindow::onRestoreWindowState()
@@ -937,41 +948,41 @@ void MainWindow::showVideoSplitter()
 
 void MainWindow::get_current_data() // Get current data
 {
-    m_dur = GETTEXT(m_row, ColumnIndex::T_DUR).toDouble();
-    m_stream_size = GETTEXT(m_row, ColumnIndex::T_STREAMSIZE);
-    m_width = GETTEXT(m_row, ColumnIndex::T_WIDTH);
-    m_height = GETTEXT(m_row, ColumnIndex::T_HEIGHT);
-    m_fmt = GETTEXT(m_row, ColumnIndex::FORMAT);
-    m_fps = GETTEXT(m_row, ColumnIndex::FPS);
+    m_dur = GETTEXT(m_row, T_DUR).toDouble();
+    m_stream_size = GETTEXT(m_row, T_STREAMSIZE);
+    m_width = GETTEXT(m_row, T_WIDTH);
+    m_height = GETTEXT(m_row, T_HEIGHT);
+    m_fmt = GETTEXT(m_row, FORMAT);
+    m_fps = GETTEXT(m_row, FPS);
 
     const double fps_double = m_fps.toDouble();
     m_fr_count = static_cast<int>(round(m_dur * fps_double));
-    m_startTime =  GETTEXT(m_row, ColumnIndex::T_STARTTIME).toDouble();
-    m_endTime = GETTEXT(m_row, ColumnIndex::T_ENDTIME).toDouble();
+    m_startTime =  GETTEXT(m_row, T_STARTTIME).toDouble();
+    m_endTime = GETTEXT(m_row, T_ENDTIME).toDouble();
 
     QString curCodec = m_fmt;
     QString curFps = m_fps;
-    QString curRes = GETTEXT(m_row, ColumnIndex::RESOLUTION);
-    QString curAr = GETTEXT(m_row, ColumnIndex::AR);
-    QString curBitrate = GETTEXT(m_row, ColumnIndex::BITRATE);
-    QString curColorSampling = GETTEXT(m_row, ColumnIndex::SUBSAMPLING);
-    QString curDepth = GETTEXT(m_row, ColumnIndex::BITDEPTH);
-    QString curSpace = GETTEXT(m_row, ColumnIndex::COLORSPACE);
+    QString curRes = GETTEXT(m_row, RESOLUTION);
+    QString curAr = GETTEXT(m_row, AR);
+    QString curBitrate = GETTEXT(m_row, BITRATE);
+    QString curColorSampling = GETTEXT(m_row, SUBSAMPLING);
+    QString curDepth = GETTEXT(m_row, BITDEPTH);
+    QString curSpace = GETTEXT(m_row, COLORSPACE);
 
-    m_curPath = GETTEXT(m_row, ColumnIndex::PATH);
-    m_curFilename = GETTEXT(m_row, ColumnIndex::FILENAME);
+    m_curPath = GETTEXT(m_row, PATH);
+    m_curFilename = GETTEXT(m_row, FILENAME);
     m_input_file = m_curPath + QString("/") + m_curFilename;
-    m_hdr[CUR_COLOR_RANGE] = GETTEXT(m_row, ColumnIndex::COLORRANGE);       // color range
-    m_hdr[CUR_COLOR_PRIMARY] = GETTEXT(m_row, ColumnIndex::COLORPRIM);      // color primary
-    m_hdr[CUR_COLOR_MATRIX] = GETTEXT(m_row, ColumnIndex::COLORMATRIX);     // color matrix
-    m_hdr[CUR_TRANSFER] = GETTEXT(m_row, ColumnIndex::TRANSFER);            // transfer
-    m_hdr[CUR_MAX_LUM] = GETTEXT(m_row, ColumnIndex::MAXLUM);               // max lum
-    m_hdr[CUR_MIN_LUM] = GETTEXT(m_row, ColumnIndex::MINLUM);               // min lum
-    m_hdr[CUR_MAX_CLL] = GETTEXT(m_row, ColumnIndex::MAXCLL);               // max cll
-    m_hdr[CUR_MAX_FALL] = GETTEXT(m_row, ColumnIndex::MAXFALL);             // max fall
-    m_hdr[CUR_MASTER_DISPLAY] = GETTEXT(m_row, ColumnIndex::MASTERDISPLAY); // master display
-    m_hdr[CUR_CHROMA_COORD] = GETTEXT(m_row, ColumnIndex::T_CHROMACOORD);   // chr coord
-    m_hdr[CUR_WHITE_COORD] = GETTEXT(m_row, ColumnIndex::T_WHITECOORD);     // white coord
+    m_hdr[CUR_COLOR_RANGE] = GETTEXT(m_row, COLORRANGE);
+    m_hdr[CUR_COLOR_PRIMARY] = GETTEXT(m_row, COLORPRIM);
+    m_hdr[CUR_COLOR_MATRIX] = GETTEXT(m_row, COLORMATRIX);
+    m_hdr[CUR_TRANSFER] = GETTEXT(m_row, TRANSFER);
+    m_hdr[CUR_MAX_LUM] = GETTEXT(m_row, MAXLUM);
+    m_hdr[CUR_MIN_LUM] = GETTEXT(m_row, MINLUM);
+    m_hdr[CUR_MAX_CLL] = GETTEXT(m_row, MAXCLL);
+    m_hdr[CUR_MAX_FALL] = GETTEXT(m_row, MAXFALL);
+    m_hdr[CUR_MASTER_DISPLAY] = GETTEXT(m_row, MASTERDISPLAY);
+    m_hdr[CUR_CHROMA_COORD] = GETTEXT(m_row, T_CHROMACOORD);
+    m_hdr[CUR_WHITE_COORD] = GETTEXT(m_row, T_WHITECOORD);
 
     //*************** Set icons ********************//
     double halfTime = m_dur/2;
@@ -1030,29 +1041,23 @@ void MainWindow::get_current_data() // Get current data
     if (curBitrate != "")
         curBitrate += QString(" %1").arg(tr("kbps"));
 
-    QString sourceParam = QString("%1: %2").arg(tr("Video"), curCodec +
-                                                curRes + curFps + curAr + curSpace +
+    QString sourceParam = QString("%1: %2").arg(tr("Video"), curCodec + curRes +
+                                                curFps + curAr + curSpace +
                                                 curColorSampling + curDepth + curBitrate);
-    int countAudioStreams = 0;
-    while (countAudioStreams < m_data[m_row].audioFormats.size()
-           && countAudioStreams < MAX_AUDIO_STREAMS) {
-        const QString curAudioStream = m_data[m_row].audioFormats[countAudioStreams];
-        const QString curAudioLang = m_data[m_row].audioLangs[countAudioStreams];
-        const QString curAudioCh = m_data[m_row].audioChannels[countAudioStreams] + " ch";
-        if (curAudioStream == "")
-            break;
-        countAudioStreams++;
-        sourceParam += QString("\n%1 %2: %3, %4, %5").arg(tr("Audio"), QString::number(countAudioStreams),
-                                                   curAudioStream, curAudioCh, curAudioLang);
+
+    Q_LOOP(i, 0, _FIELDS(m_row, audioFormats).size()) {
+        const QString audioFormat = _FIELDS(m_row, audioFormats)[i];
+        const QString audioLang = _FIELDS(m_row, audioLangs)[i];
+        const QString audioCh = Helper::recalcChannels(_FIELDS(m_row, audioChannels)[i]) + " ch";
+        sourceParam += QString("\n%1 %2: %3, %4, %5").arg(tr("Audio"), numToStr(i + 1),
+                                                   audioFormat, audioCh, audioLang);
     }
 
-    int countSubtitles = 0;
-    while (countSubtitles < m_data[m_row].subtFormats.size()
-           && countSubtitles < MAX_SUBTITLES) {
-        const QString curSubtitle = m_data[m_row].subtFormats[countSubtitles];
-        if (curSubtitle == "")
-            break;
-        countSubtitles++;
+    Q_LOOP(i, 0, _FIELDS(m_row, subtFormats).size()) {
+        const QString subtFormat = _FIELDS(m_row, subtFormats)[i];
+        const QString subtLang = _FIELDS(m_row, subtLangs)[i];
+        sourceParam += QString("\n%1 %2: %3, %4").arg(tr("Subtitle"), numToStr(i + 1),
+                                                   subtFormat, subtLang);
     }
 
     if (curCodec == "Undef, ")
@@ -1083,13 +1088,15 @@ void MainWindow::get_current_data() // Get current data
         lineEdit->setCursorPosition(0);
 
     //********** Set audio widgets *****************//
-    if (countAudioStreams > 0 || m_data[m_row].externAudioFormats.size() > 0) {
+    if (_FIELDS(m_row, audioFormats).size() > 0 ||
+            _FIELDS(m_row, externAudioFormats).size() > 0) {
         m_pAudioLabel->setVisible(false);
         ui->streamAudio->setList(m_data[m_row]);
     }
 
     //********* Set subtitle widgets ***************//
-    if (countSubtitles > 0) {
+    if (_FIELDS(m_row, subtFormats).size() > 0 ||
+            _FIELDS(m_row, externSubtFormats).size() > 0) {
         m_pSubtitleLabel->setVisible(false);
         ui->streamSubtitle->setList(m_data[m_row]);
     }
@@ -1098,7 +1105,7 @@ void MainWindow::get_current_data() // Get current data
 void MainWindow::setTheme(const int ind_theme)   // Set theme
 {
     const QString themePath = QString(":/resources/css/style_%1.css")
-            .arg(QString::number(ind_theme));
+            .arg(numToStr(ind_theme));
     QFile file(themePath);
     if (file.open(QFile::ReadOnly)) {
         const QString list = QString::fromUtf8(file.readAll());
@@ -1112,7 +1119,7 @@ void MainWindow::setTheme(const int ind_theme)   // Set theme
     case Theme::WAVE:
         spinnerFile = ":/resources/icons/svg/spinner_black.svg";
         break;
-    case Theme::DEFAULT:
+    case Theme::LIGHT:
         spinnerFile = ":/resources/icons/svg/spinner.svg";
         break;
     }
@@ -1297,7 +1304,7 @@ void MainWindow::onEncodingCompleted()
         showPopup(tr("Task completed!\n\n Elapsed time: ") +
                         Helper::timeConverter(elps_t));
     };
-    Dump("Completed ...");
+    Print("Completed ...");
     setStatus(tr("Done!"));
     m_pAnimation->stop();
     ui->label_Progress->hide();
@@ -1328,7 +1335,7 @@ void MainWindow::onEncodingCompleted()
 
 void MainWindow::onEncodingAborted()
 {
-    Dump("Stop execute ...");
+    Print("Stop execute ...");
     if (m_protectFlag)
         m_pTimer->stop();
     setStatus(tr("Stop"));
@@ -1341,16 +1348,20 @@ void MainWindow::onEncodingAborted()
     showPopup(tr("The current encoding process has been canceled!\n"));
 }
 
-void MainWindow::onEncodingError(const QString &error_message)
+void MainWindow::onEncodingError(const QString &error_message, bool popup)
 {
-    Dump("Error...");
-    if (m_protectFlag)
-        m_pTimer->stop();
-    setStatus(tr("Error!"));
-    setWidgetsEnabled(true);
-    const QString msg = (error_message != "") ? tr("An error occurred: ") + error_message :
-                                                tr("Unexpected error occurred!");
-    showInfoMessage(msg);
+    if (!popup) {
+        Print("Error...");
+        if (m_protectFlag)
+            m_pTimer->stop();
+        setStatus(tr("Error!"));
+        setWidgetsEnabled(true);
+        const QString msg = (error_message != "") ? tr("An error occurred: ") + error_message :
+                                                    tr("Unexpected error occurred!");
+        showInfoMessage(msg);
+    } else {
+        showPopup(error_message);
+    }
 }
 
 void MainWindow::pause()    // Pause encoding
@@ -1377,7 +1388,7 @@ void MainWindow::resume()   // Resume encoding
 
 void MainWindow::repeatHandler_Type_1()  // Repeat handler
 {
-    //Dump("Repeat handler...");
+    //Print("Repeat handler...");
     onStart();
     showInfoMessage(tr("Pause"), true);
     onStart();
@@ -1414,14 +1425,14 @@ void MainWindow::onSort(const bool up)
 {
     const int rowsCount = ui->tableWidget->rowCount();
     Q_LOOP(i, 0, rowsCount) {
-        QTableWidgetItem *__id = new QTableWidgetItem(QString::number(i));
+        QTableWidgetItem *__id = new QTableWidgetItem(numToStr(i));
         ui->tableWidget->setItem(i, ColumnIndex::T_ID, __id);
     }
     Qt::SortOrder srt = (up) ? Qt::AscendingOrder : Qt::DescendingOrder;
     ui->tableWidget->sortByColumn(ColumnIndex::FILENAME, srt);
     QVector<int> order(0);
     Q_LOOP(i, 0, rowsCount)
-        order.push_back(GETTEXT(i, ColumnIndex::T_ID).toInt());
+        order.push_back(GETTEXT(i, T_ID).toInt());
     Helper::reorder(m_data, order);
 }
 
@@ -1439,7 +1450,7 @@ void MainWindow::onStart()  // Encode button
 {
     switch (m_status_encode_btn) {
     case EncodingStatus::START: {
-        Dump("Status encode btn: start");
+        Print("Status encode btn: start");
         if (ui->tableWidget->rowCount() == 0) {
             showPopup(tr("Select input file first!"), PopupMessage::Icon::Warning);
             return;
@@ -1456,13 +1467,13 @@ void MainWindow::onStart()  // Encode button
         break;
     }
     case EncodingStatus::PAUSE: {
-        Dump("Status encode btn: pause");
+        Print("Status encode btn: pause");
         pause();
         m_status_encode_btn = EncodingStatus::RESUME;
         break;
     }
     case EncodingStatus::RESUME: {
-        Dump("Status encode btn: resume");
+        Print("Status encode btn: resume");
         resume();
         m_status_encode_btn = EncodingStatus::PAUSE;
         break;
@@ -1478,7 +1489,7 @@ void MainWindow::onStart()  // Encode button
 
 void MainWindow::onStop()    // Stop
 {
-    Dump("Call Stop ...");
+    Print("Call Stop ...");
     if (m_pEncoder->getEncodingState() != QProcess::NotRunning) {
         bool confirm = showDialogMessage(tr("Stop encoding?"));
         if (confirm)
@@ -1490,181 +1501,164 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
 {
     Progress prg(this, tr("OPENING FILES"));
     prg.setModal(true);
-    prg.show();
     ui->labelAnimation->hide();
     ui->label_Progress->hide();
     ui->label_Remaining->hide();
     ui->label_RemTime->hide();
     ui->progressBar->hide();
     MediaInfo MI;
-    int i = 1;
-    int countFileNames = openFileNames.size();
-    while (i <= countFileNames) {
-        const int numRows = ui->tableWidget->rowCount();
-        ui->tableWidget->setRowCount(numRows + 1);
-        const QString file = openFileNames.at(i-1);
+    Q_LOOP(i, 0, openFileNames.size()) {
+        const QString file = openFileNames.at(i);
         const QString inputFolder = QFileInfo(file).absolutePath();
         const QString inputFile = QFileInfo(file).fileName();
-        prg.setText(inputFile);
-        prg.setPercent(0);
-        QApplication::processEvents();
-        if (i == 1)
-            m_openDir = inputFolder;
-        MI.Open(file.toStdWString());
-        QString fmt_qstr = VINFO(0, "Format");
-        QString width_qstr = VINFO(0, "Width");
-        QString height_qstr = VINFO(0, "Height");
-        QString size = (width_qstr != "") ? width_qstr + "x" + height_qstr : "Undef";
-        double duration_double = 0.001 * VINFO(0, "Duration").toDouble();
-        QString durationTime = Helper::timeConverter(static_cast<float>(duration_double));
-        QString fps_qstr = VINFO(0, "FrameRate");
-        const QString status("");
-        int bitrate_int = static_cast<int>(0.001 * VINFO(0, "BitRate").toDouble());
-        QString coeff = VINFO(0, "matrix_coefficients");
-        const QString mtrx_coeff = coeff.replace(" ", "").replace(".", "").replace("on-", "").replace("onstant", "");
-        QString luminance_qstr = VINFO(0, "MasteringDisplay_Luminance");
-        QString luminance_rep = luminance_qstr.replace("min: ", "").replace("max: ", "").replace(" cd/m2", "");
-        QString min_luminance = luminance_rep.split(", ")[0];
-        QString max_luminance = luminance_rep.replace(min_luminance, "").replace(", ", "");
-        QString color_prim = VINFO(0, "MasteringDisplay_ColorPrimaries");
-        int len = color_prim.length();
-        QString white_coord = "";
-        QString chroma_coord = "";
-        if (len > 15) {
-            QStringList mdcp = color_prim.split(",");
-            QString r = mdcp[0].replace("R: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
-            QString g = mdcp[1].replace(" G: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
-            QString b = mdcp[2].replace(" B: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
-            white_coord = mdcp[3].replace(" White point: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
-            chroma_coord = r + "," + g + "," + b;
-            color_prim = "Undefined";
-        }
-
-        if (fmt_qstr == "")
-            fmt_qstr = "Undef";
-        if (fps_qstr == "")
-            fps_qstr = "Undef";
-        if (durationTime == "00:00:00")
-            durationTime = "Undef";
-
-        const QString arr_items[] = {
-            inputFile,
-            fmt_qstr,
-            size,
-            durationTime,
-            fps_qstr,
-            VINFO(0, "DisplayAspectRatio"),
-            status,
-            QString::number(bitrate_int),
-            VINFO(0, "ChromaSubsampling"),
-            VINFO(0, "BitDepth"),
-            VINFO(0, "ColorSpace"),
-            VINFO(0, "colour_range"),
-            VINFO(0, "colour_primaries").replace(".", ""),
-            mtrx_coeff,
-            VINFO(0, "transfer_characteristics").replace(".", ""),
-            max_luminance,
-            min_luminance,
-            VINFO(0, "MaxCLL").replace(" cd/m2", ""),
-            VINFO(0, "MaxFALL").replace(" cd/m2", ""),
-            color_prim,
-            inputFolder,
-            QString::number(duration_double, 'f', 3),
-            chroma_coord,
-            white_coord,
-            VINFO(0, "StreamSize"),
-            width_qstr,
-            height_qstr,
-            VINFO(0, "Title"),
-            GETINFO(Stream_General, 0, "Movie"),
-            GETINFO(Stream_General, 0, "YEAR"),
-            GETINFO(Stream_General, 0, "AUTHOR"),
-            GETINFO(Stream_General, 0, "Performer"),
-            GETINFO(Stream_General, 0, "Description")
-        };
-
-        m_data.resize(numRows + 1);
-        m_data[numRows].videoMetadata.clear();
-        Q_LOOP(j, 27, 33)
-            m_data[numRows].videoMetadata.push_back(arr_items[j]);
-
-        for (int column = ColumnIndex::FILENAME; column <= ColumnIndex::T_HEIGHT; column++) {
-            QTableWidgetItem *__item = new QTableWidgetItem(arr_items[column]);
-            if (column >= ColumnIndex::FORMAT && column <= ColumnIndex::MASTERDISPLAY)
-                __item->setTextAlignment(Qt::AlignCenter);
-            ui->tableWidget->setItem(numRows, column, __item);
-        }
-
-        QTableWidgetItem *__startTime = new QTableWidgetItem("0");
-        QTableWidgetItem *__endTime = new QTableWidgetItem("0");
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_STARTTIME, __startTime);
-        ui->tableWidget->setItem(numRows, ColumnIndex::T_ENDTIME, __endTime);
-
-        m_data[numRows].audioChecks.clear();
-        m_data[numRows].audioFormats.clear();
-        m_data[numRows].audioChannels.clear();
-        m_data[numRows].audioChLayouts.clear();
-        m_data[numRows].audioLangs.clear();
-        m_data[numRows].audioTitles.clear();
-        m_data[numRows].externAudioChecks.clear();
-        m_data[numRows].externAudioFormats.clear();
-        m_data[numRows].externAudioChannels.clear();
-        m_data[numRows].externAudioChLayouts.clear();
-        m_data[numRows].externAudioLangs.clear();
-        m_data[numRows].externAudioTitles.clear();
-        m_data[numRows].externAudioPath.clear();
-        Q_LOOP(j, 0, MAX_AUDIO_STREAMS) {
-            QString audioFormat = AINFO(size_t(j), "Format");
-            const QString audioChannels = AINFO(size_t(j), "Channels");
-            const QString audioChLayouts = AINFO(size_t(j), "ChannelLayout");
-            const QString audioLang = AINFO(size_t(j), "Language");
-            const QString audioTitle = AINFO(size_t(j), "Title");
-            const QString smplrt_qstr = AINFO(size_t(j), "SamplingRate");
-            const int smplrt_int = static_cast<int>(smplrt_qstr.toFloat() / 1000);
-            const QString smplrt = (smplrt_int != 0) ? QString::number(smplrt_int) : "";
-            if (!audioFormat.isEmpty()) {
-                audioFormat += QString("  %1 kHz").arg(smplrt);
-                m_data[numRows].audioChecks.push_back(true);
-                m_data[numRows].audioFormats.push_back(audioFormat);
-                m_data[numRows].audioChannels.push_back(audioChannels);
-                m_data[numRows].audioChLayouts.push_back(audioChLayouts);
-                m_data[numRows].audioLangs.push_back(audioLang);
-                m_data[numRows].audioTitles.push_back(audioTitle);
-            } else {
-                break;
+        if (MI.Open(file.toStdWString()) == 1) {
+            if (i == 0) {
+                m_openDir = inputFolder;
+                prg.show();
             }
-        }
-
-        m_data[numRows].subtChecks.clear();
-        m_data[numRows].subtFormats.clear();
-        m_data[numRows].subtLangs.clear();
-        m_data[numRows].subtTitles.clear();
-        Q_LOOP(j, 0, MAX_SUBTITLES) {
-            const QString subtitleFormat = GETINFO(Stream_Text, size_t(j), "Format");
-            const QString subtitleLang = GETINFO(Stream_Text, size_t(j), "Language");
-            const QString subtitleTitle = GETINFO(Stream_Text, size_t(j), "Title");
-            if (!subtitleFormat.isEmpty()) {
-                m_data[numRows].subtChecks.push_back(true);
-                m_data[numRows].subtFormats.push_back(subtitleFormat);
-                m_data[numRows].subtLangs.push_back(subtitleLang);
-                m_data[numRows].subtTitles.push_back(subtitleTitle);
-            } else {
-                break;
+            prg.setText(inputFile);
+            prg.setPercent(0);
+            QApplication::processEvents();
+            const int numRows = ui->tableWidget->rowCount();
+            ui->tableWidget->setRowCount(numRows + 1);
+            QString fmt_qstr = VINFO(0, "Format");
+            QString width_qstr = VINFO(0, "Width");
+            QString height_qstr = VINFO(0, "Height");
+            QString size = (width_qstr != "") ? width_qstr + "x" + height_qstr : "Undef";
+            double duration_double = 0.001 * VINFO(0, "Duration").toDouble();
+            QString durationTime = Helper::timeConverter(static_cast<float>(duration_double));
+            QString fps_qstr = VINFO(0, "FrameRate");
+            const QString status("");
+            int bitrate_int = static_cast<int>(0.001 * VINFO(0, "BitRate").toDouble());
+            QString coeff = VINFO(0, "matrix_coefficients");
+            const QString mtrx_coeff = coeff.replace(" ", "").replace(".", "").replace("on-", "").replace("onstant", "");
+            QString luminance_qstr = VINFO(0, "MasteringDisplay_Luminance");
+            QString luminance_rep = luminance_qstr.replace("min: ", "").replace("max: ", "").replace(" cd/m2", "");
+            QString min_luminance = luminance_rep.split(", ")[0];
+            QString max_luminance = luminance_rep.replace(min_luminance, "").replace(", ", "");
+            QString color_prim = VINFO(0, "MasteringDisplay_ColorPrimaries");
+            int len = color_prim.length();
+            QString white_coord = "";
+            QString chroma_coord = "";
+            if (len > 15) {
+                QStringList mdcp = color_prim.split(",");
+                QString r = mdcp[0].replace("R: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
+                QString g = mdcp[1].replace(" G: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
+                QString b = mdcp[2].replace(" B: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
+                white_coord = mdcp[3].replace(" White point: ", "").replace("x=", "").replace(" ", ",").replace("y=", "").replace("000", "0");
+                chroma_coord = r + "," + g + "," + b;
+                color_prim = "Undefined";
             }
+
+            if (fmt_qstr == "")
+                fmt_qstr = "Undef";
+            if (fps_qstr == "")
+                fps_qstr = "Undef";
+            if (durationTime == "00:00:00")
+                durationTime = "Undef";
+
+            const QString arr_items[] = {
+                inputFile,
+                fmt_qstr,
+                size,
+                durationTime,
+                fps_qstr,
+                VINFO(0, "DisplayAspectRatio"),
+                status,
+                numToStr(bitrate_int),
+                VINFO(0, "ChromaSubsampling"),
+                VINFO(0, "BitDepth"),
+                VINFO(0, "ColorSpace"),
+                VINFO(0, "colour_range"),
+                VINFO(0, "colour_primaries").replace(".", ""),
+                mtrx_coeff,
+                VINFO(0, "transfer_characteristics").replace(".", ""),
+                max_luminance,
+                min_luminance,
+                VINFO(0, "MaxCLL").replace(" cd/m2", ""),
+                VINFO(0, "MaxFALL").replace(" cd/m2", ""),
+                color_prim,
+                inputFolder,
+                QString::number(duration_double, 'f', 3),
+                chroma_coord,
+                white_coord,
+                VINFO(0, "StreamSize"),
+                width_qstr,
+                height_qstr,
+                VINFO(0, "Title"),
+                GETINFO(Stream_General, 0, "Movie"),
+                GETINFO(Stream_General, 0, "YEAR"),
+                GETINFO(Stream_General, 0, "AUTHOR"),
+                GETINFO(Stream_General, 0, "Performer"),
+                GETINFO(Stream_General, 0, "Description")
+            };
+
+            m_data.resize(numRows + 1);
+            m_data[numRows].clear();
+            Q_LOOP(j, 27, 33)
+                m_data[numRows].videoMetadata.push_back(arr_items[j]);
+
+            for (int column = ColumnIndex::FILENAME; column <= ColumnIndex::T_HEIGHT; column++) {
+                QTableWidgetItem *__item = new QTableWidgetItem(arr_items[column]);
+                if (column >= ColumnIndex::FORMAT && column <= ColumnIndex::MASTERDISPLAY)
+                    __item->setTextAlignment(Qt::AlignCenter);
+                ui->tableWidget->setItem(numRows, column, __item);
+            }
+
+            QTableWidgetItem *__startTime = new QTableWidgetItem("0");
+            QTableWidgetItem *__endTime = new QTableWidgetItem("0");
+            ui->tableWidget->setItem(numRows, ColumnIndex::T_STARTTIME, __startTime);
+            ui->tableWidget->setItem(numRows, ColumnIndex::T_ENDTIME, __endTime);
+
+            Q_LOOP(j, 0, MAX_AUDIO_STREAMS) {
+                QString audioFormat = AINFO(size_t(j), "Format");
+                const int smplrt_int = static_cast<int>(AINFO(size_t(j), "SamplingRate").toFloat() / 1000);
+                const QString smplrt = (smplrt_int != 0) ? numToStr(smplrt_int) : "";
+                if (!audioFormat.isEmpty()) {
+                    audioFormat += QString("  %1 kHz").arg(smplrt);
+                    _CHECKS(numRows, audioChecks).push_back(Helper::isSupported(audioFormat));
+                    _FIELDS(numRows, audioFormats).push_back(audioFormat);
+                    _FIELDS(numRows, audioChannels).push_back(AINFO(size_t(j), "Channels"));
+                    _FIELDS(numRows, audioChLayouts).push_back(AINFO(size_t(j), "ChannelLayout"));
+                    _FIELDS(numRows, audioDuration).push_back(AINFO(size_t(j), "Duration"));
+                    _FIELDS(numRows, audioLangs).push_back(AINFO(size_t(j), "Language"));
+                    _FIELDS(numRows, audioTitles).push_back(AINFO(size_t(j), "Title"));
+                    const QString deflt = AINFO(size_t(j), "Default");
+                    _CHECKS(numRows, audioDef).push_back(deflt == "Yes" ? true : false);
+                } else {
+                    break;
+                }
+            }
+
+            Q_LOOP(j, 0, MAX_SUBTITLES) {
+                const QString subtitleFormat = SINFO(size_t(j), "Format");
+                if (!subtitleFormat.isEmpty()) {
+                    _CHECKS(numRows, subtChecks).push_back(Helper::isSupported(subtitleFormat));
+                    _FIELDS(numRows, subtFormats).push_back(subtitleFormat);
+                    _FIELDS(numRows, subtDuration).push_back(SINFO(size_t(j), "Duration"));
+                    _FIELDS(numRows, subtLangs).push_back(SINFO(size_t(j), "Language"));
+                    _FIELDS(numRows, subtTitles).push_back(SINFO(size_t(j), "Title"));
+                    const QString deflt = SINFO(size_t(j), "Default");
+                    _CHECKS(numRows, subtDef).push_back(deflt == "Yes" ? true : false);
+                } else {
+                    break;
+                }
+            }
+            MI.Close();
+            prg.setPercent(50);
+            QApplication::processEvents();
+            ui->tableWidget->selectRow(ui->tableWidget->rowCount() - 1);
+            QApplication::processEvents();
+            prg.setPercent(100);
+            QApplication::processEvents();
+    #if defined (Q_OS_UNIX)
+            usleep(50000);
+    #elif defined (Q_OS_WIN64)
+            Sleep(50);
+    #endif
+        } else {
+            showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(inputFile));
         }
-        MI.Close();
-        prg.setPercent(50);
-        QApplication::processEvents();
-        ui->tableWidget->selectRow(ui->tableWidget->rowCount() - 1);
-        QApplication::processEvents();
-        prg.setPercent(100);
-        QApplication::processEvents();
-#if defined (Q_OS_UNIX)
-        usleep(50000);
-#elif defined (Q_OS_WIN64)
-        Sleep(50);
-#endif
-        i++;
     }
 }
 
@@ -1898,7 +1892,7 @@ void MainWindow::get_output_filename()  // Get output data
     extension = t.arr_container[_CODEC][_CONTAINER].toLower();
     QString suffix;
     if (m_suffixType == 0) {
-        QString row_qstr = QString::number(m_row);
+        QString row_qstr = numToStr(m_row);
         std::ostringstream sstr;
         sstr << std::setw(4) << std::setfill('0') << row_qstr.toStdString();
         std::string counter = sstr.str();
@@ -1974,8 +1968,10 @@ void MainWindow::onUndoMetadata()
 void MainWindow::onAddExtStream()
 {
     if (m_row != -1) {
+        const int ind = ui->tabWidgetStreams->currentIndex();
         QStringList result;
-        Helper::openFileDialog(Helper::FileDialogType::OPENAFILES,
+        Helper::openFileDialog(ind == 0 ? Helper::FileDialogType::OPENAFILES :
+                                          Helper::FileDialogType::OPENSFILES,
                                tr("Open Files"),
                                m_openDir,
                                result);
@@ -1983,38 +1979,57 @@ void MainWindow::onAddExtStream()
             MediaInfo MI;
             foreach (auto &path, result) {
                 if (MI.Open(path.toStdWString()) == 1) {
-                    const int acnt = GINFO(0, "AudioCount").toInt();
                     const int vcnt = GINFO(0, "VideoCount").toInt();
-                    if (vcnt == 0 && acnt == 1) {
-                        QString audioFormat = AINFO(0, "Format");
-                        const QString audioChannels = AINFO(0, "Channels");
-                        const QString audioChLayouts = AINFO(0, "ChannelsLayouts");
-                        const QString audioLang = AINFO(0, "Language");
-                        const QString audioTitle = AINFO(0, "Title");
-                        const QString smplrt_qstr = AINFO(0, "SamplingRate");
-                        const int smplrt_int = static_cast<int>(smplrt_qstr.toFloat() / 1000);
-                        const QString smplrt = (smplrt_int != 0) ? QString::number(smplrt_int) : "";
-                        if (!audioFormat.isEmpty()) {
-                            audioFormat += QString("  %1 kHz").arg(smplrt);
-                            m_data[m_row].externAudioChecks.push_back(true);
-                            m_data[m_row].externAudioFormats.push_back(audioFormat);
-                            m_data[m_row].externAudioChannels.push_back(audioChannels);
-                            m_data[m_row].externAudioChLayouts.push_back(audioChLayouts);
-                            m_data[m_row].externAudioLangs.push_back(audioLang);
-                            m_data[m_row].externAudioTitles.push_back(audioTitle);
-                            m_data[m_row].externAudioPath.push_back(path);
+                    if (ind == 0) {
+                        const int acnt = GINFO(0, "AudioCount").toInt();
+                        if (vcnt == 0 && acnt == 1) {
+                            QString audioFormat = AINFO(0, "Format");
+                            const int smplrt_int = static_cast<int>(AINFO(0, "SamplingRate").toFloat() / 1000);
+                            const QString smplrt = (smplrt_int != 0) ? numToStr(smplrt_int) : "";
+                            if (!audioFormat.isEmpty()) {
+                                audioFormat += QString("  %1 kHz").arg(smplrt);
+                                _CHECKS(m_row, externAudioChecks).push_back(Helper::isSupported(audioFormat));
+                                _FIELDS(m_row, externAudioFormats).push_back(audioFormat);
+                                _FIELDS(m_row, externAudioChannels).push_back(AINFO(0, "Channels"));
+                                _FIELDS(m_row, externAudioChLayouts).push_back(AINFO(0, "ChannelsLayouts"));
+                                _FIELDS(m_row, externAudioDuration).push_back(AINFO(0, "Duration"));
+                                _FIELDS(m_row, externAudioLangs).push_back(AINFO(0, "Language"));
+                                _FIELDS(m_row, externAudioTitles).push_back(AINFO(0, "Title"));
+                                _FIELDS(m_row, externAudioPath).push_back(path);
+                                _CHECKS(m_row, externAudioDef).push_back(false);
+                            }
+                        } else {
+                            showInfoMessage(tr("File: \'%1\' is not audio file!").arg(path));
                         }
                     } else {
-                        showInfoMessage(tr("File: \'%1\' is not audio file!").arg(path));
+                        const int scnt = GINFO(0, "TextCount").toInt();
+                        if (vcnt == 0 && scnt == 1) {
+                            const QString subtitleFormat = SINFO(0, "Format");
+                            if (!subtitleFormat.isEmpty()) {
+                                _CHECKS(m_row, externSubtChecks).push_back(Helper::isSupported(subtitleFormat));
+                                _FIELDS(m_row, externSubtFormats).push_back(subtitleFormat);
+                                _FIELDS(m_row, externSubtDuration).push_back(SINFO(0, "Duration"));
+                                _FIELDS(m_row, externSubtLangs).push_back(SINFO(0, "Language"));
+                                _FIELDS(m_row, externSubtTitles).push_back(SINFO(0, "Title"));
+                                _FIELDS(m_row, externSubtPath).push_back(path);
+                                _CHECKS(m_row, externSubtDef).push_back(false);
+                            }
+                        } else {
+                            showInfoMessage(tr("File: \'%1\' is not subtitle file!").arg(path));
+                        }
                     }
                     MI.Close();
                 } else {
                     showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(path));
                 }
             }
-            if (m_data[m_row].audioFormats.size() > 0 || m_data[m_row].externAudioFormats.size() > 0) {
+            if (_FIELDS(m_row, externAudioFormats).size() > 0) {
                 m_pAudioLabel->setVisible(false);
                 ui->streamAudio->setList(m_data[m_row]);
+            }
+            if (_FIELDS(m_row, externSubtFormats).size() > 0) {
+                m_pSubtitleLabel->setVisible(false);
+                ui->streamSubtitle->setList(m_data[m_row]);
             }
         }
     }
@@ -2081,7 +2096,7 @@ void MainWindow::onSetStartTime()
 void MainWindow::onSetEndTime()
 {
     if (m_row != -1) {
-        m_endTime = (m_endTime < m_startTime) ? m_startTime : m_curTime;
+        m_endTime = (m_curTime < m_startTime) ? m_startTime : m_curTime;
         ui->lineEditEndTime->setText(Helper::timeConverter(m_endTime));
         QTableWidgetItem *__item = new QTableWidgetItem(QString::number(m_endTime, 'f', 3));
         ui->tableWidget->setItem(m_row, ColumnIndex::T_ENDTIME, __item);
@@ -2117,7 +2132,7 @@ void MainWindow::onResetLabels()
 
 void MainWindow::setDefaultPresets() // Set default presets
 {
-    Dump("Set defaults...");
+    Print("Set defaults...");
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
         QDataStream in(&_prs_file);
@@ -2270,7 +2285,7 @@ void MainWindow::onAddPreset()  // Add preset
             cur_param.clear();
             in >> cur_param;
         } else {
-            Dump("Added energercy params...");
+            Print("Added energercy params...");
         }
         _prs_file.close();
     }
@@ -2322,7 +2337,7 @@ void MainWindow::setItemStyle(QTreeWidgetItem *item)
     case Theme::WAVE:
         foregroundChildColor.setRgb(qRgb(150, 150, 150));
         break;
-    case Theme::DEFAULT:
+    case Theme::LIGHT:
         foregroundChildColor.setRgb(qRgb(20, 20, 30));
         break;
     }
@@ -2397,7 +2412,7 @@ void MainWindow::updatePresetTable()
         }
         row++;
     }
-    Dump(m_preset_table[0].size() << " x " << m_preset_table.size());
+    Print(m_preset_table[0].size() << " x " << m_preset_table.size());
 }
 
 void MainWindow::setPresetIcon(QTreeWidgetItem *item, bool collapsed)
@@ -2410,7 +2425,7 @@ void MainWindow::setPresetIcon(QTreeWidgetItem *item, bool collapsed)
         file = (collapsed) ? QString::fromUtf8("folder.svg") :
                              QString::fromUtf8("folder_open.svg");
         break;
-    case Theme::DEFAULT:
+    case Theme::LIGHT:
         file = (collapsed) ? QString::fromUtf8("folder_light.svg") :
                              QString::fromUtf8("folder_open_light.svg");
         break;
@@ -2474,11 +2489,25 @@ void MainWindow::showPopup(const QString &text, PopupMessage::Icon icon)
 {
     PopupMessage *msg = new PopupMessage(this, icon, text);
     msg->show();
+    addReport(text, static_cast<ReportLog::Icon>(icon));
+}
+
+void MainWindow::addReport(const QString &log, ReportLog::Icon icon)
+{
+    const int ind = m_reportLog.size();
+    m_reportLog.resize(ind + 1);
+    const QString time = QTime::currentTime().toString();
+    m_reportLog[ind].reportIcon = icon;
+    m_reportLog[ind].reportTime = time;
+    m_reportLog[ind].reportMsg = log;
 }
 
 void MainWindow::showInfoMessage(const QString &message, const bool timer_mode)
 {
     auto showMessage = [this, message, timer_mode]() {
+        ReportLog::Icon icon = timer_mode ? ReportLog::Icon::Info :
+                                            ReportLog::Icon::Critical;
+        addReport(message, icon);
         Message msg(this, MessType::INFO, message, timer_mode);
         msg.exec();
     };

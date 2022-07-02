@@ -5,6 +5,7 @@
 #include <QMap>
 #include "constants.h"
 
+using namespace Constants;
 
 class Tables : public QObject
 {

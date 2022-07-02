@@ -21,7 +21,6 @@
 #include <QMap>
 #include <iostream>
 #include "mainwindow.h"
-#include "constants.h"
 #include "helper.h"
 
 
@@ -120,7 +119,7 @@ int checkForDuplicates()
             return 1;
         }
     } else {
-        Dump("Command \""<< cmd.toStdString() << "\" not found.");
+        Print("Command \""<< cmd.toStdString() << "\" not found.");
     }
     return 0;
 }

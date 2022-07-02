@@ -950,22 +950,12 @@
                           </property>
                           <item>
                            <property name="text">
-                            <string>Default</string>
-                           </property>
-                          </item>
-                          <item>
-                           <property name="text">
-                            <string>Gray</string>
+                            <string>Light</string>
                            </property>
                           </item>
                           <item>
                            <property name="text">
                             <string>Dark</string>
-                           </property>
-                          </item>
-                          <item>
-                           <property name="text">
-                            <string>Wave</string>
                            </property>
                           </item>
                          </widget>

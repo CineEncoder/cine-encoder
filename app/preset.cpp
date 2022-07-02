@@ -28,6 +28,7 @@ typedef void(Preset::*FnVoidVoid)(void);
 typedef void(Preset::*FnVoidInt)(int);
 typedef void(Preset::*FnVoidStr)(const QString&);
 
+using namespace Constants;
 
 Preset::Preset(QWidget *parent, QVector<QString> *pOld_param):
     BaseWindow(parent, true),
@@ -179,7 +180,7 @@ void Preset::showEvent(QShowEvent *event)
 
         auto comboBoxes = findChildren<QComboBox*>();
         foreach (auto combo, comboBoxes) {
-            //Dump(combo->objectName().toStdString());
+            //Print(combo->objectName().toStdString());
             QListView *_view = new QListView(combo);
             _view->setTextElideMode(Qt::ElideMiddle);
             combo->setView(_view);
@@ -263,7 +264,7 @@ bool Preset::eventFilter(QObject *watched, QEvent *event)
 
 void Preset::repeat_handler()
 {
-    //Dump("Call by timer... Repeat count: " << m_repeat);
+    //Print("Call by timer... Repeat count: " << m_repeat);
     if (m_repeat > 0) {
         m_repeat = 0;
         change_preset_name();
@@ -272,7 +273,7 @@ void Preset::repeat_handler()
 
 void Preset::change_preset_name()
 {
-    //Dump("Call change preset name...");
+    //Print("Call change preset name...");
     const int _ind_codec = ui->comboBox_codec->currentIndex();
     const int _ind_mode = ui->comboBox_mode->currentIndex();
     const int _ind_pass = ui->comboBox_pass->currentIndex();
@@ -332,9 +333,9 @@ void Preset::change_preset_name()
         pass = selected_pass + ", ";
     }
     QString hdr("");
-    if (t.arr_codec[_ind_codec][2] != "") {
+    /*if (t.arr_codec[_ind_codec][2] != "") {
         hdr = t.arr_codec[_ind_codec][2] + tr("Enabled, ");
-    }
+    }*/
 
     /************************************* Audio module ***************************************/
     QString acodec("");
@@ -384,7 +385,7 @@ void Preset::onComboBoxAspectRatio_indexChanged(int index)
     const float width_= width.toFloat();
     const float height_ = height.toFloat();
     m_aspectRatio = (height_ != 0.0f ) ? round(10000 * width_ / height_)/10000 : 0.0f;
-    //Dump("AR: " << m_aspectRatio);
+    //Print("AR: " << m_aspectRatio);
     m_repeat++;
 }
 
@@ -536,7 +537,7 @@ void Preset::onComboBox_codec_textChanged(const QString &arg1)  // Change curren
     if (row != -1) {
         Tables t;
         lockSignals(true);
-        //Dump("Curr codec... " << row);
+        //Print("Curr codec... " << row);
         ui->comboBoxAspectRatio->setEnabled(true);
         ui->comboBox_width->setEnabled(true);
         ui->comboBox_height->setEnabled(true);
@@ -924,7 +925,7 @@ void Preset::onComboBox_codec_textChanged(const QString &arg1)  // Change curren
 void Preset::onComboBox_mode_textChanged(const QString &arg1)  // Change curret mode
 {
     lockSignals(true);
-    //Dump("Change current mode...");
+    //Print("Change current mode...");
     ui->lineEdit_bitrate->clear();
     ui->lineEdit_minrate->clear();
     ui->lineEdit_maxrate->clear();
@@ -1039,14 +1040,14 @@ void Preset::onComboBox_mode_textChanged(const QString &arg1)  // Change curret 
 
 void Preset::onComboBox_preset_indexChanged(int index) // Preset index changed
 {
-    //Dump("Index of Preset: " << index);
+    //Print("Index of Preset: " << index);
     Q_UNUSED(index)
     m_repeat++;
 }
 
 void Preset::onComboBox_pass_indexChanged(int index)  // Pass index changed
 {
-    //Dump("Index of Pass: " << index);
+    //Print("Index of Pass: " << index);
     Q_UNUSED(index)
     m_repeat++;
 }
@@ -1068,7 +1069,7 @@ void Preset::onLineEdit_bitrate_editingFinished()
 void Preset::onComboBox_audio_codec_textChanged(const QString &arg1) // Change current audio codec
 {
     lockSignals(true);
-    //Dump("Change current audio codec...");
+    //Print("Change current audio codec...");
     ui->comboBox_audio_bitrate->setEnabled(true);
     ui->comboBox_audio_bitrate->clear();
     ui->comboBox_audio_sampling->setEnabled(true);
@@ -1130,7 +1131,7 @@ void Preset::onComboBox_audio_bitrate_textChanged()  // Abitrate currentText cha
 void Preset::onComboBox_master_disp_textChanged(const QString &arg1)  // Change current master display
 {
     lockSignals(true);
-    //Dump("Change current master display...");
+    //Print("Change current master display...");
     ui->lineEdit_chroma_coord->clear();
     ui->lineEdit_white_coord->clear();
     ui->lineEdit_chroma_coord->setEnabled(false);

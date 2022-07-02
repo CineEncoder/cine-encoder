@@ -1,5 +1,5 @@
 /**************************************************************************
-**  DARK THEME
+**  WAVE THEME
 **************************************************************************/
 
 
@@ -64,7 +64,11 @@ QWidget#centralwidget {
 QWidget#widget_main {
     background: @frameTopBackground;
 }
-
+QWidget#Report {
+    border: 1px solid @elementsBorderColor;
+    border-radius: 5px;
+    background: @mainBackground;
+}
 
 /**************************************************************************
 **  QFrame
@@ -496,9 +500,7 @@ QCheckBox {
     background-color: transparent;
 }
 QCheckBox:disabled {
-    spacing: 12px;
     color: #A0A5AA;
-    background-color: transparent;
 }
 QCheckBox::indicator {
     width: 12px;
@@ -507,23 +509,14 @@ QCheckBox::indicator {
     background: none;
 }
 QCheckBox::indicator:disabled {
-    width: 12px;
-    height: 12px;
     border: 2px solid #3C3C3C;
-    background: none;
 }
 QCheckBox::indicator:checked {
-    width: 12px;
-    height: 12px;
     border: 2px solid #5A5A5A;
-    background: none;
     image: url(:/resources/icons/16x16/cil-check-alt.png);
 }
 QCheckBox::indicator:checked:disabled {
-    width: 12px;
-    height: 12px;
     border: 2px solid #3C3C3C;
-    background: none;
     image: url(:/resources/icons/16x16/cil-check-alt.png);
 }
 
@@ -904,6 +897,12 @@ QPushButton#closeWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton#closeReport {
+        border: none;
+        image: url(:/resources/icons/svg/close.svg);
+        color: @elementsTextColor;
+        background-color: transparent;
+}
 QPushButton#closeTWindow {
         border: none;
         padding: 5px;
@@ -920,6 +919,10 @@ QPushButton#start[status="1"] {
 }
 QPushButton#start[status="2"] {
     image: url(:/resources/icons/svg/forward.svg);
+}
+QPushButton#report {
+    image: url(:/resources/icons/svg/order-history.svg);
+    background-color: transparent;
 }
 QPushButton:hover#resetLabels,
 QPushButton:hover#addExtStream,
@@ -943,11 +946,15 @@ QPushButton:hover#settings,
 QPushButton:hover#audioExpandBtn,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
+QPushButton:hover#closeReport,
 QPushButton:hover#closeTWindow {
     background-color: #343B48;
 }
 QPushButton:hover#closeWindow {
     background-color: #EE0000;
+}
+QPushButton:hover#report {
+    image: url(:/resources/icons/svg/order-history_white.svg);
 }
 QPushButton:pressed#resetLabels,
 QPushButton:pressed#addExtStream,
@@ -971,10 +978,14 @@ QPushButton:pressed#settings,
 QPushButton:pressed#hideWindow,
 QPushButton:pressed#expandWindow,
 QPushButton:pressed#closeWindow,
+QPushButton:pressed#closeReport,
 QPushButton:pressed#closeTWindow {
     background-color: #55AAFF;
 }
-
+QPushButton:pressed#report {
+    border-radius: 0px;
+    background-color: #55AAFF;
+}
 
 /*********************************************/
 
@@ -1124,6 +1135,24 @@ QPushButton:pressed#buttonPayPal,
 QPushButton:pressed#buttonBitcoin {
     border: 1px solid #2B323D;
     background-color: #232831;
+}
+
+
+/**************************************************************************
+**  QRadioButton
+**************************************************************************/
+
+QRadioButton {
+    background: none;
+}
+QRadioButton::indicator {
+    width: 12px; height: 12px;
+}
+QRadioButton::indicator::unchecked {
+    image: url(:/resources/icons/svg/uncheck.svg);
+}
+QRadioButton::indicator::checked {
+    image: url(:/resources/icons/svg/check.svg);
 }
 
 
