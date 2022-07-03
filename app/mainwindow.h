@@ -204,6 +204,7 @@ private:
                 m_font;
 
     // ============= Geometry =============
+    bool        m_windowActivated;
     bool        m_expandWindowsState;
     int         m_rowHeight;
 
@@ -230,8 +231,8 @@ private slots:
     void changeEvent(QEvent*);
     bool eventFilter(QObject*, QEvent*);
     void dragEnterEvent(QDragEnterEvent*);
-    void dragMoveEvent(QDragMoveEvent*);
-    void dragLeaveEvent(QDragLeaveEvent*);
+    //void dragMoveEvent(QDragMoveEvent*);
+    //void dragLeaveEvent(QDragLeaveEvent*);
     void dropEvent(QDropEvent*);
 
     void onTableSelectionChanged();

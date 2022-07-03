@@ -22,7 +22,7 @@
 
 
 BaseDialog::BaseDialog(QWidget *parent, bool isReizable) :
-    QDialog(parent, Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow),
+    QDialog(parent, Qt::Dialog | Qt::FramelessWindowHint | Qt::SubWindow | Qt::NoDropShadowWindowHint),
     m_titlebar(nullptr),
     m_maskwidget(nullptr),
     m_mouseClickCoordinate(QPoint()),
@@ -75,9 +75,9 @@ void BaseDialog::changeEvent(QEvent *event)
 {
     QDialog::changeEvent(event);
     if (event->type() == QEvent::WindowStateChange) {
-        const int margin = (windowState() == Qt::WindowMaximized) ? 0 : BORDER;
+        const int margin = windowState().testFlag(Qt::WindowMaximized) ? 0 : BORDER;
         layout()->setMargin(margin);
-        QTimer::singleShot(50, this, [this](){
+        QTimer::singleShot(50, this, [this]() {
             update();
         });
     }

@@ -89,7 +89,10 @@ void BaseWindow::showEvent(QShowEvent *event)
     QMainWindow::showEvent(event);
     if (!m_windowActivated) {
         m_windowActivated = true;
-        setContentsMargins(BORDER, BORDER + 1, BORDER, BORDER);
+        QTimer::singleShot(50, this, [this]() {
+            setContentsMargins(BORDER, BORDER + 1, BORDER, BORDER);
+            update();
+        });
     }
 }
 
@@ -98,7 +101,7 @@ void BaseWindow::changeEvent(QEvent *event)
     QMainWindow::changeEvent(event);
     if (event->type() == QEvent::WindowStateChange) {
         const int margin = isMaximized() ? 8 : BORDER;
-        setContentsMargins(margin, margin, margin, margin);
+        setContentsMargins(margin, margin + 1, margin, margin);
         QTimer::singleShot(50, this, [this]() {
             update();
         });

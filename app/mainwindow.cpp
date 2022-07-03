@@ -147,6 +147,7 @@ MainWindow::MainWindow(QWidget *parent):
     m_prefixName(DEFAULTPREFIX),
     m_suffixName(DEFAULTSUFFIX),
     m_font(""),
+    m_windowActivated(false),
     m_expandWindowsState(false),
     m_rowHeight(ROWHEIGHT)
 {
@@ -217,10 +218,12 @@ MainWindow::MainWindow(QWidget *parent):
 
     ui->streamAudio->setContentType(QStreamView::Content::Audio);
     ui->streamSubtitle->setContentType(QStreamView::Content::Subtitle);
+
     //*********** Set Event Filters ****************//
     m_pTableLabel->installEventFilter(this);
     ui->labelPreview->installEventFilter(this);
     ui->frameMiddle->setFocusPolicy(Qt::StrongFocus);
+    setAcceptDrops(true);
 }
 
 MainWindow::~MainWindow()
@@ -231,9 +234,8 @@ MainWindow::~MainWindow()
 void MainWindow::showEvent(QShowEvent *event)
 {
     BaseWindow::showEvent(event);
-    static bool windowActivated = false;
-    if (!windowActivated) {
-        windowActivated = true;
+    if (!m_windowActivated) {
+        m_windowActivated = true;
         setParameters();
     }
 }
@@ -1787,15 +1789,15 @@ void MainWindow::dragEnterEvent(QDragEnterEvent* event)     // Drag enter event
     event->acceptProposedAction();
 }
 
-void MainWindow::dragMoveEvent(QDragMoveEvent* event)     // Drag move event
+/*void MainWindow::dragMoveEvent(QDragMoveEvent* event)     // Drag move event
 {
     event->acceptProposedAction();
-}
+}*/
 
-void MainWindow::dragLeaveEvent(QDragLeaveEvent* event)     // Drag leave event
+/*void MainWindow::dragLeaveEvent(QDragLeaveEvent* event)     // Drag leave event
 {
     event->accept();
-}
+}*/
 
 void MainWindow::dropEvent(QDropEvent* event)     // Drag & Drop
 {
@@ -1810,11 +1812,11 @@ void MainWindow::dropEvent(QDropEvent* event)     // Drag & Drop
         }
         if (!formats.filter("audio/").empty() || !formats.filter("video/").empty()) {
             openFiles(pathList);
-            event->acceptProposedAction();
-            return;
+            //event->acceptProposedAction();
+            //return;
         }
     }
-    event->ignore();
+    //event->ignore();
 }
 
 void MainWindow::onComboModeChanged(int index)
