@@ -36,10 +36,12 @@ RCC_DIR =     $$PWD/../builddir/rcc
 
 # FILES
 SOURCES += \
+    fileiconprovider.cpp \
     popupmessage.cpp \
     report.cpp \
     widgets/qstreamview.cpp \
     widgets/qanimatedsvg.cpp \
+    widgets/qdoublebutton.cpp \
     basedialog.cpp \
     encoder.cpp \
     helper.cpp \
@@ -52,10 +54,12 @@ SOURCES += \
     settings.cpp
 
 HEADERS += \
+    fileiconprovider.h \
     popupmessage.h \
     report.h \
     widgets/qstreamview.h \
     widgets/qanimatedsvg.h \
+    widgets/qdoublebutton.h \
     basedialog.h \
     constants.h \
     encoder.h \

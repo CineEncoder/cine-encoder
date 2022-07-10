@@ -229,7 +229,7 @@ QString Helper::recalcChannels(const QString &ch)
 bool Helper::isSupported(const QString &format)
 {
     const QVector<QString> unspFormats = {
-        "Timed Text", "PGS"
+        "PGS"
     };
     return unspFormats.indexOf(format) == -1 ? true: false;
 }

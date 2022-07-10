@@ -376,5 +376,21 @@
         <file>resources/icons/svg/order-history.svg</file>
         <file>resources/icons/svg/undo_history.svg</file>
         <file>resources/icons/svg/order-history_white.svg</file>
+        <file>resources/icons/svg/adjoins.svg</file>
+        <file>resources/icons/svg/haschild.svg</file>
+        <file>resources/icons/svg/vline.svg</file>
+        <file>resources/icons/svg/view_icons.svg</file>
+        <file>resources/icons/svg/view_list.svg</file>
+        <file>resources/icons/svg/shortest.svg</file>
+        <file>resources/icons/svg/not_shortest.svg</file>
+        <file>resources/icons/svg/up.svg</file>
+        <file>resources/icons/svg/left.svg</file>
+        <file>resources/icons/svg/right.svg</file>
+        <file>resources/icons/svg/sys_folder.svg</file>
+        <file>resources/icons/svg/desktop.svg</file>
+        <file>resources/icons/svg/file.svg</file>
+        <file>resources/icons/svg/computer.svg</file>
+        <file>resources/icons/svg/network.svg</file>
+        <file>resources/icons/svg/drive.svg</file>
     </qresource>
 </RCC>

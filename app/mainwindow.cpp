@@ -20,6 +20,7 @@
 #include "tables.h"
 #include "helper.h"
 #include "report.h"
+#include "fileiconprovider.h"
 #include <QDesktopWidget>
 #include <QPaintEvent>
 #include <QDragEnterEvent>
@@ -35,6 +36,7 @@
 #include <QMenu>
 #include <QDate>
 #include <QFileDialog>
+#include <QStandardItemModel>
 #include <QHBoxLayout>
 #include <QGridLayout>
 #include <QDockWidget>
@@ -86,6 +88,7 @@
 
 typedef void(MainWindow::*FnVoidVoid)(void);
 typedef void(MainWindow::*FnVoidInt)(int);
+
 
 namespace MainWindowPrivate
 {
@@ -190,21 +193,22 @@ MainWindow::MainWindow(QWidget *parent):
 
     QString dockNames[] = {
         tr("Presets"), tr("Preview"), tr("Source"), tr("Output"),
-        tr("Streams"), tr("Log"), tr("Metadata"), tr("Split")
+        tr("Streams"), tr("Log"), tr("Metadata"), tr("Split"), tr("Browser")
     };
     Qt::DockWidgetArea dockArea[] = {
         Qt::LeftDockWidgetArea, Qt::BottomDockWidgetArea,
         Qt::BottomDockWidgetArea, Qt::BottomDockWidgetArea,
         Qt::RightDockWidgetArea, Qt::RightDockWidgetArea,
-        Qt::RightDockWidgetArea, Qt::RightDockWidgetArea
+        Qt::RightDockWidgetArea, Qt::RightDockWidgetArea,
+        Qt::LeftDockWidgetArea
     };
     QString objNames[] = {
         "dockPresets", "dockPreview", "dockSource", "dockOutput",
-        "dockStreams", "dockLog", "dockMetadata", "dockSplit"
+        "dockStreams", "dockLog", "dockMetadata", "dockSplit", "dockBrowser"
     };
     QFrame* dockFrames[] = {
         ui->framePreset, ui->framePreview, ui->frameSource, ui->frameOutput,
-        ui->frameStreams, ui->frameLog, ui->frameMetadata, ui->frameSplit
+        ui->frameStreams, ui->frameLog, ui->frameMetadata, ui->frameSplit, ui->frameBrowser
     };
     Q_LOOP(i, 0, DOCKS_COUNT) {
         m_pDocks[i] = new QDockWidget(dockNames[i], m_pDocksContainer);
@@ -218,6 +222,12 @@ MainWindow::MainWindow(QWidget *parent):
 
     ui->streamAudio->setContentType(QStreamView::Content::Audio);
     ui->streamSubtitle->setContentType(QStreamView::Content::Subtitle);
+    ui->switchCutting->setIcons(QIcon(QPixmap(":/resources/icons/svg/shortest.svg")),
+                                QIcon(QPixmap(":/resources/icons/svg/not_shortest.svg")));
+    ui->switchViewMode->setIcons(QIcon(QPixmap(":/resources/icons/svg/view_list.svg")),
+                                 QIcon(QPixmap(":/resources/icons/svg/view_icons.svg")));
+    ui->switchCutting->setToolTips(tr("Without cutting"), tr("Cut by shortest"));
+    ui->switchViewMode->setToolTips(tr("List view"), tr("Icon view"));
 
     //*********** Set Event Filters ****************//
     m_pTableLabel->installEventFilter(this);
@@ -281,6 +291,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.beginGroup("Tables");
         stn.setValue("Tables/table_widget_state", ui->tableWidget->horizontalHeader()->saveState());
         stn.setValue("Tables/tree_widget_state", ui->treeWidget->header()->saveState());
+        stn.setValue("Tables/splitter_state", m_pSpl->saveState());
         stn.endGroup();
         // Save Settings
         stn.beginGroup("Settings");
@@ -302,6 +313,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/font", m_font);
         stn.setValue("Settings/font_size", m_fontSize);
         stn.setValue("Settings/row_size", m_rowHeight);
+        stn.setValue("Settings/switch_view_mode", ui->switchViewMode->currentIndex());
         stn.endGroup();
 
         if (m_pTrayIcon)
@@ -353,7 +365,7 @@ void MainWindow::setTrayIcon()
 void MainWindow::createConnections()
 {
     // Buttons
-    const int BTN_COUNT = 27;
+    const int BTN_COUNT = 29;
     QPushButton *btns[BTN_COUNT] = {
         ui->closeWindow,  ui->hideWindow,    ui->expandWindow,
         ui->addFiles,     ui->removeFile,    ui->sortUp,
@@ -363,7 +375,8 @@ void MainWindow::createConnections()
         ui->framePrev,    ui->frameNext,     ui->setStartTime,
         ui->setEndTime,   ui->removePreset,  ui->editPreset,
         ui->applyPreset,  ui->addFilesHot,   ui->setOutFolder,
-        ui->closeTWindow, ui->resetLabels,   ui->report
+        ui->closeTWindow, ui->resetLabels,   ui->report,
+        ui->back,         ui->forward
     };
     FnVoidVoid btn_methods[BTN_COUNT] = {
         SLT(onCloseWindow),  SLT(onHideWindow),    SLT(onExpandWindow),
@@ -374,7 +387,8 @@ void MainWindow::createConnections()
         SLT(onFramePrev),    SLT(onFrameNext),     SLT(onSetStartTime),
         SLT(onSetEndTime),   SLT(onRemovePreset),  SLT(onEditPreset),
         SLT(onApplyPreset),  SLT(onAddFiles),      SLT(onSetOutFolder),
-        SLT(onCloseWindow),  SLT(onResetLabels),   SLT(onReport)
+        SLT(onCloseWindow),  SLT(onResetLabels),   SLT(onReport),
+        SLT(onBack),         SLT(onForward)
     };
     Q_LOOP(i, 0, BTN_COUNT)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
@@ -382,6 +396,8 @@ void MainWindow::createConnections()
     // Table
     connect(ui->tableWidget, &QTableWidget::itemSelectionChanged,
             this, SLT(onTableSelectionChanged));
+
+    connect(ui->switchViewMode, &QDoubleButton::indexChanged, this, SLT(onViewMode));
 
     connect(ui->comboBoxMode, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboModeChanged(int)));
     connect(ui->sliderTimeline, &QSlider::valueChanged, this, SLT(onSliderTimelineChanged));
@@ -391,6 +407,9 @@ void MainWindow::createConnections()
     connect(ui->treeWidget, &QTreeWidget::itemExpanded, this, SLT(onTreeExpanded));
     connect(ui->treeWidget, &QTreeWidget::itemChanged, this, SLT(onTreeChanged));
     connect(ui->treeWidget, &QTreeWidget::itemDoubleClicked, this, SLT(onTreeDblClicked));
+
+    connect(ui->treeDirs, &QTreeView::clicked, this, SLT(onTreeDirsClicked));
+    connect(ui->treeDirs, &QTreeView::doubleClicked, this, SLT(onTreeDirsDblClicked));
 
     m_pEncoder = new Encoder(this);
     connect(m_pEncoder, &Encoder::onEncodingMode, this, SLT(onEncodingMode));
@@ -466,6 +485,7 @@ void MainWindow::createConnections()
     m_pDocks[DockIndex::SPLIT_DOCK]->toggleViewAction()->setChecked(false);
     m_pDocks[DockIndex::LOG_DOCK]->setVisible(false);
     m_pDocks[DockIndex::SPLIT_DOCK]->setVisible(false);
+    m_pDocks[DockIndex::BROWSER_DOCK]->setVisible(false);
 
     QMenu *menuAbout = new QMenu(ui->menuAboutButton);
     m_pActAbout = new QAction(tr("About"), menuAbout);
@@ -527,8 +547,8 @@ void MainWindow::createConnections()
     QMenu *addPresetMenu = new QMenu(ui->addPreset);
     QAction *_actAddSection = new QAction(tr("Add section"), this);
     QAction *_actAddPreset = new QAction(tr("Add new preset"), this);
-    _actAddSection->setIcon(QIcon(":/resources/icons/16x16/cil-folder.png"));
-    _actAddPreset->setIcon(QIcon(":/resources/icons/16x16/cil-file.png"));
+    _actAddSection->setIcon(QIcon(":/resources/icons/svg/folder_light.svg"));
+    _actAddPreset->setIcon(QIcon(":/resources/icons/svg/file.svg"));
     connect(_actAddSection, &QAction::triggered, this, SLT(onAddSection));
     connect(_actAddPreset, &QAction::triggered, this, SLT(onAddPreset));
     addPresetMenu->addAction(_actAddSection);
@@ -572,10 +592,9 @@ void MainWindow::createConnections()
         });
     }
 
-    //******** Audio Elements Actions **************//
+    //******** Audio Elements **************//
     m_pAudioLabel->setVisible(true);
-
-    //******* Subtitle Elements Actions ************//
+    //******* Subtitle Elements ************//
     m_pSubtitleLabel->setVisible(true);
 }
 
@@ -591,17 +610,50 @@ void MainWindow::setParameters()    // Set parameters
     m_data.clear();
     m_reportLog.clear();
 
+    //************** File Browser ******************//
+    m_pSpl = new QSplitter(Qt::Horizontal, ui->scrollAreaWidget_Browser);
+    ui->scrollAreaWidget_Browser->layout()->addWidget(m_pSpl);
+    m_pSpl->setHandleWidth(0);
+    m_pSpl->addWidget(ui->dirsWidget);
+    m_pSpl->addWidget(ui->filesWidget);
+
+    QStandardItemModel *model_d = new QStandardItemModel(this);
+    model_d->setHorizontalHeaderItem(0, new QStandardItem(tr("Folders")));
+    QHeaderView *hv_d = new QHeaderView(Qt::Horizontal, ui->dirsWidget);
+    QFont fnt = hv_d->font();
+    fnt.setItalic(true);
+    fnt.setBold(true);
+    hv_d->setFont(fnt);
+    hv_d->setFixedHeight(28);
+    hv_d->setModel(model_d);
+    hv_d->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->dirsLayout->addWidget(hv_d);
+
+    QStandardItemModel *model_f = new QStandardItemModel(this);
+    model_f->setHorizontalHeaderItem(0, new QStandardItem(tr("Files")));
+    QHeaderView *hv_f = new QHeaderView(Qt::Horizontal, ui->filesWidget);
+    hv_f->setFont(fnt);
+    hv_f->setFixedHeight(28);
+    hv_f->setModel(model_f);
+    hv_f->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->filesLayout->addWidget(hv_f);
+    setBrowser();
+    FileIconProvider *fip = new FileIconProvider();
+    m_pDirModel->setIconProvider(fip);
+    ui->lineEditFileFilter->hide();
+
+    //************** Combo boxes *******************//
     auto comboBoxes = findChildren<QComboBox*>();
     foreach (auto combo, comboBoxes) {
         QListView *_view = new QListView(combo);
         _view->setTextElideMode(Qt::ElideMiddle);
         combo->setView(_view);
     }
-
     ui->comboBoxPreset->setVisible(false);
-    ui->comboBoxView->setVisible(false);
-    m_pAnimation = new QAnimatedSvg(ui->labelAnimation, QSize(18, 18));
+    //ui->comboBoxView->setVisible(false);
 
+    //********** Set default state *****************//
+    m_pAnimation = new QAnimatedSvg(ui->labelAnimation, QSize(18, 18));
     ui->labelAnimation->hide();
     ui->label_Progress->hide();
     ui->label_Remaining->hide();
@@ -647,9 +699,6 @@ void MainWindow::setParameters()    // Set parameters
     //*********** Table parameters ****************//
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->setShowGrid(false);
-    QFont fnt = ui->tableWidget->horizontalHeader()->font();
-    fnt.setBold(true);
-    fnt.setItalic(true);
     ui->tableWidget->horizontalHeader()->setFont(fnt);
     ui->tableWidget->horizontalHeader()->setVisible(true);
     ui->tableWidget->verticalHeader()->setVisible(true);
@@ -679,8 +728,8 @@ void MainWindow::setParameters()    // Set parameters
 
     //************* Read settings ******************//
     const QString sysLang = Helper::getSysLanguage();
-    QList<int> dockSizesX = {};
-    QList<int> dockSizesY = {};
+    QList<int> dockSizesX{};
+    QList<int> dockSizesY{};
     SETTINGS(stn);
     if (stn.value("Version").toInt() == SETTINGS_VERSION) {
         // Restore Window
@@ -703,6 +752,7 @@ void MainWindow::setParameters()    // Set parameters
         stn.beginGroup("Tables");
         ui->tableWidget->horizontalHeader()->restoreState(stn.value("Tables/table_widget_state").toByteArray());
         ui->treeWidget->header()->restoreState(stn.value("Tables/tree_widget_state").toByteArray());
+        m_pSpl->restoreState(stn.value("Tables/splitter_state").toByteArray());
         stn.endGroup();
         // Restore Settings
         stn.beginGroup("Settings");
@@ -724,6 +774,7 @@ void MainWindow::setParameters()    // Set parameters
         m_font = stn.value("Settings/font").toString();
         m_fontSize = stn.value("Settings/font_size", FONTSIZE).toInt();
         m_rowHeight = stn.value("Settings/row_size").toInt();
+        ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
         stn.endGroup();
 
     } else {
@@ -823,8 +874,13 @@ void MainWindow::setParameters()    // Set parameters
     setTrayIcon();
     if (m_hideInTrayFlag)
         m_pTrayIcon->show();
+    if (m_theme > 1)
+        m_theme = 1;
     setTheme(m_theme);
     Print("Desktop env.: " << short(Helper::getEnv()));
+
+    ui->treeDirs->setRootIndex(m_pDirModel->setRootPath(m_openDir));
+    ui->listFiles->setRootIndex(m_pFileModel->setRootPath(m_openDir));
 }
 
 void MainWindow::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY)
@@ -1234,6 +1290,104 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         }
     }
     return BaseWindow::eventFilter(watched, event);
+}
+
+/************************************************
+** Browser
+************************************************/
+
+void MainWindow::onViewMode(uchar ind)
+{
+    if (ind == 1) {
+        ui->listFiles->setWordWrap(true);
+        ui->listFiles->setViewMode(QListView::IconMode);
+        ui->listFiles->setSpacing(10);
+        //ui->listFiles->setGridSize(QSize(120, 120));
+        //ui->listFiles->setIconSize(QSize(80, 80));
+    } else {
+        ui->listFiles->setWordWrap(false);
+        ui->listFiles->setViewMode(QListView::ListMode);
+        ui->listFiles->setSpacing(5);
+        //ui->listFiles->setGridSize(QSize(ui->filesWidget->width() - 15, 50));
+        //ui->listFiles->setIconSize(QSize(30, 40));
+    }
+}
+
+void MainWindow::setBrowser()
+{
+    m_pDirModel = new QFileSystemModel(this);
+    m_pDirModel->setReadOnly(true);
+    m_pDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+    //connect(m_pDirModel, &QFileSystemModel::directoryLoaded, this, [this, ind, root](const QString &path) {
+        //ui->treeDirs->expandAll();
+        /*if (path == root) {
+            const QModelIndex child = m_pDirModel->index(0, 0, ind);
+            if (child.isValid()) {
+                ui->treeDirs->setCurrentIndex(child);
+                onTreeDirsClicked(child);
+            }
+        }*/
+    //});
+    ui->treeDirs->setModel(m_pDirModel);
+    ui->treeDirs->setColumnWidth(0, 150);
+    ui->treeDirs->hideColumn(1);
+    ui->treeDirs->hideColumn(2);
+    ui->treeDirs->hideColumn(3);
+    ui->treeDirs->header()->hide();
+
+    m_pFileModel = new QFileSystemModel(this);
+    m_pFileModel->setReadOnly(true);
+    m_pFileModel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
+    QStringList filters = {
+        "*.avi", "*.m2ts", "*.m4v", "*.mkv", "*.mov", "*.mp4",
+        "*.mpeg", "*.mpg", "*.mxf", "*.wmv", "*.ts", "*.webm"
+    };
+    m_pFileModel->setNameFilterDisables(false);
+    m_pFileModel->setNameFilters(filters);
+
+    ui->listFiles->setModel(m_pFileModel);
+    ui->listFiles->setResizeMode(QListView::ResizeMode::Adjust);
+    ui->listFiles->setFlow(QListView::Flow::LeftToRight);
+    ui->listFiles->setTextElideMode(Qt::ElideMiddle);
+    ui->listFiles->setMovement(QListView::Movement::Snap);
+    ui->listFiles->setUniformItemSizes(true);
+    ui->listFiles->setWrapping(true);
+}
+
+void MainWindow::onBack()
+{
+    auto getPreviousPath = [](const QString &path)->QString {
+        const QString previousPath = QFileInfo(path).dir().absolutePath();
+        if (QFileInfo::exists(previousPath)) {
+            return previousPath;
+        }
+        return path;
+    };
+    const QString root = m_pDirModel->rootPath();
+    const QString previousPath = getPreviousPath(root);
+    if (previousPath != root) {
+        ui->treeDirs->setRootIndex(m_pDirModel->setRootPath(previousPath));
+        ui->listFiles->setRootIndex(m_pFileModel->setRootPath(previousPath));
+    }
+}
+
+void MainWindow::onForward()
+{
+    ui->treeDirs->setRootIndex(m_pDirModel->setRootPath(m_openDir));
+    ui->listFiles->setRootIndex(m_pFileModel->setRootPath(m_openDir));
+}
+
+void MainWindow::onTreeDirsClicked(const QModelIndex &index)
+{
+    const QString path = m_pDirModel->fileInfo(index).absoluteFilePath();
+    ui->listFiles->setRootIndex(m_pFileModel->setRootPath(path));
+}
+
+void MainWindow::onTreeDirsDblClicked(const QModelIndex &index)
+{
+    const QString path = m_pDirModel->fileInfo(index).absoluteFilePath();
+    ui->treeDirs->setRootIndex(m_pDirModel->setRootPath(path));
+    ui->listFiles->setRootIndex(m_pFileModel->setRootPath(path));
 }
 
 /************************************************
@@ -1786,18 +1940,10 @@ void MainWindow::provideContextMenu(const QPoint &pos)     // Call table items m
 
 void MainWindow::dragEnterEvent(QDragEnterEvent* event)     // Drag enter event
 {
-    event->acceptProposedAction();
+    if (event->mimeData()->hasUrls()) {
+        event->acceptProposedAction();
+    }
 }
-
-/*void MainWindow::dragMoveEvent(QDragMoveEvent* event)     // Drag move event
-{
-    event->acceptProposedAction();
-}*/
-
-/*void MainWindow::dragLeaveEvent(QDragLeaveEvent* event)     // Drag leave event
-{
-    event->accept();
-}*/
 
 void MainWindow::dropEvent(QDropEvent* event)     // Drag & Drop
 {
@@ -1839,7 +1985,8 @@ QString MainWindow::setThumbnail(QString curFilename,
                              const int quality,
                              const int destination)
 {
-    QString qualityParam("-vf scale=480:-1 -compression_level 10 -pix_fmt rgb24");
+    QString qualityParam("-vf scale=480:-1 -compression_level 10 -pred mixed "
+                         "-pix_fmt rgb24 -sws_flags +accurate_rnd+full_chroma_int");
     if (quality == PreviewRes::RES_LOW)
         qualityParam = QString("-vf scale=144:-1,format=pal8,dctdnoiz=4.5");
     const QString time_qstr = QString::number(time, 'f', 3);
@@ -1847,8 +1994,11 @@ QString MainWindow::setThumbnail(QString curFilename,
     QString tmb_file = THUMBNAILPATH + QString("/%1.png").arg(tmb_name);
     QFile tmb(tmb_file);
     if (!tmb.exists()) {
+        QString inpParam("-hide_banner -probesize 100M -analyzeduration 50M");
+        if (destination == PreviewDest::PREVIEW)
+            inpParam += " -skip_frame nokey";
         QStringList cmd;
-        cmd << "-hide_banner" << "-ss" << time_qstr << "-i" << m_input_file
+        cmd << inpParam.split(" ") << "-ss" << time_qstr << "-i" << m_input_file
             << qualityParam.split(" ") << "-vframes" << "1" << "-y" << tmb_file;
         m_pProcessThumbCreation = new QProcess(this);
         m_pProcessThumbCreation->start("ffmpeg", cmd);

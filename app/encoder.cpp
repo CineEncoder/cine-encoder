@@ -106,7 +106,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     _mux_mode = false;
     *fr_count = 0;
 
-    /****************************************** Resize ****************************************/   
+    /****************************************** Resize ****************************************/
     QString resize_vf = "";
     const QString new_width = (t.arr_width[_WIDTH] != "Source") ? t.arr_width[_WIDTH] : _width;
     const QString new_height = (t.arr_height[_HEIGHT] != "Source") ? t.arr_height[_HEIGHT] : _height;
@@ -162,6 +162,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         int amountFrames = endFrame - startFrame;
         _splitStartParam = QString(" -ss %1").arg(QString::number(_startTime, 'f', 3));
         _splitParam = QString("-vframes %1 ").arg(numToStr(amountFrames));
+        //_splitParam = QString("-ss %1 -t %1 ").arg(QString::number(duration, 'f', 3));
     } else {
         *fr_count = rnd(_dur * fps_dest);
     }
@@ -234,12 +235,12 @@ void Encoder::initEncoding(const QString  &temp_file,
                      extAudioTitle(CHECKS(externAudioChecks).size(), ""),
                      extAudioMap(CHECKS(externAudioChecks).size(), ""),
                      extAudioDef(CHECKS(externAudioChecks).size(), "");
-    int extAudioNum = 1;
+    int extTrackNum = 1;
 
     Q_LOOP(k, 0, CHECKS(externAudioChecks).size()) {
         if (CHECKS(externAudioChecks)[k] == true) {
             _extAudioPaths << "-i" << FIELDS(externAudioPath)[k];
-            extAudioMap[k] = QString("-map %1:a? ").arg(numToStr(extAudioNum));
+            extAudioMap[k] = QString("-map %1:a? ").arg(numToStr(extTrackNum));
             extAudioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
                            .arg(numToStr(audioNum), FIELDS(externAudioLangs)[k].replace(" ", "\u00A0"));
             extAudioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
@@ -247,7 +248,7 @@ void Encoder::initEncoding(const QString  &temp_file,
             extAudioDef[k] = QString("-disposition:a:%1 %2 ")
                            .arg(numToStr(audioNum), CHECKS(externAudioDef)[k] ? "default" : "0");
             audioNum++;
-            extAudioNum++;
+            extTrackNum++;
         }
         _audioMapParam += extAudioMap[k];
         _audioMetadataParam += extAudioLang[k] + extAudioTitle[k] + extAudioDef[k];
@@ -284,12 +285,11 @@ void Encoder::initEncoding(const QString  &temp_file,
                      extSubTitle(CHECKS(externSubtChecks).size(), ""),
                      extSubMap(CHECKS(externSubtChecks).size(), ""),
                      extSubDef(CHECKS(externSubtChecks).size(), "");
-    int extSubtNum = 1;
 
     Q_LOOP(k, 0, CHECKS(externSubtChecks).size()) {
         if (CHECKS(externSubtChecks)[k] == true) {
             _extSubPaths << "-i" << FIELDS(externSubtPath)[k];
-            extSubMap[k] = QString("-map %1:s? ").arg(numToStr(extSubtNum));
+            extSubMap[k] = QString("-map %1:s? ").arg(numToStr(extTrackNum));
             extSubLang[k] = QString("-metadata:s:s:%1 language=%2 ")
                            .arg(numToStr(subtNum), FIELDS(externSubtLangs)[k].replace(" ", "\u00A0"));
             extSubTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
@@ -297,7 +297,7 @@ void Encoder::initEncoding(const QString  &temp_file,
             extSubDef[k] = QString("-disposition:s:%1 %2 ")
                            .arg(numToStr(subtNum), CHECKS(externSubtDef)[k] ? "default" : "0");
             subtNum++;
-            extSubtNum++;
+            extTrackNum++;
         }
         _subtitleMapParam += extSubMap[k];
         _subtitleMetadataParam += extSubLang[k] + extSubTitle[k] + extSubDef[k];
@@ -449,7 +449,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QString sub_param("");
     if (container == "mkv") {
-        _sub_mux_param = QString("-c:s copy");
+        _sub_mux_param = QString("-c:s ass");
     }
     else
     if (container == "webm") {
@@ -466,7 +466,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
 
     if (_flag_hdr) {
-        sub_param = QString(" -c:s copy");
+        sub_param = QString(" -c:s ass");
     }
     else {
         sub_param = QString(" ") + _sub_mux_param;
@@ -811,7 +811,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************* Result module ***************************************/
 
-    _preset_0 = "-hide_banner" + hwaccel + _splitStartParam;
+    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M -copyts" + hwaccel + _splitStartParam;
     _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
             + colorprim + colormatrix + transfer + "-an -sn -f null /dev/null";
     _preset = _splitParam + codec + level + preset + mode + pass + color_range

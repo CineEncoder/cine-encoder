@@ -78,6 +78,7 @@ QFrame {
     border: none;
     background-color: @mainBackground;
 }
+QFrame#frameBrowser,
 QFrame#frameSplit,
 QFrame#frameMetadata,
 QFrame#frameLog,
@@ -341,6 +342,16 @@ QTableWidget::item:selected {
 }
 
 /**************************************************************************
+**  QTreeView
+**************************************************************************/
+
+QTreeView {
+    outline: none;
+    color: @headerTextColor;
+    background-color: @tableBackground;
+}
+
+/**************************************************************************
 **  QTreeWidget
 **************************************************************************/
 
@@ -375,28 +386,28 @@ QTreeWidget::item:selected:!active {
 }
 
 
-QTreeView::branch {
+QTreeWidget::branch {
     background: @tableBackground;
 }
-QTreeView::branch:has-siblings:!adjoins-item {
+QTreeWidget::branch:has-siblings:!adjoins-item {
     background: @tableBackground;
 }
-QTreeView::branch:has-siblings:adjoins-item {
+QTreeWidget::branch:has-siblings:adjoins-item {
     background: @tableBackground;
 }
-QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {
     background: @tableBackground;
 }
-QTreeView::branch:closed:has-children:has-siblings {
+QTreeWidget::branch:closed:has-children:has-siblings {
     background: @tableBackground;
 }
-QTreeView::branch:has-children:!has-siblings:closed {
+QTreeWidget::branch:has-children:!has-siblings:closed {
     background: @tableBackground;
 }
-QTreeView::branch:open:has-children:has-siblings {
+QTreeWidget::branch:open:has-children:has-siblings {
     background: @tableBackground;
 }
-QTreeView::branch:open:has-children:!has-siblings {
+QTreeWidget::branch:open:has-children:!has-siblings {
     background: @tableBackground;
 }
 

@@ -16,8 +16,10 @@
 #include <QtGlobal>
 #include <QSystemTrayIcon>
 #include <QTreeWidgetItem>
+#include <QFileSystemModel>
 #include <QPixmap>
 #include <QProcess>
+#include <QSplitter>
 #include <QLabel>
 #include <QTimer>
 #include <ctime>
@@ -105,6 +107,7 @@ private:
     // ============= Dock area =============
     QMainWindow *m_pDocksContainer;
     QWidget     *m_pCentralDock;
+    QSplitter   *m_pSpl;
     QDockWidget *m_pDocks[DOCKS_COUNT];
 
     // ============= Top label =============
@@ -208,12 +211,19 @@ private:
     bool        m_expandWindowsState;
     int         m_rowHeight;
 
+    QFileSystemModel *m_pDirModel,
+                     *m_pFileModel;
+
 private slots:
     void setTrayIcon();
     void setExpandIcon();
     void onCloseWindow();
     void onHideWindow();
     void onReport();
+    void onBack();
+    void onForward();
+    void onViewMode(uchar ind);
+    void setBrowser();
     void onRestoreWindowState();
     void onSettings();
     void onAddFiles();
@@ -231,8 +241,6 @@ private slots:
     void changeEvent(QEvent*);
     bool eventFilter(QObject*, QEvent*);
     void dragEnterEvent(QDragEnterEvent*);
-    //void dragMoveEvent(QDragMoveEvent*);
-    //void dragLeaveEvent(QDragLeaveEvent*);
     void dropEvent(QDropEvent*);
 
     void onTableSelectionChanged();
@@ -288,6 +296,8 @@ private slots:
     void paintEvent(QPaintEvent *event);
     void onComboModeChanged(int index);
     void onResetLabels();
+    void onTreeDirsClicked(const QModelIndex&);
+    void onTreeDirsDblClicked(const QModelIndex&);
 };
 
 #endif // WIDGET_H

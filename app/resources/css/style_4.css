@@ -78,6 +78,7 @@ QFrame {
     border: none;
     background-color: @mainBackground;
 }
+QFrame#frameBrowser,
 QFrame#frameSplit,
 QFrame#frameMetadata,
 QFrame#frameLog,
