@@ -17,6 +17,8 @@
 #include <iostream>
 #include <math.h>
 #include <ctime>
+#include <algorithm>
+
 
 #define rnd(num) static_cast<int>(round(num))
 
@@ -152,17 +154,30 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /****************************************** Split ****************************************/
 
-    QString _splitStartParam = "";
-    QString _splitParam = "";
+    QVector<double> extDurVect;
+    foreach (auto dur, FIELDS(externAudioDuration))
+        extDurVect.push_back(0.001*dur.toDouble());
+    double minExtTime = *std::min_element(std::begin(extDurVect), std::end(extDurVect));
+    Print("Min external time: " << minExtTime);
 
-    if (_endTime > 0 && _startTime < _endTime) {
-        double duration = _endTime - _startTime;
+    double duration = _endTime - _startTime;
+    if (streamCutting == 1) {
+        if (minExtTime > 0) {
+            if (minExtTime < duration || minExtTime < _dur)
+                duration = minExtTime;
+            else
+            if (_dur < minExtTime)
+                duration = _dur;
+        }
+    }
+    Print("Cut duration: " << duration);
+    QString _splitStartParam("");
+    QString _splitParam("");
+    if (duration > 0) {
         *fr_count = rnd(duration * fps_dest);
-        int startFrame = rnd(_startTime * fps_dest);
-        int endFrame = rnd(_endTime * fps_dest);
-        int amountFrames = endFrame - startFrame;
-        _splitStartParam = QString(" -ss %1").arg(QString::number(_startTime, 'f', 3));
-        _splitParam = QString("-vframes %1 ").arg(numToStr(amountFrames));
+        _splitStartParam += t.arr_codec[_CODEC][0] == tr("Source") ? " -copyts" : " -copytb 0"; //-copytb 0
+        _splitStartParam += QString(" -ss %1").arg(QString::number(_startTime, 'f', 3));
+        _splitParam = QString("-vframes %1 ").arg(numToStr(*fr_count));
         //_splitParam = QString("-ss %1 -t %1 ").arg(QString::number(duration, 'f', 3));
     } else {
         *fr_count = rnd(_dur * fps_dest);
@@ -812,7 +827,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************* Result module ***************************************/
 
-    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M -copyts" + hwaccel + _splitStartParam;
+    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M" + hwaccel + _splitStartParam;
     _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
             + colorprim + colormatrix + transfer + "-an -sn -f null /dev/null";
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
