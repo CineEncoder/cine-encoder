@@ -1,4 +1,5 @@
 #include "qstreamview.h"
+#include "helper.h"
 #include <QPropertyAnimation>
 #include <QStandardItemModel>
 #include <QHeaderView>
@@ -10,6 +11,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QRadioButton>
 #include <iostream>
 
 #define ROW_HEIGHT 22
@@ -63,7 +65,8 @@ namespace QStreamViewPrivate {
 }
 
 QStreamView::QStreamView(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_pData(nullptr)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_pLayout = new QVBoxLayout(this);
@@ -87,13 +90,16 @@ void QStreamView::clearList()
 {
     QLayoutItem *item;
     while ((item = m_pLayout->takeAt(0)) != nullptr) {
-        if (item->widget())
-            item->widget()->deleteLater();
+        if (item->widget()) {
+            delete item->widget();
+            delete item;
+        }
     }
 }
 
 void QStreamView::setList(Data &data)
 {
+    m_pData = &data;
     clearList();
     const QString columns[] = {
         tr("Format"), tr("Title"), tr("Language")
@@ -117,38 +123,59 @@ void QStreamView::setList(Data &data)
     m_pLayout->addWidget(hw);
 
     if (m_type == Content::Audio) {
-        for (int i = 0; i < data.audioFormats.size(); i++) {
-            QWidget *cell = createCell(data.audioChecks[i],
-                                       data.audioFormats[i],
-                                       data.audioLangs[i],
-                                       data.audioTitles[i],
-                                       data.audioChannels[i],
-                                       data.audioChLayouts[i],
-                                       "");
+        for (int i = 0; i < FIELDS(audioFormats).size(); i++) {
+            QWidget *cell = createCell(CHECKS(audioChecks)[i],
+                                       FIELDS(audioFormats)[i],
+                                       FIELDS(audioDuration)[i],
+                                       FIELDS(audioLangs)[i],
+                                       FIELDS(audioTitles)[i],
+                                       FIELDS(audioChannels)[i],
+                                       FIELDS(audioChLayouts)[i],
+                                       "",
+                                       CHECKS(audioDef)[i]);
             m_pLayout->addWidget(cell);
         }
-        for (int i = 0; i < data.externAudioFormats.size(); i++) {
-            QWidget *cell = createCell(data.externAudioChecks[i],
-                                       data.externAudioFormats[i],
-                                       data.externAudioLangs[i],
-                                       data.externAudioTitles[i],
-                                       data.externAudioChannels[i],
-                                       data.externAudioChLayouts[i],
-                                       data.externAudioPath[i],
+        for (int i = 0; i < FIELDS(externAudioFormats).size(); i++) {
+            QWidget *cell = createCell(CHECKS(externAudioChecks)[i],
+                                       FIELDS(externAudioFormats)[i],
+                                       FIELDS(externAudioDuration)[i],
+                                       FIELDS(externAudioLangs)[i],
+                                       FIELDS(externAudioTitles)[i],
+                                       FIELDS(externAudioChannels)[i],
+                                       FIELDS(externAudioChLayouts)[i],
+                                       FIELDS(externAudioPath)[i],
+                                       CHECKS(externAudioDef)[i],
                                        true);
             m_pLayout->addWidget(cell);
         }
     } else
     if (m_type == Content::Subtitle) {
-        for (int i = 0; i < data.subtFormats.size(); i++) {
-            QWidget *cell = createCell(data.subtChecks[i],
-                                       data.subtFormats[i],
-                                       data.subtLangs[i],
-                                       data.subtTitles[i],
-                                       "", "", "");
+        for (int i = 0; i < FIELDS(subtFormats).size(); i++) {
+            QWidget *cell = createCell(CHECKS(subtChecks)[i],
+                                       FIELDS(subtFormats)[i],
+                                       FIELDS(subtDuration)[i],
+                                       FIELDS(subtLangs)[i],
+                                       FIELDS(subtTitles)[i],
+                                       "",
+                                       "",
+                                       "",
+                                       CHECKS(subtDef)[i]);
             m_pLayout->addWidget(cell);
         }
-    }    
+        for (int i = 0; i < FIELDS(externSubtFormats).size(); i++) {
+            QWidget *cell = createCell(CHECKS(externSubtChecks)[i],
+                                       FIELDS(externSubtFormats)[i],
+                                       FIELDS(externSubtDuration)[i],
+                                       FIELDS(externSubtLangs)[i],
+                                       FIELDS(externSubtTitles)[i],
+                                       "",
+                                       "",
+                                       FIELDS(externSubtPath)[i],
+                                       CHECKS(externSubtDef)[i],
+                                       true);
+            m_pLayout->addWidget(cell);
+        }
+    }
 }
 
 void QStreamView::clearTitles()
@@ -187,7 +214,7 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
         QStreamViewPrivate::onRowHovered(obj, false);
         break;
     case QEvent::MouseButtonPress:
-        Dump(obj->objectName().toStdString());
+        Print(obj->objectName().toStdString());
         break;
     default:
         break;
@@ -195,13 +222,40 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
+void QStreamView::resetDefFlags(const int ind)
+{
+    Q_LOOP(i, 1, m_pLayout->count()) {
+        if (i != ind) {
+            QLayoutItem *item = m_pLayout->itemAt(i);
+            if (item) {
+                if (item->widget()) {
+                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
+                    if (rbtn)
+                        rbtn->setChecked(false);
+                }
+            }
+        }
+    }
+
+    if (m_type == Content::Audio) {
+        m_pData->checks[Data::audioDef].fill(false);
+        m_pData->checks[Data::externAudioDef].fill(false);
+    } else
+    if (m_type == Content::Subtitle) {
+        m_pData->checks[Data::subtDef].fill(false);
+        m_pData->checks[Data::externSubtDef].fill(false);
+    }
+}
+
 QWidget *QStreamView::createCell(bool &state,
                                  const QString &format,
+                                 const QString &dur,
                                  QString &lang,
                                  QString &title,
                                  const QString &channels,
                                  QString chLayouts,
                                  const QString &path,
+                                 bool &deflt,
                                  bool externFlag)
 {
     auto connectAction = [this](QLineEdit* line, bool isVisible)->void {
@@ -227,22 +281,35 @@ QWidget *QStreamView::createCell(bool &state,
     cell->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     cell->setMinimumHeight(46);
     QGridLayout *lut = new QGridLayout(cell);
-    lut->setContentsMargins(6,3,6,4);
+    lut->setContentsMargins(6,2,6,4);
     lut->setHorizontalSpacing(6);
     lut->setVerticalSpacing(4);
     cell->setLayout(lut);
 
+    QRadioButton *rbtn = new QRadioButton(cell);
+    rbtn->setChecked(deflt);
+    rbtn->setFixedSize(QSize(12,12));
+    rbtn->setToolTip(tr("Default"));
+    connect(rbtn, &QRadioButton::clicked, this, [this, cell, rbtn, &deflt]() {
+        resetDefFlags(m_pLayout->indexOf(cell));
+        deflt = rbtn->isChecked();
+    });
+    lut->addWidget(rbtn, 0, 0, Qt::AlignLeft);
+
     // External Audio Label
     QFont fnt;
     fnt.setPointSize(8);
-    if (externFlag) {
-        QLabel *tit = QStreamViewPrivate::createLabel(cell, "extAudioLabel", tr("external"));
-        tit->setFont(fnt);
-        tit->setEnabled(false);
-        tit->setMinimumSize(QSize(0, 10));
-        tit->setMaximumSize(QSize(100, 10));
-        lut->addWidget(tit, 0, 1, Qt::AlignLeft);
-    }
+    QLabel *tit = QStreamViewPrivate::createLabel(cell, "extAudioLabel", "");
+    tit->setFont(fnt);
+    tit->setEnabled(false);
+    tit->setMinimumSize(QSize(0, 12));
+    tit->setMaximumSize(QSize(150, 12));
+    lut->addWidget(tit, 0, 1, 1, 2, Qt::AlignLeft);
+    if (externFlag)
+        tit->setText(tr("external") + " ");
+
+    if (!Helper::isSupported(format))
+        tit->setText(tit->text() + tr("unsupported"));
 
     QWidget *info = new QWidget(cell);
     info->setObjectName("infoWidget");
@@ -255,25 +322,33 @@ QWidget *QStreamView::createCell(bool &state,
     infoLut->setVerticalSpacing(2);
     info->setLayout(infoLut);
 
+    double duration_double = 0.001 * dur.toDouble();
+    QString durationTime = Helper::timeConverter(static_cast<float>(duration_double));
+    QLabel *labDuration = QStreamViewPrivate::createLabel(info, "labelDuration",
+                                                    QString("%1: %2").arg(tr("Duration"),
+                                                                          durationTime));
+    labDuration->setEnabled(true);
+    labDuration->setFixedHeight(ROW_HEIGHT);
+    infoLut->addWidget(labDuration, 0, 0);
+
     // Label channels
     if (m_type == Content::Audio) {
-        QLabel *labCh = QStreamViewPrivate::createLabel(info, "labelChannels",
-                                                        QString("%1: %2").arg(tr("Channels"), channels));
-        labCh->setEnabled(true);
-        labCh->setFixedHeight(ROW_HEIGHT);
-        infoLut->addWidget(labCh, 0, 0);
-
-        /*QSpacerItem *sp = new QSpacerItem(5, 5, QSizePolicy::Expanding, QSizePolicy::Fixed);
-        infoLut->addItem(sp, 0, 1);*/
-
-        if (chLayouts.isEmpty())
+        /*if (chLayouts.isEmpty())
             chLayouts = tr("No layouts");
 
         QLabel *labChLayouts = QStreamViewPrivate::createLabel(info, "labelChLayouts",
-                                                        QString("%1: %2").arg(tr("Layouts"), chLayouts));
+                                                        QString("%1: %2").arg(tr("Duration"), dur));
         labChLayouts->setEnabled(true);
         labChLayouts->setFixedHeight(ROW_HEIGHT);
-        infoLut->addWidget(labChLayouts, 0, 1);
+        infoLut->addWidget(labChLayouts, 0, 0);*/
+
+        QLabel *labCh = QStreamViewPrivate::createLabel(info, "labelChannels",
+                                                        QString("%1: %2")
+                                                        .arg(tr("Channels"),
+                                                             Helper::recalcChannels(channels)));
+        labCh->setEnabled(true);
+        labCh->setFixedHeight(ROW_HEIGHT);
+        infoLut->addWidget(labCh, 0, 1);
     }
 
     if (externFlag) {
@@ -281,11 +356,11 @@ QWidget *QStreamView::createCell(bool &state,
                                                           QString("%1: %2").arg(tr("Path"), path));
         labPath->setEnabled(true);
         labPath->setFixedHeight(ROW_HEIGHT);
-        infoLut->addWidget(labPath, 1, 0, 0, 2);
+        infoLut->addWidget(labPath, 1, 0, 1, 2);
     }
 
     QSpacerItem *sp_bottom = new QSpacerItem(5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding);
-    infoLut->addItem(sp_bottom, 10, 0);
+    infoLut->addItem(sp_bottom, 5, 0);
 
     // Button
     QPushButton *btn = new QPushButton(cell);
@@ -339,17 +414,5 @@ QWidget *QStreamView::createCell(bool &state,
     connectAction(line, true);
     lut->addWidget(line, 1, 3);
 
-    // Label
-    /*QLabel *label = new QLabel(cell);
-    label->setObjectName(QString::fromUtf8("labelTitle"));
-    label->setText(tr("Title:"));
-    label->setEnabled(true);
-    label->setMaximumWidth(35);
-    label->setFixedHeight(ROW_HEIGHT);
-    label->setAutoFillBackground(false);
-    label->setFrameShadow(QFrame::Plain);
-    lut->addWidget(label, 1, 3);*/
-
     return cell;
 }
-

@@ -39,6 +39,7 @@ private:
     };
     virtual bool eventFilter(QObject*, QEvent*) final;
     virtual void showEvent(QShowEvent*) final;
+    void moveWidget();
     void showEffect(const EffectType efType);
     Ui::PopupMessage *ui;
     QWidget *ui_widget;

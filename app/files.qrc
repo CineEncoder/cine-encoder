@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/css/style_2.css</file>
-        <file>resources/css/style_1.css</file>
         <file>resources/css/style_3.css</file>
+        <file>resources/css/style_1.css</file>
         <file>resources/css/style_0.css</file>
         <file>resources/html/about.html</file>
         <file>resources/html/donate.html</file>
@@ -370,5 +370,27 @@
         <file>resources/icons/svg/sort_up.svg</file>
         <file>resources/icons/svg/sort_down.svg</file>
         <file>resources/icons/svg/undo.svg</file>
+        <file>resources/icons/svg/check.svg</file>
+        <file>resources/icons/svg/uncheck.svg</file>
+        <file>resources/icons/svg/history.svg</file>
+        <file>resources/icons/svg/order-history.svg</file>
+        <file>resources/icons/svg/undo_history.svg</file>
+        <file>resources/icons/svg/order-history_white.svg</file>
+        <file>resources/icons/svg/adjoins.svg</file>
+        <file>resources/icons/svg/haschild.svg</file>
+        <file>resources/icons/svg/vline.svg</file>
+        <file>resources/icons/svg/view_icons.svg</file>
+        <file>resources/icons/svg/view_list.svg</file>
+        <file>resources/icons/svg/shortest.svg</file>
+        <file>resources/icons/svg/not_shortest.svg</file>
+        <file>resources/icons/svg/up.svg</file>
+        <file>resources/icons/svg/left.svg</file>
+        <file>resources/icons/svg/right.svg</file>
+        <file>resources/icons/svg/sys_folder.svg</file>
+        <file>resources/icons/svg/desktop.svg</file>
+        <file>resources/icons/svg/file.svg</file>
+        <file>resources/icons/svg/computer.svg</file>
+        <file>resources/icons/svg/network.svg</file>
+        <file>resources/icons/svg/drive.svg</file>
     </qresource>
 </RCC>

@@ -52,9 +52,10 @@ void Encoder::initEncoding(const QString  &temp_file,
                            QVector<QString> _cur_param,
                            const QString  (&_hdr)[11],
                            Data           data,
-                           int            *_fr_count)
+                           int            *_fr_count,
+                           int            streamCutting)
 {
-    Dump("Make preset...");
+    Print("Make preset...");
     Tables t;
     _temp_file = temp_file;
     _input_file = input_file;
@@ -94,6 +95,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     int _REP_TRC = _cur_param[CurParamIndex::REP_TRC].toInt();
 
     _extAudioPaths.clear();
+    _extSubPaths.clear();
     _preset_0 = "";
     _preset_pass1 = "";
     _preset = "";
@@ -105,7 +107,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     _mux_mode = false;
     *fr_count = 0;
 
-    /****************************************** Resize ****************************************/   
+    /****************************************** Resize ****************************************/
     QString resize_vf = "";
     const QString new_width = (t.arr_width[_WIDTH] != "Source") ? t.arr_width[_WIDTH] : _width;
     const QString new_height = (t.arr_height[_HEIGHT] != "Source") ? t.arr_height[_HEIGHT] : _height;
@@ -160,7 +162,8 @@ void Encoder::initEncoding(const QString  &temp_file,
         int endFrame = rnd(_endTime * fps_dest);
         int amountFrames = endFrame - startFrame;
         _splitStartParam = QString(" -ss %1").arg(QString::number(_startTime, 'f', 3));
-        _splitParam = QString("-vframes %1 ").arg(QString::number(amountFrames));
+        _splitParam = QString("-vframes %1 ").arg(numToStr(amountFrames));
+        //_splitParam = QString("-ss %1 -t %1 ").arg(QString::number(duration, 'f', 3));
     } else {
         *fr_count = rnd(_dur * fps_dest);
     }
@@ -168,7 +171,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     /************************************** Video metadata ************************************/
 
     QVector<QString> videoMetadata(data.videoMetadata.size(), "");
-    QString _videoMetadataParam = "";
+    QString _videoMetadataParam("");
 
     if (globalTitle != "") {
         videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(globalTitle.replace(" ", "\u00A0"));
@@ -204,68 +207,101 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************** Audio streams ************************************/
 
-    QVector<QString> audioLang(data.audioChecks.size(), "");
-    QVector<QString> audioTitle(data.audioChecks.size(), "");
-    QVector<QString> audioMap(data.audioChecks.size(), "");
-    QString _audioMapParam = "";
-    QString _audioMetadataParam = "";
-    int countDestAudioStream = 0;
-    Q_LOOP(k, 0, data.audioChecks.size()) {
-        if (data.audioChecks[k] == true) {
-            audioMap[k] = QString("-map 0:a:%1? ").arg(QString::number(k));
+    QVector<QString> audioLang(CHECKS(audioChecks).size(), ""),
+                     audioTitle(CHECKS(audioChecks).size(), ""),
+                     audioMap(CHECKS(audioChecks).size(), ""),
+                     audioDef(CHECKS(audioChecks).size(), "");
+    QString _audioMapParam(""),
+            _audioMetadataParam("");
+    int     audioNum = 0;
+
+    Q_LOOP(k, 0, CHECKS(audioChecks).size()) {
+        if (CHECKS(audioChecks)[k] == true) {
+            audioMap[k] = QString("-map 0:a:%1? ").arg(numToStr(k));
             audioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
-                           .arg(QString::number(countDestAudioStream), data.audioLangs[k].replace(" ", "\u00A0"));
+                           .arg(numToStr(audioNum), FIELDS(audioLangs)[k].replace(" ", "\u00A0"));
             audioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
-                            .arg(QString::number(countDestAudioStream), data.audioTitles[k].replace(" ", "\u00A0"));
-            countDestAudioStream++;
+                            .arg(numToStr(audioNum), FIELDS(audioTitles)[k].replace(" ", "\u00A0"));
+            audioDef[k] = QString("-disposition:a:%1 %2 ")
+                           .arg(numToStr(audioNum), CHECKS(audioDef)[k] ? "default" : "0");
+            audioNum++;
         }
         _audioMapParam += audioMap[k];
-        _audioMetadataParam += audioLang[k] + audioTitle[k];
+        _audioMetadataParam += audioLang[k] + audioTitle[k] + audioDef[k];
     }
 
     /********************************* External Audio streams ************************************/
 
-    QVector<QString> extAudioLang(data.externAudioChecks.size(), "");
-    QVector<QString> extAudioTitle(data.externAudioChecks.size(), "");
-    //QVector<QString> extAudioPath(data.externAudioChecks.size(), "");
-    QVector<QString> extAudioMap(data.externAudioChecks.size(), "");
-    int extCountDestAudioStream = 1;
-    Q_LOOP(k, 0, data.externAudioChecks.size()) {
-        if (data.externAudioChecks[k] == true) {
-            //extAudioPath[k] = QString("-i*%1*").arg(data.externAudioPath[k]);
-            _extAudioPaths << "-i" << data.externAudioPath[k];
-            extAudioMap[k] = QString("-map %1:a? ").arg(QString::number(extCountDestAudioStream));
+    QVector<QString> extAudioLang(CHECKS(externAudioChecks).size(), ""),
+                     extAudioTitle(CHECKS(externAudioChecks).size(), ""),
+                     extAudioMap(CHECKS(externAudioChecks).size(), ""),
+                     extAudioDef(CHECKS(externAudioChecks).size(), "");
+    int extTrackNum = 1;
+
+    Q_LOOP(k, 0, CHECKS(externAudioChecks).size()) {
+        if (CHECKS(externAudioChecks)[k] == true) {
+            _extAudioPaths << "-i" << FIELDS(externAudioPath)[k];
+            extAudioMap[k] = QString("-map %1:a? ").arg(numToStr(extTrackNum));
             extAudioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
-                           .arg(QString::number(countDestAudioStream), data.externAudioLangs[k].replace(" ", "\u00A0"));
+                           .arg(numToStr(audioNum), FIELDS(externAudioLangs)[k].replace(" ", "\u00A0"));
             extAudioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
-                            .arg(QString::number(countDestAudioStream), data.externAudioTitles[k].replace(" ", "\u00A0"));
-            countDestAudioStream++;
-            extCountDestAudioStream++;
+                            .arg(numToStr(audioNum), FIELDS(externAudioTitles)[k].replace(" ", "\u00A0"));
+            extAudioDef[k] = QString("-disposition:a:%1 %2 ")
+                           .arg(numToStr(audioNum), CHECKS(externAudioDef)[k] ? "default" : "0");
+            audioNum++;
+            extTrackNum++;
         }
-        //_extAudioPaths += extAudioPath[k];
         _audioMapParam += extAudioMap[k];
-        _audioMetadataParam += extAudioLang[k] + extAudioTitle[k];
+        _audioMetadataParam += extAudioLang[k] + extAudioTitle[k] + extAudioDef[k];
     }
 
     /**************************************** Subtitles **************************************/
 
-    QVector<QString> subtitleLang(data.subtChecks.size(), "");
-    QVector<QString> subtitleTitle(data.subtChecks.size(), "");
-    QVector<QString> subtitleMap(data.subtChecks.size(), "");
-    QString _subtitleMapParam = "";
-    QString _subtitleMetadataParam = "";
-    int countDestSubtitleStream = 0;
-    Q_LOOP(k, 0, data.subtChecks.size()) {
-        if (data.subtChecks[k] == true) {
-            subtitleMap[k] = QString("-map 0:s:%1? ").arg(QString::number(k));
+    QVector<QString> subtitleLang(CHECKS(subtChecks).size(), ""),
+                     subtitleTitle(CHECKS(subtChecks).size(), ""),
+                     subtitleMap(CHECKS(subtChecks).size(), ""),
+                     subtitleDef(CHECKS(subtChecks).size(), "");
+    QString _subtitleMapParam(""),
+            _subtitleMetadataParam("");
+    int     subtNum = 0;
+
+    Q_LOOP(k, 0, CHECKS(subtChecks).size()) {
+        if (CHECKS(subtChecks)[k] == true) {
+            subtitleMap[k] = QString("-map 0:s:%1? ").arg(numToStr(k));
             subtitleLang[k] = QString("-metadata:s:s:%1 language=%2 ")
-                           .arg(QString::number(countDestSubtitleStream), data.subtLangs[k].replace(" ", "\u00A0"));
+                           .arg(numToStr(subtNum), FIELDS(subtLangs)[k].replace(" ", "\u00A0"));
             subtitleTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
-                            .arg(QString::number(countDestSubtitleStream), data.subtTitles[k].replace(" ", "\u00A0"));
-            countDestSubtitleStream++;
+                            .arg(numToStr(subtNum), FIELDS(subtTitles)[k].replace(" ", "\u00A0"));
+            subtitleDef[k] = QString("-disposition:s:%1 %2 ")
+                           .arg(numToStr(subtNum), CHECKS(subtDef)[k] ? "default" : "0");
+            subtNum++;
         }
         _subtitleMapParam += subtitleMap[k];
-        _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k];
+        _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k] + subtitleDef[k];
+    }
+
+    /****************************** External Subtitle streams *********************************/
+
+    QVector<QString> extSubLang(CHECKS(externSubtChecks).size(), ""),
+                     extSubTitle(CHECKS(externSubtChecks).size(), ""),
+                     extSubMap(CHECKS(externSubtChecks).size(), ""),
+                     extSubDef(CHECKS(externSubtChecks).size(), "");
+
+    Q_LOOP(k, 0, CHECKS(externSubtChecks).size()) {
+        if (CHECKS(externSubtChecks)[k] == true) {
+            _extSubPaths << "-i" << FIELDS(externSubtPath)[k];
+            extSubMap[k] = QString("-map %1:s? ").arg(numToStr(extTrackNum));
+            extSubLang[k] = QString("-metadata:s:s:%1 language=%2 ")
+                           .arg(numToStr(subtNum), FIELDS(externSubtLangs)[k].replace(" ", "\u00A0"));
+            extSubTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
+                            .arg(numToStr(subtNum), FIELDS(externSubtTitles)[k].replace(" ", "\u00A0"));
+            extSubDef[k] = QString("-disposition:s:%1 %2 ")
+                           .arg(numToStr(subtNum), CHECKS(externSubtDef)[k] ? "default" : "0");
+            subtNum++;
+            extTrackNum++;
+        }
+        _subtitleMapParam += extSubMap[k];
+        _subtitleMetadataParam += extSubLang[k] + extSubTitle[k] + extSubDef[k];
     }
 
     /************************************* Codec module ***************************************/
@@ -413,23 +449,25 @@ void Encoder::initEncoding(const QString  &temp_file,
     /************************************ Subtitle module *************************************/
 
     QString sub_param("");
-    if (container == "MKV") {
-        _sub_mux_param = QString("-c:s copy");
+    if (container == "mkv") {
+        _sub_mux_param = QString("-c:s ass");
     }
     else
-    if (container == "WebM") {
+    if (container == "webm") {
         _sub_mux_param = QString("-c:s webvtt");
     }
     else
-    if (container == "MP4" || container == "MOV") {
+    if (container == "mp4" || container == "mov") {
         _sub_mux_param = QString("-c:s mov_text");
     }
     else {
         _sub_mux_param = QString("-sn");
+        emit onEncodingError(tr("Container \'%1\' will be transcoded without subtitles.")
+                             .arg(container), true);
     }
 
     if (_flag_hdr) {
-        sub_param = QString(" -c:s copy");
+        sub_param = QString(" -c:s ass");
     }
     else {
         sub_param = QString(" ") + _sub_mux_param;
@@ -602,7 +640,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
 
     const QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
-                    QString("-map_metadata -1 ") + _videoMetadataParam + _audioMetadataParam +
+                    QString("-map_metadata -1 -map_chapters -1 ") + _videoMetadataParam + _audioMetadataParam +
                     _subtitleMetadataParam + transform + t.arr_params[_CODEC][0];
 
     /************************************* HDR module ***************************************/
@@ -774,21 +812,21 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /************************************* Result module ***************************************/
 
-    _preset_0 = "-hide_banner" + hwaccel + _splitStartParam;
+    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M -copyts" + hwaccel + _splitStartParam;
     _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
             + colorprim + colormatrix + transfer + "-an -sn -f null /dev/null";
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
             + colorprim + colormatrix + transfer + audio_param + sub_param;
     _preset_mkvmerge = QString("%1%2%3%4%5%6 ").arg(max_cll, max_fall, max_lum, min_lum, chroma_coord, white_coord);
-    Dump("Flag two-pass: " << _flag_two_pass);
-    Dump("Flag HDR: " << _flag_hdr);
-    Dump("preset_0: " << _preset_0.toStdString());
+    Print("Flag two-pass: " << _flag_two_pass);
+    Print("Flag HDR: " << _flag_hdr);
+    Print("preset_0: " << _preset_0.toStdString());
 
     QString log("");
     if (_flag_two_pass && _flag_hdr) {
-        Dump("preset_pass1: " << _preset_pass1.toStdString());
-        Dump("preset: " << _preset.toStdString());
-        Dump("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
+        Print("preset_pass1: " << _preset_pass1.toStdString());
+        Print("preset: " << _preset.toStdString());
+        Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
         log = QString("Preset pass 1: %1 -i <input file> %2\n"
                       "Preset pass 2: %3 -i <input file> %4 -y <output file>\n"
                       "Preset mkvpropedit: %5\n")
@@ -796,23 +834,23 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
     else
     if (_flag_two_pass && !_flag_hdr) {
-        Dump("preset_pass1: " << _preset_pass1.toStdString());
-        Dump("preset: " << _preset.toStdString());
+        Print("preset_pass1: " << _preset_pass1.toStdString());
+        Print("preset: " << _preset.toStdString());
         log = QString("Preset pass 1: %1 -i <input file> %2\n"
                       "Preset pass 2: %3 -i <input file> %4 -y <output file>\n")
                 .arg(_preset_0, _preset_pass1, _preset_0, _preset);
     }
     else
     if (!_flag_two_pass && _flag_hdr) {
-        Dump("preset: " << _preset.toStdString());
-        Dump("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
+        Print("preset: " << _preset.toStdString());
+        Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
         log = QString("Preset: %1 -i <input file> %2 -y <output file>\n"
                       "Preset mkvpropedit: %3\n")
                 .arg(_preset_0, _preset, _preset_mkvmerge);
     }
     else
     if (!_flag_two_pass && !_flag_hdr) {
-        Dump("preset: " << _preset.toStdString());
+        Print("preset: " << _preset.toStdString());
         log = QString("Preset: %1 -i <input file> %2 -y <output file>\n")
                 .arg(_preset_0, _preset);
     }
@@ -822,7 +860,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
 void Encoder::encode()   // Encode
 {
-    Dump("Encode ...");
+    Print("Encode ...");
     QStringList arguments;
     _calling_pr_1 = true;
     processEncoding->disconnect();
@@ -830,7 +868,7 @@ void Encoder::encode()   // Encode
     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
     emit onEncodingProgress(0, 0.0f);
     if (_mux_mode) {
-        Dump("Muxing mode ...");
+        Print("Muxing mode ...");
         _encoding_mode = tr("Muxing:");
         emit onEncodingMode(_encoding_mode);
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
@@ -846,36 +884,39 @@ void Encoder::encode()   // Encode
 
         _loop_start = time(nullptr);
         if (!_flag_two_pass && !_flag_hdr) {
-            Dump("Encode non HDR...");
+            Print("Encode non HDR...");
             _encoding_mode = tr("Encoding:");
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
+                      << _extSubPaths
                       << _preset.split(" ") << "-y" << _output_file;
         }
         else
         if (!_flag_two_pass && _flag_hdr) {
-            Dump("Encode HDR...");
+            Print("Encode HDR...");
             _encoding_mode = tr("Encoding:");
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
+                      << _extSubPaths
                       << _preset.split(" ") << "-y" << _temp_file;
         }
         else
         if (_flag_two_pass) {
-            Dump("Encode 1-st pass...");
+            Print("Encode 1-st pass...");
             _encoding_mode = tr("1-st pass:");
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file
                       << _extAudioPaths
+                      << _extSubPaths
                       << _preset_pass1.split(" ");
         }
     }
     //qDebug() << arguments;
     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {
-        Dump("cmd command not found!!!");
+        Print("cmd command not found!!!");
         processEncoding->disconnect();
         _message = tr("An unknown error occurred!\n Possible FFMPEG not installed.\n");
         emit onEncodingInitError(_message);
@@ -884,7 +925,7 @@ void Encoder::encode()   // Encode
 
 void Encoder::add_metadata() /*** Add metedata ***/
 {
-    Dump("Add metadata ...");
+    Print("Add metadata ...");
     _calling_pr_1 = true;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_2()));
@@ -896,7 +937,7 @@ void Encoder::add_metadata() /*** Add metedata ***/
     arguments << "--edit" << "track:1" << _preset_mkvmerge.split(" ") << _temp_file;
     processEncoding->start("mkvpropedit", arguments);
     if (!processEncoding->waitForStarted()) {
-        Dump("cmd command not found!!!");
+        Print("cmd command not found!!!");
         processEncoding->disconnect();
         _message = tr("An unknown error occured!\n Possible mkvtoolnix not installed.\n");
         emit onEncodingInitError(_message);

@@ -1,44 +1,44 @@
 /**************************************************************************
-**  WAVE THEME
+**  GRAY THEME
 **************************************************************************/
 
 
-@mainBackground = #252525;
+@mainBackground = #2C2C34;
 
-@tableBorder = #292929;
-@tableBackground = #262626;
-@tableAlternateBackground = #272727;
-@tableRowSelectedBackground = #302828;
+@tableBorder = #27272C;
+@tableBackground = #192327;
+@tableAlternateBackground = #182123;
+@tableRowSelectedBackground = #1C252F;
 @tableTextColor = #B4B4B4;
 @tableTextSelected = #D2D2D2;
 @tableGrid = #373C47;
 
-@frameEdgingBackground = #262626;
-@frameMiddleBorder = #292929;
-@frameMiddleBackground = #262626;
+@frameEdgingBackground = #212428;
+@frameMiddleBorder = #25272C;
+@frameMiddleBackground = #192327;
 @frameTextColor = #A0A5AA;
-@frameEdgeBorder = #292929;
-@frameTopBackground = #292929;
-@frameBottomBackground = #292929;
-@frameHeaderBackground = #292929;
+@frameEdgeBorder = #25272C;
+@frameTopBackground = #25272C;
+@frameBottomBackground = #25272C;
+@frameHeaderBackground = #25272C;
 
-@scrollBackground = #272727;
-@scrollHandle = #222222;
-@scrollAddLineSubLine = #272727;
+@scrollBackground = #1A1C24;
+@scrollHandle = #1C1E26;
+@scrollAddLineSubLine = #1C1E26;
 
 @headerTextColor = #A0A5AA;
-@headerBackground = #303030;
-@headerBorder = #292929;
+@headerBackground = #1C2026;
+@headerBorder = #27272C;
 
 @elementsTextColor = #B4B4B4;
 @elementsTextDisabled = #62676F;
-@elementsTextAbstractItem = #B4B4B4;
-@elementsBackgroundColor = #303030;
-@elementsBackgroundAbstractItem = #404040;
-@elementsBackgroundSelectedAbstractItem = #363636;
-@elementsBorderColor = #303030;
+@elementsTextAbstractItem = #55AAFF;
+@elementsBackgroundColor = #1B1D23;
+@elementsBackgroundAbstractItem = #1B1D23;
+@elementsBackgroundSelectedAbstractItem = #272C36;
+@elementsBorderColor = #1B1D23;
 @elementsBorderHover = #404758;
-@elementsBorderDropDown = #292929;
+@elementsBorderDropDown = #22262E;
 @elementsBorderRadius = 5px;
 
 
@@ -64,7 +64,11 @@ QWidget#centralwidget {
 QWidget#widget_main {
     background: @frameTopBackground;
 }
-
+QWidget#Report {
+    border: 1px solid @elementsBorderColor;
+    border-radius: 5px;
+    background: @mainBackground;
+}
 
 /**************************************************************************
 **  QFrame
@@ -74,6 +78,7 @@ QFrame {
     border: none;
     background-color: @mainBackground;
 }
+QFrame#frameBrowser,
 QFrame#frameSplit,
 QFrame#frameMetadata,
 QFrame#frameLog,
@@ -139,10 +144,10 @@ QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
 **************************************************************************/
 
 QToolTip {
-    border: 1px solid @elementsBorderColor;
+    border: 1px solid #282828;
     border-radius: 2px;
-    color: @elementsTextAbstractItem;
-    background-color: @elementsBackgroundAbstractItem;
+    color: #ffffff;
+    background-color: #1B1D23;
 }
 
 
@@ -151,14 +156,14 @@ QToolTip {
 **************************************************************************/
 
 QMenu {
-    background-color: @elementsBackgroundAbstractItem;
+    background-color: #1B1D23;
 }
 QMenu::item {
-    color: @elementsTextAbstractItem;
+    color: #EFEFEF;
     background-color: transparent;
 }
 QMenu::item:selected {
-    background-color: @elementsBackgroundSelectedAbstractItem;
+    background-color: #05282D;
 }
 
 
@@ -337,6 +342,16 @@ QTableWidget::item:selected {
 }
 
 /**************************************************************************
+**  QTreeView
+**************************************************************************/
+
+QTreeView {
+    outline: none;
+    color: @headerTextColor;
+    background-color: @tableBackground;
+}
+
+/**************************************************************************
 **  QTreeWidget
 **************************************************************************/
 
@@ -355,44 +370,44 @@ QTreeWidget::item:selected {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: @tableRowSelectedBackground;
+    background-color: #1C252F;
 }
 QTreeWidget::item:selected:active {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: @tableRowSelectedBackground;
+    background-color: #1C252F;
 }
 QTreeWidget::item:selected:!active {
     min-height: 22px;
     border-right: 1px solid @tableBorder;
     color: @tableTextSelected;
-    background-color: @tableRowSelectedBackground;
+    background-color: #1C252F;
 }
 
 
-QTreeView::branch {
+QTreeWidget::branch {
     background: @tableBackground;
 }
-QTreeView::branch:has-siblings:!adjoins-item {
+QTreeWidget::branch:has-siblings:!adjoins-item {
     background: @tableBackground;
 }
-QTreeView::branch:has-siblings:adjoins-item {
+QTreeWidget::branch:has-siblings:adjoins-item {
     background: @tableBackground;
 }
-QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {
     background: @tableBackground;
 }
-QTreeView::branch:closed:has-children:has-siblings {
+QTreeWidget::branch:closed:has-children:has-siblings {
     background: @tableBackground;
 }
-QTreeView::branch:has-children:!has-siblings:closed {
+QTreeWidget::branch:has-children:!has-siblings:closed {
     background: @tableBackground;
 }
-QTreeView::branch:open:has-children:has-siblings {
+QTreeWidget::branch:open:has-children:has-siblings {
     background: @tableBackground;
 }
-QTreeView::branch:open:has-children:!has-siblings {
+QTreeWidget::branch:open:has-children:!has-siblings {
     background: @tableBackground;
 }
 
@@ -496,9 +511,7 @@ QCheckBox {
     background-color: transparent;
 }
 QCheckBox:disabled {
-    spacing: 12px;
     color: #A0A5AA;
-    background-color: transparent;
 }
 QCheckBox::indicator {
     width: 12px;
@@ -507,23 +520,14 @@ QCheckBox::indicator {
     background: none;
 }
 QCheckBox::indicator:disabled {
-    width: 12px;
-    height: 12px;
     border: 2px solid #3C3C3C;
-    background: none;
 }
 QCheckBox::indicator:checked {
-    width: 12px;
-    height: 12px;
     border: 2px solid #5A5A5A;
-    background: none;
     image: url(:/resources/icons/16x16/cil-check-alt.png);
 }
 QCheckBox::indicator:checked:disabled {
-    width: 12px;
-    height: 12px;
     border: 2px solid #3C3C3C;
-    background: none;
     image: url(:/resources/icons/16x16/cil-check-alt.png);
 }
 
@@ -632,17 +636,17 @@ QSpinBox, QDoubleSpinBox {
     padding: 0px;
     padding-left: 5px;
     border-radius: 0px;
-    border: 2px solid @elementsBorderColor;
-    color: @elementsTextColor;
-    background-color: @elementsBackgroundColor;
+    border: 2px solid #1B1D23;
+    color: #B4B4B4;
+    background-color: #1B1D23;
 }
 QSpinBox:disabled, QDoubleSpinBox:disabled {
     padding: 0px;
     padding-left: 5px;
     border-radius: 0px;
-    border: 2px solid @elementsBorderColor;
-    color: @elementsTextDisabled;
-    background-color: @elementsBackgroundColor;
+    border: 2px solid #1B1D23;
+    color: #62676F;
+    background-color: #1B1D23;
 }
 QSpinBox:hover, QDoubleSpinBox:hover {
     border: 2px solid #404758;
@@ -805,7 +809,7 @@ QTextBrowser#textBrowser_presetname {
     border-radius: 2px;
     border: none;
     color: #D2D2D2;
-    background-color: @elementsBackgroundColor;
+    background-color: #1B1D23;
 }
 QTextBrowser#textBrowser_log {
     padding-left: 3px;
@@ -904,6 +908,12 @@ QPushButton#closeWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton#closeReport {
+        border: none;
+        image: url(:/resources/icons/svg/close.svg);
+        color: @elementsTextColor;
+        background-color: transparent;
+}
 QPushButton#closeTWindow {
         border: none;
         padding: 5px;
@@ -920,6 +930,10 @@ QPushButton#start[status="1"] {
 }
 QPushButton#start[status="2"] {
     image: url(:/resources/icons/svg/forward.svg);
+}
+QPushButton#report {
+    image: url(:/resources/icons/svg/order-history.svg);
+    background-color: transparent;
 }
 QPushButton:hover#resetLabels,
 QPushButton:hover#addExtStream,
@@ -943,11 +957,15 @@ QPushButton:hover#settings,
 QPushButton:hover#audioExpandBtn,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
+QPushButton:hover#closeReport,
 QPushButton:hover#closeTWindow {
     background-color: #343B48;
 }
 QPushButton:hover#closeWindow {
     background-color: #EE0000;
+}
+QPushButton:hover#report {
+    image: url(:/resources/icons/svg/order-history_white.svg);
 }
 QPushButton:pressed#resetLabels,
 QPushButton:pressed#addExtStream,
@@ -971,10 +989,14 @@ QPushButton:pressed#settings,
 QPushButton:pressed#hideWindow,
 QPushButton:pressed#expandWindow,
 QPushButton:pressed#closeWindow,
+QPushButton:pressed#closeReport,
 QPushButton:pressed#closeTWindow {
     background-color: #55AAFF;
 }
-
+QPushButton:pressed#report {
+    border-radius: 0px;
+    background-color: #55AAFF;
+}
 
 /*********************************************/
 
@@ -995,7 +1017,7 @@ QPushButton:disabled#buttonTab_3,
 QPushButton:disabled#buttonTab_4 {
     border: none;
     color: #D2D2D2;
-    background-color: #323232;
+    background-color: #1B1D23;
 }
 QPushButton:hover#buttonTab_1,
 QPushButton:hover#buttonTab_2,
@@ -1105,9 +1127,9 @@ QPushButton#buttonApply,
 QPushButton#buttonPayPal,
 QPushButton#buttonBitcoin {
     border-radius: 1px;
-    border: 1px solid #474747;
+    border: 1px solid #1E2F50;
     color: #FFFFFF;
-    background-color: #3b3b3b;
+    background-color: #1E2F50;
 }
 
 QPushButton:hover#buttonCancel,
@@ -1124,6 +1146,24 @@ QPushButton:pressed#buttonPayPal,
 QPushButton:pressed#buttonBitcoin {
     border: 1px solid #2B323D;
     background-color: #232831;
+}
+
+
+/**************************************************************************
+**  QRadioButton
+**************************************************************************/
+
+QRadioButton {
+    background: none;
+}
+QRadioButton::indicator {
+    width: 12px; height: 12px;
+}
+QRadioButton::indicator::unchecked {
+    image: url(:/resources/icons/svg/uncheck.svg);
+}
+QRadioButton::indicator::checked {
+    image: url(:/resources/icons/svg/check.svg);
 }
 
 

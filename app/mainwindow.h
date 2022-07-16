@@ -16,8 +16,10 @@
 #include <QtGlobal>
 #include <QSystemTrayIcon>
 #include <QTreeWidgetItem>
+#include <QFileSystemModel>
 #include <QPixmap>
 #include <QProcess>
+#include <QSplitter>
 #include <QLabel>
 #include <QTimer>
 #include <ctime>
@@ -38,6 +40,8 @@
 
 typedef QVector<QVector<QString>> TableString;
 
+using namespace Constants;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class Widget;
@@ -50,7 +54,7 @@ class MainWindow : public BaseWindow
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow(); 
+    ~MainWindow();
 
 private:
     void setFloating(const int index, const QPoint &offset, const QSize &size);
@@ -62,9 +66,11 @@ private:
     void get_output_filename();
     void setStatus(const QString &status);
     void setWidgetsEnabled(bool);
+    void setProgressEnabled(bool);
     void showInfoMessage(const QString &message, const bool timer_mode = false);
     bool showDialogMessage(const QString &message);
     void showPopup(const QString &text, PopupMessage::Icon icon = PopupMessage::Icon::Info);
+    void addReport(const QString &log, ReportLog::Icon icon = ReportLog::Icon::Info);
     void setTheme(const int ind_theme);
     QString setThumbnail(QString curFilename,
                          const double time,
@@ -102,6 +108,8 @@ private:
     // ============= Dock area =============
     QMainWindow *m_pDocksContainer;
     QWidget     *m_pCentralDock;
+    QSplitter   *m_pSpl,
+                *m_pSplSource;
     QDockWidget *m_pDocks[DOCKS_COUNT];
 
     // ============= Top label =============
@@ -129,10 +137,12 @@ private:
                 *m_pActSettings,
                 *m_pActResetView,
                 *m_pActAbout,
-                *m_pActDonate;
+                *m_pActDonate,
+                *m_pActAddToTask;
 
     // ============= Menu actions =============
     QMenu       *m_pItemMenu,
+                *m_pFilesItemMenu,
                 *m_pSectionMenu,
                 *m_pPresetMenu;
 
@@ -146,6 +156,9 @@ private:
     // ============= Initialization =============
     QString     m_openDir;
     int         m_theme;
+
+    // ============== Report ==============
+    QVector<ReportLog> m_reportLog;
 
     // ============= Metadata =============
     QString       m_hdr[AMOUNT_HDR_PARAMS];
@@ -198,14 +211,23 @@ private:
                 m_font;
 
     // ============= Geometry =============
+    bool        m_windowActivated;
     bool        m_expandWindowsState;
-    int         m_rowHeight;   
+    int         m_rowHeight;
+
+    QFileSystemModel *m_pDirModel,
+                     *m_pFileModel;
 
 private slots:
     void setTrayIcon();
     void setExpandIcon();
     void onCloseWindow();
     void onHideWindow();
+    void onReport();
+    void onBack();
+    void onForward();
+    void onViewMode(uchar ind);
+    void setBrowser();
     void onRestoreWindowState();
     void onSettings();
     void onAddFiles();
@@ -223,8 +245,6 @@ private slots:
     void changeEvent(QEvent*);
     bool eventFilter(QObject*, QEvent*);
     void dragEnterEvent(QDragEnterEvent*);
-    void dragMoveEvent(QDragMoveEvent*);
-    void dragLeaveEvent(QDragLeaveEvent*);
     void dropEvent(QDropEvent*);
 
     void onTableSelectionChanged();
@@ -238,7 +258,7 @@ private slots:
     void onEncodingLog(const QString &log);
     void onEncodingCompleted();
     void onEncodingAborted();
-    void onEncodingError(const QString &error_message);
+    void onEncodingError(const QString &error_message, bool popup = false);
     void pause();
     void resume();
 
@@ -280,6 +300,10 @@ private slots:
     void paintEvent(QPaintEvent *event);
     void onComboModeChanged(int index);
     void onResetLabels();
+    void onTreeDirsClicked(const QModelIndex&);
+    void onTreeDirsDblClicked(const QModelIndex&);
+    void provideListContextMenu(const QPoint&);
+    void onAddToTask();
 };
 
 #endif // WIDGET_H

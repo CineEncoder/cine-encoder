@@ -19,6 +19,8 @@
 #include <QPushButton>
 #include <QTimer>
 
+#define OFFSET QPoint(374, -20)
+
 
 PopupMessage::PopupMessage(QWidget *parent, Icon icon, const QString &text) :
     BaseDialog(parent, false),
@@ -66,6 +68,12 @@ PopupMessage::PopupMessage(QWidget *parent, Icon icon, const QString &text) :
     lt->addWidget(br, 0, 1);
     br->setText(text);
     br->setStyleSheet("color: #303030");
+
+    QTimer *tmr = new QTimer(this);
+    tmr->setSingleShot(false);
+    tmr->setInterval(250);
+    connect(tmr, &QTimer::timeout, this, &PopupMessage::moveWidget);
+    tmr->start();
 }
 
 PopupMessage::~PopupMessage()
@@ -87,12 +95,20 @@ void PopupMessage::showEvent(QShowEvent *event)
     BaseDialog::showEvent(event);
     if (!m_activated) {
         m_activated = true;
-        QPoint offset(380, -35);
-        move(parentWidget()->geometry().topRight() - offset);
+        moveWidget();
         //showEffect(EffectType::Arise);
         QTimer::singleShot(5000, this, [this]() {
             showEffect(EffectType::Fade);
         });
+    }
+}
+
+void PopupMessage::moveWidget()
+{
+    if (parentWidget()) {
+        auto cw = parentWidget()->findChild<QWidget*>("centralwidget");
+        if (cw)
+            move(cw->mapToGlobal(cw->geometry().topRight()) - OFFSET);
     }
 }
 

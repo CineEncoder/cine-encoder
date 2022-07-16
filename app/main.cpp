@@ -21,7 +21,6 @@
 #include <QMap>
 #include <iostream>
 #include "mainwindow.h"
-#include "constants.h"
 #include "helper.h"
 
 
@@ -29,6 +28,8 @@ int checkForDuplicates();
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_QPA_PLATFORM", "xcb");
+    qputenv("QT_LOGGING_RULES", "*.debug=false;qt.qpa.*=false");
     setlocale(LC_ALL, "");
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("CineEncoder");
@@ -120,7 +121,7 @@ int checkForDuplicates()
             return 1;
         }
     } else {
-        Dump("Command \""<< cmd.toStdString() << "\" not found.");
+        Print("Command \""<< cmd.toStdString() << "\" not found.");
     }
     return 0;
 }

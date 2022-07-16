@@ -72,6 +72,11 @@ QWidget#centralwidget {
 QWidget#widget_main {
     background: @frameTopBackground;
 }
+QWidget#Report {
+    border: 1px solid @elementsBorderColor;
+    border-radius: 5px;
+    background: @mainBackground;
+}
 
 
 /**************************************************************************
@@ -82,6 +87,7 @@ QFrame {
     border: none;
     background-color: @mainBackground;
 }
+QFrame#frameBrowser,
 QFrame#frameSplit,
 QFrame#frameMetadata,
 QFrame#frameLog,
@@ -304,10 +310,11 @@ QHeaderView::down-arrow {
 
 
 /**************************************************************************
-**  QTableWidget
+**  QTableWidget, QListView
 **************************************************************************/
 
-QTableWidget {
+QTableWidget,
+#listFiles {
     outline: none;
     padding-bottom: 0px;
     border-radius: 0px;
@@ -337,6 +344,15 @@ QTableWidget::item:selected {
     background-color: @tableRowSelectedBackground;
 }
 
+#listFiles::item {
+    padding: 0px;
+    border: none;
+}
+#listFiles::item:selected {
+    color: @tableTextSelected;
+    background-color: @tableRowSelectedBackground;
+}
+
 #TableWidgetLabel {
     color: #E3E3E3; font: 48pt; font-style: oblique;
     font-weight: 500;
@@ -352,74 +368,85 @@ QTreeWidget {
     background-color: @tableBackground;
     alternate-background-color: @tableAlternateBackground;
 }
-QTreeWidget::item {
+#treeDirs {
+    outline: none;
+    border-right: 1px solid @tableBorder;
+    color: @headerTextColor;
+    background-color: @tableBackground;
+    alternate-background-color: @tableAlternateBackground;
+}
+QTreeWidget::item,
+QTreeView::item {
     min-height: 22px;
     margin-top: 2px;
     border-right: 1px solid @tableBorder;
 }
-QTreeWidget::item:selected {
-    min-height: 22px;
-    border-right: 1px solid @tableBorder;
+QTreeWidget::item:selected,
+QTreeView::item:selected {
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
-QTreeWidget::item:selected:active {
-    min-height: 22px;
-    border-right: 1px solid @tableBorder;
+QTreeWidget::item:selected:active,
+QTreeView::item:selected:active {
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
-QTreeWidget::item:selected:!active {
-    min-height: 22px;
-    border-right: 1px solid @tableBorder;
+QTreeWidget::item:selected:!active,
+QTreeView::item:selected:!active {
     color: @tableTextSelected;
     background-color: @tableRowSelectedBackground;
 }
 
-
+QTreeWidget::branch,
 QTreeView::branch {
     background: @tableBackground;
 }
+QTreeWidget::branch:has-siblings:!adjoins-item,
 QTreeView::branch:has-siblings:!adjoins-item {
     background: @tableBackground;
 }
+QTreeWidget::branch:has-siblings:adjoins-item,
 QTreeView::branch:has-siblings:adjoins-item {
     background: @tableBackground;
 }
+QTreeWidget::branch:!has-children:!has-siblings:adjoins-item,
 QTreeView::branch:!has-children:!has-siblings:adjoins-item {
     background: @tableBackground;
 }
+QTreeWidget::branch:closed:has-children:has-siblings,
 QTreeView::branch:closed:has-children:has-siblings {
     background: @tableBackground;
 }
+QTreeWidget::branch:has-children:!has-siblings:closed,
 QTreeView::branch:has-children:!has-siblings:closed {
     background: @tableBackground;
 }
+QTreeWidget::branch:open:has-children:has-siblings,
 QTreeView::branch:open:has-children:has-siblings {
     background: @tableBackground;
 }
+QTreeWidget::branch:open:has-children:!has-siblings,
 QTreeView::branch:open:has-children:!has-siblings {
     background: @tableBackground;
 }
 
-
 QTreeWidget::branch:has-siblings:!adjoins-item {
-    padding-bottom: 2px 0;
-    padding-top: 2px 0;
-    padding-left: 4px 0;
-    border-image: url(:/resources/icons/16x16/cil-null.png) 0;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 4px;
+    border-image: none;
 }
 QTreeWidget::branch:has-siblings:adjoins-item {
-    padding-bottom: 2px 0;
-    padding-top: 2px 0;
-    padding-left: 4px 0;
-    border-image: url(:/resources/icons/16x16/cil-null.png) 0;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 4px;
+    border-image: none;
 }
 QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {
-    padding-bottom: 2px 0;
-    padding-top: 2px 0;
-    padding-left: 4px 0;
-    border-image: url(:/resources/icons/16x16/cil-null.png) 0;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 4px;
+    border-image: none;
 }
 QTreeWidget::branch:has-children:!has-siblings:closed,
 QTreeWidget::branch:closed:has-children:has-siblings {
@@ -436,6 +463,42 @@ QTreeWidget::branch:open:has-children:has-siblings {
     image: url(:/resources/icons/16x16/cil-arrow-bottom_black.png);
 }
 
+/**************************************************************************
+**  QTreeView
+**************************************************************************/
+
+#treeDirs::item {
+    min-height: 22px;
+    margin-top: 0px;
+    border-right: none;
+}
+
+#treeDirs::branch:has-siblings:!adjoins-item {
+    border-image: none;
+    image: none /*url(:/resources/icons/svg/vline.svg)*/;
+}
+#treeDirs::branch:has-siblings:adjoins-item {
+    border-image: none;
+    image: none /*url(:/resources/icons/svg/haschild.svg)*/;
+}
+#treeDirs::branch:!has-children:!has-siblings:adjoins-item {
+    border-image: none;
+    image: none /*url(:/resources/icons/svg/adjoins.svg)*/;
+}
+#treeDirs::branch:has-children:!has-siblings:closed,
+#treeDirs::branch:closed:has-children:has-siblings {
+    padding-bottom: 7px;
+    padding-top: 7px;
+    border-image: none;
+    image: url(:/resources/icons/svg/frame-right_black.svg);
+}
+#treeDirs::branch:open:has-children:!has-siblings,
+#treeDirs::branch:open:has-children:has-siblings {
+    padding-bottom: 7px;
+    padding-top: 7px;
+    border-image: none;
+    image: url(:/resources/icons/svg/frame-bottom_black.svg);
+}
 
 /**************************************************************************
 **  QTabWidget
@@ -502,9 +565,7 @@ QCheckBox {
     background-color: transparent;
 }
 QCheckBox:disabled {
-    spacing: 12px;
     color: #000000;
-    background-color: transparent;
 }
 QCheckBox::indicator {
     width: 12px;
@@ -513,23 +574,14 @@ QCheckBox::indicator {
     background: none;
 }
 QCheckBox::indicator:disabled {
-    width: 12px;
-    height: 12px;
     border: 2px solid @elementsBorderColor;
-    background: none;
 }
 QCheckBox::indicator:checked {
-    width: 12px;
-    height: 12px;
     border: 2px solid @elementsBorderHover;
-    background: none;
     image: url(:/resources/icons/16x16/cil-check-alt_black.png);
 }
 QCheckBox::indicator:checked:disabled {
-    width: 12px;
-    height: 12px;
     border: 2px solid @elementsBorderColor;
-    background: none;
     image: url(:/resources/icons/16x16/cil-check-alt_black.png);
 }
 
@@ -731,7 +783,6 @@ QLabel#extAudioLabel {
     background-color: transparent;
 }
 
-
 /**************************************************************************
 **  QLineEdit
 **************************************************************************/
@@ -764,19 +815,35 @@ QLineEdit#lineEditGlobalTitle {
     border-top: 2px solid @elementsBorderColor;
     border-bottom: 2px solid @elementsBorderColor;
     border-right: 2px solid @elementsBorderColor;
-    color: #000000;
+    color: #202020;
     background-color: @elementsBackgroundColor;
     background-image: url(:/resources/icons/16x16/cil-tags_black.png);
     background-repeat: no-repeat;
     background-position: left;
 }
-QLineEdit:hover#lineEditGlobalTitle {
+QLineEdit#lineEditFileFilter {
+    padding-left: 20px;
+    border-radius: 0px;
+    border-left: 5px solid @elementsBorderColor;
+    border-top: 2px solid @elementsBorderColor;
+    border-bottom: 2px solid @elementsBorderColor;
+    border-right: 2px solid @elementsBorderColor;
+    color: #202020;
+    background-color: @elementsBackgroundColor;
+    background-image: url(:/resources/icons/16x16/cil-magnifying-glass_black.png);
+    background-repeat: no-repeat;
+    background-position: left;
+}
+QLineEdit:hover#lineEditGlobalTitle,
+QLineEdit:hover#lineEditFileFilter {
     border: 2px solid @elementsBorderHover;
 }
-QLineEdit:focus#lineEditGlobalTitle {
+QLineEdit:focus#lineEditGlobalTitle,
+QLineEdit:focus#lineEditFileFilter {
     border: 2px solid #5B657C;
 }
-QLineEdit:disabled#lineEditGlobalTitle {
+QLineEdit:disabled#lineEditGlobalTitle,
+QLineEdit:disabled#lineEditFileFilter {
     padding-left: 20px;
     border-radius: 0px;
     border-left: 5px solid @elementsBorderColor;
@@ -888,6 +955,14 @@ QPushButton#audioExpandBtn {
 QPushButton#audioExpandBtn[expanded=true] {
     image: url(:/resources/icons/svg/frame-top.svg);
 }
+QPushButton#leftButton,
+QPushButton#rightButton {
+    border-radius: 0px;
+}
+QPushButton:disabled#leftButton,
+QPushButton:disabled#rightButton {
+    background-color: #D9D9D9;
+}
 QPushButton#hideWindow {
         border: none;
         border-radius: 0px;
@@ -915,6 +990,12 @@ QPushButton#closeWindow {
         color: @elementsTextColor;
         background-color: transparent;
 }
+QPushButton#closeReport {
+        border: none;
+        image: url(:/resources/icons/svg/close_black.svg);
+        color: @elementsTextColor;
+        background-color: transparent;
+}
 QPushButton#closeTWindow {
         border: none;
         padding: 5px;
@@ -931,6 +1012,10 @@ QPushButton#start[status="1"] {
 }
 QPushButton#start[status="2"] {
     image: url(:/resources/icons/svg/forward.svg);
+}
+QPushButton#report {
+    image: url(:/resources/icons/svg/order-history.svg);
+    background-color: transparent;
 }
 QPushButton:hover#resetLabels,
 QPushButton:hover#addExtStream,
@@ -954,12 +1039,18 @@ QPushButton:hover#settings,
 QPushButton:hover#audioExpandBtn,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
-QPushButton:hover#closeTWindow {
+QPushButton:hover#closeReport,
+QPushButton:hover#closeTWindow,
+QPushButton:hover#back,
+QPushButton:hover#forward {
     background-color: #D9D9D9;
 }
 QPushButton:hover#closeWindow {
     image: url(:/resources/icons/svg/close.svg);
     background-color: #EE0000;
+}
+QPushButton:hover#report {
+    image: url(:/resources/icons/svg/order-history_white.svg);
 }
 QPushButton:pressed#resetLabels,
 QPushButton:pressed#addExtStream,
@@ -980,13 +1071,20 @@ QPushButton:pressed#buttonReset,
 QPushButton:pressed#addFilesHot,
 QPushButton:pressed#setOutFolder,
 QPushButton:pressed#settings,
+QPushButton:pressed#viewMode,
 QPushButton:pressed#hideWindow,
 QPushButton:pressed#expandWindow,
 QPushButton:pressed#closeWindow,
-QPushButton:pressed#closeTWindow {
+QPushButton:pressed#closeReport,
+QPushButton:pressed#closeTWindow,
+QPushButton:pressed#back,
+QPushButton:pressed#forward {
     background-color: #55AAFF;
 }
-
+QPushButton:pressed#report {
+    border-radius: 0px;
+    background-color: #55AAFF;
+}
 
 /*********************************************/
 
@@ -1136,6 +1234,24 @@ QPushButton:pressed#buttonPayPal,
 QPushButton:pressed#buttonBitcoin {
     border: 1px solid #2B323D;
     background-color: #232831;
+}
+
+
+/**************************************************************************
+**  QRadioButton
+**************************************************************************/
+
+QRadioButton {
+    background: none;
+}
+QRadioButton::indicator {
+    width: 12px; height: 12px;
+}
+QRadioButton::indicator::unchecked {
+    image: url(:/resources/icons/svg/uncheck.svg);
+}
+QRadioButton::indicator::checked {
+    image: url(:/resources/icons/svg/check.svg);
 }
 
 

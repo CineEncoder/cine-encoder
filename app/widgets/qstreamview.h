@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include "constants.h"
 
+using namespace Constants;
 
 class QStreamView : public QWidget
 {
@@ -26,16 +27,20 @@ public:
 
 private:
     virtual bool eventFilter(QObject*, QEvent*) final;
+    void resetDefFlags(const int ind);
     QWidget *createCell(bool &state,
                         const QString &format,
+                        const QString &dur,
                         QString &lang,
                         QString &title,
                         const QString &channels,
                         QString chLayouts,
                         const QString &path,
+                        bool &deflt,
                         bool externFlag = false);
     QVBoxLayout *m_pLayout;
     Content m_type;
+    Data *m_pData;
 };
 
 #endif // QSTREAMVIEW_H

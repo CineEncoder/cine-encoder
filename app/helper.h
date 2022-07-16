@@ -13,7 +13,7 @@ public:
     ~Helper();
 
     enum class FileDialogType : uint8_t {
-        OPENVFILES, OPENAFILES, SELECTFOLDER
+        OPENVFILES, OPENAFILES, OPENSFILES, SELECTFOLDER
     };
 
     enum class DesktopEnv : uint8_t {
@@ -33,6 +33,8 @@ public:
     static QString elideText(QWidget *w,
                              const QString &text,
                              const Qt::TextElideMode elide);
+    static QString recalcChannels(const QString &ch);
+    static bool isSupported(const QString &format);
     template<class T>
     static void eraseRow(QVector<T> &v, const int row);
     template<class T>

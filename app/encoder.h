@@ -26,6 +26,7 @@
     #include <windows.h>
 #endif
 
+using namespace Constants;
 
 class Encoder : public QObject
 {
@@ -48,7 +49,8 @@ public:
                       QVector<QString>  _cur_param,
                       const QString  (&_hdr)[11],
                       Data           data,
-                      int            *_fr_count);
+                      int            *_fr_count,
+                      int            streamCutting);
 
     QProcess::ProcessState getEncodingState();
     void pauseEncoding();
@@ -63,7 +65,7 @@ public:
     void onEncodingProgress(const int percent, const float rem_time);
     void onEncodingLog(const QString &log);
     void onEncodingAborted();
-    void onEncodingError(const QString &_error_message);
+    void onEncodingError(const QString &_error_message, bool popup = false);
     void onEncodingCompleted();
 
 private:
@@ -76,7 +78,8 @@ private:
 
     time_t  _loop_start;
 
-    QStringList _extAudioPaths;
+    QStringList _extAudioPaths,
+                _extSubPaths;
     QString _temp_file,
             _input_file,
             _output_file,
