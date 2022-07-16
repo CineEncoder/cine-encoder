@@ -672,8 +672,6 @@ void MainWindow::setParameters()    // Set parameters
         combo->setView(_view);
     }
     ui->comboBoxPreset->setVisible(false);
-    //ui->comboBoxView->setVisible(false);
-    ui->switchCutting->setVisible(false);
 
     //********** Set default state *****************//
     m_pAnimation = new QAnimatedSvg(ui->labelAnimation, QSize(18, 18));
