@@ -49,7 +49,8 @@ public:
                       QVector<QString>  _cur_param,
                       const QString  (&_hdr)[11],
                       Data           data,
-                      int            *_fr_count);
+                      int            *_fr_count,
+                      int            streamCutting);
 
     QProcess::ProcessState getEncodingState();
     void pauseEncoding();

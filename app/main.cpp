@@ -28,6 +28,8 @@ int checkForDuplicates();
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_QPA_PLATFORM", "xcb");
+    qputenv("QT_LOGGING_RULES", "*.debug=false;qt.qpa.*=false");
     setlocale(LC_ALL, "");
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("CineEncoder");

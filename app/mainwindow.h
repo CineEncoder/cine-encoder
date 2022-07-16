@@ -66,6 +66,7 @@ private:
     void get_output_filename();
     void setStatus(const QString &status);
     void setWidgetsEnabled(bool);
+    void setProgressEnabled(bool);
     void showInfoMessage(const QString &message, const bool timer_mode = false);
     bool showDialogMessage(const QString &message);
     void showPopup(const QString &text, PopupMessage::Icon icon = PopupMessage::Icon::Info);
@@ -107,7 +108,8 @@ private:
     // ============= Dock area =============
     QMainWindow *m_pDocksContainer;
     QWidget     *m_pCentralDock;
-    QSplitter   *m_pSpl;
+    QSplitter   *m_pSpl,
+                *m_pSplSource;
     QDockWidget *m_pDocks[DOCKS_COUNT];
 
     // ============= Top label =============
@@ -135,10 +137,12 @@ private:
                 *m_pActSettings,
                 *m_pActResetView,
                 *m_pActAbout,
-                *m_pActDonate;
+                *m_pActDonate,
+                *m_pActAddToTask;
 
     // ============= Menu actions =============
     QMenu       *m_pItemMenu,
+                *m_pFilesItemMenu,
                 *m_pSectionMenu,
                 *m_pPresetMenu;
 
@@ -298,6 +302,8 @@ private slots:
     void onResetLabels();
     void onTreeDirsClicked(const QModelIndex&);
     void onTreeDirsDblClicked(const QModelIndex&);
+    void provideListContextMenu(const QPoint&);
+    void onAddToTask();
 };
 
 #endif // WIDGET_H

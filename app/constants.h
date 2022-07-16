@@ -42,7 +42,7 @@
 #define DEFAULTPREFIX QString("output")
 #define DEFAULTSUFFIX QString("_encoded_")
 
-#define DOCKS_COUNT 9
+#define DOCKS_COUNT 8
 
 #define AMOUNT_HDR_PARAMS 11
 #define AMOUNT_VIDEO_METADATA 6
@@ -66,8 +66,8 @@ namespace Constants {
 
     // **************** Geometry and Themes *********************//
     enum DockIndex {
-        PRESETS_DOCK, PREVIEW_DOCK, SOURCE_DOCK, OUTPUT_DOCK,
-        STREAMS_DOCK, LOG_DOCK, METADATA_DOCK, SPLIT_DOCK, BROWSER_DOCK
+        SOURCE_DOCK, PRESETS_DOCK,  OUTPUT_DOCK, STREAMS_DOCK,
+        LOG_DOCK,    METADATA_DOCK, SPLIT_DOCK,  BROWSER_DOCK
     };
 
     enum Theme {

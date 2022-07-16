@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1407</width>
-    <height>760</height>
+    <height>771</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -699,12 +699,6 @@
                   <size>
                    <width>80</width>
                    <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>3840</width>
-                   <height>2160</height>
                   </size>
                  </property>
                  <property name="baseSize">
@@ -2389,12 +2383,6 @@
                   <size>
                    <width>250</width>
                    <height>100</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>3840</width>
-                   <height>2160</height>
                   </size>
                  </property>
                  <property name="sizeIncrement">
@@ -4806,9 +4794,9 @@
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>430</y>
-              <width>371</width>
-              <height>254</height>
+              <y>440</y>
+              <width>431</width>
+              <height>251</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -4868,7 +4856,304 @@
                <property name="verticalSpacing">
                 <number>3</number>
                </property>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_59">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="2">
+                <spacer name="horizontalSpacer_63">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>4</width>
+                   <height>9</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="4">
+                <spacer name="horizontalSpacer_54">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>4</width>
+                   <height>9</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="7" colspan="2">
+                <widget class="QDoubleButton" name="switchViewMode" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="5">
+                <widget class="QLineEdit" name="lineEditFileFilter">
+                 <property name="minimumSize">
+                  <size>
+                   <width>160</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>160</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Search</string>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="6">
+                <spacer name="horizontalSpacer_65">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="1" colspan="8">
+                <widget class="QWidget" name="browserWidget" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_16">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QWidget" name="dirsWidget" native="true">
+                    <property name="minimumSize">
+                     <size>
+                      <width>50</width>
+                      <height>50</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_10">
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item row="0" column="0">
+                      <layout class="QVBoxLayout" name="dirsLayout">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                      </layout>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QTreeView" name="treeDirs"/>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QWidget" name="filesWidget" native="true">
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_9">
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item row="1" column="0">
+                      <widget class="QListView" name="listFiles">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>200</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="dragEnabled">
+                        <bool>true</bool>
+                       </property>
+                       <property name="dragDropMode">
+                        <enum>QAbstractItemView::DragDrop</enum>
+                       </property>
+                       <property name="defaultDropAction">
+                        <enum>Qt::CopyAction</enum>
+                       </property>
+                       <property name="selectionMode">
+                        <enum>QAbstractItemView::ContiguousSelection</enum>
+                       </property>
+                       <property name="movement">
+                        <enum>QListView::Snap</enum>
+                       </property>
+                       <property name="flow">
+                        <enum>QListView::LeftToRight</enum>
+                       </property>
+                       <property name="resizeMode">
+                        <enum>QListView::Adjust</enum>
+                       </property>
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="viewMode">
+                        <enum>QListView::ListMode</enum>
+                       </property>
+                       <property name="modelColumn">
+                        <number>0</number>
+                       </property>
+                       <property name="uniformItemSizes">
+                        <bool>true</bool>
+                       </property>
+                       <property name="wordWrap">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0">
+                      <layout class="QVBoxLayout" name="filesLayout">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QPushButton" name="forward">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="files.qrc">
+                   <normaloff>:/resources/icons/svg/right.svg</normaloff>:/resources/icons/svg/right.svg</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="9">
+                <spacer name="horizontalSpacer_58">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="1">
                 <widget class="QPushButton" name="back">
                  <property name="enabled">
                   <bool>true</bool>
@@ -4902,313 +5187,6 @@
                    <normaloff>:/resources/icons/svg/left.svg</normaloff>:/resources/icons/svg/left.svg</iconset>
                  </property>
                 </widget>
-               </item>
-               <item row="2" column="13" colspan="2">
-                <widget class="QDoubleButton" name="switchViewMode" native="true">
-                 <property name="minimumSize">
-                  <size>
-                   <width>50</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>50</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="12">
-                <spacer name="horizontalSpacer_65">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="1" colspan="14">
-                <widget class="QScrollArea" name="scrollArea_6">
-                 <property name="horizontalScrollBarPolicy">
-                  <enum>Qt::ScrollBarAsNeeded</enum>
-                 </property>
-                 <property name="sizeAdjustPolicy">
-                  <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-                 </property>
-                 <property name="widgetResizable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                 </property>
-                 <widget class="QWidget" name="scrollAreaWidget_Browser">
-                  <property name="geometry">
-                   <rect>
-                    <x>0</x>
-                    <y>0</y>
-                    <width>361</width>
-                    <height>198</height>
-                   </rect>
-                  </property>
-                  <layout class="QGridLayout" name="gridLayout_37">
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <item row="1" column="1">
-                    <widget class="QWidget" name="filesWidget" native="true">
-                     <property name="minimumSize">
-                      <size>
-                       <width>30</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <layout class="QGridLayout" name="gridLayout_9">
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <item row="1" column="0">
-                       <widget class="QListView" name="listFiles">
-                        <property name="horizontalScrollBarPolicy">
-                         <enum>Qt::ScrollBarAsNeeded</enum>
-                        </property>
-                        <property name="sizeAdjustPolicy">
-                         <enum>QAbstractScrollArea::AdjustIgnored</enum>
-                        </property>
-                        <property name="dragEnabled">
-                         <bool>true</bool>
-                        </property>
-                        <property name="dragDropMode">
-                         <enum>QAbstractItemView::DragDrop</enum>
-                        </property>
-                        <property name="defaultDropAction">
-                         <enum>Qt::CopyAction</enum>
-                        </property>
-                        <property name="selectionMode">
-                         <enum>QAbstractItemView::ContiguousSelection</enum>
-                        </property>
-                        <property name="movement">
-                         <enum>QListView::Snap</enum>
-                        </property>
-                        <property name="flow">
-                         <enum>QListView::LeftToRight</enum>
-                        </property>
-                        <property name="resizeMode">
-                         <enum>QListView::Adjust</enum>
-                        </property>
-                        <property name="spacing">
-                         <number>0</number>
-                        </property>
-                        <property name="viewMode">
-                         <enum>QListView::ListMode</enum>
-                        </property>
-                        <property name="modelColumn">
-                         <number>0</number>
-                        </property>
-                        <property name="uniformItemSizes">
-                         <bool>true</bool>
-                        </property>
-                        <property name="wordWrap">
-                         <bool>true</bool>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="0">
-                       <layout class="QVBoxLayout" name="filesLayout">
-                        <property name="spacing">
-                         <number>0</number>
-                        </property>
-                        <property name="topMargin">
-                         <number>0</number>
-                        </property>
-                        <property name="rightMargin">
-                         <number>0</number>
-                        </property>
-                       </layout>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QWidget" name="dirsWidget" native="true">
-                     <property name="minimumSize">
-                      <size>
-                       <width>50</width>
-                       <height>50</height>
-                      </size>
-                     </property>
-                     <layout class="QGridLayout" name="gridLayout_10">
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <item row="0" column="0">
-                       <layout class="QVBoxLayout" name="dirsLayout">
-                        <property name="spacing">
-                         <number>0</number>
-                        </property>
-                        <property name="topMargin">
-                         <number>0</number>
-                        </property>
-                        <property name="rightMargin">
-                         <number>0</number>
-                        </property>
-                       </layout>
-                      </item>
-                      <item row="1" column="0">
-                       <widget class="QTreeView" name="treeDirs"/>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </widget>
-               </item>
-               <item row="0" column="10">
-                <widget class="QLineEdit" name="lineEditFileFilter">
-                 <property name="minimumSize">
-                  <size>
-                   <width>160</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>160</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Search</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="8">
-                <widget class="QPushButton" name="forward">
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="files.qrc">
-                   <normaloff>:/resources/icons/svg/right.svg</normaloff>:/resources/icons/svg/right.svg</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <spacer name="horizontalSpacer_64">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>3</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="7">
-                <spacer name="horizontalSpacer_63">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>4</width>
-                   <height>9</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="15">
-                <spacer name="horizontalSpacer_62">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>3</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="9">
-                <spacer name="horizontalSpacer_54">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>4</width>
-                   <height>9</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </item>

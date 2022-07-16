@@ -1372,6 +1372,11 @@
                               </item>
                               <item>
                                <property name="text">
+                                <string>1716</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
                                 <string notr="true">1556</string>
                                </property>
                               </item>
@@ -1423,6 +1428,11 @@
                               <item>
                                <property name="text">
                                 <string notr="true">872</string>
+                               </property>
+                              </item>
+                              <item>
+                               <property name="text">
+                                <string>804</string>
                                </property>
                               </item>
                               <item>

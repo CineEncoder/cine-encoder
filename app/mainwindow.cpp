@@ -70,8 +70,9 @@
     using namespace MediaInfoDLL;
 #endif
 
-#define WINDOW_SIZE QSize(1200, 750)
+#define WINDOW_SIZE QSize(1500, 920)
 #define ROWHEIGHT 25
+#define ROWHEIGHTDFLT 45
 #define DEFAULTTIMER 30
 #define DEFAULTPATH QDir::homePath()
 #define PRESETFILE SETTINGSPATH + QString("/presets.ini")
@@ -152,7 +153,7 @@ MainWindow::MainWindow(QWidget *parent):
     m_font(""),
     m_windowActivated(false),
     m_expandWindowsState(false),
-    m_rowHeight(ROWHEIGHT)
+    m_rowHeight(ROWHEIGHTDFLT)
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
@@ -191,23 +192,34 @@ MainWindow::MainWindow(QWidget *parent):
     pCentralDockLayout->addWidget(ui->frameTask);
     pCentralDockLayout->setContentsMargins(0, 0, 0, 0);
 
+    QFrame *pFrameSource = new QFrame(ui->frameMiddle);
+    QGridLayout *pSourceLayout = new QGridLayout(pFrameSource);
+    pSourceLayout->setContentsMargins(0, 0, 0, 0);
+    pFrameSource->setLayout(pSourceLayout);
+    m_pSplSource = new QSplitter(Qt::Horizontal, pFrameSource);
+    pSourceLayout->addWidget(m_pSplSource);
+    m_pSplSource->setHandleWidth(0);
+    ui->framePreview->setParent(pFrameSource);
+    ui->frameSource->setParent(pFrameSource);
+    m_pSplSource->addWidget(ui->framePreview);
+    m_pSplSource->addWidget(ui->frameSource);
+
     QString dockNames[] = {
-        tr("Presets"), tr("Preview"), tr("Source"), tr("Output"),
+        tr("Source"), tr("Presets"), tr("Output"),
         tr("Streams"), tr("Log"), tr("Metadata"), tr("Split"), tr("Browser")
     };
     Qt::DockWidgetArea dockArea[] = {
-        Qt::LeftDockWidgetArea, Qt::BottomDockWidgetArea,
-        Qt::BottomDockWidgetArea, Qt::BottomDockWidgetArea,
-        Qt::RightDockWidgetArea, Qt::RightDockWidgetArea,
-        Qt::RightDockWidgetArea, Qt::RightDockWidgetArea,
-        Qt::LeftDockWidgetArea
+        Qt::LeftDockWidgetArea,   Qt::LeftDockWidgetArea,
+        Qt::BottomDockWidgetArea, Qt::RightDockWidgetArea,
+        Qt::RightDockWidgetArea,  Qt::RightDockWidgetArea,
+        Qt::RightDockWidgetArea,  Qt::LeftDockWidgetArea
     };
     QString objNames[] = {
-        "dockPresets", "dockPreview", "dockSource", "dockOutput",
-        "dockStreams", "dockLog", "dockMetadata", "dockSplit", "dockBrowser"
+        "dockSource", "dockPresets", "dockOutput", "dockStreams",
+        "dockLog", "dockMetadata", "dockSplit", "dockBrowser"
     };
     QFrame* dockFrames[] = {
-        ui->framePreset, ui->framePreview, ui->frameSource, ui->frameOutput,
+        pFrameSource, ui->framePreset,  ui->frameOutput,
         ui->frameStreams, ui->frameLog, ui->frameMetadata, ui->frameSplit, ui->frameBrowser
     };
     Q_LOOP(i, 0, DOCKS_COUNT) {
@@ -218,6 +230,11 @@ MainWindow::MainWindow(QWidget *parent):
         m_pDocks[i]->setFeatures(QDockWidget::AllDockWidgetFeatures);
         m_pDocks[i]->setWidget(dockFrames[i]);
         m_pDocksContainer->addDockWidget(dockArea[i], m_pDocks[i]);
+    }
+    Q_LOOP(i, DockIndex::LOG_DOCK, DockIndex::SPLIT_DOCK + 1) {
+        m_pDocks[i]->toggleViewAction()->setChecked(false);
+        m_pDocks[i]->setVisible(false);
+        m_pDocks[i]->setFloating(true);
     }
 
     ui->streamAudio->setContentType(QStreamView::Content::Audio);
@@ -292,6 +309,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Tables/table_widget_state", ui->tableWidget->horizontalHeader()->saveState());
         stn.setValue("Tables/tree_widget_state", ui->treeWidget->header()->saveState());
         stn.setValue("Tables/splitter_state", m_pSpl->saveState());
+        stn.setValue("Tables/splitter_source_state", m_pSplSource->saveState());
         stn.endGroup();
         // Save Settings
         stn.beginGroup("Settings");
@@ -314,6 +332,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/font_size", m_fontSize);
         stn.setValue("Settings/row_size", m_rowHeight);
         stn.setValue("Settings/switch_view_mode", ui->switchViewMode->currentIndex());
+        stn.setValue("Settings/switch_cut_mode", ui->switchCutting->currentIndex());
         stn.endGroup();
 
         if (m_pTrayIcon)
@@ -481,11 +500,6 @@ void MainWindow::createConnections()
         menuView->addAction(m_pDocks[i]->toggleViewAction());
     menuView->addAction(m_pActResetView);
     ui->menuViewButton->setMenu(menuView);
-    m_pDocks[DockIndex::LOG_DOCK]->toggleViewAction()->setChecked(false);
-    m_pDocks[DockIndex::SPLIT_DOCK]->toggleViewAction()->setChecked(false);
-    m_pDocks[DockIndex::LOG_DOCK]->setVisible(false);
-    m_pDocks[DockIndex::SPLIT_DOCK]->setVisible(false);
-    m_pDocks[DockIndex::BROWSER_DOCK]->setVisible(false);
 
     QMenu *menuAbout = new QMenu(ui->menuAboutButton);
     m_pActAbout = new QAction(tr("About"), menuAbout);
@@ -511,6 +525,14 @@ void MainWindow::createConnections()
     m_pItemMenu->addSeparator();
     m_pItemMenu->addAction(m_pActSplitVideo);
     connect(ui->tableWidget, &QTableWidget::customContextMenuRequested, this, SLT(provideContextMenu));
+
+    //********** File Browser actions **************//
+    ui->listFiles->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_pFilesItemMenu = new QMenu(ui->listFiles);
+    m_pActAddToTask = new QAction(tr("Add to task"), m_pFilesItemMenu);
+    connect(m_pActAddToTask, &QAction::triggered, this, SLT(onAddToTask));
+    m_pFilesItemMenu->addAction(m_pActAddToTask);
+    connect(ui->listFiles, &QListView::customContextMenuRequested, this, SLT(provideListContextMenu));
 
     //*********** Tree menu actions ****************//
     ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -611,8 +633,8 @@ void MainWindow::setParameters()    // Set parameters
     m_reportLog.clear();
 
     //************** File Browser ******************//
-    m_pSpl = new QSplitter(Qt::Horizontal, ui->scrollAreaWidget_Browser);
-    ui->scrollAreaWidget_Browser->layout()->addWidget(m_pSpl);
+    m_pSpl = new QSplitter(Qt::Horizontal, ui->browserWidget);
+    ui->browserWidget->layout()->addWidget(m_pSpl);
     m_pSpl->setHandleWidth(0);
     m_pSpl->addWidget(ui->dirsWidget);
     m_pSpl->addWidget(ui->filesWidget);
@@ -651,14 +673,14 @@ void MainWindow::setParameters()    // Set parameters
     }
     ui->comboBoxPreset->setVisible(false);
     //ui->comboBoxView->setVisible(false);
+    ui->switchCutting->setVisible(false);
 
     //********** Set default state *****************//
     m_pAnimation = new QAnimatedSvg(ui->labelAnimation, QSize(18, 18));
-    ui->labelAnimation->hide();
-    ui->label_Progress->hide();
-    ui->label_Remaining->hide();
-    ui->label_RemTime->hide();
-    ui->progressBar->hide();
+    setProgressEnabled(false);
+    m_pTableLabel->show();
+    m_pAudioLabel->show();
+    m_pSubtitleLabel->show();
 
     //************ Create folders ******************//
     if (!QDir(SETTINGSPATH).exists()) {
@@ -753,6 +775,7 @@ void MainWindow::setParameters()    // Set parameters
         ui->tableWidget->horizontalHeader()->restoreState(stn.value("Tables/table_widget_state").toByteArray());
         ui->treeWidget->header()->restoreState(stn.value("Tables/tree_widget_state").toByteArray());
         m_pSpl->restoreState(stn.value("Tables/splitter_state").toByteArray());
+        m_pSplSource->restoreState(stn.value("Tables/splitter_source_state").toByteArray());
         stn.endGroup();
         // Restore Settings
         stn.beginGroup("Settings");
@@ -775,6 +798,7 @@ void MainWindow::setParameters()    // Set parameters
         m_fontSize = stn.value("Settings/font_size", FONTSIZE).toInt();
         m_rowHeight = stn.value("Settings/row_size").toInt();
         ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
+        ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
         stn.endGroup();
 
     } else {
@@ -844,8 +868,8 @@ void MainWindow::setParameters()    // Set parameters
 
     //*********** Other parameters *****************//
     if (dockSizesX.count() < DOCKS_COUNT || dockSizesY.count() < DOCKS_COUNT) {
-        float coeffX[DOCKS_COUNT] = {0.35f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
-        float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
+        float coeffX[DOCKS_COUNT] = {0.39f, 0.39f, 0.61f, 0.23f, 0.23f, 0.23f, 0.23f, 0.39f};
+        float coeffY[DOCKS_COUNT] = {0.16f, 0.5f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f, 0.3f};
         Q_LOOP(i, 0, DOCKS_COUNT) {
             const int dockWidth = static_cast<int>(coeffX[i] * WINDOW_SIZE.width());
             const int dockHeight = static_cast<int>(coeffY[i] * WINDOW_SIZE.height());
@@ -888,7 +912,7 @@ void MainWindow::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY
     QList<QDockWidget*> docksVis;
     QList<int> dockVisSizesX;
     QList<int> dockVisSizesY;
-    for (int i = 0; i < DOCKS_COUNT; i++) {
+    Q_LOOP(i, 0, DOCKS_COUNT) {
         if (m_pDocks[i]->isVisible() && !m_pDocks[i]->isFloating()){
             docksVis.append(m_pDocks[i]);
             dockVisSizesX.append(dockSizesX.at(i));
@@ -897,7 +921,7 @@ void MainWindow::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY
     }
     m_pDocksContainer->resizeDocks(docksVis, dockVisSizesX, Qt::Horizontal);
     m_pDocksContainer->resizeDocks(docksVis, dockVisSizesY, Qt::Vertical);
-    for (int i = 0; i < DOCKS_COUNT; i++) {
+    Q_LOOP(i, 0, DOCKS_COUNT) {
         if (m_pDocks[i]->isVisible() && m_pDocks[i]->isFloating()){
             m_pDocks[i]->setFloating(false); // Bypassing the error with detached docks in some Linux distributions
             m_pDocks[i]->setFloating(true);
@@ -1204,6 +1228,7 @@ void MainWindow::setWidgetsEnabled(bool state)    // Set widgets states
     m_pActAddFiles->setEnabled(state);
     m_pActRemoveFile->setEnabled(state);
     m_pActSettings->setEnabled(state);
+    m_pActAddToTask->setEnabled(state);
     ui->lineEditCurTime->setEnabled(state);
     ui->lineEditStartTime->setEnabled(state);
     ui->lineEditEndTime->setEnabled(state);
@@ -1250,6 +1275,15 @@ void MainWindow::setWidgetsEnabled(bool state)    // Set widgets states
         ui->start->style()->polish(ui->start);
         ui->start->setToolTip(tr("Encode"));
     }
+}
+
+void MainWindow::setProgressEnabled(bool state)
+{
+    ui->labelAnimation->setVisible(state);
+    ui->label_Progress->setVisible(state);
+    ui->label_Remaining->setVisible(state);
+    ui->label_RemTime->setVisible(state);
+    ui->progressBar->setVisible(state);
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -1299,17 +1333,27 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 void MainWindow::onViewMode(uchar ind)
 {
     if (ind == 1) {
-        ui->listFiles->setWordWrap(true);
         ui->listFiles->setViewMode(QListView::IconMode);
+        ui->listFiles->setWordWrap(true);
+#ifdef Q_OS_UNIX
         ui->listFiles->setSpacing(10);
-        //ui->listFiles->setGridSize(QSize(120, 120));
-        //ui->listFiles->setIconSize(QSize(80, 80));
+        ui->listFiles->setGridSize(QSize(120, 120));
+#else
+        ui->listFiles->setSpacing(0);
+        ui->listFiles->setGridSize(QSize(100, 100));
+#endif
+        ui->listFiles->setIconSize(QSize(80, 80));
     } else {
-        ui->listFiles->setWordWrap(false);
         ui->listFiles->setViewMode(QListView::ListMode);
+        ui->listFiles->setWordWrap(false);
+#ifdef Q_OS_UNIX
         ui->listFiles->setSpacing(5);
-        //ui->listFiles->setGridSize(QSize(ui->filesWidget->width() - 15, 50));
-        //ui->listFiles->setIconSize(QSize(30, 40));
+        ui->listFiles->setGridSize(QSize(200, 50));
+#else
+        ui->listFiles->setSpacing(0);
+        ui->listFiles->setGridSize(QSize(200, 45));
+#endif
+        ui->listFiles->setIconSize(QSize(30, 40));
     }
 }
 
@@ -1352,6 +1396,8 @@ void MainWindow::setBrowser()
     ui->listFiles->setMovement(QListView::Movement::Snap);
     ui->listFiles->setUniformItemSizes(true);
     ui->listFiles->setWrapping(true);
+    ui->listFiles->setSelectionRectVisible(true);
+    ui->listFiles->setSelectionMode(QAbstractItemView::SelectionMode::ContiguousSelection);
 }
 
 void MainWindow::onBack()
@@ -1390,6 +1436,22 @@ void MainWindow::onTreeDirsDblClicked(const QModelIndex &index)
     ui->listFiles->setRootIndex(m_pFileModel->setRootPath(path));
 }
 
+void MainWindow::provideListContextMenu(const QPoint &pos)     // Call file items menu
+{
+    auto selectedList = ui->listFiles->selectionModel()->selectedIndexes();
+    if (selectedList.size() > 0)
+        m_pFilesItemMenu->exec(ui->listFiles->mapToGlobal(pos + QPoint(5, 5)));
+}
+
+void MainWindow::onAddToTask()
+{
+    QStringList list;
+    foreach(auto index, ui->listFiles->selectionModel()->selectedIndexes())
+        list.append(m_pFileModel->fileInfo(index).absoluteFilePath());
+    if (list.size() > 0)
+        openFiles(list);
+}
+
 /************************************************
 ** Encoder
 ************************************************/
@@ -1398,6 +1460,7 @@ void MainWindow::initEncoding()
 {
     ui->textBrowser_log->clear();
     const QString globalTitle = ui->lineEditGlobalTitle->text();
+    const int streamCutting = ui->switchCutting->currentIndex();
     m_pEncoder->initEncoding(m_temp_file,
                              m_input_file,
                              m_output_file,
@@ -1412,7 +1475,8 @@ void MainWindow::initEncoding()
                              m_curParams,
                              m_hdr,
                              m_data[m_row],
-                             &m_fr_count);
+                             &m_fr_count,
+                             streamCutting);
 }
 
 void MainWindow::onEncodingMode(const QString &mode)
@@ -1424,12 +1488,7 @@ void MainWindow::onEncodingStarted()
 {
     setStatus(tr("Encoding"));
     setWidgetsEnabled(false);
-
-    ui->labelAnimation->show();
-    ui->label_Progress->show();
-    ui->label_Remaining->show();
-    ui->label_RemTime->show();
-    ui->progressBar->show();
+    setProgressEnabled(true);
 }
 
 void MainWindow::onEncodingInitError(const QString &message)
@@ -1463,11 +1522,7 @@ void MainWindow::onEncodingCompleted()
     Print("Completed ...");
     setStatus(tr("Done!"));
     m_pAnimation->stop();
-    ui->label_Progress->hide();
-    ui->label_Remaining->hide();
-    ui->label_RemTime->hide();
-    ui->labelAnimation->hide();
-    ui->progressBar->hide();
+    setProgressEnabled(false);
     if (m_batch_mode) {
         const int row = ui->tableWidget->currentRow();
         const int numRows = ui->tableWidget->rowCount();
@@ -1495,12 +1550,8 @@ void MainWindow::onEncodingAborted()
     if (m_protectFlag)
         m_pTimer->stop();
     setStatus(tr("Stop"));
-    ui->label_Progress->hide();
-    ui->label_Remaining->hide();
-    ui->label_RemTime->hide();
-    ui->labelAnimation->hide();
-    ui->progressBar->hide();
     setWidgetsEnabled(true);
+    setProgressEnabled(false);
     showPopup(tr("The current encoding process has been canceled!\n"));
 }
 
@@ -1657,11 +1708,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
 {
     Progress prg(this, tr("OPENING FILES"));
     prg.setModal(true);
-    ui->labelAnimation->hide();
-    ui->label_Progress->hide();
-    ui->label_Remaining->hide();
-    ui->label_RemTime->hide();
-    ui->progressBar->hide();
+    setProgressEnabled(false);
     MediaInfo MI;
     Q_LOOP(i, 0, openFileNames.size()) {
         const QString file = openFileNames.at(i);
@@ -1820,11 +1867,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
 
 void MainWindow::onTableSelectionChanged()
 {
-    ui->labelAnimation->hide();
-    ui->label_Progress->hide();
-    ui->label_Remaining->hide();
-    ui->label_RemTime->hide();
-    ui->progressBar->hide();
+    setProgressEnabled(false);
     ui->labelSplitPreview->clear();
     ui->sliderTimeline->blockSignals(true);
     ui->sliderTimeline->setValue(0);
@@ -1920,8 +1963,8 @@ void MainWindow::resetView()
 
     QList<int> dockSizesX = {};
     QList<int> dockSizesY = {};
-    float coeffX[DOCKS_COUNT] = {0.35f, 0.04f, 0.48f, 0.48f, 0.25f, 0.25f, 0.25f, 0.25f};
-    float coeffY[DOCKS_COUNT] = {0.9f, 0.1f, 0.1f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f};
+    float coeffX[DOCKS_COUNT] = {0.39f, 0.39f, 0.61f, 0.23f, 0.23f, 0.23f, 0.23f, 0.39f};
+    float coeffY[DOCKS_COUNT] = {0.16f, 0.5f, 0.1f, 0.9f, 0.9f, 0.9f, 0.9f, 0.3f};
     Q_LOOP(i, 0, DOCKS_COUNT) {
         int dockWidth = static_cast<int>(coeffX[i] * this->width());
         int dockHeight = static_cast<int>(coeffY[i] * this->height());
@@ -1958,11 +2001,8 @@ void MainWindow::dropEvent(QDropEvent* event)     // Drag & Drop
         }
         if (!formats.filter("audio/").empty() || !formats.filter("video/").empty()) {
             openFiles(pathList);
-            //event->acceptProposedAction();
-            //return;
         }
     }
-    //event->ignore();
 }
 
 void MainWindow::onComboModeChanged(int index)
@@ -1977,7 +2017,7 @@ void MainWindow::onSliderResizeChanged(int value)
 }
 
 /************************************************
-** Preview Window
+** Source Window
 ************************************************/
 
 QString MainWindow::setThumbnail(QString curFilename,
@@ -2025,10 +2065,6 @@ void MainWindow::repeatHandler_Type_2()
     if (m_row != -1)
         setThumbnail(m_curFilename, m_curTime, PreviewRes::RES_HIGH, PreviewDest::SPLITTER);
 }
-
-/************************************************
-** Source Window
-************************************************/
 
 /************************************************
 ** Output Window

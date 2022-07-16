@@ -52,7 +52,8 @@ void Encoder::initEncoding(const QString  &temp_file,
                            QVector<QString> _cur_param,
                            const QString  (&_hdr)[11],
                            Data           data,
-                           int            *_fr_count)
+                           int            *_fr_count,
+                           int            streamCutting)
 {
     Print("Make preset...");
     Tables t;
@@ -639,7 +640,7 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
 
     const QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
-                    QString("-map_metadata -1 ") + _videoMetadataParam + _audioMetadataParam +
+                    QString("-map_metadata -1 -map_chapters -1 ") + _videoMetadataParam + _audioMetadataParam +
                     _subtitleMetadataParam + transform + t.arr_params[_CODEC][0];
 
     /************************************* HDR module ***************************************/
