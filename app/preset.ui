@@ -1372,7 +1372,7 @@
                               </item>
                               <item>
                                <property name="text">
-                                <string>1716</string>
+                                <string notr="true">1716</string>
                                </property>
                               </item>
                               <item>
@@ -1432,7 +1432,7 @@
                               </item>
                               <item>
                                <property name="text">
-                                <string>804</string>
+                                <string notr="true">804</string>
                                </property>
                               </item>
                               <item>

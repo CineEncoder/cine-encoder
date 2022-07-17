@@ -28,8 +28,10 @@ int checkForDuplicates();
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_UNIX
     qputenv("QT_QPA_PLATFORM", "xcb");
     qputenv("QT_LOGGING_RULES", "*.debug=false;qt.qpa.*=false");
+#endif
     setlocale(LC_ALL, "");
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("CineEncoder");
@@ -37,7 +39,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-    app.setStyle(QStyleFactory::create("Fusion"));   
+    app.setStyle(QStyleFactory::create("Fusion"));
     const QString sysLang = Helper::getSysLanguage();
     /*const int id = QFontDatabase::addApplicationFont(":/resources/fonts/interregular.otf");
     QString sysFamily = app.font().family();
@@ -110,7 +112,6 @@ int checkForDuplicates()
         const QString list = QString(process.readAllStandardOutput());
         const int lindex = list.indexOf("cine_encoder");
         const int rindex = list.lastIndexOf("cine_encoder");
-        //qDebug() << list << "\n" << lindex << rindex;
         if (lindex != rindex) {
             QMessageBox msgBox(nullptr);
             msgBox.setWindowTitle("Cine Encoder");
