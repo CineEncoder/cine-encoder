@@ -5128,6 +5128,9 @@
                    <height>22</height>
                   </size>
                  </property>
+                 <property name="toolTip">
+                  <string>Forward</string>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
