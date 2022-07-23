@@ -120,6 +120,7 @@ Install dependencies to builddir folder:
     Qt5Gui.dll
     Qt5Multimedia.dll
     Qt5Network.dll
+    Qt5Svg.dll
     Qt5Widgets.dll
     cine-encoder.ico
 
