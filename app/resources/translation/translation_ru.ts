@@ -234,68 +234,89 @@ Select the correct input file!</source>
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="452"/>
+        <location filename="../../mainwindow.cpp" line="456"/>
+        <source>File</source>
+        <translation>Файл</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="458"/>
+        <source>Tools</source>
+        <translation>Инструменты</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="459"/>
+        <source>View</source>
+        <translation>Вид</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="460"/>
+        <source>Preferences</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="463"/>
         <source>Add files</source>
         <translation>Добавить файлы</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="453"/>
+        <location filename="../../mainwindow.cpp" line="464"/>
         <source>Remove from the list</source>
         <translation>Убрать из списка</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="454"/>
+        <location filename="../../mainwindow.cpp" line="465"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="465"/>
+        <location filename="../../mainwindow.cpp" line="474"/>
         <source>Encode/Pause</source>
         <translation>Кодировать/Пауза</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="466"/>
+        <location filename="../../mainwindow.cpp" line="475"/>
         <location filename="../../mainwindow.cpp" line="1550"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="474"/>
+        <location filename="../../mainwindow.cpp" line="481"/>
         <source>Edit metadata</source>
         <translation>Редакт. метаданные</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="475"/>
+        <location filename="../../mainwindow.cpp" line="482"/>
         <source>Select audio streams</source>
         <translation>Выбрать аудио потоки</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="476"/>
+        <location filename="../../mainwindow.cpp" line="483"/>
         <source>Select subtitles</source>
         <translation>Выбрать субтитры</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="477"/>
+        <location filename="../../mainwindow.cpp" line="484"/>
         <source>Split video</source>
         <translation>Разделить</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="491"/>
+        <location filename="../../mainwindow.cpp" line="502"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="497"/>
+        <location filename="../../mainwindow.cpp" line="496"/>
         <source>Reset state</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="505"/>
+        <location filename="../../mainwindow.cpp" line="461"/>
+        <location filename="../../mainwindow.cpp" line="506"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="506"/>
+        <location filename="../../mainwindow.cpp" line="507"/>
         <source>Donate</source>
         <translation>Донат</translation>
     </message>
@@ -331,6 +352,7 @@ Select the correct input file!</source>
         <translation>Применить</translation>
     </message>
     <message>
+        <location filename="../../mainwindow.cpp" line="457"/>
         <location filename="../../mainwindow.cpp" line="544"/>
         <source>Edit</source>
         <translation>Правка</translation>
@@ -2186,8 +2208,6 @@ hr { height: 1px; border-width: 0; }
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="501"/>
-        <location filename="../../mainwindow.ui" line="5506"/>
-        <location filename="../../mainwindow.ui" line="5512"/>
         <source>Edit</source>
         <translation>Правка</translation>
     </message>
@@ -2267,12 +2287,6 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../mainwindow.ui" line="1265"/>
         <source>Add external stream</source>
         <translation>Добавить внешнюю дорожку</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5487"/>
-        <location filename="../../mainwindow.ui" line="5490"/>
-        <source>View</source>
-        <translation>Вид</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="1473"/>
@@ -2531,58 +2545,19 @@ hr { height: 1px; border-width: 0; }
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5288"/>
+        <location filename="../../mainwindow.ui" line="5417"/>
         <source>Event log</source>
         <translation>Журнал событий</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5345"/>
-        <location filename="../../mainwindow.ui" line="5348"/>
-        <source>Preferences</source>
-        <translation>Настройки</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5600"/>
-        <source>Hide</source>
-        <translation>Скрыть</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5556"/>
-        <source>Close</source>
-        <translation>Закрыть</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5471"/>
+        <location filename="../../mainwindow.ui" line="5269"/>
         <source>Add title for all files</source>
         <translation>Добавить заголовок для всех файлов</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5474"/>
+        <location filename="../../mainwindow.ui" line="5272"/>
         <source>Title  (global)</source>
         <translation>Название (глобально)</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5437"/>
-        <source>Expand</source>
-        <translation>Развернуть</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5364"/>
-        <location filename="../../mainwindow.ui" line="5367"/>
-        <source>Tools</source>
-        <translation>Инструменты</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5683"/>
-        <location filename="../../mainwindow.ui" line="5686"/>
-        <source>About</source>
-        <translation>О программе</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5326"/>
-        <location filename="../../mainwindow.ui" line="5329"/>
-        <source>File</source>
-        <translation>Файл</translation>
     </message>
 </context>
 </TS>

@@ -234,68 +234,89 @@ Möglicheweise mkvtoolnix nicht installiert.
         <translation>Ende</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="452"/>
+        <location filename="../../mainwindow.cpp" line="456"/>
+        <source>File</source>
+        <translation>Datei</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="458"/>
+        <source>Tools</source>
+        <translation>Tools</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="459"/>
+        <source>View</source>
+        <translation>Anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="460"/>
+        <source>Preferences</source>
+        <translation>Systemeinstellungen</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="463"/>
         <source>Add files</source>
         <translation>Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="453"/>
+        <location filename="../../mainwindow.cpp" line="464"/>
         <source>Remove from the list</source>
         <translation>Aus der Liste entfernen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="454"/>
+        <location filename="../../mainwindow.cpp" line="465"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="465"/>
+        <location filename="../../mainwindow.cpp" line="474"/>
         <source>Encode/Pause</source>
         <translation>Kodieren/Pause</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="466"/>
+        <location filename="../../mainwindow.cpp" line="475"/>
         <location filename="../../mainwindow.cpp" line="1550"/>
         <source>Stop</source>
         <translation>Anhalten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="474"/>
+        <location filename="../../mainwindow.cpp" line="481"/>
         <source>Edit metadata</source>
         <translation>Metadaten bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="475"/>
+        <location filename="../../mainwindow.cpp" line="482"/>
         <source>Select audio streams</source>
         <translation>Audio-Streams auswählen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="476"/>
+        <location filename="../../mainwindow.cpp" line="483"/>
         <source>Select subtitles</source>
         <translation>Untertitel auswählen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="477"/>
+        <location filename="../../mainwindow.cpp" line="484"/>
         <source>Split video</source>
         <translation>Video aufteilen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="491"/>
+        <location filename="../../mainwindow.cpp" line="502"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="497"/>
+        <location filename="../../mainwindow.cpp" line="496"/>
         <source>Reset state</source>
         <translation>Zustand zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="505"/>
+        <location filename="../../mainwindow.cpp" line="461"/>
+        <location filename="../../mainwindow.cpp" line="506"/>
         <source>About</source>
         <translation>Über das Programm</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="506"/>
+        <location filename="../../mainwindow.cpp" line="507"/>
         <source>Donate</source>
         <translation>Spenden</translation>
     </message>
@@ -331,6 +352,7 @@ Möglicheweise mkvtoolnix nicht installiert.
         <translation>Übernehmen</translation>
     </message>
     <message>
+        <location filename="../../mainwindow.cpp" line="457"/>
         <location filename="../../mainwindow.cpp" line="544"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
@@ -2186,8 +2208,6 @@ hr { height: 1px; border-width: 0; }
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="501"/>
-        <location filename="../../mainwindow.ui" line="5506"/>
-        <location filename="../../mainwindow.ui" line="5512"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
@@ -2267,12 +2287,6 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../mainwindow.ui" line="1265"/>
         <source>Add external stream</source>
         <translation>Externen Stream hinzufügen</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5487"/>
-        <location filename="../../mainwindow.ui" line="5490"/>
-        <source>View</source>
-        <translation>Anzeigen</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="1473"/>
@@ -2531,58 +2545,19 @@ hr { height: 1px; border-width: 0; }
         <translation>Rückwärts</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5288"/>
+        <location filename="../../mainwindow.ui" line="5417"/>
         <source>Event log</source>
         <translation>Ereignisprotokoll</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5345"/>
-        <location filename="../../mainwindow.ui" line="5348"/>
-        <source>Preferences</source>
-        <translation>Systemeinstellungen</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5600"/>
-        <source>Hide</source>
-        <translation>Verstecken</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5556"/>
-        <source>Close</source>
-        <translation>Schließen</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5471"/>
+        <location filename="../../mainwindow.ui" line="5269"/>
         <source>Add title for all files</source>
         <translation>Titel für alle Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5474"/>
+        <location filename="../../mainwindow.ui" line="5272"/>
         <source>Title  (global)</source>
         <translation>Titel  (global)</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5437"/>
-        <source>Expand</source>
-        <translation>Erweitern</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5364"/>
-        <location filename="../../mainwindow.ui" line="5367"/>
-        <source>Tools</source>
-        <translation>Tools</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5683"/>
-        <location filename="../../mainwindow.ui" line="5686"/>
-        <source>About</source>
-        <translation>Über</translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.ui" line="5326"/>
-        <location filename="../../mainwindow.ui" line="5329"/>
-        <source>File</source>
-        <translation>Datei</translation>
     </message>
 </context>
 </TS>
