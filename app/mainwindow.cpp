@@ -448,7 +448,18 @@ void MainWindow::createConnections()
     connect(m_pTimerSetThumbnail, SIGNAL(timeout()), this, SLOT(repeatHandler_Type_2()));
 
     //************ Top menu actions ****************//
-    QMenu *menuFiles = new QMenu(ui->menuFileButton);
+    m_pMenuBar = new QMenuBar(ui->frame_top);
+    m_pMenuBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    QGridLayout *pTopLayout = dynamic_cast<QGridLayout*>(ui->frame_top->layout());
+    if (pTopLayout)
+        pTopLayout->addWidget(m_pMenuBar, 0, 5, Qt::AlignVCenter);
+    QMenu *menuFiles = m_pMenuBar->addMenu(tr("File"));
+    QMenu *menuEdit = m_pMenuBar->addMenu(tr("Edit"));
+    QMenu *menuTools = m_pMenuBar->addMenu(tr("Tools"));
+    QMenu *menuView = m_pMenuBar->addMenu(tr("View"));
+    QMenu *menuPreferences = m_pMenuBar->addMenu(tr("Preferences"));
+    QMenu *menuAbout = m_pMenuBar->addMenu(tr("About"));
+
     m_pActAddFiles = new QAction(tr("Add files"), menuFiles);
     m_pActRemoveFile = new QAction(tr("Remove from the list"), menuFiles);
     m_pActCloseWindow = new QAction(tr("Close"), menuFiles);
@@ -459,18 +470,14 @@ void MainWindow::createConnections()
     menuFiles->addAction(m_pActRemoveFile);
     menuFiles->addSeparator();
     menuFiles->addAction(m_pActCloseWindow);
-    ui->menuFileButton->setMenu(menuFiles);
 
-    QMenu *menuEdit = new QMenu(ui->menuEditButton);
     m_pActStart = new QAction(tr("Encode/Pause"), menuEdit);
     m_pActStop = new QAction(tr("Stop"), menuEdit);
     connect(m_pActStart, &QAction::triggered, this, SLT(onStart));
     connect(m_pActStop, &QAction::triggered, this, SLT(onStop));
     menuEdit->addAction(m_pActStart);
     menuEdit->addAction(m_pActStop);
-    ui->menuEditButton->setMenu(menuEdit);
 
-    QMenu *menuTools = new QMenu(ui->menuToolsButton);
     m_pActEditMetadata = new QAction(tr("Edit metadata"), menuTools);
     m_pActSelectAudio = new QAction(tr("Select audio streams"), menuTools);
     m_pActSelectSubtitles = new QAction(tr("Select subtitles"), menuTools);
@@ -485,23 +492,17 @@ void MainWindow::createConnections()
     menuTools->addAction(m_pActSelectSubtitles);
     menuTools->addSeparator();
     menuTools->addAction(m_pActSplitVideo);
-    ui->menuToolsButton->setMenu(menuTools);
 
-    QMenu *menuPreferences = new QMenu(ui->menuPreferencesButton);
-    m_pActSettings = new QAction(tr("Settings"), menuPreferences);
-    connect(m_pActSettings, &QAction::triggered, this, SLT(onSettings));
-    menuPreferences->addAction(m_pActSettings);
-    ui->menuPreferencesButton->setMenu(menuPreferences);
-
-    QMenu *menuView = new QMenu(ui->menuViewButton);
     m_pActResetView = new QAction(tr("Reset state"), menuView);
     connect(m_pActResetView, &QAction::triggered, this, SLT(resetView));
     Q_LOOP(i, 0, DOCKS_COUNT)
         menuView->addAction(m_pDocks[i]->toggleViewAction());
     menuView->addAction(m_pActResetView);
-    ui->menuViewButton->setMenu(menuView);
 
-    QMenu *menuAbout = new QMenu(ui->menuAboutButton);
+    m_pActSettings = new QAction(tr("Settings"), menuPreferences);
+    connect(m_pActSettings, &QAction::triggered, this, SLT(onSettings));
+    menuPreferences->addAction(m_pActSettings);   
+
     m_pActAbout = new QAction(tr("About"), menuAbout);
     m_pActDonate = new QAction(tr("Donate"), menuAbout);
     connect(m_pActAbout, &QAction::triggered, this, SLT(onActionAbout));
@@ -509,7 +510,6 @@ void MainWindow::createConnections()
     menuAbout->addAction(m_pActAbout);
     menuAbout->addSeparator();
     menuAbout->addAction(m_pActDonate);
-    ui->menuAboutButton->setMenu(menuAbout);
 
     //********** Table menu actions ****************//
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);

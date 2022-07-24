@@ -22,6 +22,7 @@
 #include <QSplitter>
 #include <QLabel>
 #include <QTimer>
+#include <QMenuBar>
 #include <ctime>
 #include "encoder.h"
 #include "constants.h"
@@ -111,6 +112,9 @@ private:
     QSplitter   *m_pSpl,
                 *m_pSplSource;
     QDockWidget *m_pDocks[DOCKS_COUNT];
+
+    // ============= Menu bar ==============
+    QMenuBar    *m_pMenuBar;
 
     // ============= Top label =============
     QLabel      *m_pTableLabel,

@@ -173,6 +173,32 @@ QMenu::item:selected {
     background-color: @elementsBackgroundSelectedAbstractItem;
 }
 
+/**************************************************************************
+**  QMenuBar
+**************************************************************************/
+
+QMenuBar {
+    min-height: 27px;
+    padding: 0px;
+    spacing: 3px;
+    background-color: transparent;
+}
+QMenuBar::item {
+    padding-left: 15px; padding-right: 15px;
+    border: none;
+    border-radius: 0px;
+    color: @elementsTextColor;
+    background: transparent;
+}
+QMenuBar::item:selected {
+    background: #343B48;
+}
+QMenuBar::item:pressed {
+    padding-top: 2px;
+    border-bottom: 2px solid #55AAFF;
+    color: #55AAFF;
+    background: transparent;
+}
 
 /**************************************************************************
 **  QScrollBar
@@ -899,51 +925,51 @@ QTextBrowser#textBrowser_log {
 **************************************************************************/
 
 QPushButton {
-        border: none;
-        border-radius: 3px;
-        color: #DCDCDC;
-        background-color: transparent;
+    border: none;
+    border-radius: 3px;
+    color: #DCDCDC;
+    background-color: transparent;
 }
 QPushButton:hover {
-        border: none;
-        color: #55AAFF;
-        background-color: transparent;
+    border: none;
+    color: #55AAFF;
+    background-color: transparent;
 }
 QPushButton:pressed {
-        border: none;
-        color: #343B48;
-        background-color: transparent;
+    border: none;
+    color: #343B48;
+    background-color: transparent;
 }
 QPushButton::menu-indicator {
-        height: 0px;
-        background-color: transparent;
+    height: 0px;
+    background-color: transparent;
 }
 
 /*********************************************/
 
 QPushButton#buttonReset {
-        border: none;
-        image: url(:/resources/icons/16x16/cil-history.png);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    image: url(:/resources/icons/16x16/cil-history.png);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#addFilesHot {
-        border: none;
-        image: url(:/resources/icons/12x12/cil-input.png);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    image: url(:/resources/icons/12x12/cil-input.png);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#setOutFolder {
-        border: none;
-        image: url(:/resources/icons/12x12/cil-output.png);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    image: url(:/resources/icons/12x12/cil-output.png);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#settings {
-        border: none;
-        image: url(:/resources/icons/16x16/cil-settings.png);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    image: url(:/resources/icons/16x16/cil-settings.png);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#audioExpandBtn {
     border: none;
@@ -964,44 +990,44 @@ QPushButton:disabled#rightButton {
     background-color: #343B48;
 }
 QPushButton#hideWindow {
-        border: none;
-        border-radius: 0px;
-        padding: 7px;
-        image: url(:/resources/icons/svg/minimize.svg);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    padding: 7px;
+    image: url(:/resources/icons/svg/minimize.svg);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#expandWindow {
-        border: none;
-        border-radius: 0px;
-        padding: 7px;
-        image: url(:/resources/icons/svg/restore.svg);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    padding: 7px;
+    image: url(:/resources/icons/svg/restore.svg);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#expandWindow[expanded=true] {
-        image: url(:/resources/icons/svg/expand.svg);
+    image: url(:/resources/icons/svg/expand.svg);
 }
 QPushButton#closeWindow {
-        border: none;
-        border-radius: 0px;
-        padding: 7px;
-        image: url(:/resources/icons/svg/close.svg);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    padding: 7px;
+    image: url(:/resources/icons/svg/close.svg);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#closeReport {
-        border: none;
-        image: url(:/resources/icons/svg/close.svg);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    image: url(:/resources/icons/svg/close.svg);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#closeTWindow {
-        border: none;
-        padding: 5px;
-        image: url(:/resources/icons/16x16/cil-x.png);
-        color: @elementsTextColor;
-        background-color: transparent;
+    border: none;
+    padding: 5px;
+    image: url(:/resources/icons/16x16/cil-x.png);
+    color: @elementsTextColor;
+    background-color: transparent;
 }
 QPushButton#start {
     padding: 3px;
