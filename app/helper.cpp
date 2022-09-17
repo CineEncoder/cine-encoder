@@ -1,10 +1,13 @@
 #include "helper.h"
 #include <QLocale>
-#include <QProcess>
 #include <QFileDialog>
 #include <QFontMetrics>
 #include <iostream>
 #include <math.h>
+#if defined (Q_OS_UNIX)
+    #include <stdlib.h>
+#endif
+
 
 #define trc(num) static_cast<int>(trunc(num))
 #define rnd(num) static_cast<int>(round(num))
@@ -27,18 +30,9 @@ Helper::DesktopEnv Helper::m_desktopEnv = Helper::DesktopEnv::UNDEF;
 void Helper::detectEnv()
 {
 #if defined (Q_OS_UNIX)
-    QProcess prc;
-    prc.setProcessChannelMode(QProcess::MergedChannels);
-    QStringList arg;
-    arg << "XDG_CURRENT_DESKTOP";
-    prc.start("printenv", arg);
-    if (prc.waitForFinished(1500)) {
-        const QString line = QString(prc.readAllStandardOutput());
-        m_desktopEnv = (line.indexOf("GNOME") != -1) ?
-                    DesktopEnv::GNOME : DesktopEnv::OTHER;
-    } else {
-        Print("printenv not found");
-    }
+    const QString environment = QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP"));
+    m_desktopEnv = (environment.indexOf("GNOME") != -1) ?
+                DesktopEnv::GNOME : DesktopEnv::OTHER;
 #endif
 }
 
