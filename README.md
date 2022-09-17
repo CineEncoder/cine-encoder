@@ -134,7 +134,7 @@ cd builddir
 
 ### Tracking the development of the project
 
-Next release version: 3.5. Estimated release date: Jun 18 2022.
+Next release version: 3.5.5. Estimated release date: Dec 15 2022.
 To tracking the development of the project see [Project page](https://github.com/CineEncoder/cine-encoder/projects/1?fullscreen=true)
 
 
