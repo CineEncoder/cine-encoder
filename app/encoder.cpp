@@ -877,10 +877,10 @@ void Encoder::encode()   // Encode
 {
     Print("Encode ...");
     QStringList arguments;
-    _calling_pr_1 = true;
+    //_calling_pr_1 = true;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
-    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
+    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
     emit onEncodingProgress(0, 0.0f);
     if (_mux_mode) {
         Print("Muxing mode ...");
@@ -938,13 +938,13 @@ void Encoder::encode()   // Encode
     }
 }
 
-void Encoder::add_metadata() /*** Add metedata ***/
+void Encoder::add_metadata() // Add metedata
 {
     Print("Add metadata ...");
-    _calling_pr_1 = true;
+    _mux_mode = true;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_2()));
-    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
+    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
     _encoding_mode = tr("Add data:");
     emit onEncodingMode(_encoding_mode);
     emit onEncodingProgress(0, 0.0f);
@@ -962,9 +962,10 @@ void Encoder::add_metadata() /*** Add metedata ***/
 void Encoder::progress_1()   // Progress
 {
     QString line = QString(processEncoding->readAllStandardOutput());
-    const QString line_mod6 = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
-    emit onEncodingLog(line_mod6);
-    const int pos_err_1 = line_mod6.indexOf("[error]:");
+    const QString line_mod = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
+    emit onEncodingLog(line_mod);
+    _error_message = line_mod;
+    /*const int pos_err_1 = line_mod6.indexOf("[error]:");
     const int pos_err_2 = line_mod6.indexOf("Error");
     const int pos_err_3 = line_mod6.indexOf(" @ ");
     if (pos_err_1 != -1) {
@@ -979,10 +980,10 @@ void Encoder::progress_1()   // Progress
         const QStringList error = line_mod6.split("]");
         if (error.size() >= 2)
             _error_message = error[1];
-    }
-    const int pos_st = line_mod6.indexOf("frame=");
+    }*/
+    const int pos_st = line_mod.indexOf("frame=");
     if (pos_st == 0) {
-        QStringList data = line_mod6.split(" ");
+        QStringList data = line_mod.split(" ");
         const QString frame_qstr = data[0].replace("frame=", "");
         int frame = frame_qstr.toInt();
         if (frame == 0)
@@ -1002,7 +1003,7 @@ void Encoder::progress_1()   // Progress
             percent_int = 100;
         emit onEncodingProgress(percent_int, rem_time);
 
-        if ((percent_int >= 95) && _calling_pr_1) {
+        /*if ((percent_int >= 95) && _calling_pr_1) {
              disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
              if (_mux_mode) {
                  connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed()));
@@ -1021,7 +1022,7 @@ void Encoder::progress_1()   // Progress
                  }
              }
              _calling_pr_1 = false;
-        }
+        }*/
     }
 }
 
@@ -1029,17 +1030,15 @@ void Encoder::progress_2()   // Progress mkvpropedit
 {
     const QString line = QString(processEncoding->readAllStandardOutput());
     emit onEncodingLog(line);
+    _error_message = line;
     const int pos_st = line.indexOf("Done.");
     const int pos_nf = line.indexOf("Nothing to do.");
+    static bool lock = false;
     if ((pos_st != -1) || (pos_nf != -1)) {
-        int percent = 100;
-        emit onEncodingProgress(percent, 0.0f);
-        if (_calling_pr_1) {
-            disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
-            _mux_mode = true;
+        emit onEncodingProgress(100, 0.0f);
+        if (!lock) {
+            lock = true;
             _loop_start = time(nullptr);
-            _calling_pr_1 = false;
-            connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
         }
     }
 }
@@ -1078,15 +1077,37 @@ void Encoder::stopEncoding()
 
 void Encoder::killEncoding()
 {
-    processEncoding->kill();
+    if (processEncoding->state() == QProcess::Running)
+        processEncoding->kill();
 }
 
-void Encoder::completed()
+void Encoder::completed(int exit_code)
 {
     processEncoding->disconnect();
-    if (_flag_hdr)
-        QDir().remove(_temp_file);
-    emit onEncodingCompleted();
+    if (exit_code == 0) {
+        if (_mux_mode) {
+            if (_flag_hdr)
+                QDir().remove(_temp_file);
+            emit onEncodingProgress(100, 0.0f);
+            emit onEncodingCompleted();
+        } else {
+            if (!_flag_two_pass && _flag_hdr) {
+                add_metadata();
+            } else
+            if (!_flag_two_pass && !_flag_hdr) {
+                emit onEncodingProgress(100, 0.0f);
+                emit onEncodingCompleted();
+            } else
+            if (_flag_two_pass) {
+                _flag_two_pass = false;
+                encode();
+            }
+        }
+    } else {
+        if (_flag_hdr)
+            QDir().remove(_temp_file);
+        emit onEncodingError(_error_message);
+    }
 }
 
 void Encoder::abort()
@@ -1095,12 +1116,4 @@ void Encoder::abort()
     if (_flag_hdr)
         QDir().remove(_temp_file);
     emit onEncodingAborted();
-}
-
-void Encoder::error()
-{
-    processEncoding->disconnect();
-    if (_flag_hdr)
-        QDir().remove(_temp_file);
-    emit onEncodingError(_error_message);
 }
