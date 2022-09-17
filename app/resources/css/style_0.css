@@ -103,7 +103,8 @@ QFrame#frameTask {
     border-top: none;
     background-color: @frameEdgingBackground;
 }
-QFrame#frameTaskHeader {
+QFrame#frameTaskHeader,
+QFrame#frameTaskHeader_2 {
     min-height: 23px;
     border-top: 1px solid @frameEdgeBorder;
     background-color: @frameHeaderBackground;
@@ -128,6 +129,14 @@ QFrame#frame_top {
 QFrame#frameTab_1, QFrame#frameAudio, QFrame#frameSubtitle, QFrame#frameTab_4,
 QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
     background-color: @tableBackground;
+}
+
+QFrame#frameAudioExport,
+QFrame#frameSubtitleExport {
+    background-color: @mainBackground;
+}
+QFrame#frameProgressExport {
+    background-color: @mainBackground;
 }
 
 #AudioLabel {
@@ -546,7 +555,6 @@ QTabWidget::pane {
 }
 
 /*********************************************/
-
 QTabWidget#tabWidgetStreams {
     qproperty-tabPosition: North;
     color: @frameTextColor;
@@ -563,7 +571,6 @@ QTabWidget::pane#tabWidgetStreams {
 }
 
 /*********************************************/
-
 QTabWidget#tabWidgetSettings {
     qproperty-tabPosition: South;
     color: @frameTextColor;
@@ -575,11 +582,27 @@ QTabWidget::tab-bar#tabWidgetSettings {
     background-color: @mainBackground;
 }
 QTabWidget::pane#tabWidgetSettings {
-
     border: none;
     background-color: @mainBackground;
 }
 
+/*********************************************/
+QTabWidget#tabWidgetExport {
+    qproperty-tabPosition: South;
+    color: @frameTextColor;
+    border: none;
+    background-color: @frameMiddleBackground;
+}
+QTabWidget::tab-bar#tabWidgetExport {
+    alignment: left;
+    height: 0px;
+    background-color: @frameMiddleBackground;
+}
+QTabWidget::pane#tabWidgetExport {
+
+    border: none;
+    background-color: @frameMiddleBackground;
+}
 
 /**************************************************************************
 **  QCheckBox
@@ -946,7 +969,13 @@ QPushButton::menu-indicator {
 }
 
 /*********************************************/
-
+QPushButton#buttonReturn {
+    border: none;
+    border-radius: 0px;
+    image: url(:/resources/icons/svg/previous.svg);
+    color: @elementsTextColor;
+    background-color: transparent;
+}
 QPushButton#buttonReset {
     border: none;
     image: url(:/resources/icons/16x16/cil-history_black.png);
@@ -1058,6 +1087,7 @@ QPushButton:hover#sortUp,
 QPushButton:hover#sortDown,
 QPushButton:hover#stop,
 QPushButton:hover#start,
+QPushButton:hover#buttonReturn,
 QPushButton:hover#buttonReset,
 QPushButton:hover#addFilesHot,
 QPushButton:hover#setOutFolder,
@@ -1093,6 +1123,7 @@ QPushButton:pressed#sortUp,
 QPushButton:pressed#sortDown,
 QPushButton:pressed#stop,
 QPushButton:pressed#start,
+QPushButton:pressed#buttonReturn,
 QPushButton:pressed#buttonReset,
 QPushButton:pressed#addFilesHot,
 QPushButton:pressed#setOutFolder,
@@ -1214,7 +1245,6 @@ QPushButton:pressed#buttonOutputPath {
 }
 
 /*********************************************/
-
 QPushButton#applyPreset {
     border-radius: 3px;
     border: 1px solid #DDDDDD;
@@ -1235,7 +1265,7 @@ QPushButton:pressed#applyPreset {
 }
 
 /*********************************************/
-
+QPushButton#buttonExport,
 QPushButton#buttonCancel,
 QPushButton#buttonApply,
 QPushButton#buttonPayPal,
@@ -1245,7 +1275,7 @@ QPushButton#buttonBitcoin {
     color: #FFFFFF;
     background-color: #0d56be;
 }
-
+QPushButton:hover#buttonExport,
 QPushButton:hover#buttonCancel,
 QPushButton:hover#buttonApply,
 QPushButton:hover#buttonPayPal,
@@ -1253,7 +1283,7 @@ QPushButton:hover#buttonBitcoin {
     border: 1px solid #1f8efa;
     background-color: #1f8efa;
 }
-
+QPushButton:pressed#buttonExport,
 QPushButton:pressed#buttonCancel,
 QPushButton:pressed#buttonApply,
 QPushButton:pressed#buttonPayPal,
@@ -1262,6 +1292,22 @@ QPushButton:pressed#buttonBitcoin {
     background-color: #232831;
 }
 
+/*********************************************/
+QPushButton#buttonStop,
+QPushButton#buttonPause {
+    border-radius: 8px;
+    border: 1px solid #0d56be;
+    color: @elementsTextColor;
+    background-color: transparent;
+}
+QPushButton:hover#buttonStop,
+QPushButton:hover#buttonPause {
+    background-color: #DDDDDD;
+}
+QPushButton:pressed#buttonStop,
+QPushButton:pressed#buttonPause {
+    background-color: #EEEEEE;
+}
 
 /**************************************************************************
 **  QRadioButton
@@ -1304,7 +1350,6 @@ QProgressBar::chunk {
 }
 
 /*********************************************/
-
 QProgressBar#progressBar_opening {
     width: 15px;
     border-top-left-radius: @elementsBorderRadius;
@@ -1323,6 +1368,27 @@ QProgressBar::chunk#progressBar_opening {
     background: #394150;
 }
 
+/*********************************************/
+QProgressBar#progressBar_export {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 36px;
+    width: 15px;
+    border-top-left-radius: 3;
+    border-top-right-radius: 3;
+    border-bottom-left-radius: 3;
+    border-bottom-right-radius: 3;
+    text-align: right;
+    color: #000000;
+    background: #DDDDDD;
+}
+QProgressBar::chunk#progressBar_export {
+    border-top-left-radius: 3;
+    border-top-right-radius: 3;
+    border-bottom-left-radius: 3;
+    border-bottom-right-radius: 3;
+    background: #0080ff;
+}
 
 /**************************************************************************
 **  QSlider

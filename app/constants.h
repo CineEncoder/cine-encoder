@@ -82,6 +82,26 @@ namespace Constants {
         RES_LOW, RES_HIGH
     };
 
+    // ******************* Stream Data ***************************//
+    enum class ContentType : uchar {
+        Audio, Subtitle
+    };
+
+    struct StreamData {
+        ContentType cont_type;
+        QString input_file;
+        QString output_file;
+        float duration;
+        int stream;
+        StreamData() :
+            cont_type(ContentType::Audio),
+            input_file(QString()),
+            output_file(QString()),
+            duration(0.f),
+            stream(-1)
+        {}
+    };
+
     // ********************* Report ******************************//
     struct ReportLog {
         enum class Icon : uchar {
@@ -137,6 +157,35 @@ namespace Constants {
         VIDEO_AUTHOR, VIDEO_PERFORMER, VIDEO_DESCRIPTION
     };
 
+    // ***************** Encoder Data **************************//
+    enum CurParamIndex {
+        OUTPUT_PARAM,   CODEC,          MODE,
+        CONTAINER,      BQR,            MAXRATE,
+        BUFSIZE,        FRAME_RATE,     BLENDING,
+        WIDTH,          HEIGHT,         PASS,
+        PRESET,         COLOR_RANGE,    MIN_LUM,
+        MAX_LUM,        MAX_CLL,        MAX_FALL,
+        MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
+        AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
+        LEVEL,          ASAMPLE_RATE,   ACHANNELS,
+        MATRIX,         PRIMARY,        TRC,
+        PRESET_NAME,    REP_PRIM,       REP_MATRIX,
+        REP_TRC
+    };
+
+    struct EncoderAudioParam {
+        int AUDIO_CODEC;
+        int AUDIO_BITRATE;
+        int AUDIO_SAMPLING;
+        int AUDIO_CHANNELS;
+        QString AUDIO_CONTAINER;
+    };
+
+    struct EncoderSubtParam {
+        int SUBT_CODEC;
+        QString SUBT_CONTAINER;
+    };
+
     // ******************* Presets *****************************//
     enum Profile {
         HIGH,           MAIN,           MAIN10,
@@ -161,22 +210,7 @@ namespace Constants {
 
     enum MasterDisplay {
         SOURCE, DISPLAY_P3, DCI_P3, BT_2020, BT_709, CUSTOM
-    };
-
-    enum CurParamIndex {
-        OUTPUT_PARAM,   CODEC,          MODE,
-        CONTAINER,      BQR,            MAXRATE,
-        BUFSIZE,        FRAME_RATE,     BLENDING,
-        WIDTH,          HEIGHT,         PASS,
-        PRESET,         COLOR_RANGE,    MIN_LUM,
-        MAX_LUM,        MAX_CLL,        MAX_FALL,
-        MASTER_DISPLAY, CHROMA_COORD,   WHITE_COORD,
-        AUDIO_CODEC,    AUDIO_BITRATE,  MINRATE,
-        LEVEL,          ASAMPLE_RATE,   ACHANNELS,
-        MATRIX,         PRIMARY,        TRC,
-        PRESET_NAME,    REP_PRIM,       REP_MATRIX,
-        REP_TRC
-    };
+    };   
 
     enum EncodingStatus {
         START, PAUSE, RESUME

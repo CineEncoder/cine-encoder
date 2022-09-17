@@ -20,6 +20,7 @@
 #include "tables.h"
 #include "helper.h"
 #include "report.h"
+#include "streamconverter.h"
 #include "fileiconprovider.h"
 #include <QDesktopWidget>
 #include <QPaintEvent>
@@ -411,6 +412,10 @@ void MainWindow::createConnections()
     };
     Q_LOOP(i, 0, BTN_COUNT)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
+
+    // Streams actions
+    connect(ui->streamAudio, &QStreamView::onExtractTrack, this, SLT(onExtract));
+    connect(ui->streamSubtitle, &QStreamView::onExtractTrack, this, SLT(onExtract));
 
     // Table
     connect(ui->tableWidget, &QTableWidget::itemSelectionChanged,
@@ -1299,6 +1304,13 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
             ui->frameMiddle->setFocus();
+            return true;
+        } else
+        if (keyEvent->key() == Qt::Key_F10) {
+            auto actList = m_pMenuBar->actions();
+            if (actList.size() > 0) {
+                //actList.at(0)->activate(QAction::ActionEvent::Hover);
+            }
             return true;
         }
     } else
@@ -2660,7 +2672,7 @@ void MainWindow::providePresetContextMenu(const QPoint &pos) // Call tree items 
 }
 
 /************************************************
-** Message Windows
+** Messages
 ************************************************/
 
 bool MainWindow::showDialogMessage(const QString &message)
@@ -2707,5 +2719,28 @@ void MainWindow::showInfoMessage(const QString &message, const bool timer_mode)
         }
     } else {
         showMessage();
+    }
+}
+
+/************************************************
+** Extract
+************************************************/
+
+void MainWindow::onExtract(QStreamView::Content type, int num)
+{
+    const float duration = (type == QStreamView::Content::Audio) ?
+                _FIELDS(m_row, audioDuration).at(num).toFloat() :
+                _FIELDS(m_row, subtDuration).at(num).toFloat();
+    StreamData data;
+    data.cont_type = ContentType(type);
+    data.input_file = m_input_file;
+    data.output_file = m_output_file;
+    data.duration = 0.001f * duration;
+    data.stream = num;
+    StreamConverter ext(this,
+                        StreamConverter::Mode::Extract,
+                        &data);
+    if (ext.exec() == QDialog::Accepted) {
+        showPopup(tr("Task completed!\n"));
     }
 }

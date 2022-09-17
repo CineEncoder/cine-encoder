@@ -109,7 +109,8 @@ QFrame#frameOutput {
     background-color: @frameMiddleBackground;
 }
 
-QFrame#frameTaskHeader {
+QFrame#frameTaskHeader,
+QFrame#frameTaskHeader_2 {
     min-height: 23px;
     border-top: 1px solid @frameEdgeBorder;
     background-color: @frameHeaderBackground;
@@ -134,6 +135,14 @@ QFrame#frame_top {
 QFrame#frameTab_1, QFrame#frameAudio, QFrame#frameSubtitle, QFrame#frameTab_4,
 QFrame#frameLeftTab_1, QFrame#frameLeftTab_2, QFrame#frameTab_5 {
     background-color: @tableBackground;
+}
+
+QFrame#frameAudioExport,
+QFrame#frameSubtitleExport {
+    background-color: @mainBackground;
+}
+QFrame#frameProgressExport {
+    background-color: @mainBackground;
 }
 
 #AudioLabel {
@@ -580,6 +589,23 @@ QTabWidget::pane#tabWidgetSettings {
     background-color: @mainBackground;
 }
 
+/*********************************************/
+QTabWidget#tabWidgetExport {
+    qproperty-tabPosition: South;
+    color: @frameTextColor;
+    border: none;
+    background-color: @frameMiddleBackground;
+}
+QTabWidget::tab-bar#tabWidgetExport {
+    alignment: left;
+    height: 0px;
+    background-color: @frameMiddleBackground;
+}
+QTabWidget::pane#tabWidgetExport {
+
+    border: none;
+    background-color: @frameMiddleBackground;
+}
 
 /**************************************************************************
 **  QCheckBox
@@ -946,7 +972,13 @@ QPushButton::menu-indicator {
 }
 
 /*********************************************/
-
+QPushButton#buttonReturn {
+    border: none;
+    border-radius: 0px;
+    image: url(:/resources/icons/svg/previous.svg);
+    color: @elementsTextColor;
+    background-color: transparent;
+}
 QPushButton#buttonReset {
     border: none;
     image: url(:/resources/icons/16x16/cil-history.png);
@@ -1058,6 +1090,7 @@ QPushButton:hover#sortUp,
 QPushButton:hover#sortDown,
 QPushButton:hover#stop,
 QPushButton:hover#start,
+QPushButton:hover#buttonReturn,
 QPushButton:hover#buttonReset,
 QPushButton:hover#addFilesHot,
 QPushButton:hover#setOutFolder,
@@ -1092,6 +1125,7 @@ QPushButton:pressed#sortUp,
 QPushButton:pressed#sortDown,
 QPushButton:pressed#stop,
 QPushButton:pressed#start,
+QPushButton:pressed#buttonReturn,
 QPushButton:pressed#buttonReset,
 QPushButton:pressed#addFilesHot,
 QPushButton:pressed#setOutFolder,
@@ -1212,7 +1246,6 @@ QPushButton:pressed#buttonOutputPath {
 }
 
 /*********************************************/
-
 QPushButton#applyPreset {
     border-radius: 3px;
     border: 1px solid #373C46;
@@ -1233,7 +1266,7 @@ QPushButton:pressed#applyPreset {
 }
 
 /*********************************************/
-
+QPushButton#buttonExport,
 QPushButton#buttonCancel,
 QPushButton#buttonApply,
 QPushButton#buttonPayPal,
@@ -1243,7 +1276,7 @@ QPushButton#buttonBitcoin {
     color: #FFFFFF;
     background-color: #3b3b3b;
 }
-
+QPushButton:hover#buttonExport,
 QPushButton:hover#buttonCancel,
 QPushButton:hover#buttonApply,
 QPushButton:hover#buttonPayPal,
@@ -1251,7 +1284,7 @@ QPushButton:hover#buttonBitcoin {
     border: 1px solid #3D4656;
     background-color: #394150;
 }
-
+QPushButton:pressed#buttonExport,
 QPushButton:pressed#buttonCancel,
 QPushButton:pressed#buttonApply,
 QPushButton:pressed#buttonPayPal,
@@ -1260,6 +1293,22 @@ QPushButton:pressed#buttonBitcoin {
     background-color: #232831;
 }
 
+/*********************************************/
+QPushButton#buttonStop,
+QPushButton#buttonPause {
+    border-radius: 8px;
+    border: 1px solid #474747;
+    color: @elementsTextColor;
+    background-color: transparent;
+}
+QPushButton:hover#buttonStop,
+QPushButton:hover#buttonPause {
+    background-color: #343B48;
+}
+QPushButton:pressed#buttonStop,
+QPushButton:pressed#buttonPause {
+    background-color: #55AAFF;
+}
 
 /**************************************************************************
 **  QRadioButton
@@ -1302,7 +1351,6 @@ QProgressBar::chunk {
 }
 
 /*********************************************/
-
 QProgressBar#progressBar_opening {
     width: 15px;
     border-top-left-radius: @elementsBorderRadius;
@@ -1321,6 +1369,27 @@ QProgressBar::chunk#progressBar_opening {
     background: #133685;
 }
 
+/*********************************************/
+QProgressBar#progressBar_export {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 36px;
+    width: 15px;
+    border-top-left-radius: 3;
+    border-top-right-radius: 3;
+    border-bottom-left-radius: 3;
+    border-bottom-right-radius: 3;
+    text-align: right;
+    color: #D2D2D2;
+    background: #0B101A;
+}
+QProgressBar::chunk#progressBar_export {
+    border-top-left-radius: 3;
+    border-top-right-radius: 3;
+    border-bottom-left-radius: 3;
+    border-bottom-right-radius: 3;
+    background: #133685;
+}
 
 /**************************************************************************
 **  QSlider

@@ -110,6 +110,30 @@ Select the correct input file!</source>
     </message>
 </context>
 <context>
+    <name>EncoderStream</name>
+    <message>
+        <location filename="../../encoderstream.cpp" line="129"/>
+        <location filename="../../encoderstream.cpp" line="163"/>
+        <source>Source</source>
+        <translation>来源</translation>
+    </message>
+    <message>
+        <location filename="../../encoderstream.cpp" line="191"/>
+        <source>The file does not contain duration information!
+Select the correct input file!</source>
+        <translation>該文件不包含持續時間信息！
+選擇正確的輸入文件！</translation>
+    </message>
+    <message>
+        <location filename="../../encoderstream.cpp" line="204"/>
+        <source>An unknown error occurred!
+ Possible FFMPEG not installed.
+</source>
+        <translation>发生未知错误！
+可能没有安装FFMPEG。</translation>
+    </message>
+</context>
+<context>
     <name>Helper</name>
     <message>
         <location filename="../../helper.cpp" line="99"/>
@@ -137,293 +161,300 @@ Select the correct input file!</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="163"/>
+        <location filename="../../mainwindow.cpp" line="164"/>
         <source>No media</source>
         <translation>没有媒体</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="165"/>
+        <location filename="../../mainwindow.cpp" line="166"/>
         <source>No audio</source>
         <translation>没有音频</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="208"/>
+        <location filename="../../mainwindow.cpp" line="209"/>
         <source>Presets</source>
         <translation>预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1898"/>
+        <location filename="../../mainwindow.cpp" line="1910"/>
         <source>Preview</source>
         <translation>预览</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="208"/>
+        <location filename="../../mainwindow.cpp" line="209"/>
         <source>Source</source>
         <translation>来源</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="208"/>
+        <location filename="../../mainwindow.cpp" line="209"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Streams</source>
         <translation>溪流</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Log</source>
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Metadata</source>
         <translation>元数据</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Split</source>
         <translation>分割</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Browser</source>
         <translation>浏览器</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="246"/>
+        <location filename="../../mainwindow.cpp" line="247"/>
         <source>Without cutting</source>
         <translation>无需切割</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="246"/>
+        <location filename="../../mainwindow.cpp" line="247"/>
         <source>Cut by shortest</source>
         <translation>按最短截断</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="247"/>
+        <location filename="../../mainwindow.cpp" line="248"/>
         <source>List view</source>
         <translation>列表显示</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="247"/>
+        <location filename="../../mainwindow.cpp" line="248"/>
         <source>Icon view</source>
         <translation>图标视图</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="273"/>
+        <location filename="../../mainwindow.cpp" line="274"/>
         <source>Quit program?</source>
         <translation>退出程序？</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="362"/>
+        <location filename="../../mainwindow.cpp" line="363"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="362"/>
+        <location filename="../../mainwindow.cpp" line="363"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="362"/>
+        <location filename="../../mainwindow.cpp" line="363"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="456"/>
+        <location filename="../../mainwindow.cpp" line="461"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="458"/>
+        <location filename="../../mainwindow.cpp" line="463"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="459"/>
+        <location filename="../../mainwindow.cpp" line="464"/>
         <source>View</source>
         <translation>视图</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="460"/>
+        <location filename="../../mainwindow.cpp" line="465"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="463"/>
+        <location filename="../../mainwindow.cpp" line="468"/>
         <source>Add files</source>
         <translation>添加文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="464"/>
+        <location filename="../../mainwindow.cpp" line="469"/>
         <source>Remove from the list</source>
         <translation>从列表中删除</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="465"/>
+        <location filename="../../mainwindow.cpp" line="470"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="474"/>
+        <location filename="../../mainwindow.cpp" line="479"/>
         <source>Encode/Pause</source>
         <translation>编码/暂停</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="475"/>
-        <location filename="../../mainwindow.cpp" line="1550"/>
+        <location filename="../../mainwindow.cpp" line="480"/>
+        <location filename="../../mainwindow.cpp" line="1562"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="481"/>
+        <location filename="../../mainwindow.cpp" line="486"/>
         <source>Edit metadata</source>
         <translation>编辑元数据</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="482"/>
+        <location filename="../../mainwindow.cpp" line="487"/>
         <source>Select audio streams</source>
         <translation>选择音频流</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="483"/>
+        <location filename="../../mainwindow.cpp" line="488"/>
         <source>Select subtitles</source>
         <translation>选择字幕</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="484"/>
+        <location filename="../../mainwindow.cpp" line="489"/>
         <source>Split video</source>
         <translation>分割视频</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="502"/>
+        <location filename="../../mainwindow.cpp" line="507"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="496"/>
+        <location filename="../../mainwindow.cpp" line="2744"/>
+        <source>Task completed!
+</source>
+        <translation>任務完成！
+</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="501"/>
         <source>Reset state</source>
         <translation>复位状态</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="461"/>
-        <location filename="../../mainwindow.cpp" line="506"/>
+        <location filename="../../mainwindow.cpp" line="466"/>
+        <location filename="../../mainwindow.cpp" line="511"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="507"/>
+        <location filename="../../mainwindow.cpp" line="512"/>
         <source>Donate</source>
         <translation>捐赠</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="532"/>
+        <location filename="../../mainwindow.cpp" line="537"/>
         <source>Add to task</source>
         <translation>添加到任务</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="539"/>
-        <location filename="../../mainwindow.cpp" line="570"/>
+        <location filename="../../mainwindow.cpp" line="544"/>
+        <location filename="../../mainwindow.cpp" line="575"/>
         <source>Add section</source>
         <translation>添加部分</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="540"/>
+        <location filename="../../mainwindow.cpp" line="545"/>
         <source>Add preset</source>
         <translation>添加预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="541"/>
+        <location filename="../../mainwindow.cpp" line="546"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="542"/>
+        <location filename="../../mainwindow.cpp" line="547"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="543"/>
+        <location filename="../../mainwindow.cpp" line="548"/>
         <source>Apply</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="457"/>
-        <location filename="../../mainwindow.cpp" line="544"/>
+        <location filename="../../mainwindow.cpp" line="462"/>
+        <location filename="../../mainwindow.cpp" line="549"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="571"/>
+        <location filename="../../mainwindow.cpp" line="576"/>
         <source>Add new preset</source>
         <translation>添加新预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="643"/>
+        <location filename="../../mainwindow.cpp" line="648"/>
         <source>Folders</source>
         <translation>文件夹</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="655"/>
+        <location filename="../../mainwindow.cpp" line="660"/>
         <source>Files</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="959"/>
+        <location filename="../../mainwindow.cpp" line="964"/>
         <source>ABOUT</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="965"/>
+        <location filename="../../mainwindow.cpp" line="970"/>
         <source>DONATE</source>
         <translation>捐赠</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="993"/>
+        <location filename="../../mainwindow.cpp" line="998"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>您需要重新启动程序才能使设置生效。</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1124"/>
+        <location filename="../../mainwindow.cpp" line="1129"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1139"/>
+        <location filename="../../mainwindow.cpp" line="1144"/>
         <source>Subtitle</source>
         <translation>字幕</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1610"/>
-        <location filename="../../mainwindow.cpp" line="2161"/>
+        <location filename="../../mainwindow.cpp" line="1622"/>
+        <location filename="../../mainwindow.cpp" line="2173"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1144"/>
+        <location filename="../../mainwindow.cpp" line="1149"/>
         <source>Undefined</source>
         <translation>未定义</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1274"/>
+        <location filename="../../mainwindow.cpp" line="1279"/>
         <source>Encode</source>
         <translation>编码</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1487"/>
-        <location filename="../../mainwindow.cpp" line="1588"/>
+        <location filename="../../mainwindow.cpp" line="1499"/>
+        <location filename="../../mainwindow.cpp" line="1600"/>
         <source>Encoding</source>
         <translation>编码</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1521"/>
+        <location filename="../../mainwindow.cpp" line="1533"/>
         <source>Done!</source>
         <translation>完成！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1517"/>
+        <location filename="../../mainwindow.cpp" line="1529"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -432,134 +463,134 @@ Select the correct input file!</source>
 经过时间:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="167"/>
+        <location filename="../../mainwindow.cpp" line="168"/>
         <source>No subtitles</source>
         <translation>没有字幕</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1119"/>
+        <location filename="../../mainwindow.cpp" line="1124"/>
         <source>bit</source>
         <translation>位</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1122"/>
+        <location filename="../../mainwindow.cpp" line="1127"/>
         <source>kbps</source>
         <translation>kbps</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1132"/>
+        <location filename="../../mainwindow.cpp" line="1137"/>
         <source>Audio</source>
         <translation>音频</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1553"/>
+        <location filename="../../mainwindow.cpp" line="1565"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>当前的编码过程已被取消！
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1562"/>
+        <location filename="../../mainwindow.cpp" line="1574"/>
         <source>Error!</source>
         <translation>错误！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1564"/>
+        <location filename="../../mainwindow.cpp" line="1576"/>
         <source>An error occurred: </source>
         <translation>发生了一个错误: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1565"/>
+        <location filename="../../mainwindow.cpp" line="1577"/>
         <source>Unexpected error occurred!</source>
         <translation>发生意外错误！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1577"/>
-        <location filename="../../mainwindow.cpp" line="1598"/>
-        <location filename="../../mainwindow.cpp" line="1689"/>
+        <location filename="../../mainwindow.cpp" line="1589"/>
+        <location filename="../../mainwindow.cpp" line="1610"/>
+        <location filename="../../mainwindow.cpp" line="1701"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1660"/>
+        <location filename="../../mainwindow.cpp" line="1672"/>
         <source>Select input file first!</source>
         <translation>首先选择输入文件！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1664"/>
+        <location filename="../../mainwindow.cpp" line="1676"/>
         <source>Select preset first!</source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1689"/>
+        <location filename="../../mainwindow.cpp" line="1701"/>
         <source>Resume</source>
         <translation>简历</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1699"/>
+        <location filename="../../mainwindow.cpp" line="1711"/>
         <source>Stop encoding?</source>
         <translation>停止编码？</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1707"/>
+        <location filename="../../mainwindow.cpp" line="1719"/>
         <source>OPENING FILES</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2116"/>
+        <location filename="../../mainwindow.cpp" line="2128"/>
         <source>Select output folder</source>
         <translation>选择输出文件夹</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2188"/>
+        <location filename="../../mainwindow.cpp" line="2200"/>
         <source>File: &apos;%1&apos; is not audio file!</source>
         <translation>文件: %1 不是音频文件！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1861"/>
-        <location filename="../../mainwindow.cpp" line="2209"/>
+        <location filename="../../mainwindow.cpp" line="1873"/>
+        <location filename="../../mainwindow.cpp" line="2221"/>
         <source>File: &apos;%1&apos; cannot be opened!</source>
         <translation>文件: %1 无法打开！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2204"/>
+        <location filename="../../mainwindow.cpp" line="2216"/>
         <source>File: &apos;%1&apos; is not subtitle file!</source>
         <translation>文件: %1 不是字幕文件!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2337"/>
-        <location filename="../../mainwindow.cpp" line="2348"/>
-        <location filename="../../mainwindow.cpp" line="2398"/>
-        <location filename="../../mainwindow.cpp" line="2431"/>
+        <location filename="../../mainwindow.cpp" line="2349"/>
+        <location filename="../../mainwindow.cpp" line="2360"/>
+        <location filename="../../mainwindow.cpp" line="2410"/>
+        <location filename="../../mainwindow.cpp" line="2443"/>
         <source>Select preset first!
 </source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2365"/>
+        <location filename="../../mainwindow.cpp" line="2377"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2390"/>
+        <location filename="../../mainwindow.cpp" line="2402"/>
         <source>Delete presets first!
 </source>
         <translation>先删除预设！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2454"/>
+        <location filename="../../mainwindow.cpp" line="2466"/>
         <source>First add a section!
 </source>
         <translation>首先添加一个部分！
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2547"/>
+        <location filename="../../mainwindow.cpp" line="2559"/>
         <source>Preset not selected</source>
         <translation>未选择预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2702"/>
+        <location filename="../../mainwindow.cpp" line="2714"/>
         <source>Task</source>
         <translation>任务</translation>
     </message>
@@ -1424,47 +1455,77 @@ hr { height: 1px; border-width: 0; }
 <context>
     <name>QStreamView</name>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="105"/>
+        <location filename="../../widgets/qstreamview.cpp" line="108"/>
         <source>Format</source>
         <translation>格式</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="105"/>
+        <location filename="../../widgets/qstreamview.cpp" line="108"/>
         <source>Title</source>
         <translation>标题</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="105"/>
+        <location filename="../../widgets/qstreamview.cpp" line="108"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="292"/>
+        <location filename="../../widgets/qstreamview.cpp" line="247"/>
+        <source>Collapse</source>
+        <translation>坍塌</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="247"/>
+        <source>Expand</source>
+        <translation>擴張</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="248"/>
+        <source>Uncheck</source>
+        <translation>取消選中</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="248"/>
+        <source>Check</source>
+        <translation>查看</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="249"/>
+        <source>Set as default track</source>
+        <translation>設為默認軌道</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="266"/>
+        <source>Extract track</source>
+        <translation>提取音頻或字幕軌道</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="361"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="309"/>
+        <location filename="../../widgets/qstreamview.cpp" line="378"/>
         <source>external</source>
         <translation>外部</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="312"/>
+        <location filename="../../widgets/qstreamview.cpp" line="381"/>
         <source>unsupported</source>
         <translation>不支持</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="328"/>
+        <location filename="../../widgets/qstreamview.cpp" line="397"/>
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="347"/>
+        <location filename="../../widgets/qstreamview.cpp" line="416"/>
         <source>Channels</source>
         <translation>声道</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="356"/>
+        <location filename="../../widgets/qstreamview.cpp" line="425"/>
         <source>Path</source>
         <translation>路径</translation>
     </message>
@@ -1712,6 +1773,243 @@ hr { height: 1px; border-width: 0; }
         <source>APPLY</source>
         <oldsource>Apply</oldsource>
         <translation>应用</translation>
+    </message>
+</context>
+<context>
+    <name>StreamConverter</name>
+    <message>
+        <location filename="../../streamconverter.ui" line="20"/>
+        <source>STREAM  CONVERTER</source>
+        <translation>流轉換器</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="155"/>
+        <source>Progress:</source>
+        <translation>进度：</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="284"/>
+        <location filename="../../streamconverter.ui" line="2633"/>
+        <source>Remaining:</source>
+        <translation>剩余：</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="465"/>
+        <source>Stop</source>
+        <translation>停止</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="587"/>
+        <source>Tasks</source>
+        <translation>任务</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="634"/>
+        <source>Remove from the list</source>
+        <translation>从列表中删除</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="742"/>
+        <source>Add files</source>
+        <translation>添加文件</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="935"/>
+        <source>File name</source>
+        <translation>文件名</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="940"/>
+        <source>Format</source>
+        <translation>格式</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="945"/>
+        <source>Duration</source>
+        <translation>持续时间</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="950"/>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="955"/>
+        <source>Bit depth</source>
+        <translation>位深</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="960"/>
+        <source>Sampling rate</source>
+        <translation>採樣率</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="965"/>
+        <source>Path</source>
+        <translation>路径</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="991"/>
+        <source>Sort Z-A</source>
+        <translation>排序 Z-A</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1035"/>
+        <source>Encode</source>
+        <translation>编码</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1117"/>
+        <source>Sort A-Z</source>
+        <translation>排序 A-Z</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1212"/>
+        <source>Mode</source>
+        <translation>模式</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1216"/>
+        <source>Single Mode</source>
+        <translation>单个模式</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1221"/>
+        <source>Batch Mode</source>
+        <translation>批量模式</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1481"/>
+        <source>Export</source>
+        <translation>出口</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1544"/>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1737"/>
+        <location filename="../../streamconverter.ui" line="1894"/>
+        <location filename="../../streamconverter.ui" line="1936"/>
+        <location filename="../../streamconverter.ui" line="2073"/>
+        <location filename="../../streamconverter.ui" line="2297"/>
+        <location filename="../../streamconverter.cpp" line="225"/>
+        <location filename="../../streamconverter.cpp" line="283"/>
+        <location filename="../../streamconverter.cpp" line="284"/>
+        <location filename="../../streamconverter.cpp" line="346"/>
+        <source>Source</source>
+        <translation>来源</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1815"/>
+        <location filename="../../streamconverter.ui" line="2374"/>
+        <source>Codec</source>
+        <translation>编解码器</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2012"/>
+        <source>Sample rate</source>
+        <translation>采样率</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2037"/>
+        <source>Bitrate</source>
+        <translation>比特率</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2078"/>
+        <location filename="../../streamconverter.cpp" line="225"/>
+        <source>trim to 1 ch</source>
+        <translation>修剪到 1 通道</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2083"/>
+        <location filename="../../streamconverter.cpp" line="225"/>
+        <source>trim to 2 ch</source>
+        <translation>修剪到 2 通道</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2100"/>
+        <source>Channels</source>
+        <translation>声道</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2131"/>
+        <location filename="../../streamconverter.ui" line="2416"/>
+        <source>Container</source>
+        <translation>容器</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2906"/>
+        <source>Stream  Converter</source>
+        <translation>流轉換器</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="3032"/>
+        <source>STOP</source>
+        <translation>停止</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="3060"/>
+        <source>PAUSE</source>
+        <translation>暫停</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="3091"/>
+        <source>EXPORT</source>
+        <translation>出口</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="56"/>
+        <source>Audio</source>
+        <translation>音频</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="56"/>
+        <location filename="../../streamconverter.cpp" line="57"/>
+        <source>Converter</source>
+        <translation>轉換器</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="57"/>
+        <source>Subtitle</source>
+        <translation>字幕</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="67"/>
+        <location filename="../../streamconverter.cpp" line="68"/>
+        <location filename="../../streamconverter.cpp" line="90"/>
+        <source>Pause</source>
+        <translation>暂停</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="90"/>
+        <source>Resume</source>
+        <translation>简历</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="134"/>
+        <location filename="../../streamconverter.cpp" line="384"/>
+        <source>Stop encoding?</source>
+        <translation>停止编码？</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="320"/>
+        <location filename="../../streamconverter.cpp" line="325"/>
+        <location filename="../../streamconverter.cpp" line="330"/>
+        <source>Auto</source>
+        <translation>自动</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="438"/>
+        <source>An error occurred: </source>
+        <translation>发生了一个错误: </translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="439"/>
+        <source>Unexpected error occurred!</source>
+        <translation>发生意外错误！</translation>
     </message>
 </context>
 <context>
@@ -1996,7 +2294,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="195"/>
         <location filename="../../tables.h" line="196"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="393"/>
+        <location filename="../../tables.h" line="406"/>
         <source>Ultrafast</source>
         <translation>超级快</translation>
     </message>
@@ -2006,7 +2304,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="195"/>
         <location filename="../../tables.h" line="196"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="394"/>
+        <location filename="../../tables.h" line="407"/>
         <source>Superfast</source>
         <translation>超快</translation>
     </message>
@@ -2021,7 +2319,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="395"/>
+        <location filename="../../tables.h" line="408"/>
         <source>Veryfast</source>
         <translation>非常快</translation>
     </message>
@@ -2036,7 +2334,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="396"/>
+        <location filename="../../tables.h" line="409"/>
         <source>Faster</source>
         <translation>快速</translation>
     </message>
@@ -2051,7 +2349,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="397"/>
+        <location filename="../../tables.h" line="410"/>
         <source>Fast</source>
         <translation>快</translation>
     </message>
@@ -2066,7 +2364,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="398"/>
+        <location filename="../../tables.h" line="411"/>
         <source>Medium</source>
         <translation>中等</translation>
     </message>
@@ -2084,7 +2382,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="207"/>
         <location filename="../../tables.h" line="208"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="399"/>
+        <location filename="../../tables.h" line="412"/>
         <source>Slow</source>
         <translation>慢</translation>
     </message>
@@ -2099,7 +2397,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="400"/>
+        <location filename="../../tables.h" line="413"/>
         <source>Slower</source>
         <translation>较慢</translation>
     </message>
@@ -2114,7 +2412,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="401"/>
+        <location filename="../../tables.h" line="414"/>
         <source>Veryslow</source>
         <translation>非常慢</translation>
     </message>
@@ -2150,27 +2448,27 @@ hr { height: 1px; border-width: 0; }
         <translation>2道次优化</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="481"/>
+        <location filename="../../tables.h" line="494"/>
         <source>Constant Bitrate</source>
         <translation>恒定比特率</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="482"/>
+        <location filename="../../tables.h" line="495"/>
         <source>Average Bitrate</source>
         <translation>平均比特率</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="483"/>
+        <location filename="../../tables.h" line="496"/>
         <source>Variable Bitrate</source>
         <translation>可变比特率</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="484"/>
+        <location filename="../../tables.h" line="497"/>
         <source>Constant Rate Factor</source>
         <translation>恒定速率因子</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="485"/>
+        <location filename="../../tables.h" line="498"/>
         <source>Constant QP</source>
         <translation>恒定 QP</translation>
     </message>

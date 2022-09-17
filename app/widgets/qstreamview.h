@@ -25,6 +25,9 @@ public:
     void clearTitles();
     void undoTitles();
 
+signals:
+    void onExtractTrack(QStreamView::Content type, int track);
+
 private:
     virtual bool eventFilter(QObject*, QEvent*) final;
     void resetDefFlags(const int ind);

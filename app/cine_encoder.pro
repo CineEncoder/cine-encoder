@@ -21,7 +21,7 @@ CODECFORSRC = UTF-8
 # GENERAL
 TARGET = cine_encoder
 TEMPLATE = app
-VERSION = 3.5.4
+VERSION = 3.5.5
 
 # DIRS
 CONFIG -= debug_and_release debug_and_release_target
@@ -44,6 +44,7 @@ SOURCES += \
     widgets/qdoublebutton.cpp \
     basedialog.cpp \
     encoder.cpp \
+    encoderstream.cpp \
     helper.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -51,7 +52,8 @@ SOURCES += \
     notification.cpp \
     preset.cpp \
     progress.cpp \
-    settings.cpp
+    settings.cpp \
+    streamconverter.cpp
 
 HEADERS += \
     fileiconprovider.h \
@@ -63,6 +65,7 @@ HEADERS += \
     basedialog.h \
     constants.h \
     encoder.h \
+    encoderstream.h \
     helper.h \
     mainwindow.h \
     message.h \
@@ -70,6 +73,7 @@ HEADERS += \
     preset.h \
     progress.h \
     settings.h \
+    streamconverter.h \
     tables.h
 
 FORMS += \
@@ -80,7 +84,8 @@ FORMS += \
     preset.ui \
     progress.ui \
     report.ui \
-    settings.ui
+    settings.ui \
+    streamconverter.ui
 
 
 contains(DEFINES, WM_CUSTOM) {
@@ -111,16 +116,19 @@ win32 {
     RC_FILE = icon.rc
 }
 
-TRANSLATIONS += $$PWD/resources/translation/translation_de.ts \
-                $$PWD/resources/translation/translation_ru.ts \
-                $$PWD/resources/translation/translation_zh.ts \
-                $$PWD/resources/translation/translation_nl.ts
+TRANSLATIONS += \
+    $$PWD/resources/translation/translation_de.ts \
+    $$PWD/resources/translation/translation_ru.ts \
+    $$PWD/resources/translation/translation_zh.ts \
+    $$PWD/resources/translation/translation_nl.ts
 
-RESOURCES += files.qrc
+RESOURCES += \
+    files.qrc
+
 
 # LIBS
 unix:!macx {
-    QT += x11extras dbus
+    QT += x11extras
     CONFIG += link_pkgconfig
     PKGCONFIG += xext
     LIBS += -lX11 \

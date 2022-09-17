@@ -392,5 +392,6 @@
         <file>resources/icons/svg/computer.svg</file>
         <file>resources/icons/svg/network.svg</file>
         <file>resources/icons/svg/drive.svg</file>
+        <file>resources/icons/svg/previous.svg</file>
     </qresource>
 </RCC>

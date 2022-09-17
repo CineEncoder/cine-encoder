@@ -1,5 +1,7 @@
 #include "qstreamview.h"
 #include "helper.h"
+#include <QMouseEvent>
+#include <QMenu>
 #include <QPropertyAnimation>
 #include <QStandardItemModel>
 #include <QHeaderView>
@@ -88,6 +90,7 @@ void QStreamView::setContentType(Content type)
 
 void QStreamView::clearList()
 {
+    //m_pData = nullptr;
     QLayoutItem *item;
     while ((item = m_pLayout->takeAt(0)) != nullptr) {
         if (item->widget()) {
@@ -99,8 +102,8 @@ void QStreamView::clearList()
 
 void QStreamView::setList(Data &data)
 {
-    m_pData = &data;
     clearList();
+    m_pData = &data;
     const QString columns[] = {
         tr("Format"), tr("Title"), tr("Language")
     };
@@ -213,9 +216,73 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
     case QEvent::HoverLeave:
         QStreamViewPrivate::onRowHovered(obj, false);
         break;
-    case QEvent::MouseButtonPress:
-        Print(obj->objectName().toStdString());
+    case QEvent::MouseButtonDblClick: {
+        QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
+        if (mouse_event->buttons() & Qt::LeftButton) {
+            QWidget *cell = qobject_cast<QWidget*>(obj);
+            QPushButton *btn = cell->findChild<QPushButton*>("audioExpandBtn");
+            if (btn)
+                btn->click();
+        }
         break;
+    }
+    case QEvent::MouseButtonPress: {
+        QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
+        if (mouse_event->buttons() & Qt::RightButton) {           
+            QWidget *cell = qobject_cast<QWidget*>(obj);
+            QPushButton *btn = cell->findChild<QPushButton*>("audioExpandBtn");
+            bool expanded = false;
+            if (btn)
+                expanded = btn->property("expanded").toBool();
+            QCheckBox *chkBox = cell->findChild<QCheckBox*>();
+            bool checked = false;
+            if (chkBox)
+                checked = (chkBox->checkState() == 2) ? true : false;
+            QRadioButton *rbtn = cell->findChild<QRadioButton*>();
+            bool deflt = false;
+            if (rbtn)
+                deflt = rbtn->isChecked();
+
+            QMenu *streamMenu = new QMenu(cell);
+            QAction *pActExpand = new QAction(expanded ? tr("Collapse") : tr("Expand"), streamMenu);
+            QAction *pActCheck = new QAction(checked ? tr("Uncheck") : tr("Check"), streamMenu);
+            QAction *pActSetDef = new QAction(tr("Set as default track"), streamMenu);
+            connect(pActExpand, &QAction::triggered, this, [btn]() {
+                if (btn)
+                    btn->click();
+            });
+            connect(pActCheck, &QAction::triggered, this, [chkBox]() {
+                if (chkBox)
+                    chkBox->click();
+            });
+            connect(pActSetDef, &QAction::triggered, this, [rbtn, deflt]() {
+                if (rbtn && !deflt)
+                    rbtn->click();
+            });
+            QAction *pActExtract = nullptr;
+            const bool external = obj->property("External").toBool();
+            const int num = obj->property("Number").toInt();
+            if (!external) {
+                pActExtract = new QAction(tr("Extract track"), streamMenu);
+                connect(pActExtract, &QAction::triggered, this, [this, num]() {
+                    emit onExtractTrack(m_type, num);
+                });
+            }
+            streamMenu->addAction(pActExpand);
+            streamMenu->addSeparator();
+            streamMenu->addAction(pActCheck);
+            streamMenu->addAction(pActSetDef);
+            if (!external) {
+                streamMenu->addSeparator();
+                streamMenu->addAction(pActExtract);
+            }
+            const QPoint globPos = cell->mapToGlobal(mouse_event->pos() + QPoint(0, 10));
+            streamMenu->exec(globPos);
+            streamMenu->deleteLater();
+            QStreamViewPrivate::onRowHovered(obj, false);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -278,6 +345,8 @@ QWidget *QStreamView::createCell(bool &state,
     cell->setAttribute(Qt::WA_Hover);
     cell->installEventFilter(this);
     cell->setObjectName("Cell");
+    cell->setProperty("Number", m_pLayout->count() - 1);
+    cell->setProperty("External", externFlag);
     cell->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     cell->setMinimumHeight(46);
     QGridLayout *lut = new QGridLayout(cell);

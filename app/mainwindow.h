@@ -28,6 +28,8 @@
 #include "constants.h"
 #include "popupmessage.h"
 #include "widgets/qanimatedsvg.h"
+#include "widgets/qstreamview.h"
+
 #ifdef WM_CUSTOM
     #include "basewindow_cwm.h"
 #else
@@ -308,6 +310,7 @@ private slots:
     void onTreeDirsDblClicked(const QModelIndex&);
     void provideListContextMenu(const QPoint&);
     void onAddToTask();
+    void onExtract(QStreamView::Content type, int num);
 };
 
 #endif // WIDGET_H

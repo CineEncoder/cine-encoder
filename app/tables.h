@@ -371,6 +371,19 @@ public:
         {"MKV",  "MOV", "MP4", "M2TS", "TS"}
     };
 
+    const QString arr_acodec_sep[9] = {
+        "Source",  "Advanced Audio Coding",  "Dolby Digital",
+        "Dolby TrueHD",  "Vorbis",  "Opus",
+        "Pulse Code Modulation 16 bit",
+        "Pulse Code Modulation 24 bit",
+        "Pulse Code Modulation 32 bit"
+    };
+
+    const QString arr_scodec_sep[7] = {
+        "Source", "SubRip", "WebVTT", "SubStation Alpha",
+        "Advanced SSA", "Timed Text", "MOV text"
+    };
+
     /** Get Current **/
 
     QString getCodecName(int row) const

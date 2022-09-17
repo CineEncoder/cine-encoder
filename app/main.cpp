@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
 #endif
     setlocale(LC_ALL, "");
     QApplication app(argc, argv);
-    QCoreApplication::setOrganizationName("CineEncoder");
-    QCoreApplication::setApplicationName("CineEncoder");
+    QCoreApplication::setOrganizationName(QString::fromUtf8("CineEncoder"));
+    QCoreApplication::setApplicationName(QString::fromUtf8("Cine Encoder"));
     QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);

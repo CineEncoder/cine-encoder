@@ -94,7 +94,8 @@ QFrame#frameTask {
     border-top: none;
     background-color: @frameEdgingBackground;
 }
-QFrame#frameTaskHeader {
+QFrame#frameTaskHeader,
+QFrame#frameTaskHeader_2 {
     min-height: 23px;
     border-top: 1px solid @frameEdgeBorder;
     background-color: @frameHeaderBackground;

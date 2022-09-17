@@ -112,6 +112,31 @@ Möglicheweise mkvtoolnix nicht installiert.
     </message>
 </context>
 <context>
+    <name>EncoderStream</name>
+    <message>
+        <location filename="../../encoderstream.cpp" line="129"/>
+        <location filename="../../encoderstream.cpp" line="163"/>
+        <source>Source</source>
+        <translation>Quelle</translation>
+    </message>
+    <message>
+        <location filename="../../encoderstream.cpp" line="191"/>
+        <source>The file does not contain duration information!
+Select the correct input file!</source>
+        <translation>Die Datei enthält keine Informationen zur Dauer!
+Wählen Sie die richtige Eingabedatei!</translation>
+    </message>
+    <message>
+        <location filename="../../encoderstream.cpp" line="204"/>
+        <source>An unknown error occurred!
+ Possible FFMPEG not installed.
+</source>
+        <translation>Ein unbekannter Fehler ist aufgetreten!
+Möglicherweise FFMPEG nicht installiert.
+</translation>
+    </message>
+</context>
+<context>
     <name>Helper</name>
     <message>
         <location filename="../../helper.cpp" line="99"/>
@@ -139,293 +164,300 @@ Möglicheweise mkvtoolnix nicht installiert.
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="163"/>
+        <location filename="../../mainwindow.cpp" line="164"/>
         <source>No media</source>
         <translation>Keine Medien</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="165"/>
+        <location filename="../../mainwindow.cpp" line="166"/>
         <source>No audio</source>
         <translation>Keine Audio</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="208"/>
+        <location filename="../../mainwindow.cpp" line="209"/>
         <source>Presets</source>
         <translation>Voreinstellungen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1898"/>
+        <location filename="../../mainwindow.cpp" line="1910"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="208"/>
+        <location filename="../../mainwindow.cpp" line="209"/>
         <source>Source</source>
         <translation>Quelle</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="208"/>
+        <location filename="../../mainwindow.cpp" line="209"/>
         <source>Output</source>
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Streams</source>
         <translation>Datenströme</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Log</source>
         <translation>Log</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Metadata</source>
         <translation>Metadaten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Split</source>
         <translation>Aufteilen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="210"/>
         <source>Browser</source>
         <translation>Browser</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="246"/>
+        <location filename="../../mainwindow.cpp" line="247"/>
         <source>Without cutting</source>
         <translation>Ohne schneiden</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="246"/>
+        <location filename="../../mainwindow.cpp" line="247"/>
         <source>Cut by shortest</source>
         <translation>Am kürzesten schneiden</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="247"/>
+        <location filename="../../mainwindow.cpp" line="248"/>
         <source>List view</source>
         <translation>Listenansicht</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="247"/>
+        <location filename="../../mainwindow.cpp" line="248"/>
         <source>Icon view</source>
         <translation>Symbolansicht</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="273"/>
+        <location filename="../../mainwindow.cpp" line="274"/>
         <source>Quit program?</source>
         <translation>Programm beenden?</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="362"/>
+        <location filename="../../mainwindow.cpp" line="363"/>
         <source>Hide</source>
         <translation>Minimieren</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="362"/>
+        <location filename="../../mainwindow.cpp" line="363"/>
         <source>Show</source>
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="362"/>
+        <location filename="../../mainwindow.cpp" line="363"/>
         <source>Exit</source>
         <translation>Ende</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="456"/>
+        <location filename="../../mainwindow.cpp" line="461"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="458"/>
+        <location filename="../../mainwindow.cpp" line="463"/>
         <source>Tools</source>
         <translation>Tools</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="459"/>
+        <location filename="../../mainwindow.cpp" line="464"/>
         <source>View</source>
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="460"/>
+        <location filename="../../mainwindow.cpp" line="465"/>
         <source>Preferences</source>
         <translation>Systemeinstellungen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="463"/>
+        <location filename="../../mainwindow.cpp" line="468"/>
         <source>Add files</source>
         <translation>Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="464"/>
+        <location filename="../../mainwindow.cpp" line="469"/>
         <source>Remove from the list</source>
         <translation>Aus der Liste entfernen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="465"/>
+        <location filename="../../mainwindow.cpp" line="470"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="474"/>
+        <location filename="../../mainwindow.cpp" line="479"/>
         <source>Encode/Pause</source>
         <translation>Kodieren/Pause</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="475"/>
-        <location filename="../../mainwindow.cpp" line="1550"/>
+        <location filename="../../mainwindow.cpp" line="480"/>
+        <location filename="../../mainwindow.cpp" line="1562"/>
         <source>Stop</source>
         <translation>Anhalten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="481"/>
+        <location filename="../../mainwindow.cpp" line="486"/>
         <source>Edit metadata</source>
         <translation>Metadaten bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="482"/>
+        <location filename="../../mainwindow.cpp" line="487"/>
         <source>Select audio streams</source>
         <translation>Audio-Streams auswählen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="483"/>
+        <location filename="../../mainwindow.cpp" line="488"/>
         <source>Select subtitles</source>
         <translation>Untertitel auswählen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="484"/>
+        <location filename="../../mainwindow.cpp" line="489"/>
         <source>Split video</source>
         <translation>Video aufteilen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="502"/>
+        <location filename="../../mainwindow.cpp" line="507"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="496"/>
+        <location filename="../../mainwindow.cpp" line="2744"/>
+        <source>Task completed!
+</source>
+        <translation>Aufgabe erledigt!
+</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="501"/>
         <source>Reset state</source>
         <translation>Zustand zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="461"/>
-        <location filename="../../mainwindow.cpp" line="506"/>
+        <location filename="../../mainwindow.cpp" line="466"/>
+        <location filename="../../mainwindow.cpp" line="511"/>
         <source>About</source>
         <translation>Über das Programm</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="507"/>
+        <location filename="../../mainwindow.cpp" line="512"/>
         <source>Donate</source>
         <translation>Spenden</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="532"/>
+        <location filename="../../mainwindow.cpp" line="537"/>
         <source>Add to task</source>
         <translation>Zur Aufgabe hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="539"/>
-        <location filename="../../mainwindow.cpp" line="570"/>
+        <location filename="../../mainwindow.cpp" line="544"/>
+        <location filename="../../mainwindow.cpp" line="575"/>
         <source>Add section</source>
         <translation>Abschnitt hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="540"/>
+        <location filename="../../mainwindow.cpp" line="545"/>
         <source>Add preset</source>
         <translation>Voreinstellung hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="541"/>
+        <location filename="../../mainwindow.cpp" line="546"/>
         <source>Rename</source>
         <translation>Umbenennen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="542"/>
+        <location filename="../../mainwindow.cpp" line="547"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="543"/>
+        <location filename="../../mainwindow.cpp" line="548"/>
         <source>Apply</source>
         <translation>Übernehmen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="457"/>
-        <location filename="../../mainwindow.cpp" line="544"/>
+        <location filename="../../mainwindow.cpp" line="462"/>
+        <location filename="../../mainwindow.cpp" line="549"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="571"/>
+        <location filename="../../mainwindow.cpp" line="576"/>
         <source>Add new preset</source>
         <translation>Neues Preset hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="643"/>
+        <location filename="../../mainwindow.cpp" line="648"/>
         <source>Folders</source>
         <translation>Mappen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="655"/>
+        <location filename="../../mainwindow.cpp" line="660"/>
         <source>Files</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="959"/>
+        <location filename="../../mainwindow.cpp" line="964"/>
         <source>ABOUT</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="965"/>
+        <location filename="../../mainwindow.cpp" line="970"/>
         <source>DONATE</source>
         <translation>Spenden</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="993"/>
+        <location filename="../../mainwindow.cpp" line="998"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>Sie müssen das Programm neu starten, damit die Einstellungen wirksam werden.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1124"/>
+        <location filename="../../mainwindow.cpp" line="1129"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1139"/>
+        <location filename="../../mainwindow.cpp" line="1144"/>
         <source>Subtitle</source>
         <translation>Untertitel</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1610"/>
-        <location filename="../../mainwindow.cpp" line="2161"/>
+        <location filename="../../mainwindow.cpp" line="1622"/>
+        <location filename="../../mainwindow.cpp" line="2173"/>
         <source>Open Files</source>
         <translation>Dateien öffnen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1144"/>
+        <location filename="../../mainwindow.cpp" line="1149"/>
         <source>Undefined</source>
         <translation>Undefiniert</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1274"/>
+        <location filename="../../mainwindow.cpp" line="1279"/>
         <source>Encode</source>
         <translation>Codieren</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1487"/>
-        <location filename="../../mainwindow.cpp" line="1588"/>
+        <location filename="../../mainwindow.cpp" line="1499"/>
+        <location filename="../../mainwindow.cpp" line="1600"/>
         <source>Encoding</source>
         <translation>Encoding</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1521"/>
+        <location filename="../../mainwindow.cpp" line="1533"/>
         <source>Done!</source>
         <translation>Fertig!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1517"/>
+        <location filename="../../mainwindow.cpp" line="1529"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -434,136 +466,136 @@ Möglicheweise mkvtoolnix nicht installiert.
 Verstrichene Zeit:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="167"/>
+        <location filename="../../mainwindow.cpp" line="168"/>
         <source>No subtitles</source>
         <translation>Keine Untertitel</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1119"/>
+        <location filename="../../mainwindow.cpp" line="1124"/>
         <source>bit</source>
         <translation>bit</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1122"/>
+        <location filename="../../mainwindow.cpp" line="1127"/>
         <source>kbps</source>
         <translation>kbps</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1132"/>
+        <location filename="../../mainwindow.cpp" line="1137"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1553"/>
+        <location filename="../../mainwindow.cpp" line="1565"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>Der aktuelle Kodierungsprozess wurde abgebrochen!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1562"/>
+        <location filename="../../mainwindow.cpp" line="1574"/>
         <source>Error!</source>
         <translation>Fehler!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1564"/>
+        <location filename="../../mainwindow.cpp" line="1576"/>
         <source>An error occurred: </source>
         <translation>Ein Fehler ist aufgetreten: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1565"/>
+        <location filename="../../mainwindow.cpp" line="1577"/>
         <source>Unexpected error occurred!</source>
         <translation>Unerwarteter Fehler aufgetreten!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1577"/>
-        <location filename="../../mainwindow.cpp" line="1598"/>
-        <location filename="../../mainwindow.cpp" line="1689"/>
+        <location filename="../../mainwindow.cpp" line="1589"/>
+        <location filename="../../mainwindow.cpp" line="1610"/>
+        <location filename="../../mainwindow.cpp" line="1701"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1660"/>
+        <location filename="../../mainwindow.cpp" line="1672"/>
         <source>Select input file first!</source>
         <translation>Wählen Sie zuerst die Eingabedatei!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1664"/>
+        <location filename="../../mainwindow.cpp" line="1676"/>
         <source>Select preset first!</source>
         <translation>Wählen Sie zuerst die Voreinstellungen!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1689"/>
+        <location filename="../../mainwindow.cpp" line="1701"/>
         <source>Resume</source>
         <translation>Fortsetzen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1699"/>
+        <location filename="../../mainwindow.cpp" line="1711"/>
         <source>Stop encoding?</source>
         <translation>Kodieren stoppen?</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1707"/>
+        <location filename="../../mainwindow.cpp" line="1719"/>
         <source>OPENING FILES</source>
         <translation>Öffne Dateien</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2116"/>
+        <location filename="../../mainwindow.cpp" line="2128"/>
         <source>Select output folder</source>
         <translation>Ausgabeordner auswählen</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2188"/>
+        <location filename="../../mainwindow.cpp" line="2200"/>
         <source>File: &apos;%1&apos; is not audio file!</source>
         <translation>Datei: %1 ist keine Audiodatei!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1861"/>
-        <location filename="../../mainwindow.cpp" line="2209"/>
+        <location filename="../../mainwindow.cpp" line="1873"/>
+        <location filename="../../mainwindow.cpp" line="2221"/>
         <source>File: &apos;%1&apos; cannot be opened!</source>
         <translation>Datei: %1 kann nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2204"/>
+        <location filename="../../mainwindow.cpp" line="2216"/>
         <source>File: &apos;%1&apos; is not subtitle file!</source>
         <translation>Datei: %1 ist keine Untertiteldatei!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2337"/>
-        <location filename="../../mainwindow.cpp" line="2348"/>
-        <location filename="../../mainwindow.cpp" line="2398"/>
-        <location filename="../../mainwindow.cpp" line="2431"/>
+        <location filename="../../mainwindow.cpp" line="2349"/>
+        <location filename="../../mainwindow.cpp" line="2360"/>
+        <location filename="../../mainwindow.cpp" line="2410"/>
+        <location filename="../../mainwindow.cpp" line="2443"/>
         <source>Select preset first!
 </source>
         <translation>Wählen Sie zuerst ein Preset!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2365"/>
+        <location filename="../../mainwindow.cpp" line="2377"/>
         <source>Delete?</source>
         <translation>Löschen?</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2390"/>
+        <location filename="../../mainwindow.cpp" line="2402"/>
         <source>Delete presets first!
 </source>
         <translation>Löschen Sie zuerst das Presets!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2454"/>
+        <location filename="../../mainwindow.cpp" line="2466"/>
         <source>First add a section!
 </source>
         <translation>Fügen Sie zuerst einen Abschnitt hinzu!
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2547"/>
+        <location filename="../../mainwindow.cpp" line="2559"/>
         <source>Preset not selected</source>
         <translation>Preset nicht ausgewählt</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2702"/>
+        <location filename="../../mainwindow.cpp" line="2714"/>
         <source>Task</source>
         <translation>Aufgabe</translation>
     </message>
@@ -1428,47 +1460,77 @@ hr { height: 1px; border-width: 0; }
 <context>
     <name>QStreamView</name>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="105"/>
+        <location filename="../../widgets/qstreamview.cpp" line="108"/>
         <source>Format</source>
         <translation>Formatierung</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="105"/>
+        <location filename="../../widgets/qstreamview.cpp" line="108"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="105"/>
+        <location filename="../../widgets/qstreamview.cpp" line="108"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="292"/>
+        <location filename="../../widgets/qstreamview.cpp" line="247"/>
+        <source>Collapse</source>
+        <translation>Zusammenbruch</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="247"/>
+        <source>Expand</source>
+        <translation>Erweitern</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="248"/>
+        <source>Uncheck</source>
+        <translation>Deaktivieren</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="248"/>
+        <source>Check</source>
+        <translation>Prüfen</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="249"/>
+        <source>Set as default track</source>
+        <translation>Als Standard einstellen</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="266"/>
+        <source>Extract track</source>
+        <translation>Spur extrahieren</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="361"/>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="309"/>
+        <location filename="../../widgets/qstreamview.cpp" line="378"/>
         <source>external</source>
         <translation>extern</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="312"/>
+        <location filename="../../widgets/qstreamview.cpp" line="381"/>
         <source>unsupported</source>
         <translation>nicht unterstützt</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="328"/>
+        <location filename="../../widgets/qstreamview.cpp" line="397"/>
         <source>Duration</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="347"/>
+        <location filename="../../widgets/qstreamview.cpp" line="416"/>
         <source>Channels</source>
         <translation>Kanäle</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="356"/>
+        <location filename="../../widgets/qstreamview.cpp" line="425"/>
         <source>Path</source>
         <translation>Pfade</translation>
     </message>
@@ -1716,6 +1778,243 @@ hr { height: 1px; border-width: 0; }
         <source>APPLY</source>
         <oldsource>Apply</oldsource>
         <translation>Übernehmen</translation>
+    </message>
+</context>
+<context>
+    <name>StreamConverter</name>
+    <message>
+        <location filename="../../streamconverter.ui" line="20"/>
+        <source>STREAM  CONVERTER</source>
+        <translation>STREAM-KONVERTER</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="155"/>
+        <source>Progress:</source>
+        <translation>Fortschritt:</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="284"/>
+        <location filename="../../streamconverter.ui" line="2633"/>
+        <source>Remaining:</source>
+        <translation>Verbleibend:</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="465"/>
+        <source>Stop</source>
+        <translation>Anhalten</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="587"/>
+        <source>Tasks</source>
+        <translation>Aufgaben</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="634"/>
+        <source>Remove from the list</source>
+        <translation>Aus der Liste entfernen</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="742"/>
+        <source>Add files</source>
+        <translation>Dateien hinzufügen</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="935"/>
+        <source>File name</source>
+        <translation>Dateinamen</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="940"/>
+        <source>Format</source>
+        <translation>Format</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="945"/>
+        <source>Duration</source>
+        <translation>Dauer</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="950"/>
+        <source>Status</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="955"/>
+        <source>Bit depth</source>
+        <translation>Bit-Tiefe</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="960"/>
+        <source>Sampling rate</source>
+        <translation>Abtastrate</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="965"/>
+        <source>Path</source>
+        <translation>Weg</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="991"/>
+        <source>Sort Z-A</source>
+        <translation>Sortierung Z-A</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1035"/>
+        <source>Encode</source>
+        <translation>Codieren</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1117"/>
+        <source>Sort A-Z</source>
+        <translation>Sortierung A-Z</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1212"/>
+        <source>Mode</source>
+        <translation>Modus</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1216"/>
+        <source>Single Mode</source>
+        <translation>Einzel-Modus</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1221"/>
+        <source>Batch Mode</source>
+        <translation>Batchmodus</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1481"/>
+        <source>Export</source>
+        <translation>Export</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1544"/>
+        <source>Reset</source>
+        <translation>Zurücksetzen</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1737"/>
+        <location filename="../../streamconverter.ui" line="1894"/>
+        <location filename="../../streamconverter.ui" line="1936"/>
+        <location filename="../../streamconverter.ui" line="2073"/>
+        <location filename="../../streamconverter.ui" line="2297"/>
+        <location filename="../../streamconverter.cpp" line="225"/>
+        <location filename="../../streamconverter.cpp" line="283"/>
+        <location filename="../../streamconverter.cpp" line="284"/>
+        <location filename="../../streamconverter.cpp" line="346"/>
+        <source>Source</source>
+        <translation>Quelle</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="1815"/>
+        <location filename="../../streamconverter.ui" line="2374"/>
+        <source>Codec</source>
+        <translation>Codec</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2012"/>
+        <source>Sample rate</source>
+        <translation> Abtastrate</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2037"/>
+        <source>Bitrate</source>
+        <translation>Bitrate</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2078"/>
+        <location filename="../../streamconverter.cpp" line="225"/>
+        <source>trim to 1 ch</source>
+        <translation>Trimmen auf 1-Kanal</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2083"/>
+        <location filename="../../streamconverter.cpp" line="225"/>
+        <source>trim to 2 ch</source>
+        <translation>Trimmen auf 2-Kanal</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2100"/>
+        <source>Channels</source>
+        <translation>Kanäle</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2131"/>
+        <location filename="../../streamconverter.ui" line="2416"/>
+        <source>Container</source>
+        <translation>Container</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="2906"/>
+        <source>Stream  Converter</source>
+        <translation>Stream-Konverter</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="3032"/>
+        <source>STOP</source>
+        <translation>STOP</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="3060"/>
+        <source>PAUSE</source>
+        <translation>PAUSE</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.ui" line="3091"/>
+        <source>EXPORT</source>
+        <translation>EXPORT</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="56"/>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="56"/>
+        <location filename="../../streamconverter.cpp" line="57"/>
+        <source>Converter</source>
+        <translation>Konverter</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="57"/>
+        <source>Subtitle</source>
+        <translation>Untertitel</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="67"/>
+        <location filename="../../streamconverter.cpp" line="68"/>
+        <location filename="../../streamconverter.cpp" line="90"/>
+        <source>Pause</source>
+        <translation>Pause</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="90"/>
+        <source>Resume</source>
+        <translation>Fortsetzen</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="134"/>
+        <location filename="../../streamconverter.cpp" line="384"/>
+        <source>Stop encoding?</source>
+        <translation>Kodieren stoppen?</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="320"/>
+        <location filename="../../streamconverter.cpp" line="325"/>
+        <location filename="../../streamconverter.cpp" line="330"/>
+        <source>Auto</source>
+        <translation>Auto</translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="438"/>
+        <source>An error occurred: </source>
+        <translation>Ein Fehler ist aufgetreten: </translation>
+    </message>
+    <message>
+        <location filename="../../streamconverter.cpp" line="439"/>
+        <source>Unexpected error occurred!</source>
+        <translation>Unerwarteter Fehler aufgetreten!</translation>
     </message>
 </context>
 <context>
@@ -2000,7 +2299,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="195"/>
         <location filename="../../tables.h" line="196"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="393"/>
+        <location filename="../../tables.h" line="406"/>
         <source>Ultrafast</source>
         <translation>Ultra-Schnell</translation>
     </message>
@@ -2010,7 +2309,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="195"/>
         <location filename="../../tables.h" line="196"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="394"/>
+        <location filename="../../tables.h" line="407"/>
         <source>Superfast</source>
         <translation>Super-Schnell</translation>
     </message>
@@ -2025,7 +2324,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="395"/>
+        <location filename="../../tables.h" line="408"/>
         <source>Veryfast</source>
         <translation>Sehr schnell</translation>
     </message>
@@ -2040,7 +2339,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="396"/>
+        <location filename="../../tables.h" line="409"/>
         <source>Faster</source>
         <translation>Schneller</translation>
     </message>
@@ -2055,7 +2354,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="397"/>
+        <location filename="../../tables.h" line="410"/>
         <source>Fast</source>
         <translation>Schnell</translation>
     </message>
@@ -2070,7 +2369,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="398"/>
+        <location filename="../../tables.h" line="411"/>
         <source>Medium</source>
         <translation>Mittelmäßig</translation>
     </message>
@@ -2088,7 +2387,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="207"/>
         <location filename="../../tables.h" line="208"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="399"/>
+        <location filename="../../tables.h" line="412"/>
         <source>Slow</source>
         <translation>Langsam</translation>
     </message>
@@ -2103,7 +2402,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="400"/>
+        <location filename="../../tables.h" line="413"/>
         <source>Slower</source>
         <translation>Langsamer</translation>
     </message>
@@ -2118,7 +2417,7 @@ hr { height: 1px; border-width: 0; }
         <location filename="../../tables.h" line="204"/>
         <location filename="../../tables.h" line="205"/>
         <location filename="../../tables.h" line="221"/>
-        <location filename="../../tables.h" line="401"/>
+        <location filename="../../tables.h" line="414"/>
         <source>Veryslow</source>
         <translation>Sehr langsam</translation>
     </message>
@@ -2154,27 +2453,27 @@ hr { height: 1px; border-width: 0; }
         <translation>2-fach Optimierung</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="481"/>
+        <location filename="../../tables.h" line="494"/>
         <source>Constant Bitrate</source>
         <translation>Konstante Bitrate</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="482"/>
+        <location filename="../../tables.h" line="495"/>
         <source>Average Bitrate</source>
         <translation>Durchschnittliche Bitrate</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="483"/>
+        <location filename="../../tables.h" line="496"/>
         <source>Variable Bitrate</source>
         <translation>Variable Bitrate</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="484"/>
+        <location filename="../../tables.h" line="497"/>
         <source>Constant Rate Factor</source>
         <translation>Faktor mit konstanter Rate</translation>
     </message>
     <message>
-        <location filename="../../tables.h" line="485"/>
+        <location filename="../../tables.h" line="498"/>
         <source>Constant QP</source>
         <translation>Konstante QP</translation>
     </message>
