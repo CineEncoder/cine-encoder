@@ -1271,6 +1271,7 @@ void MainWindow::setWidgetsEnabled(bool state)    // Set widgets states
 
     ui->resetLabels->setEnabled(state);
     ui->settings->setEnabled(state);
+    ui->filesWidget->setEnabled(state);
 
     if (state) {
         m_status_encode_btn = EncodingStatus::START;
