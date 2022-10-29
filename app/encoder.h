@@ -71,8 +71,7 @@ public:
 private:
     bool    _flag_two_pass,
             _flag_hdr,
-            _mux_mode,
-            _calling_pr_1;
+            _mux_mode;
 
     int     *fr_count;
 
@@ -99,9 +98,8 @@ private slots:
     void add_metadata();
     void progress_1();
     void progress_2();
-    void completed();
+    void completed(int);
     void abort();
-    void error();    
 };
 
 #endif // ENCODER_H
