@@ -29,10 +29,10 @@ int checkForDuplicates();
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_UNIX
+    qputenv("LC_ALL", "en_US.UTF8");
     qputenv("QT_QPA_PLATFORM", "xcb");
     qputenv("QT_LOGGING_RULES", "*.debug=false;qt.qpa.*=false");
 #endif
-    setlocale(LC_ALL, "");
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName(QString::fromUtf8("CineEncoder"));
     QCoreApplication::setApplicationName(QString::fromUtf8("Cine Encoder"));
