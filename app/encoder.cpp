@@ -877,7 +877,6 @@ void Encoder::encode()   // Encode
 {
     Print("Encode ...");
     QStringList arguments;
-    //_calling_pr_1 = true;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
@@ -965,22 +964,6 @@ void Encoder::progress_1()   // Progress
     const QString line_mod = line.replace("   ", " ").replace("  ", " ").replace("  ", " ").replace("= ", "=");
     emit onEncodingLog(line_mod);
     _error_message = line_mod;
-    /*const int pos_err_1 = line_mod6.indexOf("[error]:");
-    const int pos_err_2 = line_mod6.indexOf("Error");
-    const int pos_err_3 = line_mod6.indexOf(" @ ");
-    if (pos_err_1 != -1) {
-        const QStringList error = line_mod6.split(":");
-        if (error.size() >= 2)
-            _error_message = error[1];
-    }
-    if (pos_err_2 != -1) {
-        _error_message = line_mod6;
-    }
-    if (pos_err_3 != -1) {
-        const QStringList error = line_mod6.split("]");
-        if (error.size() >= 2)
-            _error_message = error[1];
-    }*/
     const int pos_st = line_mod.indexOf("frame=");
     if (pos_st == 0) {
         QStringList data = line_mod.split(" ");
@@ -1002,27 +985,6 @@ void Encoder::progress_1()   // Progress
         if (percent_int > 100)
             percent_int = 100;
         emit onEncodingProgress(percent_int, rem_time);
-
-        /*if ((percent_int >= 95) && _calling_pr_1) {
-             disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(error()));
-             if (_mux_mode) {
-                 connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed()));
-             } else {
-                 if (!_flag_two_pass && _flag_hdr) {
-                     disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(add_metadata()));
-                 } else
-                 if (!_flag_two_pass && !_flag_hdr) {
-                     disconnect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed()));
-                 } else
-                 if (_flag_two_pass) {
-                     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(encode()));
-                     _flag_two_pass = false;
-                 }
-             }
-             _calling_pr_1 = false;
-        }*/
     }
 }
 
