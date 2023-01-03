@@ -33,12 +33,13 @@ int main(int argc, char *argv[])
     qputenv("QT_QPA_PLATFORM", "xcb");
     qputenv("QT_LOGGING_RULES", "*.debug=false;qt.qpa.*=false");
 #endif
-    QApplication app(argc, argv);
+    QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);    
+    QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
     QCoreApplication::setOrganizationName(QString::fromUtf8("CineEncoder"));
     QCoreApplication::setApplicationName(QString::fromUtf8("Cine Encoder"));
-    QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    QApplication::setApplicationDisplayName("Cine Encoder");
+    QApplication app(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));
     const QString sysLang = Helper::getSysLanguage();
     /*const int id = QFontDatabase::addApplicationFont(":/resources/fonts/interregular.otf");
