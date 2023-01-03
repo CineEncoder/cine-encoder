@@ -2,6 +2,8 @@
 #include <QLocale>
 #include <QFileDialog>
 #include <QFontMetrics>
+#include <QEventLoop>
+#include <QTimer>
 #include <iostream>
 #include <math.h>
 #if defined (Q_OS_UNIX)
@@ -226,4 +228,11 @@ bool Helper::isSupported(const QString &format)
         "PGS"
     };
     return unspFormats.indexOf(format) == -1 ? true: false;
+}
+
+void Helper::nonBlockDelay(int msec)
+{
+    QEventLoop loop;
+    QTimer::singleShot(msec, &loop, SLOT(quit()));
+    loop.exec();
 }

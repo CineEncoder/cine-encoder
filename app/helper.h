@@ -39,6 +39,7 @@ public:
     static void eraseRow(QVector<T> &v, const int row);
     template<class T>
     static void reorder(QVector<T> &v, QVector<int> const &order);
+    static void nonBlockDelay(int msec);
 
 private:
     static DesktopEnv m_desktopEnv;

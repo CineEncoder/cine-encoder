@@ -1732,7 +1732,6 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
             }
             prg.setText(inputFile);
             prg.setPercent(0);
-            QApplication::processEvents();
             const int numRows = ui->tableWidget->rowCount();
             ui->tableWidget->setRowCount(numRows + 1);
             QString fmt_qstr = VINFO(0, "Format");
@@ -1860,16 +1859,9 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
             }
             MI.Close();
             prg.setPercent(50);
-            QApplication::processEvents();
             ui->tableWidget->selectRow(ui->tableWidget->rowCount() - 1);
-            QApplication::processEvents();
             prg.setPercent(100);
-            QApplication::processEvents();
-    #if defined (Q_OS_UNIX)
-            usleep(50000);
-    #elif defined (Q_OS_WIN64)
-            Sleep(50);
-    #endif
+            Helper::nonBlockDelay(50);
         } else {
             showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(inputFile));
         }
