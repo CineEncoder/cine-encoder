@@ -1,4 +1,6 @@
 #include "helper.h"
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QLocale>
 #include <QFileDialog>
 #include <QFontMetrics>
@@ -235,4 +237,9 @@ void Helper::nonBlockDelay(int msec)
     QEventLoop loop;
     QTimer::singleShot(msec, &loop, SLOT(quit()));
     loop.exec();
+}
+
+int Helper::getLogicalDpi()
+{
+    return qApp->desktop()->logicalDpiX() / 96;
 }
