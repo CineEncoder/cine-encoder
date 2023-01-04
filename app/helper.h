@@ -40,7 +40,7 @@ public:
     template<class T>
     static void reorder(QVector<T> &v, QVector<int> const &order);
     static void nonBlockDelay(int msec);
-    static int getLogicalDpi();
+    static int scaling();
 
 private:
     static DesktopEnv m_desktopEnv;

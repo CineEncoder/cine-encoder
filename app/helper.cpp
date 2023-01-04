@@ -239,7 +239,7 @@ void Helper::nonBlockDelay(int msec)
     loop.exec();
 }
 
-int Helper::getLogicalDpi()
+int Helper::scaling()
 {
     return qApp->desktop()->logicalDpiX() / 96;
 }

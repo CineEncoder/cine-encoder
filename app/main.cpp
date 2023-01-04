@@ -75,9 +75,9 @@ int main(int argc, char *argv[])
     app.setFont(fnt);
 
     /******************* Set Splash *******************************/
-    const int dpi = Helper::getLogicalDpi();
     const QPixmap pixmap(":/resources/images/splash.png");
-    const QPixmap scaled = pixmap.scaled(pixmap.size() * dpi, Qt::KeepAspectRatio, Qt::FastTransformation);
+    const QPixmap scaled = pixmap.scaled(pixmap.size() * Helper::scaling(),
+                                         Qt::KeepAspectRatio, Qt::FastTransformation);
     QSplashScreen *splash = new QSplashScreen(scaled);
     splash->show();
     app.processEvents();
