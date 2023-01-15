@@ -12,6 +12,7 @@
 
 #include "popupmessage.h"
 #include "ui_popupmessage.h"
+#include "helper.h"
 #include <QPropertyAnimation>
 #include <QGraphicsOpacityEffect>
 #include <QLayout>
@@ -19,7 +20,7 @@
 #include <QPushButton>
 #include <QTimer>
 
-#define OFFSET QPoint(374, -20)
+#define OFFSET (QPoint(374, -20) * Helper::scaling())
 
 
 PopupMessage::PopupMessage(QWidget *parent, Icon icon, const QString &text) :
@@ -37,15 +38,18 @@ PopupMessage::PopupMessage(QWidget *parent, Icon icon, const QString &text) :
     ui_widget->setAutoFillBackground(true);
 
     QPixmap pxm(":/resources/icons/svg/popup.svg");
-    ui->imageLabel->setPixmap(pxm.scaled(ui_widget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    ui->imageLabel->setPixmap(pxm.scaled(ui_widget->size() * Helper::scaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     QGridLayout *lt = new QGridLayout(ui->imageLabel);
-    lt->setContentsMargins(12, 34, 6, 6);
-    lt->setSpacing(6);
+    lt->setContentsMargins(12 * Helper::scaling(),
+                           34 * Helper::scaling(),
+                           6 * Helper::scaling(),
+                           6 * Helper::scaling());
+    lt->setSpacing(6 * Helper::scaling());
     ui->imageLabel->setLayout(lt);
 
     QLabel *lab = new QLabel(ui->imageLabel);
     lab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    lab->setFixedSize(QSize(30, 30));
+    lab->setFixedSize(QSize(30, 30)* Helper::scaling());
 
     QString iconPath(":/resources/icons/svg/info.svg");
     switch (icon) {
@@ -59,7 +63,7 @@ PopupMessage::PopupMessage(QWidget *parent, Icon icon, const QString &text) :
         break;
     }
     QPixmap logo(iconPath);
-    lab->setPixmap(logo.scaled(QSize(30,30), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    lab->setPixmap(logo.scaled(QSize(30,30) * Helper::scaling(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     lt->addWidget(lab, 0, 0, Qt::AlignTop);
 
     QTextBrowser *br = new QTextBrowser(ui->imageLabel);

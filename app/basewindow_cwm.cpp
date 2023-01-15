@@ -12,13 +12,14 @@
 
 #include "basewindow_cwm.h"
 #include "qboxlayout.h"
+#include "helper.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include <QIcon>
 #include <QTimer>
 #include <QGraphicsDropShadowEffect>
 
-#define BORDER 15
+#define BORDER int(15 * Helper::scaling())
 
 
 BaseWindow::BaseWindow(QWidget *parent, bool isReizable) :

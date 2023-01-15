@@ -7,7 +7,7 @@
    viewBox="0 0 200 200"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="restore.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,15 +23,17 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.56123738"
-     inkscape:cx="220.04949"
-     inkscape:cy="528.29696"
+     inkscape:zoom="0.070154673"
+     inkscape:cx="-1867.3026"
+     inkscape:cy="2508.7424"
      inkscape:window-width="1920"
-     inkscape:window-height="1019"
+     inkscape:window-height="1017"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2" />
   <g
@@ -40,7 +42,7 @@
      id="layer1">
     <path
        id="rect896"
-       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#ffffff;stroke-width:14.6187;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
-       d="m 40.51097,40.170964 h 118.84945 c 0.81359,0 1.46858,0.662543 1.46858,1.485522 V 160.47203 c 0,0.82297 -0.65499,1.48552 -1.46858,1.48552 H 40.51097 c -0.813587,0 -1.46857,-0.66255 -1.46857,-1.48552 V 41.656486 c 0,-0.822979 0.654983,-1.485522 1.46857,-1.485522 z" />
+       style="fill:none;fill-opacity:0.992361;fill-rule:evenodd;stroke:#ffffff;stroke-width:11.7888;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 52.37875,51.1944 h 95.84248 c 0.65613,0 1.18435,0.534287 1.18435,1.197955 v 95.815275 c 0,0.66367 -0.52822,1.19796 -1.18435,1.19796 H 52.37875 c -0.656126,0 -1.18435,-0.53429 -1.18435,-1.19796 V 52.392355 c 0,-0.663668 0.528224,-1.197955 1.18435,-1.197955 z" />
   </g>
 </svg>

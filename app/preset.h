@@ -34,7 +34,7 @@ class Preset : public BaseWindow
 {
     Q_OBJECT
 public:
-    explicit Preset(QWidget *parent, QVector<QString> *pOld_param);
+    explicit Preset(QWidget *parent, QVector<QString> *pOld_param, int theme);
     ~Preset();
 
 private:
@@ -68,7 +68,8 @@ private:
     Ui::Preset *ui;
     QVector<QString> *m_pNew_param;
     float m_aspectRatio;
-    int   m_repeat;
+    int   m_repeat,
+          m_theme;
     bool  m_windowActivated;
 };
 

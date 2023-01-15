@@ -37,7 +37,7 @@ namespace QStreamViewPrivate {
         line->setEnabled(true);
         line->setText(text);
         line->setCursorPosition(0);
-        line->setFixedHeight(ROW_HEIGHT);
+        line->setFixedHeight(ROW_HEIGHT * Helper::scaling());
         QObject::connect(line, &QLineEdit::editingFinished, [line, &text]() {
             if (line->isModified()) {
                 line->setModified(false);
@@ -73,7 +73,7 @@ QStreamView::QStreamView(QWidget *parent) :
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_pLayout = new QVBoxLayout(this);
     m_pLayout->setContentsMargins(0,0,0,0);
-    m_pLayout->setSpacing(1);
+    m_pLayout->setSpacing(1 * Helper::scaling());
     m_pLayout->setSizeConstraint(QLayout::SetMinimumSize);
     setLayout(m_pLayout);
 }
@@ -117,8 +117,8 @@ void QStreamView::setList(Data &data)
     fnt.setItalic(true);
     fnt.setBold(true);
     hw->setFont(fnt);
-    hw->setDefaultSectionSize(132);
-    hw->setFixedHeight(28);
+    hw->setDefaultSectionSize(132 * Helper::scaling());
+    hw->setFixedHeight(28 * Helper::scaling());
     hw->setModel(model);
     hw->setSectionResizeMode(0, QHeaderView::Fixed);
     hw->setSectionResizeMode(1, QHeaderView::Stretch);
@@ -348,16 +348,16 @@ QWidget *QStreamView::createCell(bool &state,
     cell->setProperty("Number", m_pLayout->count() - 1);
     cell->setProperty("External", externFlag);
     cell->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    cell->setMinimumHeight(46);
+    cell->setMinimumHeight(46 * Helper::scaling());
     QGridLayout *lut = new QGridLayout(cell);
     lut->setContentsMargins(6,2,6,4);
-    lut->setHorizontalSpacing(6);
-    lut->setVerticalSpacing(4);
+    lut->setHorizontalSpacing(6 * Helper::scaling());
+    lut->setVerticalSpacing(4 * Helper::scaling());
     cell->setLayout(lut);
 
     QRadioButton *rbtn = new QRadioButton(cell);
     rbtn->setChecked(deflt);
-    rbtn->setFixedSize(QSize(12,12));
+    rbtn->setFixedSize(QSize(12,12) * Helper::scaling());
     rbtn->setToolTip(tr("Default"));
     connect(rbtn, &QRadioButton::clicked, this, [this, cell, rbtn, &deflt]() {
         resetDefFlags(m_pLayout->indexOf(cell));
@@ -371,8 +371,8 @@ QWidget *QStreamView::createCell(bool &state,
     QLabel *tit = QStreamViewPrivate::createLabel(cell, "extAudioLabel", "");
     tit->setFont(fnt);
     tit->setEnabled(false);
-    tit->setMinimumSize(QSize(0, 12));
-    tit->setMaximumSize(QSize(150, 12));
+    tit->setMinimumSize(QSize(0, 12) * Helper::scaling());
+    tit->setMaximumSize(QSize(150, 12) * Helper::scaling());
     lut->addWidget(tit, 0, 1, 1, 2, Qt::AlignLeft);
     if (externFlag)
         tit->setText(tr("external") + " ");
@@ -387,8 +387,8 @@ QWidget *QStreamView::createCell(bool &state,
     lut->addWidget(info, 2, 0, 3, 0);
     QGridLayout *infoLut = new QGridLayout(info);
     infoLut->setContentsMargins(6,6,6,6);
-    infoLut->setHorizontalSpacing(6);
-    infoLut->setVerticalSpacing(2);
+    infoLut->setHorizontalSpacing(6 * Helper::scaling());
+    infoLut->setVerticalSpacing(2 * Helper::scaling());
     info->setLayout(infoLut);
 
     double duration_double = 0.001 * dur.toDouble();
@@ -397,7 +397,7 @@ QWidget *QStreamView::createCell(bool &state,
                                                     QString("%1: %2").arg(tr("Duration"),
                                                                           durationTime));
     labDuration->setEnabled(true);
-    labDuration->setFixedHeight(ROW_HEIGHT);
+    labDuration->setFixedHeight(ROW_HEIGHT * Helper::scaling());
     infoLut->addWidget(labDuration, 0, 0);
 
     // Label channels
@@ -416,7 +416,7 @@ QWidget *QStreamView::createCell(bool &state,
                                                         .arg(tr("Channels"),
                                                              Helper::recalcChannels(channels)));
         labCh->setEnabled(true);
-        labCh->setFixedHeight(ROW_HEIGHT);
+        labCh->setFixedHeight(ROW_HEIGHT * Helper::scaling());
         infoLut->addWidget(labCh, 0, 1);
     }
 
@@ -424,7 +424,7 @@ QWidget *QStreamView::createCell(bool &state,
         QLabel *labPath = QStreamViewPrivate::createLabel(info, "labelPath",
                                                           QString("%1: %2").arg(tr("Path"), path));
         labPath->setEnabled(true);
-        labPath->setFixedHeight(ROW_HEIGHT);
+        labPath->setFixedHeight(ROW_HEIGHT * Helper::scaling());
         infoLut->addWidget(labPath, 1, 0, 1, 2);
     }
 
@@ -434,15 +434,15 @@ QWidget *QStreamView::createCell(bool &state,
     // Button
     QPushButton *btn = new QPushButton(cell);
     btn->setObjectName(QString::fromUtf8("audioExpandBtn"));
-    btn->setFixedSize(QSize(12, 12));
+    btn->setFixedSize(QSize(12, 12) * Helper::scaling());
     connect(btn, &QPushButton::clicked, this, [cell, btn, info]() {
-        if (cell->minimumHeight() == 46) {
-            QStreamViewPrivate::onRowResize(cell, 46, 120);
+        if (cell->minimumHeight() == 46 * Helper::scaling()) {
+            QStreamViewPrivate::onRowResize(cell, 46 * Helper::scaling(), 120 * Helper::scaling());
             btn->setProperty("expanded", true);
             btn->style()->polish(btn);
             info->show();
         } else {
-            QStreamViewPrivate::onRowResize(cell, 120, 46);
+            QStreamViewPrivate::onRowResize(cell, 120 * Helper::scaling(), 46 * Helper::scaling());
             btn->setProperty("expanded", false);
             btn->style()->polish(btn);
             info->hide();
@@ -455,14 +455,14 @@ QWidget *QStreamView::createCell(bool &state,
                                                   QString::number(m_pLayout->count()) + ".");
     num->setFont(fnt);
     num->setEnabled(false);
-    num->setMinimumWidth(14);
+    num->setMinimumWidth(14 * Helper::scaling());
     lut->addWidget(num, 1, 0, Qt::AlignLeft);
 
     // Check
     QCheckBox *chkBox = new QCheckBox(cell);
     chkBox->setObjectName(QString::fromUtf8("checkBox"));
     chkBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    chkBox->setFixedWidth(100);
+    chkBox->setFixedWidth(100 * Helper::scaling());
     chkBox->setText(format);
     chkBox->setEnabled(true);
     chkBox->setChecked(state);
@@ -479,7 +479,7 @@ QWidget *QStreamView::createCell(bool &state,
 
     // Lang
     QLineEdit *line = QStreamViewPrivate::createLine(cell, "lineLang", lang);
-    line->setMaximumWidth(30);
+    line->setMaximumWidth(30 * Helper::scaling());
     connectAction(line, true);
     lut->addWidget(line, 1, 3);
 

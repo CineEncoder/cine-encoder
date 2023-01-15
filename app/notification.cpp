@@ -12,8 +12,8 @@
 
 #include "notification.h"
 #include "ui_notification.h"
+#include "helper.h"
 #include <QDesktopServices>
-#include <QFile>
 
 
 Notification::Notification(QWidget *parent, MessConf mess_conf, const QString &title):
@@ -24,6 +24,7 @@ Notification::Notification(QWidget *parent, MessConf mess_conf, const QString &t
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
+    ui->frame_main->setProperty("scale", int(Helper::scaling() * 100));
     QFont font;
     font.setPointSize(10);
     ui->label_title->setFont(font);
@@ -32,7 +33,9 @@ Notification::Notification(QWidget *parent, MessConf mess_conf, const QString &t
     connect(ui->buttonCancel, &QPushButton::clicked, this, &Notification::onCloseWindow);
     if (m_mess_conf == MessConf::AllBtns) {
         connect(ui->buttonPayPal, &QPushButton::clicked, this, &Notification::onButtonPayPal);
-        connect(ui->buttonBitcoin, &QPushButton::clicked, this, &Notification::onButtonBitcoin);
+        //connect(ui->buttonBitcoin, &QPushButton::clicked, this, &Notification::onButtonBitcoin);
+        ui->buttonBitcoin->hide();
+        ui->buttonBitcoin->setFixedWidth(0);
     } else {
         ui->spacerPayPal->changeSize(0,0);
         ui->spacerBitcoin->changeSize(0,0);
@@ -50,14 +53,10 @@ Notification::~Notification()
 
 void Notification::setMessage()
 {
-    QString text("");
+
     QString fileName = (m_mess_conf == MessConf::AllBtns) ?
                 ":/resources/html/donate.html" : ":/resources/html/about.html";
-    QFile file(fileName);
-    if (file.open(QIODevice::ReadOnly)) {
-        text = QString(file.readAll());
-        file.close();
-    }
+    QString text(Helper::readFile(fileName));
     if (m_mess_conf == MessConf::AllBtns) {
         text = text.arg(tr("This software is free for personal and commercial use. "
                            "It is distributed in the hope that it is useful but without "
@@ -85,6 +84,7 @@ void Notification::showEvent(QShowEvent *event)
     BaseWindow::showEvent(event);
     if (!m_windowActivated) {
         m_windowActivated = true;
+        resize(QSize(369, 363) * Helper::scaling());
         QSizeF size(this->size());
         QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
         move(parentWidget()->geometry().center() - center);

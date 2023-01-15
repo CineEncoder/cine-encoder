@@ -30,6 +30,7 @@ Message::Message(QWidget *parent, MessType mess_type,
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
+    ui->frame_main->setProperty("scale", int(Helper::scaling() * 100));
     connect(ui->closeWindow, &QPushButton::clicked, this, &Message::onCloseWindow);
     connect(ui->buttonApply, &QPushButton::clicked, this, &Message::onButtonApply);
     Icon icon = Icon::Info;
@@ -53,7 +54,7 @@ Message::Message(QWidget *parent, MessType mess_type,
         break;
     }
     QPixmap logo(iconPath);
-    ui->label->setPixmap(logo.scaled(QSize(20, 20), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    ui->labelWindowIcon->setPixmap(logo.scaled(QSize(20, 20), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 Message::~Message()
@@ -76,6 +77,7 @@ void Message::showEvent(QShowEvent *event)
     BaseWindow::showEvent(event);
     if (!m_windowActivated) {
         m_windowActivated = true;
+        resize(QSize(330, 175) * Helper::scaling());
         QSizeF size(this->size());
         QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
         move(parentWidget()->geometry().center() - center);

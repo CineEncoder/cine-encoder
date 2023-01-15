@@ -58,6 +58,7 @@ private:
     void onCloseWindow();
     void onButtonApply();
     void onButtonReset();
+    void showEvent(QShowEvent*);
     virtual bool eventFilter(QObject*, QEvent*) final;
 
     void onButtonOutputPath();
@@ -85,7 +86,8 @@ private:
     bool    *m_pShowHdrFlag,
             *m_pProtectFlag,
             *m_pMultiInstances,
-            *m_pHideInTrayFlag;
+            *m_pHideInTrayFlag,
+            m_windowActivated;
 };
 
 #endif // SETTINGS_H
