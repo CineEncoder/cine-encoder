@@ -1844,6 +1844,9 @@ QPushButton:pressed#buttonPause {
 #switchCutting #rightButton {
     image: url(:/resources/icons/svg/not_shortest.svg);
 }
+QDoubleButton QPushButton {
+    min-height: 20px;
+}
 #frame_main[scale="200"] QDoubleButton {
     max-width: 100px;
     min-width: 100px;

@@ -1007,7 +1007,7 @@ void MainWindow::setFloating(const int index, const QPoint &offset, const QSize 
         m_pDocks[index]->setVisible(true);
     m_pDocks[index]->setFloating(true);
     m_pDocks[index]->move(this->geometry().center() + offset);
-    m_pDocks[index]->resize(size);
+    m_pDocks[index]->resize(size * Helper::scaling());
 }
 
 void MainWindow::showMetadataEditor()

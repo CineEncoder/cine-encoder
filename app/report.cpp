@@ -93,7 +93,7 @@ void Report::showEvent(QShowEvent *event)
     BaseDialog::showEvent(event);
     if (!m_activated) {
         m_activated = true;
-        setFixedSize(QSize(400, 280) * Helper::scaling());
+        resize(QSize(400, 280) * Helper::scaling());
         moveWidget();
     }
 }

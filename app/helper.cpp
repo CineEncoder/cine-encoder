@@ -250,7 +250,7 @@ void Helper::nonBlockDelay(int msec)
 
 double Helper::scaling()
 {
-    double scale = double(100 * qApp->desktop()->logicalDpiX()) / 96;
+    double scale = double(qApp->desktop()->logicalDpiX()) / 96;
     return (scale < 1.25) ? 1.00 :
            (scale < 1.50) ? 1.25 :
            (scale < 1.75) ? 1.50 :
