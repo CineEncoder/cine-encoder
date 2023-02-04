@@ -1888,8 +1888,6 @@ QRadioButton::indicator::checked {
 
 QProgressBar {
     width: 15px;
-    max-height: 40px;
-    min-height: 40px;
     border-top-left-radius: @elementsBorderRadius;
     border-top-right-radius: @elementsBorderRadius;
     border-bottom-left-radius: @elementsBorderRadius;
@@ -1900,6 +1898,8 @@ QProgressBar {
 }
 #frame_main[scale="200"] QProgressBar {
     width: 30px;
+    max-height: 40px;
+    min-height: 40px;
 }
 QProgressBar::chunk {
     border-top-left-radius: @elementsBorderRadius;
@@ -1950,6 +1950,8 @@ QProgressBar#progressBar_export {
     margin-bottom: 16px;
     margin-right: 72px;
     width: 30px;
+    max-height: 14px;
+    min-height: 0px;
     border-top-left-radius: 6;
     border-top-right-radius: 6;
     border-bottom-left-radius: 6;

@@ -30,8 +30,12 @@ public:
     void setText(const QString &text);
     void setPercent(const int percent);
 
+protected:
+    virtual void showEvent(QShowEvent*) final;
+
 private:
     Ui::Progress *ui;
+    bool m_windowActivated;
 };
 
 #endif // PROGRESS_H

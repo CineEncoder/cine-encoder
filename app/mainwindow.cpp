@@ -1855,8 +1855,8 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
             MI.Close();
             prg.setPercent(50);
             ui->tableWidget->selectRow(ui->tableWidget->rowCount() - 1);
-            prg.setPercent(100);
             Helper::nonBlockDelay(50);
+            prg.setPercent(100);
         } else {
             showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(inputFile));
         }
