@@ -14,6 +14,7 @@
 #include "ui_preset.h"
 #include "tables.h"
 #include "message.h"
+#include "helper.h"
 #include <QListView>
 #include <QMouseEvent>
 #include <QCloseEvent>
@@ -30,16 +31,18 @@ typedef void(Preset::*FnVoidStr)(const QString&);
 
 using namespace Constants;
 
-Preset::Preset(QWidget *parent, QVector<QString> *pOld_param):
+Preset::Preset(QWidget *parent, QVector<QString> *pOld_param, int theme):
     BaseWindow(parent, true),
     ui(new Ui::Preset),
     m_pNew_param(pOld_param),
     m_aspectRatio(0.0f),
     m_repeat(0),
+    m_theme(theme),
     m_windowActivated(false)
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
+    ui->frame_main->setProperty("scale", int(Helper::scaling() * 100));
     QFont font;
     font.setPointSize(10);
     ui->label_title->setFont(font);
@@ -161,17 +164,19 @@ void Preset::showEvent(QShowEvent *event)
     BaseWindow::showEvent(event);
     if (!m_windowActivated) {
         m_windowActivated = true;
-
+        setMinimumSize(QSize(500, 600) * Helper::scaling());
         SETTINGS(stn);
         if (stn.childGroups().contains("PresetWidget")) {
             stn.beginGroup("PresetWidget");
             restoreGeometry(stn.value("PresetWidget/geometry", geometry()).toByteArray());
             stn.endGroup();
         } else {
-            QSizeF size(this->size());
-            QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
-            move(parentWidget()->geometry().center() - center);
+            resize(QSize(610, 778) * Helper::scaling());
         }
+        QSizeF size(this->size());
+        QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
+        move(parentWidget()->geometry().center() - center);
+        setStyleSheet(Helper::getCss(m_theme));
 
         QTimer *timer = new QTimer(this);
         timer->setInterval(450);

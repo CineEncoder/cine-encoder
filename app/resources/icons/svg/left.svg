@@ -11,7 +11,7 @@
    sodipodi:docname="left.svg"
    width="210mm"
    height="210mm"
-   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -30,21 +30,21 @@
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#d1d1d1"
    showgrid="false"
-   inkscape:zoom="0.32747956"
-   inkscape:cx="377.12277"
-   inkscape:cy="601.56426"
+   inkscape:zoom="0.08186989"
+   inkscape:cx="-1795.5319"
+   inkscape:cy="549.65263"
    inkscape:window-width="1920"
-   inkscape:window-height="1019"
+   inkscape:window-height="1017"
    inkscape:window-x="0"
    inkscape:window-y="0"
    inkscape:window-maximized="1"
    inkscape:current-layer="Capa_1"
    inkscape:document-units="mm" />
 <polygon
-   points="132.124,182.381 188.124,182.381 188.124,96.516 222.96,96.516 160.124,0 97.288,96.516 132.124,96.516 "
+   points="188.124,182.381 188.124,96.516 222.96,96.516 160.124,0 97.288,96.516 132.124,96.516 132.124,182.381 "
    id="polygon2"
    style="fill:#7b6b6b;fill-opacity:1;stroke:#7b6b6b;stroke-opacity:1"
-   transform="matrix(0,-3.7187949,3.7187949,0,55.595929,1002.3003)" />
+   transform="matrix(0,-2.869483,2.869483,0,134.8176,862.15452)" />
 <g
    id="g10">
 </g>

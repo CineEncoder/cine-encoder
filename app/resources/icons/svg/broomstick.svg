@@ -10,7 +10,7 @@
    style="enable-background:new 0 0 507.733 507.733;"
    xml:space="preserve"
    sodipodi:docname="broomstick.svg"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -32,19 +32,22 @@
    inkscape:pagecheckerboard="0"
    showgrid="false"
    inkscape:zoom="0.43869244"
-   inkscape:cx="-10.257756"
-   inkscape:cy="324.82894"
+   inkscape:cx="-168.6831"
+   inkscape:cy="325.96869"
    inkscape:window-width="1920"
-   inkscape:window-height="1019"
+   inkscape:window-height="1017"
    inkscape:window-x="0"
    inkscape:window-y="0"
    inkscape:window-maximized="1"
-   inkscape:current-layer="g1128" />
+   inkscape:current-layer="g1128"
+   inkscape:showpageshadow="2"
+   inkscape:deskcolor="#d1d1d1" />
 
 <g
    id="g1128"
    transform="matrix(-0.7311119,0,0,-0.75007916,444.17381,446.34947)"><g
-     id="g6990"><path
+     id="g6990"
+     transform="matrix(0.88911,0,0,0.88911,31.685146,21.651913)"><path
        style="fill:#51565f;stroke-width:3.55123;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 23.309739,531.88855 c -9.199185,0.0814 -18.4264198,-2.83098 -25.6463885,-9.75262 -7.2211849,-6.9228 -10.3623675,-14.87812 -10.4558615,-24.85793 -0.09348,-9.97864 3.9198595,-17.99842 9.9872171,-25.03759 L 275.71069,195.33045 c 2.02597,-2.01428 5.09236,-2.04141 7.15452,-0.0633 2.06337,1.97813 2.09141,4.97182 0.0654,6.98496 L 4.4158783,479.16204 c -5.06431832,5.03513 -7.0516911,11.04063 -6.9862536,18.02555 0.065438,6.98491 3.18792598,12.94523 7.3228085,17.89896 10.3143968,9.88824 26.6693208,9.74358 35.7750358,-0.31643 L 319.04227,237.86135 c 2.02596,-2.01427 5.09236,-2.04139 7.15451,-0.0633 2.06338,1.97812 2.09143,4.97181 0.0654,6.98492 L 47.74744,521.69292 c -6.067357,7.03918 -15.2385,10.11427 -24.437701,10.19563 z"
        id="path1067" /><g

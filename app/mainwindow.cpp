@@ -71,7 +71,7 @@
     using namespace MediaInfoDLL;
 #endif
 
-#define WINDOW_SIZE QSize(1500, 920)
+#define WINDOW_SIZE (QSize(1500, 920) * Helper::scaling())
 #define ROWHEIGHT 25
 #define ROWHEIGHTDFLT 45
 #define DEFAULTTIMER 30
@@ -240,10 +240,10 @@ MainWindow::MainWindow(QWidget *parent):
 
     ui->streamAudio->setContentType(QStreamView::Content::Audio);
     ui->streamSubtitle->setContentType(QStreamView::Content::Subtitle);
-    ui->switchCutting->setIcons(QIcon(QPixmap(":/resources/icons/svg/shortest.svg")),
+    /*ui->switchCutting->setIcons(QIcon(QPixmap(":/resources/icons/svg/shortest.svg")),
                                 QIcon(QPixmap(":/resources/icons/svg/not_shortest.svg")));
     ui->switchViewMode->setIcons(QIcon(QPixmap(":/resources/icons/svg/view_list.svg")),
-                                 QIcon(QPixmap(":/resources/icons/svg/view_icons.svg")));
+                                 QIcon(QPixmap(":/resources/icons/svg/view_icons.svg")));*/
     ui->switchCutting->setToolTips(tr("Without cutting"), tr("Cut by shortest"));
     ui->switchViewMode->setToolTips(tr("List view"), tr("Icon view"));
 
@@ -651,7 +651,7 @@ void MainWindow::setParameters()    // Set parameters
     fnt.setItalic(true);
     fnt.setBold(true);
     hv_d->setFont(fnt);
-    hv_d->setFixedHeight(28);
+    hv_d->setFixedHeight(28 * Helper::scaling());
     hv_d->setModel(model_d);
     hv_d->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->dirsLayout->addWidget(hv_d);
@@ -660,7 +660,7 @@ void MainWindow::setParameters()    // Set parameters
     model_f->setHorizontalHeaderItem(0, new QStandardItem(tr("Files")));
     QHeaderView *hv_f = new QHeaderView(Qt::Horizontal, ui->filesWidget);
     hv_f->setFont(fnt);
-    hv_f->setFixedHeight(28);
+    hv_f->setFixedHeight(28 * Helper::scaling());
     hv_f->setModel(model_f);
     hv_f->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->filesLayout->addWidget(hv_f);
@@ -679,7 +679,7 @@ void MainWindow::setParameters()    // Set parameters
     ui->comboBoxPreset->setVisible(false);
 
     //********** Set default state *****************//
-    m_pAnimation = new QAnimatedSvg(ui->labelAnimation, QSize(18, 18));
+    m_pAnimation = new QAnimatedSvg(ui->labelAnimation, QSize(18, 18) * Helper::scaling());
     setProgressEnabled(false);
     m_pTableLabel->show();
     m_pAudioLabel->show();
@@ -727,6 +727,7 @@ void MainWindow::setParameters()    // Set parameters
     ui->tableWidget->horizontalHeader()->setFont(fnt);
     ui->tableWidget->horizontalHeader()->setVisible(true);
     ui->tableWidget->verticalHeader()->setVisible(true);
+    ui->tableWidget->verticalHeader()->setDefaultSectionSize(ROWHEIGHT * Helper::scaling());
     ui->tableWidget->setAlternatingRowColors(true);
     ui->tableWidget->setDropIndicatorShown(true);
     ui->tableWidget->setDragEnabled(true);
@@ -740,7 +741,7 @@ void MainWindow::setParameters()    // Set parameters
     ui->tableWidget->setColumnWidth(ColumnIndex::FPS, 70);
     ui->tableWidget->setColumnWidth(ColumnIndex::AR, 60);
     ui->tableWidget->setColumnWidth(ColumnIndex::STATUS, 80);
-    ui->tableWidget->setIconSize(QSize(16, 16));
+    ui->tableWidget->setIconSize(QSize(16, 16) * Helper::scaling());
 
     for (int i = ColumnIndex::COLORRANGE; i <= ColumnIndex::MAXFALL; i++)
         ui->tableWidget->setColumnWidth(i, 82);
@@ -1006,7 +1007,7 @@ void MainWindow::setFloating(const int index, const QPoint &offset, const QSize 
         m_pDocks[index]->setVisible(true);
     m_pDocks[index]->setFloating(true);
     m_pDocks[index]->move(this->geometry().center() + offset);
-    m_pDocks[index]->resize(size);
+    m_pDocks[index]->resize(size * Helper::scaling());
 }
 
 void MainWindow::showMetadataEditor()
@@ -1072,7 +1073,7 @@ void MainWindow::get_current_data() // Get current data
     //*************** Set icons ********************//
     double halfTime = m_dur/2;
     QString tmb_file = setThumbnail(m_curFilename, halfTime, PreviewRes::RES_HIGH, PreviewDest::PREVIEW);
-    QSize imageSize = QSize(85, 48);
+    QSize imageSize = QSize(85, 48) * Helper::scaling();
     if (m_rowHeight == ROWHEIGHT) {
         const QString icons[4][5] = {
             {"cil-hdr",       "cil-camera-roll",       "cil-hd",       "cil-4k",       "cil-file"},
@@ -1094,7 +1095,7 @@ void MainWindow::get_current_data() // Get current data
             type = 3;
 
         tmb_file = QString(":/resources/icons/16x16/%1.png").arg(icons[m_theme][type]);
-        imageSize = QSize(16, 16);
+        imageSize = QSize(16, 16) * Helper::scaling();
     }
     QPixmap pxmp(tmb_file);
     QPixmap scaled = pxmp.scaled(imageSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -1189,14 +1190,8 @@ void MainWindow::get_current_data() // Get current data
 
 void MainWindow::setTheme(const int ind_theme)   // Set theme
 {
-    const QString themePath = QString(":/resources/css/style_%1.css")
-            .arg(numToStr(ind_theme));
-    QFile file(themePath);
-    if (file.open(QFile::ReadOnly)) {
-        const QString list = QString::fromUtf8(file.readAll());
-        setStyleSheet(Helper::getParsedCss(list));
-        file.close();
-    }
+    ui->frame_main->setProperty("scale", int(Helper::scaling() * 100));
+    setStyleSheet(Helper::getCss(ind_theme));
     QString spinnerFile;
     switch (ind_theme) {
     case Theme::GRAY:
@@ -1347,24 +1342,24 @@ void MainWindow::onViewMode(uchar ind)
         ui->listFiles->setViewMode(QListView::IconMode);
         ui->listFiles->setWordWrap(true);
 #ifdef Q_OS_UNIX
-        ui->listFiles->setSpacing(10);
-        ui->listFiles->setGridSize(QSize(120, 120));
+        ui->listFiles->setSpacing(10 * Helper::scaling());
+        ui->listFiles->setGridSize(QSize(120, 120) * Helper::scaling());
 #else
         ui->listFiles->setSpacing(0);
-        ui->listFiles->setGridSize(QSize(100, 100));
+        ui->listFiles->setGridSize(QSize(100, 100) * Helper::scaling());
 #endif
-        ui->listFiles->setIconSize(QSize(80, 80));
+        ui->listFiles->setIconSize(QSize(80, 80) * Helper::scaling());
     } else {
         ui->listFiles->setViewMode(QListView::ListMode);
         ui->listFiles->setWordWrap(false);
 #ifdef Q_OS_UNIX
-        ui->listFiles->setSpacing(5);
-        ui->listFiles->setGridSize(QSize(200, 50));
+        ui->listFiles->setSpacing(5 * Helper::scaling());
+        ui->listFiles->setGridSize(QSize(200, 50) * Helper::scaling());
 #else
         ui->listFiles->setSpacing(0);
-        ui->listFiles->setGridSize(QSize(200, 45));
+        ui->listFiles->setGridSize(QSize(200, 45) * Helper::scaling());
 #endif
-        ui->listFiles->setIconSize(QSize(30, 40));
+        ui->listFiles->setIconSize(QSize(30, 40) * Helper::scaling());
     }
 }
 
@@ -1732,7 +1727,6 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
             }
             prg.setText(inputFile);
             prg.setPercent(0);
-            QApplication::processEvents();
             const int numRows = ui->tableWidget->rowCount();
             ui->tableWidget->setRowCount(numRows + 1);
             QString fmt_qstr = VINFO(0, "Format");
@@ -1860,16 +1854,9 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
             }
             MI.Close();
             prg.setPercent(50);
-            QApplication::processEvents();
             ui->tableWidget->selectRow(ui->tableWidget->rowCount() - 1);
-            QApplication::processEvents();
+            Helper::nonBlockDelay(50);
             prg.setPercent(100);
-            QApplication::processEvents();
-    #if defined (Q_OS_UNIX)
-            usleep(50000);
-    #elif defined (Q_OS_WIN64)
-            Sleep(50);
-    #endif
         } else {
             showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(inputFile));
         }
@@ -1942,12 +1929,12 @@ void MainWindow::resizeTableRows(int rows_height)
 {
     QHeaderView *vertHeader = ui->tableWidget->verticalHeader();
     vertHeader->setSectionResizeMode(QHeaderView::Fixed);
-    vertHeader->setDefaultSectionSize(rows_height);
+    vertHeader->setDefaultSectionSize(rows_height * Helper::scaling());
     if (rows_height == ROWHEIGHT) {
-        ui->tableWidget->setIconSize(QSize(16, 16));
+        ui->tableWidget->setIconSize(QSize(16, 16) * Helper::scaling());
     } else {
-        const int rows_width = static_cast<int>(round(1.777f*rows_height));
-        ui->tableWidget->setIconSize(QSize(rows_width, rows_height));
+        const int rows_width = static_cast<int>(round(1.777f*rows_height * Helper::scaling()));
+        ui->tableWidget->setIconSize(QSize(rows_width, rows_height * Helper::scaling()));
     }
     const int numRows = ui->tableWidget->rowCount();
     if (numRows > 0) {
@@ -2417,7 +2404,7 @@ void MainWindow::onEditPreset()  // Edit preset
         // Item is child...
         for (int k = 0; k < PARAMETERS_COUNT; k++)
             m_newParams[k] = item->text(k+7);
-        Preset presetWindow(this, &m_newParams);
+        Preset presetWindow(this, &m_newParams, m_theme);
         if (presetWindow.exec() == Dialog::Accept) {
             for (int k = 0; k < PARAMETERS_COUNT; k++)
                 item->setText(k+7, m_newParams[k]);
@@ -2740,7 +2727,8 @@ void MainWindow::onExtract(QStreamView::Content type, int num)
     data.stream = num;
     StreamConverter ext(this,
                         StreamConverter::Mode::Extract,
-                        &data);
+                        &data,
+                        m_theme);
     if (ext.exec() == QDialog::Accepted) {
         showPopup(tr("Task completed!\n"));
     }

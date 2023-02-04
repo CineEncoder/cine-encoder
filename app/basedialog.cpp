@@ -17,8 +17,9 @@
 #include <QIcon>
 #include <QTimer>
 #include <QGraphicsDropShadowEffect>
+#include "helper.h"
 
-#define BORDER 15
+#define BORDER int(15 * Helper::scaling())
 
 
 BaseDialog::BaseDialog(QWidget *parent, bool isReizable) :

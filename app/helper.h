@@ -34,11 +34,15 @@ public:
                              const QString &text,
                              const Qt::TextElideMode elide);
     static QString recalcChannels(const QString &ch);
+    static QString getCss(int theme_index);
     static bool isSupported(const QString &format);
     template<class T>
     static void eraseRow(QVector<T> &v, const int row);
     template<class T>
     static void reorder(QVector<T> &v, QVector<int> const &order);
+    static void nonBlockDelay(int msec);
+    static double scaling();
+    static QByteArray readFile(const QString &path);
 
 private:
     static DesktopEnv m_desktopEnv;

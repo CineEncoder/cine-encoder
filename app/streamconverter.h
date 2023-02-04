@@ -42,7 +42,8 @@ public:
     };
     explicit StreamConverter(QWidget *parent,
                              Mode mode,
-                             StreamData *data);
+                             StreamData *data,
+                             int theme);
     ~StreamConverter();
 
 private:
@@ -58,7 +59,8 @@ private:
     void showInfoMessage(const QString &message);
 
     Ui::StreamConverter *ui;
-    int m_status_pause_btn;
+    int m_status_pause_btn,
+        m_theme;
     bool  m_windowActivated;
     Mode  m_mode;
     EncoderStream *m_pEncoder;

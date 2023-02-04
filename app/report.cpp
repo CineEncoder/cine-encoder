@@ -1,12 +1,13 @@
 #include "report.h"
 #include "ui_report.h"
+#include "helper.h"
 #include <QMouseEvent>
 #include <QLayout>
 #include <QToolTip>
 #include <QTimer>
 #include <iostream>
 
-#define OFFSET QPoint(530, -30)
+#define OFFSET (QPoint(530, -30) * Helper::scaling())
 
 
 Report::Report(QWidget *parent, const QVector<ReportLog> &reportLog) :
@@ -22,6 +23,8 @@ Report::Report(QWidget *parent, const QVector<ReportLog> &reportLog) :
     ui->setupUi(ui_widget);
     setMaskWidget(ui_widget);
     ui_widget->setAutoFillBackground(true);
+    ui_widget->setObjectName("frame_main");
+    ui_widget->setProperty("scale", int(Helper::scaling() * 100));
 
     setEnabled(true);
     connect(ui->closeReport, &QPushButton::clicked, this, [this]() {
@@ -39,10 +42,11 @@ Report::Report(QWidget *parent, const QVector<ReportLog> &reportLog) :
     fnt.setItalic(true);
     ui->reportTable->setEnabled(true);
     ui->reportTable->horizontalHeader()->setFont(fnt);
+    ui->reportTable->horizontalHeader()->setFixedHeight(28 * Helper::scaling());
     ui->reportTable->horizontalHeader()->setVisible(true);
     ui->reportTable->verticalHeader()->setVisible(true);
     ui->reportTable->setShowGrid(false);
-    ui->reportTable->setColumnWidth(0, 80);
+    ui->reportTable->setColumnWidth(0, 80 * Helper::scaling());
     foreach (const ReportLog &a, reportLog) {
         const int ind = ui->reportTable->rowCount();
         ui->reportTable->setRowCount(ind + 1);
@@ -69,8 +73,7 @@ Report::Report(QWidget *parent, const QVector<ReportLog> &reportLog) :
             break;
         }
         QPixmap pxmp(iconPath);
-
-        QPixmap scaled = pxmp.scaled(QSize(30,30), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        QPixmap scaled = pxmp.scaled(QSize(30,30) * Helper::scaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         ui->reportTable->item(ind, 1)->setIcon(QIcon(scaled));
     }
     const int ind = ui->reportTable->rowCount();
@@ -90,6 +93,7 @@ void Report::showEvent(QShowEvent *event)
     BaseDialog::showEvent(event);
     if (!m_activated) {
         m_activated = true;
+        resize(QSize(400, 280) * Helper::scaling());
         moveWidget();
     }
 }

@@ -16,6 +16,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QVector>
+#include <iostream>
 
 #define Print(a) std::cout << a << std::endl
 #define numToStr(num) QString::number(num)
