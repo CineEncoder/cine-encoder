@@ -146,11 +146,6 @@ See [LICENSE.md](https://github.com/CineEncoder/CineEncoder/blob/master/LICENSE)
 
 ### Donate
 
-If you wish to support this project, you can make a donation  via PayPal or Ethereum. Your contributions will help keep the project alive and support future development.
+If you wish to support this project, you can make a donation. Your contributions will help keep the project alive and support future development.
 
 [![PayPal](./images/PayPal.png)](https://paypal.me/CineEncoder?country.x=MD&locale.x=en_US)
-
-You can send ethereum at the address below:\
-0x3244195BEBabeF146F8B25369c48D90ECdcBCb8c
-
-![Ethereum](./images/Ethereum.png)

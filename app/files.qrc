@@ -73,7 +73,6 @@
         <file>resources/icons/16x16/cil-image-plus.png</file>
         <file>resources/icons/16x16/cil-image1.png</file>
         <file>resources/icons/16x16/cil-infinity.png</file>
-        <file>resources/icons/16x16/cil-input.png</file>
         <file>resources/icons/16x16/cil-layers.png</file>
         <file>resources/icons/16x16/cil-level-down.png</file>
         <file>resources/icons/16x16/cil-level-up.png</file>
@@ -172,13 +171,12 @@
         <file>resources/icons/32x32/cil-comment-bubble.png</file>
         <file>resources/icons/32x32/cil-comment-square.png</file>
         <file>resources/icons/32x32/cil-copy.png</file>
-        <file>resources/icons/32x32/cil-cursor-move.png</file>
         <file>resources/icons/32x32/cil-cursor.png</file>
         <file>resources/icons/32x32/cil-description.png</file>
         <file>resources/icons/32x32/cil-equalizer.png</file>
         <file>resources/icons/32x32/cil-exit-to-app.png</file>
         <file>resources/icons/32x32/cil-exposure.png</file>
-        <file>resources/icons/32x32/cil-external-link.png</file>
+        <file>resources/icons/32x32/cil-output_black.png</file>
         <file>resources/icons/32x32/cil-file.png</file>
         <file>resources/icons/32x32/cil-folder-open.png</file>
         <file>resources/icons/32x32/cil-folder.png</file>
@@ -215,7 +213,6 @@
         <file>resources/icons/32x32/cil-microphone.png</file>
         <file>resources/icons/32x32/cil-minus.png</file>
         <file>resources/icons/32x32/cil-mobile.png</file>
-        <file>resources/icons/32x32/cil-move.png</file>
         <file>resources/icons/32x32/cil-movie.png</file>
         <file>resources/icons/32x32/cil-mug-tea.png</file>
         <file>resources/icons/32x32/cil-notes.png</file>
@@ -233,14 +230,13 @@
         <file>resources/icons/32x32/cil-remove.png</file>
         <file>resources/icons/32x32/cil-satelite.png</file>
         <file>resources/icons/32x32/cil-save.png</file>
-        <file>resources/icons/32x32/cil-screen-desktop.png</file>
-        <file>resources/icons/32x32/cil-settings.png</file>
+        <file>resources/icons/32x32/cil-screen-desktop_black.png</file>
+        <file>resources/icons/32x32/cil-settings_black.png</file>
         <file>resources/icons/32x32/cil-speech.png</file>
-        <file>resources/icons/32x32/cil-speedometer.png</file>
         <file>resources/icons/32x32/cil-star.png</file>
         <file>resources/icons/32x32/cil-swap-horizontal.png</file>
         <file>resources/icons/32x32/cil-swap-vertical.png</file>
-        <file>resources/icons/32x32/cil-tag.png</file>
+        <file>resources/icons/32x32/cil-tags_black.png</file>
         <file>resources/icons/32x32/cil-task.png</file>
         <file>resources/icons/32x32/cil-transfer.png</file>
         <file>resources/icons/32x32/cil-user-female.png</file>
@@ -265,7 +261,6 @@
         <file>resources/icons/16x16/cil-forward.png</file>
         <file>resources/icons/16x16/cil-pause.png</file>
         <file>resources/icons/16x16/cil-play.png</file>
-        <file>resources/icons/16x16/cil-stop.png</file>
         <file>resources/icons/16x16/cil-sort-ascending.png</file>
         <file>resources/icons/16x16/cil-sort-descending.png</file>
         <file>resources/icons/12x12/cil-input.png</file>
@@ -393,5 +388,59 @@
         <file>resources/icons/svg/network.svg</file>
         <file>resources/icons/svg/drive.svg</file>
         <file>resources/icons/svg/previous.svg</file>
+        <file>resources/icons/svg/stop.svg</file>
+        <file>resources/icons/24x24/cil-tags_black.png</file>
+        <file>resources/icons/24x24/cil-tags.png</file>
+        <file>resources/icons/32x32/cil-tags.png</file>
+        <file>resources/icons/20x20/cil-tags.png</file>
+        <file>resources/icons/20x20/cil-tags_black.png</file>
+        <file>resources/icons/32x32/cil-screen-desktop.png</file>
+        <file>resources/icons/20x20/cil-screen-desktop_black.png</file>
+        <file>resources/icons/20x20/cil-screen-desktop.png</file>
+        <file>resources/icons/24x24/cil-screen-desktop_black.png</file>
+        <file>resources/icons/24x24/cil-screen-desktop.png</file>
+        <file>resources/icons/32x32/cil-output.png</file>
+        <file>resources/icons/16x16/cil-output_black.png</file>
+        <file>resources/icons/16x16/cil-output.png</file>
+        <file>resources/icons/20x20/cil-output_black.png</file>
+        <file>resources/icons/20x20/cil-output.png</file>
+        <file>resources/icons/24x24/cil-output_black.png</file>
+        <file>resources/icons/24x24/cil-output.png</file>
+        <file>resources/icons/32x32/cil-layers_black.png</file>
+        <file>resources/icons/32x32/cil-layers.png</file>
+        <file>resources/icons/32x32/cil-arrow-bottom_black.png</file>
+        <file>resources/icons/32x32/cil-arrow-bottom.png</file>
+        <file>resources/icons/32x32/cil-input_black.png</file>
+        <file>resources/icons/16x16/cil-input_black.png</file>
+        <file>resources/icons/16x16/cil-input.png</file>
+        <file>resources/icons/20x20/cil-input.png</file>
+        <file>resources/icons/20x20/cil-input_black.png</file>
+        <file>resources/icons/24x24/cil-input_black.png</file>
+        <file>resources/icons/24x24/cil-input.png</file>
+        <file>resources/icons/32x32/cil-settings.png</file>
+        <file>resources/icons/20x20/cil-settings.png</file>
+        <file>resources/icons/20x20/cil-settings_black.png</file>
+        <file>resources/icons/24x24/cil-settings_black.png</file>
+        <file>resources/icons/24x24/cil-settings.png</file>
+        <file>resources/icons/32x32/cil-arrow-right_black.png</file>
+        <file>resources/icons/32x32/cil-arrow-right.png</file>
+        <file>resources/icons/20x20/cil-arrow-right_black.png</file>
+        <file>resources/icons/20x20/cil-arrow-right.png</file>
+        <file>resources/icons/24x24/cil-arrow-right_black.png</file>
+        <file>resources/icons/24x24/cil-arrow-right.png</file>
+        <file>resources/icons/svg/reset.svg</file>
+        <file>resources/icons/20x20/cil-cursor-center.png</file>
+        <file>resources/icons/24x24/cil-cursor-center.png</file>
+        <file>resources/icons/32x32/cil-cursor-center.png</file>
+        <file>resources/icons/32x32/cil-arrow-top_black.png</file>
+        <file>resources/icons/32x32/cil-arrow-top.png</file>
+        <file>resources/icons/24x24/cil-arrow-top_black.png</file>
+        <file>resources/icons/24x24/cil-arrow-top.png</file>
+        <file>resources/icons/20x20/cil-arrow-top_black.png</file>
+        <file>resources/icons/20x20/cil-arrow-top.png</file>
+        <file>resources/icons/24x24/cil-arrow-bottom_black.png</file>
+        <file>resources/icons/24x24/cil-arrow-bottom.png</file>
+        <file>resources/icons/20x20/cil-arrow-bottom.png</file>
+        <file>resources/icons/20x20/cil-arrow-bottom_black.png</file>
     </qresource>
 </RCC>

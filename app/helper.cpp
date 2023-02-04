@@ -1,4 +1,5 @@
 #include "helper.h"
+#include "constants.h"
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QLocale>
@@ -221,7 +222,15 @@ QString Helper::elideText(QWidget *w,
 QString Helper::recalcChannels(const QString &ch)
 {
     return (ch == "6") ? "5.1" :
-           (ch == "8") ? "7.1" : ch;
+                         (ch == "8") ? "7.1" : ch;
+}
+
+QString Helper::getCss(int theme_index)
+{
+    const QString themePath = QString(":/resources/css/style_%1.css")
+            .arg(numToStr(theme_index));
+    const QString list(Helper::readFile(themePath));
+    return Helper::getParsedCss(list);
 }
 
 bool Helper::isSupported(const QString &format)
@@ -239,7 +248,22 @@ void Helper::nonBlockDelay(int msec)
     loop.exec();
 }
 
-int Helper::scaling()
+double Helper::scaling()
 {
-    return qApp->desktop()->logicalDpiX() / 96;
+    double scale = double(qApp->desktop()->logicalDpiX()) / 96;
+    return (scale < 1.25) ? 1.00 :
+           (scale < 1.50) ? 1.25 :
+           (scale < 1.75) ? 1.50 :
+           (scale < 2.00) ? 1.75 : 2.00;
+}
+
+QByteArray Helper::readFile(const QString &path)
+{
+    QByteArray arr = {};
+    QFile file(path);
+    if (file.open(QFile::ReadOnly)) {
+        arr = file.readAll();
+        file.close();
+    }
+    return arr;
 }

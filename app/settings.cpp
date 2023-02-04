@@ -27,11 +27,13 @@ using namespace Constants;
 
 Settings::Settings(QWidget *parent):
     BaseWindow(parent, true),
-    ui(new Ui::Settings)
+    ui(new Ui::Settings),
+    m_windowActivated(false)
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
     ui->frameMiddle->setFocusPolicy(Qt::StrongFocus);
+    ui->frame_main->setProperty("scale", int(Helper::scaling() * 100));
 
     // Buttons
     QPushButton *btns[] = {
@@ -119,17 +121,6 @@ void Settings::setParameters(QString    *pOutputFolder,
     m_pLanguage = pLanguage;
     m_pFont = pFont;
     m_pFontSize = pFontSize;
-
-    SETTINGS(stn);
-    if (stn.childGroups().contains("SettingsWidget")) {
-        stn.beginGroup("SettingsWidget");
-        restoreGeometry(stn.value("SettingsWidget/geometry", geometry()).toByteArray());
-        stn.endGroup();
-    } else {
-        QSizeF size(this->size());
-        QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
-        move(parentWidget()->geometry().center() - center);
-    }
 
     ui->lineEdit_tempPath->setText(*m_pTempFolder);
     ui->lineEdit_outPath->setText(*m_pOutputFolder);
@@ -282,6 +273,27 @@ void Settings::onButtonReset()
     int fontInd = ui->comboBox_font->findText(appFontFamily);
     if (fontInd != -1) {
         ui->comboBox_font->setCurrentIndex(fontInd);
+    }
+}
+
+void Settings::showEvent(QShowEvent *event)
+{
+    BaseWindow::showEvent(event);
+    if (!m_windowActivated) {
+        m_windowActivated = true;
+        setMinimumSize(QSize(589, 550) * Helper::scaling());
+        SETTINGS(stn);
+        if (stn.childGroups().contains("SettingsWidget")) {
+            stn.beginGroup("SettingsWidget");
+            restoreGeometry(stn.value("SettingsWidget/geometry", geometry()).toByteArray());
+            stn.endGroup();
+        } else {
+            resize(QSize(589, 654) * Helper::scaling());
+        }
+        QSizeF size(this->size());
+        QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
+        move(parentWidget()->geometry().center() - center);
+        setStyleSheet(Helper::getCss(*m_pTheme));
     }
 }
 

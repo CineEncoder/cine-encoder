@@ -7,7 +7,7 @@
    viewBox="0 0 200 200"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="play.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,14 +25,16 @@
      showgrid="false"
      width="200mm"
      inkscape:zoom="0.28061869"
-     inkscape:cx="486.42519"
-     inkscape:cy="864.16197"
+     inkscape:cx="235.1946"
+     inkscape:cy="865.94375"
      inkscape:window-width="1920"
-     inkscape:window-height="1019"
+     inkscape:window-height="1017"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2" />
   <g
@@ -41,7 +43,7 @@
      id="layer1">
     <g
        id="g2258"
-       transform="translate(-4.7625002,6.879167)">
+       transform="matrix(0.91715245,0,0,0.91715245,2.9169691,12.770409)">
       <path
          style="display:inline;fill:none;fill-rule:evenodd;stroke:#5cbc67;stroke-width:20.965;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="M 52.078614,30.494039 52.895989,161.6602"

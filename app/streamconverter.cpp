@@ -35,10 +35,12 @@ using namespace Constants;
 
 StreamConverter::StreamConverter(QWidget *parent,
                                  Mode mode,
-                                 StreamData *data):
+                                 StreamData *data,
+                                 int theme):
     BaseWindow(parent, true),
     ui(new Ui::StreamConverter),
     m_status_pause_btn(EncodingStatus::PAUSE),
+    m_theme(theme),
     m_windowActivated(false),
     m_mode(mode),
     m_pData(data),
@@ -47,6 +49,7 @@ StreamConverter::StreamConverter(QWidget *parent,
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
+    ui->frame_main->setProperty("scale", int(Helper::scaling() * 100));
     QFont font;
     font.setPointSize(10);
     ui->label_title->setFont(font);
@@ -200,10 +203,12 @@ void StreamConverter::showEvent(QShowEvent *event)
             restoreGeometry(stn.value("ConverterWidget/geometry", geometry()).toByteArray());
             stn.endGroup();
         } else {
-            QSizeF size(this->size());
-            QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
-            move(parentWidget()->geometry().center() - center);
+            resize(QSize(400, 600) * Helper::scaling());
         }
+        QSizeF size(this->size());
+        QPoint center = QPointF(size.width()/2, size.height()/2).toPoint();
+        move(parentWidget()->geometry().center() - center);
+        setStyleSheet(Helper::getCss(m_theme));
 
         // Fill interface
         auto comboBoxes = findChildren<QComboBox*>();

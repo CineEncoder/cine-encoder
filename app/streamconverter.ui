@@ -468,7 +468,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="files.qrc">
+                    <iconset>
                      <normaloff>:/resources/icons/16x16/cil-stop.png</normaloff>:/resources/icons/16x16/cil-stop.png</iconset>
                    </property>
                   </widget>
@@ -2171,7 +2171,7 @@
                               <x>0</x>
                               <y>0</y>
                               <width>390</width>
-                              <height>521</height>
+                              <height>200</height>
                              </rect>
                             </property>
                             <layout class="QGridLayout" name="gridLayout_33">
@@ -2924,7 +2924,7 @@
              </spacer>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="labelWindowIcon">
               <property name="minimumSize">
                <size>
                 <width>20</width>
