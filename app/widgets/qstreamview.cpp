@@ -294,12 +294,10 @@ void QStreamView::resetDefFlags(const int ind)
     Q_LOOP(i, 1, m_pLayout->count()) {
         if (i != ind) {
             QLayoutItem *item = m_pLayout->itemAt(i);
-            if (item) {
-                if (item->widget()) {
-                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
-                    if (rbtn)
-                        rbtn->setChecked(false);
-                }
+            if (item && item->widget()) {
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
+                if (rbtn)
+                    rbtn->setChecked(false);
             }
         }
     }
@@ -364,13 +362,11 @@ QWidget *QStreamView::createCell(bool &state,
         deflt = rbtn->isChecked();
         if (deflt) {
             QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
-            if (item) {
-                if (item->widget()) {
-                    QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>();
-                    if (chkBox && !chkBox->isChecked()) {
-                        chkBox->setChecked(true);
-                        state = true;
-                    }
+            if (item && item->widget()) {
+                QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>();
+                if (chkBox && !chkBox->isChecked()) {
+                    chkBox->setChecked(true);
+                    state = true;
                 }
             }
         }
@@ -482,13 +478,11 @@ QWidget *QStreamView::createCell(bool &state,
         state = (chkBox->checkState() == 2) ? true : false;
         if (!state) {
             QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
-            if (item) {
-                if (item->widget()) {
-                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
-                    if (rbtn && rbtn->isChecked()) {
-                        rbtn->setChecked(false);
-                        deflt = false;
-                    }
+            if (item && item->widget()) {
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
+                if (rbtn && rbtn->isChecked()) {
+                    rbtn->setChecked(false);
+                    deflt = false;
                 }
             }
         }
