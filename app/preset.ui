@@ -2655,6 +2655,11 @@
                                 <string>Source</string>
                                </property>
                               </item>
+                              <item>
+                               <property name="text">
+                                <string>SVT-AV1 4:2:0 10 bit</string>
+                               </property>
+                              </item>
                              </widget>
                             </item>
                             <item row="1" column="4">

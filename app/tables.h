@@ -101,7 +101,8 @@ public:
         {"DNxHR 444",                             tr("YUV, 4:4:4, 10 bit"), "HDR: "},
         {"XDCAM HD422",                           tr("YUV, 4:2:2, 8 bit"),  ""},
         {"XAVC 4:2:2",                            tr("YUV, 4:2:2, 8 bit"),  ""},
-        {tr("Source"),                            "",                       "HDR: "}
+        {tr("Source"),                            "",                       "HDR: "},
+        {tr("SVT-AV1 4:2:0 10 bit"),              tr("YUV, 4:2:0, 10 bit"), "HDR: "}
     };
 
     /*********************************** Intel QSV presets ************************************/
@@ -153,7 +154,8 @@ public:
         {"-pix_fmt yuv444p10le -c:v dnxhd -profile:v dnxhr_444 ",       "",                     "1", ""},
         {xdcam_preset,                                                  "",                     "0", ""},
         {xavc_preset,                                                   " -guess_layout_max 0", "0", ""},
-        {"-movflags +write_colr -c:v copy ",                            "",                     "1", ""}
+        {"-movflags +write_colr -c:v copy ",                            "",                     "1", ""},
+        {"-pix_fmt yuv420p10le -c:v libsvtav1 ",                        "",                     "1", ""}
     };
 
     const QString arr_mode[NUMBER_PRESETS][5] = {
@@ -186,7 +188,8 @@ public:
         {tr("Auto"), "",       "",    "",    ""},
         {"VBR",      "",       "",    "",    ""}, // XDCAM
         {"CBR",      "",       "",    "",    ""}, // XAVC
-        {tr("Auto"), "",       "",    "",    ""}  // Source
+        {tr("Auto"), "",       "",    "",    ""}, // Source
+        {"ABR",      "CRF",    "",    "",    ""}  // SVT-AV1
     };
 
     const QString arr_preset[NUMBER_PRESETS][10] = {
@@ -219,7 +222,8 @@ public:
         {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
         {tr("None"), tr("Ultrafast"), tr("Superfast"), tr("Veryfast"), tr("Faster"), tr("Fast"), tr("Medium"), tr("Slow"),     tr("Slower"), tr("Veryslow")},
-        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""}
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""},
+        {tr("None"), "",              "",              "",             "",           "",         "",           "",             "",           ""}  // SVT-AV1
     };
 
     const QString arr_level[NUMBER_PRESETS][21] = {
@@ -252,7 +256,8 @@ public:
         {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""},
         {"2",        "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}, // XDCAM
         {"5.2",      "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}, // XAVC
-        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}  // Source
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}, // Source
+        {tr("Auto"), "",  "",   "",    "",    "",    "",  "",    "",    "",    "",    "",    "",    "",    "",    "",  "",    "",    "",  "",    ""}  // SVT-AV1
     };
 
     const QString arr_pass[NUMBER_PRESETS][2] = {
@@ -285,7 +290,8 @@ public:
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
         {tr("Auto"),   ""},
-        {tr("Auto"),   ""}
+        {tr("Auto"),   ""},
+        {tr("1 Pass"), tr("2 Pass")} // SVT-AV1
     };
 
     const QString arr_acodec[NUMBER_PRESETS][6] = {
@@ -318,7 +324,8 @@ public:
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
         {"PCM 16 bit", "",           "",           "",           "",     ""},
         {"PCM 16 bit", "PCM 24 bit", "PCM 32 bit", "",           "",     ""},
-        {"AAC",        "AC3",        "DTS",        "Vorbis",     "Opus", tr("Source")}
+        {"AAC",        "AC3",        "DTS",        "Vorbis",     "Opus", tr("Source")},
+        {"Opus",       "Vorbis",     tr("Source"), "",           "",     ""}  // SVT-AV1
     };
 
     const QString arr_bitrate[5][17] = {
@@ -368,7 +375,8 @@ public:
         {"MOV",  "",    "",    "",     ""},
         {"MXF",  "",    "",    "",     ""},
         {"MXF",  "",    "",    "",     ""},
-        {"MKV",  "MOV", "MP4", "M2TS", "TS"}
+        {"MKV",  "MOV", "MP4", "M2TS", "TS"},
+        {"WebM", "MKV", "",    "",     ""}  // SVT-AV1
     };
 
     const QString arr_acodec_sep[9] = {
