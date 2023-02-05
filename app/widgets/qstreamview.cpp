@@ -359,9 +359,21 @@ QWidget *QStreamView::createCell(bool &state,
     rbtn->setChecked(deflt);
     rbtn->setFixedSize(QSize(12,12) * Helper::scaling());
     rbtn->setToolTip(tr("Default"));
-    connect(rbtn, &QRadioButton::clicked, this, [this, cell, rbtn, &deflt]() {
+    connect(rbtn, &QRadioButton::clicked, this, [this, cell, rbtn, &deflt, &state]() {
         resetDefFlags(m_pLayout->indexOf(cell));
         deflt = rbtn->isChecked();
+        if (deflt) {
+            QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
+            if (item) {
+                if (item->widget()) {
+                    QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>();
+                    if (chkBox && !chkBox->isChecked()) {
+                        chkBox->setChecked(true);
+                        state = true;
+                    }
+                }
+            }
+        }
     });
     lut->addWidget(rbtn, 0, 0, Qt::AlignLeft);
 
@@ -466,8 +478,20 @@ QWidget *QStreamView::createCell(bool &state,
     chkBox->setText(format);
     chkBox->setEnabled(true);
     chkBox->setChecked(state);
-    connect(chkBox, &QCheckBox::clicked, this, [chkBox, &state](){
+    connect(chkBox, &QCheckBox::clicked, this, [this, cell, chkBox, &state, &deflt](){
         state = (chkBox->checkState() == 2) ? true : false;
+        if (!state) {
+            QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
+            if (item) {
+                if (item->widget()) {
+                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
+                    if (rbtn && rbtn->isChecked()) {
+                        rbtn->setChecked(false);
+                        deflt = false;
+                    }
+                }
+            }
+        }
     });
     lut->addWidget(chkBox, 1, 1);
 
