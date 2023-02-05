@@ -922,6 +922,13 @@ void Preset::onComboBox_codec_textChanged(const QString &arg1)  // Change curren
             ui->comboBox_color_matrix->setCurrentIndex(0);
             ui->comboBox_transfer->setCurrentIndex(0);
         }
+
+        else if (arg1 == tr("SVT-AV1 4:2:0 10 bit")) {
+            ui->comboBox_profile->setCurrentIndex(Profile::PROFILE_AUTO);
+            ui->comboBox_pixfmt->setCurrentIndex(Pixformat::YUV420P10LE);
+            ui->comboBox_preset->setEnabled(false);
+            ui->comboBox_level->setEnabled(false);
+        }
         lockSignals(false);
     }
 
