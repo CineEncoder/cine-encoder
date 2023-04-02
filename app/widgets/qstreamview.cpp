@@ -306,7 +306,7 @@ void QStreamView::resetDefFlags(const int ind)
         if (i != ind) {
             QLayoutItem *item = m_pLayout->itemAt(i);
             if (item && item->widget()) {
-                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream");
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream", Qt::FindDirectChildrenOnly);
                 if (rbtn)
                     rbtn->setChecked(false);
             }
@@ -368,9 +368,9 @@ QWidget *QStreamView::createCell(bool &state,
     QRadioButton *rbtn = QStreamViewPrivate::createRadio(cell, "defaultStream", "", deflt);
     rbtn->setFixedSize(QSize(12,12) * Helper::scaling());
     rbtn->setToolTip(tr("Default"));
-    connect(rbtn, &QRadioButton::clicked, this, [this, cell, rbtn, &deflt, &state]() {
+    connect(rbtn, &QRadioButton::clicked, this, [this, cell, &deflt, &state](bool checked) {
         resetDefFlags(m_pLayout->indexOf(cell));
-        deflt = rbtn->isChecked();
+        deflt = checked;
         if (deflt) {
             QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
             if (item && item->widget()) {
