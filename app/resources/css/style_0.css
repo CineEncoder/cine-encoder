@@ -1442,14 +1442,14 @@ QPushButton#settings {
     min-height: 40px;
     image: url(:/resources/icons/32x32/cil-settings_black.png);
 }
-QPushButton#audioExpandBtn {
+QPushButton#expandBtn {
     border: none;
     border-radius: 0px;
     image: url(:/resources/icons/svg/frame-bottom.svg);
     color: @elementsTextColor;
     background-color: transparent;
 }
-QPushButton#audioExpandBtn[expanded=true] {
+QPushButton#expandBtn[expanded=true] {
     image: url(:/resources/icons/svg/frame-top.svg);
 }
 QPushButton#leftButton,
@@ -1562,7 +1562,7 @@ QPushButton:hover#buttonReset,
 QPushButton:hover#addFilesHot,
 QPushButton:hover#setOutFolder,
 QPushButton:hover#settings,
-QPushButton:hover#audioExpandBtn,
+QPushButton:hover#expandBtn,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
 QPushButton:hover#closeReport,
