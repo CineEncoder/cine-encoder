@@ -385,7 +385,7 @@ void MainWindow::setTrayIcon()
 void MainWindow::createConnections()
 {
     // Buttons
-    const int BTN_COUNT = 29;
+    const int BTN_COUNT = 30;
     QPushButton *btns[BTN_COUNT] = {
         ui->closeWindow,  ui->hideWindow,    ui->expandWindow,
         ui->addFiles,     ui->removeFile,    ui->sortUp,
@@ -396,7 +396,7 @@ void MainWindow::createConnections()
         ui->setEndTime,   ui->removePreset,  ui->editPreset,
         ui->applyPreset,  ui->addFilesHot,   ui->setOutFolder,
         ui->closeTWindow, ui->resetLabels,   ui->report,
-        ui->back,         ui->forward
+        ui->back,         ui->forward, ui->removeAllFiles
     };
     FnVoidVoid btn_methods[BTN_COUNT] = {
         SLT(onCloseWindow),  SLT(onHideWindow),    SLT(onExpandWindow),
@@ -408,7 +408,7 @@ void MainWindow::createConnections()
         SLT(onSetEndTime),   SLT(onRemovePreset),  SLT(onEditPreset),
         SLT(onApplyPreset),  SLT(onAddFiles),      SLT(onSetOutFolder),
         SLT(onCloseWindow),  SLT(onResetLabels),   SLT(onReport),
-        SLT(onBack),         SLT(onForward)
+        SLT(onBack),         SLT(onForward),       SLT(onRemoveAllFiles)
     };
     Q_LOOP(i, 0, BTN_COUNT)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
@@ -467,12 +467,15 @@ void MainWindow::createConnections()
 
     m_pActAddFiles = new QAction(tr("Add files"), menuFiles);
     m_pActRemoveFile = new QAction(tr("Remove from the list"), menuFiles);
+    m_pActRemoveAllFiles = new QAction(tr("Clear the list"), menuFiles);
     m_pActCloseWindow = new QAction(tr("Close"), menuFiles);
     connect(m_pActAddFiles, &QAction::triggered, this, SLT(onAddFiles));
     connect(m_pActRemoveFile, &QAction::triggered, this, SLT(onRemoveFile));
+    connect(m_pActRemoveAllFiles, &QAction::triggered, this, SLT(onRemoveAllFiles));
     connect(m_pActCloseWindow, &QAction::triggered, this, SLT(onCloseWindow));
     menuFiles->addAction(m_pActAddFiles);
     menuFiles->addAction(m_pActRemoveFile);
+    menuFiles->addAction(m_pActRemoveAllFiles);
     menuFiles->addSeparator();
     menuFiles->addAction(m_pActCloseWindow);
 
@@ -520,6 +523,8 @@ void MainWindow::createConnections()
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     m_pItemMenu = new QMenu(this);
     m_pItemMenu->addAction(m_pActRemoveFile);
+    m_pItemMenu->addSeparator();
+    m_pItemMenu->addAction(m_pActRemoveAllFiles);
     m_pItemMenu->addSeparator();
     m_pItemMenu->addAction(m_pActStart);
     m_pItemMenu->addSeparator();
@@ -1225,6 +1230,7 @@ void MainWindow::setWidgetsEnabled(bool state)    // Set widgets states
     state ? m_pAnimation->stop() : m_pAnimation->start();
     m_pActAddFiles->setEnabled(state);
     m_pActRemoveFile->setEnabled(state);
+    m_pActRemoveAllFiles->setEnabled(state);
     m_pActSettings->setEnabled(state);
     m_pActAddToTask->setEnabled(state);
     ui->lineEditCurTime->setEnabled(state);
@@ -1240,6 +1246,7 @@ void MainWindow::setWidgetsEnabled(bool state)    // Set widgets states
     ui->sortDown->setEnabled(state);
     ui->addFiles->setEnabled(state);
     ui->removeFile->setEnabled(state);
+    ui->removeAllFiles->setEnabled(state);
 
     ui->addPreset->setEnabled(state);
     ui->removePreset->setEnabled(state);
@@ -1632,6 +1639,20 @@ void MainWindow::onRemoveFile()  // Remove file from table
         ui->tableWidget->blockSignals(false);
         onTableSelectionChanged();
     }
+}
+
+void MainWindow::onRemoveAllFiles()  // Remove all files from table
+{
+    const int rowsCount = ui->tableWidget->rowCount();
+    if(rowsCount <= 0)
+        return;
+    ui->tableWidget->blockSignals(true);
+    for(int row = rowsCount - 1; row > -1; row--) {
+        ui->tableWidget->removeRow(row);
+        Helper::eraseRow(m_data, row);
+    }
+    ui->tableWidget->blockSignals(false);
+    onTableSelectionChanged();
 }
 
 void MainWindow::onSort(const bool up)
