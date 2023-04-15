@@ -1103,8 +1103,8 @@
            <widget class="QFrame" name="frameStreams">
             <property name="geometry">
              <rect>
-              <x>640</x>
-              <y>10</y>
+              <x>380</x>
+              <y>440</y>
               <width>341</width>
               <height>201</height>
              </rect>
@@ -2076,7 +2076,7 @@
              <rect>
               <x>280</x>
               <y>10</y>
-              <width>351</width>
+              <width>431</width>
               <height>301</height>
              </rect>
             </property>
@@ -3197,9 +3197,9 @@
            <widget class="QFrame" name="frameLog">
             <property name="geometry">
              <rect>
-              <x>640</x>
-              <y>220</y>
-              <width>341</width>
+              <x>730</x>
+              <y>440</y>
+              <width>271</width>
               <height>191</height>
              </rect>
             </property>
@@ -4753,7 +4753,7 @@
              <rect>
               <x>10</x>
               <y>440</y>
-              <width>431</width>
+              <width>361</width>
               <height>251</height>
              </rect>
             </property>
