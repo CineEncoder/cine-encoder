@@ -31,6 +31,7 @@ signals:
 private:
     virtual bool eventFilter(QObject*, QEvent*) final;
     void resetDefFlags(const int ind);
+    void resetBurnFlags(const int ind);
     QWidget *createCell(bool &state,
                         const QString &format,
                         const QString &dur,

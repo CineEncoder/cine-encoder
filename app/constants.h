@@ -122,7 +122,8 @@ namespace Constants {
     struct Data {
         enum StreamCheck {
             audioChecks, externAudioChecks, subtChecks, externSubtChecks,
-            audioDef,    externAudioDef,    subtDef,    externSubtDef
+            audioDef,    externAudioDef,    subtDef,    externSubtDef,
+            subtBurn,    externSubtBurn
         };
         enum StreamField {
             audioFormats, audioChannels, audioChLayouts, audioDuration,
@@ -138,7 +139,7 @@ namespace Constants {
             externSubtTitles,  externSubtPath
         };
 
-        static const int CHECKS_COUNT = 8;
+        static const int CHECKS_COUNT = 10;
         static const int FIELDS_COUNT = 22;
 
         QVector<QString> videoMetadata;

@@ -323,6 +323,23 @@ void QStreamView::resetDefFlags(const int ind)
     }
 }
 
+void QStreamView::resetBurnFlags(const int ind)
+{
+    Q_LOOP(i, 1, m_pLayout->count()) {
+        if (i != ind) {
+            QLayoutItem *item = m_pLayout->itemAt(i);
+            if (item && item->widget()) {
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("burnInto");
+                if (rbtn)
+                    rbtn->setChecked(false);
+            }
+        }
+    }
+
+
+
+}
+
 QWidget *QStreamView::createCell(bool &state,
                                  const QString &format,
                                  const QString &dur,
@@ -437,6 +454,15 @@ QWidget *QStreamView::createCell(bool &state,
         labCh->setEnabled(true);
         labCh->setFixedHeight(ROW_HEIGHT * Helper::scaling());
         infoLut->addWidget(labCh, 0, 1);
+    } else
+    if (m_type == Content::Subtitle) {
+        QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", tr("Burn into video"), false);
+        brn_rbtn->setFixedHeight(12 * Helper::scaling());
+        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &deflt](bool checked) {
+            resetBurnFlags(m_pLayout->indexOf(cell));
+
+        });
+        infoLut->addWidget(brn_rbtn, 0, 1, Qt::AlignLeft);
     }
 
     // Label external path
