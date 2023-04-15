@@ -1353,6 +1353,9 @@ QPushButton#addFiles {
 QPushButton#removeFile {
     image: url(:/resources/icons/svg/remove_file.svg);
 }
+QPushButton#removeAllFiles {
+    image: url(:/resources/icons/svg/remove_file.svg);
+}
 QPushButton#addPreset {
     image: url(:/resources/icons/svg/add.svg);
 }
@@ -1553,6 +1556,7 @@ QPushButton:hover#removePreset,
 QPushButton:hover#editPreset,
 QPushButton:hover#addFiles,
 QPushButton:hover#removeFile,
+QPushButton:hover#removeAllFiles,
 QPushButton:hover#sortUp,
 QPushButton:hover#sortDown,
 QPushButton:hover#stop,
@@ -1589,6 +1593,7 @@ QPushButton:pressed#removePreset,
 QPushButton:pressed#editPreset,
 QPushButton:pressed#addFiles,
 QPushButton:pressed#removeFile,
+QPushButton:pressed#removeAllFiles,
 QPushButton:pressed#sortUp,
 QPushButton:pressed#sortDown,
 QPushButton:pressed#stop,

@@ -132,6 +132,7 @@ private:
     // ============= Top menu actions =============
     QAction     *m_pActAddFiles,
                 *m_pActRemoveFile,
+                *m_pActRemoveAllFiles,
                 *m_pActCloseWindow,
                 *m_pActSelectPreset,
                 *m_pActStart,
@@ -238,6 +239,7 @@ private slots:
     void onSettings();
     void onAddFiles();
     void onRemoveFile();
+    void onRemoveAllFiles();
     void onStart();
     void onStop();
     void onSort(const bool up);
