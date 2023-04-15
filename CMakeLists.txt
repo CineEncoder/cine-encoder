@@ -16,27 +16,27 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Multimedia Svg)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets X11Extras)
 
 add_executable(cine_encoder WIN32 MACOSX_BUNDLE
-    basedialog.cpp basedialog.h
-    constants.h
-    encoder.cpp encoder.h
-    encoderstream.cpp encoderstream.h
-    fileiconprovider.cpp fileiconprovider.h
-    helper.cpp helper.h
-    main.cpp
-    mainwindow.cpp mainwindow.h mainwindow.ui
-    message.cpp message.h message.ui
-    notification.cpp notification.h notification.ui
-    popupmessage.cpp popupmessage.h popupmessage.ui
-    preset.cpp preset.h preset.ui
-    progress.cpp progress.h progress.ui
-    report.cpp report.h report.ui
-    settings.cpp settings.h settings.ui
-    streamconverter.cpp streamconverter.h streamconverter.ui
-    tables.h
-    widgets/qanimatedsvg.cpp widgets/qanimatedsvg.h
-    widgets/qdoublebutton.cpp widgets/qdoublebutton.h
-    widgets/qstreamview.cpp widgets/qstreamview.h
-    files.qrc
+    app/basedialog.cpp app/basedialog.h
+    app/constants.h
+    app/encoder.cpp app/encoder.h
+    app/encoderstream.cpp app/encoderstream.h
+    app/fileiconprovider.cpp app/fileiconprovider.h
+    app/helper.cpp app/helper.h
+    app/main.cpp
+    app/mainwindow.cpp app/mainwindow.h app/mainwindow.ui
+    app/message.cpp app/message.h app/message.ui
+    app/notification.cpp app/notification.h app/notification.ui
+    app/popupmessage.cpp app/popupmessage.h app/popupmessage.ui
+    app/preset.cpp app/preset.h app/preset.ui
+    app/progress.cpp app/progress.h app/progress.ui
+    app/report.cpp app/report.h app/report.ui
+    app/settings.cpp app/settings.h app/settings.ui
+    app/streamconverter.cpp app/streamconverter.h app/streamconverter.ui
+    app/tables.h
+    app/widgets/qanimatedsvg.cpp app/widgets/qanimatedsvg.h
+    app/widgets/qdoublebutton.cpp app/widgets/qdoublebutton.h
+    app/widgets/qstreamview.cpp app/widgets/qstreamview.h
+    app/files.qrc
 )
 target_link_libraries(cine_encoder PRIVATE
     Qt::Core
@@ -44,6 +44,8 @@ target_link_libraries(cine_encoder PRIVATE
     Qt::Multimedia
     Qt::Svg
 )
+
+target_include_directories(cine_encoder PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/app)
 
 if((QT_VERSION_MAJOR GREATER 4))
     target_link_libraries(cine_encoder PRIVATE
@@ -53,14 +55,14 @@ endif()
 
 if(DEFINES___contains___WM_CUSTOM)
     target_sources(cine_encoder PUBLIC
-        basewindow_cwm.cpp basewindow_cwm.h
+        app/basewindow_cwm.cpp app/basewindow_cwm.h
     )
 endif()
 
 if(UNIX AND NOT DEFINES___contains___WM_CUSTOM AND NOT MACOS)
     target_sources(cine_encoder PUBLIC
-        platform_unix/basewindow.cpp platform_unix/basewindow.h
-        platform_unix/xutil.cpp platform_unix/xutil.h
+        app/platform_unix/basewindow.cpp app/platform_unix/basewindow.h
+        app/platform_unix/xutil.cpp app/platform_unix/xutil.h
     )
 endif()
 
