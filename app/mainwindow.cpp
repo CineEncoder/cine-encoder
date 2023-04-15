@@ -1993,7 +1993,7 @@ void MainWindow::dropEvent(QDropEvent* event)     // Drag & Drop
         QStringList formats;
         QStringList pathList;
         QList<QUrl> urlList = mimeData->urls();
-        for (int i = 0; i < urlList.size() && i < 32; ++i) {
+        for (int i = 0; i < urlList.size(); ++i) {
             pathList.append(urlList.at(i).toLocalFile());
             formats.append(QMimeDatabase().mimeTypeForFile(pathList.at(i)).name());
         }
