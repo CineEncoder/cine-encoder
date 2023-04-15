@@ -47,6 +47,17 @@ namespace QStreamViewPrivate {
         return line;
     }
 
+    QRadioButton *createRadio(QWidget *parent, const char *name, const QString &text, bool checked)
+    {
+        QRadioButton *btn = new QRadioButton(parent);
+        btn->setObjectName(QString::fromUtf8(name));
+        btn->setAutoExclusive(false);
+        if (!text.isEmpty())
+            btn->setText(text);
+        btn->setChecked(checked);
+        return btn;
+    }
+
     void onRowHovered(QObject *obj, bool flag)
     {
         QWidget *wgt = dynamic_cast<QWidget*>(obj);
@@ -220,7 +231,7 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
         if (mouse_event->buttons() & Qt::LeftButton) {
             QWidget *cell = qobject_cast<QWidget*>(obj);
-            QPushButton *btn = cell->findChild<QPushButton*>("audioExpandBtn");
+            QPushButton *btn = cell->findChild<QPushButton*>("expandBtn");
             if (btn)
                 btn->click();
         }
@@ -228,17 +239,17 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
     }
     case QEvent::MouseButtonPress: {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
-        if (mouse_event->buttons() & Qt::RightButton) {           
+        if (mouse_event->buttons() & Qt::RightButton) {
             QWidget *cell = qobject_cast<QWidget*>(obj);
-            QPushButton *btn = cell->findChild<QPushButton*>("audioExpandBtn");
+            QPushButton *btn = cell->findChild<QPushButton*>("expandBtn");
             bool expanded = false;
             if (btn)
                 expanded = btn->property("expanded").toBool();
-            QCheckBox *chkBox = cell->findChild<QCheckBox*>();
+            QCheckBox *chkBox = cell->findChild<QCheckBox*>("checkStream");
             bool checked = false;
             if (chkBox)
                 checked = (chkBox->checkState() == 2) ? true : false;
-            QRadioButton *rbtn = cell->findChild<QRadioButton*>();
+            QRadioButton *rbtn = cell->findChild<QRadioButton*>("defaultStream");
             bool deflt = false;
             if (rbtn)
                 deflt = rbtn->isChecked();
@@ -294,12 +305,10 @@ void QStreamView::resetDefFlags(const int ind)
     Q_LOOP(i, 1, m_pLayout->count()) {
         if (i != ind) {
             QLayoutItem *item = m_pLayout->itemAt(i);
-            if (item) {
-                if (item->widget()) {
-                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
-                    if (rbtn)
-                        rbtn->setChecked(false);
-                }
+            if (item && item->widget()) {
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream", Qt::FindDirectChildrenOnly);
+                if (rbtn)
+                    rbtn->setChecked(false);
             }
         }
     }
@@ -355,22 +364,20 @@ QWidget *QStreamView::createCell(bool &state,
     lut->setVerticalSpacing(4 * Helper::scaling());
     cell->setLayout(lut);
 
-    QRadioButton *rbtn = new QRadioButton(cell);
-    rbtn->setChecked(deflt);
+    // Radio button 'Default stream'
+    QRadioButton *rbtn = QStreamViewPrivate::createRadio(cell, "defaultStream", "", deflt);
     rbtn->setFixedSize(QSize(12,12) * Helper::scaling());
     rbtn->setToolTip(tr("Default"));
-    connect(rbtn, &QRadioButton::clicked, this, [this, cell, rbtn, &deflt, &state]() {
+    connect(rbtn, &QRadioButton::clicked, this, [this, cell, &deflt, &state](bool checked) {
         resetDefFlags(m_pLayout->indexOf(cell));
-        deflt = rbtn->isChecked();
+        deflt = checked;
         if (deflt) {
             QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
-            if (item) {
-                if (item->widget()) {
-                    QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>();
-                    if (chkBox && !chkBox->isChecked()) {
-                        chkBox->setChecked(true);
-                        state = true;
-                    }
+            if (item && item->widget()) {
+                QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>("checkStream");
+                if (chkBox && !chkBox->isChecked()) {
+                    chkBox->setChecked(true);
+                    state = true;
                 }
             }
         }
@@ -414,14 +421,14 @@ QWidget *QStreamView::createCell(bool &state,
 
     // Label channels
     if (m_type == Content::Audio) {
-        /*if (chLayouts.isEmpty())
+        if (chLayouts.isEmpty())
             chLayouts = tr("No layouts");
 
         QLabel *labChLayouts = QStreamViewPrivate::createLabel(info, "labelChLayouts",
-                                                        QString("%1: %2").arg(tr("Duration"), dur));
+                                                        QString("%1: %2").arg(tr("Layouts"), chLayouts));
         labChLayouts->setEnabled(true);
         labChLayouts->setFixedHeight(ROW_HEIGHT);
-        infoLut->addWidget(labChLayouts, 0, 0);*/
+        infoLut->addWidget(labChLayouts, 1, 1);
 
         QLabel *labCh = QStreamViewPrivate::createLabel(info, "labelChannels",
                                                         QString("%1: %2")
@@ -432,20 +439,22 @@ QWidget *QStreamView::createCell(bool &state,
         infoLut->addWidget(labCh, 0, 1);
     }
 
+    // Label external path
     if (externFlag) {
+        const QString elidedPath = Helper::elideText(this, path, Qt::ElideMiddle);
         QLabel *labPath = QStreamViewPrivate::createLabel(info, "labelPath",
-                                                          QString("%1: %2").arg(tr("Path"), path));
+                                                          QString("%1: %2").arg(tr("Path"), elidedPath));
         labPath->setEnabled(true);
         labPath->setFixedHeight(ROW_HEIGHT * Helper::scaling());
-        infoLut->addWidget(labPath, 1, 0, 1, 2);
+        infoLut->addWidget(labPath, 2, 0, 1, 2);
     }
 
     QSpacerItem *sp_bottom = new QSpacerItem(5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding);
     infoLut->addItem(sp_bottom, 5, 0);
 
-    // Button
+    // Expand button
     QPushButton *btn = new QPushButton(cell);
-    btn->setObjectName(QString::fromUtf8("audioExpandBtn"));
+    btn->setObjectName(QString::fromUtf8("expandBtn"));
     btn->setFixedSize(QSize(12, 12) * Helper::scaling());
     connect(btn, &QPushButton::clicked, this, [cell, btn, info]() {
         if (cell->minimumHeight() == 46 * Helper::scaling()) {
@@ -472,7 +481,7 @@ QWidget *QStreamView::createCell(bool &state,
 
     // Check
     QCheckBox *chkBox = new QCheckBox(cell);
-    chkBox->setObjectName(QString::fromUtf8("checkBox"));
+    chkBox->setObjectName(QString::fromUtf8("checkStream"));
     chkBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     chkBox->setFixedWidth(100 * Helper::scaling());
     chkBox->setText(format);
@@ -482,13 +491,11 @@ QWidget *QStreamView::createCell(bool &state,
         state = (chkBox->checkState() == 2) ? true : false;
         if (!state) {
             QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
-            if (item) {
-                if (item->widget()) {
-                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>();
-                    if (rbtn && rbtn->isChecked()) {
-                        rbtn->setChecked(false);
-                        deflt = false;
-                    }
+            if (item && item->widget()) {
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream");
+                if (rbtn && rbtn->isChecked()) {
+                    rbtn->setChecked(false);
+                    deflt = false;
                 }
             }
         }

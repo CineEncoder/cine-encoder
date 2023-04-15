@@ -9,10 +9,6 @@
 #include <QTimer>
 #include <iostream>
 #include <math.h>
-#if defined (Q_OS_UNIX)
-    #include <stdlib.h>
-#endif
-
 
 #define trc(num) static_cast<int>(trunc(num))
 #define rnd(num) static_cast<int>(round(num))
@@ -35,7 +31,7 @@ Helper::DesktopEnv Helper::m_desktopEnv = Helper::DesktopEnv::UNDEF;
 void Helper::detectEnv()
 {
 #if defined (Q_OS_UNIX)
-    const QString environment = QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP"));
+    const QString environment = qgetenv("XDG_CURRENT_DESKTOP");
     m_desktopEnv = (environment.indexOf("GNOME") != -1) ?
                 DesktopEnv::GNOME : DesktopEnv::OTHER;
 #endif
@@ -215,7 +211,7 @@ QString Helper::elideText(QWidget *w,
 #else
     const int fwidth = fm.horizontalAdvance(text);
 #endif
-    const int width = w->width();
+    const int width(0.9 * w->width());
     return (fwidth > width) ? fm.elidedText(text, elide, width, 0) : text;
 }
 

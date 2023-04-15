@@ -136,24 +136,24 @@ Select the correct input file!</source>
 <context>
     <name>Helper</name>
     <message>
-        <location filename="../../helper.cpp" line="98"/>
+        <location filename="../../helper.cpp" line="94"/>
         <source>Audio Files</source>
         <translation>音频文件</translation>
     </message>
     <message>
-        <location filename="../../helper.cpp" line="93"/>
-        <location filename="../../helper.cpp" line="111"/>
-        <location filename="../../helper.cpp" line="132"/>
+        <location filename="../../helper.cpp" line="89"/>
+        <location filename="../../helper.cpp" line="107"/>
+        <location filename="../../helper.cpp" line="128"/>
         <source>All files</source>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../../helper.cpp" line="81"/>
+        <location filename="../../helper.cpp" line="77"/>
         <source>Video Files</source>
         <translation>视频文件</translation>
     </message>
     <message>
-        <location filename="../../helper.cpp" line="116"/>
+        <location filename="../../helper.cpp" line="112"/>
         <source>Subtitle Files</source>
         <translation>字幕文件</translation>
     </message>
@@ -176,7 +176,7 @@ Select the correct input file!</source>
         <translation>预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1898"/>
+        <location filename="../../mainwindow.cpp" line="1919"/>
         <source>Preview</source>
         <translation>预览</translation>
     </message>
@@ -287,174 +287,179 @@ Select the correct input file!</source>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="470"/>
+        <source>Clear the list</source>
+        <translation>清除列表</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="471"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="479"/>
+        <location filename="../../mainwindow.cpp" line="482"/>
         <source>Encode/Pause</source>
         <translation>编码/暂停</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="480"/>
-        <location filename="../../mainwindow.cpp" line="1558"/>
+        <location filename="../../mainwindow.cpp" line="483"/>
+        <location filename="../../mainwindow.cpp" line="1565"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="486"/>
+        <location filename="../../mainwindow.cpp" line="489"/>
         <source>Edit metadata</source>
         <translation>编辑元数据</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="487"/>
+        <location filename="../../mainwindow.cpp" line="490"/>
         <source>Select audio streams</source>
         <translation>选择音频流</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="488"/>
+        <location filename="../../mainwindow.cpp" line="491"/>
         <source>Select subtitles</source>
         <translation>选择字幕</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="489"/>
+        <location filename="../../mainwindow.cpp" line="492"/>
         <source>Split video</source>
         <translation>分割视频</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="507"/>
+        <location filename="../../mainwindow.cpp" line="510"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2733"/>
+        <location filename="../../mainwindow.cpp" line="2754"/>
         <source>Task completed!
 </source>
         <translation>任務完成！
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="501"/>
+        <location filename="../../mainwindow.cpp" line="504"/>
         <source>Reset state</source>
         <translation>复位状态</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="466"/>
-        <location filename="../../mainwindow.cpp" line="511"/>
+        <location filename="../../mainwindow.cpp" line="514"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="512"/>
+        <location filename="../../mainwindow.cpp" line="515"/>
         <source>Donate</source>
         <translation>捐赠</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="537"/>
+        <location filename="../../mainwindow.cpp" line="542"/>
         <source>Add to task</source>
         <translation>添加到任务</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="544"/>
-        <location filename="../../mainwindow.cpp" line="575"/>
+        <location filename="../../mainwindow.cpp" line="549"/>
+        <location filename="../../mainwindow.cpp" line="580"/>
         <source>Add section</source>
         <translation>添加部分</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="545"/>
+        <location filename="../../mainwindow.cpp" line="550"/>
         <source>Add preset</source>
         <translation>添加预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="546"/>
+        <location filename="../../mainwindow.cpp" line="551"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="547"/>
+        <location filename="../../mainwindow.cpp" line="552"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="548"/>
+        <location filename="../../mainwindow.cpp" line="553"/>
         <source>Apply</source>
         <translation>应用</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="462"/>
-        <location filename="../../mainwindow.cpp" line="549"/>
+        <location filename="../../mainwindow.cpp" line="554"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="576"/>
+        <location filename="../../mainwindow.cpp" line="581"/>
         <source>Add new preset</source>
         <translation>添加新预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="648"/>
+        <location filename="../../mainwindow.cpp" line="653"/>
         <source>Folders</source>
         <translation>文件夹</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="660"/>
+        <location filename="../../mainwindow.cpp" line="665"/>
         <source>Files</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="965"/>
+        <location filename="../../mainwindow.cpp" line="970"/>
         <source>ABOUT</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="971"/>
+        <location filename="../../mainwindow.cpp" line="976"/>
         <source>DONATE</source>
         <translation>捐赠</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="999"/>
+        <location filename="../../mainwindow.cpp" line="1004"/>
         <source>You need to restart the program for the settings to take effect.</source>
         <translation>您需要重新启动程序才能使设置生效。</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1130"/>
+        <location filename="../../mainwindow.cpp" line="1135"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1145"/>
+        <location filename="../../mainwindow.cpp" line="1150"/>
         <source>Subtitle</source>
         <translation>字幕</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1618"/>
-        <location filename="../../mainwindow.cpp" line="2161"/>
+        <location filename="../../mainwindow.cpp" line="1625"/>
+        <location filename="../../mainwindow.cpp" line="2182"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1150"/>
+        <location filename="../../mainwindow.cpp" line="1155"/>
         <source>Undefined</source>
         <translation>未定义</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1275"/>
+        <location filename="../../mainwindow.cpp" line="1282"/>
         <source>Encode</source>
         <translation>编码</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1495"/>
-        <location filename="../../mainwindow.cpp" line="1596"/>
+        <location filename="../../mainwindow.cpp" line="1502"/>
+        <location filename="../../mainwindow.cpp" line="1603"/>
         <source>Encoding</source>
         <translation>编码</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1529"/>
+        <location filename="../../mainwindow.cpp" line="1536"/>
         <source>Done!</source>
         <translation>完成！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1525"/>
+        <location filename="../../mainwindow.cpp" line="1532"/>
         <source>Task completed!
 
  Elapsed time: </source>
@@ -468,129 +473,129 @@ Select the correct input file!</source>
         <translation>没有字幕</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1125"/>
+        <location filename="../../mainwindow.cpp" line="1130"/>
         <source>bit</source>
         <translation>位</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1128"/>
+        <location filename="../../mainwindow.cpp" line="1133"/>
         <source>kbps</source>
         <translation>kbps</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1138"/>
+        <location filename="../../mainwindow.cpp" line="1143"/>
         <source>Audio</source>
         <translation>音频</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1561"/>
+        <location filename="../../mainwindow.cpp" line="1568"/>
         <source>The current encoding process has been canceled!
 </source>
         <translation>当前的编码过程已被取消！
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1570"/>
+        <location filename="../../mainwindow.cpp" line="1577"/>
         <source>Error!</source>
         <translation>错误！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1572"/>
+        <location filename="../../mainwindow.cpp" line="1579"/>
         <source>An error occurred: </source>
         <translation>发生了一个错误: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1573"/>
+        <location filename="../../mainwindow.cpp" line="1580"/>
         <source>Unexpected error occurred!</source>
         <translation>发生意外错误！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1585"/>
-        <location filename="../../mainwindow.cpp" line="1606"/>
-        <location filename="../../mainwindow.cpp" line="1697"/>
+        <location filename="../../mainwindow.cpp" line="1592"/>
+        <location filename="../../mainwindow.cpp" line="1613"/>
+        <location filename="../../mainwindow.cpp" line="1718"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1668"/>
+        <location filename="../../mainwindow.cpp" line="1689"/>
         <source>Select input file first!</source>
         <translation>首先选择输入文件！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1672"/>
+        <location filename="../../mainwindow.cpp" line="1693"/>
         <source>Select preset first!</source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1697"/>
+        <location filename="../../mainwindow.cpp" line="1718"/>
         <source>Resume</source>
         <translation>简历</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1707"/>
+        <location filename="../../mainwindow.cpp" line="1728"/>
         <source>Stop encoding?</source>
         <translation>停止编码？</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1715"/>
+        <location filename="../../mainwindow.cpp" line="1736"/>
         <source>OPENING FILES</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2116"/>
+        <location filename="../../mainwindow.cpp" line="2137"/>
         <source>Select output folder</source>
         <translation>选择输出文件夹</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2188"/>
+        <location filename="../../mainwindow.cpp" line="2209"/>
         <source>File: &apos;%1&apos; is not audio file!</source>
         <translation>文件: %1 不是音频文件！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1861"/>
-        <location filename="../../mainwindow.cpp" line="2209"/>
+        <location filename="../../mainwindow.cpp" line="1882"/>
+        <location filename="../../mainwindow.cpp" line="2230"/>
         <source>File: &apos;%1&apos; cannot be opened!</source>
         <translation>文件: %1 无法打开！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2204"/>
+        <location filename="../../mainwindow.cpp" line="2225"/>
         <source>File: &apos;%1&apos; is not subtitle file!</source>
         <translation>文件: %1 不是字幕文件!</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2337"/>
-        <location filename="../../mainwindow.cpp" line="2348"/>
-        <location filename="../../mainwindow.cpp" line="2398"/>
-        <location filename="../../mainwindow.cpp" line="2431"/>
+        <location filename="../../mainwindow.cpp" line="2358"/>
+        <location filename="../../mainwindow.cpp" line="2369"/>
+        <location filename="../../mainwindow.cpp" line="2419"/>
+        <location filename="../../mainwindow.cpp" line="2452"/>
         <source>Select preset first!
 </source>
         <translation>首先选择预设！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2365"/>
+        <location filename="../../mainwindow.cpp" line="2386"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2390"/>
+        <location filename="../../mainwindow.cpp" line="2411"/>
         <source>Delete presets first!
 </source>
         <translation>先删除预设！</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2454"/>
+        <location filename="../../mainwindow.cpp" line="2475"/>
         <source>First add a section!
 </source>
         <translation>首先添加一个部分！
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2547"/>
+        <location filename="../../mainwindow.cpp" line="2568"/>
         <source>Preset not selected</source>
         <translation>未选择预设</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="2702"/>
+        <location filename="../../mainwindow.cpp" line="2723"/>
         <source>Task</source>
         <translation>任务</translation>
     </message>
@@ -1436,77 +1441,87 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QStreamView</name>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="108"/>
+        <location filename="../../widgets/qstreamview.cpp" line="119"/>
         <source>Format</source>
         <translation>格式</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="108"/>
+        <location filename="../../widgets/qstreamview.cpp" line="119"/>
         <source>Title</source>
         <translation>标题</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="108"/>
+        <location filename="../../widgets/qstreamview.cpp" line="119"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="247"/>
+        <location filename="../../widgets/qstreamview.cpp" line="258"/>
         <source>Collapse</source>
         <translation>坍塌</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="247"/>
+        <location filename="../../widgets/qstreamview.cpp" line="258"/>
         <source>Expand</source>
         <translation>擴張</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="248"/>
+        <location filename="../../widgets/qstreamview.cpp" line="259"/>
         <source>Uncheck</source>
         <translation>取消選中</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="248"/>
+        <location filename="../../widgets/qstreamview.cpp" line="259"/>
         <source>Check</source>
         <translation>查看</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="249"/>
+        <location filename="../../widgets/qstreamview.cpp" line="260"/>
         <source>Set as default track</source>
         <translation>設為默認軌道</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="266"/>
+        <location filename="../../widgets/qstreamview.cpp" line="277"/>
         <source>Extract track</source>
         <translation>提取音頻或字幕軌道</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="361"/>
+        <location filename="../../widgets/qstreamview.cpp" line="370"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="378"/>
+        <location filename="../../widgets/qstreamview.cpp" line="397"/>
         <source>external</source>
         <translation>外部</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="381"/>
+        <location filename="../../widgets/qstreamview.cpp" line="400"/>
         <source>unsupported</source>
         <translation>不支持</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="397"/>
+        <location filename="../../widgets/qstreamview.cpp" line="416"/>
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="416"/>
+        <location filename="../../widgets/qstreamview.cpp" line="425"/>
+        <source>No layouts</source>
+        <translation>沒有頻道</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="428"/>
+        <source>Layouts</source>
+        <translation>頻道</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/qstreamview.cpp" line="435"/>
         <source>Channels</source>
         <translation>声道</translation>
     </message>
     <message>
-        <location filename="../../widgets/qstreamview.cpp" line="425"/>
+        <location filename="../../widgets/qstreamview.cpp" line="446"/>
         <source>Path</source>
         <translation>路径</translation>
     </message>
@@ -2529,7 +2544,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="761"/>
-        <location filename="../../mainwindow.ui" line="3076"/>
+        <location filename="../../mainwindow.ui" line="2334"/>
         <source>Mode</source>
         <translation>模式</translation>
     </message>
@@ -2575,52 +2590,52 @@ p, li { white-space: pre-wrap; }
         <translation>字幕</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4420"/>
+        <location filename="../../mainwindow.ui" line="4473"/>
         <source>Next Frame  </source>
         <translation>下一帧  </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3524"/>
+        <location filename="../../mainwindow.ui" line="3577"/>
         <source>  Description:</source>
         <translation>  描述:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3573"/>
+        <location filename="../../mainwindow.ui" line="3626"/>
         <source>  Title:</source>
         <translation>  标题:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3647"/>
+        <location filename="../../mainwindow.ui" line="3700"/>
         <source>  Performer:</source>
         <translation>  演员:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3721"/>
+        <location filename="../../mainwindow.ui" line="3774"/>
         <source>  Year:</source>
         <translation>  年:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3829"/>
+        <location filename="../../mainwindow.ui" line="3882"/>
         <source>  Author:</source>
         <translation>  作者:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3869"/>
+        <location filename="../../mainwindow.ui" line="3922"/>
         <source>  Name:</source>
         <translation>  姓名:</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4547"/>
+        <location filename="../../mainwindow.ui" line="4600"/>
         <source>Set end time</source>
         <translation>设置结束时间</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4321"/>
+        <location filename="../../mainwindow.ui" line="4374"/>
         <source>  Prev Frame</source>
         <translation>  上一帧</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4519"/>
+        <location filename="../../mainwindow.ui" line="4572"/>
         <source>Set start time</source>
         <translation>设置开始时间</translation>
     </message>
@@ -2631,7 +2646,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="1917"/>
-        <location filename="../../mainwindow.ui" line="2935"/>
+        <location filename="../../mainwindow.ui" line="2885"/>
         <source>Add files</source>
         <translation>添加文件</translation>
     </message>
@@ -2641,132 +2656,137 @@ p, li { white-space: pre-wrap; }
         <translation>输出文件夹</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2831"/>
+        <location filename="../../mainwindow.ui" line="2916"/>
         <source>Sort Z-A</source>
         <translation>排序 Z-A</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2495"/>
+        <location filename="../../mainwindow.ui" line="2592"/>
         <source>File name</source>
         <translation>文件名</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2500"/>
+        <location filename="../../mainwindow.ui" line="2240"/>
+        <source>Clear the list</source>
+        <translation>清除列表</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.ui" line="2597"/>
         <source>Format</source>
         <translation>格式</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2505"/>
+        <location filename="../../mainwindow.ui" line="2602"/>
         <source>Resolution</source>
         <translation>分辨率</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2510"/>
+        <location filename="../../mainwindow.ui" line="2607"/>
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2515"/>
+        <location filename="../../mainwindow.ui" line="2612"/>
         <source>FPS</source>
         <translation>FPS</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2520"/>
+        <location filename="../../mainwindow.ui" line="2617"/>
         <source>AR</source>
         <translation>AR</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2525"/>
+        <location filename="../../mainwindow.ui" line="2622"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2530"/>
+        <location filename="../../mainwindow.ui" line="2627"/>
         <source>Bitrate</source>
         <translation>比特率</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2535"/>
+        <location filename="../../mainwindow.ui" line="2632"/>
         <source>Subsampling</source>
         <translation>二次采样</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2540"/>
+        <location filename="../../mainwindow.ui" line="2637"/>
         <source>Bit depth</source>
         <translation>位深</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2545"/>
+        <location filename="../../mainwindow.ui" line="2642"/>
         <source>Color space</source>
         <translation>色彩空间</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2550"/>
+        <location filename="../../mainwindow.ui" line="2647"/>
         <source>Color range</source>
         <translation>色彩范围</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2555"/>
+        <location filename="../../mainwindow.ui" line="2652"/>
         <source>Color prim</source>
         <translation>色彩原始</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2560"/>
+        <location filename="../../mainwindow.ui" line="2657"/>
         <source>Color mtrx</source>
         <translation>颜色矩阵</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2565"/>
+        <location filename="../../mainwindow.ui" line="2662"/>
         <source>Transfer</source>
         <translation>传输</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2570"/>
+        <location filename="../../mainwindow.ui" line="2667"/>
         <source>Max lum</source>
         <translation>最大 LUM</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2575"/>
+        <location filename="../../mainwindow.ui" line="2672"/>
         <source>Min lum</source>
         <translation>最小 LUM</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2580"/>
+        <location filename="../../mainwindow.ui" line="2677"/>
         <source>Max CLL</source>
         <translation>最大 CLL</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2585"/>
+        <location filename="../../mainwindow.ui" line="2682"/>
         <source>Max Fall</source>
         <translation>最大下降</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2590"/>
+        <location filename="../../mainwindow.ui" line="2687"/>
         <source>Master display</source>
         <translation>主显示</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2595"/>
+        <location filename="../../mainwindow.ui" line="2692"/>
         <source>Path</source>
         <translation>路径</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3042"/>
+        <location filename="../../mainwindow.ui" line="2158"/>
         <source>Encode</source>
         <translation>编码</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3080"/>
+        <location filename="../../mainwindow.ui" line="2338"/>
         <source>Single Mode</source>
         <translation>单个模式</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3085"/>
+        <location filename="../../mainwindow.ui" line="2343"/>
         <source>Batch Mode</source>
         <translation>批量模式</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2245"/>
+        <location filename="../../mainwindow.ui" line="3034"/>
         <source>Tasks</source>
         <translation>任务</translation>
     </message>
@@ -2776,67 +2796,67 @@ p, li { white-space: pre-wrap; }
         <translation>撤消标题</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2750"/>
+        <location filename="../../mainwindow.ui" line="2403"/>
         <source>Remove from the list</source>
         <translation>从列表中删除</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="2787"/>
+        <location filename="../../mainwindow.ui" line="2372"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3011"/>
+        <location filename="../../mainwindow.ui" line="2306"/>
         <source>Sort A-Z</source>
         <translation>排序 A-Z</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="3121"/>
+        <location filename="../../mainwindow.ui" line="3088"/>
         <source>Scale</source>
         <translation>规模</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4002"/>
+        <location filename="../../mainwindow.ui" line="4055"/>
         <source>Clear all</source>
         <translation>清除一切</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4049"/>
+        <location filename="../../mainwindow.ui" line="4102"/>
         <source>Undo all</source>
         <translation>全部撤销</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4626"/>
+        <location filename="../../mainwindow.ui" line="4679"/>
         <source>Reset labels</source>
         <translation>重置标签</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="4843"/>
+        <location filename="../../mainwindow.ui" line="4896"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5037"/>
+        <location filename="../../mainwindow.ui" line="5090"/>
         <source>Forward</source>
         <translation>向前</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5084"/>
+        <location filename="../../mainwindow.ui" line="5137"/>
         <source>Back</source>
         <translation>后退</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5314"/>
+        <location filename="../../mainwindow.ui" line="5367"/>
         <source>Event log</source>
         <translation>事件簿</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5166"/>
+        <location filename="../../mainwindow.ui" line="5219"/>
         <source>Add title for all files</source>
         <translation>为所有文件添加标题</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="5169"/>
+        <location filename="../../mainwindow.ui" line="5222"/>
         <source>Title  (global)</source>
         <translation>标题  （全局）</translation>
     </message>

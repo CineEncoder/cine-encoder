@@ -1353,6 +1353,9 @@ QPushButton#addFiles {
 QPushButton#removeFile {
     image: url(:/resources/icons/svg/remove_file.svg);
 }
+QPushButton#removeAllFiles {
+    image: url(:/resources/icons/svg/broomstick.svg);
+}
 QPushButton#addPreset {
     image: url(:/resources/icons/svg/add.svg);
 }
@@ -1442,14 +1445,14 @@ QPushButton#settings {
     min-height: 40px;
     image: url(:/resources/icons/32x32/cil-settings.png);
 }
-QPushButton#audioExpandBtn {
+QPushButton#expandBtn {
     border: none;
     border-radius: 0px;
     image: url(:/resources/icons/svg/frame-bottom_black.svg);
     color: @elementsTextColor;
     background-color: transparent;
 }
-QPushButton#audioExpandBtn[expanded=true] {
+QPushButton#expandBtn[expanded=true] {
     image: url(:/resources/icons/svg/frame-top_black.svg);
 }
 QPushButton#leftButton,
@@ -1552,6 +1555,7 @@ QPushButton:hover#removePreset,
 QPushButton:hover#editPreset,
 QPushButton:hover#addFiles,
 QPushButton:hover#removeFile,
+QPushButton:hover#removeAllFiles,
 QPushButton:hover#sortUp,
 QPushButton:hover#sortDown,
 QPushButton:hover#stop,
@@ -1561,7 +1565,7 @@ QPushButton:hover#buttonReset,
 QPushButton:hover#addFilesHot,
 QPushButton:hover#setOutFolder,
 QPushButton:hover#settings,
-QPushButton:hover#audioExpandBtn,
+QPushButton:hover#expandBtn,
 QPushButton:hover#hideWindow,
 QPushButton:hover#expandWindow,
 QPushButton:hover#closeReport,
@@ -1587,6 +1591,7 @@ QPushButton:pressed#removePreset,
 QPushButton:pressed#editPreset,
 QPushButton:pressed#addFiles,
 QPushButton:pressed#removeFile,
+QPushButton:pressed#removeAllFiles,
 QPushButton:pressed#sortUp,
 QPushButton:pressed#sortDown,
 QPushButton:pressed#stop,
