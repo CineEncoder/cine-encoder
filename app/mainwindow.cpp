@@ -408,7 +408,7 @@ void MainWindow::createConnections()
         SLT(onSetEndTime),   SLT(onRemovePreset),  SLT(onEditPreset),
         SLT(onApplyPreset),  SLT(onAddFiles),      SLT(onSetOutFolder),
         SLT(onCloseWindow),  SLT(onResetLabels),   SLT(onReport),
-        SLT(onBack),         SLT(onForward), SLT(onRemoveAllFiles)
+        SLT(onBack),         SLT(onForward),       SLT(onRemoveAllFiles)
     };
     Q_LOOP(i, 0, BTN_COUNT)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);

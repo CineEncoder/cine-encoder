@@ -1354,7 +1354,7 @@ QPushButton#removeFile {
     image: url(:/resources/icons/svg/remove_file.svg);
 }
 QPushButton#removeAllFiles {
-    image: url(:/resources/icons/svg/remove_file.svg);
+    image: url(:/resources/icons/svg/broomstick.svg);
 }
 QPushButton#addPreset {
     image: url(:/resources/icons/svg/add.svg);
