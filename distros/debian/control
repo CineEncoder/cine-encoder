@@ -20,7 +20,7 @@ Depends:	${misc:Depends},
             ffmpeg,
             mkvtoolnix,
             i965-va-driver
-Description: Cine Encoder 2022 ver 3.5
+Description: Cine Encoder 2023 ver 3.5
  Cine Encoder is an application, uses the FFmpeg, MKVToolNix and MediaInfo
  utilities, that allows to convert media files while preserving HDR metadata.
  Supported hardware encoding NVENC and Intel QSV (for Windows and experimental
