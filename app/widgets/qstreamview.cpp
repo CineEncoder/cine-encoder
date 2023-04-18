@@ -137,6 +137,7 @@ void QStreamView::setList(Data &data)
     m_pLayout->addWidget(hw);
 
     if (m_type == Content::Audio) {
+        bool stub = false;
         for (int i = 0; i < FIELDS(audioFormats).size(); i++) {
             QWidget *cell = createCell(CHECKS(audioChecks)[i],
                                        FIELDS(audioFormats)[i],
@@ -146,7 +147,8 @@ void QStreamView::setList(Data &data)
                                        FIELDS(audioChannels)[i],
                                        FIELDS(audioChLayouts)[i],
                                        "",
-                                       CHECKS(audioDef)[i]);
+                                       CHECKS(audioDef)[i],
+                                       stub);
             m_pLayout->addWidget(cell);
         }
         for (int i = 0; i < FIELDS(externAudioFormats).size(); i++) {
@@ -159,6 +161,7 @@ void QStreamView::setList(Data &data)
                                        FIELDS(externAudioChLayouts)[i],
                                        FIELDS(externAudioPath)[i],
                                        CHECKS(externAudioDef)[i],
+                                       stub,
                                        true);
             m_pLayout->addWidget(cell);
         }
@@ -173,7 +176,8 @@ void QStreamView::setList(Data &data)
                                        "",
                                        "",
                                        "",
-                                       CHECKS(subtDef)[i]);
+                                       CHECKS(subtDef)[i],
+                                       CHECKS(subtBurn)[i]);
             m_pLayout->addWidget(cell);
         }
         for (int i = 0; i < FIELDS(externSubtFormats).size(); i++) {
@@ -186,6 +190,7 @@ void QStreamView::setList(Data &data)
                                        "",
                                        FIELDS(externSubtPath)[i],
                                        CHECKS(externSubtDef)[i],
+                                       CHECKS(externSubtBurn)[i],
                                        true);
             m_pLayout->addWidget(cell);
         }
@@ -349,7 +354,9 @@ QWidget *QStreamView::createCell(bool &state,
                                  QString chLayouts,
                                  const QString &path,
                                  bool &deflt,
-                                 bool externFlag)
+                                 bool &burn,
+                                 bool externFlag
+                                 )
 {
     auto connectAction = [this](QLineEdit* line, bool isVisible)->void {
         auto actionList = line->findChildren<QAction*>();
@@ -382,7 +389,7 @@ QWidget *QStreamView::createCell(bool &state,
     cell->setLayout(lut);
 
     // Radio button 'Default stream'
-    QRadioButton *rbtn = QStreamViewPrivate::createRadio(cell, "defaultStream", "", deflt);
+    QRadioButton *rbtn = QStreamViewPrivate::createRadio(cell, "defaultStream", "Default", deflt);
     rbtn->setFixedSize(QSize(12,12) * Helper::scaling());
     rbtn->setToolTip(tr("Default"));
     connect(rbtn, &QRadioButton::clicked, this, [this, cell, &deflt, &state](bool checked) {
@@ -456,11 +463,11 @@ QWidget *QStreamView::createCell(bool &state,
         infoLut->addWidget(labCh, 0, 1);
     } else
     if (m_type == Content::Subtitle) {
-        QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", tr("Burn into video"), false);
+        QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", "Burn", burn);
         brn_rbtn->setFixedHeight(12 * Helper::scaling());
-        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &deflt](bool checked) {
-            resetBurnFlags(m_pLayout->indexOf(cell));
-
+        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn](bool checked) {
+            //resetBurnFlags(m_pLayout->indexOf(cell));
+            burn = checked;
         });
         infoLut->addWidget(brn_rbtn, 0, 1, Qt::AlignLeft);
     }

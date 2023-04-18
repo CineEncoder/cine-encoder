@@ -185,6 +185,7 @@ namespace Constants {
 
     struct EncoderSubtParam {
         int SUBT_CODEC;
+        bool burn;
         QString SUBT_CONTAINER;
     };
 

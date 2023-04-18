@@ -41,6 +41,7 @@ private:
                         QString chLayouts,
                         const QString &path,
                         bool &deflt,
+                        bool &burn,
                         bool externFlag = false);
     QVBoxLayout *m_pLayout;
     Content m_type;
