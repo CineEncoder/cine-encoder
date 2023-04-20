@@ -314,8 +314,6 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     Q_LOOP(k, 0, CHECKS(externSubtChecks).size()) {
         if (CHECKS(externSubtChecks)[k] == true) {
-            _extSubPaths << "-i" << FIELDS(externSubtPath)[k];
-
             if (CHECKS(externSubtBurn)[k] == true) {
                 _burn_subtitle = true;
                 extSubBurn[k] = " -vf \"subtitles=" + FIELDS(externSubtPath)[k] + "\" ";
@@ -323,6 +321,7 @@ void Encoder::initEncoding(const QString  &temp_file,
                 _subtitleMetadataParam += " ";
             }
             else {
+                _extSubPaths << "-i" << FIELDS(externSubtPath)[k];
                 extSubMap[k] = QString("-map %1:s? ").arg(numToStr(extTrackNum));
                 extSubLang[k] = QString("-metadata:s:s:%1 language=%2 ")
                         .arg(numToStr(subtNum), FIELDS(externSubtLangs)[k].replace(" ", "\u00A0"));
@@ -943,7 +942,13 @@ void Encoder::encode()   // Encode
                       << _preset_pass1.split(" ");
         }
     }
-    //qDebug() << arguments;
+    // qDebug() << arguments;
+    std::string args_ = "";
+    for (int i = 0; i < arguments.count(); i++)
+    {
+        args_ += arguments[i].toStdString() + " ";
+    }
+    Print(args_);
     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {
         Print("cmd command not found!!!");
