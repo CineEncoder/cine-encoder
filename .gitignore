@@ -1,5 +1,7 @@
 # Ignored folders:
 /builddir
+cmake-build-debug/
+.idea/
 
 # Ignored files:
 *.pro.user

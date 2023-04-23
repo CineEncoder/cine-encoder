@@ -135,33 +135,23 @@ void EncoderStream::initEncoding(StreamData *data,
     /************************************ Subtitle module *************************************/
     QString scodec("");
     {
-        const QString selected_scodec = t.arr_scodec_sep[SCODEC];
-        if (selected_scodec == "SubRip") {
-            scodec = QString("-c:s srt");
-        }
-        else
-        if (selected_scodec == "WebVTT") {
-            scodec = QString("-c:s webvtt");
-        }
-        else
-        if (selected_scodec == "SubStation Alpha") {
-            scodec = QString("-c:s ssa");
-        }
-        else
-        if (selected_scodec == "Advanced SSA") {
-            scodec = QString("-c:s ass");
-        }
-        else
-        if (selected_scodec == "Timed Text") {
-            scodec = QString("-c:s ttml");
-        }
-        else
-        if (selected_scodec == "MOV text") {
-            scodec = QString("-c:s mov_text");
-        }
-        else
-        if (selected_scodec == tr("Source")) {
-            scodec = "-c:s copy";
+        if (!sParam->burn) {
+            const QString selected_scodec = t.arr_scodec_sep[SCODEC];
+            if (selected_scodec == "SubRip") {
+                scodec = QString("-c:s srt");
+            } else if (selected_scodec == "WebVTT") {
+                scodec = QString("-c:s webvtt");
+            } else if (selected_scodec == "SubStation Alpha") {
+                scodec = QString("-c:s ssa");
+            } else if (selected_scodec == "Advanced SSA") {
+                scodec = QString("-c:s ass");
+            } else if (selected_scodec == "Timed Text") {
+                scodec = QString("-c:s ttml");
+            } else if (selected_scodec == "MOV text") {
+                scodec = QString("-c:s mov_text");
+            } else if (selected_scodec == tr("Source")) {
+                scodec = "-c:s copy";
+            }
         }
     }
     const QString sparam = "-an " + scodec;

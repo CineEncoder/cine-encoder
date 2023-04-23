@@ -275,24 +275,33 @@ void Encoder::initEncoding(const QString  &temp_file,
     QVector<QString> subtitleLang(CHECKS(subtChecks).size(), ""),
                      subtitleTitle(CHECKS(subtChecks).size(), ""),
                      subtitleMap(CHECKS(subtChecks).size(), ""),
-                     subtitleDef(CHECKS(subtChecks).size(), "");
+                     subtitleDef(CHECKS(subtChecks).size(), ""),
+                     subtitleBurn(CHECKS(subtChecks).size(), "");
     QString _subtitleMapParam(""),
             _subtitleMetadataParam("");
     int     subtNum = 0;
 
     Q_LOOP(k, 0, CHECKS(subtChecks).size()) {
         if (CHECKS(subtChecks)[k] == true) {
-            subtitleMap[k] = QString("-map 0:s:%1? ").arg(numToStr(k));
-            subtitleLang[k] = QString("-metadata:s:s:%1 language=%2 ")
-                           .arg(numToStr(subtNum), FIELDS(subtLangs)[k].replace(" ", "\u00A0"));
-            subtitleTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
-                            .arg(numToStr(subtNum), FIELDS(subtTitles)[k].replace(" ", "\u00A0"));
-            subtitleDef[k] = QString("-disposition:s:%1 %2 ")
-                           .arg(numToStr(subtNum), CHECKS(subtDef)[k] ? "default" : "0");
+            if (CHECKS(subtBurn)[k]) {
+                _burn_subtitle = true;
+                subtitleBurn[k] = " -vf \"subtitles=" + input_file + ":stream_index=" + numToStr(subtNum) + "\" ";
+                _subtitleMapParam += subtitleBurn[k];
+                _subtitleMetadataParam += " ";
+            }
+            else {
+                subtitleMap[k] = QString("-map 0:s:%1? ").arg(numToStr(k));
+                subtitleLang[k] = QString("-metadata:s:s:%1 language=%2 ")
+                        .arg(numToStr(subtNum), FIELDS(subtLangs)[k].replace(" ", "\u00A0"));
+                subtitleTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
+                        .arg(numToStr(subtNum), FIELDS(subtTitles)[k].replace(" ", "\u00A0"));
+                subtitleDef[k] = QString("-disposition:s:%1 %2 ")
+                        .arg(numToStr(subtNum), CHECKS(subtDef)[k] ? "default" : "0");
+                _subtitleMapParam += subtitleMap[k];
+                _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k] + subtitleDef[k];
+            }
             subtNum++;
         }
-        _subtitleMapParam += subtitleMap[k];
-        _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k] + subtitleDef[k];
     }
 
     /****************************** External Subtitle streams *********************************/
@@ -300,23 +309,32 @@ void Encoder::initEncoding(const QString  &temp_file,
     QVector<QString> extSubLang(CHECKS(externSubtChecks).size(), ""),
                      extSubTitle(CHECKS(externSubtChecks).size(), ""),
                      extSubMap(CHECKS(externSubtChecks).size(), ""),
-                     extSubDef(CHECKS(externSubtChecks).size(), "");
+                     extSubDef(CHECKS(externSubtChecks).size(), ""),
+                     extSubBurn(CHECKS(externSubtChecks).size(), "");
 
     Q_LOOP(k, 0, CHECKS(externSubtChecks).size()) {
         if (CHECKS(externSubtChecks)[k] == true) {
-            _extSubPaths << "-i" << FIELDS(externSubtPath)[k];
-            extSubMap[k] = QString("-map %1:s? ").arg(numToStr(extTrackNum));
-            extSubLang[k] = QString("-metadata:s:s:%1 language=%2 ")
-                           .arg(numToStr(subtNum), FIELDS(externSubtLangs)[k].replace(" ", "\u00A0"));
-            extSubTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
-                            .arg(numToStr(subtNum), FIELDS(externSubtTitles)[k].replace(" ", "\u00A0"));
-            extSubDef[k] = QString("-disposition:s:%1 %2 ")
-                           .arg(numToStr(subtNum), CHECKS(externSubtDef)[k] ? "default" : "0");
+            if (CHECKS(externSubtBurn)[k] == true) {
+                _burn_subtitle = true;
+                extSubBurn[k] = " -vf \"subtitles=" + FIELDS(externSubtPath)[k] + "\" ";
+                _subtitleMapParam += extSubBurn[k];
+                _subtitleMetadataParam += " ";
+            }
+            else {
+                _extSubPaths << "-i" << FIELDS(externSubtPath)[k];
+                extSubMap[k] = QString("-map %1:s? ").arg(numToStr(extTrackNum));
+                extSubLang[k] = QString("-metadata:s:s:%1 language=%2 ")
+                        .arg(numToStr(subtNum), FIELDS(externSubtLangs)[k].replace(" ", "\u00A0"));
+                extSubTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
+                        .arg(numToStr(subtNum), FIELDS(externSubtTitles)[k].replace(" ", "\u00A0"));
+                extSubDef[k] = QString("-disposition:s:%1 %2 ")
+                        .arg(numToStr(subtNum), CHECKS(externSubtDef)[k] ? "default" : "0");
+                _subtitleMapParam += extSubMap[k];
+                _subtitleMetadataParam += extSubLang[k] + extSubTitle[k] + extSubDef[k];
+            }
             subtNum++;
             extTrackNum++;
         }
-        _subtitleMapParam += extSubMap[k];
-        _subtitleMetadataParam += extSubLang[k] + extSubTitle[k] + extSubDef[k];
     }
 
     /************************************* Codec module ***************************************/
@@ -464,28 +482,25 @@ void Encoder::initEncoding(const QString  &temp_file,
     /************************************ Subtitle module *************************************/
 
     QString sub_param("");
-    if (container == "mkv") {
-        _sub_mux_param = QString("-c:s ass");
-    }
-    else
-    if (container == "webm") {
-        _sub_mux_param = QString("-c:s webvtt");
-    }
-    else
-    if (container == "mp4" || container == "mov") {
-        _sub_mux_param = QString("-c:s mov_text");
-    }
-    else {
-        _sub_mux_param = QString("-sn");
-        emit onEncodingError(tr("Container \'%1\' will be transcoded without subtitles.")
-                             .arg(container), true);
-    }
 
-    if (_flag_hdr) {
-        sub_param = QString(" -c:s ass");
-    }
-    else {
-        sub_param = QString(" ") + _sub_mux_param;
+    if (!_burn_subtitle) {
+        if (container == "mkv") {
+            _sub_mux_param = QString("-c:s ass");
+        } else if (container == "webm") {
+            _sub_mux_param = QString("-c:s webvtt");
+        } else if (container == "mp4" || container == "mov") {
+            _sub_mux_param = QString("-c:s mov_text");
+        } else {
+            _sub_mux_param = QString("-sn");
+            emit onEncodingError(tr("Container \'%1\' will be transcoded without subtitles.")
+                                         .arg(container), true);
+        }
+
+        if (_flag_hdr) {
+            sub_param = QString(" -c:s ass");
+        } else {
+            sub_param = QString(" ") + _sub_mux_param;
+        }
     }
 
     /************************************* Color module ***************************************/
@@ -927,7 +942,13 @@ void Encoder::encode()   // Encode
                       << _preset_pass1.split(" ");
         }
     }
-    //qDebug() << arguments;
+    // qDebug() << arguments;
+    std::string args_ = "";
+    for (int i = 0; i < arguments.count(); i++)
+    {
+        args_ += arguments[i].toStdString() + " ";
+    }
+    Print(args_);
     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {
         Print("cmd command not found!!!");
