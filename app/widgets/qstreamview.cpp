@@ -341,8 +341,8 @@ void QStreamView::resetBurnFlags(const int ind)
         }
     }
 
-
-
+    m_pData->checks[Data::subtBurn].fill(false);
+    m_pData->checks[Data::externSubtBurn].fill(false);
 }
 
 QWidget *QStreamView::createCell(bool &state,
@@ -464,10 +464,12 @@ QWidget *QStreamView::createCell(bool &state,
     } else
     if (m_type == Content::Subtitle) {
         QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", "Burn", burn);
-        brn_rbtn->setFixedHeight(12 * Helper::scaling());
-        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn](bool checked) {
-            //resetBurnFlags(m_pLayout->indexOf(cell));
+        brn_rbtn->setFixedSize(QSize(12,12) * Helper::scaling());
+        brn_rbtn->setToolTip(tr("Burn"));
+        connect(brn_rbtn, &QRadioButton::clicked, this, [this, info, &burn, &state](bool checked) {
+            // resetBurnFlags(m_pLayout->indexOf(info));
             burn = checked;
+            state = checked;
         });
         infoLut->addWidget(brn_rbtn, 0, 1, Qt::AlignLeft);
     }
