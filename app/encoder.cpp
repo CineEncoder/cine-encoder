@@ -942,6 +942,7 @@ void Encoder::encode()   // Encode
                       << _preset_pass1.split(" ");
         }
     }
+    /*
     // qDebug() << arguments;
     std::string args_ = "";
     for (int i = 0; i < arguments.count(); i++)
@@ -949,6 +950,7 @@ void Encoder::encode()   // Encode
         args_ += arguments[i].toStdString() + " ";
     }
     Print(args_);
+    */
     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {
         Print("cmd command not found!!!");
