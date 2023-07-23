@@ -38,6 +38,7 @@
 #include <QFile>
 #include <QSizePolicy>
 #include <QTranslator>
+#include <QScreen>
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -803,9 +804,9 @@ void MainWindow::setParameters()    // Set parameters
         stn.endGroup();
 
     } else {
-        const QSize delta = QApplication::desktop()->size() - WINDOW_SIZE;
-        const QPointF topLeft(float(delta.width())/2, float(delta.height())/2);
-        const QRect rect(topLeft.toPoint(), WINDOW_SIZE);
+        const QRect scr_rect = QApplication::primaryScreen()->availableGeometry();
+        const QPoint topLeft = scr_rect.translated(100,100).topLeft();
+        const QRect rect(topLeft, WINDOW_SIZE);
         setGeometry(rect);
 
         ui->treeWidget->setColumnWidth(0, 230);
