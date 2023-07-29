@@ -244,7 +244,7 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
     }
     case QEvent::MouseButtonPress: {
         QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
-        if (mouse_event->buttons() & Qt::RightButton) {           
+        if (mouse_event->buttons() & Qt::RightButton) {
             QWidget *cell = qobject_cast<QWidget*>(obj);
             QPushButton *btn = cell->findChild<QPushButton*>("expandBtn");
             bool expanded = false;

@@ -23,11 +23,7 @@
 #include "streamconverter.h"
 #include "fileiconprovider.h"
 #include <QDesktopWidget>
-#include <QPaintEvent>
 #include <QDragEnterEvent>
-#include <QDragLeaveEvent>
-#include <QDragMoveEvent>
-#include <QDropEvent>
 #include <QMimeDatabase>
 #include <QMimeData>
 #include <QTableWidgetItem>
@@ -36,18 +32,16 @@
 #include <QList>
 #include <QMenu>
 #include <QDate>
-#include <QFileDialog>
 #include <QStandardItemModel>
-#include <QHBoxLayout>
 #include <QGridLayout>
 #include <QDockWidget>
 #include <QFile>
 #include <QSizePolicy>
-#include <QMap>
 #include <QTranslator>
+#include <QScreen>
 #include <iostream>
 #include <iomanip>
-#include <math.h>
+#include <cmath>
 #include <sstream>
 
 
@@ -76,8 +70,8 @@
 #define ROWHEIGHTDFLT 45
 #define DEFAULTTIMER 30
 #define DEFAULTPATH QDir::homePath()
-#define PRESETFILE SETTINGSPATH + QString("/presets.ini")
-#define THUMBNAILPATH SETTINGSPATH + QString("/thumbnails")
+#define PRESETFILE (SETTINGSPATH + QString("/presets.ini"))
+#define THUMBNAILPATH (SETTINGSPATH + QString("/thumbnails"))
 #define GETINFO(a, b, c) QString::fromStdWString(MI.Get(a, b, __T(c)))
 #define GINFO(a, b) QString::fromStdWString(MI.Get(Stream_General, a, __T(b), Info_Text, Info_Name))
 #define VINFO(a, b) QString::fromStdWString(MI.Get(Stream_Video, a, __T(b)))
@@ -546,12 +540,12 @@ void MainWindow::createConnections()
 
     //*********** Tree menu actions ****************//
     ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    QAction *actAddSection = new QAction(tr("Add section"), this);
-    QAction *actAddPreset = new QAction(tr("Add preset"), this);
-    QAction *actRenamePreset = new QAction(tr("Rename"), this);
-    QAction *actRemovePreset = new QAction(tr("Remove"), this);
-    QAction *actApplyPreset = new QAction(tr("Apply"), this);
-    QAction *actEditPreset = new QAction(tr("Edit"), this);
+    auto *actAddSection = new QAction(tr("Add section"), this);
+    auto *actAddPreset = new QAction(tr("Add preset"), this);
+    auto *actRenamePreset = new QAction(tr("Rename"), this);
+    auto *actRemovePreset = new QAction(tr("Remove"), this);
+    auto *actApplyPreset = new QAction(tr("Apply"), this);
+    auto *actEditPreset = new QAction(tr("Edit"), this);
     connect(actAddSection, &QAction::triggered, this, SLT(onAddSection));
     connect(actAddPreset, &QAction::triggered, this, SLT(onAddPreset));
     connect(actRenamePreset, &QAction::triggered, this, SLT(onRenamePreset));
@@ -577,8 +571,8 @@ void MainWindow::createConnections()
 
     //********** Preset menu actions ***************//
     QMenu *addPresetMenu = new QMenu(ui->addPreset);
-    QAction *_actAddSection = new QAction(tr("Add section"), this);
-    QAction *_actAddPreset = new QAction(tr("Add new preset"), this);
+    auto *_actAddSection = new QAction(tr("Add section"), this);
+    auto *_actAddPreset = new QAction(tr("Add new preset"), this);
     _actAddSection->setIcon(QIcon(":/resources/icons/svg/folder_light.svg"));
     _actAddPreset->setIcon(QIcon(":/resources/icons/svg/file.svg"));
     connect(_actAddSection, &QAction::triggered, this, SLT(onAddSection));
@@ -811,9 +805,9 @@ void MainWindow::setParameters()    // Set parameters
         stn.endGroup();
 
     } else {
-        const QSize delta = QApplication::desktop()->size() - WINDOW_SIZE;
-        const QPointF topLeft(float(delta.width())/2, float(delta.height())/2);
-        const QRect rect(topLeft.toPoint(), WINDOW_SIZE);
+        const QRect scr_rect = QApplication::primaryScreen()->availableGeometry();
+        const QPoint topLeft = scr_rect.translated(100,100).topLeft();
+        const QRect rect(topLeft, WINDOW_SIZE);
         setGeometry(rect);
 
         ui->treeWidget->setColumnWidth(0, 230);
@@ -839,7 +833,7 @@ void MainWindow::setParameters()    // Set parameters
     for (int i = 0; i < NUM_ROWS; i++) {
         type = m_preset_table[PARAMETERS_COUNT][i];
         if (type == "TopLewelItem") {
-            QTreeWidgetItem *root = new QTreeWidgetItem();
+            auto *root = new QTreeWidgetItem();
             root->setText(0, m_preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
             root->setFont(0, parentFont);
@@ -849,8 +843,8 @@ void MainWindow::setParameters()    // Set parameters
             root->setFirstColumnSpanned(true);
         }
         if (type == "ChildItem") {
-            QTreeWidgetItem *item = ui->treeWidget->currentItem();
-            QTreeWidgetItem *child = new QTreeWidgetItem();
+            auto *item = ui->treeWidget->currentItem();
+            auto *child = new QTreeWidgetItem();
             for (int j = 0; j < PARAMETERS_COUNT; j++)
                 child->setText(j + 7, m_preset_table[j][i]);
             QString savedPresetName = child->text(30 + 7);
@@ -897,7 +891,7 @@ void MainWindow::setParameters()    // Set parameters
     if (m_rowHeight != 0)
         ui->sliderResize->setValue(m_rowHeight);
 
-    m_expandWindowsState = isMaximized() ? true : false;
+    m_expandWindowsState = isMaximized();
 
     if (m_batch_mode) {
         ui->comboBoxMode->blockSignals(true);
@@ -916,7 +910,7 @@ void MainWindow::setParameters()    // Set parameters
     ui->listFiles->setRootIndex(m_pFileModel->setRootPath(m_openDir));
 }
 
-void MainWindow::setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY)
+void MainWindow::setDocksParameters(const QList<int>& dockSizesX, const QList<int>& dockSizesY)
 {
     QList<QDockWidget*> docksVis;
     QList<int> dockVisSizesX;
@@ -945,7 +939,7 @@ void MainWindow::onCloseWindow()    // Close window
 
 void MainWindow::setExpandIcon()
 {
-    ui->expandWindow->setProperty("expanded", isMaximized() ? true : false);
+    ui->expandWindow->setProperty("expanded", isMaximized());
     ui->expandWindow->style()->polish(ui->expandWindow);
 }
 
@@ -1179,15 +1173,15 @@ void MainWindow::get_current_data() // Get current data
         lineEdit->setCursorPosition(0);
 
     //********** Set audio widgets *****************//
-    if (_FIELDS(m_row, audioFormats).size() > 0 ||
-            _FIELDS(m_row, externAudioFormats).size() > 0) {
+    if (!_FIELDS(m_row, audioFormats).empty() ||
+        !_FIELDS(m_row, externAudioFormats).empty()) {
         m_pAudioLabel->setVisible(false);
         ui->streamAudio->setList(m_data[m_row]);
     }
 
     //********* Set subtitle widgets ***************//
-    if (_FIELDS(m_row, subtFormats).size() > 0 ||
-            _FIELDS(m_row, externSubtFormats).size() > 0) {
+    if (!_FIELDS(m_row, subtFormats).empty() ||
+        !_FIELDS(m_row, externSubtFormats).empty()) {
         m_pSubtitleLabel->setVisible(false);
         ui->streamSubtitle->setList(m_data[m_row]);
     }
@@ -1204,6 +1198,7 @@ void MainWindow::setTheme(const int ind_theme)   // Set theme
     case Theme::WAVE:
         spinnerFile = ":/resources/icons/svg/spinner_black.svg";
         break;
+    default:
     case Theme::LIGHT:
         spinnerFile = ":/resources/icons/svg/spinner.svg";
         break;
@@ -1219,9 +1214,9 @@ void MainWindow::setTheme(const int ind_theme)   // Set theme
 
 void MainWindow::setStatus(const QString &status)
 {
-    QTableWidgetItem *__item = new QTableWidgetItem(status);
-    __item->setTextAlignment(Qt::AlignCenter);
-    ui->tableWidget->setItem(m_row, ColumnIndex::STATUS, __item);
+    auto *item = new QTableWidgetItem(status);
+    item->setTextAlignment(Qt::AlignCenter);
+    ui->tableWidget->setItem(m_row, ColumnIndex::STATUS, item);
 }
 
 void MainWindow::setWidgetsEnabled(bool state)    // Set widgets states
@@ -1296,7 +1291,7 @@ void MainWindow::changeEvent(QEvent *event)
 {
     BaseWindow::changeEvent(event);
     if (event->type() == QEvent::WindowStateChange) {
-        m_expandWindowsState = isMaximized() ? true: false;
+        m_expandWindowsState = isMaximized();
         setExpandIcon();
     }
 }
@@ -1452,7 +1447,7 @@ void MainWindow::onTreeDirsDblClicked(const QModelIndex &index)
 void MainWindow::provideListContextMenu(const QPoint &pos)     // Call file items menu
 {
     auto selectedList = ui->listFiles->selectionModel()->selectedIndexes();
-    if (selectedList.size() > 0)
+    if (!selectedList.empty())
         m_pFilesItemMenu->exec(ui->listFiles->mapToGlobal(pos + QPoint(5, 5)));
 }
 
@@ -1461,7 +1456,7 @@ void MainWindow::onAddToTask()
     QStringList list;
     foreach(auto index, ui->listFiles->selectionModel()->selectedIndexes())
         list.append(m_pFileModel->fileInfo(index).absoluteFilePath());
-    if (list.size() > 0)
+    if (!list.empty())
         openFiles(list);
 }
 
@@ -1659,8 +1654,8 @@ void MainWindow::onSort(const bool up)
 {
     const int rowsCount = ui->tableWidget->rowCount();
     Q_LOOP(i, 0, rowsCount) {
-        QTableWidgetItem *__id = new QTableWidgetItem(numToStr(i));
-        ui->tableWidget->setItem(i, ColumnIndex::T_ID, __id);
+        auto *id = new QTableWidgetItem(numToStr(i));
+        ui->tableWidget->setItem(i, ColumnIndex::T_ID, id);
     }
     Qt::SortOrder srt = (up) ? Qt::AscendingOrder : Qt::DescendingOrder;
     ui->tableWidget->sortByColumn(ColumnIndex::FILENAME, srt);
@@ -2027,7 +2022,7 @@ void MainWindow::dropEvent(QDropEvent* event)     // Drag & Drop
 
 void MainWindow::onComboModeChanged(int index)
 {
-    m_batch_mode = (index == 0) ? false : true;
+    m_batch_mode = (index != 0);
 }
 
 void MainWindow::onSliderResizeChanged(int value)
@@ -2232,11 +2227,11 @@ void MainWindow::onAddExtStream()
                     showInfoMessage(tr("File: \'%1\' cannot be opened!").arg(path));
                 }
             }
-            if (_FIELDS(m_row, externAudioFormats).size() > 0) {
+            if (!_FIELDS(m_row, externAudioFormats).empty()) {
                 m_pAudioLabel->setVisible(false);
                 ui->streamAudio->setList(m_data[m_row]);
             }
-            if (_FIELDS(m_row, externSubtFormats).size() > 0) {
+            if (!_FIELDS(m_row, externSubtFormats).empty()) {
                 m_pSubtitleLabel->setVisible(false);
                 ui->streamSubtitle->setList(m_data[m_row]);
             }
@@ -2297,8 +2292,8 @@ void MainWindow::onSetStartTime()
     if (m_row != -1) {
         m_startTime = (m_startTime > m_endTime && m_endTime != 0.0) ? m_endTime : m_curTime;
         ui->lineEditStartTime->setText(Helper::timeConverter(m_startTime));
-        QTableWidgetItem *__item = new QTableWidgetItem(QString::number(m_startTime, 'f', 3));
-        ui->tableWidget->setItem(m_row, ColumnIndex::T_STARTTIME, __item);
+        auto *item = new QTableWidgetItem(QString::number(m_startTime, 'f', 3));
+        ui->tableWidget->setItem(m_row, ColumnIndex::T_STARTTIME, item);
     }
 }
 
@@ -2307,8 +2302,8 @@ void MainWindow::onSetEndTime()
     if (m_row != -1) {
         m_endTime = (m_curTime < m_startTime) ? m_startTime : m_curTime;
         ui->lineEditEndTime->setText(Helper::timeConverter(m_endTime));
-        QTableWidgetItem *__item = new QTableWidgetItem(QString::number(m_endTime, 'f', 3));
-        ui->tableWidget->setItem(m_row, ColumnIndex::T_ENDTIME, __item);
+        auto *item = new QTableWidgetItem(QString::number(m_endTime, 'f', 3));
+        ui->tableWidget->setItem(m_row, ColumnIndex::T_ENDTIME, item);
     }
 }
 
@@ -2325,13 +2320,13 @@ void MainWindow::onResetLabels()
 
         m_startTime = 0.0;
         ui->lineEditStartTime->setText(Helper::timeConverter(m_startTime));
-        QTableWidgetItem *__item_st = new QTableWidgetItem(QString::number(m_startTime, 'f', 3));
-        ui->tableWidget->setItem(m_row, ColumnIndex::T_STARTTIME, __item_st);
+        auto *item_st = new QTableWidgetItem(QString::number(m_startTime, 'f', 3));
+        ui->tableWidget->setItem(m_row, ColumnIndex::T_STARTTIME, item_st);
 
         m_endTime = 0.0;
         ui->lineEditEndTime->setText(Helper::timeConverter(m_endTime));
-        QTableWidgetItem *__item_end = new QTableWidgetItem(QString::number(m_endTime, 'f', 3));
-        ui->tableWidget->setItem(m_row, ColumnIndex::T_ENDTIME, __item_end);
+        auto *item_end = new QTableWidgetItem(QString::number(m_endTime, 'f', 3));
+        ui->tableWidget->setItem(m_row, ColumnIndex::T_ENDTIME, item_end);
     }
 }
 
@@ -2460,7 +2455,7 @@ void MainWindow::onAddSection()  // Add section
     QFont parentFont;
     parentFont.setBold(true);
     parentFont.setItalic(true);
-    QTreeWidgetItem *root = new QTreeWidgetItem();
+    auto *root = new QTreeWidgetItem();
     root->setText(0, "New section");
     root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
     root->setFont(0, parentFont);
@@ -2498,9 +2493,9 @@ void MainWindow::onAddPreset()  // Add preset
         }
         _prs_file.close();
     }
-    QTreeWidgetItem *item = ui->treeWidget->currentItem();
-    QTreeWidgetItem *parentItem = item->parent();
-    QTreeWidgetItem *child = new QTreeWidgetItem();
+    auto *item = ui->treeWidget->currentItem();
+    auto *parentItem = item->parent();
+    auto *child = new QTreeWidgetItem();
     for (int k = 0; k < PARAMETERS_COUNT; k++)
         child->setText(k + 7, cur_param[k]);
     updateInfoFields(cur_param[1], cur_param[2], cur_param[3], cur_param[4],
