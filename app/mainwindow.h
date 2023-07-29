@@ -246,7 +246,7 @@ private slots:
     void onSortDown();
     void onSortUp();
     void setParameters();
-    void setDocksParameters(QList<int> dockSizesX, QList<int> dockSizesY);
+    void setDocksParameters(const QList<int>& dockSizesX, const QList<int>& dockSizesY);
 
     void showEvent(QShowEvent*);
     void closeEvent(QCloseEvent*);
