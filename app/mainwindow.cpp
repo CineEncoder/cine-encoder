@@ -1863,6 +1863,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
                     _FIELDS(numRows, subtTitles).push_back(SINFO(size_t(j), "Title"));
                     const QString deflt = SINFO(size_t(j), "Default");
                     _CHECKS(numRows, subtDef).push_back(deflt == "Yes" ? true : false);
+                    _CHECKS(numRows, subtBurn).push_back(false);
                 } else {
                     break;
                 }
@@ -2214,6 +2215,7 @@ void MainWindow::onAddExtStream()
                                 _FIELDS(m_row, externSubtTitles).push_back(SINFO(0, "Title"));
                                 _FIELDS(m_row, externSubtPath).push_back(path);
                                 _CHECKS(m_row, externSubtDef).push_back(false);
+                                _CHECKS(m_row, externSubtBurn).push_back(false);
                             }
                         } else {
                             showInfoMessage(tr("File: \'%1\' is not subtitle file!").arg(path));

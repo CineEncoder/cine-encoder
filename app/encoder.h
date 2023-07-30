@@ -71,6 +71,7 @@ public:
 private:
     bool    _flag_two_pass,
             _flag_hdr,
+            _burn_subtitle,
             _mux_mode;
 
     int     *fr_count;

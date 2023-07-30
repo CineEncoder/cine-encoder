@@ -137,6 +137,7 @@ void QStreamView::setList(Data &data)
     m_pLayout->addWidget(hw);
 
     if (m_type == Content::Audio) {
+        bool stub = false;
         for (int i = 0; i < FIELDS(audioFormats).size(); i++) {
             QWidget *cell = createCell(CHECKS(audioChecks)[i],
                                        FIELDS(audioFormats)[i],
@@ -146,7 +147,8 @@ void QStreamView::setList(Data &data)
                                        FIELDS(audioChannels)[i],
                                        FIELDS(audioChLayouts)[i],
                                        "",
-                                       CHECKS(audioDef)[i]);
+                                       CHECKS(audioDef)[i],
+                                       stub);
             m_pLayout->addWidget(cell);
         }
         for (int i = 0; i < FIELDS(externAudioFormats).size(); i++) {
@@ -159,6 +161,7 @@ void QStreamView::setList(Data &data)
                                        FIELDS(externAudioChLayouts)[i],
                                        FIELDS(externAudioPath)[i],
                                        CHECKS(externAudioDef)[i],
+                                       stub,
                                        true);
             m_pLayout->addWidget(cell);
         }
@@ -173,7 +176,8 @@ void QStreamView::setList(Data &data)
                                        "",
                                        "",
                                        "",
-                                       CHECKS(subtDef)[i]);
+                                       CHECKS(subtDef)[i],
+                                       CHECKS(subtBurn)[i]);
             m_pLayout->addWidget(cell);
         }
         for (int i = 0; i < FIELDS(externSubtFormats).size(); i++) {
@@ -186,6 +190,7 @@ void QStreamView::setList(Data &data)
                                        "",
                                        FIELDS(externSubtPath)[i],
                                        CHECKS(externSubtDef)[i],
+                                       CHECKS(externSubtBurn)[i],
                                        true);
             m_pLayout->addWidget(cell);
         }
@@ -300,6 +305,29 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
+void QStreamView::resetCheckFlags(const int ind)
+{
+    Q_LOOP(i, 1, m_pLayout->count()) {
+        if (i != ind) {
+            QLayoutItem *item = m_pLayout->itemAt(i);
+            if (item && item->widget()) {
+                QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>("checkStream");
+                if (chkBox)
+                    chkBox->setChecked(false);
+            }
+        }
+    }
+
+    if (m_type == Content::Audio) {
+        m_pData->checks[Data::audioChecks].fill(false);
+        m_pData->checks[Data::externAudioChecks].fill(false);
+    } else
+    if (m_type == Content::Subtitle) {
+        m_pData->checks[Data::subtChecks].fill(false);
+        m_pData->checks[Data::externSubtChecks].fill(false);
+    }
+}
+
 void QStreamView::resetDefFlags(const int ind)
 {
     Q_LOOP(i, 1, m_pLayout->count()) {
@@ -323,6 +351,23 @@ void QStreamView::resetDefFlags(const int ind)
     }
 }
 
+void QStreamView::resetBurnFlags(const int ind)
+{
+    Q_LOOP(i, 1, m_pLayout->count()) {
+        if (i != ind) {
+            QLayoutItem *item = m_pLayout->itemAt(i);
+            if (item && item->widget()) {
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("burnInto");
+                if (rbtn)
+                    rbtn->setChecked(false);
+            }
+        }
+    }
+
+    m_pData->checks[Data::subtBurn].fill(false);
+    m_pData->checks[Data::externSubtBurn].fill(false);
+}
+
 QWidget *QStreamView::createCell(bool &state,
                                  const QString &format,
                                  const QString &dur,
@@ -332,7 +377,9 @@ QWidget *QStreamView::createCell(bool &state,
                                  QString chLayouts,
                                  const QString &path,
                                  bool &deflt,
-                                 bool externFlag)
+                                 bool &burn,
+                                 bool externFlag
+                                 )
 {
     auto connectAction = [this](QLineEdit* line, bool isVisible)->void {
         auto actionList = line->findChildren<QAction*>();
@@ -368,16 +415,23 @@ QWidget *QStreamView::createCell(bool &state,
     QRadioButton *rbtn = QStreamViewPrivate::createRadio(cell, "defaultStream", "", deflt);
     rbtn->setFixedSize(QSize(12,12) * Helper::scaling());
     rbtn->setToolTip(tr("Default"));
-    connect(rbtn, &QRadioButton::clicked, this, [this, cell, &deflt, &state](bool checked) {
+    connect(rbtn, &QRadioButton::clicked, this, [this, cell, &burn, &deflt, &state](bool checked) {
+        resetBurnFlags(m_pLayout->indexOf(cell));
         resetDefFlags(m_pLayout->indexOf(cell));
         deflt = checked;
-        if (deflt) {
-            QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
-            if (item && item->widget()) {
+        QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
+        if (item && item->widget()) {
+            if (deflt) {
                 QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>("checkStream");
                 if (chkBox && !chkBox->isChecked()) {
                     chkBox->setChecked(true);
                     state = true;
+                }
+            } else {
+                QRadioButton *brn_rbtn = item->widget()->findChild<QRadioButton*>("burnInto");
+                if (brn_rbtn && brn_rbtn->isChecked()) {
+                    brn_rbtn->setChecked(false);
+                    burn = false;
                 }
             }
         }
@@ -437,6 +491,33 @@ QWidget *QStreamView::createCell(bool &state,
         labCh->setEnabled(true);
         labCh->setFixedHeight(ROW_HEIGHT * Helper::scaling());
         infoLut->addWidget(labCh, 0, 1);
+    } else
+    if (m_type == Content::Subtitle) {
+        QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", tr("Burn into video"), burn);
+        brn_rbtn->setFixedHeight(12 * Helper::scaling());
+        brn_rbtn->setToolTip(tr("Burn into video"));
+        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn, &deflt, &state](bool checked) {
+            resetBurnFlags(m_pLayout->indexOf(cell));
+            resetDefFlags(m_pLayout->indexOf(cell));
+            resetCheckFlags(m_pLayout->indexOf(cell));
+            burn = checked;
+            if (burn) {
+                QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
+                if (item && item->widget()) {
+                    QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>("checkStream");
+                    if (chkBox && !chkBox->isChecked()) {
+                        chkBox->setChecked(true);
+                        state = true;
+                    }
+                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream", Qt::FindDirectChildrenOnly);
+                    if (rbtn && !rbtn->isChecked()) {
+                        rbtn->setChecked(true);
+                        deflt = true;
+                    }
+                }
+            }
+        });
+        infoLut->addWidget(brn_rbtn, 0, 1, Qt::AlignLeft);
     }
 
     // Label external path
@@ -487,15 +568,20 @@ QWidget *QStreamView::createCell(bool &state,
     chkBox->setText(format);
     chkBox->setEnabled(true);
     chkBox->setChecked(state);
-    connect(chkBox, &QCheckBox::clicked, this, [this, cell, chkBox, &state, &deflt](){
+    connect(chkBox, &QCheckBox::clicked, this, [this, cell, chkBox, &burn, &state, &deflt](){
         state = (chkBox->checkState() == 2) ? true : false;
         if (!state) {
             QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
             if (item && item->widget()) {
-                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream");
+                QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream", Qt::FindDirectChildrenOnly);
                 if (rbtn && rbtn->isChecked()) {
                     rbtn->setChecked(false);
                     deflt = false;
+                }
+                QRadioButton *brn_rbtn = item->widget()->findChild<QRadioButton*>("burnInto");
+                if (brn_rbtn && brn_rbtn->isChecked()) {
+                    brn_rbtn->setChecked(false);
+                    burn = false;
                 }
             }
         }

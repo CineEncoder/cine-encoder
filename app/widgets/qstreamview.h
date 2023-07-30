@@ -30,7 +30,9 @@ signals:
 
 private:
     virtual bool eventFilter(QObject*, QEvent*) final;
+    void resetCheckFlags(const int ind);
     void resetDefFlags(const int ind);
+    void resetBurnFlags(const int ind);
     QWidget *createCell(bool &state,
                         const QString &format,
                         const QString &dur,
@@ -40,6 +42,7 @@ private:
                         QString chLayouts,
                         const QString &path,
                         bool &deflt,
+                        bool &burn,
                         bool externFlag = false);
     QVBoxLayout *m_pLayout;
     Content m_type;
