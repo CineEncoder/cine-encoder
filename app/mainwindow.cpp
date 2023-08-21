@@ -1477,6 +1477,7 @@ void MainWindow::initEncoding()
     ui->textBrowser_log->clear();
     const QString globalTitle = ui->lineEditGlobalTitle->text();
     const int streamCutting = ui->switchCutting->currentIndex();
+
     m_pEncoder->initEncoding(m_temp_file,
                              m_input_file,
                              m_output_file,
@@ -1492,7 +1493,9 @@ void MainWindow::initEncoding()
                              m_hdr,
                              m_data[m_row],
                              &m_fr_count,
-                             streamCutting);
+                             streamCutting,
+                             m_subtitles_font,
+                             m_subtitles_fontSize);
 }
 
 void MainWindow::onEncodingMode(const QString &mode)

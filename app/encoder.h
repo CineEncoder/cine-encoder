@@ -50,7 +50,9 @@ public:
                       const QString  (&_hdr)[11],
                       Data           data,
                       int            *_fr_count,
-                      int            streamCutting);
+                      int            streamCutting,
+                      const QString &subtitle_font,
+                      int subtitle_font_size);
 
     QProcess::ProcessState getEncodingState();
     void pauseEncoding();
