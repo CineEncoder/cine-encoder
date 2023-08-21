@@ -52,7 +52,10 @@ public:
                       int            *_fr_count,
                       int            streamCutting,
                       const QString &subtitle_font,
-                      int subtitle_font_size);
+                      int subtitle_font_size,
+                      const QString &subtitle_font_color,
+                      const QString &subtitle_background_color
+                      );
 
     QProcess::ProcessState getEncodingState();
     void pauseEncoding();

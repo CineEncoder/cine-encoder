@@ -55,7 +55,9 @@ public:
                        QString    *pFont,
                        int        *pSubtitlesFontSize,
                        QString    *pSubtitlesFont,
-                       bool       *pSubtitlesBackground);
+                       bool       *pSubtitlesBackground,
+                       QColor     *pSubtitlesColor,
+                       QColor     *pSubtitlesBackgroundColor);
 
 private:
     void onCloseWindow();
@@ -71,8 +73,15 @@ private:
     void onComboBoxSuffixType_indexChanged(int);
     void onComboBoxFont_indexChanged(int);
     void onComboBoxSubtitlesFont_indexChanged(int);
+    void subtitles_color_change();
+    void subtitles_background_color_change();
 
     Ui::Settings *ui;
+
+    QColor  *m_pSubtitlesColor,
+            *m_pSubtitlesBackgroundColor;
+    QColor  m_pSubtitlesColor_temp,
+            m_pSubtitlesBackgroundColor_temp;
 
     QString *m_pOutputFolder,
             *m_pTempFolder,

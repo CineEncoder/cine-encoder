@@ -134,6 +134,7 @@ MainWindow::MainWindow(QWidget *parent):
     m_multiInstances(false),
     m_protectFlag(false),
     m_fontSize(FONTSIZE),
+    m_subtitles_fontSize(FONTSIZE),
     m_prefxType(0),
     m_suffixType(0),
     m_pos_top(-1),
@@ -145,9 +146,12 @@ MainWindow::MainWindow(QWidget *parent):
     m_prefixName(DEFAULTPREFIX),
     m_suffixName(DEFAULTSUFFIX),
     m_font(""),
+    m_subtitles_font(""),
     m_windowActivated(false),
     m_expandWindowsState(false),
-    m_rowHeight(ROWHEIGHTDFLT)
+    m_rowHeight(ROWHEIGHTDFLT),
+    m_subtitles_background_color("#" + DEFAULTSUBTITLEBACKGROUNDCOLOR),
+    m_subtitles_color("#" + DEFAULTSUBTITLECOLOR)
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
@@ -996,7 +1000,9 @@ void MainWindow::onSettings()
                            &m_font,
                            &m_subtitles_fontSize,
                            &m_subtitles_font,
-                           &m_subtitles_background);
+                           &m_subtitles_background,
+                           &m_subtitles_color,
+                           &m_subtitles_background_color);
     if (settings.exec() == Dialog::Accept) {
         m_pTimer->setInterval(m_timerInterval*1000);
         setTheme(m_theme);
@@ -1495,7 +1501,10 @@ void MainWindow::initEncoding()
                              &m_fr_count,
                              streamCutting,
                              m_subtitles_font,
-                             m_subtitles_fontSize);
+                             m_subtitles_fontSize,
+                             QString(m_subtitles_color.name(QColor::HexArgb).replace("#", "")),
+                             QString(m_subtitles_background_color.name(QColor::HexArgb).replace("#", ""))
+    );
 }
 
 void MainWindow::onEncodingMode(const QString &mode)

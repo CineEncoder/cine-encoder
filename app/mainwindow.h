@@ -220,6 +220,9 @@ private:
                 m_font,
                 m_subtitles_font;
 
+    QColor      m_subtitles_color,
+                m_subtitles_background_color;
+
     // ============= Geometry =============
     bool        m_windowActivated;
     bool        m_expandWindowsState;

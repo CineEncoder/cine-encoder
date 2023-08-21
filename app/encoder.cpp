@@ -57,7 +57,10 @@ void Encoder::initEncoding(const QString  &temp_file,
                            int            *_fr_count,
                            int            streamCutting,
                            const QString &subtitle_font,
-                           int subtitle_font_size)
+                           int subtitle_font_size,
+                           const QString &subtitle_font_color,
+                           const QString &subtitle_background_color
+                           )
 {
     Print("Make preset...");
     Tables t;
@@ -275,9 +278,12 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     /**************************************** Subtitles **************************************/
     QString burn_subt_vf, burn_string;
-    QString burn_font = QString("FontName=%1").arg(subtitle_font);
-    QString burn_fontsize = QString("Fontsize=%1").arg(subtitle_font_size);
-    burn_string = QString("charenc=:force_style=\"'FontName=" + burn_font + "," + burn_fontsize + ",PrimaryColour=&H00FFFFFF,BorderStyle=4,BackColour=&H96000000'\"");
+    burn_string = QString("charenc=:force_style=\"'FontName=\"" + subtitle_font +
+                          "\",Fontsize=" + subtitle_font_size +
+                          ",PrimaryColour=&H" + subtitle_font_color +
+                          ",BorderStyle=4" +
+                          ",BackColour=&H" + subtitle_background_color +
+                          "'\"");
     Q_LOOP(k, 0, CHECKS(subtBurn).size()) {
         if (CHECKS(subtBurn)[k]) {
             _burn_subtitle = true;
