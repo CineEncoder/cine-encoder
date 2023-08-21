@@ -51,10 +51,11 @@ public:
                       Data           data,
                       int            *_fr_count,
                       int            streamCutting,
-                      const QString &subtitle_font,
-                      int subtitle_font_size,
-                      const QString &subtitle_font_color,
-                      const QString &subtitle_background_color
+                      const QString  &subtitle_font,
+                      int            subtitle_font_size,
+                      const QString  &subtitle_font_color,
+                      const bool     burn_background,
+                      const QString  &subtitle_background_color
                       );
 
     QProcess::ProcessState getEncodingState();

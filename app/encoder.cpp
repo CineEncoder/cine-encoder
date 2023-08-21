@@ -59,6 +59,7 @@ void Encoder::initEncoding(const QString  &temp_file,
                            const QString &subtitle_font,
                            int subtitle_font_size,
                            const QString &subtitle_font_color,
+                           const bool burn_background,
                            const QString &subtitle_background_color
                            )
 {
@@ -281,9 +282,11 @@ void Encoder::initEncoding(const QString  &temp_file,
     burn_string = QString("charenc=:force_style=\"'FontName=\"" + subtitle_font +
                           "\",Fontsize=" + subtitle_font_size +
                           ",PrimaryColour=&H" + subtitle_font_color +
-                          ",BorderStyle=4" +
-                          ",BackColour=&H" + subtitle_background_color +
-                          "'\"");
+                          ",BorderStyle=4");
+    if (burn_background) {
+        burn_string += QString(",BackColour=&H" + subtitle_background_color);
+    }
+    burn_string += QString("'\"");
     Q_LOOP(k, 0, CHECKS(subtBurn).size()) {
         if (CHECKS(subtBurn)[k]) {
             _burn_subtitle = true;

@@ -198,8 +198,8 @@ void Settings::setParameters(QString    *pOutputFolder,
     QStringListModel *subtitlesFontModel = new QStringListModel(ui->comboBox_subtitles_font);
     subtitlesFontModel->setStringList(fontFamilies);
     ui->comboBox_subtitles_font->blockSignals(true);
-    ui->comboBox_subtitles_font->setModel(fontModel);
-    const int subtitlesFontInd = ui->comboBox_subtitles_font->findText(appFontFamily);
+    ui->comboBox_subtitles_font->setModel(subtitlesFontModel);
+    const int subtitlesFontInd = ui->comboBox_subtitles_font->findText(*pSubtitlesFont);
     if (subtitlesFontInd != -1) {
         ui->comboBox_subtitles_font->setCurrentIndex(subtitlesFontInd);
     }

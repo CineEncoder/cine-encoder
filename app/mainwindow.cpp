@@ -1503,6 +1503,7 @@ void MainWindow::initEncoding()
                              m_subtitles_font,
                              m_subtitles_fontSize,
                              QString(m_subtitles_color.name(QColor::HexArgb).replace("#", "")),
+                             m_subtitles_background,
                              QString(m_subtitles_background_color.name(QColor::HexArgb).replace("#", ""))
     );
 }
