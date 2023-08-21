@@ -201,9 +201,11 @@ private:
     bool        m_hideInTrayFlag,
                 m_showHdrFlag,
                 m_multiInstances,
-                m_protectFlag;
+                m_protectFlag,
+                m_subtitles_background;
 
     int         m_fontSize,
+                m_subtitles_fontSize,
                 m_prefxType,
                 m_suffixType,
                 m_pos_top,
@@ -215,7 +217,8 @@ private:
                 m_temp_folder,
                 m_prefixName,
                 m_suffixName,
-                m_font;
+                m_font,
+                m_subtitles_font;
 
     // ============= Geometry =============
     bool        m_windowActivated;

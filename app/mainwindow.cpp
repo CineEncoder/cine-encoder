@@ -327,6 +327,9 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/row_size", m_rowHeight);
         stn.setValue("Settings/switch_view_mode", ui->switchViewMode->currentIndex());
         stn.setValue("Settings/switch_cut_mode", ui->switchCutting->currentIndex());
+        stn.setValue("Settings/subtitles_font", m_subtitles_font);
+        stn.setValue("Settings/subtitles_font_size", m_subtitles_fontSize);
+        stn.setValue("Settings/subtitles_background", m_subtitles_background);
         stn.endGroup();
 
         if (m_pTrayIcon)
@@ -798,6 +801,9 @@ void MainWindow::setParameters()    // Set parameters
         m_language = stn.value("Settings/language", sysLang).toString();
         m_font = stn.value("Settings/font").toString();
         m_fontSize = stn.value("Settings/font_size", FONTSIZE).toInt();
+        m_subtitles_font = stn.value("Settings/subtitles_font").toString();
+        m_subtitles_fontSize = stn.value("Settings/subtitles_font_size", FONTSIZE).toInt();
+        m_subtitles_background = stn.value("Settings/subtitles_background").toBool();
         m_rowHeight = stn.value("Settings/row_size").toInt();
         ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
         ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
@@ -987,7 +993,10 @@ void MainWindow::onSettings()
                            &m_hideInTrayFlag,
                            &m_language,
                            &m_fontSize,
-                           &m_font);
+                           &m_font,
+                           &m_subtitles_fontSize,
+                           &m_subtitles_font,
+                           &m_subtitles_background);
     if (settings.exec() == Dialog::Accept) {
         m_pTimer->setInterval(m_timerInterval*1000);
         setTheme(m_theme);

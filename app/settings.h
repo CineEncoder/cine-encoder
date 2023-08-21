@@ -52,7 +52,10 @@ public:
                        bool       *pHideInTrayFlag,
                        QString    *pLanguage,
                        int        *pFontSize,
-                       QString    *pFont);
+                       QString    *pFont,
+                       int        *pSubtitlesFontSize,
+                       QString    *pSubtitlesFont,
+                       bool       *pSubtitlesBackground);
 
 private:
     void onCloseWindow();
@@ -67,6 +70,7 @@ private:
     void onComboBoxPrefixType_indexChanged(int);
     void onComboBoxSuffixType_indexChanged(int);
     void onComboBoxFont_indexChanged(int);
+    void onComboBoxSubtitlesFont_indexChanged(int);
 
     Ui::Settings *ui;
 
@@ -75,9 +79,11 @@ private:
             *m_pPrefixName,
             *m_pSuffixName,
             *m_pLanguage,
-            *m_pFont;
+            *m_pFont,
+            *m_pSubtitlesFont;
 
     int     *m_pFontSize,
+            *m_pSubtitlesFontSize,
             *m_pPrefxType,
             *m_pSuffixType,
             *m_pTimerInterval,
@@ -87,7 +93,8 @@ private:
             *m_pProtectFlag,
             *m_pMultiInstances,
             *m_pHideInTrayFlag,
-            m_windowActivated;
+            m_windowActivated,
+            *m_pSubtitlesBackground;
 };
 
 #endif // SETTINGS_H
