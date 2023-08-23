@@ -691,7 +691,11 @@ void Encoder::initEncoding(const QString  &temp_file,
     codec.append(colorprim_vf);
     codec.append(colormatrix_vf);
     codec.append(transfer_vf);
-    codec.append(burn_subt_vf.split(" "));
+    if (_burn_subtitle)
+    {
+        codec.append("-vf");
+    }
+    codec.append(burn_subt_vf);//.split(" "));
     codec.append(t.arr_params[_CODEC][0].split(" "));
 
     /************************************* HDR module ***************************************/
@@ -869,6 +873,15 @@ void Encoder::initEncoding(const QString  &temp_file,
             + colorprim + colormatrix + transfer + QStringList {"-an","-sn","-f","null", "/dev/null"};
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
             + colorprim + colormatrix + transfer + audio_param + sub_param;
+    // DEBUG
+    /*
+    std::string _presetarray[_preset.length()];
+    for (int i = 0; i < _preset.length(); i++)
+    {
+        _presetarray[i] = _preset[i].toStdString();
+    }
+    */
+
     _preset_mkvmerge = max_cll.join(" ") + max_fall.join(" ") + max_lum.join(" ") + min_lum.join(" ") + chroma_coord.join(" ") + white_coord.join(" ");
     Print("Flag two-pass: " << _flag_two_pass);
     Print("Flag HDR: " << _flag_hdr);
@@ -918,6 +931,28 @@ void Encoder::encode()   // Encode
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
     emit onEncodingProgress(0, 0.0f);
+
+    // DEBUG
+    /*
+    std::string _extSubPathsarray[_extSubPaths.length()];
+    for (int i = 0; i < _extSubPaths.length(); i++)
+    {
+        _extSubPathsarray[i] = _extSubPaths[i].toStdString();
+    }
+
+    std::string _sub_mux_paramarray[_sub_mux_param.length()];
+    for (int i = 0; i < _extSubPaths.length(); i++)
+    {
+        _sub_mux_paramarray[i] = _sub_mux_param[i].toStdString();
+    }
+
+    std::string _presetarray[_preset.length()];
+    for (int i = 0; i < _preset.length(); i++)
+    {
+        _presetarray[i] = _preset[i].toStdString();
+    }
+    */
+
     if (_mux_mode) {
         Print("Muxing mode ...");
         _encoding_mode = tr("Muxing:");
