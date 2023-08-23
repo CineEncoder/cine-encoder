@@ -685,16 +685,23 @@ void Encoder::initEncoding(const QString  &temp_file,
     codec.append(_videoMetadataParam);
     codec.append(_audioMetadataParam);
     codec.append(_subtitleMetadataParam);
+    if ((hwaccel_filter_vf != "") ||
+        (fps_vf != "") ||
+        (resize_vf != "") ||
+        (colorprim_vf.count() != 0) ||
+        (colormatrix_vf.count() != 0) ||
+        (transfer_vf.count() != 0) ||
+        (burn_subt_vf != "") ||
+        _burn_subtitle)
+    {
+        codec.append("-vf");
+    }
     codec.append(hwaccel_filter_vf.split(" "));
     codec.append(fps_vf.split(" "));
     codec.append(resize_vf.split(" "));
     codec.append(colorprim_vf);
     codec.append(colormatrix_vf);
     codec.append(transfer_vf);
-    if (_burn_subtitle)
-    {
-        codec.append("-vf");
-    }
     codec.append(burn_subt_vf);//.split(" "));
     codec.append(t.arr_params[_CODEC][0].split(" "));
 
