@@ -149,9 +149,7 @@ MainWindow::MainWindow(QWidget *parent):
     m_subtitles_font(""),
     m_windowActivated(false),
     m_expandWindowsState(false),
-    m_rowHeight(ROWHEIGHTDFLT),
-    m_subtitles_background_color("#" + DEFAULTSUBTITLEBACKGROUNDCOLOR),
-    m_subtitles_color("#" + DEFAULTSUBTITLECOLOR)
+    m_rowHeight(ROWHEIGHTDFLT)
 {
     ui->setupUi(centralWidget());
     setTitleBar(ui->frame_top);
@@ -333,7 +331,10 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/switch_cut_mode", ui->switchCutting->currentIndex());
         stn.setValue("Settings/subtitles_font", m_subtitles_font);
         stn.setValue("Settings/subtitles_font_size", m_subtitles_fontSize);
+        stn.setValue("Settings/subtitles_color", m_subtitles_color.name());
         stn.setValue("Settings/subtitles_background", m_subtitles_background);
+        stn.setValue("Settings/subtitles_background_alpha", m_subtitles_background_alpha);
+        stn.setValue("Settings/subtitles_background_color", m_subtitles_background_color.name());
         stn.endGroup();
 
         if (m_pTrayIcon)
@@ -808,6 +809,9 @@ void MainWindow::setParameters()    // Set parameters
         m_subtitles_font = stn.value("Settings/subtitles_font").toString();
         m_subtitles_fontSize = stn.value("Settings/subtitles_font_size", FONTSIZE).toInt();
         m_subtitles_background = stn.value("Settings/subtitles_background").toBool();
+        m_subtitles_color = QColor(stn.value("Settings/subtitles_color", DEFAULTSUBTITLECOLOR).toString());
+        m_subtitles_background_color = QColor(stn.value("Settings/subtitles_background_color", DEFAULTSUBTITLEBACKGROUNDCOLOR).toString());
+        m_subtitles_background_alpha = stn.value("Settings/subtitles_background_alpha", 150).toInt();
         m_rowHeight = stn.value("Settings/row_size").toInt();
         ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
         ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
@@ -1002,7 +1006,8 @@ void MainWindow::onSettings()
                            &m_subtitles_font,
                            &m_subtitles_background,
                            &m_subtitles_color,
-                           &m_subtitles_background_color);
+                           &m_subtitles_background_color,
+                           &m_subtitles_background_alpha);
     if (settings.exec() == Dialog::Accept) {
         m_pTimer->setInterval(m_timerInterval*1000);
         setTheme(m_theme);

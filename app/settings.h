@@ -57,7 +57,8 @@ public:
                        QString    *pSubtitlesFont,
                        bool       *pSubtitlesBackground,
                        QColor     *pSubtitlesColor,
-                       QColor     *pSubtitlesBackgroundColor);
+                       QColor     *pSubtitlesBackgroundColor,
+                       int        *pSubtitlesBackgroundAlpha);
 
 private:
     void onCloseWindow();
@@ -96,7 +97,8 @@ private:
             *m_pPrefxType,
             *m_pSuffixType,
             *m_pTimerInterval,
-            *m_pTheme;
+            *m_pTheme,
+            *m_pSubtitlesBackgroundAlpha;
 
     bool    *m_pShowHdrFlag,
             *m_pProtectFlag,
