@@ -105,10 +105,10 @@ void Encoder::initEncoding(const QString  &temp_file,
     _extAudioPaths.clear();
     _extSubPaths.clear();
     _preset_0 = "";
-    _preset_pass1 = "";
-    _preset = "";
+    _preset_pass1.clear();
+    _preset.clear();
     _preset_mkvmerge = "";
-    _sub_mux_param = "";
+    _sub_mux_param.clear();
     _error_message = "";
     _flag_two_pass = false;
     _flag_hdr = false;
@@ -178,14 +178,13 @@ void Encoder::initEncoding(const QString  &temp_file,
         }
     }
     Print("Cut duration: " << duration);
-    QString _splitStartParam("");
-    QString _splitParam("");
+    QStringList _splitStartParam;
+    QStringList _splitParam;
     if (duration > 0) {
         *fr_count = rnd(duration * fps_dest);
-        _splitStartParam += t.arr_codec[_CODEC][0] == tr("Source") ? " -copyts" : " -copytb 0"; //-copytb 0
-        _splitStartParam += QString(" -ss %1").arg(QString::number(_startTime, 'f', 3));
-        _splitParam = QString("-vframes %1 ").arg(numToStr(*fr_count));
-        //_splitParam = QString("-ss %1 -t %1 ").arg(QString::number(duration, 'f', 3));
+        _splitStartParam.append(t.arr_codec[_CODEC][0] == tr("Source") ? QStringList{"-copyts"} : QStringList{"-copytb","0"}); //-copytb 0
+        _splitStartParam.append(QStringList{"-ss", QString::number(_startTime, 'f', 3)});
+        _splitParam.append(QStringList{"-vframes", numToStr(*fr_count)});
     } else {
         *fr_count = rnd(_dur * fps_dest);
     }
@@ -193,38 +192,44 @@ void Encoder::initEncoding(const QString  &temp_file,
     /************************************** Video metadata ************************************/
 
     QVector<QString> videoMetadata(data.videoMetadata.size(), "");
-    QString _videoMetadataParam("");
+    QStringList _videoMetadataParam;
 
     if (globalTitle != "") {
         videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(globalTitle.replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata:s:v:0",QString("title="+globalTitle)});
     } else {
-        if (data.videoMetadata[VIDEO_TITLE] != "")
+        if (data.videoMetadata[VIDEO_TITLE] != "") {
             videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(data.videoMetadata[VIDEO_TITLE]
-                                                                        .replace(" ", "\u00A0"));
-        else
+                                                                                .replace(" ", "\u00A0"));
+            _videoMetadataParam.append({"-metadata:s:v:0",QString("title=" + data.videoMetadata[VIDEO_TITLE])});
+        } else {
             videoMetadata[0] = QString("-map_metadata:s:v:0 -1 ");
+            _videoMetadataParam.append({"-map_metadata:s:v:0","-1"});
+        }
     }
     if (data.videoMetadata[VIDEO_MOVIENAME] != "") {
         videoMetadata[1] = QString("-metadata title=%1 ").arg(data.videoMetadata[VIDEO_MOVIENAME]
                                                               .replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata",QString("title="+data.videoMetadata[VIDEO_MOVIENAME])});
     }
     if (data.videoMetadata[VIDEO_AUTHOR] != "") {
         videoMetadata[2] = QString("-metadata author=%1 ").arg(data.videoMetadata[VIDEO_AUTHOR]
                                                                .replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata",QString("author="+data.videoMetadata[VIDEO_AUTHOR])});
     }
     if (data.videoMetadata[VIDEO_DESCRIPTION] != "") {
         videoMetadata[3] = QString("-metadata description=%1 ").arg(data.videoMetadata[VIDEO_DESCRIPTION]
                                                                     .replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata",QString("description="+data.videoMetadata[VIDEO_DESCRIPTION])});
     }
     if (data.videoMetadata[VIDEO_YEAR] != "") {
         videoMetadata[4] = QString("-metadata year=%1 ").arg(data.videoMetadata[VIDEO_YEAR].replace(" ", ""));
+        _videoMetadataParam.append({"-metadata",QString("year="+data.videoMetadata[VIDEO_YEAR])});
     }
     if (data.videoMetadata[VIDEO_PERFORMER] != "") {
         videoMetadata[5] = QString("-metadata author=%1 ").arg(data.videoMetadata[VIDEO_PERFORMER]
                                                                .replace(" ", "\u00A0"));
-    }
-    for (int i = 0; i < 6; i++) {
-        _videoMetadataParam += videoMetadata[i];
+        _videoMetadataParam.append({"-metadata",QString("author="+data.videoMetadata[VIDEO_PERFORMER])});
     }
 
     /************************************** Audio streams ************************************/
@@ -233,23 +238,27 @@ void Encoder::initEncoding(const QString  &temp_file,
                      audioTitle(CHECKS(audioChecks).size(), ""),
                      audioMap(CHECKS(audioChecks).size(), ""),
                      audioDef(CHECKS(audioChecks).size(), "");
-    QString _audioMapParam(""),
-            _audioMetadataParam("");
+    QStringList _audioMapParam,
+            _audioMetadataParam;
     int     audioNum = 0;
 
     Q_LOOP(k, 0, CHECKS(audioChecks).size()) {
         if (CHECKS(audioChecks)[k] == true) {
             audioMap[k] = QString("-map 0:a:%1? ").arg(numToStr(k));
+            _audioMapParam.append({"-map", "0:a:"+numToStr(k)+"?" });
             audioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
                            .arg(numToStr(audioNum), FIELDS(audioLangs)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"language="+FIELDS(audioLangs)[k]});
             audioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
                             .arg(numToStr(audioNum), FIELDS(audioTitles)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"title="+FIELDS(audioTitles)[k]});
             audioDef[k] = QString("-disposition:a:%1 %2 ")
                            .arg(numToStr(audioNum), CHECKS(audioDef)[k] ? "default" : "0");
+            _audioMetadataParam.append({"-disposition:a:"+numToStr(audioNum),CHECKS(audioDef)[k] ? "default" : "0"});
             audioNum++;
         }
-        _audioMapParam += audioMap[k];
-        _audioMetadataParam += audioLang[k] + audioTitle[k] + audioDef[k];
+        // _audioMapParam += audioMap[k];
+        // _audioMetadataParam += audioLang[k] + audioTitle[k] + audioDef[k];
     }
 
     /********************************* External Audio streams ************************************/
@@ -264,25 +273,29 @@ void Encoder::initEncoding(const QString  &temp_file,
         if (CHECKS(externAudioChecks)[k] == true) {
             _extAudioPaths << "-i" << FIELDS(externAudioPath)[k];
             extAudioMap[k] = QString("-map %1:a? ").arg(numToStr(extTrackNum));
+            _audioMapParam.append({"-map", numToStr(extTrackNum) + ":a?" });
             extAudioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
                            .arg(numToStr(audioNum), FIELDS(externAudioLangs)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"language="+FIELDS(externAudioLangs)[k]});
             extAudioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
                             .arg(numToStr(audioNum), FIELDS(externAudioTitles)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"title="+FIELDS(externAudioTitles)[k]});
             extAudioDef[k] = QString("-disposition:a:%1 %2 ")
                            .arg(numToStr(audioNum), CHECKS(externAudioDef)[k] ? "default" : "0");
+            _audioMetadataParam.append({"-disposition:a:"+numToStr(audioNum),CHECKS(externAudioDef)[k] ? "default" : "0"});
             audioNum++;
             extTrackNum++;
         }
-        _audioMapParam += extAudioMap[k];
-        _audioMetadataParam += extAudioLang[k] + extAudioTitle[k] + extAudioDef[k];
+        //_audioMapParam += extAudioMap[k];
+        //_audioMetadataParam += extAudioLang[k] + extAudioTitle[k] + extAudioDef[k];
     }
 
     /**************************************** Subtitles **************************************/
     QString burn_subt_vf, burn_string;
-    burn_string = QString("charenc=:force_style=\"'FontName=\"" + subtitle_font +
-                          "\",Fontsize=" + subtitle_font_size +
+    burn_string = "charenc=:force_style=\"'FontName='" + subtitle_font +
+                          "',Fontsize=" + numToStr(subtitle_font_size) +
                           ",PrimaryColour=&H" + subtitle_font_color +
-                          ",BorderStyle=4");
+                          ",BorderStyle=4";
     if (burn_background) {
         burn_string += QString(",BackColour=&H" + subtitle_background_color);
     }
@@ -291,8 +304,7 @@ void Encoder::initEncoding(const QString  &temp_file,
         if (CHECKS(subtBurn)[k]) {
             _burn_subtitle = true;
             QString _input_file(input_file);
-            // Hard-coded for testing....
-            burn_subt_vf = QString("subtitles='%1':%2:stream_index=%3").arg(_input_file/*.replace(" ", "\\ ")*/, burn_string, numToStr(k));
+            burn_subt_vf = QString("subtitles='%1':%2:stream_index=%3").arg(_input_file, burn_string, numToStr(k));
             break;
         }
     }
@@ -308,24 +320,28 @@ void Encoder::initEncoding(const QString  &temp_file,
                      subtitleTitle(CHECKS(subtChecks).size(), ""),
                      subtitleMap(CHECKS(subtChecks).size(), ""),
                      subtitleDef(CHECKS(subtChecks).size(), "");
-    QString _subtitleMapParam(""),
-            _subtitleMetadataParam("");
+    QStringList _subtitleMapParam,
+            _subtitleMetadataParam;
     int     subtNum = 0;
 
     if (!_burn_subtitle) {
         Q_LOOP(k, 0, CHECKS(subtChecks).size()) {
             if (CHECKS(subtChecks)[k] == true) {
                 subtitleMap[k] = QString("-map 0:s:%1? ").arg(numToStr(k));
+                _subtitleMapParam.append({"-map", "0:s:"+numToStr(k)+"?"});
                 subtitleLang[k] = QString("-metadata:s:s:%1 language=%2 ")
                                       .arg(numToStr(subtNum), FIELDS(subtLangs)[k].replace(" ", "\u00A0"));
+                _subtitleMetadataParam.append({"-metadata:s:s:"+numToStr(subtNum), "language="+FIELDS(subtLangs)[k] });
                 subtitleTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
                                        .arg(numToStr(subtNum), FIELDS(subtTitles)[k].replace(" ", "\u00A0"));
+                _subtitleMetadataParam.append({"-metadata:s:s:"+numToStr(subtNum), "title="+FIELDS(subtTitles)[k] });
                 subtitleDef[k] = QString("-disposition:s:%1 %2 ")
                                      .arg(numToStr(subtNum), CHECKS(subtDef)[k] ? "default" : "0");
+                _subtitleMetadataParam.append({"-disposition:s:"+numToStr(subtNum), CHECKS(subtDef)[k] ? "default" : "0" });
                 subtNum++;
             }
-            _subtitleMapParam += subtitleMap[k];
-            _subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k] + subtitleDef[k];
+            //_subtitleMapParam += subtitleMap[k];
+            //_subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k] + subtitleDef[k];
         }
     }
 
@@ -341,17 +357,21 @@ void Encoder::initEncoding(const QString  &temp_file,
             if (CHECKS(externSubtChecks)[k] == true) {
                 _extSubPaths << "-i" << FIELDS(externSubtPath)[k];
                 extSubMap[k] = QString("-map %1:s? ").arg(numToStr(extTrackNum));
+                _subtitleMapParam.append({"-map", numToStr(extTrackNum)+":s?"});
                 extSubLang[k] = QString("-metadata:s:s:%1 language=%2 ")
                                     .arg(numToStr(subtNum), FIELDS(externSubtLangs)[k].replace(" ", "\u00A0"));
+                _subtitleMetadataParam.append({"-metadata:s:s:"+numToStr(subtNum), "language="+FIELDS(externSubtLangs)[k] });
                 extSubTitle[k] = QString("-metadata:s:s:%1 title=%2 ")
                                      .arg(numToStr(subtNum), FIELDS(externSubtTitles)[k].replace(" ", "\u00A0"));
+                _subtitleMetadataParam.append({"-metadata:s:s:"+numToStr(subtNum), "title="+FIELDS(externSubtTitles)[k] });
                 extSubDef[k] = QString("-disposition:s:%1 %2 ")
                                    .arg(numToStr(subtNum), CHECKS(externSubtDef)[k] ? "default" : "0");
+                _subtitleMetadataParam.append({"-disposition:s:"+numToStr(subtNum), CHECKS(externSubtDef)[k] ? "default" : "0" });
                 subtNum++;
                 extTrackNum++;
             }
-            _subtitleMapParam += extSubMap[k];
-            _subtitleMetadataParam += extSubLang[k] + extSubTitle[k] + extSubDef[k];
+            //_subtitleMapParam += extSubMap[k];
+            //_subtitleMetadataParam += extSubLang[k] + extSubTitle[k] + extSubDef[k];
         }
     }
 
@@ -364,12 +384,14 @@ void Encoder::initEncoding(const QString  &temp_file,
     /************************************* Level module **************************************/
 
     const QString selected_level = t.arr_level[_CODEC][_LEVEL];
-    const QString level = (selected_level != "" && selected_level != tr("Auto")) ?
-                QString("-level:v %1 ").arg(selected_level) : "";
-
+    QStringList level;
+    if (selected_level != "" && selected_level != tr("Auto"))
+    {
+        level.append({"-level:v",selected_level});
+    }
     /************************************* Mode module ***************************************/
 
-    QString mode = "";
+    QStringList mode;
     const QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 0);
     const QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 0);
     const QString maxrate = QString::number(1000000.0*_MAXRATE.toDouble(), 'f', 0);
@@ -377,152 +399,152 @@ void Encoder::initEncoding(const QString  &temp_file,
     const QString selected_mode = t.arr_mode[_CODEC][_MODE];
 
     if (selected_mode == "CBR") {
-        mode = QString("-b:v %1 -minrate %1 -maxrate %1 -bufsize %2 ").arg(bitrate, bufsize);
+        mode.append({"-b:v", bitrate, "-minrate", bitrate, "-maxrate", bitrate, "-bufsize", bufsize });
     }
     else
     if (selected_mode == "ABR") {
-        mode = QString("-b:v %1 ").arg(bitrate);
+        mode.append({"-b:v", bitrate });
     }
     else
     if (selected_mode == "VBR") {
-        mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 ").arg(bitrate, minrate, maxrate, bufsize);
+        mode.append({"-b:v", bitrate, "-minrate", minrate, "-maxrate", maxrate, "-bufsize", bufsize});
     }
     else
     if (selected_mode == "VBR_NV") {
-        mode = QString("-b:v %1 -minrate %2 -maxrate %3 -bufsize %4 -rc vbr ").arg(bitrate, minrate, maxrate, bufsize);
+        mode.append({"-b:v", bitrate, "-minrate", minrate, "-maxrate", maxrate, "-bufsize", bufsize, "-rc", "vbr"});
     }
     else
     if (selected_mode == "CRF") {
-        mode = QString("-crf %1 ").arg(_BQR);
+        mode.append({"-crf" , _BQR});
     }
     else
     if (selected_mode == "CQP") {
-        mode = QString("-b:v 0 -cq %1 -qmin %1 -qmax %1 ").arg(_BQR);
+        mode.append({"-b:v", "0", "-cq", _BQR, "-qmin", _BQR, "-qmax", _BQR});
     }
     else
     if (selected_mode == "CQP_QS") {
-        mode = QString("-global_quality %1 -look_ahead 1 ").arg(_BQR);
+        mode.append({"-global_quality", _BQR, "-look_ahead", "1"});
     }
     else
     if (selected_mode == "CQP_VA") {
-        mode = QString("-qp %1 -rc_mode 4 ").arg(_BQR);
+        mode.append({"-qp", _BQR, "-rc_mode", "4"});
     }
 
     /************************************* Preset module ***************************************/
 
-    QString preset = "";
+    QStringList preset;
     const QString selected_preset = t.getCurrentPreset(_CODEC, _PRESET);
     if (selected_preset != "" && selected_preset != tr("None")) {
-        preset = QString("-preset ") + selected_preset.toLower() + QString(" ");
+        preset.append({"-preset", selected_preset.toLower() });
     }
 
     /************************************* Pass module ***************************************/
 
     const QString selected_pass = t.arr_pass[_CODEC][_PASS];
-    QString pass = "";
-    QString pass1 = "";
+    QStringList pass;
+    QStringList pass1;
     if (selected_pass == tr("2 Pass_x265")) {
-        pass = "-x265-params pass=2 ";
-        pass1 = "-x265-params pass=1 ";
+        pass.append({"-x265-params","pass=2"});
+        pass1.append({"-x265-params","pass=1"});
         _flag_two_pass = true;
     }
     else
     if (selected_pass == tr("2 Pass")) {
-        pass = "-pass 2 ";
-        pass1 = "-pass 1 ";
+        pass.append({"-pass","2"});
+        pass1.append({"-pass","1"});
         _flag_two_pass = true;
     }
     else
     if (selected_pass == tr("2 Pass Optimisation")) {
-        pass = "-2pass 1 ";
+        pass.append({"-2pass","1"});
     }
 
     /************************************* Audio module ***************************************/
 
-    QString acodec = "";
+    QStringList acodec;
     const QString selected_acodec = t.arr_acodec[_CODEC][_AUDIO_CODEC];
     QString selected_bitrate = "";
 
-    QString sampling = "";
+    QStringList sampling;
     const QString selected_sampling = t.arr_sampling[_AUDIO_SAMPLING];
     if (selected_sampling != "Source") {
-        sampling = QString("-af aresample=%1:resampler=soxr ").arg(selected_sampling);
+        sampling.append({"-af",QString("aresample=%1:resampler=soxr").arg(selected_sampling)});
     }
 
-    QString channels = "";
+    QStringList channels;
     const QString selected_channels = t.arr_channels[_AUDIO_CHANNELS];
     if (selected_channels != "Source") {
-        channels = QString(" -ac %1").arg(selected_channels);
+        channels.append({"-ac", selected_channels});
     }
 
     if (selected_acodec == "AAC") {
         selected_bitrate = t.arr_bitrate[0][_AUDIO_BITRATE];
-        acodec = QString("-c:a aac -b:a %1").arg(selected_bitrate);
+        acodec.append({"-c:a","aac", "-b:a", selected_bitrate});
     }
     else
     if (selected_acodec == "AC3") {
         selected_bitrate = t.arr_bitrate[1][_AUDIO_BITRATE];
-        acodec = QString("-c:a ac3 -b:a %1").arg(selected_bitrate);
+        acodec.append({"-c:a", "ac3", "-b:a", selected_bitrate});
     }
     else
     if (selected_acodec == "DTS") {
         selected_bitrate = t.arr_bitrate[2][_AUDIO_BITRATE];
-        acodec = QString("-strict -2 -c:a dca -b:a %1").arg(selected_bitrate);
+        acodec.append({"-strict", "-2", "-c:a", "dca", "-b:a", selected_bitrate});
     }
     else
     if (selected_acodec == "Vorbis") {
         selected_bitrate = t.arr_bitrate[3][_AUDIO_BITRATE];
-        acodec = QString("-c:a libvorbis -b:a %1").arg(selected_bitrate);
+        acodec.append({"-c:a", "libvorbis", "-b:a", selected_bitrate});
     }
     else
     if (selected_acodec == "Opus") {
         selected_bitrate = t.arr_bitrate[4][_AUDIO_BITRATE];
-        acodec = QString("-c:a libopus -b:a %1").arg(selected_bitrate);
+        acodec.append({"-c:a", "libopus", "-b:a", selected_bitrate});
     }
     else
     if (selected_acodec == "PCM 16 bit") {
-        acodec = "-c:a pcm_s16le";
+        acodec.append({"-c:a", "pcm_s16le"});
     }
     else
     if (selected_acodec == "PCM 24 bit") {
-        acodec = "-c:a pcm_s24le";
+        acodec.append({"-c:a", "pcm_s24le"});
     }
     else
     if (selected_acodec == "PCM 32 bit") {
-        acodec = "-c:a pcm_s32le";
+        acodec.append({"-c:a", "pcm_s32le"});
     }
     else
     if (selected_acodec == tr("Source")) {
-        acodec = "-c:a copy";
+        acodec.append({"-c:a", "copy"});
     }
-    const QString audio_param = sampling + acodec + channels;
+    const QStringList audio_param = sampling + acodec + channels;
 
     /************************************ Subtitle module *************************************/
 
-    QString sub_param("");
+    QStringList sub_param;
 
     if (_burn_subtitle) {
-        _sub_mux_param = QString("-sn");
-        sub_param = QString(" ") + _sub_mux_param;
+        _sub_mux_param.append("-sn");
+        sub_param.append(_sub_mux_param);
     } else {
         if (container == "mkv") {
-            _sub_mux_param = QString("-c:s ass");
+            _sub_mux_param.append({"-c:s","ass"});
         } else
         if (container == "webm") {
-            _sub_mux_param = QString("-c:s webvtt");
+            _sub_mux_param.append({"-c:s","webvtt"});
         } else
         if (container == "mp4" || container == "mov") {
-            _sub_mux_param = QString("-c:s mov_text");
+            _sub_mux_param.append({"-c:s", "mov_text"});
         } else {
-            _sub_mux_param = QString("-sn");
+            _sub_mux_param.append("-sn");
             emit onEncodingError(tr("Container \'%1\' will be transcoded without subtitles.")
                                          .arg(container), true);
         }
 
         if (_flag_hdr) {
-            sub_param = QString(" -c:s ass");
+            sub_param.append({"-c:s", "ass"});
         } else {
-            sub_param = QString(" ") + _sub_mux_param;
+            sub_param.append(_sub_mux_param);
         }
     }
 
@@ -548,8 +570,8 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"",                ""}
     };
 
-    QString colorprim = "";
-    QString colorprim_vf = "";
+    QStringList colorprim;
+    QStringList colorprim_vf;
     const QString selected_colorprim = arr_colorprim[_PRIMARY];
     if (!curr_colorprim.contains(_hdr[CUR_COLOR_PRIMARY])) {
         _message = tr("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
@@ -558,13 +580,13 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
     if (selected_colorprim == "Source") {
         if (_hdr[CUR_COLOR_PRIMARY] != "") {
-            colorprim = QString("-color_primaries %1 ").arg(curr_colorprim[_hdr[CUR_COLOR_PRIMARY]]);
+            colorprim.append({"-color_primaries", curr_colorprim[_hdr[CUR_COLOR_PRIMARY]]});
         }
     }
     else {
-        colorprim = QString("-color_primaries %1 ").arg(selected_colorprim);
+        colorprim.append({"-color_primaries", selected_colorprim});
         if (_REP_PRIM == 2) {
-            colorprim_vf = QString("zscale=p=%1").arg(selected_colorprim);
+            colorprim_vf.append(QString("zscale=p=%1").arg(selected_colorprim));
         } else {
 
         }
@@ -593,8 +615,8 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"",                        ""}
     };
 
-    QString colormatrix = "";
-    QString colormatrix_vf = "";
+    QStringList colormatrix;
+    QStringList colormatrix_vf;
     const QString selected_colormatrix = arr_colormatrix[_MATRIX];
     if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
         _message = tr("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
@@ -603,13 +625,13 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
     if (selected_colormatrix == "Source") {
         if (_hdr[CUR_COLOR_MATRIX] != "") {
-            colormatrix = QString("-colorspace %1 ").arg(curr_colormatrix[_hdr[CUR_COLOR_MATRIX]]);
+            colormatrix.append({"-colorspace", curr_colormatrix[_hdr[CUR_COLOR_MATRIX]]});
         }
     }
     else {
-        colormatrix = QString("-colorspace %1 ").arg(selected_colormatrix);
+        colormatrix.append({"-colorspace", selected_colormatrix});
         if (_REP_MATRIX == 2) {
-            colormatrix_vf = QString("zscale=m=%1").arg(selected_colormatrix);
+            colormatrix_vf.append(QString("zscale=m=%1").arg(selected_colormatrix));
         } else {
 
         }
@@ -642,8 +664,8 @@ void Encoder::initEncoding(const QString  &temp_file,
         {"",                         ""}
     };
 
-    QString transfer = "";
-    QString transfer_vf = "";
+    QStringList transfer;
+    QStringList transfer_vf;
     const QString selected_transfer = arr_trc[_TRC];
     if (!curr_transfer.contains(_hdr[CUR_TRANSFER])) {
         _message = tr("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
@@ -652,33 +674,35 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
     if (selected_transfer == "Source") {
         if (_hdr[CUR_TRANSFER] != "") {
-            transfer = QString("-color_trc %1 ").arg(curr_transfer[_hdr[CUR_TRANSFER]]);
+            transfer.append({"-color_trc",curr_transfer[_hdr[CUR_TRANSFER]]});
         }
     }
     else {
-        transfer = QString("-color_trc %1 ").arg(selected_transfer);
+        transfer.append({"-color_trc", selected_transfer});
         if (_REP_TRC == 2) {
-            transfer_vf = QString("zscale=t=%1").arg(selected_transfer);
+            transfer_vf.append(QString("zscale=t=%1").arg(selected_transfer));
         } else {
 
         }
     }
 
+
+    /*
     const int vf_size = 7;
-    const QString vf_transform_arr[vf_size] = {
-        hwaccel_filter_vf,
-        fps_vf,
-        resize_vf,
+    const QStringList vf_transform_arr[vf_size] = {
+            {hwaccel_filter_vf},
+            {fps_vf},
+            {resize_vf},
         colorprim_vf,
         colormatrix_vf,
         transfer_vf,
-        burn_subt_vf
+            {burn_subt_vf}
     };
 
-    QString vf = "";
+    QStringList vf;
     int pos = 0;
     for (int n = 0; n < vf_size; n ++) {
-        if (vf_transform_arr[n] != "") {
+        if (vf_transform_arr[n].count() != 0) {
             pos++;
             if (pos == 1) {
                 vf += vf_transform_arr[n];
@@ -692,79 +716,96 @@ void Encoder::initEncoding(const QString  &temp_file,
     if (vf != "") {
         transform = QString("-vf %1 ").arg(vf);
     }
-
     const QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
                     QString("-map_metadata -1 -map_chapters -1 ") + _videoMetadataParam + _audioMetadataParam +
                     _subtitleMetadataParam + transform + t.arr_params[_CODEC][0];
+    */
+
+    QStringList codec = {"-map", "0:v:0?"};
+    codec.append(_audioMapParam);
+    codec.append(_subtitleMapParam);
+    codec.append({"-map_metadata", "-1", "-map_chapters", "-1"});
+    codec.append(_videoMetadataParam);
+    codec.append(_audioMetadataParam);
+    codec.append(_subtitleMetadataParam);
+    codec.append("-vf");
+    codec.append(hwaccel_filter_vf);
+    codec.append(fps_vf);
+    codec.append(resize_vf);
+    codec.append(colorprim_vf);
+    codec.append(colormatrix_vf);
+    codec.append(transfer_vf);
+    codec.append(burn_subt_vf);
+    codec.append(t.arr_params[_CODEC][0]);
 
     /************************************* HDR module ***************************************/
 
-    QString color_range = "";
-    QString max_lum = "";
-    QString min_lum = "";
-    QString max_cll = "";
-    QString max_fall = "";
-    QString chroma_coord = "";
-    QString white_coord = "";
+    QStringList color_range;
+    QStringList max_lum;
+    QStringList min_lum;
+    QStringList max_cll;
+    QStringList max_fall;
+    QStringList chroma_coord;
+    QStringList white_coord;
     if (_flag_hdr == true) {
 
         /********************************* Color range module **********************************/
 
         if (_COLOR_RANGE == 0) {                             // color range
             if (_hdr[CUR_COLOR_RANGE] == "Limited")
-                color_range = "-color_range tv ";
+                color_range.append({"-color_range","tv"});
             else
             if (_hdr[CUR_COLOR_RANGE] == "Full")
-                color_range = "-color_range pc ";
+                color_range.append({"-color_range","pc"});
         }
         else
         if (_COLOR_RANGE == 1) {
-            color_range = "-color_range pc ";
+            color_range.append({"-color_range","pc"});
         }
         else
         if (_COLOR_RANGE == 2) {
-            color_range = "-color_range tv ";
+            color_range.append({"-color_range","tv"});
         }
 
         /************************************* Lum module ***************************************/
 
         if (_MAX_LUM != "") {                           // max lum
-            max_lum = QString("-s max-luminance=%1 ").arg(_MAX_LUM);
+            max_lum.append({"-s", QString("max-luminance=%1").arg(_MAX_LUM)});
         } else {
             if (_hdr[CUR_MAX_LUM] != "") {
-                max_lum = QString("-s max-luminance=%1 ").arg(_hdr[CUR_MAX_LUM]);
+                max_lum.append({"-s", QString("max-luminance=%1").arg(_hdr[CUR_MAX_LUM])});
             } else {
-                max_lum = "-d max-luminance ";
+                max_lum.append({"-d", "max-luminance"});
             }
         }
 
         if (_MIN_LUM != "") {                           // min lum
-            min_lum = QString("-s min-luminance=%1 ").arg(_MIN_LUM);
+            min_lum.append({"-s", QString("min-luminance=%1").arg(_MIN_LUM)});
         } else {
             if (_hdr[CUR_MIN_LUM] != "") {
-                min_lum = QString("-s min-luminance=%1 ").arg(_hdr[CUR_MIN_LUM]);
+                min_lum.append({"-s", QString("min-luminance=%1").arg(_hdr[CUR_MIN_LUM])});
             } else {
-                min_lum = "-d min-luminance ";
+                min_lum.append({"-d", "min-luminance"});
             }
         }
 
         if (_MAX_CLL != "") {                           // max cll
-            max_cll = QString("-s max-content-light=%1 ").arg(_MAX_CLL);
+            max_cll.append({"-s", QString("max-content-light=%1").arg(_MAX_CLL)});
         } else {
             if (_hdr[CUR_MAX_CLL] != "") {
-                max_cll = QString("-s max-content-light=%1 ").arg(_hdr[CUR_MAX_CLL]);
+                max_cll.append({"-s", QString("max-content-light=%1").arg(_hdr[CUR_MAX_CLL])});
             } else {
-                max_cll = "-d max-content-light ";
+                max_cll.append({"-d", "max-content-light"});
             }
         }
 
         if (_MAX_FALL != "") {                           // max fall
-            max_fall = QString("-s max-frame-light=%1 ").arg(_MAX_FALL);
+            max_fall.append({"-s", QString("max-frame-light=%1").arg(_MAX_FALL)});
         } else {
             if (_hdr[CUR_MAX_FALL] != "") {
-                max_fall = QString("-s max-frame-light=%1 ").arg(_hdr[CUR_MAX_FALL]);
+                max_fall.append({"-s", QString("max-frame-light=%1").arg(_hdr[CUR_MAX_FALL])});
             } else {
-                max_fall = "-d max-frame-light ";
+                max_fall.append({"-d", "max-frame-light"});
             }
         }
 
@@ -847,66 +888,67 @@ void Encoder::initEncoding(const QString  &temp_file,
         }
 
         if (current_coord[red_x] == "") {
-            chroma_coord = "-d chromaticity-coordinates-red-x -d chromaticity-coordinates-red-y "
-                           "-d chromaticity-coordinates-green-x -d chromaticity-coordinates-green-y "
-                           "-d chromaticity-coordinates-blue-x -d chromaticity-coordinates-blue-y ";
+            chroma_coord.append({"-d", "chromaticity-coordinates-red-x", "-d", "chromaticity-coordinates-red-y",
+                                    "-d", "chromaticity-coordinates-green-x", "-d", "chromaticity-coordinates-green-y",
+                                    "-d", "chromaticity-coordinates-blue-x", "-d", "chromaticity-coordinates-blue-y"});
         } else {
-            chroma_coord = QString("-s chromaticity-coordinates-red-x=%1 -s chromaticity-coordinates-red-y=%2 "
-                                   "-s chromaticity-coordinates-green-x=%3 -s chromaticity-coordinates-green-y=%4 "
-                                   "-s chromaticity-coordinates-blue-x=%5 -s chromaticity-coordinates-blue-y=%6 ")
-                                   .arg(current_coord[red_x], current_coord[red_y], current_coord[green_x],
-                                        current_coord[green_y], current_coord[blue_x], current_coord[blue_y]);
+            chroma_coord.append({"-s", "chromaticity-coordinates-red-x="+current_coord[red_x],
+                                 "-s", "chromaticity-coordinates-red-y="+current_coord[red_y],
+                                 "-s", "chromaticity-coordinates-green-x="+current_coord[green_x],
+                                 "-s", "chromaticity-coordinates-green-y="+current_coord[green_y],
+                                 "-s", "chromaticity-coordinates-blue-x="+current_coord[blue_x],
+                                 "-s", "chromaticity-coordinates-blue-y="+current_coord[blue_y]});
         }
         if (current_coord[white_x] == "") {
-            white_coord = "-d white-coordinates-x -d white-coordinates-y ";
+            white_coord.append({"-d", "white-coordinates-x", "-d","white-coordinates-y"});
         } else {
-            white_coord = QString("-s white-coordinates-x=%1 -s white-coordinates-y=%2 ").arg(current_coord[white_x], current_coord[white_y]);
+            white_coord.append({"-s", QString("white-coordinates-x=%1").arg(current_coord[white_x]), "-s", QString("white-coordinates-y=%2 ").arg(current_coord[white_y])});
         }
     }
 
     /************************************* Result module ***************************************/
 
-    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M" + hwaccel + _splitStartParam;
+    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M" + hwaccel + _splitStartParam.join(" ");
     _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
-            + colorprim + colormatrix + transfer + "-an -sn -f null /dev/null";
+            + colorprim + colormatrix + transfer + QStringList {"-an","-sn","-f","null", "/dev/null"};
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
             + colorprim + colormatrix + transfer + audio_param + sub_param;
-    _preset_mkvmerge = QString("%1%2%3%4%5%6 ").arg(max_cll, max_fall, max_lum, min_lum, chroma_coord, white_coord);
+    _preset_mkvmerge = max_cll.join(" ") + max_fall.join(" ") + max_lum.join(" ") + min_lum.join(" ") + chroma_coord.join(" ") + white_coord.join(" ");
     Print("Flag two-pass: " << _flag_two_pass);
     Print("Flag HDR: " << _flag_hdr);
     Print("preset_0: " << _preset_0.toStdString());
 
     QString log("");
     if (_flag_two_pass && _flag_hdr) {
-        Print("preset_pass1: " << _preset_pass1.toStdString());
-        Print("preset: " << _preset.toStdString());
+        Print("preset_pass1: " << _preset_pass1.join(" ").toStdString());
+        Print("preset: " << _preset.join(" ").toStdString());
         Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
         log = QString("Preset pass 1: %1 -i <input file> %2\n"
                       "Preset pass 2: %3 -i <input file> %4 -y <output file>\n"
                       "Preset mkvpropedit: %5\n")
-                .arg(_preset_0, _preset_pass1, _preset_0, _preset, _preset_mkvmerge);
+                .arg(_preset_0, _preset_pass1.join(" "), _preset_0, _preset.join(" "), _preset_mkvmerge);
     }
     else
     if (_flag_two_pass && !_flag_hdr) {
-        Print("preset_pass1: " << _preset_pass1.toStdString());
-        Print("preset: " << _preset.toStdString());
+        Print("preset_pass1: " << _preset_pass1.join(" ").toStdString());
+        Print("preset: " << _preset.join(" ").toStdString());
         log = QString("Preset pass 1: %1 -i <input file> %2\n"
                       "Preset pass 2: %3 -i <input file> %4 -y <output file>\n")
-                .arg(_preset_0, _preset_pass1, _preset_0, _preset);
+                .arg(_preset_0, _preset_pass1.join(" "), _preset_0, _preset.join(" "));
     }
     else
     if (!_flag_two_pass && _flag_hdr) {
-        Print("preset: " << _preset.toStdString());
+        Print("preset: " << _preset.join(" ").toStdString());
         Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
         log = QString("Preset: %1 -i <input file> %2 -y <output file>\n"
                       "Preset mkvpropedit: %3\n")
-                .arg(_preset_0, _preset, _preset_mkvmerge);
+                .arg(_preset_0, _preset.join(" "), _preset_mkvmerge);
     }
     else
     if (!_flag_two_pass && !_flag_hdr) {
-        Print("preset: " << _preset.toStdString());
+        Print("preset: " << _preset.join(" ").toStdString());
         log = QString("Preset: %1 -i <input file> %2 -y <output file>\n")
-                .arg(_preset_0, _preset);
+                .arg(_preset_0, _preset.join(" "));
     }
     emit onEncodingLog(log);
     encode();
@@ -926,7 +968,7 @@ void Encoder::encode()   // Encode
         emit onEncodingMode(_encoding_mode);
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
                   << "-map" << "0:s?" << "-movflags" << "+write_colr"
-                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param.split(" ") << "-y" << _output_file;
+                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param << "-y" << _output_file;
     } else {
         if (*fr_count == 0) {
             _message = tr("The file does not contain FPS information!\nSelect the correct input file!");
@@ -942,8 +984,7 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths
-                      << _preset.split(" ") << "-y" << _output_file;
+                      << _extSubPaths << _preset << "-y" << _output_file;
         }
         else
         if (!_flag_two_pass && _flag_hdr) {
@@ -952,8 +993,7 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths
-                      << _preset.split(" ") << "-y" << _temp_file;
+                      << _extSubPaths << _preset << "-y" << _temp_file;
         }
         else
         if (_flag_two_pass) {
@@ -962,10 +1002,12 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths
-                      << _preset_pass1.split(" ");
+                      << _extSubPaths << _preset_pass1;
         }
     }
+
+    std::string myargs = arguments.join(" ").toStdString();
+
     //qDebug() << arguments;
     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {

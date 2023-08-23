@@ -90,13 +90,12 @@ private:
             _input_file,
             _output_file,
             _preset_0,
-            _preset_pass1,
-            _preset,
             _preset_mkvmerge,
-            _sub_mux_param,
             _message,
             _error_message,
             _encoding_mode;
+
+    QStringList _preset, _preset_pass1, _sub_mux_param;
 
     QProcess *processEncoding;
 
