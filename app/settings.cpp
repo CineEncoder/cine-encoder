@@ -299,11 +299,16 @@ void Settings::onButtonApply()
     int subtitles_background = ui->checkBox_subtitles_background->checkState();
     *m_pSubtitlesBackground = (subtitles_background == 2) ? true : false;
 
-    m_pSubtitlesBackgroundColor->setAlpha(ui->spinBox_background->value());
+    *m_pSubtitlesColor = QColor(m_pSubtitlesColor_temp.name());
 
     QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
+
+    *m_pSubtitlesBackgroundColor = QColor(m_pSubtitlesBackgroundColor_temp.red(),
+                                          m_pSubtitlesBackgroundColor_temp.green(),
+                                          m_pSubtitlesBackgroundColor_temp.blue(),
+                                          ui->spinBox_background->value());
 
     QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
@@ -463,12 +468,14 @@ void Settings::onComboBoxSubtitlesFont_indexChanged(int index)
 
 void Settings::subtitles_color_change()
 {
-    QColorDialog cdialog;
-    QColor t(255, 255, 255, 255);
-    cdialog.setOption(QColorDialog::ShowAlphaChannel, true);
+    QColorDialog cdialog(*m_pSubtitlesColor);
+
+    m_pSubtitlesColor_temp = QColor(m_pSubtitlesColor->red(),
+                                    m_pSubtitlesColor->green(),
+                                    m_pSubtitlesColor->blue());
 
     if (cdialog.exec() == QDialog::Accepted) {
-        QColor m_pSubtitlesColor_temp = cdialog.getColor(t);
+        m_pSubtitlesColor_temp = cdialog.getColor();
 
         QString s("background: " + m_pSubtitlesColor_temp.name() + ";");
         ui->subtitles_color->setStyleSheet(s);
@@ -478,17 +485,17 @@ void Settings::subtitles_color_change()
 
 void Settings::subtitles_background_color_change()
 {
-    QColorDialog cdialog;
-    cdialog.setOptions(QColorDialog::DontUseNativeDialog | QColorDialog::ShowAlphaChannel);
-
-    QColor t(255, 255, 255, 255);
-    cdialog.setCurrentColor(t);
+    m_pSubtitlesBackgroundColor_temp = QColor(m_pSubtitlesBackgroundColor->red(),
+                                              m_pSubtitlesBackgroundColor->green(),
+                                              m_pSubtitlesBackgroundColor->blue(),
+                                              m_pSubtitlesBackgroundColor->alpha());
+    QColorDialog cdialog(m_pSubtitlesBackgroundColor_temp);
     if (cdialog.exec() == QDialog::Accepted) {
-        QColor m_pSubtitlesBackgroundColor_temp = cdialog.getColor(t);
+        m_pSubtitlesBackgroundColor_temp = cdialog.getColor();
         m_pSubtitlesBackgroundColor_temp = QColor(m_pSubtitlesBackgroundColor_temp.red(),
                                                   m_pSubtitlesBackgroundColor_temp.green(),
                                                   m_pSubtitlesBackgroundColor_temp.blue(),
-                                                  ui->spinBox_background->value());
+                                                  m_pSubtitlesBackgroundColor->alpha());
 
         QString s("background: "
                   + m_pSubtitlesBackgroundColor_temp.name()
