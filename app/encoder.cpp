@@ -257,8 +257,6 @@ void Encoder::initEncoding(const QString  &temp_file,
             _audioMetadataParam.append({"-disposition:a:"+numToStr(audioNum),CHECKS(audioDef)[k] ? "default" : "0"});
             audioNum++;
         }
-        // _audioMapParam += audioMap[k];
-        // _audioMetadataParam += audioLang[k] + audioTitle[k] + audioDef[k];
     }
 
     /********************************* External Audio streams ************************************/
@@ -286,8 +284,6 @@ void Encoder::initEncoding(const QString  &temp_file,
             audioNum++;
             extTrackNum++;
         }
-        //_audioMapParam += extAudioMap[k];
-        //_audioMetadataParam += extAudioLang[k] + extAudioTitle[k] + extAudioDef[k];
     }
 
     /**************************************** Subtitles **************************************/
@@ -340,8 +336,6 @@ void Encoder::initEncoding(const QString  &temp_file,
                 _subtitleMetadataParam.append({"-disposition:s:"+numToStr(subtNum), CHECKS(subtDef)[k] ? "default" : "0" });
                 subtNum++;
             }
-            //_subtitleMapParam += subtitleMap[k];
-            //_subtitleMetadataParam += subtitleLang[k] + subtitleTitle[k] + subtitleDef[k];
         }
     }
 
@@ -370,8 +364,6 @@ void Encoder::initEncoding(const QString  &temp_file,
                 subtNum++;
                 extTrackNum++;
             }
-            //_subtitleMapParam += extSubMap[k];
-            //_subtitleMetadataParam += extSubLang[k] + extSubTitle[k] + extSubDef[k];
         }
     }
 
@@ -686,41 +678,6 @@ void Encoder::initEncoding(const QString  &temp_file,
         }
     }
 
-
-    /*
-    const int vf_size = 7;
-    const QStringList vf_transform_arr[vf_size] = {
-            {hwaccel_filter_vf},
-            {fps_vf},
-            {resize_vf},
-        colorprim_vf,
-        colormatrix_vf,
-        transfer_vf,
-            {burn_subt_vf}
-    };
-
-    QStringList vf;
-    int pos = 0;
-    for (int n = 0; n < vf_size; n ++) {
-        if (vf_transform_arr[n].count() != 0) {
-            pos++;
-            if (pos == 1) {
-                vf += vf_transform_arr[n];
-            } else {
-                vf += "," + vf_transform_arr[n];
-            }
-        }
-    }
-
-    QString transform = "";
-    if (vf != "") {
-        transform = QString("-vf %1 ").arg(vf);
-    }
-    const QString codec = QString("-map 0:v:0? ") + _audioMapParam + _subtitleMapParam +
-                    QString("-map_metadata -1 -map_chapters -1 ") + _videoMetadataParam + _audioMetadataParam +
-                    _subtitleMetadataParam + transform + t.arr_params[_CODEC][0];
-    */
-
     QStringList codec = {"-map", "0:v:0?"};
     codec.append(_audioMapParam);
     codec.append(_subtitleMapParam);
@@ -728,15 +685,14 @@ void Encoder::initEncoding(const QString  &temp_file,
     codec.append(_videoMetadataParam);
     codec.append(_audioMetadataParam);
     codec.append(_subtitleMetadataParam);
-    codec.append("-vf");
-    codec.append(hwaccel_filter_vf);
-    codec.append(fps_vf);
-    codec.append(resize_vf);
+    codec.append(hwaccel_filter_vf.split(" "));
+    codec.append(fps_vf.split(" "));
+    codec.append(resize_vf.split(" "));
     codec.append(colorprim_vf);
     codec.append(colormatrix_vf);
     codec.append(transfer_vf);
-    codec.append(burn_subt_vf);
-    codec.append(t.arr_params[_CODEC][0]);
+    codec.append(burn_subt_vf.split(" "));
+    codec.append(t.arr_params[_CODEC][0].split(" "));
 
     /************************************* HDR module ***************************************/
 
@@ -1006,10 +962,20 @@ void Encoder::encode()   // Encode
         }
     }
 
+    // Clean up empty slots.
+    arguments.removeAll("");
+    arguments.removeAll(" ");
+
+    std::string argsarray[arguments.length()];
+    for (int i = 0; i < arguments.length(); i++)
+    {
+        argsarray[i] = arguments[i].toStdString();
+    }
+
     std::string myargs = arguments.join(" ").toStdString();
 
     //qDebug() << arguments;
-    processEncoding->start("ffmpeg", arguments);
+     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {
         Print("cmd command not found!!!");
         processEncoding->disconnect();
