@@ -299,25 +299,13 @@ void Settings::onButtonApply()
     int subtitles_background = ui->checkBox_subtitles_background->checkState();
     *m_pSubtitlesBackground = (subtitles_background == 2) ? true : false;
 
-    m_pSubtitlesBackgroundColor_temp.setAlpha(ui->spinBox_background->value());
-    *m_pSubtitlesBackgroundColor = m_pSubtitlesBackgroundColor_temp;
-    *m_pSubtitlesColor = m_pSubtitlesColor_temp;
+    m_pSubtitlesBackgroundColor->setAlpha(ui->spinBox_background->value());
 
-    QString s("background: #"
-              + QString(m_pSubtitlesColor_temp.red() < 16? "0" : "") + QString::number(m_pSubtitlesColor_temp.red(),16)
-              + QString(m_pSubtitlesColor_temp.green() < 16? "0" : "") + QString::number(m_pSubtitlesColor_temp.green(),16)
-              + QString(m_pSubtitlesColor_temp.blue() < 16? "0" : "") + QString::number(m_pSubtitlesColor_temp.blue(),16)
-              + QString(m_pSubtitlesColor_temp.alpha() < 16? "0" : "") + QString::number(m_pSubtitlesColor_temp.alpha(),16)
-              + ";");
+    QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
 
-    QString sb("background: #"
-              + QString(m_pSubtitlesBackgroundColor_temp.red() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.red(),16)
-              + QString(m_pSubtitlesBackgroundColor_temp.green() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.green(),16)
-              + QString(m_pSubtitlesBackgroundColor_temp.blue() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.blue(),16)
-              + QString(m_pSubtitlesBackgroundColor_temp.alpha() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.alpha(),16)
-              + ";");
+    QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
 
@@ -363,10 +351,10 @@ void Settings::onButtonReset()
     if (subtitlesFontInd != -1) {
         ui->comboBox_subtitles_font->setCurrentIndex(subtitlesFontInd);
     }
-    QString s("background: #" + DEFAULTSUBTITLECOLOR);
+    QString s("background: " + DEFAULTSUBTITLECOLOR);
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
-    QString sb("background: #" + DEFAULTSUBTITLEBACKGROUNDCOLOR);
+    QString sb("background: " + DEFAULTSUBTITLEBACKGROUNDCOLOR);
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
 
@@ -479,14 +467,13 @@ void Settings::subtitles_color_change()
     QColor t(255, 255, 255, 255);
     cdialog.setOption(QColorDialog::ShowAlphaChannel, true);
 
-    m_pSubtitlesColor_temp = cdialog.getColor(t);
+    if (cdialog.exec() == QDialog::Accepted) {
+        QColor m_pSubtitlesColor_temp = cdialog.getColor(t);
 
-    QString s("background: #"
-              + QString(m_pSubtitlesColor_temp.red() < 16? "0" : "") + QString::number(m_pSubtitlesColor_temp.red(),16)
-              + QString(m_pSubtitlesColor_temp.green() < 16? "0" : "") + QString::number(m_pSubtitlesColor_temp.green(),16)
-              + QString(m_pSubtitlesColor_temp.blue() < 16? "0" : "") + QString::number(m_pSubtitlesColor_temp.blue(),16) + ";");
-    ui->subtitles_color->setStyleSheet(s);
-    ui->subtitles_color->update();
+        QString s("background: " + m_pSubtitlesColor_temp.name() + ";");
+        ui->subtitles_color->setStyleSheet(s);
+        ui->subtitles_color->update();
+    }
 }
 
 void Settings::subtitles_background_color_change()
@@ -496,14 +483,17 @@ void Settings::subtitles_background_color_change()
 
     QColor t(255, 255, 255, 255);
     cdialog.setCurrentColor(t);
-    m_pSubtitlesBackgroundColor_temp = cdialog.getColor(t);
+    if (cdialog.exec() == QDialog::Accepted) {
+        QColor m_pSubtitlesBackgroundColor_temp = cdialog.getColor(t);
+        m_pSubtitlesBackgroundColor_temp = QColor(m_pSubtitlesBackgroundColor_temp.red(),
+                                                  m_pSubtitlesBackgroundColor_temp.green(),
+                                                  m_pSubtitlesBackgroundColor_temp.blue(),
+                                                  ui->spinBox_background->value());
 
-    QString s("background: #"
-              + QString(m_pSubtitlesBackgroundColor_temp.red() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.red(),16)
-              + QString(m_pSubtitlesBackgroundColor_temp.green() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.green(),16)
-              + QString(m_pSubtitlesBackgroundColor_temp.blue() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.blue(),16)
-              + QString(m_pSubtitlesBackgroundColor_temp.alpha() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor_temp.alpha(),16)
-              + ";");
-    ui->subtitles_background_color->setStyleSheet(s);
-    ui->subtitles_background_color->update();
+        QString s("background: "
+                  + m_pSubtitlesBackgroundColor_temp.name()
+                  + ";");
+        ui->subtitles_background_color->setStyleSheet(s);
+        ui->subtitles_background_color->update();
+    }
 }

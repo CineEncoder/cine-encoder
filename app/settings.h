@@ -81,8 +81,6 @@ private:
 
     QColor  *m_pSubtitlesColor,
             *m_pSubtitlesBackgroundColor;
-    QColor  m_pSubtitlesColor_temp,
-            m_pSubtitlesBackgroundColor_temp;
 
     QString *m_pOutputFolder,
             *m_pTempFolder,
