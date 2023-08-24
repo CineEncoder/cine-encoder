@@ -1507,7 +1507,7 @@
                        <x>0</x>
                        <y>30</y>
                        <width>407</width>
-                       <height>201</height>
+                       <height>238</height>
                       </rect>
                      </property>
                      <layout class="QGridLayout" name="gridLayout_21">
@@ -1520,37 +1520,50 @@
                       <property name="rightMargin">
                        <number>0</number>
                       </property>
-                      <item row="0" column="0">
-                       <spacer name="horizontalSpacer_12">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                      <item row="0" column="3">
+                       <widget class="QLabel" name="label_subtitle_fontSize">
+                        <property name="enabled">
+                         <bool>false</bool>
                         </property>
-                        <property name="sizeType">
-                         <enum>QSizePolicy::Expanding</enum>
+                        <property name="text">
+                         <string>Size</string>
                         </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
+                       </widget>
                       </item>
-                      <item row="1" column="2">
-                       <spacer name="verticalSpacer_19">
-                        <property name="orientation">
-                         <enum>Qt::Vertical</enum>
+                      <item row="2" column="2">
+                       <widget class="QPushButton" name="subtitles_color">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
                         </property>
-                        <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
+                        <property name="minimumSize">
                          <size>
-                          <width>20</width>
-                          <height>18</height>
+                          <width>0</width>
+                          <height>24</height>
                          </size>
                         </property>
-                       </spacer>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Subtitle</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QLabel" name="label_subtitlefont">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
+                        <property name="text">
+                         <string>Font</string>
+                        </property>
+                       </widget>
                       </item>
                       <item row="5" column="2">
                        <widget class="QPushButton" name="subtitles_background_color">
@@ -1577,13 +1590,43 @@
                         </property>
                        </widget>
                       </item>
-                      <item row="0" column="1">
-                       <widget class="QLabel" name="label_subtitlefont">
-                        <property name="enabled">
-                         <bool>false</bool>
+                      <item row="0" column="0">
+                       <spacer name="horizontalSpacer_12">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
                         </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Expanding</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="6" column="1">
+                       <widget class="QLabel" name="label_9">
                         <property name="text">
-                         <string>Font</string>
+                         <string>Opacity</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="5" column="1">
+                       <widget class="QLabel" name="label_8">
+                        <property name="text">
+                         <string>Background</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="6" column="2">
+                       <widget class="QSpinBox" name="spinBox_background">
+                        <property name="maximum">
+                         <number>255</number>
+                        </property>
+                        <property name="value">
+                         <number>150</number>
                         </property>
                        </widget>
                       </item>
@@ -1618,12 +1661,57 @@
                         </property>
                        </widget>
                       </item>
-                      <item row="6" column="1">
-                       <widget class="QLabel" name="label_9">
+                      <item row="2" column="1">
+                       <widget class="QLabel" name="label">
                         <property name="text">
-                         <string>Opacity</string>
+                         <string>Color</string>
                         </property>
                        </widget>
+                      </item>
+                      <item row="0" column="5">
+                       <spacer name="horizontalSpacer_16">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="3" column="2">
+                       <spacer name="verticalSpacer_18">
+                        <property name="orientation">
+                         <enum>Qt::Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>20</width>
+                          <height>18</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="1" column="2">
+                       <spacer name="verticalSpacer_19">
+                        <property name="orientation">
+                         <enum>Qt::Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>20</width>
+                          <height>18</height>
+                         </size>
+                        </property>
+                       </spacer>
                       </item>
                       <item row="0" column="4">
                        <widget class="QComboBox" name="comboBox_subtitles_fontsize">
@@ -1672,51 +1760,6 @@
                         </item>
                        </widget>
                       </item>
-                      <item row="0" column="3">
-                       <widget class="QLabel" name="label_subtitle_fontSize">
-                        <property name="enabled">
-                         <bool>false</bool>
-                        </property>
-                        <property name="text">
-                         <string>Size</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="2">
-                       <widget class="QPushButton" name="subtitles_color">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>24</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>30</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Subtitle</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="6" column="2">
-                       <widget class="QSpinBox" name="spinBox_background">
-                        <property name="maximum">
-                         <number>255</number>
-                        </property>
-                        <property name="value">
-                         <number>150</number>
-                        </property>
-                       </widget>
-                      </item>
                       <item row="0" column="2">
                        <widget class="QComboBox" name="comboBox_subtitles_font">
                         <property name="sizePolicy">
@@ -1739,46 +1782,67 @@
                         </property>
                        </widget>
                       </item>
-                      <item row="0" column="5">
-                       <spacer name="horizontalSpacer_16">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                      <item row="7" column="2">
+                       <widget class="QComboBox" name="comboBox_subtitles_location">
+                        <property name="currentIndex">
+                         <number>0</number>
                         </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                      <item row="3" column="2">
-                       <spacer name="verticalSpacer_18">
-                        <property name="orientation">
-                         <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeType">
-                         <enum>QSizePolicy::Fixed</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>20</width>
-                          <height>18</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                      <item row="5" column="1">
-                       <widget class="QLabel" name="label_8">
-                        <property name="text">
-                         <string>Background</string>
-                        </property>
+                        <item>
+                         <property name="text">
+                          <string>Default</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Bottom Left</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Bottom Center</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Bottom Right</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Top Left</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Top Center</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Top Right</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Middle Left</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Middle Center</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Middle Right</string>
+                         </property>
+                        </item>
                        </widget>
                       </item>
-                      <item row="2" column="1">
-                       <widget class="QLabel" name="label">
+                      <item row="7" column="1">
+                       <widget class="QLabel" name="label_10">
                         <property name="text">
-                         <string>Color</string>
+                         <string>Location</string>
                         </property>
                        </widget>
                       </item>

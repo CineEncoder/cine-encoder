@@ -40,6 +40,11 @@ Encoder::~Encoder()
 ** Encoder
 ************************************************/
 
+QString Resize()
+{
+
+}
+
 void Encoder::initEncoding(const QString  &temp_file,
                            const QString  &input_file,
                            const QString  &output_file,
@@ -60,7 +65,8 @@ void Encoder::initEncoding(const QString  &temp_file,
                            int subtitle_font_size,
                            const QString &subtitle_font_color,
                            const bool burn_background,
-                           const QString &subtitle_background_color
+                           const QString &subtitle_background_color,
+                           int subtitle_location
                            )
 {
     Print("Make preset...");
@@ -117,77 +123,24 @@ void Encoder::initEncoding(const QString  &temp_file,
     *fr_count = 0;
 
     /****************************************** Resize ****************************************/
-    QString resize_vf = "";
-    const QString new_width = (t.arr_width[_WIDTH] != "Source") ? t.arr_width[_WIDTH] : _width;
-    const QString new_height = (t.arr_height[_HEIGHT] != "Source") ? t.arr_height[_HEIGHT] : _height;
-    if ((t.arr_width[_WIDTH] != "Source") || (t.arr_height[_HEIGHT] != "Source")) {
-        if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) // QSV
-            resize_vf = QString("scale_qsv=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
-        else
-        if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) // VAAPI
-            resize_vf = QString("scale_vaapi=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
-        else
-            resize_vf = QString("scale=%1:%2,setsar=1:1").arg(new_width, new_height);
-    }
+    QString resize_vf;
+    resizeVF(_width, _height, _CODEC, _WIDTH, _HEIGHT, t, resize_vf);
 
     /******************************************* FPS *****************************************/
-
-    QString fps_vf = "";
+    QString fps_vf;
     double fps_dest;
-
-    if (t.frame_rate[_FRAME_RATE] != "Source") {
-        fps_dest = t.frame_rate[_FRAME_RATE].toDouble();
-        if (_BLENDING == t.Blending::Simple) {
-            if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) // QSV
-                fps_vf = QString("vpp_qsv=framerate=%1").arg(t.frame_rate[_FRAME_RATE]);
-            else
-            if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) // VAAPI
-                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
-            else
-                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
-        }
-        else
-        if (_BLENDING == t.Blending::Interpolated)
-            fps_vf = QString("framerate=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
-        else
-        if (_BLENDING == t.Blending::MCI)
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
-                    .arg(t.frame_rate[_FRAME_RATE]);
-        else
-        if (_BLENDING == t.Blending::Blend)
-            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(t.frame_rate[_FRAME_RATE]);
-    } else
-        fps_dest = _fps.toDouble();
+    fpsVF(_fps, _CODEC, _FRAME_RATE, _BLENDING, t, fps_vf, fps_dest);
 
     /****************************************** Split ****************************************/
-
     QVector<double> extDurVect;
     foreach (auto dur, FIELDS(externAudioDuration))
         extDurVect.push_back(0.001*dur.toDouble());
     double minExtTime = *std::min_element(std::begin(extDurVect), std::end(extDurVect));
     Print("Min external time: " << minExtTime);
 
-    double duration = _endTime - _startTime;
-    if (streamCutting == 1) {
-        if (minExtTime > 0) {
-            if (minExtTime < duration || minExtTime < _dur)
-                duration = minExtTime;
-            else
-            if (_dur < minExtTime)
-                duration = _dur;
-        }
-    }
-    Print("Cut duration: " << duration);
     QStringList _splitStartParam;
     QStringList _splitParam;
-    if (duration > 0) {
-        *fr_count = rnd(duration * fps_dest);
-        _splitStartParam.append(t.arr_codec[_CODEC][0] == tr("Source") ? QStringList{"-copyts"} : QStringList{"-copytb","0"}); //-copytb 0
-        _splitStartParam.append(QStringList{"-ss", QString::number(_startTime, 'f', 3)});
-        _splitParam.append(QStringList{"-vframes", numToStr(*fr_count)});
-    } else {
-        *fr_count = rnd(_dur * fps_dest);
-    }
+    split(_startTime, _endTime, _dur, streamCutting, t, _CODEC, fps_dest, minExtTime, _splitStartParam, _splitParam);
 
     /************************************** Video metadata ************************************/
 
@@ -233,93 +186,181 @@ void Encoder::initEncoding(const QString  &temp_file,
     }
 
     /************************************** Audio streams ************************************/
-
-    QVector<QString> audioLang(CHECKS(audioChecks).size(), ""),
-                     audioTitle(CHECKS(audioChecks).size(), ""),
-                     audioMap(CHECKS(audioChecks).size(), ""),
-                     audioDef(CHECKS(audioChecks).size(), "");
-    QStringList _audioMapParam,
-            _audioMetadataParam;
-    int     audioNum = 0;
-
-    Q_LOOP(k, 0, CHECKS(audioChecks).size()) {
-        if (CHECKS(audioChecks)[k] == true) {
-            audioMap[k] = QString("-map 0:a:%1? ").arg(numToStr(k));
-            _audioMapParam.append({"-map", "0:a:"+numToStr(k)+"?" });
-            audioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
-                           .arg(numToStr(audioNum), FIELDS(audioLangs)[k].replace(" ", "\u00A0"));
-            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"language="+FIELDS(audioLangs)[k]});
-            audioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
-                            .arg(numToStr(audioNum), FIELDS(audioTitles)[k].replace(" ", "\u00A0"));
-            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"title="+FIELDS(audioTitles)[k]});
-            audioDef[k] = QString("-disposition:a:%1 %2 ")
-                           .arg(numToStr(audioNum), CHECKS(audioDef)[k] ? "default" : "0");
-            _audioMetadataParam.append({"-disposition:a:"+numToStr(audioNum),CHECKS(audioDef)[k] ? "default" : "0"});
-            audioNum++;
-        }
-    }
+    QStringList _audioMapParam;
+    QStringList _audioMetadataParam;
+    int audioNum;
+    audio(data, _audioMapParam, _audioMetadataParam, audioNum);
 
     /********************************* External Audio streams ************************************/
+    int extTrackNum = extAudio(data, _audioMapParam, _audioMetadataParam, audioNum);
 
-    QVector<QString> extAudioLang(CHECKS(externAudioChecks).size(), ""),
-                     extAudioTitle(CHECKS(externAudioChecks).size(), ""),
-                     extAudioMap(CHECKS(externAudioChecks).size(), ""),
-                     extAudioDef(CHECKS(externAudioChecks).size(), "");
-    int extTrackNum = 1;
+    /**************************************** Subtitles **************************************/QString burn_subt_vf;
+    QStringList _subtitleMapParam;
+    QStringList _subtitleMetadataParam;
+    int subtNum;
+    subtitles(input_file, subtitle_font, subtitle_font_size, subtitle_font_color, burn_background,
+              subtitle_background_color, subtitle_location, data, burn_subt_vf, _subtitleMapParam,
+              _subtitleMetadataParam, subtNum);
 
-    Q_LOOP(k, 0, CHECKS(externAudioChecks).size()) {
-        if (CHECKS(externAudioChecks)[k] == true) {
-            _extAudioPaths << "-i" << FIELDS(externAudioPath)[k];
-            extAudioMap[k] = QString("-map %1:a? ").arg(numToStr(extTrackNum));
-            _audioMapParam.append({"-map", numToStr(extTrackNum) + ":a?" });
-            extAudioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
-                           .arg(numToStr(audioNum), FIELDS(externAudioLangs)[k].replace(" ", "\u00A0"));
-            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"language="+FIELDS(externAudioLangs)[k]});
-            extAudioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
-                            .arg(numToStr(audioNum), FIELDS(externAudioTitles)[k].replace(" ", "\u00A0"));
-            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"title="+FIELDS(externAudioTitles)[k]});
-            extAudioDef[k] = QString("-disposition:a:%1 %2 ")
-                           .arg(numToStr(audioNum), CHECKS(externAudioDef)[k] ? "default" : "0");
-            _audioMetadataParam.append({"-disposition:a:"+numToStr(audioNum),CHECKS(externAudioDef)[k] ? "default" : "0"});
-            audioNum++;
-            extTrackNum++;
-        }
+    /****************************** External Subtitle streams *********************************/
+    extSub(data, extTrackNum, _subtitleMapParam, _subtitleMetadataParam, subtNum);
+
+    /************************************* Codec module ***************************************/
+    QString hwaccel;
+    QString hwaccel_filter_vf;
+    codecModule(t, _CODEC, hwaccel, hwaccel_filter_vf);
+
+    /************************************* Level module **************************************/
+    QStringList level = levelModule(t, _CODEC, _LEVEL);
+
+    /************************************* Mode module ***************************************/
+    QStringList mode = modeModule(t, _CODEC, _MODE, _BQR, _MINRATE, _MAXRATE, _BUFSIZE);
+
+    /************************************* Preset module ***************************************/
+    QStringList preset = presetModule(t, _CODEC, _PRESET);
+
+    /************************************* Pass module ***************************************/
+    QStringList pass;
+    QStringList pass1;
+    passModule(t, _CODEC, _PASS, pass, pass1);
+
+    /************************************* Audio module ***************************************/
+    QStringList audio_param = audioModule(t, _CODEC, _AUDIO_CODEC, _AUDIO_BITRATE, _AUDIO_SAMPLING, _AUDIO_CHANNELS);
+
+    /************************************ Subtitle module *************************************/
+    QStringList sub_param = subModule(container);
+
+    /************************************* Color module ***************************************/
+
+    // color primaries
+    QStringList colorprim;
+    QStringList colorprim_vf;
+    colorPrimaries(_hdr, _PRIMARY, _REP_PRIM, colorprim, colorprim_vf);
+
+    // color matrix
+    QStringList colormatrix;
+    QStringList colormatrix_vf;
+    colorMatrix(_hdr, _MATRIX, _REP_MATRIX, colormatrix, colormatrix_vf);
+
+    // transfer characteristics
+    QStringList transfer;
+    QStringList transfer_vf;
+    colorTransfer(_hdr, _TRC, _REP_TRC, transfer, transfer_vf);
+
+    QStringList codec = getCodec(t, _CODEC, resize_vf, fps_vf, _videoMetadataParam, _audioMapParam, _audioMetadataParam,
+                                 burn_subt_vf, _subtitleMapParam, _subtitleMetadataParam, hwaccel_filter_vf,
+                                 colorprim_vf,
+                                 colormatrix_vf, transfer_vf);
+
+    /************************************* HDR module ***************************************/
+
+    QStringList color_range;
+    QStringList max_lum;
+    QStringList min_lum;
+    QStringList max_cll;
+    QStringList max_fall;
+    QStringList chroma_coord;
+    QStringList white_coord;
+    if (_flag_hdr == true) {
+
+        /********************************* Color range module **********************************/
+        hdrColorRange(_hdr, _COLOR_RANGE, color_range);
+
+        /************************************* Lum module ***************************************/
+        hdrLum(_hdr, _MIN_LUM, _MAX_LUM, _MAX_CLL, _MAX_FALL, max_lum, min_lum, max_cll, max_fall);
+
+        /************************************* Display module ***************************************/
+        hdrDisplay(_hdr, _MASTER_DISPLAY, _CHROMA_COORD, _WHITE_COORD, chroma_coord, white_coord);
+
     }
 
-    /**************************************** Subtitles **************************************/
-    QString burn_subt_vf, burn_string;
-    burn_string = "charenc=:force_style=\"'FontName='" + subtitle_font +
-                          "',Fontsize=" + numToStr(subtitle_font_size) +
-                          ",PrimaryColour=&H" + subtitle_font_color +
-                          ",BorderStyle=4";
-    if (burn_background) {
-        burn_string += QString(",BackColour=&H" + subtitle_background_color);
+    /************************************* Result module ***************************************/
+    getPresets(_splitStartParam, _splitParam, hwaccel, level, mode, preset, pass, pass1, audio_param, sub_param,
+               colorprim,
+               colormatrix, transfer, codec, color_range, max_lum, min_lum, max_cll, max_fall, chroma_coord,
+               white_coord);
+
+    Print("Flag two-pass: " << _flag_two_pass);
+    Print("Flag HDR: " << _flag_hdr);
+    Print("preset_0: " << _preset_0.toStdString());
+
+    QString log = getLog();
+    emit onEncodingLog(log);
+    encode();
+}
+
+void Encoder::getPresets(const QStringList &_splitStartParam, const QStringList &_splitParam, const QString &hwaccel,
+                         const QStringList &level, const QStringList &mode, const QStringList &preset,
+                         const QStringList &pass, const QStringList &pass1, const QStringList &audio_param,
+                         const QStringList &sub_param, const QStringList &colorprim, const QStringList &colormatrix,
+                         const QStringList &transfer, const QStringList &codec, const QStringList &color_range,
+                         const QStringList &max_lum, const QStringList &min_lum, const QStringList &max_cll,
+                         const QStringList &max_fall, const QStringList &chroma_coord, const QStringList &white_coord) {
+    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M" + hwaccel + _splitStartParam.join(" ");
+    _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
+                    + colorprim + colormatrix + transfer + QStringList {"-an","-sn","-f","null", "/dev/null"};
+    _preset = _splitParam + codec + level + preset + mode + pass + color_range
+              + colorprim + colormatrix + transfer + audio_param + sub_param;
+    // DEBUG
+/*
+std::string _presetarray[_preset.length()];
+for (int i = 0; i < _preset.length(); i++)
+{
+    _presetarray[i] = _preset[i].toStdString();
+}
+*/
+
+    _preset_mkvmerge = max_cll.join(" ") + max_fall.join(" ") + max_lum.join(" ") + min_lum.join(" ") + chroma_coord.join(" ") + white_coord.join(" ");
+}
+
+QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize_vf, const QString &fps_vf,
+                              const QStringList &_videoMetadataParam, const QStringList &_audioMapParam,
+                              const QStringList &_audioMetadataParam, const QString &burn_subt_vf,
+                              const QStringList &_subtitleMapParam, const QStringList &_subtitleMetadataParam,
+                              const QString &hwaccel_filter_vf, const QStringList &colorprim_vf,
+                              const QStringList &colormatrix_vf, const QStringList &transfer_vf) const {
+    QStringList codec = {"-map", "0:v:0?"};
+    codec.append(_audioMapParam);
+    codec.append(_subtitleMapParam);
+    codec.append({"-map_metadata", "-1", "-map_chapters", "-1"});
+    codec.append(_videoMetadataParam);
+    codec.append(_audioMetadataParam);
+    codec.append(_subtitleMetadataParam);
+    if ((hwaccel_filter_vf != "") ||
+        (fps_vf != "") ||
+        (resize_vf != "") ||
+        (colorprim_vf.count() != 0) ||
+        (colormatrix_vf.count() != 0) ||
+        (transfer_vf.count() != 0) ||
+        (burn_subt_vf != "") ||
+        _burn_subtitle)
+    {
+        codec.append("-vf");
     }
-    burn_string += QString("'\"");
-    Q_LOOP(k, 0, CHECKS(subtBurn).size()) {
-        if (CHECKS(subtBurn)[k]) {
-            _burn_subtitle = true;
-            QString _input_file(input_file);
-            burn_subt_vf = QString("subtitles='%1':%2:stream_index=%3").arg(_input_file, burn_string, numToStr(k));
-            break;
-        }
-    }
-    Q_LOOP(k, 0, CHECKS(externSubtBurn).size()) {
-        if (CHECKS(externSubtBurn)[k]) {
-            _burn_subtitle = true;
-            burn_subt_vf = QString("subtitles='%1':%2").arg(FIELDS(externSubtPath)[k], burn_string);
-            break;
-        }
-    }
+    codec.append(hwaccel_filter_vf.split(" "));
+    codec.append(fps_vf.split(" "));
+    codec.append(resize_vf.split(" "));
+    codec.append(colorprim_vf);
+    codec.append(colormatrix_vf);
+    codec.append(transfer_vf);
+    codec.append(burn_subt_vf);//.split(" "));
+    codec.append(t.arr_params[_CODEC][0].split(" "));
+    return codec;
+}
+
+void Encoder::subtitles(const QString &input_file, const QString &subtitle_font, int subtitle_font_size,
+                        const QString &subtitle_font_color, const bool burn_background,
+                        const QString &subtitle_background_color, int subtitle_location, Data &data,
+                        QString &burn_subt_vf, QStringList &_subtitleMapParam, QStringList &_subtitleMetadataParam,
+                        int &subtNum) {
+    subtNum= 0;
+    subtVF(input_file, subtitle_font, subtitle_font_size, subtitle_font_color, burn_background,
+           subtitle_background_color, subtitle_location, data, burn_subt_vf);
 
     QVector<QString> subtitleLang(CHECKS(subtChecks).size(), ""),
                      subtitleTitle(CHECKS(subtChecks).size(), ""),
                      subtitleMap(CHECKS(subtChecks).size(), ""),
                      subtitleDef(CHECKS(subtChecks).size(), "");
-    QStringList _subtitleMapParam,
-            _subtitleMetadataParam;
-    int     subtNum = 0;
-
     if (!_burn_subtitle) {
         Q_LOOP(k, 0, CHECKS(subtChecks).size()) {
             if (CHECKS(subtChecks)[k] == true) {
@@ -338,9 +379,111 @@ void Encoder::initEncoding(const QString  &temp_file,
             }
         }
     }
+}
 
-    /****************************** External Subtitle streams *********************************/
+QStringList Encoder::levelModule(const Tables &t, int _CODEC, int _LEVEL) const {
+    const QString selected_level = t.arr_level[_CODEC][_LEVEL];
+    QStringList level;
+    if (selected_level != "" && selected_level != tr("Auto"))
+    {
+        level.append({"-level:v",selected_level});
+    }
+    return level;
+}
 
+void Encoder::colorMatrix(const QString (&_hdr)[11], int _MATRIX, int _REP_MATRIX, QStringList &colormatrix,
+                          QStringList &colormatrix_vf) {
+    const QString arr_colormatrix[14] = {
+        "Source", "bt470bg", "bt709", "bt2020nc", "bt2020c", "smpte170m", "smpte240m",
+        "smpte2085", "chroma-derived-nc", "chroma-derived-c", "fcc", "GBR", "ICtCp", "YCgCo"
+    };
+    const QMap<QString, QString> curr_colormatrix = {
+        {"BT709",                   "bt709"},
+        {"BT2020nc",                "bt2020nc"},
+        {"BT2020c",                 "bt2020c"},
+        {"FCC73682",                "fcc"},
+        {"BT470SystemB/G",          "bt470bg"},
+        {"SMPTE240M",               "smpte240m"},
+        {"YCgCo",                   "YCgCo"},
+        {"Y'D'zD'x",                "smpte2085"},
+        {"Chromaticity-derivednc",  "chroma-derived-nc"},
+        {"Chromaticity-derivedc",   "chroma-derived-c"},
+        {"ICtCp",                   "ICtCp"},
+        {"BT601",                   "smpte170m"},
+        {"Identity",                "GBR"},
+        {"",                        ""}
+    };
+    const QString selected_colormatrix = arr_colormatrix[_MATRIX];
+    if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
+        _message = tr("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
+        emit onEncodingInitError(_message);
+        // return;
+    }
+    if (selected_colormatrix == "Source") {
+        if (_hdr[CUR_COLOR_MATRIX] != "") {
+            colormatrix.append({"-colorspace", curr_colormatrix[_hdr[CUR_COLOR_MATRIX]]});
+        }
+    }
+    else {
+        colormatrix.append({"-colorspace", selected_colormatrix});
+        if (_REP_MATRIX == 2) {
+            colormatrix_vf.append(QString("zscale=m=%1").arg(selected_colormatrix));
+        } else {
+
+        }
+    }
+}
+
+void Encoder::colorTransfer(const QString (&_hdr)[11], int _TRC, int _REP_TRC, QStringList &transfer,
+                            QStringList &transfer_vf) {
+    const QString arr_trc[17] = {
+        "Source", "bt470m", "bt470bg", "bt709", "bt1361e", "bt2020-10", "bt2020-12", "smpte170m",
+        "smpte240m", "smpte428", "smpte2084", "arib-std-b67", "linear", "log100", "log316",
+        "iec61966-2-1", "iec61966-2-4"
+    };
+    const QMap<QString, QString> curr_transfer = {
+        {"BT709",                    "bt709"},
+        {"PQ",                       "smpte2084"},
+        {"HLG",                      "arib-std-b67"},
+        {"BT2020 (10-bit)",          "bt2020-10"},
+        {"BT2020 (12-bit)",          "bt2020-12"},
+        {"BT470 System M",           "bt470m"},
+        {"BT470 System B/G",         "bt470bg"},
+        {"SMPTE 240M",               "smpte240m"},
+        {"Linear",                   "linear"},
+        {"Logarithmic (100:1)",      "log100"},
+        {"Logarithmic (31622777:1)", "log316"},
+        {"xvYCC",                    "iec61966-2-4"},
+        {"BT1361",                   "bt1361e"},
+        {"sRGB/sYCC",                "iec61966-2-1"},
+        {"SMPTE 428M",               "smpte428"},
+        {"BT601",                    "smpte170m"},
+        {"",                         ""}
+    };
+    const QString selected_transfer = arr_trc[_TRC];
+    if (!curr_transfer.contains(_hdr[CUR_TRANSFER])) {
+        _message = tr("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
+        emit onEncodingInitError(_message);
+        return;
+    }
+    if (selected_transfer == "Source") {
+        if (_hdr[CUR_TRANSFER] != "") {
+            transfer.append({"-color_trc",curr_transfer[_hdr[CUR_TRANSFER]]});
+        }
+    }
+    else {
+        transfer.append({"-color_trc", selected_transfer});
+        if (_REP_TRC == 2) {
+            transfer_vf.append(QString("zscale=t=%1").arg(selected_transfer));
+        } else {
+
+        }
+    }
+}
+
+void
+Encoder::extSub(Data &data, int extTrackNum, QStringList &_subtitleMapParam, QStringList &_subtitleMetadataParam,
+                int subtNum) {
     QVector<QString> extSubLang(CHECKS(externSubtChecks).size(), ""),
                      extSubTitle(CHECKS(externSubtChecks).size(), ""),
                      extSubMap(CHECKS(externSubtChecks).size(), ""),
@@ -366,23 +509,142 @@ void Encoder::initEncoding(const QString  &temp_file,
             }
         }
     }
+}
 
-    /************************************* Codec module ***************************************/
-
-    const QString hwaccel = t.arr_params[_CODEC][1];
-    const QString hwaccel_filter_vf = t.arr_params[_CODEC][3];
-    _flag_hdr = static_cast<bool>(t.arr_params[_CODEC][2].toInt());
-
-    /************************************* Level module **************************************/
-
-    const QString selected_level = t.arr_level[_CODEC][_LEVEL];
-    QStringList level;
-    if (selected_level != "" && selected_level != tr("Auto"))
-    {
-        level.append({"-level:v",selected_level});
+QStringList Encoder::presetModule(const Tables &t, int _CODEC, int _PRESET) const {
+    QStringList preset;
+    const QString selected_preset = t.getCurrentPreset(_CODEC, _PRESET);
+    if (selected_preset != "" && selected_preset != tr("None")) {
+        preset.append({"-preset", selected_preset.toLower() });
     }
-    /************************************* Mode module ***************************************/
+    return preset;
+}
 
+void
+Encoder::audio(Data &data, QStringList &_audioMapParam, QStringList &_audioMetadataParam, int &audioNum) const {
+    audioNum= 0;
+    QVector<QString> audioLang(CHECKS(audioChecks).size(), ""),
+                     audioTitle(CHECKS(audioChecks).size(), ""),
+                     audioMap(CHECKS(audioChecks).size(), ""),
+                     audioDef(CHECKS(audioChecks).size(), "");
+    Q_LOOP(k, 0, CHECKS(audioChecks).size()) {
+        if (CHECKS(audioChecks)[k] == true) {
+            audioMap[k] = QString("-map 0:a:%1? ").arg(numToStr(k));
+            _audioMapParam.append({"-map", "0:a:"+numToStr(k)+"?" });
+            audioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
+                           .arg(numToStr(audioNum), FIELDS(audioLangs)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"language="+FIELDS(audioLangs)[k]});
+            audioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
+                            .arg(numToStr(audioNum), FIELDS(audioTitles)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"title="+FIELDS(audioTitles)[k]});
+            audioDef[k] = QString("-disposition:a:%1 %2 ")
+                           .arg(numToStr(audioNum), CHECKS(audioDef)[k] ? "default" : "0");
+            _audioMetadataParam.append({"-disposition:a:"+numToStr(audioNum),CHECKS(audioDef)[k] ? "default" : "0"});
+            audioNum++;
+        }
+    }
+}
+
+int Encoder::extAudio(Data &data, QStringList &_audioMapParam, QStringList &_audioMetadataParam, int audioNum) {
+    QVector<QString> extAudioLang(CHECKS(externAudioChecks).size(), ""),
+                     extAudioTitle(CHECKS(externAudioChecks).size(), ""),
+                     extAudioMap(CHECKS(externAudioChecks).size(), ""),
+                     extAudioDef(CHECKS(externAudioChecks).size(), "");
+    int extTrackNum = 1;
+
+    Q_LOOP(k, 0, CHECKS(externAudioChecks).size()) {
+        if (CHECKS(externAudioChecks)[k] == true) {
+            _extAudioPaths << "-i" << FIELDS(externAudioPath)[k];
+            extAudioMap[k] = QString("-map %1:a? ").arg(numToStr(extTrackNum));
+            _audioMapParam.append({"-map", numToStr(extTrackNum) + ":a?" });
+            extAudioLang[k] = QString("-metadata:s:a:%1 language=%2 ")
+                           .arg(numToStr(audioNum), FIELDS(externAudioLangs)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"language="+FIELDS(externAudioLangs)[k]});
+            extAudioTitle[k] = QString("-metadata:s:a:%1 title=%2 ")
+                            .arg(numToStr(audioNum), FIELDS(externAudioTitles)[k].replace(" ", "\u00A0"));
+            _audioMetadataParam.append({"-metadata:s:a:"+numToStr(audioNum),"title="+FIELDS(externAudioTitles)[k]});
+            extAudioDef[k] = QString("-disposition:a:%1 %2 ")
+                           .arg(numToStr(audioNum), CHECKS(externAudioDef)[k] ? "default" : "0");
+            _audioMetadataParam.append({"-disposition:a:"+numToStr(audioNum),CHECKS(externAudioDef)[k] ? "default" : "0"});
+            audioNum++;
+            extTrackNum++;
+        }
+    }
+    return extTrackNum;
+}
+
+void Encoder::colorPrimaries(const QString (&_hdr)[11], int _PRIMARY, int _REP_PRIM, QStringList &colorprim,
+                             QStringList &colorprim_vf) {
+    const QString arr_colorprim[11] = {
+        "Source",    "bt470m",   "bt470bg",  "bt709",    "bt2020", "smpte170m",
+        "smpte240m", "smpte428", "smpte431", "smpte432", "film"
+    };
+    const QMap<QString, QString> curr_colorprim = {
+        {"BT709",           "bt709"},
+        {"BT2020",          "bt2020"},
+        {"BT601 NTSC",      "smpte170m"},
+        {"BT601 PAL",       "bt470bg"},
+        {"BT470 System M",  "bt470m"},
+        {"SMPTE 240M",      "smpte240m"},
+        {"Generic film",    "film"},
+        {"DCI P3",          "smpte431"},
+        {"XYZ",             "smpte428"},
+        {"Display P3",      "smpte432"},
+        {"",                ""}
+    };
+    const QString selected_colorprim = arr_colorprim[_PRIMARY];
+    if (!curr_colorprim.contains(_hdr[CUR_COLOR_PRIMARY])) {
+        _message = tr("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
+        emit onEncodingInitError(_message);
+        return;
+    }
+    if (selected_colorprim == "Source") {
+        if (_hdr[CUR_COLOR_PRIMARY] != "") {
+            colorprim.append({"-color_primaries", curr_colorprim[_hdr[CUR_COLOR_PRIMARY]]});
+        }
+    }
+    else {
+        colorprim.append({"-color_primaries", selected_colorprim});
+        if (_REP_PRIM == 2) {
+            colorprim_vf.append(QString("zscale=p=%1").arg(selected_colorprim));
+        } else {
+
+        }
+    }
+}
+
+QStringList Encoder::subModule(const QString &container) {
+    QStringList sub_param;
+
+    if (_burn_subtitle) {
+        _sub_mux_param.append("-sn");
+        sub_param.append(_sub_mux_param);
+    } else {
+        if (container == "mkv") {
+            _sub_mux_param.append({"-c:s", "ass"});
+        } else
+        if (container == "webm") {
+            _sub_mux_param.append({"-c:s", "webvtt"});
+        } else
+        if (container == "mp4" || container == "mov") {
+            _sub_mux_param.append({"-c:s", "mov_text"});
+        } else {
+            _sub_mux_param.append("-sn");
+            emit onEncodingError(tr("Container \'%1\' will be transcoded without subtitles.")
+                                         .arg(container), true);
+        }
+
+        if (_flag_hdr) {
+            sub_param.append({"-c:s", "ass"});
+        } else {
+            sub_param.append(_sub_mux_param);
+        }
+    }
+    return sub_param;
+}
+
+QStringList Encoder::modeModule(const Tables &t, int _CODEC, int _MODE, const QString &_BQR, const QString &_MINRATE,
+                                const QString &_MAXRATE, const QString &_BUFSIZE) const {
     QStringList mode;
     const QString bitrate = QString::number(1000000.0*_BQR.toDouble(), 'f', 0);
     const QString minrate = QString::number(1000000.0*_MINRATE.toDouble(), 'f', 0);
@@ -421,20 +683,238 @@ void Encoder::initEncoding(const QString  &temp_file,
     if (selected_mode == "CQP_VA") {
         mode.append({"-qp", _BQR, "-rc_mode", "4"});
     }
+    return mode;
+}
 
-    /************************************* Preset module ***************************************/
+void Encoder::hdrDisplay(const QString (&_hdr)[11], int _MASTER_DISPLAY, const QString &_CHROMA_COORD,
+                         const QString &_WHITE_COORD, QStringList &chroma_coord, QStringList &white_coord) {
+    enum Display {Display_P3, Dci_P3, Bt_2020, Bt_709};
+    enum Coord {red_x, red_y, green_x, green_y, blue_x, blue_y, white_x, white_y};
+    const QString arr_coord[4][8] = {
+        {"0.680", "0.320", "0.265", "0.690", "0.150", "0.060", "0.3127", "0.3290"}, // Display_P3
+        {"0.680", "0.320", "0.265", "0.690", "0.150", "0.060", "0.314",  "0.3510"}, // DCI_P3
+        {"0.708", "0.292", "0.170", "0.797", "0.131", "0.046", "0.3127", "0.3290"}, // BT.2020
+        {"0.640", "0.330", "0.30",  "0.60",  "0.150", "0.060", "0.3127", "0.3290"}  // BT.709
+    };
+    QString current_coord[8] = {"", "", "", "", "", "", "", ""};
 
-    QStringList preset;
-    const QString selected_preset = t.getCurrentPreset(_CODEC, _PRESET);
-    if (selected_preset != "" && selected_preset != tr("None")) {
-        preset.append({"-preset", selected_preset.toLower() });
+    auto fill_coord = [&current_coord, &arr_coord](int display){
+        for (int i = red_x; i <= white_y; i++) {
+            current_coord[i] = arr_coord[display][i];
+        }
+    };
+    if (_MASTER_DISPLAY == SOURCE) {     // From source
+        if (_hdr[CUR_MASTER_DISPLAY] == "Display P3") {
+            fill_coord(Display::Display_P3);
+        } else
+        if (_hdr[CUR_MASTER_DISPLAY] == "DCI P3") {
+            fill_coord(Display::Dci_P3);
+        } else
+        if (_hdr[CUR_MASTER_DISPLAY] == "BT.2020") {
+            fill_coord(Display::Bt_2020);
+        } else
+        if (_hdr[CUR_MASTER_DISPLAY] == "BT.709") {
+            fill_coord(Display::Bt_709);
+        } else
+        if (_hdr[CUR_MASTER_DISPLAY] == "Undefined") {
+            const QStringList chr = _hdr[CUR_CHROMA_COORD].split(",");
+            if (chr.size() == 6) {
+                for (int i = red_x; i <= blue_y; i++) {
+                    current_coord[i] = chr[i];
+                }
+            } else {
+                _message = tr("Incorrect master display chroma coordinates source parameters!");
+                emit onEncodingInitError(_message);
+                return;
+            }
+            const QStringList wht = _hdr[CUR_WHITE_COORD].split(",");
+            if (wht.size() == 2) {
+                current_coord[white_x] = wht[0];
+                current_coord[white_y] = wht[1];
+            } else {
+                _message = tr("Incorrect master display white point coordinates source parameters!");
+                emit onEncodingInitError(_message);
+                return;
+            }
+        }
+    }
+    if (_MASTER_DISPLAY == DISPLAY_P3) {     // Display P3
+        fill_coord(Display::Display_P3);
+    } else
+    if (_MASTER_DISPLAY == DCI_P3) {     // DCI P3
+        fill_coord(Display::Dci_P3);
+    } else
+    if (_MASTER_DISPLAY == BT_2020) {     // BT.2020
+        fill_coord(Display::Bt_2020);
+    } else
+    if (_MASTER_DISPLAY == BT_709) {     // BT.709
+        fill_coord(Display::Bt_709);
+    } else
+    if (_MASTER_DISPLAY == CUSTOM) {     // Custom
+        QStringList chr = _CHROMA_COORD.split(",");
+        if (chr.size() == 6) {
+            for (int i = red_x; i <= blue_y; i++) {
+                current_coord[i] = chr[i];
+            }
+        }
+        QStringList wht = _WHITE_COORD.split(",");
+        if (wht.size() == 2) {
+            current_coord[white_x] = wht[0];
+            current_coord[white_y] = wht[1];
+        }
     }
 
-    /************************************* Pass module ***************************************/
+    if (current_coord[red_x] == "") {
+        chroma_coord.append({"-d", "chromaticity-coordinates-red-x", "-d", "chromaticity-coordinates-red-y",
+                                "-d", "chromaticity-coordinates-green-x", "-d", "chromaticity-coordinates-green-y",
+                                "-d", "chromaticity-coordinates-blue-x", "-d", "chromaticity-coordinates-blue-y"});
+    } else {
+        chroma_coord.append({"-s", "chromaticity-coordinates-red-x="+current_coord[red_x],
+                             "-s", "chromaticity-coordinates-red-y="+current_coord[red_y],
+                             "-s", "chromaticity-coordinates-green-x="+current_coord[green_x],
+                             "-s", "chromaticity-coordinates-green-y="+current_coord[green_y],
+                             "-s", "chromaticity-coordinates-blue-x="+current_coord[blue_x],
+                             "-s", "chromaticity-coordinates-blue-y="+current_coord[blue_y]});
+    }
+    if (current_coord[white_x] == "") {
+        white_coord.append({"-d", "white-coordinates-x", "-d","white-coordinates-y"});
+    } else {
+        white_coord.append({"-s", QString("white-coordinates-x=%1").arg(current_coord[white_x]), "-s", QString("white-coordinates-y=%2 ").arg(current_coord[white_y])});
+    }
+}
 
+void
+Encoder::hdrLum(const QString (&_hdr)[11], const QString &_MIN_LUM, const QString &_MAX_LUM, const QString &_MAX_CLL,
+                const QString &_MAX_FALL, QStringList &max_lum, QStringList &min_lum, QStringList &max_cll,
+                QStringList &max_fall) const {
+    if (_MAX_LUM != "") {                           // max lum
+        max_lum.append({"-s", QString("max-luminance=%1").arg(_MAX_LUM)});
+    } else {
+        if (_hdr[CUR_MAX_LUM] != "") {
+            max_lum.append({"-s", QString("max-luminance=%1").arg(_hdr[CUR_MAX_LUM])});
+        } else {
+            max_lum.append({"-d", "max-luminance"});
+        }
+    }
+
+    if (_MIN_LUM != "") {                           // min lum
+        min_lum.append({"-s", QString("min-luminance=%1").arg(_MIN_LUM)});
+    } else {
+        if (_hdr[CUR_MIN_LUM] != "") {
+            min_lum.append({"-s", QString("min-luminance=%1").arg(_hdr[CUR_MIN_LUM])});
+        } else {
+            min_lum.append({"-d", "min-luminance"});
+        }
+    }
+
+    if (_MAX_CLL != "") {                           // max cll
+        max_cll.append({"-s", QString("max-content-light=%1").arg(_MAX_CLL)});
+    } else {
+        if (_hdr[CUR_MAX_CLL] != "") {
+            max_cll.append({"-s", QString("max-content-light=%1").arg(_hdr[CUR_MAX_CLL])});
+        } else {
+            max_cll.append({"-d", "max-content-light"});
+        }
+    }
+
+    if (_MAX_FALL != "") {                           // max fall
+        max_fall.append({"-s", QString("max-frame-light=%1").arg(_MAX_FALL)});
+    } else {
+        if (_hdr[CUR_MAX_FALL] != "") {
+            max_fall.append({"-s", QString("max-frame-light=%1").arg(_hdr[CUR_MAX_FALL])});
+        } else {
+            max_fall.append({"-d", "max-frame-light"});
+        }
+    }
+}
+
+void Encoder::hdrColorRange(const QString (&_hdr)[11], int _COLOR_RANGE, QStringList &color_range) const {
+    if (_COLOR_RANGE == 0) {                             // color range
+        if (_hdr[CUR_COLOR_RANGE] == "Limited")
+            color_range.append({"-color_range","tv"});
+        else
+        if (_hdr[CUR_COLOR_RANGE] == "Full")
+            color_range.append({"-color_range","pc"});
+    }
+    else
+    if (_COLOR_RANGE == 1) {
+        color_range.append({"-color_range","pc"});
+    }
+    else
+    if (_COLOR_RANGE == 2) {
+        color_range.append({"-color_range","tv"});
+    }
+}
+
+QString Encoder::getLog() const {
+    QString log("");
+    if (_flag_two_pass && _flag_hdr) {
+        Print("preset_pass1: " << _preset_pass1.join(" ").toStdString());
+        Print("preset: " << _preset.join(" ").toStdString());
+        Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
+        log = QString("Preset pass 1: %1 -i <input file> %2\n"
+                      "Preset pass 2: %3 -i <input file> %4 -y <output file>\n"
+                      "Preset mkvpropedit: %5\n")
+                .arg(_preset_0, _preset_pass1.join(" "), _preset_0, _preset.join(" "), _preset_mkvmerge);
+    }
+    else
+    if (_flag_two_pass && !_flag_hdr) {
+        Print("preset_pass1: " << _preset_pass1.join(" ").toStdString());
+        Print("preset: " << _preset.join(" ").toStdString());
+        log = QString("Preset pass 1: %1 -i <input file> %2\n"
+                      "Preset pass 2: %3 -i <input file> %4 -y <output file>\n")
+                .arg(_preset_0, _preset_pass1.join(" "), _preset_0, _preset.join(" "));
+    }
+    else
+    if (!_flag_two_pass && _flag_hdr) {
+        Print("preset: " << _preset.join(" ").toStdString());
+        Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
+        log = QString("Preset: %1 -i <input file> %2 -y <output file>\n"
+                      "Preset mkvpropedit: %3\n")
+                .arg(_preset_0, _preset.join(" "), _preset_mkvmerge);
+    }
+    else
+    if (!_flag_two_pass && !_flag_hdr) {
+        Print("preset: " << _preset.join(" ").toStdString());
+        log = QString("Preset: %1 -i <input file> %2 -y <output file>\n")
+                .arg(_preset_0, _preset.join(" "));
+    }
+    return log;
+}
+
+void
+Encoder::split(const double &_startTime, const double &_endTime, const double &_dur, int streamCutting, const Tables &t,
+               int _CODEC, double fps_dest, double minExtTime, QStringList &_splitStartParam,
+               QStringList &_splitParam) const {
+    double duration = _endTime - _startTime;
+    if (streamCutting == 1) {
+        if (minExtTime > 0) {
+            if (minExtTime < duration || minExtTime < _dur)
+                duration = minExtTime;
+            else
+            if (_dur < minExtTime)
+                duration = _dur;
+        }
+    }
+    Print("Cut duration: " << duration);
+    if (duration > 0) {
+        *fr_count = rnd(duration * fps_dest);
+        _splitStartParam.append(t.arr_codec[_CODEC][0] == tr("Source") ? QStringList{"-copyts"} : QStringList{"-copytb","0"}); //-copytb 0
+        _splitStartParam.append(QStringList{"-ss", QString::number(_startTime, 'f', 3)});
+        _splitParam.append(QStringList{"-vframes", numToStr(*fr_count)});
+    } else {
+        *fr_count = rnd(_dur * fps_dest);
+    }
+}
+
+void Encoder::codecModule(const Tables &t, int _CODEC, QString &hwaccel, QString &hwaccel_filter_vf) {
+    hwaccel= t.arr_params[_CODEC][1];
+    hwaccel_filter_vf= t.arr_params[_CODEC][3];
+    _flag_hdr = static_cast<bool>(t.arr_params[_CODEC][2].toInt());
+}
+
+void Encoder::passModule(const Tables &t, int _CODEC, int _PASS, QStringList &pass, QStringList &pass1) {
     const QString selected_pass = t.arr_pass[_CODEC][_PASS];
-    QStringList pass;
-    QStringList pass1;
     if (selected_pass == tr("2 Pass_x265")) {
         pass.append({"-x265-params","pass=2"});
         pass1.append({"-x265-params","pass=1"});
@@ -450,9 +930,10 @@ void Encoder::initEncoding(const QString  &temp_file,
     if (selected_pass == tr("2 Pass Optimisation")) {
         pass.append({"-2pass","1"});
     }
+}
 
-    /************************************* Audio module ***************************************/
-
+QStringList Encoder::audioModule(const Tables &t, int _CODEC, int _AUDIO_CODEC, int _AUDIO_BITRATE, int _AUDIO_SAMPLING,
+                                 int _AUDIO_CHANNELS) const {
     QStringList acodec;
     const QString selected_acodec = t.arr_acodec[_CODEC][_AUDIO_CODEC];
     QString selected_bitrate = "";
@@ -510,424 +991,108 @@ void Encoder::initEncoding(const QString  &temp_file,
         acodec.append({"-c:a", "copy"});
     }
     const QStringList audio_param = sampling + acodec + channels;
+    return audio_param;
+}
 
-    /************************************ Subtitle module *************************************/
-
-    QStringList sub_param;
-
-    if (_burn_subtitle) {
-        _sub_mux_param.append("-sn");
-        sub_param.append(_sub_mux_param);
-    } else {
-        if (container == "mkv") {
-            _sub_mux_param.append({"-c:s","ass"});
-        } else
-        if (container == "webm") {
-            _sub_mux_param.append({"-c:s","webvtt"});
-        } else
-        if (container == "mp4" || container == "mov") {
-            _sub_mux_param.append({"-c:s", "mov_text"});
-        } else {
-            _sub_mux_param.append("-sn");
-            emit onEncodingError(tr("Container \'%1\' will be transcoded without subtitles.")
-                                         .arg(container), true);
-        }
-
-        if (_flag_hdr) {
-            sub_param.append({"-c:s", "ass"});
-        } else {
-            sub_param.append(_sub_mux_param);
-        }
+void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, int subtitle_font_size,
+                     const QString &subtitle_font_color, const bool burn_background,
+                     const QString &subtitle_background_color, int subtitle_location, Data &data,
+                     QString &burn_subt_vf) {
+    QString  burn_string;
+    burn_string = "charenc=:force_style=\"'FontName='" + subtitle_font +
+                          "',Fontsize=" + numToStr(subtitle_font_size) +
+                          ",PrimaryColour=&H" + subtitle_font_color +
+                          ",BorderStyle=4";
+    if (burn_background) {
+        burn_string += QString(",BackColour=&H" + subtitle_background_color);
     }
 
-    /************************************* Color module ***************************************/
-
-    // color primaries
-
-    const QString arr_colorprim[11] = {
-        "Source",    "bt470m",   "bt470bg",  "bt709",    "bt2020", "smpte170m",
-        "smpte240m", "smpte428", "smpte431", "smpte432", "film"
-    };
-    const QMap<QString, QString> curr_colorprim = {
-        {"BT709",           "bt709"},
-        {"BT2020",          "bt2020"},
-        {"BT601 NTSC",      "smpte170m"},
-        {"BT601 PAL",       "bt470bg"},
-        {"BT470 System M",  "bt470m"},
-        {"SMPTE 240M",      "smpte240m"},
-        {"Generic film",    "film"},
-        {"DCI P3",          "smpte431"},
-        {"XYZ",             "smpte428"},
-        {"Display P3",      "smpte432"},
-        {"",                ""}
-    };
-
-    QStringList colorprim;
-    QStringList colorprim_vf;
-    const QString selected_colorprim = arr_colorprim[_PRIMARY];
-    if (!curr_colorprim.contains(_hdr[CUR_COLOR_PRIMARY])) {
-        _message = tr("Can\'t find color primaries %1 in source map.").arg(_hdr[CUR_COLOR_PRIMARY]);
-        emit onEncodingInitError(_message);
-        return;
-    }
-    if (selected_colorprim == "Source") {
-        if (_hdr[CUR_COLOR_PRIMARY] != "") {
-            colorprim.append({"-color_primaries", curr_colorprim[_hdr[CUR_COLOR_PRIMARY]]});
-        }
-    }
-    else {
-        colorprim.append({"-color_primaries", selected_colorprim});
-        if (_REP_PRIM == 2) {
-            colorprim_vf.append(QString("zscale=p=%1").arg(selected_colorprim));
-        } else {
-
-        }
-    }
-
-    // color matrix
-
-    const QString arr_colormatrix[14] = {
-        "Source", "bt470bg", "bt709", "bt2020nc", "bt2020c", "smpte170m", "smpte240m",
-        "smpte2085", "chroma-derived-nc", "chroma-derived-c", "fcc", "GBR", "ICtCp", "YCgCo"
-    };
-    const QMap<QString, QString> curr_colormatrix = {
-        {"BT709",                   "bt709"},
-        {"BT2020nc",                "bt2020nc"},
-        {"BT2020c",                 "bt2020c"},
-        {"FCC73682",                "fcc"},
-        {"BT470SystemB/G",          "bt470bg"},
-        {"SMPTE240M",               "smpte240m"},
-        {"YCgCo",                   "YCgCo"},
-        {"Y'D'zD'x",                "smpte2085"},
-        {"Chromaticity-derivednc",  "chroma-derived-nc"},
-        {"Chromaticity-derivedc",   "chroma-derived-c"},
-        {"ICtCp",                   "ICtCp"},
-        {"BT601",                   "smpte170m"},
-        {"Identity",                "GBR"},
-        {"",                        ""}
-    };
-
-    QStringList colormatrix;
-    QStringList colormatrix_vf;
-    const QString selected_colormatrix = arr_colormatrix[_MATRIX];
-    if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
-        _message = tr("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
-        emit onEncodingInitError(_message);
-        return;
-    }
-    if (selected_colormatrix == "Source") {
-        if (_hdr[CUR_COLOR_MATRIX] != "") {
-            colormatrix.append({"-colorspace", curr_colormatrix[_hdr[CUR_COLOR_MATRIX]]});
-        }
-    }
-    else {
-        colormatrix.append({"-colorspace", selected_colormatrix});
-        if (_REP_MATRIX == 2) {
-            colormatrix_vf.append(QString("zscale=m=%1").arg(selected_colormatrix));
-        } else {
-
-        }
-    }
-
-    // transfer characteristics
-
-    const QString arr_trc[17] = {
-        "Source", "bt470m", "bt470bg", "bt709", "bt1361e", "bt2020-10", "bt2020-12", "smpte170m",
-        "smpte240m", "smpte428", "smpte2084", "arib-std-b67", "linear", "log100", "log316",
-        "iec61966-2-1", "iec61966-2-4"
-    };
-    const QMap<QString, QString> curr_transfer = {
-        {"BT709",                    "bt709"},
-        {"PQ",                       "smpte2084"},
-        {"HLG",                      "arib-std-b67"},
-        {"BT2020 (10-bit)",          "bt2020-10"},
-        {"BT2020 (12-bit)",          "bt2020-12"},
-        {"BT470 System M",           "bt470m"},
-        {"BT470 System B/G",         "bt470bg"},
-        {"SMPTE 240M",               "smpte240m"},
-        {"Linear",                   "linear"},
-        {"Logarithmic (100:1)",      "log100"},
-        {"Logarithmic (31622777:1)", "log316"},
-        {"xvYCC",                    "iec61966-2-4"},
-        {"BT1361",                   "bt1361e"},
-        {"sRGB/sYCC",                "iec61966-2-1"},
-        {"SMPTE 428M",               "smpte428"},
-        {"BT601",                    "smpte170m"},
-        {"",                         ""}
-    };
-
-    QStringList transfer;
-    QStringList transfer_vf;
-    const QString selected_transfer = arr_trc[_TRC];
-    if (!curr_transfer.contains(_hdr[CUR_TRANSFER])) {
-        _message = tr("Can\'t find transfer characteristics %1 in source map.").arg(_hdr[CUR_TRANSFER]);
-        emit onEncodingInitError(_message);
-        return;
-    }
-    if (selected_transfer == "Source") {
-        if (_hdr[CUR_TRANSFER] != "") {
-            transfer.append({"-color_trc",curr_transfer[_hdr[CUR_TRANSFER]]});
-        }
-    }
-    else {
-        transfer.append({"-color_trc", selected_transfer});
-        if (_REP_TRC == 2) {
-            transfer_vf.append(QString("zscale=t=%1").arg(selected_transfer));
-        } else {
-
-        }
-    }
-
-    QStringList codec = {"-map", "0:v:0?"};
-    codec.append(_audioMapParam);
-    codec.append(_subtitleMapParam);
-    codec.append({"-map_metadata", "-1", "-map_chapters", "-1"});
-    codec.append(_videoMetadataParam);
-    codec.append(_audioMetadataParam);
-    codec.append(_subtitleMetadataParam);
-    if ((hwaccel_filter_vf != "") ||
-        (fps_vf != "") ||
-        (resize_vf != "") ||
-        (colorprim_vf.count() != 0) ||
-        (colormatrix_vf.count() != 0) ||
-        (transfer_vf.count() != 0) ||
-        (burn_subt_vf != "") ||
-        _burn_subtitle)
+    // Location mapping to ffmpeg alignment
+    int location = subtitle_location;
+    switch (location)
     {
-        codec.append("-vf");
+        case 0: // default
+            break;
+        case 1: // bottom left
+        case 2: // bottom center
+        case 3: // bottom right
+            break;
+        case 4: // top left
+        case 5: // top center
+        case 6: // top right
+            location += 1;
+            break;
+        case 7: // middle left
+        case 8: // middle center
+        case 9: // middle right
+            location += 2;
+            break;
     }
-    codec.append(hwaccel_filter_vf.split(" "));
-    codec.append(fps_vf.split(" "));
-    codec.append(resize_vf.split(" "));
-    codec.append(colorprim_vf);
-    codec.append(colormatrix_vf);
-    codec.append(transfer_vf);
-    codec.append(burn_subt_vf);//.split(" "));
-    codec.append(t.arr_params[_CODEC][0].split(" "));
+    if (location > 0)
+    {
+        burn_string += QString(",Alignment"+ numToStr(location));
+    }
 
-    /************************************* HDR module ***************************************/
+    burn_string += QString("'\"");
+    Q_LOOP(k, 0, CHECKS(subtBurn).size()) {
+        if (CHECKS(subtBurn)[k]) {
+            _burn_subtitle = true;
+            QString _input_file(input_file);
+            burn_subt_vf = QString("subtitles='%1':%2:stream_index=%3").arg(_input_file, burn_string, numToStr(k));
+            break;
+        }
+    }
+    Q_LOOP(k, 0, CHECKS(externSubtBurn).size()) {
+        if (CHECKS(externSubtBurn)[k]) {
+            _burn_subtitle = true;
+            burn_subt_vf = QString("subtitles='%1':%2").arg(FIELDS(externSubtPath)[k], burn_string);
+            break;
+        }
+    }
+}
 
-    QStringList color_range;
-    QStringList max_lum;
-    QStringList min_lum;
-    QStringList max_cll;
-    QStringList max_fall;
-    QStringList chroma_coord;
-    QStringList white_coord;
-    if (_flag_hdr == true) {
-
-        /********************************* Color range module **********************************/
-
-        if (_COLOR_RANGE == 0) {                             // color range
-            if (_hdr[CUR_COLOR_RANGE] == "Limited")
-                color_range.append({"-color_range","tv"});
+void Encoder::fpsVF(const QString &_fps, int _CODEC, int _FRAME_RATE, int _BLENDING, Tables &t, QString &fps_vf,
+                    double &fps_dest) const {
+    fps_vf= "";
+    if (t.frame_rate[_FRAME_RATE] != "Source") {
+        fps_dest = t.frame_rate[_FRAME_RATE].toDouble();
+        if (_BLENDING == t.Blending::Simple) {
+            if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) // QSV
+                fps_vf = QString("vpp_qsv=framerate=%1").arg(t.frame_rate[_FRAME_RATE]);
             else
-            if (_hdr[CUR_COLOR_RANGE] == "Full")
-                color_range.append({"-color_range","pc"});
+            if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) // VAAPI
+                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
+            else
+                fps_vf = QString("fps=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
         }
         else
-        if (_COLOR_RANGE == 1) {
-            color_range.append({"-color_range","pc"});
-        }
+        if (_BLENDING == t.Blending::Interpolated)
+            fps_vf = QString("framerate=fps=%1").arg(t.frame_rate[_FRAME_RATE]);
         else
-        if (_COLOR_RANGE == 2) {
-            color_range.append({"-color_range","tv"});
-        }
+        if (_BLENDING == t.Blending::MCI)
+            fps_vf = QString("minterpolate=fps=%1:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1")
+                    .arg(t.frame_rate[_FRAME_RATE]);
+        else
+        if (_BLENDING == t.Blending::Blend)
+            fps_vf = QString("minterpolate=fps=%1:mi_mode=blend").arg(t.frame_rate[_FRAME_RATE]);
+    } else
+        fps_dest = _fps.toDouble();
+}
 
-        /************************************* Lum module ***************************************/
-
-        if (_MAX_LUM != "") {                           // max lum
-            max_lum.append({"-s", QString("max-luminance=%1").arg(_MAX_LUM)});
-        } else {
-            if (_hdr[CUR_MAX_LUM] != "") {
-                max_lum.append({"-s", QString("max-luminance=%1").arg(_hdr[CUR_MAX_LUM])});
-            } else {
-                max_lum.append({"-d", "max-luminance"});
-            }
-        }
-
-        if (_MIN_LUM != "") {                           // min lum
-            min_lum.append({"-s", QString("min-luminance=%1").arg(_MIN_LUM)});
-        } else {
-            if (_hdr[CUR_MIN_LUM] != "") {
-                min_lum.append({"-s", QString("min-luminance=%1").arg(_hdr[CUR_MIN_LUM])});
-            } else {
-                min_lum.append({"-d", "min-luminance"});
-            }
-        }
-
-        if (_MAX_CLL != "") {                           // max cll
-            max_cll.append({"-s", QString("max-content-light=%1").arg(_MAX_CLL)});
-        } else {
-            if (_hdr[CUR_MAX_CLL] != "") {
-                max_cll.append({"-s", QString("max-content-light=%1").arg(_hdr[CUR_MAX_CLL])});
-            } else {
-                max_cll.append({"-d", "max-content-light"});
-            }
-        }
-
-        if (_MAX_FALL != "") {                           // max fall
-            max_fall.append({"-s", QString("max-frame-light=%1").arg(_MAX_FALL)});
-        } else {
-            if (_hdr[CUR_MAX_FALL] != "") {
-                max_fall.append({"-s", QString("max-frame-light=%1").arg(_hdr[CUR_MAX_FALL])});
-            } else {
-                max_fall.append({"-d", "max-frame-light"});
-            }
-        }
-
-        /************************************* Display module ***************************************/
-
-        enum Display {Display_P3, Dci_P3, Bt_2020, Bt_709};
-        enum Coord {red_x, red_y, green_x, green_y, blue_x, blue_y, white_x, white_y};
-        const QString arr_coord[4][8] = {
-            {"0.680", "0.320", "0.265", "0.690", "0.150", "0.060", "0.3127", "0.3290"}, // Display_P3
-            {"0.680", "0.320", "0.265", "0.690", "0.150", "0.060", "0.314",  "0.3510"}, // DCI_P3
-            {"0.708", "0.292", "0.170", "0.797", "0.131", "0.046", "0.3127", "0.3290"}, // BT.2020
-            {"0.640", "0.330", "0.30",  "0.60",  "0.150", "0.060", "0.3127", "0.3290"}  // BT.709
-        };
-        QString current_coord[8] = {"", "", "", "", "", "", "", ""};
-
-        auto fill_coord = [&current_coord, &arr_coord](int display){
-            for (int i = red_x; i <= white_y; i++) {
-                current_coord[i] = arr_coord[display][i];
-            }
-        };
-        if (_MASTER_DISPLAY == MasterDisplay::SOURCE) {     // From source
-            if (_hdr[CUR_MASTER_DISPLAY] == "Display P3") {
-                fill_coord(Display::Display_P3);
-            } else
-            if (_hdr[CUR_MASTER_DISPLAY] == "DCI P3") {
-                fill_coord(Display::Dci_P3);
-            } else
-            if (_hdr[CUR_MASTER_DISPLAY] == "BT.2020") {
-                fill_coord(Display::Bt_2020);
-            } else
-            if (_hdr[CUR_MASTER_DISPLAY] == "BT.709") {
-                fill_coord(Display::Bt_709);
-            } else
-            if (_hdr[CUR_MASTER_DISPLAY] == "Undefined") {
-                const QStringList chr = _hdr[CUR_CHROMA_COORD].split(",");
-                if (chr.size() == 6) {
-                    for (int i = red_x; i <= blue_y; i++) {
-                        current_coord[i] = chr[i];
-                    }
-                } else {
-                    _message = tr("Incorrect master display chroma coordinates source parameters!");
-                    emit onEncodingInitError(_message);
-                    return;
-                }
-                const QStringList wht = _hdr[CUR_WHITE_COORD].split(",");
-                if (wht.size() == 2) {
-                    current_coord[white_x] = wht[0];
-                    current_coord[white_y] = wht[1];
-                } else {
-                    _message = tr("Incorrect master display white point coordinates source parameters!");
-                    emit onEncodingInitError(_message);
-                    return;
-                }
-            }
-        }
-        if (_MASTER_DISPLAY == MasterDisplay::DISPLAY_P3) {     // Display P3
-            fill_coord(Display::Display_P3);
-        } else
-        if (_MASTER_DISPLAY == MasterDisplay::DCI_P3) {     // DCI P3
-            fill_coord(Display::Dci_P3);
-        } else
-        if (_MASTER_DISPLAY == MasterDisplay::BT_2020) {     // BT.2020
-            fill_coord(Display::Bt_2020);
-        } else
-        if (_MASTER_DISPLAY == MasterDisplay::BT_709) {     // BT.709
-            fill_coord(Display::Bt_709);
-        } else
-        if (_MASTER_DISPLAY == MasterDisplay::CUSTOM) {     // Custom
-            QStringList chr = _CHROMA_COORD.split(",");
-            if (chr.size() == 6) {
-                for (int i = red_x; i <= blue_y; i++) {
-                    current_coord[i] = chr[i];
-                }
-            }
-            QStringList wht = _WHITE_COORD.split(",");
-            if (wht.size() == 2) {
-                current_coord[white_x] = wht[0];
-                current_coord[white_y] = wht[1];
-            }
-        }
-
-        if (current_coord[red_x] == "") {
-            chroma_coord.append({"-d", "chromaticity-coordinates-red-x", "-d", "chromaticity-coordinates-red-y",
-                                    "-d", "chromaticity-coordinates-green-x", "-d", "chromaticity-coordinates-green-y",
-                                    "-d", "chromaticity-coordinates-blue-x", "-d", "chromaticity-coordinates-blue-y"});
-        } else {
-            chroma_coord.append({"-s", "chromaticity-coordinates-red-x="+current_coord[red_x],
-                                 "-s", "chromaticity-coordinates-red-y="+current_coord[red_y],
-                                 "-s", "chromaticity-coordinates-green-x="+current_coord[green_x],
-                                 "-s", "chromaticity-coordinates-green-y="+current_coord[green_y],
-                                 "-s", "chromaticity-coordinates-blue-x="+current_coord[blue_x],
-                                 "-s", "chromaticity-coordinates-blue-y="+current_coord[blue_y]});
-        }
-        if (current_coord[white_x] == "") {
-            white_coord.append({"-d", "white-coordinates-x", "-d","white-coordinates-y"});
-        } else {
-            white_coord.append({"-s", QString("white-coordinates-x=%1").arg(current_coord[white_x]), "-s", QString("white-coordinates-y=%2 ").arg(current_coord[white_y])});
-        }
+void Encoder::resizeVF(const QString &_width, const QString &_height, int _CODEC, int _WIDTH, int _HEIGHT, Tables &t,
+                       QString &resize_vf) const {
+    resize_vf= "";
+    const QString new_width = (t.arr_width[_WIDTH] != "Source") ? t.arr_width[_WIDTH] : _width;
+    const QString new_height = (t.arr_height[_HEIGHT] != "Source") ? t.arr_height[_HEIGHT] : _height;
+    if ((t.arr_width[_WIDTH] != "Source") || (t.arr_height[_HEIGHT] != "Source")) {
+        if (_CODEC >= CODEC_QSV_FIRST && _CODEC <= CODEC_QSV_LAST) // QSV
+            resize_vf = QString("scale_qsv=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
+        else
+        if (_CODEC >= CODEC_VAAPI_FIRST && _CODEC <= CODEC_VAAPI_LAST) // VAAPI
+            resize_vf = QString("scale_vaapi=w=%1:h=%2,setsar=1:1").arg(new_width, new_height);
+        else
+            resize_vf = QString("scale=%1:%2,setsar=1:1").arg(new_width, new_height);
     }
-
-    /************************************* Result module ***************************************/
-
-    _preset_0 = "-hide_banner -probesize 100M -analyzeduration 50M" + hwaccel + _splitStartParam.join(" ");
-    _preset_pass1 = _splitParam + codec + level + preset + mode + pass1 + color_range
-            + colorprim + colormatrix + transfer + QStringList {"-an","-sn","-f","null", "/dev/null"};
-    _preset = _splitParam + codec + level + preset + mode + pass + color_range
-            + colorprim + colormatrix + transfer + audio_param + sub_param;
-    // DEBUG
-    /*
-    std::string _presetarray[_preset.length()];
-    for (int i = 0; i < _preset.length(); i++)
-    {
-        _presetarray[i] = _preset[i].toStdString();
-    }
-    */
-
-    _preset_mkvmerge = max_cll.join(" ") + max_fall.join(" ") + max_lum.join(" ") + min_lum.join(" ") + chroma_coord.join(" ") + white_coord.join(" ");
-    Print("Flag two-pass: " << _flag_two_pass);
-    Print("Flag HDR: " << _flag_hdr);
-    Print("preset_0: " << _preset_0.toStdString());
-
-    QString log("");
-    if (_flag_two_pass && _flag_hdr) {
-        Print("preset_pass1: " << _preset_pass1.join(" ").toStdString());
-        Print("preset: " << _preset.join(" ").toStdString());
-        Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
-        log = QString("Preset pass 1: %1 -i <input file> %2\n"
-                      "Preset pass 2: %3 -i <input file> %4 -y <output file>\n"
-                      "Preset mkvpropedit: %5\n")
-                .arg(_preset_0, _preset_pass1.join(" "), _preset_0, _preset.join(" "), _preset_mkvmerge);
-    }
-    else
-    if (_flag_two_pass && !_flag_hdr) {
-        Print("preset_pass1: " << _preset_pass1.join(" ").toStdString());
-        Print("preset: " << _preset.join(" ").toStdString());
-        log = QString("Preset pass 1: %1 -i <input file> %2\n"
-                      "Preset pass 2: %3 -i <input file> %4 -y <output file>\n")
-                .arg(_preset_0, _preset_pass1.join(" "), _preset_0, _preset.join(" "));
-    }
-    else
-    if (!_flag_two_pass && _flag_hdr) {
-        Print("preset: " << _preset.join(" ").toStdString());
-        Print("preset_mkvpropedit: " << _preset_mkvmerge.toStdString());
-        log = QString("Preset: %1 -i <input file> %2 -y <output file>\n"
-                      "Preset mkvpropedit: %3\n")
-                .arg(_preset_0, _preset.join(" "), _preset_mkvmerge);
-    }
-    else
-    if (!_flag_two_pass && !_flag_hdr) {
-        Print("preset: " << _preset.join(" ").toStdString());
-        log = QString("Preset: %1 -i <input file> %2 -y <output file>\n")
-                .arg(_preset_0, _preset.join(" "));
-    }
-    emit onEncodingLog(log);
-    encode();
 }
 
 void Encoder::encode()   // Encode

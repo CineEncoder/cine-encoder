@@ -335,6 +335,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/subtitles_background", m_subtitles_background);
         stn.setValue("Settings/subtitles_background_alpha", m_subtitles_background_alpha);
         stn.setValue("Settings/subtitles_background_color", m_subtitles_background_color.name());
+        stn.setValue("Settings/subtitles_location", m_subtitles_location);
         stn.endGroup();
 
         if (m_pTrayIcon)
@@ -812,6 +813,7 @@ void MainWindow::setParameters()    // Set parameters
         m_subtitles_color = QColor(stn.value("Settings/subtitles_color", DEFAULTSUBTITLECOLOR).toString());
         m_subtitles_background_color = QColor(stn.value("Settings/subtitles_background_color", DEFAULTSUBTITLEBACKGROUNDCOLOR).toString());
         m_subtitles_background_alpha = stn.value("Settings/subtitles_background_alpha", 150).toInt();
+        m_subtitles_location = stn.value("Settings/subtitles_location", 0).toInt();
         m_rowHeight = stn.value("Settings/row_size").toInt();
         ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
         ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
@@ -1007,7 +1009,8 @@ void MainWindow::onSettings()
                            &m_subtitles_background,
                            &m_subtitles_color,
                            &m_subtitles_background_color,
-                           &m_subtitles_background_alpha);
+                           &m_subtitles_background_alpha,
+                           &m_subtitles_location);
     if (settings.exec() == Dialog::Accept) {
         m_pTimer->setInterval(m_timerInterval*1000);
         setTheme(m_theme);
@@ -1509,7 +1512,8 @@ void MainWindow::initEncoding()
                              m_subtitles_fontSize,
                              QString(m_subtitles_color.name(QColor::HexArgb).replace("#", "")),
                              m_subtitles_background,
-                             QString(m_subtitles_background_color.name(QColor::HexArgb).replace("#", ""))
+                             QString(m_subtitles_background_color.name(QColor::HexArgb).replace("#", "")),
+                             m_subtitles_location
     );
 }
 

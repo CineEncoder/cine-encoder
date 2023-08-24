@@ -110,7 +110,8 @@ void Settings::setParameters(QString    *pOutputFolder,
                              bool       *pSubtitlesBackground,
                              QColor     *pSubtitlesColor,
                              QColor     *pSubtitlesBackgroundColor,
-                             int        *pSubtitlesBackgroundAlpha)
+                             int        *pSubtitlesBackgroundAlpha,
+                             int        *pSubtitlesLocation)
 {
     QFont title_font;
     title_font.setPointSize(10);
@@ -136,6 +137,7 @@ void Settings::setParameters(QString    *pOutputFolder,
     m_pSubtitlesColor = pSubtitlesColor;
     m_pSubtitlesBackgroundColor = pSubtitlesBackgroundColor;
     m_pSubtitlesBackgroundAlpha = pSubtitlesBackgroundAlpha;
+    m_pSubtitlesLocation = pSubtitlesLocation;
     ui->spinBox_background->setValue(*m_pSubtitlesBackgroundAlpha);
 
     ui->lineEdit_tempPath->setText(*m_pTempFolder);
@@ -212,19 +214,19 @@ void Settings::setParameters(QString    *pOutputFolder,
     }
     ui->comboBox_subtitles_font->blockSignals(false);
 
-    QString sb("background: #"
-               + QString(m_pSubtitlesBackgroundColor->red() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor->red(),16)
-               + QString(m_pSubtitlesBackgroundColor->green() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor->green(),16)
-               + QString(m_pSubtitlesBackgroundColor->blue() < 16? "0" : "") + QString::number(m_pSubtitlesBackgroundColor->blue(),16) + ";");
+    std::string temp = m_pSubtitlesBackgroundColor->name().toStdString();
+    QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
 
-    QString s("background: #"
-              + QString(m_pSubtitlesColor->red() < 16? "0" : "") + QString::number(m_pSubtitlesColor->red(),16)
-              + QString(m_pSubtitlesColor->green() < 16? "0" : "") + QString::number(m_pSubtitlesColor->green(),16)
-              + QString(m_pSubtitlesColor->blue() < 16? "0" : "") + QString::number(m_pSubtitlesColor->blue(),16) + ";");
+    temp = m_pSubtitlesColor->name().toStdString();
+    QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
+
+    ui->comboBox_subtitles_location->blockSignals(true);
+    ui->comboBox_subtitles_location->setCurrentIndex(m_pSubtitlesLocation);
+    ui->comboBox_subtitles_location->blockSignals(false);
 
     QListView *comboboxLangListView = new QListView(ui->comboBox_lang);
     QListView *comboboxThemeListView = new QListView(ui->comboBox_theme);
@@ -313,6 +315,9 @@ void Settings::onButtonApply()
     QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
+
+    /*============= Location for hard-burn subtitles ==============*/
+    *m_pSubtitlesLocation = ui->comboBox_subtitles_location->currentIndex();
 
     /*============== Pref and Suff ===============*/
     *m_pPrefxType = ui->comboBoxPrefixType->currentIndex();
