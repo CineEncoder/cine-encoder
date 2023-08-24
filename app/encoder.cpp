@@ -1046,7 +1046,8 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
                      const QString &subtitle_background_color, int subtitle_location, Data &data,
                      QString &burn_subt_vf) {
     QString  burn_string;
-    burn_string = "charenc=:force_style=\"'FontName='" + subtitle_font +
+    // Hard-coding UTF-8. Not very elegant....
+    burn_string = "charenc=utf-8:force_style=\"'FontName='" + subtitle_font +
                           "',Fontsize=" + numToStr(subtitle_font_size) +
                           ",PrimaryColour=&H" + subtitle_font_color +
                           ",BorderStyle=4";
