@@ -225,7 +225,7 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->subtitles_color->update();
 
     ui->comboBox_subtitles_location->blockSignals(true);
-    ui->comboBox_subtitles_location->setCurrentIndex(m_pSubtitlesLocation);
+    ui->comboBox_subtitles_location->setCurrentIndex(*m_pSubtitlesLocation);
     ui->comboBox_subtitles_location->blockSignals(false);
 
     QListView *comboboxLangListView = new QListView(ui->comboBox_lang);

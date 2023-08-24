@@ -52,7 +52,7 @@ void Encoder::initEncoding(const QString  &temp_file,
                            const QString  &container,
                            QString  globalTitle,
                            QVector<QString> _cur_param,
-                           const QString  (&_hdr)[11],
+                           const QString  _hdr[],
                            Data           data,
                            int            *_fr_count,
                            int            streamCutting,
@@ -391,7 +391,7 @@ QStringList Encoder::levelModule(const Tables &t, int _CODEC, int _LEVEL) const 
     return level;
 }
 
-void Encoder::colorMatrix(const QString (&_hdr)[11], int _MATRIX, int _REP_MATRIX, QStringList &colormatrix,
+void Encoder::colorMatrix(const QString _hdr[], int _MATRIX, int _REP_MATRIX, QStringList &colormatrix,
                           QStringList &colormatrix_vf) {
     const QString arr_colormatrix[14] = {
         "Source", "bt470bg", "bt709", "bt2020nc", "bt2020c", "smpte170m", "smpte240m",
@@ -434,7 +434,7 @@ void Encoder::colorMatrix(const QString (&_hdr)[11], int _MATRIX, int _REP_MATRI
     }
 }
 
-void Encoder::colorTransfer(const QString (&_hdr)[11], int _TRC, int _REP_TRC, QStringList &transfer,
+void Encoder::colorTransfer(const QString _hdr[], int _TRC, int _REP_TRC, QStringList &transfer,
                             QStringList &transfer_vf) {
     const QString arr_trc[17] = {
         "Source", "bt470m", "bt470bg", "bt709", "bt1361e", "bt2020-10", "bt2020-12", "smpte170m",
@@ -573,7 +573,7 @@ int Encoder::extAudio(Data &data, QStringList &_audioMapParam, QStringList &_aud
     return extTrackNum;
 }
 
-void Encoder::colorPrimaries(const QString (&_hdr)[11], int _PRIMARY, int _REP_PRIM, QStringList &colorprim,
+void Encoder::colorPrimaries(const QString _hdr[], int _PRIMARY, int _REP_PRIM, QStringList &colorprim,
                              QStringList &colorprim_vf) {
     const QString arr_colorprim[11] = {
         "Source",    "bt470m",   "bt470bg",  "bt709",    "bt2020", "smpte170m",
@@ -686,7 +686,7 @@ QStringList Encoder::modeModule(const Tables &t, int _CODEC, int _MODE, const QS
     return mode;
 }
 
-void Encoder::hdrDisplay(const QString (&_hdr)[11], int _MASTER_DISPLAY, const QString &_CHROMA_COORD,
+void Encoder::hdrDisplay(const QString _hdr[11], int _MASTER_DISPLAY, const QString &_CHROMA_COORD,
                          const QString &_WHITE_COORD, QStringList &chroma_coord, QStringList &white_coord) {
     enum Display {Display_P3, Dci_P3, Bt_2020, Bt_709};
     enum Coord {red_x, red_y, green_x, green_y, blue_x, blue_y, white_x, white_y};
@@ -784,7 +784,7 @@ void Encoder::hdrDisplay(const QString (&_hdr)[11], int _MASTER_DISPLAY, const Q
 }
 
 void
-Encoder::hdrLum(const QString (&_hdr)[11], const QString &_MIN_LUM, const QString &_MAX_LUM, const QString &_MAX_CLL,
+Encoder::hdrLum(const QString _hdr[], const QString &_MIN_LUM, const QString &_MAX_LUM, const QString &_MAX_CLL,
                 const QString &_MAX_FALL, QStringList &max_lum, QStringList &min_lum, QStringList &max_cll,
                 QStringList &max_fall) const {
     if (_MAX_LUM != "") {                           // max lum
@@ -828,7 +828,7 @@ Encoder::hdrLum(const QString (&_hdr)[11], const QString &_MIN_LUM, const QStrin
     }
 }
 
-void Encoder::hdrColorRange(const QString (&_hdr)[11], int _COLOR_RANGE, QStringList &color_range) const {
+void Encoder::hdrColorRange(const QString _hdr[], int _COLOR_RANGE, QStringList &color_range) const {
     if (_COLOR_RANGE == 0) {                             // color range
         if (_hdr[CUR_COLOR_RANGE] == "Limited")
             color_range.append({"-color_range","tv"});

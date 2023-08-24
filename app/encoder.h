@@ -48,7 +48,7 @@ public:
                       const QString  &container,
                       QString        globalTitle,
                       QVector<QString>  _cur_param,
-                      const QString  (&_hdr)[11],
+                      const QString  _hdr[],
                       Data           data,
                       int            *_fr_count,
                       int            streamCutting,
@@ -135,14 +135,14 @@ private slots:
 
     QString getLog() const;
 
-    void hdrColorRange(const QString (&_hdr)[11], int _COLOR_RANGE, QStringList &color_range) const;
+    void hdrColorRange(const QString _hdr[], int _COLOR_RANGE, QStringList &color_range) const;
 
-    void hdrLum(const QString (&_hdr)[11], const QString &_MIN_LUM, const QString &_MAX_LUM, const QString &_MAX_CLL,
+    void hdrLum(const QString _hdr[], const QString &_MIN_LUM, const QString &_MAX_LUM, const QString &_MAX_CLL,
                 const QString &_MAX_FALL, QStringList &max_lum, QStringList &min_lum, QStringList &max_cll,
                 QStringList &max_fall) const;
 
     void
-    hdrDisplay(const QString (&_hdr)[11], int _MASTER_DISPLAY, const QString &_CHROMA_COORD,
+    hdrDisplay(const QString _hdr[], int _MASTER_DISPLAY, const QString &_CHROMA_COORD,
                const QString &_WHITE_COORD,
                QStringList &chroma_coord, QStringList &white_coord);
 
@@ -151,7 +151,7 @@ private slots:
 
     QStringList subModule(const QString &container);
 
-    void colorPrimaries(const QString (&_hdr)[11], int _PRIMARY, int _REP_PRIM, QStringList &colorprim,
+    void colorPrimaries(const QString _hdr[], int _PRIMARY, int _REP_PRIM, QStringList &colorprim,
                         QStringList &colorprim_vf);
 
     int extAudio(Data &data, QStringList &_audioMapParam, QStringList &_audioMetadataParam, int audioNum);
@@ -164,9 +164,9 @@ private slots:
                 int subtNum);
 
     void
-    colorTransfer(const QString (&_hdr)[11], int _TRC, int _REP_TRC, QStringList &transfer, QStringList &transfer_vf);
+    colorTransfer(const QString _hdr[], int _TRC, int _REP_TRC, QStringList &transfer, QStringList &transfer_vf);
 
-    void colorMatrix(const QString (&_hdr)[11], int _MATRIX, int _REP_MATRIX, QStringList &colormatrix,
+    void colorMatrix(const QString hdr[], int _MATRIX, int _REP_MATRIX, QStringList &colormatrix,
                      QStringList &colormatrix_vf);
 
     QStringList levelModule(const Tables &t, int _CODEC, int _LEVEL) const;
