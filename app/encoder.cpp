@@ -40,11 +40,6 @@ Encoder::~Encoder()
 ** Encoder
 ************************************************/
 
-QString Resize()
-{
-
-}
-
 void Encoder::initEncoding(const QString  &temp_file,
                            const QString  &input_file,
                            const QString  &output_file,
@@ -146,44 +141,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QVector<QString> videoMetadata(data.videoMetadata.size(), "");
     QStringList _videoMetadataParam;
-
-    if (globalTitle != "") {
-        videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(globalTitle.replace(" ", "\u00A0"));
-        _videoMetadataParam.append({"-metadata:s:v:0",QString("title="+globalTitle)});
-    } else {
-        if (data.videoMetadata[VIDEO_TITLE] != "") {
-            videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(data.videoMetadata[VIDEO_TITLE]
-                                                                                .replace(" ", "\u00A0"));
-            _videoMetadataParam.append({"-metadata:s:v:0",QString("title=" + data.videoMetadata[VIDEO_TITLE])});
-        } else {
-            videoMetadata[0] = QString("-map_metadata:s:v:0 -1 ");
-            _videoMetadataParam.append({"-map_metadata:s:v:0","-1"});
-        }
-    }
-    if (data.videoMetadata[VIDEO_MOVIENAME] != "") {
-        videoMetadata[1] = QString("-metadata title=%1 ").arg(data.videoMetadata[VIDEO_MOVIENAME]
-                                                              .replace(" ", "\u00A0"));
-        _videoMetadataParam.append({"-metadata",QString("title="+data.videoMetadata[VIDEO_MOVIENAME])});
-    }
-    if (data.videoMetadata[VIDEO_AUTHOR] != "") {
-        videoMetadata[2] = QString("-metadata author=%1 ").arg(data.videoMetadata[VIDEO_AUTHOR]
-                                                               .replace(" ", "\u00A0"));
-        _videoMetadataParam.append({"-metadata",QString("author="+data.videoMetadata[VIDEO_AUTHOR])});
-    }
-    if (data.videoMetadata[VIDEO_DESCRIPTION] != "") {
-        videoMetadata[3] = QString("-metadata description=%1 ").arg(data.videoMetadata[VIDEO_DESCRIPTION]
-                                                                    .replace(" ", "\u00A0"));
-        _videoMetadataParam.append({"-metadata",QString("description="+data.videoMetadata[VIDEO_DESCRIPTION])});
-    }
-    if (data.videoMetadata[VIDEO_YEAR] != "") {
-        videoMetadata[4] = QString("-metadata year=%1 ").arg(data.videoMetadata[VIDEO_YEAR].replace(" ", ""));
-        _videoMetadataParam.append({"-metadata",QString("year="+data.videoMetadata[VIDEO_YEAR])});
-    }
-    if (data.videoMetadata[VIDEO_PERFORMER] != "") {
-        videoMetadata[5] = QString("-metadata author=%1 ").arg(data.videoMetadata[VIDEO_PERFORMER]
-                                                               .replace(" ", "\u00A0"));
-        _videoMetadataParam.append({"-metadata",QString("author="+data.videoMetadata[VIDEO_PERFORMER])});
-    }
+    data = video(globalTitle, data, videoMetadata, _videoMetadataParam);
 
     /************************************** Audio streams ************************************/
     QStringList _audioMapParam;
@@ -287,6 +245,48 @@ void Encoder::initEncoding(const QString  &temp_file,
     QString log = getLog();
     emit onEncodingLog(log);
     encode();
+}
+
+Data &Encoder::video(QString &globalTitle, Data &data, QVector<QString> &videoMetadata,
+                     QStringList &_videoMetadataParam) const {
+    if (globalTitle != "") {
+        videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(globalTitle.replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata:s:v:0",QString("title="+globalTitle)});
+    } else {
+        if (data.videoMetadata[VIDEO_TITLE] != "") {
+            videoMetadata[0] = QString("-metadata:s:v:0 title=%1 ").arg(data.videoMetadata[VIDEO_TITLE]
+                                                                                .replace(" ", "\u00A0"));
+            _videoMetadataParam.append({"-metadata:s:v:0",QString("title=" + data.videoMetadata[VIDEO_TITLE])});
+        } else {
+            videoMetadata[0] = QString("-map_metadata:s:v:0 -1 ");
+            _videoMetadataParam.append({"-map_metadata:s:v:0","-1"});
+        }
+    }
+    if (data.videoMetadata[VIDEO_MOVIENAME] != "") {
+        videoMetadata[1] = QString("-metadata title=%1 ").arg(data.videoMetadata[VIDEO_MOVIENAME]
+                                                              .replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata",QString("title="+data.videoMetadata[VIDEO_MOVIENAME])});
+    }
+    if (data.videoMetadata[VIDEO_AUTHOR] != "") {
+        videoMetadata[2] = QString("-metadata author=%1 ").arg(data.videoMetadata[VIDEO_AUTHOR]
+                                                               .replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata",QString("author="+data.videoMetadata[VIDEO_AUTHOR])});
+    }
+    if (data.videoMetadata[VIDEO_DESCRIPTION] != "") {
+        videoMetadata[3] = QString("-metadata description=%1 ").arg(data.videoMetadata[VIDEO_DESCRIPTION]
+                                                                    .replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata",QString("description="+data.videoMetadata[VIDEO_DESCRIPTION])});
+    }
+    if (data.videoMetadata[VIDEO_YEAR] != "") {
+        videoMetadata[4] = QString("-metadata year=%1 ").arg(data.videoMetadata[VIDEO_YEAR].replace(" ", ""));
+        _videoMetadataParam.append({"-metadata",QString("year="+data.videoMetadata[VIDEO_YEAR])});
+    }
+    if (data.videoMetadata[VIDEO_PERFORMER] != "") {
+        videoMetadata[5] = QString("-metadata author=%1 ").arg(data.videoMetadata[VIDEO_PERFORMER]
+                                                               .replace(" ", "\u00A0"));
+        _videoMetadataParam.append({"-metadata",QString("author="+data.videoMetadata[VIDEO_PERFORMER])});
+    }
+    return data;
 }
 
 void Encoder::getPresets(const QStringList &_splitStartParam, const QStringList &_splitParam, const QString &hwaccel,

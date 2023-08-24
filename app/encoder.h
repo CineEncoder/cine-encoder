@@ -192,6 +192,9 @@ private slots:
                     const QStringList &codec, const QStringList &color_range, const QStringList &max_lum,
                     const QStringList &min_lum, const QStringList &max_cll, const QStringList &max_fall,
                     const QStringList &chroma_coord, const QStringList &white_coord);
+
+    Data &video(QString &globalTitle, Data &data, QVector<QString> &videoMetadata,
+                QStringList &_videoMetadataParam) const;
 };
 
 #endif // ENCODER_H
