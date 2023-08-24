@@ -390,7 +390,7 @@ QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize
     codec.append(colorprim_vf);
     codec.append(colormatrix_vf);
     codec.append(transfer_vf);
-    codec.append(burn_subt_vf);//.split(" "));
+    codec.append(burn_subt_vf);
     codec.append(t.arr_params[_CODEC][0].split(" "));
     return codec;
 }
@@ -464,7 +464,7 @@ void Encoder::colorMatrix(const QString _hdr[], int _MATRIX, int _REP_MATRIX, QS
     if (!curr_colormatrix.contains(_hdr[CUR_COLOR_MATRIX])) {
         _message = tr("Can\'t find color matrix %1 in source map.").arg(_hdr[CUR_COLOR_MATRIX]);
         emit onEncodingInitError(_message);
-        // return;
+        return;
     }
     if (selected_colormatrix == "Source") {
         if (_hdr[CUR_COLOR_MATRIX] != "") {
