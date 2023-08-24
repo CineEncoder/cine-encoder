@@ -64,58 +64,45 @@ void Encoder::initEncoding(const QString  &temp_file,
                            int subtitle_location
                            )
 {
-    Print("Make preset...");
     Tables t;
-    _temp_file = temp_file;
-    _input_file = input_file;
-    _output_file = output_file;
-    fr_count = _fr_count;
-    int _CODEC = _cur_param[CurParamIndex::CODEC].toInt();
-    int _MODE = _cur_param[CurParamIndex::MODE].toInt();
-    //int _CONTAINER = _cur_param[CurParamIndex::CONTAINER].toInt();
-    QString _BQR = _cur_param[CurParamIndex::BQR];
-    QString _MINRATE = _cur_param[CurParamIndex::MINRATE];
-    QString _MAXRATE = _cur_param[CurParamIndex::MAXRATE];
-    QString _BUFSIZE = _cur_param[CurParamIndex::BUFSIZE];
-    int _LEVEL = _cur_param[CurParamIndex::LEVEL].toInt();
-    int _FRAME_RATE = _cur_param[CurParamIndex::FRAME_RATE].toInt();
-    int _BLENDING = _cur_param[CurParamIndex::BLENDING].toInt();
-    int _WIDTH = _cur_param[CurParamIndex::WIDTH].toInt();
-    int _HEIGHT = _cur_param[CurParamIndex::HEIGHT].toInt();
-    int _PASS = _cur_param[CurParamIndex::PASS].toInt();
-    int _PRESET = _cur_param[CurParamIndex::PRESET].toInt();
-    int _COLOR_RANGE = _cur_param[CurParamIndex::COLOR_RANGE].toInt();
-    int _MATRIX = _cur_param[CurParamIndex::MATRIX].toInt();
-    int _PRIMARY = _cur_param[CurParamIndex::PRIMARY].toInt();
-    int _TRC = _cur_param[CurParamIndex::TRC].toInt();
-    QString _MIN_LUM = _cur_param[CurParamIndex::MIN_LUM].replace(",", ".");
-    QString _MAX_LUM = _cur_param[CurParamIndex::MAX_LUM].replace(",", ".");
-    QString _MAX_CLL = _cur_param[CurParamIndex::MAX_CLL].replace(",", ".");
-    QString _MAX_FALL = _cur_param[CurParamIndex::MAX_FALL].replace(",", ".");
-    int _MASTER_DISPLAY = _cur_param[CurParamIndex::MASTER_DISPLAY].toInt();
-    QString _CHROMA_COORD = _cur_param[CurParamIndex::CHROMA_COORD];
-    QString _WHITE_COORD = _cur_param[CurParamIndex::WHITE_COORD];
-    int _AUDIO_CODEC = _cur_param[CurParamIndex::AUDIO_CODEC].toInt();
-    int _AUDIO_BITRATE = _cur_param[CurParamIndex::AUDIO_BITRATE].toInt();
-    int _AUDIO_SAMPLING = _cur_param[CurParamIndex::ASAMPLE_RATE].toInt();
-    int _AUDIO_CHANNELS = _cur_param[CurParamIndex::ACHANNELS].toInt();
-    int _REP_PRIM = _cur_param[CurParamIndex::REP_PRIM].toInt();
-    int _REP_MATRIX = _cur_param[CurParamIndex::REP_MATRIX].toInt();
-    int _REP_TRC = _cur_param[CurParamIndex::REP_TRC].toInt();
-
-    _extAudioPaths.clear();
-    _extSubPaths.clear();
-    _preset_0 = "";
-    _preset_pass1.clear();
-    _preset.clear();
-    _preset_mkvmerge = "";
-    _sub_mux_param.clear();
-    _error_message = "";
-    _flag_two_pass = false;
-    _flag_hdr = false;
-    _burn_subtitle = false;
-    _mux_mode = false;
-    *fr_count = 0;
+    int _CODEC;
+    int _MODE;
+    QString _BQR;
+    QString _MINRATE;
+    QString _MAXRATE;
+    QString _BUFSIZE;
+    int _LEVEL;
+    int _FRAME_RATE;
+    int _BLENDING;
+    int _WIDTH;
+    int _HEIGHT;
+    int _PASS;
+    int _PRESET;
+    int _COLOR_RANGE;
+    int _MATRIX;
+    int _PRIMARY;
+    int _TRC;
+    QString _MIN_LUM;
+    QString _MAX_LUM;
+    QString _MAX_CLL;
+    QString _MAX_FALL;
+    int _MASTER_DISPLAY;
+    QString _CHROMA_COORD;
+    QString _WHITE_COORD;
+    int _AUDIO_CODEC;
+    int _AUDIO_BITRATE;
+    int _AUDIO_SAMPLING;
+    int _AUDIO_CHANNELS;
+    int _REP_PRIM;
+    int _REP_MATRIX;
+    int _REP_TRC;
+    initVariables(temp_file, input_file, output_file, _cur_param, _fr_count, t, _CODEC, _MODE, _BQR, _MINRATE, _MAXRATE,
+                  _BUFSIZE,
+                  _LEVEL, _FRAME_RATE, _BLENDING, _WIDTH, _HEIGHT, _PASS, _PRESET, _COLOR_RANGE, _MATRIX, _PRIMARY,
+                  _TRC, _MIN_LUM,
+                  _MAX_LUM, _MAX_CLL, _MAX_FALL, _MASTER_DISPLAY, _CHROMA_COORD, _WHITE_COORD, _AUDIO_CODEC,
+                  _AUDIO_BITRATE,
+                  _AUDIO_SAMPLING, _AUDIO_CHANNELS, _REP_PRIM, _REP_MATRIX, _REP_TRC);
 
     /****************************************** Resize ****************************************/
     QString resize_vf;
@@ -245,6 +232,66 @@ void Encoder::initEncoding(const QString  &temp_file,
     QString log = getLog();
     emit onEncodingLog(log);
     encode();
+}
+
+void Encoder::initVariables(const QString &temp_file, const QString &input_file, const QString &output_file,
+                            QVector<QString> &_cur_param, int *_fr_count, Tables &t, int &_CODEC, int &_MODE,
+                            QString &_BQR, QString &_MINRATE, QString &_MAXRATE, QString &_BUFSIZE, int &_LEVEL,
+                            int &_FRAME_RATE, int &_BLENDING, int &_WIDTH, int &_HEIGHT, int &_PASS, int &_PRESET,
+                            int &_COLOR_RANGE, int &_MATRIX, int &_PRIMARY, int &_TRC, QString &_MIN_LUM,
+                            QString &_MAX_LUM, QString &_MAX_CLL, QString &_MAX_FALL, int &_MASTER_DISPLAY,
+                            QString &_CHROMA_COORD, QString &_WHITE_COORD, int &_AUDIO_CODEC, int &_AUDIO_BITRATE,
+                            int &_AUDIO_SAMPLING, int &_AUDIO_CHANNELS, int &_REP_PRIM, int &_REP_MATRIX,
+                            int &_REP_TRC) {
+    _CODEC= _cur_param[CODEC].toInt();
+    _MODE= _cur_param[MODE].toInt();
+    _BQR= _cur_param[BQR];
+    _MINRATE= _cur_param[MINRATE];
+    _MAXRATE= _cur_param[MAXRATE];
+    _BUFSIZE= _cur_param[BUFSIZE];
+    _LEVEL= _cur_param[LEVEL].toInt();
+    _FRAME_RATE= _cur_param[FRAME_RATE].toInt();
+    _BLENDING= _cur_param[BLENDING].toInt();
+    _WIDTH= _cur_param[WIDTH].toInt();
+    _HEIGHT= _cur_param[HEIGHT].toInt();
+    _PASS= _cur_param[PASS].toInt();
+    _PRESET= _cur_param[PRESET].toInt();
+    _COLOR_RANGE= _cur_param[COLOR_RANGE].toInt();
+    _MATRIX= _cur_param[MATRIX].toInt();
+    _PRIMARY= _cur_param[PRIMARY].toInt();
+    _TRC= _cur_param[TRC].toInt();
+    _MIN_LUM= _cur_param[MIN_LUM].replace(",", ".");
+    _MAX_LUM= _cur_param[MAX_LUM].replace(",", ".");
+    _MAX_CLL= _cur_param[MAX_CLL].replace(",", ".");
+    _MAX_FALL= _cur_param[MAX_FALL].replace(",", ".");
+    _MASTER_DISPLAY= _cur_param[MASTER_DISPLAY].toInt();
+    _CHROMA_COORD= _cur_param[CHROMA_COORD];
+    _WHITE_COORD= _cur_param[WHITE_COORD];
+    _AUDIO_CODEC= _cur_param[AUDIO_CODEC].toInt();
+    _AUDIO_BITRATE= _cur_param[AUDIO_BITRATE].toInt();
+    _AUDIO_SAMPLING= _cur_param[ASAMPLE_RATE].toInt();
+    _AUDIO_CHANNELS= _cur_param[ACHANNELS].toInt();
+    _REP_PRIM= _cur_param[REP_PRIM].toInt();
+    _REP_MATRIX= _cur_param[REP_MATRIX].toInt();
+    _REP_TRC= _cur_param[REP_TRC].toInt();
+    Print("Make preset...");
+    _temp_file = temp_file;
+    _input_file = input_file;
+    _output_file = output_file;
+    fr_count = _fr_count;//int _CONTAINER = _cur_param[CurParamIndex::CONTAINER].toInt();
+    _extAudioPaths.clear();
+    _extSubPaths.clear();
+    _preset_0 = "";
+    _preset_pass1.clear();
+    _preset.clear();
+    _preset_mkvmerge = "";
+    _sub_mux_param.clear();
+    _error_message = "";
+    _flag_two_pass = false;
+    _flag_hdr = false;
+    _burn_subtitle = false;
+    _mux_mode = false;
+    *fr_count = 0;
 }
 
 Data &Encoder::video(QString &globalTitle, Data &data, QVector<QString> &videoMetadata,

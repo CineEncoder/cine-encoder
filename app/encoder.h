@@ -195,6 +195,15 @@ private slots:
 
     Data &video(QString &globalTitle, Data &data, QVector<QString> &videoMetadata,
                 QStringList &_videoMetadataParam) const;
+
+    void initVariables(const QString &temp_file, const QString &input_file, const QString &output_file,
+                       QVector<QString> &_cur_param, int *_fr_count, Tables &t, int &_CODEC, int &_MODE,
+                       QString &_BQR, QString &_MINRATE, QString &_MAXRATE, QString &_BUFSIZE, int &_LEVEL,
+                       int &_FRAME_RATE, int &_BLENDING, int &_WIDTH, int &_HEIGHT, int &_PASS, int &_PRESET,
+                       int &_COLOR_RANGE, int &_MATRIX, int &_PRIMARY, int &_TRC, QString &_MIN_LUM, QString &_MAX_LUM,
+                       QString &_MAX_CLL, QString &_MAX_FALL, int &_MASTER_DISPLAY, QString &_CHROMA_COORD,
+                       QString &_WHITE_COORD, int &_AUDIO_CODEC, int &_AUDIO_BITRATE, int &_AUDIO_SAMPLING,
+                       int &_AUDIO_CHANNELS, int &_REP_PRIM, int &_REP_MATRIX, int &_REP_TRC);
 };
 
 #endif // ENCODER_H
