@@ -1045,6 +1045,7 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
                      const QString &subtitle_font_color, const bool burn_background,
                      const QString &subtitle_background_color, int subtitle_location, Data &data,
                      QString &burn_subt_vf) {
+    // Keep with a QString here as there are no spaces in the parameters.
     QString  burn_string;
     // DEBUG
     std::string fontcol = subtitle_font_color.toStdString();
@@ -1081,7 +1082,7 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
     }
     if (location > 0)
     {
-        burn_string += QString(",Alignment"+ numToStr(location));
+        burn_string += QString(",Alignment="+ numToStr(location));
     }
 
     burn_string += QString("'\"");
@@ -1104,6 +1105,7 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
 
 void Encoder::fpsVF(const QString &_fps, int _CODEC, int _FRAME_RATE, int _BLENDING, Tables &t, QString &fps_vf,
                     double &fps_dest) const {
+    // Keep with a QString here as there are no spaces in the parameters.
     fps_vf= "";
     if (t.frame_rate[_FRAME_RATE] != "Source") {
         fps_dest = t.frame_rate[_FRAME_RATE].toDouble();
@@ -1132,6 +1134,7 @@ void Encoder::fpsVF(const QString &_fps, int _CODEC, int _FRAME_RATE, int _BLEND
 
 void Encoder::resizeVF(const QString &_width, const QString &_height, int _CODEC, int _WIDTH, int _HEIGHT, Tables &t,
                        QString &resize_vf) const {
+    // Keep with a QString here as there are no spaces in the parameters.
     resize_vf= "";
     const QString new_width = (t.arr_width[_WIDTH] != "Source") ? t.arr_width[_WIDTH] : _width;
     const QString new_height = (t.arr_height[_HEIGHT] != "Source") ? t.arr_height[_HEIGHT] : _height;
