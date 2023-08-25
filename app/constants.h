@@ -29,10 +29,10 @@
                             QSettings::IniFormat);
 
 // ******************* Constants *****************************//
-#define PRESETS_VERSION 354
-#define SETTINGS_VERSION 354
+#define PRESETS_VERSION 355
+#define SETTINGS_VERSION 355
 
-#define PARAMETERS_COUNT 34
+#define PARAMETERS_COUNT 42
 #define NUMBER_PRESETS 31
 
 #define CODEC_QSV_FIRST 6
@@ -174,7 +174,12 @@ namespace Constants {
         LEVEL,          ASAMPLE_RATE,   ACHANNELS,
         MATRIX,         PRIMARY,        TRC,
         PRESET_NAME,    REP_PRIM,       REP_MATRIX,
-        REP_TRC
+        REP_TRC,
+        USE_PRESET_SUBTITLE_SETTINGS,
+        SUBTITLE_FONT, SUBTITLE_FONT_SIZE,
+        SUBTITLE_FONT_COLOR,
+        SUBTITLE_BACKGROUND, SUBTITLE_BACKGROUND_COLOR,
+        SUBTITLE_BACKGROUND_ALPHA, SUBTITLE_LOCATION
     };
 
     struct EncoderAudioParam {

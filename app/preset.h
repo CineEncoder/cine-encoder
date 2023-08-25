@@ -65,6 +65,7 @@ private:
     // Metadata
     void onComboBox_master_disp_textChanged(const QString&);
 
+    QColor m_pPresetSubtitlesColor_temp, m_pPresetSubtitlesBackgroundColor_temp;
     Ui::Preset *ui;
     QVector<QString> *m_pNew_param;
     float m_aspectRatio;

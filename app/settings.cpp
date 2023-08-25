@@ -218,13 +218,13 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->comboBox_subtitles_font->blockSignals(false);
 
     // DEBUG
-    std::string temp = m_pSubtitlesBackgroundColor->name().toStdString();
+    // std::string temp = m_pSubtitlesBackgroundColor->name().toStdString();
     QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
 
     // DEBUG
-    temp = m_pSubtitlesColor->name().toStdString();
+    // temp = m_pSubtitlesColor->name().toStdString();
     QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
@@ -306,8 +306,9 @@ void Settings::onButtonApply()
     int subtitles_background = ui->checkBox_subtitles_background->checkState();
     *m_pSubtitlesBackground = (subtitles_background == 2) ? true : false;
 
-    *m_pSubtitlesColor = QColor(m_pSubtitlesColor_temp.name());
+    *m_pSubtitlesBackgroundAlpha = ui->spinBox_background->value();
 
+    *m_pSubtitlesColor = QColor(m_pSubtitlesColor_temp.name());
     QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
@@ -315,7 +316,7 @@ void Settings::onButtonApply()
     *m_pSubtitlesBackgroundColor = QColor(m_pSubtitlesBackgroundColor_temp.red(),
                                           m_pSubtitlesBackgroundColor_temp.green(),
                                           m_pSubtitlesBackgroundColor_temp.blue(),
-                                          ui->spinBox_background->value());
+                                          *m_pSubtitlesBackgroundAlpha);
 
     QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
@@ -372,6 +373,9 @@ void Settings::onButtonReset()
     QString sb("background: " + DEFAULTSUBTITLEBACKGROUNDCOLOR);
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
+    ui->comboBox_subtitles_location->setCurrentIndex(0);
+    ui->checkBox_subtitles_background->setChecked(false);
+    ui->spinBox_background->setValue(150);
 }
 
 void Settings::showEvent(QShowEvent *event)
