@@ -147,6 +147,11 @@ MainWindow::MainWindow(QWidget *parent):
     m_suffixName(DEFAULTSUFFIX),
     m_font(""),
     m_subtitles_font(""),
+    m_subtitles_color(QColor(DEFAULTSUBTITLECOLOR)),
+    m_subtitles_background_alpha(150),
+    m_subtitles_background_color(QColor(DEFAULTSUBTITLEBACKGROUNDCOLOR)),
+    m_subtitles_location(0),
+    m_subtitles_background(0),
     m_windowActivated(false),
     m_expandWindowsState(false),
     m_rowHeight(ROWHEIGHTDFLT)
