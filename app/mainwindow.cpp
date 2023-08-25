@@ -859,10 +859,7 @@ void MainWindow::setParameters()    // Set parameters
     for (int i = 0; i < NUM_ROWS; i++) {
         type = m_preset_table[PARAMETERS_COUNT][i];
         // Fix for typo in name within previous code.
-        if (type == "TopLewelItem") {
-            m_preset_table[PARAMETERS_COUNT][i] = "TopLevelItem";
-        }
-        if (type == "TopLevelItem") {
+        if ((type == "TopLewelItem") || (type == "TopLevelItem")) {
             auto *root = new QTreeWidgetItem();
             root->setText(0, m_preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
