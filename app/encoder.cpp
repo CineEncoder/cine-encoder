@@ -349,14 +349,13 @@ void Encoder::getPresets(const QStringList &_splitStartParam, const QStringList 
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
               + colorprim + colormatrix + transfer + audio_param + sub_param;
     // DEBUG
-/*
-std::string _presetarray[_preset.length()];
-for (int i = 0; i < _preset.length(); i++)
-{
-    _presetarray[i] = _preset[i].toStdString();
-}
-*/
-
+    /*
+    std::string _presetarray[_preset.length()];
+    for (int i = 0; i < _preset.length(); i++)
+    {
+        _presetarray[i] = _preset[i].toStdString();
+    }
+    */
     _preset_mkvmerge = max_cll.join(" ") + max_fall.join(" ") + max_lum.join(" ") + min_lum.join(" ") + chroma_coord.join(" ") + white_coord.join(" ");
 }
 
@@ -1227,7 +1226,8 @@ void Encoder::encode()   // Encode
     arguments.removeAll("");
     arguments.removeAll(" ");
 
-    //DEBUG
+    // DEBUG
+    /*
     std::string argsarray[arguments.length()];
     for (int i = 0; i < arguments.length(); i++)
     {
@@ -1235,7 +1235,8 @@ void Encoder::encode()   // Encode
     }
 
     std::string myargs = arguments.join(" ").toStdString();
-    //ENDDEBUG
+    */
+    // ENDDEBUG
 
     //qDebug() << arguments;
      processEncoding->start("ffmpeg", arguments);

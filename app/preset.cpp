@@ -194,6 +194,7 @@ void Preset::showEvent(QShowEvent *event)
         m_windowActivated = true;
         setMinimumSize(QSize(500, 600) * Helper::scaling());
         SETTINGS(stn);
+
         if (stn.childGroups().contains("PresetWidget")) {
             stn.beginGroup("PresetWidget");
             restoreGeometry(stn.value("PresetWidget/geometry", geometry()).toByteArray());

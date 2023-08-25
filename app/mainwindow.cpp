@@ -147,6 +147,11 @@ MainWindow::MainWindow(QWidget *parent):
     m_suffixName(DEFAULTSUFFIX),
     m_font(""),
     m_subtitles_font(""),
+    m_subtitles_color(QColor(DEFAULTSUBTITLECOLOR)),
+    m_subtitles_background_alpha(150),
+    m_subtitles_background_color(QColor(DEFAULTSUBTITLEBACKGROUNDCOLOR)),
+    m_subtitles_location(0),
+    m_subtitles_background(0),
     m_windowActivated(false),
     m_expandWindowsState(false),
     m_rowHeight(ROWHEIGHTDFLT)
@@ -853,7 +858,7 @@ void MainWindow::setParameters()    // Set parameters
     parentFont.setItalic(true);
     for (int i = 0; i < NUM_ROWS; i++) {
         type = m_preset_table[PARAMETERS_COUNT][i];
-        if (type == "TopLewelItem") {
+        if (type == "TopLevelItem") {
             auto *root = new QTreeWidgetItem();
             root->setText(0, m_preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -2517,6 +2522,14 @@ void MainWindow::onAddPreset()  // Add preset
     }
 
     QVector<QString> cur_param = QVector<QString>(default_param);
+    // Shim our current values.
+    cur_param[SUBTITLE_FONT] = m_subtitles_font;
+    cur_param[SUBTITLE_FONT_SIZE] = m_subtitles_fontSize;
+    cur_param[SUBTITLE_FONT_COLOR] = m_subtitles_color.name();
+    cur_param[SUBTITLE_BACKGROUND] = m_subtitles_background;
+    cur_param[SUBTITLE_BACKGROUND_COLOR] = m_subtitles_background_color.name();
+    cur_param[SUBTITLE_BACKGROUND_ALPHA] = m_subtitles_background_alpha;
+    cur_param[SUBTITLE_LOCATION] = m_subtitles_location;
 
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
@@ -2645,7 +2658,7 @@ void MainWindow::updatePresetTable()
     int row = 0;
     Q_LOOP(top, 0, TOP_LEVEL_ITEMS_COUNT) {
         m_preset_table[0][row] = ui->treeWidget->topLevelItem(top)->text(0);
-        m_preset_table[PARAMETERS_COUNT][row] = "TopLewelItem";
+        m_preset_table[PARAMETERS_COUNT][row] = "TopLevelItem";
         CHILD_COUNT = ui->treeWidget->topLevelItem(top)->childCount();
         Q_LOOP(child, 0, CHILD_COUNT) {
             row++;
