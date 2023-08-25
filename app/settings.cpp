@@ -136,6 +136,9 @@ void Settings::setParameters(QString    *pOutputFolder,
     m_pSubtitlesBackground = pSubtitlesBackground;
     m_pSubtitlesColor = pSubtitlesColor;
     m_pSubtitlesBackgroundColor = pSubtitlesBackgroundColor;
+    // Set the temp colors to match the default colors, avoid resetting to black if no change is made.
+    m_pSubtitlesColor_temp = QColor(m_pSubtitlesColor->name());
+    m_pSubtitlesBackgroundColor_temp = QColor(m_pSubtitlesBackgroundColor->name());
     m_pSubtitlesBackgroundAlpha = pSubtitlesBackgroundAlpha;
     m_pSubtitlesLocation = pSubtitlesLocation;
     ui->spinBox_background->setValue(*m_pSubtitlesBackgroundAlpha);
@@ -369,7 +372,6 @@ void Settings::onButtonReset()
     QString sb("background: " + DEFAULTSUBTITLEBACKGROUNDCOLOR);
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
-
 }
 
 void Settings::showEvent(QShowEvent *event)
