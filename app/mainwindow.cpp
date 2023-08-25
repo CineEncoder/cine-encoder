@@ -858,7 +858,11 @@ void MainWindow::setParameters()    // Set parameters
     parentFont.setItalic(true);
     for (int i = 0; i < NUM_ROWS; i++) {
         type = m_preset_table[PARAMETERS_COUNT][i];
+        // Fix for typo in name within previous code.
         if (type == "TopLewelItem") {
+            m_preset_table[PARAMETERS_COUNT][i] = "TopLevelItem";
+        }
+        if (type == "TopLevelItem") {
             auto *root = new QTreeWidgetItem();
             root->setText(0, m_preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -2654,7 +2658,7 @@ void MainWindow::updatePresetTable()
     int row = 0;
     Q_LOOP(top, 0, TOP_LEVEL_ITEMS_COUNT) {
         m_preset_table[0][row] = ui->treeWidget->topLevelItem(top)->text(0);
-        m_preset_table[PARAMETERS_COUNT][row] = "TopLewelItem";
+        m_preset_table[PARAMETERS_COUNT][row] = "TopLevelItem";
         CHILD_COUNT = ui->treeWidget->topLevelItem(top)->childCount();
         Q_LOOP(child, 0, CHILD_COUNT) {
             row++;
