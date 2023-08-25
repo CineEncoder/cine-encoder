@@ -214,11 +214,13 @@ void Settings::setParameters(QString    *pOutputFolder,
     }
     ui->comboBox_subtitles_font->blockSignals(false);
 
+    // DEBUG
     std::string temp = m_pSubtitlesBackgroundColor->name().toStdString();
     QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
 
+    // DEBUG
     temp = m_pSubtitlesColor->name().toStdString();
     QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
@@ -477,10 +479,12 @@ void Settings::subtitles_color_change()
 
     m_pSubtitlesColor_temp = QColor(m_pSubtitlesColor->red(),
                                     m_pSubtitlesColor->green(),
-                                    m_pSubtitlesColor->blue());
+                                    m_pSubtitlesColor->blue(),
+                                    0);
 
     if (cdialog.exec() == QDialog::Accepted) {
         m_pSubtitlesColor_temp = cdialog.getColor();
+        m_pSubtitlesColor_temp.setAlpha(0);
 
         QString s("background: " + m_pSubtitlesColor_temp.name() + ";");
         ui->subtitles_color->setStyleSheet(s);

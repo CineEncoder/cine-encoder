@@ -331,6 +331,9 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/switch_cut_mode", ui->switchCutting->currentIndex());
         stn.setValue("Settings/subtitles_font", m_subtitles_font);
         stn.setValue("Settings/subtitles_font_size", m_subtitles_fontSize);
+        // DEBUG
+        std::string test = m_subtitles_color.name().toStdString();
+        std::string test2 = m_subtitles_background_color.name().toStdString();
         stn.setValue("Settings/subtitles_color", m_subtitles_color.name());
         stn.setValue("Settings/subtitles_background", m_subtitles_background);
         stn.setValue("Settings/subtitles_background_alpha", m_subtitles_background_alpha);
@@ -810,6 +813,9 @@ void MainWindow::setParameters()    // Set parameters
         m_subtitles_font = stn.value("Settings/subtitles_font").toString();
         m_subtitles_fontSize = stn.value("Settings/subtitles_font_size", FONTSIZE).toInt();
         m_subtitles_background = stn.value("Settings/subtitles_background").toBool();
+        // DEBUG
+        std::string test = stn.value("Settings/subtitles_color").toString().toStdString();
+        std::string test2 = stn.value("Settings/subtitles_background_color").toString().toStdString();
         m_subtitles_color = QColor(stn.value("Settings/subtitles_color", DEFAULTSUBTITLECOLOR).toString());
         m_subtitles_background_color = QColor(stn.value("Settings/subtitles_background_color", DEFAULTSUBTITLEBACKGROUNDCOLOR).toString());
         m_subtitles_background_alpha = stn.value("Settings/subtitles_background_alpha", 150).toInt();
@@ -1492,6 +1498,13 @@ void MainWindow::initEncoding()
     const QString globalTitle = ui->lineEditGlobalTitle->text();
     const int streamCutting = ui->switchCutting->currentIndex();
 
+    // Avoid touching our defined colors.
+    // Shim the alpha values here because the color picker clobbers them and we need reliable values.
+    QColor subtitles_color = m_subtitles_color;
+    subtitles_color.setAlpha(0);
+    QColor subtitles_background_color = m_subtitles_background_color;
+    subtitles_background_color.setAlpha(m_subtitles_background_alpha);
+
     m_pEncoder->initEncoding(m_temp_file,
                              m_input_file,
                              m_output_file,
@@ -1510,9 +1523,9 @@ void MainWindow::initEncoding()
                              streamCutting,
                              m_subtitles_font,
                              m_subtitles_fontSize,
-                             QString(m_subtitles_color.name(QColor::HexArgb).replace("#", "")),
+                             QString(subtitles_color.name(QColor::HexArgb).replace("#", "")),
                              m_subtitles_background,
-                             QString(m_subtitles_background_color.name(QColor::HexArgb).replace("#", "")),
+                             QString(subtitles_background_color.name(QColor::HexArgb).replace("#", "")),
                              m_subtitles_location
     );
 }

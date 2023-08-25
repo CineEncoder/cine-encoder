@@ -1046,6 +1046,9 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
                      const QString &subtitle_background_color, int subtitle_location, Data &data,
                      QString &burn_subt_vf) {
     QString  burn_string;
+    // DEBUG
+    std::string fontcol = subtitle_font_color.toStdString();
+    std::string bgcol = subtitle_background_color.toStdString();
     // Hard-coding UTF-8. Not very elegant....
     burn_string = "charenc=utf-8:force_style=\"'FontName='" + subtitle_font +
                           "',Fontsize=" + numToStr(subtitle_font_size) +
@@ -1221,6 +1224,7 @@ void Encoder::encode()   // Encode
     arguments.removeAll("");
     arguments.removeAll(" ");
 
+    //DEBUG
     std::string argsarray[arguments.length()];
     for (int i = 0; i < arguments.length(); i++)
     {
@@ -1228,6 +1232,7 @@ void Encoder::encode()   // Encode
     }
 
     std::string myargs = arguments.join(" ").toStdString();
+    //ENDDEBUG
 
     //qDebug() << arguments;
      processEncoding->start("ffmpeg", arguments);
