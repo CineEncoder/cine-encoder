@@ -2538,7 +2538,7 @@ void MainWindow::onAddPreset()  // Add preset
             cur_param.clear();
             in >> cur_param;
         } else {
-            Print("Added emergercy params...");
+            Print("Added emergency params...");
         }
         _prs_file.close();
     }
