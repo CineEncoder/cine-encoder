@@ -182,6 +182,15 @@ namespace Constants {
         SUBTITLE_BACKGROUND_ALPHA, SUBTITLE_LOCATION
     };
 
+    // This needs to be aligned with the preset table above.
+    const QVector<QString> default_param = {
+            "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
+            "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
+            "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
+            "0", "0", "0", "Arial", numToStr(FONTSIZE), DEFAULTSUBTITLECOLOR,
+            "0", DEFAULTSUBTITLEBACKGROUNDCOLOR, "150", "0"
+    };
+
     struct EncoderAudioParam {
         int AUDIO_CODEC;
         int AUDIO_BITRATE;

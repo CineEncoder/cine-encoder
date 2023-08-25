@@ -2516,14 +2516,8 @@ void MainWindow::onAddPreset()  // Add preset
         return;
     }
 
-    // This needs to be aligned with the preset in constants.h, otherwise things crash later.
-    QVector<QString> cur_param = {
-        "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
-        "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
-        "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
-        "0", "0", "0", m_subtitles_font, numToStr(m_subtitles_fontSize), m_subtitles_color.name(),
-        "0", m_subtitles_background_color.name(), numToStr(m_subtitles_background_alpha), "0"
-    };
+    QVector<QString> cur_param = QVector<QString>(default_param);
+
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
         QDataStream in(&_prs_file);

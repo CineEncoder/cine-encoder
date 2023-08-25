@@ -55,7 +55,8 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param, int theme):
     connect(ui->buttonApply, &QPushButton::clicked, this, &Preset::onButtonApply);
     // Tab buttons
     QList<QPushButton*> tabButtons = {ui->buttonTab_1, ui->buttonTab_2,
-                                      ui->buttonTab_3, ui->buttonTab_4};
+                                      ui->buttonTab_3, ui->buttonTab_4,
+                                      ui->buttonTab_5};
     for (int i = 0; i < tabButtons.size(); i++) {
         connect(tabButtons[i], &QPushButton::clicked, this, [this, i, tabButtons]() {
             for (int j = 0; j < tabButtons.size(); j++)
