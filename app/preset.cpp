@@ -24,6 +24,7 @@
 #include <math.h>
 #include <QFontDatabase>
 #include <QStringListModel>
+#include <QColorDialog>
 
 #define SLT(method) &Preset::method
 
@@ -101,6 +102,15 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param, int theme):
         stn.setValue("PresetWidget/geometry", this->saveGeometry());
         stn.endGroup();
     });
+
+    QPushButton *btns[] = {
+            ui->preset_subtitles_background_color, ui->preset_subtitles_color
+    };
+    FnVoidVoid btn_methods[] = {
+            &Preset::subtitles_background_color_change, &Preset::subtitles_color_change
+    };
+    for (int i = 0; i < 8; i++)
+        connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
 }
 
 Preset::~Preset()
@@ -147,7 +157,7 @@ void Preset::onButtonApply()  // Apply preset
     (*m_pNew_param)[CurParamIndex::ACHANNELS] = QString::number(ui->comboBox_audio_channels->currentIndex());
     (*m_pNew_param)[CurParamIndex::REP_PRIM] = QString::number(ui->checkBox_primaries->checkState());
     (*m_pNew_param)[CurParamIndex::REP_MATRIX] = QString::number(ui->checkBox_matrix->checkState());
-    (*m_pNew_param)[CurParamIndex::REP_TRC] = QString::number(ui->checkBox_transfer->checkState());
+        (*m_pNew_param)[CurParamIndex::REP_TRC] = QString::number(ui->checkBox_transfer->checkState());
     (*m_pNew_param)[CurParamIndex::USE_PRESET_SUBTITLE_SETTINGS] = QString::number(ui->checkBox_use_preset_subtitles->checkState());
     (*m_pNew_param)[CurParamIndex::SUBTITLE_FONT] = ui->comboBox_preset_subtitles_font->currentText();
     int arrFontSize[6] = {8, 9, 10, 11, 12, 13};
@@ -194,6 +204,9 @@ void Preset::showEvent(QShowEvent *event)
         m_windowActivated = true;
         setMinimumSize(QSize(500, 600) * Helper::scaling());
         SETTINGS(stn);
+
+        m_pPresetSubtitlesColor_temp = QColor(stn.value("Settings/subtitles_color", DEFAULTSUBTITLECOLOR).toString());
+        m_pPresetSubtitlesBackgroundColor_temp = QColor(stn.value("Settings/subtitles_background_color", DEFAULTSUBTITLEBACKGROUNDCOLOR).toString());
 
         if (stn.childGroups().contains("PresetWidget")) {
             stn.beginGroup("PresetWidget");
@@ -1258,4 +1271,55 @@ void Preset::onComboBox_master_disp_textChanged(const QString &arg1)  // Change 
         ui->lineEdit_white_coord->setText("0.3127,0.3290");
     }
     lockSignals(false);
+}
+
+void Preset::onComboBoxSubtitlesFont_indexChanged(int index)
+{
+    QFont font;
+    const QString family = ui->comboBox_preset_subtitles_font->itemText(index);
+    font.setFamily(family);
+    ui->comboBox_preset_subtitles_font->setFont(font);
+}
+
+void Preset::subtitles_color_change()
+{
+    QColor color = QColor((*m_pNew_param)[CurParamIndex::SUBTITLE_FONT_COLOR]);
+    QColorDialog cdialog(color);
+
+    m_pPresetSubtitlesColor_temp = QColor(color.red(),
+                                          color.green(),
+                                          color.blue(),
+                                    0);
+
+    if (cdialog.exec() == QDialog::Accepted) {
+        m_pPresetSubtitlesColor_temp = cdialog.getColor();
+        m_pPresetSubtitlesColor_temp.setAlpha(0);
+
+        QString s("background: " + m_pPresetSubtitlesColor_temp.name() + ";");
+        ui->preset_subtitles_color->setStyleSheet(s);
+        ui->preset_subtitles_color->update();
+    }
+}
+
+void Preset::subtitles_background_color_change() {
+    QColor color = QColor((*m_pNew_param)[CurParamIndex::SUBTITLE_BACKGROUND_COLOR]);
+    // int alpha = (*m_pNew_param)[CurParamIndex::SUBTITLE_BACKGROUND_ALPHA].toInt();
+    m_pPresetSubtitlesBackgroundColor_temp = QColor(color.red(),
+                                                    color.green(),
+                                                    color.blue(),
+                                                    color.alpha());
+    QColorDialog cdialog(m_pPresetSubtitlesBackgroundColor_temp);
+    if (cdialog.exec() == QDialog::Accepted) {
+        m_pPresetSubtitlesBackgroundColor_temp = cdialog.getColor();
+        m_pPresetSubtitlesBackgroundColor_temp = QColor(m_pPresetSubtitlesBackgroundColor_temp.red(),
+                                                        m_pPresetSubtitlesBackgroundColor_temp.green(),
+                                                        m_pPresetSubtitlesBackgroundColor_temp.blue(),
+                                                        color.alpha());
+
+        QString s("background: "
+                  + m_pPresetSubtitlesBackgroundColor_temp.name()
+                  + ";");
+        ui->preset_subtitles_background_color->setStyleSheet(s);
+        ui->preset_subtitles_background_color->update();
+    }
 }
