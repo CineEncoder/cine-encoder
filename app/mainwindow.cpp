@@ -134,6 +134,7 @@ MainWindow::MainWindow(QWidget *parent):
     m_multiInstances(false),
     m_protectFlag(false),
     m_fontSize(FONTSIZE),
+    m_subtitles_fontSize(FONTSIZE),
     m_prefxType(0),
     m_suffixType(0),
     m_pos_top(-1),
@@ -145,6 +146,12 @@ MainWindow::MainWindow(QWidget *parent):
     m_prefixName(DEFAULTPREFIX),
     m_suffixName(DEFAULTSUFFIX),
     m_font(""),
+    m_subtitles_font(""),
+    m_subtitles_color(QColor(DEFAULTSUBTITLECOLOR)),
+    m_subtitles_background_alpha(150),
+    m_subtitles_background_color(QColor(DEFAULTSUBTITLEBACKGROUNDCOLOR)),
+    m_subtitles_location(0),
+    m_subtitles_background(0),
     m_windowActivated(false),
     m_expandWindowsState(false),
     m_rowHeight(ROWHEIGHTDFLT)
@@ -327,6 +334,16 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/row_size", m_rowHeight);
         stn.setValue("Settings/switch_view_mode", ui->switchViewMode->currentIndex());
         stn.setValue("Settings/switch_cut_mode", ui->switchCutting->currentIndex());
+        stn.setValue("Settings/subtitles_font", m_subtitles_font);
+        stn.setValue("Settings/subtitles_font_size", m_subtitles_fontSize);
+        // DEBUG
+        std::string test = m_subtitles_color.name().toStdString();
+        std::string test2 = m_subtitles_background_color.name().toStdString();
+        stn.setValue("Settings/subtitles_color", m_subtitles_color.name());
+        stn.setValue("Settings/subtitles_background", m_subtitles_background);
+        stn.setValue("Settings/subtitles_background_alpha", m_subtitles_background_alpha);
+        stn.setValue("Settings/subtitles_background_color", m_subtitles_background_color.name());
+        stn.setValue("Settings/subtitles_location", m_subtitles_location);
         stn.endGroup();
 
         if (m_pTrayIcon)
@@ -798,6 +815,16 @@ void MainWindow::setParameters()    // Set parameters
         m_language = stn.value("Settings/language", sysLang).toString();
         m_font = stn.value("Settings/font").toString();
         m_fontSize = stn.value("Settings/font_size", FONTSIZE).toInt();
+        m_subtitles_font = stn.value("Settings/subtitles_font").toString();
+        m_subtitles_fontSize = stn.value("Settings/subtitles_font_size", FONTSIZE).toInt();
+        m_subtitles_background = stn.value("Settings/subtitles_background").toBool();
+        // DEBUG
+        std::string test = stn.value("Settings/subtitles_color").toString().toStdString();
+        std::string test2 = stn.value("Settings/subtitles_background_color").toString().toStdString();
+        m_subtitles_color = QColor(stn.value("Settings/subtitles_color", DEFAULTSUBTITLECOLOR).toString());
+        m_subtitles_background_color = QColor(stn.value("Settings/subtitles_background_color", DEFAULTSUBTITLEBACKGROUNDCOLOR).toString());
+        m_subtitles_background_alpha = stn.value("Settings/subtitles_background_alpha", 150).toInt();
+        m_subtitles_location = stn.value("Settings/subtitles_location", 0).toInt();
         m_rowHeight = stn.value("Settings/row_size").toInt();
         ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
         ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
@@ -831,7 +858,8 @@ void MainWindow::setParameters()    // Set parameters
     parentFont.setItalic(true);
     for (int i = 0; i < NUM_ROWS; i++) {
         type = m_preset_table[PARAMETERS_COUNT][i];
-        if (type == "TopLewelItem") {
+        // Fix for typo in name within previous code.
+        if ((type == "TopLewelItem") || (type == "TopLevelItem")) {
             auto *root = new QTreeWidgetItem();
             root->setText(0, m_preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -987,7 +1015,14 @@ void MainWindow::onSettings()
                            &m_hideInTrayFlag,
                            &m_language,
                            &m_fontSize,
-                           &m_font);
+                           &m_font,
+                           &m_subtitles_fontSize,
+                           &m_subtitles_font,
+                           &m_subtitles_background,
+                           &m_subtitles_color,
+                           &m_subtitles_background_color,
+                           &m_subtitles_background_alpha,
+                           &m_subtitles_location);
     if (settings.exec() == Dialog::Accept) {
         m_pTimer->setInterval(m_timerInterval*1000);
         setTheme(m_theme);
@@ -1468,6 +1503,14 @@ void MainWindow::initEncoding()
     ui->textBrowser_log->clear();
     const QString globalTitle = ui->lineEditGlobalTitle->text();
     const int streamCutting = ui->switchCutting->currentIndex();
+
+    // Avoid touching our defined colors.
+    // Shim the alpha values here because the color picker clobbers them and we need reliable values.
+    QColor subtitles_color = m_subtitles_color;
+    subtitles_color.setAlpha(0);
+    QColor subtitles_background_color = m_subtitles_background_color;
+    subtitles_background_color.setAlpha(m_subtitles_background_alpha);
+
     m_pEncoder->initEncoding(m_temp_file,
                              m_input_file,
                              m_output_file,
@@ -1483,7 +1526,14 @@ void MainWindow::initEncoding()
                              m_hdr,
                              m_data[m_row],
                              &m_fr_count,
-                             streamCutting);
+                             streamCutting,
+                             m_subtitles_font,
+                             m_subtitles_fontSize,
+                             QString(subtitles_color.name(QColor::HexArgb).replace("#", "")),
+                             m_subtitles_background,
+                             QString(subtitles_background_color.name(QColor::HexArgb).replace("#", "")),
+                             m_subtitles_location
+    );
 }
 
 void MainWindow::onEncodingMode(const QString &mode)
@@ -2488,7 +2538,7 @@ void MainWindow::onAddPreset()  // Add preset
             cur_param.clear();
             in >> cur_param;
         } else {
-            Print("Added energercy params...");
+            Print("Added emergency params...");
         }
         _prs_file.close();
     }
@@ -2605,7 +2655,7 @@ void MainWindow::updatePresetTable()
     int row = 0;
     Q_LOOP(top, 0, TOP_LEVEL_ITEMS_COUNT) {
         m_preset_table[0][row] = ui->treeWidget->topLevelItem(top)->text(0);
-        m_preset_table[PARAMETERS_COUNT][row] = "TopLewelItem";
+        m_preset_table[PARAMETERS_COUNT][row] = "TopLevelItem";
         CHILD_COUNT = ui->treeWidget->topLevelItem(top)->childCount();
         Q_LOOP(child, 0, CHILD_COUNT) {
             row++;

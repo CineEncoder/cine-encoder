@@ -52,7 +52,14 @@ public:
                        bool       *pHideInTrayFlag,
                        QString    *pLanguage,
                        int        *pFontSize,
-                       QString    *pFont);
+                       QString    *pFont,
+                       int        *pSubtitlesFontSize,
+                       QString    *pSubtitlesFont,
+                       bool       *pSubtitlesBackground,
+                       QColor     *pSubtitlesColor,
+                       QColor     *pSubtitlesBackgroundColor,
+                       int        *pSubtitlesBackgroundAlpha,
+                       int        *pSubtitlesLocation);
 
 private:
     void onCloseWindow();
@@ -67,27 +74,40 @@ private:
     void onComboBoxPrefixType_indexChanged(int);
     void onComboBoxSuffixType_indexChanged(int);
     void onComboBoxFont_indexChanged(int);
+    void onComboBoxSubtitlesFont_indexChanged(int);
+    void subtitles_color_change();
+    void subtitles_background_color_change();
 
     Ui::Settings *ui;
+
+    QColor  *m_pSubtitlesColor,
+            *m_pSubtitlesBackgroundColor;
+    QColor  m_pSubtitlesColor_temp,
+            m_pSubtitlesBackgroundColor_temp;
 
     QString *m_pOutputFolder,
             *m_pTempFolder,
             *m_pPrefixName,
             *m_pSuffixName,
             *m_pLanguage,
-            *m_pFont;
+            *m_pFont,
+            *m_pSubtitlesFont;
 
     int     *m_pFontSize,
+            *m_pSubtitlesFontSize,
             *m_pPrefxType,
             *m_pSuffixType,
             *m_pTimerInterval,
-            *m_pTheme;
+            *m_pTheme,
+            *m_pSubtitlesBackgroundAlpha,
+            *m_pSubtitlesLocation;
 
     bool    *m_pShowHdrFlag,
             *m_pProtectFlag,
             *m_pMultiInstances,
             *m_pHideInTrayFlag,
-            m_windowActivated;
+            m_windowActivated,
+            *m_pSubtitlesBackground;
 };
 
 #endif // SETTINGS_H

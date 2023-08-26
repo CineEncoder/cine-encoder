@@ -30,7 +30,7 @@ Make sure that the NVIDIA drivers are installed in accordance with the following
 
 *ver - current version
 
-### Buid instruction for Linux
+### Build instruction for Linux
 Install dependencies:
 
 ##### - Arch Linux / Manjaro Linux:
@@ -75,7 +75,7 @@ Install dependencies:
     intel-media-driver
     libva-intel-driver
 
-Buld package:
+Build package:
 
 ```sh
 mkdir build
@@ -86,13 +86,22 @@ qmake-qt5 -o builddir/Makefile app/cine_encoder.pro -spec linux-g++ CONFIG+=qtqu
 cd builddir
 make
 ```
+or
+```sh
+git clone https://github.com/CineEncoder/cine-encoder.git
+mkdir build
+cd build
+cmake ../cine-encoder
+make
+```
+
 Run:
 
 ```sh
 ./cine_encoder -platform xcb
 ```
 
-### Buid instruction for Windows
+### Build instruction for Windows
 
 ```sh
 mkdir build
@@ -124,7 +133,7 @@ Install dependencies to builddir folder:
     Qt5Widgets.dll
     cine-encoder.ico
 
-Buld package:
+Build package:
 
 ```sh
 cd builddir

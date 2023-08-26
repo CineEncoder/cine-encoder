@@ -201,21 +201,29 @@ private:
     bool        m_hideInTrayFlag,
                 m_showHdrFlag,
                 m_multiInstances,
-                m_protectFlag;
+                m_protectFlag,
+                m_subtitles_background;
 
     int         m_fontSize,
+                m_subtitles_fontSize,
                 m_prefxType,
                 m_suffixType,
                 m_pos_top,
                 m_pos_cld,
-                m_timerInterval;
+                m_timerInterval,
+                m_subtitles_background_alpha,
+                m_subtitles_location;
 
     QString     m_language,
                 m_output_folder,
                 m_temp_folder,
                 m_prefixName,
                 m_suffixName,
-                m_font;
+                m_font,
+                m_subtitles_font;
+
+    QColor      m_subtitles_color,
+                m_subtitles_background_color;
 
     // ============= Geometry =============
     bool        m_windowActivated;

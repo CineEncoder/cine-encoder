@@ -42,6 +42,8 @@
 
 #define DEFAULTPREFIX QString("output")
 #define DEFAULTSUFFIX QString("_encoded_")
+#define DEFAULTSUBTITLECOLOR QString("#00FFFFFF")
+#define DEFAULTSUBTITLEBACKGROUNDCOLOR QString("#96000000")
 
 #define DOCKS_COUNT 8
 
