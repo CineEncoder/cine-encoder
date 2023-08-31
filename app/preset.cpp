@@ -55,9 +55,9 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param, int theme):
     connect(ui->buttonCancel, &QPushButton::clicked, this, &Preset::onCloseWindow);
     connect(ui->buttonApply, &QPushButton::clicked, this, &Preset::onButtonApply);
     // Tab buttons
-    QList<QPushButton*> tabButtons = {ui->buttonTab_1, ui->buttonTab_2,
-                                      ui->buttonTab_3, ui->buttonTab_4,
-                                      ui->buttonTab_5};
+    QList<QPushButton*> tabButtons = {ui->buttonTab_presetTransform, ui->buttonTab_presetVideo,
+                                      ui->buttonTab_presetAudio, ui->buttonTab_presetMetadata,
+                                      ui->buttonTab_presetSubtitles};
     for (int i = 0; i < tabButtons.size(); i++) {
         connect(tabButtons[i], &QPushButton::clicked, this, [this, i, tabButtons]() {
             for (int j = 0; j < tabButtons.size(); j++)
@@ -111,6 +111,8 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param, int theme):
     };
     for (int i = 0; i < 2; i++)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
+
+    connect(ui->comboBox_preset_subtitles_font, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, SLT(onComboBoxSubtitlesFont_indexChanged));
 }
 
 Preset::~Preset()
@@ -195,6 +197,7 @@ void Preset::lockSignals(bool status)
     ui->comboBoxAspectRatio->blockSignals(status);
     ui->comboBox_width->blockSignals(status);
     ui->comboBox_height->blockSignals(status);
+    ui->comboBox_preset_subtitles_font->blockSignals(status);
 }
 
 void Preset::showEvent(QShowEvent *event)

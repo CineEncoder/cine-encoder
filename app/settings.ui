@@ -137,7 +137,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QPushButton" name="buttonTab_1">
+               <widget class="QPushButton" name="buttonTab_settingsPathsAndFiles">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -159,7 +159,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_2">
+               <widget class="QPushButton" name="buttonTab_settingsAdvanced">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -181,7 +181,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_3">
+               <widget class="QPushButton" name="buttonTab_settingsSubtitles">
                 <property name="text">
                  <string>Subtitles</string>
                 </property>
@@ -297,7 +297,7 @@
                          </widget>
                         </item>
                         <item row="6" column="1" colspan="2">
-                         <widget class="QLabel" name="label_4">
+                         <widget class="QLabel" name="label_suffixType">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -336,7 +336,7 @@
                          </widget>
                         </item>
                         <item row="2" column="1" colspan="2">
-                         <widget class="QLabel" name="label_2">
+                         <widget class="QLabel" name="label_prefixType">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -378,7 +378,7 @@
                          </spacer>
                         </item>
                         <item row="4" column="1" colspan="2">
-                         <widget class="QLabel" name="label_3">
+                         <widget class="QLabel" name="label_editPrefix">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -391,7 +391,7 @@
                          </widget>
                         </item>
                         <item row="8" column="1" colspan="2">
-                         <widget class="QLabel" name="label_5">
+                         <widget class="QLabel" name="label_editSuffix">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -673,7 +673,7 @@
                          </spacer>
                         </item>
                         <item row="0" column="1">
-                         <widget class="QLabel" name="label_temp">
+                         <widget class="QLabel" name="label_tempPath">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -692,7 +692,7 @@
                          </widget>
                         </item>
                         <item row="2" column="1">
-                         <widget class="QLabel" name="label_out">
+                         <widget class="QLabel" name="label_outPath">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1007,7 +1007,7 @@
                          </widget>
                         </item>
                         <item row="0" column="1" alignment="Qt::AlignRight">
-                         <widget class="QLabel" name="label_1">
+                         <widget class="QLabel" name="label_lang">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1397,7 +1397,7 @@
                          </spacer>
                         </item>
                         <item row="2" column="1" alignment="Qt::AlignRight">
-                         <widget class="QLabel" name="label_7">
+                         <widget class="QLabel" name="label_protectionTimer">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1413,7 +1413,7 @@
                          </widget>
                         </item>
                         <item row="2" column="3" alignment="Qt::AlignLeft">
-                         <widget class="QLabel" name="label_6">
+                         <widget class="QLabel" name="label_ProtectionTimerSec">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1607,14 +1607,14 @@
                        </spacer>
                       </item>
                       <item row="6" column="1">
-                       <widget class="QLabel" name="label_9">
+                       <widget class="QLabel" name="label_subtitles_background">
                         <property name="text">
                          <string>Opacity</string>
                         </property>
                        </widget>
                       </item>
                       <item row="5" column="1">
-                       <widget class="QLabel" name="label_8">
+                       <widget class="QLabel" name="label_subtitles_bgcol">
                         <property name="text">
                          <string>Background</string>
                         </property>
@@ -1662,7 +1662,7 @@
                        </widget>
                       </item>
                       <item row="2" column="1">
-                       <widget class="QLabel" name="label">
+                       <widget class="QLabel" name="label_subtitles_color">
                         <property name="text">
                          <string>Color</string>
                         </property>
@@ -1840,7 +1840,7 @@
                        </widget>
                       </item>
                       <item row="7" column="1">
-                       <widget class="QLabel" name="label_10">
+                       <widget class="QLabel" name="label_subtitles_location">
                         <property name="text">
                          <string>Location</string>
                         </property>

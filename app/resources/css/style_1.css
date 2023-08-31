@@ -1617,10 +1617,14 @@ QPushButton:pressed#report {
 
 /*********************************************/
 
-QPushButton#buttonTab_1,
-QPushButton#buttonTab_2,
-QPushButton#buttonTab_3,
-QPushButton#buttonTab_4 {
+QPushButton#buttonTab_settingsPathsAndFiles,
+QPushButton#buttonTab_settingsAdvanced,
+QPushButton#buttonTab_settingsSubtitles,
+QPushButton#buttonTab_presetTransform,
+QPushButton#buttonTab_presetVideo,
+QPushButton#buttonTab_presetAudio,
+QPushButton#buttonTab_presetMetadata,
+QPushButton#buttonTab_presetSubtitles {
     text-align: center right;
     padding-right: 12px;
     border: none;
@@ -1628,33 +1632,49 @@ QPushButton#buttonTab_4 {
     color: #A0A5AA;
     background-color: transparent;
 }
-#frame_main[scale="200"] QPushButton#buttonTab_1,
-#frame_main[scale="200"] QPushButton#buttonTab_2,
-#frame_main[scale="200"] QPushButton#buttonTab_3,
-#frame_main[scale="200"] QPushButton#buttonTab_4 {
+#frame_main[scale="200"] QPushButton#buttonTab_settingsPathsAndFiles,
+#frame_main[scale="200"] QPushButton#buttonTab_settingsAdvanced,
+#frame_main[scale="200"] QPushButton#buttonTab_settingsSubtitles,
+#frame_main[scale="200"] QPushButton#buttonTab_presetTransform,
+#frame_main[scale="200"] QPushButton#buttonTab_presetVideo,
+#frame_main[scale="200"] QPushButton#buttonTab_presetAudio,
+#frame_main[scale="200"] QPushButton#buttonTab_presetMetadata,
+#frame_main[scale="200"] QPushButton#buttonTab_presetSubtitles {
     max-width: 300px;
     min-width: 300px;
     max-height: 60px;
     min-height: 60px;
 }
-QPushButton:disabled#buttonTab_1,
-QPushButton:disabled#buttonTab_2,
-QPushButton:disabled#buttonTab_3,
-QPushButton:disabled#buttonTab_4 {
+QPushButton:disabled#buttonTab_settingsPathsAndFiles,
+QPushButton:disabled#buttonTab_settingsAdvanced,
+QPushButton:disabled#buttonTab_settingsSubtitles,
+QPushButton:disabled#buttonTab_presetTransform,
+QPushButton:disabled#buttonTab_presetVideo,
+QPushButton:disabled#buttonTab_presetAudio,
+QPushButton:disabled#buttonTab_presetMetadata,
+QPushButton:disabled#buttonTab_presetSubtitles {
     border: none;
     color: #D2D2D2;
     background-color: #323232;
 }
-QPushButton:hover#buttonTab_1,
-QPushButton:hover#buttonTab_2,
-QPushButton:hover#buttonTab_3,
-QPushButton:hover#buttonTab_4 {
+QPushButton:hover#buttonTab_settingsPathsAndFiles,
+QPushButton:hover#buttonTab_settingsAdvanced,
+QPushButton:hover#buttonTab_settingsSubtitles,
+QPushButton:hover#buttonTab_presetTransform,
+QPushButton:hover#buttonTab_presetVideo,
+QPushButton:hover#buttonTab_presetAudio,
+QPushButton:hover#buttonTab_presetMetadata,
+QPushButton:hover#buttonTab_presetSubtitles {
     background-color: #343B48;
 }
-QPushButton:pressed#buttonTab_1,
-QPushButton:pressed#buttonTab_2,
-QPushButton:pressed#buttonTab_3,
-QPushButton:pressed#buttonTab_4 {
+QPushButton:pressed#buttonTab_settingsPathsAndFiles,
+QPushButton:pressed#buttonTab_settingsAdvanced,
+QPushButton:pressed#buttonTab_settingsSubtitles,
+QPushButton:pressed#buttonTab_presetTransform,
+QPushButton:pressed#buttonTab_presetVideo,
+QPushButton:pressed#buttonTab_presetAudio,
+QPushButton:pressed#buttonTab_presetMetadata,
+QPushButton:pressed#buttonTab_presetSubtitles {
     background-color: #55AAFF;
 }
 

@@ -51,7 +51,7 @@ Settings::Settings(QWidget *parent):
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
 
     // Tab buttons
-    QList<QPushButton*> tabButtons = {ui->buttonTab_1, ui->buttonTab_2, ui->buttonTab_3};
+    QList<QPushButton*> tabButtons = {ui->buttonTab_settingsPathsAndFiles, ui->buttonTab_settingsAdvanced, ui->buttonTab_settingsSubtitles};
     for (int i = 0; i < tabButtons.size(); i++) {
         connect(tabButtons[i], &QPushButton::clicked, this, [this, i, tabButtons]() {
             for (int j = 0; j < tabButtons.size(); j++)

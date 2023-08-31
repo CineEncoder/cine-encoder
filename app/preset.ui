@@ -436,7 +436,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QPushButton" name="buttonTab_1">
+               <widget class="QPushButton" name="buttonTab_presetTransform">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -458,7 +458,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_2">
+               <widget class="QPushButton" name="buttonTab_presetVideo">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -477,7 +477,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_3">
+               <widget class="QPushButton" name="buttonTab_presetAudio">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -496,7 +496,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_4">
+               <widget class="QPushButton" name="buttonTab_presetMetadata">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -515,7 +515,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_5">
+               <widget class="QPushButton" name="buttonTab_presetSubtitles">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -721,7 +721,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_3">
+                             <widget class="QLabel" name="label_presetname">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -972,7 +972,7 @@
                              </widget>
                             </item>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_6">
+                             <widget class="QLabel" name="label_FrameRate">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1171,7 +1171,7 @@
                              </widget>
                             </item>
                             <item row="4" column="6" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_8">
+                             <widget class="QLabel" name="label_PAR">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1222,7 +1222,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="4" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_14">
+                             <widget class="QLabel" name="label_AspectRatio">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1263,7 +1263,7 @@
                              </spacer>
                             </item>
                             <item row="4" column="4" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_11">
+                             <widget class="QLabel" name="label_width">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1502,7 +1502,7 @@
                              </spacer>
                             </item>
                             <item row="6" column="4" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_13">
+                             <widget class="QLabel" name="label_height">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1744,7 +1744,7 @@
                              </widget>
                             </item>
                             <item row="6" column="6" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_9">
+                             <widget class="QLabel" name="label_DAR">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1950,7 +1950,7 @@
                              <number>24</number>
                             </property>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_credits_18">
+                             <widget class="QLabel" name="label_mode">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2366,7 +2366,7 @@
                              <number>24</number>
                             </property>
                             <item row="1" column="1">
-                             <widget class="QLabel" name="label_credits_17">
+                             <widget class="QLabel" name="label_container">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2682,7 +2682,7 @@
                              </widget>
                             </item>
                             <item row="1" column="4">
-                             <widget class="QLabel" name="label_credits_30">
+                             <widget class="QLabel" name="label_pass">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2908,7 +2908,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_credits_15">
+                             <widget class="QLabel" name="label_codec">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2942,7 +2942,7 @@
                              </widget>
                             </item>
                             <item row="2" column="4">
-                             <widget class="QLabel" name="label_credits_22">
+                             <widget class="QLabel" name="label_profile">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3057,7 +3057,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_7">
+                             <widget class="QLabel" name="label_preset">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3117,7 +3117,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="4">
-                             <widget class="QLabel" name="label_credits_23">
+                             <widget class="QLabel" name="label_pixfmt">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3338,7 +3338,7 @@
                              </widget>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_4">
+                             <widget class="QLabel" name="label_level">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3635,7 +3635,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_credits_49">
+                             <widget class="QLabel" name="label_audio_codec">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3730,7 +3730,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label">
+                             <widget class="QLabel" name="label_audio_channels">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3819,7 +3819,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1">
-                             <widget class="QLabel" name="label_credits_50">
+                             <widget class="QLabel" name="label_audio_sampling">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3844,7 +3844,7 @@
                              </widget>
                             </item>
                             <item row="0" column="4">
-                             <widget class="QLabel" name="label_credits_51">
+                             <widget class="QLabel" name="label_audio_bitrate">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4157,7 +4157,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_108">
+                             <widget class="QLabel" name="label_chroma_coord">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4191,7 +4191,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_109">
+                             <widget class="QLabel" name="label_white_coord">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4225,7 +4225,7 @@
                              </widget>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_65">
+                             <widget class="QLabel" name="label_master_disp">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4304,7 +4304,7 @@
                              <number>24</number>
                             </property>
                             <item row="1" column="3" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="labelMaxCll">
+                             <widget class="QLabel" name="label_max_cll">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4404,7 +4404,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_105">
+                             <widget class="QLabel" name="label_min_lum">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4458,7 +4458,7 @@
                              </spacer>
                             </item>
                             <item row="2" column="3" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_107">
+                             <widget class="QLabel" name="label_max_fall">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4508,7 +4508,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_92">
+                             <widget class="QLabel" name="label_max_lum">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4574,7 +4574,7 @@
                              <number>24</number>
                             </property>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_47">
+                             <widget class="QLabel" name="label_color_matrix">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4722,7 +4722,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_44">
+                             <widget class="QLabel" name="label_color_prim">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4852,7 +4852,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_64">
+                             <widget class="QLabel" name="label_color_range">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4951,7 +4951,7 @@
                              </spacer>
                             </item>
                             <item row="3" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_48">
+                             <widget class="QLabel" name="label_transfer">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -5211,7 +5211,7 @@
                        </spacer>
                       </item>
                       <item row="1" column="1">
-                       <widget class="QLabel" name="label_subtitlefont">
+                       <widget class="QLabel" name="label_preset_subtitles_font">
                         <property name="enabled">
                          <bool>false</bool>
                         </property>
@@ -5269,7 +5269,7 @@
                        </widget>
                       </item>
                       <item row="8" column="1">
-                       <widget class="QLabel" name="label_10">
+                       <widget class="QLabel" name="label_preset_subtitles_location">
                         <property name="text">
                          <string>Location</string>
                         </property>
@@ -5292,7 +5292,7 @@
                        </spacer>
                       </item>
                       <item row="6" column="1">
-                       <widget class="QLabel" name="label_8">
+                       <widget class="QLabel" name="label_preset_subtitles_background_color">
                         <property name="text">
                          <string>Background</string>
                         </property>
@@ -5315,21 +5315,21 @@
                        </spacer>
                       </item>
                       <item row="3" column="1">
-                       <widget class="QLabel" name="label">
+                       <widget class="QLabel" name="label_preset_subtitles_color">
                         <property name="text">
                          <string>Color</string>
                         </property>
                        </widget>
                       </item>
                       <item row="7" column="1">
-                       <widget class="QLabel" name="label_9">
+                       <widget class="QLabel" name="label_preset_subtitles_background">
                         <property name="text">
                          <string>Opacity</string>
                         </property>
                        </widget>
                       </item>
                       <item row="1" column="3">
-                       <widget class="QLabel" name="label_subtitle_fontSize">
+                       <widget class="QLabel" name="label_preset_subtitles_fontsize">
                         <property name="enabled">
                          <bool>false</bool>
                         </property>
