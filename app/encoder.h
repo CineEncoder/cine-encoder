@@ -203,7 +203,10 @@ private slots:
                        int &_COLOR_RANGE, int &_MATRIX, int &_PRIMARY, int &_TRC, QString &_MIN_LUM, QString &_MAX_LUM,
                        QString &_MAX_CLL, QString &_MAX_FALL, int &_MASTER_DISPLAY, QString &_CHROMA_COORD,
                        QString &_WHITE_COORD, int &_AUDIO_CODEC, int &_AUDIO_BITRATE, int &_AUDIO_SAMPLING,
-                       int &_AUDIO_CHANNELS, int &_REP_PRIM, int &_REP_MATRIX, int &_REP_TRC);
+                       int &_AUDIO_CHANNELS, int &_REP_PRIM, int &_REP_MATRIX, int &_REP_TRC,
+                       int &_USE_PRESET_SUBTITLES, QString &_SUBTITLE_FONT, int &_SUBTITLE_FONT_SIZE,
+                       QString &_SUBTITLE_FONT_COLOR, int &_SUBTITLE_BACKGROUND,
+                       QString &_SUBTITLE_BACKGROUND_COLOR, int &_SUBTITLE_LOCATION);
 };
 
 #endif // ENCODER_H

@@ -18,6 +18,7 @@
 #include <math.h>
 #include <ctime>
 #include <algorithm>
+#include <QColor>
 
 
 #define rnd(num) static_cast<int>(round(num))
@@ -96,13 +97,22 @@ void Encoder::initEncoding(const QString  &temp_file,
     int _REP_PRIM;
     int _REP_MATRIX;
     int _REP_TRC;
+    int _USE_PRESET_SUBTITLES;
+    QString _SUBTITLE_FONT;
+    int _SUBTITLE_FONT_SIZE;
+    QString _SUBTITLE_FONT_COLOR;
+    int _SUBTITLE_BACKGROUND;
+    QString _SUBTITLE_BACKGROUND_COLOR;
+    int _SUBTITLE_LOCATION;
     initVariables(temp_file, input_file, output_file, _cur_param, _fr_count, t, _CODEC, _MODE, _BQR, _MINRATE, _MAXRATE,
                   _BUFSIZE,
                   _LEVEL, _FRAME_RATE, _BLENDING, _WIDTH, _HEIGHT, _PASS, _PRESET, _COLOR_RANGE, _MATRIX, _PRIMARY,
                   _TRC, _MIN_LUM,
                   _MAX_LUM, _MAX_CLL, _MAX_FALL, _MASTER_DISPLAY, _CHROMA_COORD, _WHITE_COORD, _AUDIO_CODEC,
                   _AUDIO_BITRATE,
-                  _AUDIO_SAMPLING, _AUDIO_CHANNELS, _REP_PRIM, _REP_MATRIX, _REP_TRC);
+                  _AUDIO_SAMPLING, _AUDIO_CHANNELS, _REP_PRIM, _REP_MATRIX, _REP_TRC,
+                  _USE_PRESET_SUBTITLES, _SUBTITLE_FONT, _SUBTITLE_FONT_SIZE, _SUBTITLE_FONT_COLOR, _SUBTITLE_BACKGROUND,
+                  _SUBTITLE_BACKGROUND_COLOR, _SUBTITLE_LOCATION);
 
     /****************************************** Resize ****************************************/
     QString resize_vf;
@@ -143,8 +153,14 @@ void Encoder::initEncoding(const QString  &temp_file,
     QStringList _subtitleMapParam;
     QStringList _subtitleMetadataParam;
     int subtNum;
-    subtitles(input_file, subtitle_font, subtitle_font_size, subtitle_font_color, burn_background,
-              subtitle_background_color, subtitle_location, data, burn_subt_vf, _subtitleMapParam,
+    subtitles(input_file,
+              _USE_PRESET_SUBTITLES == 1 ? _SUBTITLE_FONT : subtitle_font,
+              _USE_PRESET_SUBTITLES == 1 ? _SUBTITLE_FONT_SIZE: subtitle_font_size,
+              _USE_PRESET_SUBTITLES == 1 ? _SUBTITLE_FONT_COLOR : subtitle_font_color,
+              _USE_PRESET_SUBTITLES == 1 ? _SUBTITLE_BACKGROUND : burn_background,
+              _USE_PRESET_SUBTITLES == 1 ? _SUBTITLE_BACKGROUND_COLOR : subtitle_background_color,
+              _USE_PRESET_SUBTITLES == 1 ? _SUBTITLE_LOCATION : subtitle_location,
+              data, burn_subt_vf, _subtitleMapParam,
               _subtitleMetadataParam, subtNum);
 
     /****************************** External Subtitle streams *********************************/
@@ -242,7 +258,11 @@ void Encoder::initVariables(const QString &temp_file, const QString &input_file,
                             QString &_MAX_LUM, QString &_MAX_CLL, QString &_MAX_FALL, int &_MASTER_DISPLAY,
                             QString &_CHROMA_COORD, QString &_WHITE_COORD, int &_AUDIO_CODEC, int &_AUDIO_BITRATE,
                             int &_AUDIO_SAMPLING, int &_AUDIO_CHANNELS, int &_REP_PRIM, int &_REP_MATRIX,
-                            int &_REP_TRC) {
+                            int &_REP_TRC,
+                            int &_USE_PRESET_SUBTITLES, QString &_SUBTITLE_FONT, int &_SUBTITLE_FONT_SIZE,
+                            QString &_SUBTITLE_FONT_COLOR, int &_SUBTITLE_BACKGROUND,
+                            QString &_SUBTITLE_BACKGROUND_COLOR,
+                            int &_SUBTITLE_LOCATION) {
     _CODEC= _cur_param[CODEC].toInt();
     _MODE= _cur_param[MODE].toInt();
     _BQR= _cur_param[BQR];
@@ -274,6 +294,18 @@ void Encoder::initVariables(const QString &temp_file, const QString &input_file,
     _REP_PRIM= _cur_param[REP_PRIM].toInt();
     _REP_MATRIX= _cur_param[REP_MATRIX].toInt();
     _REP_TRC= _cur_param[REP_TRC].toInt();
+    _USE_PRESET_SUBTITLES = _cur_param[USE_PRESET_SUBTITLE_SETTINGS].toInt();
+    _SUBTITLE_FONT = _cur_param[SUBTITLE_FONT];
+    _SUBTITLE_FONT_SIZE = _cur_param[SUBTITLE_FONT_SIZE].toInt();
+    _SUBTITLE_FONT_COLOR = _cur_param[SUBTITLE_FONT_COLOR];
+    _SUBTITLE_BACKGROUND = _cur_param[SUBTITLE_BACKGROUND].toInt();
+    QString bgCol = _cur_param[SUBTITLE_BACKGROUND_COLOR];
+    int bgAlpha = _cur_param[SUBTITLE_BACKGROUND_ALPHA].toInt();
+    // Now we need to get the alpha set into the color.
+    QColor bgColor = QColor(bgCol);
+    bgColor.setAlpha(bgAlpha);
+    _SUBTITLE_BACKGROUND_COLOR = bgColor.name();
+    _SUBTITLE_LOCATION = _cur_param[SUBTITLE_LOCATION].toInt();
     Print("Make preset...");
     _temp_file = temp_file;
     _input_file = input_file;
