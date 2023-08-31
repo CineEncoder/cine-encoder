@@ -107,9 +107,9 @@ Preset::Preset(QWidget *parent, QVector<QString> *pOld_param, int theme):
             ui->preset_subtitles_background_color, ui->preset_subtitles_color
     };
     FnVoidVoid btn_methods[] = {
-            &Preset::subtitles_background_color_change, &Preset::subtitles_color_change
+            SLT(subtitles_background_color_change), SLT(subtitles_color_change)
     };
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 2; i++)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
 }
 
