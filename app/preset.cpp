@@ -198,6 +198,8 @@ void Preset::lockSignals(bool status)
     ui->comboBox_width->blockSignals(status);
     ui->comboBox_height->blockSignals(status);
     ui->comboBox_preset_subtitles_font->blockSignals(status);
+    ui->comboBox_preset_subtitles_fontsize->blockSignals(status);
+    ui->comboBox_preset_subtitles_location->blockSignals(status);
 }
 
 void Preset::showEvent(QShowEvent *event)
@@ -310,6 +312,7 @@ void Preset::showEvent(QShowEvent *event)
         }
         ui->comboBox_preset_subtitles_font->blockSignals(false);
 
+        ui->comboBox_preset_subtitles_fontsize->blockSignals(true);
         int arrFontSize[6] = {8, 9, 10, 11, 12, 13};
         int font_size_index = (*m_pNew_param)[CurParamIndex::SUBTITLE_FONT_SIZE].toInt();
         QMap<int, int> fontSizeIndex;
@@ -322,11 +325,14 @@ void Preset::showEvent(QShowEvent *event)
         if (fontSizeIndex.contains(font_size_index)) {
             ui->comboBox_preset_subtitles_fontsize->setCurrentIndex(fontSizeIndex.value(font_size_index));
         }
+        ui->comboBox_preset_subtitles_fontsize->blockSignals(false);
 
         ui->checkBox_preset_subtitles_background->setCheckState((Qt::CheckState)(*m_pNew_param)[CurParamIndex::SUBTITLE_BACKGROUND].toInt());
         int bgAlpha = (*m_pNew_param)[CurParamIndex::SUBTITLE_BACKGROUND_ALPHA].toInt();
         ui->spinBox_preset_background->setValue(bgAlpha);
+        ui->comboBox_preset_subtitles_location->blockSignals(true);
         ui->comboBox_preset_subtitles_location->setCurrentIndex((*m_pNew_param)[CurParamIndex::SUBTITLE_LOCATION].toInt());
+        ui->comboBox_preset_subtitles_location->blockSignals(false);
 
         (*m_pNew_param)[CurParamIndex::SUBTITLE_FONT_COLOR] = m_pPresetSubtitlesColor_temp.name();
         QColor temp = QColor(m_pPresetSubtitlesColor_temp.name());
