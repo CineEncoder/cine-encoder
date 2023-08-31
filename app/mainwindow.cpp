@@ -228,7 +228,10 @@ MainWindow::MainWindow(QWidget *parent):
         m_pDocks[i]->setObjectName(objNames[i]);
         m_pDocks[i]->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::TopDockWidgetArea |
                                      Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-        m_pDocks[i]->setFeatures(QDockWidget::AllDockWidgetFeatures);
+        m_pDocks[i]->setFeatures(QDockWidget::DockWidgetClosable |
+                                 QDockWidget::DockWidgetMovable |
+                                 QDockWidget::DockWidgetFloatable
+                                 /*QDockWidget::DockWidgetVerticalTitleBar*/);
         m_pDocks[i]->setWidget(dockFrames[i]);
         m_pDocksContainer->addDockWidget(dockArea[i], m_pDocks[i]);
     }

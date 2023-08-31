@@ -164,7 +164,7 @@ void Helper::openFileDialog(FileDialogType dialogType,
         dlg.setNameFilter(getFilter(subtitleFilters));
         break;
     case FileDialogType::SELECTFOLDER:
-        dlg.setFileMode(QFileDialog::DirectoryOnly);
+        dlg.setOption(QFileDialog::ShowDirsOnly, true);
         break;
     }
     if (dlg.exec() == QFileDialog::Accepted) {
