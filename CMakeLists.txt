@@ -82,6 +82,7 @@ endif()
 if(UNIX AND NOT MACOS)
     target_link_libraries(cine_encoder PRIVATE
         # Qt::X11Extras
+	Qt::GuiPrivate
         X11
         Xext
         mediainfo
