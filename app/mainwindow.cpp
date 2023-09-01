@@ -22,7 +22,6 @@
 #include "report.h"
 #include "streamconverter.h"
 #include "fileiconprovider.h"
-#include <QDesktopWidget>
 #include <QDragEnterEvent>
 #include <QMimeDatabase>
 #include <QMimeData>
@@ -43,7 +42,6 @@
 #include <iomanip>
 #include <cmath>
 #include <sstream>
-
 
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE
@@ -83,7 +81,6 @@
 
 typedef void(MainWindow::*FnVoidVoid)(void);
 typedef void(MainWindow::*FnVoidInt)(int);
-
 
 namespace MainWindowPrivate
 {
@@ -228,7 +225,10 @@ MainWindow::MainWindow(QWidget *parent):
         m_pDocks[i]->setObjectName(objNames[i]);
         m_pDocks[i]->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::TopDockWidgetArea |
                                      Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
-        m_pDocks[i]->setFeatures(QDockWidget::AllDockWidgetFeatures);
+        m_pDocks[i]->setFeatures(QDockWidget::DockWidgetClosable |
+                                 QDockWidget::DockWidgetMovable |
+                                 QDockWidget::DockWidgetFloatable
+                /*QDockWidget::DockWidgetVerticalTitleBar*/);
         m_pDocks[i]->setWidget(dockFrames[i]);
         m_pDocksContainer->addDockWidget(dockArea[i], m_pDocks[i]);
     }

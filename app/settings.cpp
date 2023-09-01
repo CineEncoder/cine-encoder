@@ -250,8 +250,8 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->comboBoxPrefixType->setView(comboboxPrefixTypeListView);
     ui->comboBoxSuffixType->setView(comboboxSuffixTypeListView);
 
-    QRegExpValidator *prefixValidator = new QRegExpValidator(QRegExp("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditPrefix);
-    QRegExpValidator *suffixValidator = new QRegExpValidator(QRegExp("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditSuffix);
+    QRegularExpressionValidator *prefixValidator = new QRegularExpressionValidator(QRegularExpression("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditPrefix);
+    QRegularExpressionValidator *suffixValidator = new QRegularExpressionValidator(QRegularExpression("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditSuffix);
     ui->lineEditPrefix->setValidator(prefixValidator);
     ui->lineEditSuffix->setValidator(suffixValidator);
 }

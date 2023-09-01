@@ -11,9 +11,9 @@ set(CMAKE_AUTORCC ON)
 include(GNUInstallDirs)
 set(CMAKE_AUTOUIC ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Multimedia Svg)
-find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets X11Extras)
+find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets) # X11Extras)
 
 add_executable(cine_encoder WIN32 MACOSX_BUNDLE
     app/basedialog.cpp app/basedialog.h
@@ -81,7 +81,7 @@ endif()
 
 if(UNIX AND NOT MACOS)
     target_link_libraries(cine_encoder PRIVATE
-        Qt::X11Extras
+        # Qt::X11Extras
         X11
         Xext
         mediainfo

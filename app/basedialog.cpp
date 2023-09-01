@@ -77,7 +77,7 @@ void BaseDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
     if (event->type() == QEvent::WindowStateChange) {
         const int margin = windowState().testFlag(Qt::WindowMaximized) ? 0 : BORDER;
-        layout()->setMargin(margin);
+        layout()->setContentsMargins(margin, margin, margin, margin);
         QTimer::singleShot(50, this, [this]() {
             update();
         });
