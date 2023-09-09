@@ -114,15 +114,15 @@ bool BaseDialog::eventFilter(QObject *watched, QEvent *event)
         if ((event->type() == QEvent::MouseMove) && m_clickPressedFlag) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
-                if (isMaximized() && mouse_event->globalPos().y() > 80) {
+                if (isMaximized() && mouse_event->globalPosition().y() > 80) {
                     onExpandWindow();
                     QTimer::singleShot(50, this, [this, mouse_event](){
                         m_mouseClickCoordinate = QPoint(int(float(m_titlebar->width())/2), 30);
-                        this->move(mouse_event->globalPos() - m_mouseClickCoordinate);
+                        this->move(mouse_event->globalPosition().toPoint() - m_mouseClickCoordinate);
                     });
                 } else
                 if (!isMaximized()) {
-                    this->move(mouse_event->globalPos() - m_mouseClickCoordinate);
+                    this->move(mouse_event->globalPosition().toPoint() - m_mouseClickCoordinate);
                 }
                 return true;
             }
@@ -184,7 +184,7 @@ bool BaseDialog::eventFilter(QObject *watched, QEvent *event)
                     m_oldWidth = this->width();
                     m_oldHeight = this->height();
                     m_mouseClickCoordinate = mouse_event->pos();
-                    m_globalMouseClickCoordinate = mouse_event->globalPos();
+                    m_globalMouseClickCoordinate = mouse_event->globalPosition().toPoint();
                     const QPoint mouseClickCoordinate = mouse_event->pos();
                     if (mouseClickCoordinate.x() < BORDER) {
                         if (mouseClickCoordinate.y() < BORDER) {
@@ -231,8 +231,8 @@ bool BaseDialog::eventFilter(QObject *watched, QEvent *event)
                 if (mouse_event->buttons() & Qt::LeftButton) {
                     const int index = m_clickPressedToResizeFlag.indexOf(true);
                     if (index != -1) {
-                        const int deltaX = mouse_event->globalPos().x() - m_mouseClickCoordinate.x();
-                        const int deltaY = mouse_event->globalPos().y() - m_mouseClickCoordinate.y();
+                        const int deltaX = mouse_event->globalPosition().x() - m_mouseClickCoordinate.x();
+                        const int deltaY = mouse_event->globalPosition().y() - m_mouseClickCoordinate.y();
                         const int deltaWidth = deltaX - m_globalMouseClickCoordinate.x() + m_mouseClickCoordinate.x();
                         const int deltaHeight = deltaY - m_globalMouseClickCoordinate.y() + m_mouseClickCoordinate.y();
                         switch (index) {
