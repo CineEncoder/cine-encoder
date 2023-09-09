@@ -96,6 +96,7 @@ void Settings::setParameters(QString    *pOutputFolder,
                              bool       *pMultiInstances,
                              bool       *pShowHdrFlag,
                              int        *pTimerInterval,
+                             int        *pThreads,
                              int        *pTheme,
                              QString    *pPrefixName,
                              QString    *pSuffixName,
@@ -122,6 +123,7 @@ void Settings::setParameters(QString    *pOutputFolder,
     m_pProtectFlag = pProtectFlag;
     m_pMultiInstances = pMultiInstances;
     m_pTimerInterval = pTimerInterval;
+    m_pThreads = pThreads;
     m_pTheme = pTheme;
     m_pPrefixName = pPrefixName;
     m_pSuffixName = pSuffixName;
@@ -146,6 +148,7 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->lineEdit_tempPath->setText(*m_pTempFolder);
     ui->lineEdit_outPath->setText(*m_pOutputFolder);
     ui->spinBox_protectionTimer->setValue(*m_pTimerInterval);
+    ui->spinBox_threads->setValue(*m_pThreads);
 
     if (*m_pShowHdrFlag) {
         ui->checkBox_showHDR->setChecked(true);
@@ -294,6 +297,7 @@ void Settings::onButtonApply()
     *m_pShowHdrFlag = (stts_hdr_info == 2) ? true : false;
 
     /*================ Protection ================*/
+    *m_pThreads = ui->spinBox_threads->value();
     *m_pTimerInterval = ui->spinBox_protectionTimer->value();
     int stts_protect = ui->checkBox_protection->checkState();
     *m_pProtectFlag = (stts_protect == 2) ? true : false;
@@ -346,6 +350,7 @@ void Settings::onButtonReset()
     ui->checkBox_protection->setChecked(false);
     ui->checkBox_allowDuplicates->setChecked(false);
     ui->spinBox_protectionTimer->setEnabled(false);
+    ui->spinBox_threads->setValue(0);
     ui->comboBox_theme->setCurrentIndex(3);
     ui->comboBox_lang->setCurrentIndex(0);
     ui->comboBoxPrefixType->setCurrentIndex(0);

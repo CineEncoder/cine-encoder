@@ -212,7 +212,8 @@ private:
                 m_pos_cld,
                 m_timerInterval,
                 m_subtitles_background_alpha,
-                m_subtitles_location;
+                m_subtitles_location,
+                m_threads;
 
     QString     m_language,
                 m_output_folder,

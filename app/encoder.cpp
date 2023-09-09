@@ -61,7 +61,8 @@ void Encoder::initEncoding(const QString  &temp_file,
                            const QString &subtitle_font_color,
                            const bool burn_background,
                            const QString &subtitle_background_color,
-                           int subtitle_location
+                           int subtitle_location,
+                           int threads
                            )
 {
     Tables t;
@@ -234,7 +235,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QString log = getLog();
     emit onEncodingLog(log);
-    encode();
+    encode(threads);
 }
 
 void Encoder::initVariables(const QString &temp_file, const QString &input_file, const QString &output_file,
@@ -1152,7 +1153,7 @@ void Encoder::resizeVF(const QString &_width, const QString &_height, int _CODEC
     }
 }
 
-void Encoder::encode()   // Encode
+void Encoder::encode(int threads)   // Encode
 {
     Print("Encode ...");
     QStringList arguments;
@@ -1188,7 +1189,9 @@ void Encoder::encode()   // Encode
         emit onEncodingMode(_encoding_mode);
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
                   << "-map" << "0:s?" << "-movflags" << "+write_colr"
-                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param << "-y" << _output_file;
+                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param
+                  << "-threads" << numToStr(threads)
+                  << "-y" << _output_file;
     } else {
         if (*fr_count == 0) {
             _message = tr("The file does not contain FPS information!\nSelect the correct input file!");
@@ -1204,7 +1207,9 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths << _preset << "-y" << _output_file;
+                      << _extSubPaths << _preset
+                     << "-threads" << numToStr(threads)
+                      << "-y" << _output_file;
         }
         else
         if (!_flag_two_pass && _flag_hdr) {
@@ -1213,7 +1218,9 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths << _preset << "-y" << _temp_file;
+                      << _extSubPaths << _preset
+                      << "-threads" << numToStr(threads)
+                      << "-y" << _temp_file;
         }
         else
         if (_flag_two_pass) {
@@ -1222,7 +1229,9 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths << _preset_pass1;
+                      << _extSubPaths
+                      << "-threads" << numToStr(threads)
+                      << _preset_pass1;
         }
     }
 
@@ -1356,7 +1365,7 @@ void Encoder::killEncoding()
         processEncoding->kill();
 }
 
-void Encoder::completed(int exit_code)
+void Encoder::completed(int exit_code, int threads)
 {
     processEncoding->disconnect();
     if (exit_code == 0) {
@@ -1375,7 +1384,7 @@ void Encoder::completed(int exit_code)
             } else
             if (_flag_two_pass) {
                 _flag_two_pass = false;
-                encode();
+                encode(threads);
             }
         }
     } else {

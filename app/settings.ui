@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>589</width>
-    <height>654</height>
+    <width>610</width>
+    <height>711</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1334,7 +1334,106 @@
                         <property name="rightMargin">
                          <number>0</number>
                         </property>
-                        <item row="2" column="2">
+                        <item row="5" column="4">
+                         <spacer name="horizontalSpacer_4">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="3" column="2">
+                         <widget class="QCheckBox" name="checkBox_protection">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>246</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>246</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>Enable overheating protection (for 25 sec)</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="4" column="2">
+                         <spacer name="verticalSpacer_14">
+                          <property name="orientation">
+                           <enum>Qt::Vertical</enum>
+                          </property>
+                          <property name="sizeType">
+                           <enum>QSizePolicy::Fixed</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>20</width>
+                            <height>18</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="1" column="1">
+                         <widget class="QLabel" name="label_threads">
+                          <property name="text">
+                           <string>Threads</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="5" column="1" alignment="Qt::AlignRight">
+                         <widget class="QLabel" name="label_protectionTimer">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="text">
+                           <string>      Every</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="2">
+                         <widget class="QSpinBox" name="spinBox_threads">
+                          <property name="enabled">
+                           <bool>true</bool>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>30</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>90</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="5" column="2">
                          <widget class="QSpinBox" name="spinBox_protectionTimer">
                           <property name="enabled">
                            <bool>false</bool>
@@ -1380,77 +1479,7 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="1" column="2">
-                         <spacer name="verticalSpacer_14">
-                          <property name="orientation">
-                           <enum>Qt::Vertical</enum>
-                          </property>
-                          <property name="sizeType">
-                           <enum>QSizePolicy::Fixed</enum>
-                          </property>
-                          <property name="sizeHint" stdset="0">
-                           <size>
-                            <width>20</width>
-                            <height>18</height>
-                           </size>
-                          </property>
-                         </spacer>
-                        </item>
-                        <item row="2" column="1" alignment="Qt::AlignRight">
-                         <widget class="QLabel" name="label_7">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>      Every</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="2" column="3" alignment="Qt::AlignLeft">
-                         <widget class="QLabel" name="label_6">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="text">
-                           <string>sec</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="2" colspan="2">
-                         <widget class="QCheckBox" name="checkBox_protection">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>246</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>246</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>Enable overheating protection (for 25 sec)</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="2" column="0">
+                        <item row="5" column="0">
                          <spacer name="horizontalSpacer_6">
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
@@ -1466,15 +1495,25 @@
                           </property>
                          </spacer>
                         </item>
-                        <item row="2" column="4">
-                         <spacer name="horizontalSpacer_4">
+                        <item row="5" column="3" alignment="Qt::AlignLeft">
+                         <widget class="QLabel" name="label_protectionTimer2">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="text">
+                           <string>sec</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="2">
+                         <spacer name="verticalSpacer_20">
                           <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
+                           <enum>Qt::Vertical</enum>
                           </property>
                           <property name="sizeHint" stdset="0">
                            <size>
-                            <width>40</width>
-                            <height>20</height>
+                            <width>20</width>
+                            <height>18</height>
                            </size>
                           </property>
                          </spacer>
