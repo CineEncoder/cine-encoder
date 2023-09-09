@@ -277,13 +277,18 @@ void Settings::onButtonApply()
     *m_pSubtitlesFontSize = arrFontSize[subtitles_font_size_index];
 
     /*===================== Theme =================*/
-    *m_pTheme = ui->comboBox_theme->currentIndex();
+    if (*m_pTheme != ui->comboBox_theme->currentIndex()) {
+        *m_pTheme = ui->comboBox_theme->currentIndex();
+        restart_needed = true;
+    }
 
     /*===================== Lang ==================*/
     const int lang_index = ui->comboBox_lang->currentIndex();
     QString arrLang[4] = {"en", "zh", "de", "ru"};
-    *m_pLanguage = arrLang[lang_index];
-
+    if (*m_pLanguage != arrLang[lang_index]) {
+        *m_pLanguage = arrLang[lang_index];
+        restart_needed = true;
+    }
     /*==================== Paths ==================*/
     *m_pTempFolder = ui->lineEdit_tempPath->text();
     *m_pOutputFolder = ui->lineEdit_outPath->text();
@@ -343,6 +348,7 @@ void Settings::onButtonApply()
 
 void Settings::onButtonReset()
 {
+    restart_needed = true;
     ui->lineEdit_tempPath->clear();
     ui->lineEdit_outPath->clear();
     ui->checkBox_showHDR->setChecked(false);
