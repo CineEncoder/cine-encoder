@@ -72,9 +72,27 @@ Settings::Settings(QWidget *parent):
         &Settings::onComboBoxPrefixType_indexChanged, &Settings::onComboBoxSuffixType_indexChanged,
         &Settings::onComboBoxFont_indexChanged, &Settings::onComboBoxSubtitlesFont_indexChanged
     };
-    for (int i = 0; i < 5; i++)
-        connect(boxes[i], static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    // Release build, this crashes out and i gets to 12.... No idea.
+    /*
+    for (int i = 0; i < 5; i++) {
+        connect(boxes[i], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
                 this, boxes_methods[i]);
+    }
+     */
+    // Do it manually to prevent the failure.
+    int j = 0;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+    j++;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+    j++;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+    j++;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+
 
     // On close
     connect(this, &Settings::destroyed, this, [this]() {
