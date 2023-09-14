@@ -83,7 +83,8 @@ private:
             _burn_subtitle,
             _mux_mode;
 
-    int     *fr_count;
+    int     *fr_count,
+            _threads;
 
     time_t  _loop_start;
 
@@ -103,11 +104,11 @@ private:
     QProcess *processEncoding;
 
 private slots:
-    void encode(int threads);
+    void encode();
     void add_metadata();
     void progress_1();
     void progress_2();
-    void completed(int exit_code, int threads);
+    void completed(int exit_code);
     void abort();
 
     void

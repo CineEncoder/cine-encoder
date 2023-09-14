@@ -235,7 +235,8 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QString log = getLog();
     emit onEncodingLog(log);
-    encode(threads);
+    _threads = threads;
+    encode();
 }
 
 void Encoder::initVariables(const QString &temp_file, const QString &input_file, const QString &output_file,
@@ -296,6 +297,7 @@ void Encoder::initVariables(const QString &temp_file, const QString &input_file,
     _burn_subtitle = false;
     _mux_mode = false;
     *fr_count = 0;
+    _threads = 0;
 }
 
 Data &Encoder::video(QString &globalTitle, Data &data, QVector<QString> &videoMetadata,
@@ -1153,13 +1155,13 @@ void Encoder::resizeVF(const QString &_width, const QString &_height, int _CODEC
     }
 }
 
-void Encoder::encode(int threads)   // Encode
+void Encoder::encode()   // Encode
 {
     Print("Encode ...");
     QStringList arguments;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
-    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int, int)));
+    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
     emit onEncodingProgress(0, 0.0f);
 
     // DEBUG
@@ -1190,7 +1192,7 @@ void Encoder::encode(int threads)   // Encode
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
                   << "-map" << "0:s?" << "-movflags" << "+write_colr"
                   << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param
-                  << "-threads" << numToStr(threads)
+                  << "-threads" << numToStr(_threads)
                   << "-y" << _output_file;
     } else {
         if (*fr_count == 0) {
@@ -1208,7 +1210,7 @@ void Encoder::encode(int threads)   // Encode
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
                       << _extSubPaths << _preset
-                     << "-threads" << numToStr(threads)
+                     << "-threads" << numToStr(_threads)
                       << "-y" << _output_file;
         }
         else
@@ -1219,7 +1221,7 @@ void Encoder::encode(int threads)   // Encode
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
                       << _extSubPaths << _preset
-                      << "-threads" << numToStr(threads)
+                      << "-threads" << numToStr(_threads)
                       << "-y" << _temp_file;
         }
         else
@@ -1230,7 +1232,7 @@ void Encoder::encode(int threads)   // Encode
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file
                       << _extAudioPaths
                       << _extSubPaths
-                      << "-threads" << numToStr(threads)
+                      << "-threads" << numToStr(_threads)
                       << _preset_pass1;
         }
     }
@@ -1365,7 +1367,7 @@ void Encoder::killEncoding()
         processEncoding->kill();
 }
 
-void Encoder::completed(int exit_code, int threads)
+void Encoder::completed(int exit_code)
 {
     processEncoding->disconnect();
     if (exit_code == 0) {
@@ -1384,7 +1386,7 @@ void Encoder::completed(int exit_code, int threads)
             } else
             if (_flag_two_pass) {
                 _flag_two_pass = false;
-                encode(threads);
+                encode();
             }
         }
     } else {
