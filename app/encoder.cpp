@@ -1159,7 +1159,7 @@ void Encoder::encode(int threads)   // Encode
     QStringList arguments;
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
-    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
+    connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int, int)));
     emit onEncodingProgress(0, 0.0f);
 
     // DEBUG
