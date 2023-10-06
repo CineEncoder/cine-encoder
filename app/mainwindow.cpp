@@ -42,6 +42,7 @@
 #include <iomanip>
 #include <cmath>
 #include <sstream>
+#include <QXmlStreamWriter>
 
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE
@@ -287,6 +288,43 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
             out << m_curParams << m_pos_top << m_pos_cld << m_preset_table;
             prs_file.close();
         }
+
+        QString xmlFile = SETTINGSPATH + "/test.xml";
+        QXmlStreamWriter stream(&xmlFile);
+        stream.setAutoFormatting(true);
+        stream.writeStartDocument();
+        stream.writeStartElement("cineencoder");
+        stream.writeTextElement("version", numToStr(PRESETS_VERSION));
+        stream.writeTextElement("m_pos_top", numToStr(m_pos_top));
+        stream.writeTextElement("m_pos_cld", numToStr(m_pos_cld));
+
+        stream.writeStartElement("params");
+        int i = 0;
+        for (const QString& param : m_curParams) {
+            stream.writeStartElement(numToStr(i));
+            stream.writeCharacters(param);
+            stream.writeEndElement();
+            i++;
+        }
+        stream.writeEndElement();
+
+        stream.writeStartElement("presettable");
+        i = 0;
+        for (const QStringList& presetTable : m_preset_table) {
+            int j = 0;
+            stream.writeStartElement(numToStr(i));
+            for (const QString &presetString: presetTable) {
+                stream.writeStartElement(numToStr(j));
+                stream.writeCharacters(presetString);
+                stream.writeEndElement();
+                j++;
+            }
+            i++;
+        }
+        stream.writeEndElement();
+
+        stream.writeEndElement();
+        stream.writeEndDocument();
 
         SETTINGS(stn);
         // Save Version
@@ -736,6 +774,68 @@ void MainWindow::setParameters()    // Set parameters
         }
     } else {
         setDefaultPresets();
+    }
+
+    bool validXmlFile = false;
+    int mpostop = 0;
+    int mposcld = 0;
+    QList<QString> tmpparamslist;
+    QList<QList<QString>> tmppresetlist;
+    QString xmlFile = SETTINGSPATH + "/test.xml";
+    QXmlStreamReader stream(xmlFile);
+    stream.readNextStartElement();
+    // Check we have a cineencoder XML file.
+    if (stream.name() == QString("cineencoder"))
+    {
+        // Check our version.
+        stream.readNextStartElement();
+        if (stream.name() == numToStr(PRESETS_VERSION))
+        {
+            validXmlFile = true;
+        }
+
+        if (validXmlFile)
+        {
+            while (!stream.atEnd())
+            {
+                if (stream.isStartElement()) {
+                    if (stream.name() == QString("m_pos_top")) {
+                        mpostop = stream.readElementText().toInt();
+                    }
+                    if (stream.name() == QString("m_pos_cld")) {
+                        mposcld = stream.readElementText().toInt();
+                    }
+                    if (stream.name() == QString("params"))
+                    {
+                        while(!stream.isEndElement())
+                        {
+                            stream.readNext();
+                            if (stream.isStartElement())
+                            {
+                                tmpparamslist.append(stream.readElementText());
+                            }
+                        }
+                    }
+                    if (stream.name() == QString("presettable"))
+                    {
+                        while(!stream.isEndElement())
+                        {
+                            stream.readNext();
+                            if (stream.isStartElement())
+                            {
+                                QList<QString> tmpList;
+                                while(!stream.isEndElement()) {
+                                    tmpList.append(stream.readElementText());
+                                    stream.readNext();
+                                }
+                                tmppresetlist.append(tmpList);
+                            }
+                        }
+                    }
+                }
+                stream.readNext();
+            }
+        }
     }
 
     //*********** Table parameters ****************//
@@ -2522,6 +2622,32 @@ void MainWindow::onAddSection()  // Add section
     updatePresetTable();
 }
 
+class params
+{
+    enum paramIndex  {pDescription, pCodec, };
+    QVector<QString> default_values = {
+            "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
+            "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
+            "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
+            "0", "0"
+    };
+
+    QVector<QString> values;
+
+    public: params() {
+        clear();
+    }
+
+    public: void clear() {
+        copy_values_from(default_values);
+    }
+
+    public: void copy_values_from(QVector<QString> copy_from) {
+        values = QVector<QString>(copy_from);
+        values.detach();
+    }
+};
+
 void MainWindow::onAddPreset()  // Add preset
 {
     if (ui->treeWidget->currentIndex().row() < 0) {
@@ -2529,12 +2655,8 @@ void MainWindow::onAddPreset()  // Add preset
         return;
     }
 
-    QVector<QString> cur_param = {
-        "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
-        "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
-        "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
-        "0", "0"
-    };
+    params cur_param;
+
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
         QDataStream in(&_prs_file);
