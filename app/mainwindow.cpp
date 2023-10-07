@@ -324,9 +324,9 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
                 stream.writeEndElement();
                 j++;
             }
+            stream.writeEndElement();
             i++;
         }
-        stream.writeEndElement();
 
         stream.writeEndElement();
         stream.writeEndDocument();
