@@ -69,6 +69,7 @@
 #define DEFAULTTIMER 30
 #define DEFAULTPATH QDir::homePath()
 #define PRESETFILE (SETTINGSPATH + QString("/presets.ini"))
+#define XMLPRESETFILE (SETTINGSPATH + QString("/presets.xml"))
 #define THUMBNAILPATH (SETTINGSPATH + QString("/thumbnails"))
 #define GETINFO(a, b, c) QString::fromStdWString(MI.Get(a, b, __T(c)))
 #define GINFO(a, b) QString::fromStdWString(MI.Get(Stream_General, a, __T(b), Info_Text, Info_Name))
@@ -289,7 +290,11 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
             prs_file.close();
         }
 
-        QString xmlFile = SETTINGSPATH + "/test.xml";
+        QFile xmlFile(XMLPRESETFILE);
+        if (!xmlFile.open(QFile::WriteOnly | QFile::Text)) { // Open file in write only mode
+            qDebug() << QString("Cannot write file %1(%2).").arg(XMLPRESETFILE).arg(xmlFile.errorString());
+            return;
+        }
         QXmlStreamWriter stream(&xmlFile);
         stream.setAutoFormatting(true);
         stream.writeStartDocument();
@@ -325,6 +330,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
 
         stream.writeEndElement();
         stream.writeEndDocument();
+        xmlFile.close();
 
         SETTINGS(stn);
         // Save Version
@@ -780,7 +786,7 @@ void MainWindow::setParameters()    // Set parameters
     int mpostop = 0;
     int mposcld = 0;
     QList<QList<QString>> tmppresetlist;
-    QString xmlFile = SETTINGSPATH + "/test.xml";
+    QString xmlFile = XMLPRESETFILE;
     QXmlStreamReader stream(xmlFile);
     stream.readNextStartElement();
     // Check we have a cineencoder XML file.
