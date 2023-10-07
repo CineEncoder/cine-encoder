@@ -37,6 +37,7 @@ add_executable(cine_encoder WIN32 MACOSX_BUNDLE
     app/widgets/qdoublebutton.cpp app/widgets/qdoublebutton.h
     app/widgets/qstreamview.cpp app/widgets/qstreamview.h
     app/files.qrc
+        app/qsettingsxml.cpp
 )
 target_link_libraries(cine_encoder PRIVATE
     Qt::Core

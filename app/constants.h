@@ -177,6 +177,21 @@ namespace Constants {
         REP_TRC
     };
 
+    static QString param_names[] = {
+            "OUTPUT_PARAM", "CODEC", "MODE",
+            "CONTAINER", "BQR", "MAXRATE",
+             "BUFSIZE", "FRAME_RATE", "BLENDING",
+            "WIDTH", "HEIGHT", "PASS",
+            "PRESET", "COLOR_RANGE", "MIN_LUM",
+            "MAX_LUM", "MAX_CLL", "MAX_FALL",
+            "MASTER_DISPLAY", "CHROMA_COORD", "WHITE_COORD",
+            "AUDIO_CODEC", "AUDIO_BITRATE", "MINRATE",
+            "LEVEL", "ASAMPLE_RATE", "ACHANNELS",
+            "MATRIX", "PRIMARY", "TRC",
+            "PRESET_NAME", "REP_PRIM", "REP_MATRIX",
+            "REP_TRC"
+    };
+
     struct EncoderAudioParam {
         int AUDIO_CODEC;
         int AUDIO_BITRATE;

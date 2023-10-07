@@ -301,7 +301,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stream.writeStartElement("params");
         int i = 0;
         for (const QString& param : m_curParams) {
-            stream.writeStartElement(numToStr(i));
+            stream.writeStartElement(param_names[i]);
             stream.writeCharacters(param);
             stream.writeEndElement();
             i++;
@@ -779,7 +779,6 @@ void MainWindow::setParameters()    // Set parameters
     bool validXmlFile = false;
     int mpostop = 0;
     int mposcld = 0;
-    QList<QString> tmpparamslist;
     QList<QList<QString>> tmppresetlist;
     QString xmlFile = SETTINGSPATH + "/test.xml";
     QXmlStreamReader stream(xmlFile);
@@ -812,7 +811,20 @@ void MainWindow::setParameters()    // Set parameters
                             stream.readNext();
                             if (stream.isStartElement())
                             {
-                                tmpparamslist.append(stream.readElementText());
+                                QString param_name_from_xml = stream.name().toString();
+
+                                // Do we have this parameter name in our supported list?
+                                auto index = std::find(param_names->begin(), param_names->end(), param_name_from_xml);
+
+                                if (index != param_names->end())
+                                {
+                                    // Convoluted way to figure out the index in which to read this value.
+                                    int x = -1;
+                                    x = index - param_names->begin();
+                                    m_curParams[x] = stream.readElementText();
+                                }
+                                // Read our end element
+                                stream.readNext();
                             }
                         }
                     }
