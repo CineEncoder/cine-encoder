@@ -314,18 +314,44 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stream.writeEndElement();
 
         stream.writeStartElement("presettable");
-        i = 0;
-        for (const QStringList& presetTable : m_preset_table) {
-            int j = 0;
-            stream.writeStartElement(numToStr(i));
-            for (const QString &presetString: presetTable) {
-                stream.writeStartElement(numToStr(j));
-                stream.writeCharacters(presetString);
+
+        // Data structure internally is column-wise preset. We need to capture each column into an XML
+        // entry
+        int paramscount;
+        try {
+            paramscount = m_preset_table.count();
+        }
+        catch (...)
+        {
+            paramscount = 0;
+        }
+        int presetcount;
+        try {
+            presetcount = m_preset_table[0].count();
+
+        }
+        catch (...)
+        {
+            presetcount = 0;
+        }
+
+        // Preset
+        for (int preset = 0; preset < presetcount; preset++) {
+            stream.writeStartElement(QString("preset") + numToStr(preset));
+            // Parameters
+            for (int param = 0; param < paramscount; param++)
+            {
+                if (param < PARAMETERS_COUNT) {
+                    stream.writeStartElement(param_names[param]);
+                }
+                else
+                {
+                    stream.writeStartElement("TYPE");
+                }
+                stream.writeCharacters(m_preset_table[param][preset]);
                 stream.writeEndElement();
-                j++;
             }
             stream.writeEndElement();
-            i++;
         }
 
         stream.writeEndElement();
