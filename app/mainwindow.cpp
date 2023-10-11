@@ -2040,7 +2040,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
                 const QString smplrt = (smplrt_int != 0) ? numToStr(smplrt_int) : "";
                 if (!audioFormat.isEmpty()) {
                     audioFormat += QString("  %1 kHz").arg(smplrt);
-                    _CHECKS(numRows, audioChecks).push_back(Helper::isAudioSupported(audioFormat));
+                    _CHECKS(numRows, audioChecks).push_back(Helper::isSupported(audioFormat));
                     _FIELDS(numRows, audioFormats).push_back(audioFormat);
                     _FIELDS(numRows, audioChannels).push_back(AINFO(size_t(j), "Channels"));
                     _FIELDS(numRows, audioChLayouts).push_back(AINFO(size_t(j), "ChannelLayout"));
@@ -2057,8 +2057,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
             Q_LOOP(j, 0, MAX_SUBTITLES) {
                 const QString subtitleFormat = SINFO(size_t(j), "Format");
                 if (!subtitleFormat.isEmpty()) {
-                    // MKV supports PGS, for example. We need to check extension before declaring unsupported.
-                    _CHECKS(numRows, subtChecks).push_back(getExtension() != "mkv" ? Helper::isSubtitleSupported(subtitleFormat) : false);
+                    _CHECKS(numRows, subtChecks).push_back(Helper::isSupported(subtitleFormat));
                     _FIELDS(numRows, subtFormats).push_back(subtitleFormat);
                     _FIELDS(numRows, subtDuration).push_back(SINFO(size_t(j), "Duration"));
                     _FIELDS(numRows, subtLangs).push_back(SINFO(size_t(j), "Language"));

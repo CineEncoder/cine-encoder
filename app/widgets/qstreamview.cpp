@@ -450,7 +450,7 @@ QWidget *QStreamView::createCell(bool &state,
     if (externFlag)
         tit->setText(tr("external") + " ");
 
-    if (!Helper::isAudioSupported(format))
+    if (!Helper::isSupported(format))
         tit->setText(tit->text() + tr("unsupported"));
 
     QWidget *info = new QWidget(cell);
