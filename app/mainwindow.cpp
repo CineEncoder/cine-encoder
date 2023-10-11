@@ -2368,6 +2368,16 @@ void MainWindow::onUndoMetadata()
 ** Streams Window
 ************************************************/
 
+QString MainWindow::getExtension()
+{
+    const int _CODEC = m_curParams[CurParamIndex::CODEC].toInt();
+    const int _CONTAINER = m_curParams[CurParamIndex::CONTAINER].toInt();
+    Tables t;
+    QString extension = t.arr_container[_CODEC][_CONTAINER].toLower();
+
+    return extension;
+}
+
 void MainWindow::onAddExtStream()
 {
     if (m_row != -1) {
@@ -2391,7 +2401,7 @@ void MainWindow::onAddExtStream()
                             const QString smplrt = (smplrt_int != 0) ? numToStr(smplrt_int) : "";
                             if (!audioFormat.isEmpty()) {
                                 audioFormat += QString("  %1 kHz").arg(smplrt);
-                                _CHECKS(m_row, externAudioChecks).push_back(Helper::isSupported(audioFormat));
+                                _CHECKS(m_row, externAudioChecks).push_back(Helper::isAudioSupported(audioFormat));
                                 _FIELDS(m_row, externAudioFormats).push_back(audioFormat);
                                 _FIELDS(m_row, externAudioChannels).push_back(AINFO(0, "Channels"));
                                 _FIELDS(m_row, externAudioChLayouts).push_back(AINFO(0, "ChannelsLayouts"));
@@ -2409,7 +2419,8 @@ void MainWindow::onAddExtStream()
                         if (vcnt == 0 && scnt == 1) {
                             const QString subtitleFormat = SINFO(0, "Format");
                             if (!subtitleFormat.isEmpty()) {
-                                _CHECKS(m_row, externSubtChecks).push_back(Helper::isSupported(subtitleFormat));
+                                // PGS are supported by mkv, but not mp4 and probably other containers.
+                                _CHECKS(m_row, externSubtChecks).push_back((getExtension() != "mkv") ? Helper::isSubtitleSupported(subtitleFormat) : false);
                                 _FIELDS(m_row, externSubtFormats).push_back(subtitleFormat);
                                 _FIELDS(m_row, externSubtDuration).push_back(SINFO(0, "Duration"));
                                 _FIELDS(m_row, externSubtLangs).push_back(SINFO(0, "Language"));

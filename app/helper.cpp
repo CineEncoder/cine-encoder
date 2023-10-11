@@ -229,7 +229,10 @@ QString Helper::getCss(int theme_index)
     return Helper::getParsedCss(list);
 }
 
-bool Helper::isSupported(const QString &format)
+bool Helper::isAudioSupported(const QString &format) {
+}
+
+bool Helper::isSubtitleSupported(const QString &format)
 {
     const QVector<QString> unspFormats = {
         "PGS"

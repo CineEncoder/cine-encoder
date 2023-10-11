@@ -99,6 +99,7 @@ private:
                           QTreeWidgetItem *item,
                           const bool defaultNameFlag);
     void updatePresetTable();
+    QString getExtension();
 
     // ====================================
     Ui::Widget *ui;
