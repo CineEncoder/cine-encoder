@@ -867,15 +867,71 @@ void MainWindow::setParameters()    // Set parameters
                             stream.readNext();
                             if (stream.isStartElement())
                             {
-                                QList<QString> tmpList;
+                                QList<QString> tmpList = default_preset.toList();
                                 while(!stream.isEndElement()) {
-                                    tmpList.append(stream.readElementText());
+                                    auto parameter_index = std::find(param_names->begin(), param_names->end(), stream.name());
+                                    int index = parameter_index - param_names->begin();
+                                    if (index >= 0) {
+                                        tmpList[index] = stream.readElementText();
+                                    }
+                                    else
+                                    {
+                                        if (stream.name().toString() == "TYPE") {
+                                            tmpList.append(stream.readElementText());
+                                        }
+                                    }
                                     stream.readNext();
                                 }
                                 tmppresetlist.append(tmpList);
                             }
                         }
                     }
+/*
+        stream.writeStartElement("presettable");
+
+        // Data structure internally is column-wise preset. We need to capture each column into an XML
+        // entry
+        int paramscount;
+        try {
+            paramscount = m_preset_table.count();
+        }
+        catch (...)
+        {
+            paramscount = 0;
+        }
+        int presetcount;
+        try {
+            presetcount = m_preset_table[0].count();
+
+        }
+        catch (...)
+        {
+            presetcount = 0;
+        }
+
+        // Preset
+        for (int preset = 0; preset < presetcount; preset++) {
+            stream.writeStartElement(QString("preset") + numToStr(preset));
+            // Parameters
+            for (int param = 0; param < paramscount; param++)
+            {
+                if (param < PARAMETERS_COUNT) {
+                    stream.writeStartElement(param_names[param]);
+                }
+                else
+                {
+                    stream.writeStartElement("TYPE");
+                }
+                stream.writeCharacters(m_preset_table[param][preset]);
+                stream.writeEndElement();
+            }
+            stream.writeEndElement();
+        }
+
+        stream.writeEndElement();
+ */
+
+
                 }
                 stream.readNext();
             }

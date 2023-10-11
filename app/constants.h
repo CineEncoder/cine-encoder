@@ -178,7 +178,8 @@ namespace Constants {
     };
 
     static QString param_names[] = {
-            "OUTPUT_PARAM", "CODEC", "MODE",
+            "OUTPUT_PARAM",
+            "CODEC", "MODE",
             "CONTAINER", "BQR", "MAXRATE",
              "BUFSIZE", "FRAME_RATE", "BLENDING",
             "WIDTH", "HEIGHT", "PASS",
@@ -190,6 +191,22 @@ namespace Constants {
             "MATRIX", "PRIMARY", "TRC",
             "PRESET_NAME", "REP_PRIM", "REP_MATRIX",
             "REP_TRC"
+    };
+
+    static QList<QString> default_preset = {
+            "ProRes HQ, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
+            "19", "0",
+            "0", "Auto", "Auto",
+            "Auto", "0", "0",
+            "0", "0", "0",
+            "0", "0", "",
+            "", "", "",
+            "0", "From source", "From source",
+            "0", "0", "Auto",
+            "0", "0", "0",
+            "0", "0", "0",
+            "ProRes HQ", "0", "0",
+            "0"
     };
 
     struct EncoderAudioParam {
