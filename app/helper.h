@@ -35,8 +35,7 @@ public:
                              const Qt::TextElideMode elide);
     static QString recalcChannels(const QString &ch);
     static QString getCss(int theme_index);
-    static bool isAudioSupported(const QString &format);
-    static bool isSubtitleSupported(const QString &format);
+    static bool isSupported(const QString &format);
     template<class T>
     static void eraseRow(QVector<T> &v, const int row);
     template<class T>
