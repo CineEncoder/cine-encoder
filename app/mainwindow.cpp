@@ -790,104 +790,142 @@ void MainWindow::setParameters()    // Set parameters
     }
 
     //************** Read presets ******************//
-    /*
-    QFile _prs_file(PRESETFILE);
-    if (_prs_file.open(QIODevice::ReadOnly)) {
-        QDataStream in(&_prs_file);
-        in.setVersion(QDataStream::Qt_4_0);
-        int ver;
-        in >> ver;
-        if (ver == PRESETS_VERSION) {
-            in >> m_curParams >> m_pos_top >> m_pos_cld >> m_preset_table;
-            _prs_file.close();
-        }
-        else {
-            _prs_file.close();
+    bool debug = true;
+    if (false) {
+        QFile _prs_file(PRESETFILE);
+        if (_prs_file.open(QIODevice::ReadOnly)) {
+            QDataStream in(&_prs_file);
+            in.setVersion(QDataStream::Qt_4_0);
+            int ver;
+            in >> ver;
+            if (ver == PRESETS_VERSION) {
+                in >> m_curParams >> m_pos_top >> m_pos_cld >> m_preset_table;
+                _prs_file.close();
+            } else {
+                _prs_file.close();
+                setDefaultPresets();
+            }
+        } else {
             setDefaultPresets();
         }
-    } else {
-        setDefaultPresets();
     }
-   */
-
-    bool validXmlFile = false;
-    QString xmlFile = XMLPRESETFILE;
-    try {
-        QXmlStreamReader stream(xmlFile);
-        stream.readNextStartElement();
-        // Check we have a cineencoder XML file.
-        if (stream.name() == QString("cineencoder")) {
-            // Check our version.
+    else {
+        bool validXmlFile = false;
+        QFile xmlFile(XMLPRESETFILE);
+        if (!xmlFile.open(QFile::ReadOnly | QFile::Text)) { // Open file in write only mode
+            setDefaultPresets();
+        } else {
+            std::string debugstring = "";
+            QXmlStreamReader stream(&xmlFile);
             stream.readNextStartElement();
-            if (stream.name() == numToStr(PRESETS_VERSION)) {
-                validXmlFile = true;
-            }
+            // Check we have a cineencoder XML file.
+            debugstring = stream.name().toString().toStdString();
+            if (stream.name() == QString("cineencoder")) {
+                // Check our version.
+                stream.readNextStartElement();
+                if (stream.name() != QString("version")) {
+                    setDefaultPresets();
+                    return;
+                }
+                auto version_from_xml = stream.readElementText();
+                debugstring = version_from_xml.toStdString();
+                if (version_from_xml == numToStr(PRESETS_VERSION)) {
+                    validXmlFile = true;
+                }
 
-            if (validXmlFile) {
-                while (!stream.atEnd()) {
-                    if (stream.isStartElement()) {
-                        if (stream.name() == QString("m_pos_top")) {
-                            m_pos_top = stream.readElementText().toInt();
-                        }
-                        if (stream.name() == QString("m_pos_cld")) {
-                            m_pos_cld = stream.readElementText().toInt();
-                        }
-                        if (stream.name() == QString("params")) {
-                            while (!stream.isEndElement()) {
-                                stream.readNext();
-                                if (stream.isStartElement()) {
-                                    QString param_name_from_xml = stream.name().toString();
-
-                                    // Do we have this parameter name in our supported list?
-                                    auto index = std::find(param_names->begin(), param_names->end(),
-                                                           param_name_from_xml);
-
-                                    if (index != param_names->end()) {
-                                        // Convoluted way to figure out the index in which to read this value.
-                                        int x = -1;
-                                        x = index - param_names->begin();
-                                        m_curParams[x] = stream.readElementText();
-                                    }
-                                    // Read our end element
-                                    stream.readNext();
-                                }
+                if (validXmlFile) {
+                    stream.readNextStartElement();
+                    while (!stream.atEnd()) {
+                        debugstring = stream.name().toString().toStdString();
+                        if (stream.isStartElement()) {
+                            debugstring = stream.name().toString().toStdString();
+                            if (stream.name() == QString("m_pos_top")) {
+                                m_pos_top = stream.readElementText().toInt();
                             }
-                        }
-                        if (stream.name() == QString("presettable")) {
-                            while (!stream.isEndElement()) {
-                                stream.readNext();
-                                if (stream.isStartElement()) {
-                                    QList<QString> tmpList = default_preset.toList();
-                                    while (!stream.isEndElement()) {
-                                        auto parameter_index = std::find(param_names->begin(), param_names->end(),
-                                                                         stream.name());
-                                        int index = parameter_index - param_names->begin();
-                                        if (index >= 0) {
-                                            tmpList[index] = stream.readElementText();
-                                        } else {
-                                            if (stream.name().toString() == "TYPE") {
-                                                tmpList.append(stream.readElementText());
-                                            }
+                            if (stream.name() == QString("m_pos_cld")) {
+                                m_pos_cld = stream.readElementText().toInt();
+                            }
+                            if (stream.name() == QString("params")) {
+                                while (!stream.isEndElement()) {
+                                    debugstring = stream.name().toString().toStdString();
+                                    stream.readNextStartElement();
+                                    debugstring = stream.name().toString().toStdString();
+                                    if (stream.isStartElement()) {
+                                        debugstring = stream.name().toString().toStdString();
+                                        QString param_name_from_xml = stream.name().toString();
+
+                                        // Do we have this parameter name in our supported list?
+                                        int index = param_names->indexOf(param_name_from_xml);
+
+                                        if (index != -1) {
+                                            m_curParams[index] = stream.readElementText();
+                                            debugstring = m_curParams[index].toStdString();
                                         }
+                                        // Read our end element
                                         stream.readNext();
                                     }
-                                    m_preset_table.append(tmpList);
+                                }
+                            }
+                            QList<QString> ptable_list[PARAMETERS_COUNT + 1];
+                            if (stream.name() == QString("presettable")) {
+                                while (!stream.isEndElement()) {
+                                    // Get our preset.
+                                    stream.readNext();
+                                    if (stream.isStartElement()) {
+                                        // Set up our defaults.
+                                        QString parameters[PARAMETERS_COUNT + 1];
+                                        for (int p = 0; p < PARAMETERS_COUNT; p++)
+                                        {
+                                            parameters[p] = default_preset[p];
+                                        }
+                                        parameters[PARAMETERS_COUNT] = "ChildItem";
+                                        while (!stream.isEndElement()) {
+                                            debugstring = stream.name().toString().toStdString();
+                                            int index = param_names->indexOf(stream.name());
+                                            QString text = stream.readElementText();
+                                            if (index >= 0) {
+                                                parameters[index] = text;
+                                                debugstring = text.toStdString();
+                                            } else {
+                                                if (stream.name().toString() == "TYPE") {
+                                                    parameters[PARAMETERS_COUNT] = text;
+                                                    debugstring = text.toStdString();
+                                                }
+                                            }
+                                            stream.readNext();
+                                        }
+
+                                        // Use our parameters to extend our list of values.
+                                        for (int p = 0; p < PARAMETERS_COUNT + 1; p++)
+                                        {
+                                            ptable_list[p].push_back(parameters[p]);
+                                        }
+                                    }
                                 }
                             }
                         }
+                        stream.readNext();
                     }
-                    stream.readNext();
                 }
+            } else {
+                setDefaultPresets();
             }
-        }
-        else
-        {
-            throw("Not a cineencoder file");
+            xmlFile.close();
         }
     }
-    catch (...) {
-        setDefaultPresets();
+
+    /*
+    if (debug) {
+        std::list<std::list<std::string>> ptable_list;
+        for (int i = 0; i < m_preset_table.count(); i++) {
+            std::list<std::string> pstring;
+            for (int j = 0; j < m_preset_table[i].count(); j++) {
+                pstring.push_back(m_preset_table[i][j].toStdString());
+            }
+            ptable_list.push_back(pstring);
+        }
     }
+    */
 
     //*********** Table parameters ****************//
     ui->tableWidget->setRowCount(0);
