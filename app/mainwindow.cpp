@@ -2579,18 +2579,6 @@ void MainWindow::onResetLabels()
 void MainWindow::setDefaultPresets() // Set default presets
 {
     Print("Set defaults...");
-    /*
-    QFile _prs_file(":/resources/data/default_presets.ini");
-    if (_prs_file.open(QIODevice::ReadOnly)) {
-        QDataStream in(&_prs_file);
-        in.setVersion(QDataStream::Qt_4_0);
-        int ver;
-        in >> ver;
-        if (ver == PRESETS_VERSION) // Replace to open the old version
-            in >> m_curParams >> m_pos_top >> m_pos_cld >> m_preset_table;
-        _prs_file.close();
-    }
-     */
     readXMLPresetFile(":/resources/data/default_presets.xml");
 }
 
@@ -2744,27 +2732,8 @@ void MainWindow::onAddPreset()  // Add preset
         return;
     }
 
-    QVector<QString> cur_param = {
-            "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
-            "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
-            "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
-            "0", "0"
-    };
-
-    QFile _prs_file(":/resources/data/default_presets.ini");
-    if (_prs_file.open(QIODevice::ReadOnly)) {
-        QDataStream in(&_prs_file);
-        in.setVersion(QDataStream::Qt_4_0);
-        int ver;
-        in >> ver;
-        if (ver == PRESETS_VERSION) {
-            cur_param.clear();
-            in >> cur_param;
-        } else {
-            Print("Added emergency params...");
-        }
-        _prs_file.close();
-    }
+    QVector<QString> cur_param = default_preset.toVector();
+    cur_param[OUTPUT_PARAM] = "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV";
     auto *item = ui->treeWidget->currentItem();
     auto *parentItem = item->parent();
     auto *child = new QTreeWidgetItem();

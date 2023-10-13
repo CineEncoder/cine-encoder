@@ -321,7 +321,6 @@
         <file>resources/icons/16x16/cil-frame-left.png</file>
         <file>resources/icons/16x16/cil-frame-right.png</file>
         <file>resources/icons/16x16/cil-cursor-center.png</file>
-        <file>resources/data/default_presets.ini</file>
         <file>resources/data/default_presets.xml</file>
         <file>resources/data/default_settings.ini</file>
         <file>resources/css/style_4.css</file>
