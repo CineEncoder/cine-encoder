@@ -827,12 +827,9 @@ void MainWindow::setParameters()    // Set parameters
     if (!xmlFile.open(QFile::ReadOnly | QFile::Text)) { // Open file in write only mode
         setDefaultPresets();
     } else {
-        std::string debugstring = "";
-        std::string valstring = "";
         QXmlStreamReader stream(&xmlFile);
         stream.readNextStartElement();
         // Check we have a cineencoder XML file.
-        debugstring = stream.name().toString().toStdString();
         if (stream.name() == QString("cineencoder")) {
             // Check our version.
             stream.readNextStartElement();
@@ -841,7 +838,6 @@ void MainWindow::setParameters()    // Set parameters
                 return;
             }
             auto version_from_xml = stream.readElementText();
-            debugstring = version_from_xml.toStdString();
             if (version_from_xml == numToStr(PRESETS_VERSION)) {
                 validXmlFile = true;
             }
@@ -884,12 +880,10 @@ void MainWindow::setParameters()    // Set parameters
                             parameters[PARAMETERS_COUNT] = "ChildItem";
                             while (stream.readNextStartElement()) {
                                 QString nnn = stream.name().toString();
-                                debugstring = nnn.toStdString();
                                 QString val = stream.readElementText();
-                                valstring = val.toStdString();
                                 // Do we have this parameter name in our supported list?
                                 int index = -1;
-                                for (int i = 0; i < param_names->size(); i++)
+                                for (int i = 0; i < PARAMETERS_COUNT; i++)
                                 {
                                     if (param_names[i] == nnn)
                                     {
@@ -899,9 +893,7 @@ void MainWindow::setParameters()    // Set parameters
                                 }
 
                                 if (index >= 0) {
-                                    valstring = parameters[index].toStdString();
                                     parameters[index] = val;
-                                    valstring = parameters[index].toStdString();
                                     int xx = 0;
                                 } else {
                                     if (stream.name().toString() == "TYPE") {
@@ -939,7 +931,6 @@ void MainWindow::setParameters()    // Set parameters
                     for (int j = 0; j < presets_added; j++)
                     {
                         QString sss = ptable_list[i][j];
-                        debugstring = sss.toStdString();
                         parlist.append(sss);
                     }
                     m_preset_table.append(parlist);
@@ -1101,10 +1092,12 @@ void MainWindow::setParameters()    // Set parameters
         if (type == "ChildItem") {
             auto *item = ui->treeWidget->currentItem();
             auto *child = new QTreeWidgetItem();
-            for (int j = 0; j < PARAMETERS_COUNT; j++)
+            for (int j = 0; j < PARAMETERS_COUNT; j++) {
                 child->setText(j + 7, m_preset_table[j][i]);
+            }
             QString savedPresetName = child->text(30 + 7);
             child->setText(0, savedPresetName);
+
             updateInfoFields(m_preset_table[1][i],
                              m_preset_table[2][i],
                              m_preset_table[3][i],
@@ -2618,6 +2611,8 @@ void MainWindow::onResetLabels()
 
 void MainWindow::setDefaultPresets() // Set default presets
 {
+    throw("NOT READY YET");
+    return;
     Print("Set defaults...");
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
