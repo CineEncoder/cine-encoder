@@ -57,7 +57,8 @@ public:
                       const QString  &subtitle_font_color,
                       const bool     burn_background,
                       const QString  &subtitle_background_color,
-                      int            subtitle_location
+                      int            subtitle_location,
+                      int threads
                       );
 
     QProcess::ProcessState getEncodingState();
@@ -82,7 +83,8 @@ private:
             _burn_subtitle,
             _mux_mode;
 
-    int     *fr_count;
+    int     *fr_count,
+            _threads;
 
     time_t  _loop_start;
 
@@ -106,7 +108,7 @@ private slots:
     void add_metadata();
     void progress_1();
     void progress_2();
-    void completed(int);
+    void completed(int exit_code);
     void abort();
 
     void

@@ -62,7 +62,8 @@ void Encoder::initEncoding(const QString  &temp_file,
                            const QString &subtitle_font_color,
                            const bool burn_background,
                            const QString &subtitle_background_color,
-                           int subtitle_location
+                           int subtitle_location,
+                           int threads
                            )
 {
     Tables t;
@@ -127,7 +128,10 @@ void Encoder::initEncoding(const QString  &temp_file,
     QVector<double> extDurVect;
     foreach (auto dur, FIELDS(externAudioDuration))
         extDurVect.push_back(0.001*dur.toDouble());
-    double minExtTime = *std::min_element(std::begin(extDurVect), std::end(extDurVect));
+    double minExtTime = 0;
+    if (extDurVect.count() > 0) {
+        minExtTime = *std::min_element(extDurVect.begin(), extDurVect.end());
+    }
     Print("Min external time: " << minExtTime);
 
     QStringList _splitStartParam;
@@ -247,6 +251,7 @@ void Encoder::initEncoding(const QString  &temp_file,
 
     QString log = getLog();
     emit onEncodingLog(log);
+    _threads = threads;
     encode();
 }
 
@@ -324,6 +329,7 @@ void Encoder::initVariables(const QString &temp_file, const QString &input_file,
     _burn_subtitle = false;
     _mux_mode = false;
     *fr_count = 0;
+    _threads = 0;
 }
 
 Data &Encoder::video(QString &globalTitle, Data &data, QVector<QString> &videoMetadata,
@@ -381,13 +387,14 @@ void Encoder::getPresets(const QStringList &_splitStartParam, const QStringList 
     _preset = _splitParam + codec + level + preset + mode + pass + color_range
               + colorprim + colormatrix + transfer + audio_param + sub_param;
     // DEBUG
-    /*
-    std::string _presetarray[_preset.length()];
-    for (int i = 0; i < _preset.length(); i++)
-    {
-        _presetarray[i] = _preset[i].toStdString();
-    }
-    */
+/*
+std::string _presetarray[_preset.length()];
+for (int i = 0; i < _preset.length(); i++)
+{
+    _presetarray[i] = _preset[i].toStdString();
+}
+*/
+
     _preset_mkvmerge = max_cll.join(" ") + max_fall.join(" ") + max_lum.join(" ") + min_lum.join(" ") + chroma_coord.join(" ") + white_coord.join(" ");
 }
 
@@ -1216,7 +1223,9 @@ void Encoder::encode()   // Encode
         emit onEncodingMode(_encoding_mode);
         arguments << "-hide_banner" << "-i" << _temp_file << "-map" << "0:v:0?" << "-map" << "0:a?"
                   << "-map" << "0:s?" << "-movflags" << "+write_colr"
-                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param << "-y" << _output_file;
+                  << "-c:v" << "copy" << "-c:a" << "copy" << _sub_mux_param
+                  << "-threads" << numToStr(_threads)
+                  << "-y" << _output_file;
     } else {
         if (*fr_count == 0) {
             _message = tr("The file does not contain FPS information!\nSelect the correct input file!");
@@ -1232,7 +1241,9 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths << _preset << "-y" << _output_file;
+                      << _extSubPaths << _preset
+                     << "-threads" << numToStr(_threads)
+                      << "-y" << _output_file;
         }
         else
         if (!_flag_two_pass && _flag_hdr) {
@@ -1241,7 +1252,9 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths << _preset << "-y" << _temp_file;
+                      << _extSubPaths << _preset
+                      << "-threads" << numToStr(_threads)
+                      << "-y" << _temp_file;
         }
         else
         if (_flag_two_pass) {
@@ -1250,7 +1263,9 @@ void Encoder::encode()   // Encode
             emit onEncodingMode(_encoding_mode);
             arguments << _preset_0.split(" ") << "-y" << "-i" << _input_file
                       << _extAudioPaths
-                      << _extSubPaths << _preset_pass1;
+                      << _extSubPaths
+                      << "-threads" << numToStr(_threads)
+                      << _preset_pass1;
         }
     }
 
@@ -1258,8 +1273,7 @@ void Encoder::encode()   // Encode
     arguments.removeAll("");
     arguments.removeAll(" ");
 
-    // DEBUG
-    /*
+    //DEBUG
     std::string argsarray[arguments.length()];
     for (int i = 0; i < arguments.length(); i++)
     {
@@ -1267,8 +1281,7 @@ void Encoder::encode()   // Encode
     }
 
     std::string myargs = arguments.join(" ").toStdString();
-    */
-    // ENDDEBUG
+    //ENDDEBUG
 
     //qDebug() << arguments;
      processEncoding->start("ffmpeg", arguments);

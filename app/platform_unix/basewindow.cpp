@@ -102,8 +102,8 @@ void BaseWindow::showEvent(QShowEvent *event)
 
 void BaseWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    const int x = event->x();
-    const int y = event->y();
+    const int x = event->position().x();
+    const int y = event->position().y();
     if (m_resizingCornerEdge == XUtils::CornerEdge::kInvalid && m_isResizable) {
         XUtils::UpdateCursorShape(this, x, y, this->contentsMargins(), BORDER);
     }
@@ -112,15 +112,15 @@ void BaseWindow::mouseMoveEvent(QMouseEvent *event)
 
 void BaseWindow::mousePressEvent(QMouseEvent *event)
 {
-    const int x = event->x();
-    const int y = event->y();
+    const int x = event->position().x();
+    const int y = event->position().y();
     if (event->button() == Qt::LeftButton && m_isResizable) {
         const XUtils::CornerEdge ce = XUtils::GetCornerEdge(this, x, y,
                                                             this->contentsMargins(),
                                                             BORDER);
         if (ce != XUtils::CornerEdge::kInvalid) {
             m_resizingCornerEdge = ce;
-            XUtils::SendButtonRelease(this, event->pos(), event->globalPos());
+            XUtils::SendButtonRelease(this, event->pos(), event->globalPosition().toPoint());
             XUtils::StartResizing(this, QCursor::pos(), ce);
         }
     }
@@ -165,7 +165,7 @@ bool BaseWindow::eventFilter(QObject *watched, QEvent *event)
         if ((event->type() == QEvent::MouseButtonPress)) {
             QMouseEvent* mouse_event = dynamic_cast<QMouseEvent*>(event);
             if (mouse_event->buttons() & Qt::LeftButton) {
-                XUtils::SendButtonRelease(this, mouse_event->pos(), mouse_event->globalPos());
+                XUtils::SendButtonRelease(this, mouse_event->pos(), mouse_event->globalPosition().toPoint());
                 XUtils::MoveWindow(this, Qt::LeftButton);
                 return true;
             }

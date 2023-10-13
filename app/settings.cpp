@@ -72,9 +72,27 @@ Settings::Settings(QWidget *parent):
         &Settings::onComboBoxPrefixType_indexChanged, &Settings::onComboBoxSuffixType_indexChanged,
         &Settings::onComboBoxFont_indexChanged, &Settings::onComboBoxSubtitlesFont_indexChanged
     };
-    for (int i = 0; i < 5; i++)
-        connect(boxes[i], static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    // Release build, this crashes out and i gets to 12.... No idea.
+    /*
+    for (int i = 0; i < 5; i++) {
+        connect(boxes[i], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
                 this, boxes_methods[i]);
+    }
+     */
+    // Do it manually to prevent the failure.
+    int j = 0;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+    j++;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+    j++;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+    j++;
+    connect(boxes[j], static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, boxes_methods[j]);
+
 
     // On close
     connect(this, &Settings::destroyed, this, [this]() {
@@ -96,6 +114,7 @@ void Settings::setParameters(QString    *pOutputFolder,
                              bool       *pMultiInstances,
                              bool       *pShowHdrFlag,
                              int        *pTimerInterval,
+                             int        *pThreads,
                              int        *pTheme,
                              QString    *pPrefixName,
                              QString    *pSuffixName,
@@ -122,6 +141,7 @@ void Settings::setParameters(QString    *pOutputFolder,
     m_pProtectFlag = pProtectFlag;
     m_pMultiInstances = pMultiInstances;
     m_pTimerInterval = pTimerInterval;
+    m_pThreads = pThreads;
     m_pTheme = pTheme;
     m_pPrefixName = pPrefixName;
     m_pSuffixName = pSuffixName;
@@ -146,6 +166,7 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->lineEdit_tempPath->setText(*m_pTempFolder);
     ui->lineEdit_outPath->setText(*m_pOutputFolder);
     ui->spinBox_protectionTimer->setValue(*m_pTimerInterval);
+    ui->spinBox_threads->setValue(*m_pThreads);
 
     if (*m_pShowHdrFlag) {
         ui->checkBox_showHDR->setChecked(true);
@@ -218,13 +239,13 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->comboBox_subtitles_font->blockSignals(false);
 
     // DEBUG
-    // std::string temp = m_pSubtitlesBackgroundColor->name().toStdString();
+    std::string temp = m_pSubtitlesBackgroundColor->name().toStdString();
     QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
 
     // DEBUG
-    // temp = m_pSubtitlesColor->name().toStdString();
+    temp = m_pSubtitlesColor->name().toStdString();
     QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
@@ -250,8 +271,8 @@ void Settings::setParameters(QString    *pOutputFolder,
     ui->comboBoxPrefixType->setView(comboboxPrefixTypeListView);
     ui->comboBoxSuffixType->setView(comboboxSuffixTypeListView);
 
-    QRegExpValidator *prefixValidator = new QRegExpValidator(QRegExp("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditPrefix);
-    QRegExpValidator *suffixValidator = new QRegExpValidator(QRegExp("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditSuffix);
+    QRegularExpressionValidator *prefixValidator = new QRegularExpressionValidator(QRegularExpression("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditPrefix);
+    QRegularExpressionValidator *suffixValidator = new QRegularExpressionValidator(QRegularExpression("^[^\\\\/:*?\"<>|+%!@]*$"), ui->lineEditSuffix);
     ui->lineEditPrefix->setValidator(prefixValidator);
     ui->lineEditSuffix->setValidator(suffixValidator);
 }
@@ -274,13 +295,18 @@ void Settings::onButtonApply()
     *m_pSubtitlesFontSize = arrFontSize[subtitles_font_size_index];
 
     /*===================== Theme =================*/
-    *m_pTheme = ui->comboBox_theme->currentIndex();
+    if (*m_pTheme != ui->comboBox_theme->currentIndex()) {
+        *m_pTheme = ui->comboBox_theme->currentIndex();
+        restart_needed = true;
+    }
 
     /*===================== Lang ==================*/
     const int lang_index = ui->comboBox_lang->currentIndex();
     QString arrLang[4] = {"en", "zh", "de", "ru"};
-    *m_pLanguage = arrLang[lang_index];
-
+    if (*m_pLanguage != arrLang[lang_index]) {
+        *m_pLanguage = arrLang[lang_index];
+        restart_needed = true;
+    }
     /*==================== Paths ==================*/
     *m_pTempFolder = ui->lineEdit_tempPath->text();
     *m_pOutputFolder = ui->lineEdit_outPath->text();
@@ -294,6 +320,7 @@ void Settings::onButtonApply()
     *m_pShowHdrFlag = (stts_hdr_info == 2) ? true : false;
 
     /*================ Protection ================*/
+    *m_pThreads = ui->spinBox_threads->value();
     *m_pTimerInterval = ui->spinBox_protectionTimer->value();
     int stts_protect = ui->checkBox_protection->checkState();
     *m_pProtectFlag = (stts_protect == 2) ? true : false;
@@ -306,9 +333,8 @@ void Settings::onButtonApply()
     int subtitles_background = ui->checkBox_subtitles_background->checkState();
     *m_pSubtitlesBackground = (subtitles_background == 2) ? true : false;
 
-    *m_pSubtitlesBackgroundAlpha = ui->spinBox_background->value();
-
     *m_pSubtitlesColor = QColor(m_pSubtitlesColor_temp.name());
+
     QString s("background: " + m_pSubtitlesColor->name() + ";");
     ui->subtitles_color->setStyleSheet(s);
     ui->subtitles_color->update();
@@ -316,7 +342,7 @@ void Settings::onButtonApply()
     *m_pSubtitlesBackgroundColor = QColor(m_pSubtitlesBackgroundColor_temp.red(),
                                           m_pSubtitlesBackgroundColor_temp.green(),
                                           m_pSubtitlesBackgroundColor_temp.blue(),
-                                          *m_pSubtitlesBackgroundAlpha);
+                                          ui->spinBox_background->value());
 
     QString sb("background: " + m_pSubtitlesBackgroundColor->name() + ";");
     ui->subtitles_background_color->setStyleSheet(sb);
@@ -340,6 +366,7 @@ void Settings::onButtonApply()
 
 void Settings::onButtonReset()
 {
+    restart_needed = true;
     ui->lineEdit_tempPath->clear();
     ui->lineEdit_outPath->clear();
     ui->checkBox_showHDR->setChecked(false);
@@ -347,6 +374,7 @@ void Settings::onButtonReset()
     ui->checkBox_protection->setChecked(false);
     ui->checkBox_allowDuplicates->setChecked(false);
     ui->spinBox_protectionTimer->setEnabled(false);
+    ui->spinBox_threads->setValue(0);
     ui->comboBox_theme->setCurrentIndex(3);
     ui->comboBox_lang->setCurrentIndex(0);
     ui->comboBoxPrefixType->setCurrentIndex(0);
@@ -373,9 +401,6 @@ void Settings::onButtonReset()
     QString sb("background: " + DEFAULTSUBTITLEBACKGROUNDCOLOR);
     ui->subtitles_background_color->setStyleSheet(sb);
     ui->subtitles_background_color->update();
-    ui->comboBox_subtitles_location->setCurrentIndex(0);
-    ui->checkBox_subtitles_background->setChecked(false);
-    ui->spinBox_background->setValue(150);
 }
 
 void Settings::showEvent(QShowEvent *event)

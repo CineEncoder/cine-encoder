@@ -182,12 +182,42 @@ namespace Constants {
         SUBTITLE_BACKGROUND_ALPHA, SUBTITLE_LOCATION
     };
 
-    // This needs to be aligned with the preset table above.
-    const QVector<QString> default_param = {
-            "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
-            "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
-            "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
-            "0", "0", "0", "Arial", numToStr(FONTSIZE), DEFAULTSUBTITLECOLOR,
+    static QString param_names[] = {
+            "OUTPUT_PARAM",
+            "CODEC", "MODE",
+            "CONTAINER", "BQR", "MAXRATE",
+             "BUFSIZE", "FRAME_RATE", "BLENDING",
+            "WIDTH", "HEIGHT", "PASS",
+            "PRESET", "COLOR_RANGE", "MIN_LUM",
+            "MAX_LUM", "MAX_CLL", "MAX_FALL",
+            "MASTER_DISPLAY", "CHROMA_COORD", "WHITE_COORD",
+            "AUDIO_CODEC", "AUDIO_BITRATE", "MINRATE",
+            "LEVEL", "ASAMPLE_RATE", "ACHANNELS",
+            "MATRIX", "PRIMARY", "TRC",
+            "PRESET_NAME", "REP_PRIM", "REP_MATRIX",
+            "REP_TRC",
+            "USE_PRESET_SUBTITLE_SETTINGS",
+            "SUBTITLE_FONT", "SUBTITLE_FONT_SIZE",
+            "SUBTITLE_FONT_COLOR",
+            "SUBTITLE_BACKGROUND", "SUBTITLE_BACKGROUND_COLOR",
+            "SUBTITLE_BACKGROUND_ALPHA", "SUBTITLE_LOCATION"
+    };
+
+    static QList<QString> default_preset = {
+            "ProRes HQ, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
+            "19", "0",
+            "0", "Auto", "Auto",
+            "Auto", "0", "0",
+            "0", "0", "0",
+            "0", "0", "",
+            "", "", "",
+            "0", "From source", "From source",
+            "0", "0", "Auto",
+            "0", "0", "0",
+            "0", "0", "0",
+            "ProRes HQ", "0", "0",
+            "0",
+            "0", "Arial", numToStr(FONTSIZE), DEFAULTSUBTITLECOLOR,
             "0", DEFAULTSUBTITLEBACKGROUNDCOLOR, "150", "0"
     };
 

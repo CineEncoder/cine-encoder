@@ -22,7 +22,6 @@
 #include "report.h"
 #include "streamconverter.h"
 #include "fileiconprovider.h"
-#include <QDesktopWidget>
 #include <QDragEnterEvent>
 #include <QMimeDatabase>
 #include <QMimeData>
@@ -43,7 +42,7 @@
 #include <iomanip>
 #include <cmath>
 #include <sstream>
-
+#include <QXmlStreamWriter>
 
 #if defined (Q_OS_UNIX)
     #ifndef UNICODE
@@ -70,6 +69,7 @@
 #define DEFAULTTIMER 30
 #define DEFAULTPATH QDir::homePath()
 #define PRESETFILE (SETTINGSPATH + QString("/presets.ini"))
+#define XMLPRESETFILE (SETTINGSPATH + QString("/presets.xml"))
 #define THUMBNAILPATH (SETTINGSPATH + QString("/thumbnails"))
 #define GETINFO(a, b, c) QString::fromStdWString(MI.Get(a, b, __T(c)))
 #define GINFO(a, b) QString::fromStdWString(MI.Get(Stream_General, a, __T(b), Info_Text, Info_Name))
@@ -83,7 +83,6 @@
 
 typedef void(MainWindow::*FnVoidVoid)(void);
 typedef void(MainWindow::*FnVoidInt)(int);
-
 
 namespace MainWindowPrivate
 {
@@ -152,6 +151,7 @@ MainWindow::MainWindow(QWidget *parent):
     m_subtitles_background_color(QColor(DEFAULTSUBTITLEBACKGROUNDCOLOR)),
     m_subtitles_location(0),
     m_subtitles_background(0),
+    m_threads(0),
     m_windowActivated(false),
     m_expandWindowsState(false),
     m_rowHeight(ROWHEIGHTDFLT)
@@ -231,7 +231,7 @@ MainWindow::MainWindow(QWidget *parent):
         m_pDocks[i]->setFeatures(QDockWidget::DockWidgetClosable |
                                  QDockWidget::DockWidgetMovable |
                                  QDockWidget::DockWidgetFloatable
-                                 /*QDockWidget::DockWidgetVerticalTitleBar*/);
+                /*QDockWidget::DockWidgetVerticalTitleBar*/);
         m_pDocks[i]->setWidget(dockFrames[i]);
         m_pDocksContainer->addDockWidget(dockArea[i], m_pDocks[i]);
     }
@@ -281,14 +281,74 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
             if (m_pProcessThumbCreation->state() != QProcess::NotRunning)
                 m_pProcessThumbCreation->kill();
         }
-        QFile prs_file(PRESETFILE);
-        if (prs_file.open(QIODevice::WriteOnly)) {
-            QDataStream out(&prs_file);
-            out.setVersion(QDataStream::Qt_4_0);
-            out << PRESETS_VERSION;
-            out << m_curParams << m_pos_top << m_pos_cld << m_preset_table;
-            prs_file.close();
+
+        QFile xmlFile(XMLPRESETFILE);
+        if (!xmlFile.open(QFile::WriteOnly | QFile::Text)) { // Open file in write only mode
+            qDebug() << QString("Cannot write file %1(%2).").arg(XMLPRESETFILE).arg(xmlFile.errorString());
+            return;
         }
+        QXmlStreamWriter stream(&xmlFile);
+        stream.setAutoFormatting(true);
+        stream.writeStartDocument();
+        stream.writeStartElement("cineencoder");
+        stream.writeTextElement("version", numToStr(PRESETS_VERSION));
+        stream.writeTextElement("m_pos_top", numToStr(m_pos_top));
+        stream.writeTextElement("m_pos_cld", numToStr(m_pos_cld));
+
+        stream.writeStartElement("params");
+        int i = 0;
+        for (const QString& param : m_curParams) {
+            stream.writeStartElement(param_names[i]);
+            stream.writeCharacters(param);
+            stream.writeEndElement();
+            i++;
+        }
+        stream.writeEndElement();
+
+        stream.writeStartElement("presettable");
+
+        // Data structure internally is column-wise preset. We need to capture each column into an XML
+        // entry
+        int paramscount;
+        try {
+            paramscount = m_preset_table.count();
+        }
+        catch (...)
+        {
+            paramscount = 0;
+        }
+        int presetcount;
+        try {
+            presetcount = m_preset_table[0].count();
+
+        }
+        catch (...)
+        {
+            presetcount = 0;
+        }
+
+        // Preset
+        for (int preset = 0; preset < presetcount; preset++) {
+            stream.writeStartElement(QString("preset") + numToStr(preset));
+            // Parameters
+            for (int param = 0; param < paramscount; param++)
+            {
+                if (param < PARAMETERS_COUNT) {
+                    stream.writeStartElement(param_names[param]);
+                }
+                else
+                {
+                    stream.writeStartElement("TYPE");
+                }
+                stream.writeCharacters(m_preset_table[param][preset]);
+                stream.writeEndElement();
+            }
+            stream.writeEndElement();
+        }
+
+        stream.writeEndElement();
+        stream.writeEndDocument();
+        xmlFile.close();
 
         SETTINGS(stn);
         // Save Version
@@ -347,6 +407,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Settings/subtitles_background_alpha", m_subtitles_background_alpha);
         stn.setValue("Settings/subtitles_background_color", m_subtitles_background_color.name());
         stn.setValue("Settings/subtitles_location", m_subtitles_location);
+        stn.setValue("Settings/threads", m_threads);
         stn.endGroup();
 
         if (m_pTrayIcon)
@@ -648,9 +709,6 @@ void MainWindow::setParameters()    // Set parameters
     createConnections();
     m_newParams.resize(PARAMETERS_COUNT);
     m_curParams.resize(PARAMETERS_COUNT);
-    m_preset_table.resize(PARAMETERS_COUNT + 1);
-    Q_LOOP(i, 0, PARAMETERS_COUNT + 1)
-      m_preset_table[i].resize(5);
 
     m_data.clear();
     m_reportLog.clear();
@@ -721,21 +779,10 @@ void MainWindow::setParameters()    // Set parameters
     }
 
     //************** Read presets ******************//
-    QFile _prs_file(PRESETFILE);
-    if (_prs_file.open(QIODevice::ReadOnly)) {
-        QDataStream in(&_prs_file);
-        in.setVersion(QDataStream::Qt_4_0);
-        int ver;
-        in >> ver;
-        if (ver == PRESETS_VERSION) {
-            in >> m_curParams >> m_pos_top >> m_pos_cld >> m_preset_table;
-            _prs_file.close();
-        }
-        else {
-            _prs_file.close();
-            setDefaultPresets();
-        }
-    } else {
+    bool validXmlFile = false;
+    validXmlFile = readXMLPresetFile(XMLPRESETFILE);
+    if (!validXmlFile)
+    {
         setDefaultPresets();
     }
 
@@ -828,6 +875,7 @@ void MainWindow::setParameters()    // Set parameters
         m_subtitles_background_color = QColor(stn.value("Settings/subtitles_background_color", DEFAULTSUBTITLEBACKGROUNDCOLOR).toString());
         m_subtitles_background_alpha = stn.value("Settings/subtitles_background_alpha", 150).toInt();
         m_subtitles_location = stn.value("Settings/subtitles_location", 0).toInt();
+        m_threads = stn.value("Settings/threads", 0).toInt();
         m_rowHeight = stn.value("Settings/row_size").toInt();
         ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
         ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
@@ -861,7 +909,8 @@ void MainWindow::setParameters()    // Set parameters
     parentFont.setItalic(true);
     for (int i = 0; i < NUM_ROWS; i++) {
         type = m_preset_table[PARAMETERS_COUNT][i];
-        if (type == "TopLevelItem") {
+        // Fix for typo in name within previous code.
+        if ((type == "TopLewelItem") || (type == "TopLevelItem")) {
             auto *root = new QTreeWidgetItem();
             root->setText(0, m_preset_table[0][i]);
             root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -874,10 +923,12 @@ void MainWindow::setParameters()    // Set parameters
         if (type == "ChildItem") {
             auto *item = ui->treeWidget->currentItem();
             auto *child = new QTreeWidgetItem();
-            for (int j = 0; j < PARAMETERS_COUNT; j++)
+            for (int j = 0; j < PARAMETERS_COUNT; j++) {
                 child->setText(j + 7, m_preset_table[j][i]);
+            }
             QString savedPresetName = child->text(30 + 7);
             child->setText(0, savedPresetName);
+
             updateInfoFields(m_preset_table[1][i],
                              m_preset_table[2][i],
                              m_preset_table[3][i],
@@ -961,6 +1012,141 @@ void MainWindow::setDocksParameters(const QList<int>& dockSizesX, const QList<in
     }
 }
 
+bool MainWindow::readXMLPresetFile(QString file)
+{
+    bool debug = false;
+
+    m_preset_table.clear();
+    bool validXmlFile = false;
+    QFile xmlFile(file);
+    int presets_added = 0;
+    if (!xmlFile.open(QFile::ReadOnly | QFile::Text)) { // Open file in write only mode
+        return validXmlFile;
+    }
+    QXmlStreamReader stream(&xmlFile);
+    stream.readNextStartElement();
+    // Check we have a cineencoder XML file.
+    if (stream.name() == QString("cineencoder")) {
+        // Check our version.
+        stream.readNextStartElement();
+        if (stream.name() != QString("version")) {
+            return validXmlFile;
+        }
+        validXmlFile = true;
+        auto version_from_xml = stream.readElementText();
+        // Don't actually use the version, but read it in case compatibility shims needed later.
+
+        if (validXmlFile) {
+            QList<QString> ptable_list[PARAMETERS_COUNT + 1];
+
+            while (!stream.atEnd()) {
+                stream.readNextStartElement();
+                QString nnn = stream.name().toString();
+                std::string sss = nnn.toStdString();
+                if (nnn == QString("m_pos_top")) {
+                    QString val = stream.readElementText();
+                    m_pos_top = val.toInt();
+                }
+                if (nnn == QString("m_pos_cld")) {
+                    QString val = stream.readElementText();
+                    m_pos_cld = val.toInt();
+                }
+                if (nnn == QString("params")) {
+                    while (stream.readNextStartElement()) {
+                        QString nnn = stream.name().toString();
+                        QString val = stream.readElementText();
+                        // Do we have this parameter name in our supported list?
+                        int index = param_names->indexOf(nnn);
+
+                        if (index != -1) {
+                            m_curParams[index] = val;
+                        }
+                    }
+                }
+                if (nnn == QString("presettable")) {
+                    // Each preset is a start element
+                    while (stream.readNextStartElement()) {
+                        // Set up our defaults.
+                        QString parameters[PARAMETERS_COUNT + 1];
+                        for (int p = 0; p < PARAMETERS_COUNT; p++) {
+                            parameters[p] = default_preset[p];
+                        }
+                        parameters[PARAMETERS_COUNT] = "ChildItem";
+                        while (stream.readNextStartElement()) {
+                            QString nnn = stream.name().toString();
+                            QString val = stream.readElementText();
+                            // Do we have this parameter name in our supported list?
+                            int index = -1;
+                            for (int i = 0; i < PARAMETERS_COUNT; i++)
+                            {
+                                if (param_names[i] == nnn)
+                                {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            if (index >= 0) {
+                                parameters[index] = val;
+                                int xx = 0;
+                            } else {
+                                if (stream.name().toString() == "TYPE") {
+                                    parameters[PARAMETERS_COUNT] = val;
+                                }
+                            }
+                        }
+
+                        // Use our parameters to extend our list of values.
+                        for (int p = 0; p < PARAMETERS_COUNT + 1; p++) {
+                            ptable_list[p].push_back(parameters[p]);
+                        }
+                        presets_added++;
+
+                    }
+                }
+            }
+
+            // Dump the table for review.
+            // debug
+            std::list<std::list<std::string>> list_of_list_of_strings;
+            for (int pp = 0; pp < PARAMETERS_COUNT + 1; pp++) {
+                std::list<std::string> list_of_strings;
+                for (int pr = 0; pr < presets_added; pr++)
+                {
+                    list_of_strings.push_back(ptable_list[pp][pr].toStdString());
+                }
+
+                list_of_list_of_strings.push_back(list_of_strings);
+            }
+
+            for (int i = 0; i < PARAMETERS_COUNT + 1; i++)
+            {
+                QList<QString> parlist;
+                for (int j = 0; j < presets_added; j++)
+                {
+                    QString sss = ptable_list[i][j];
+                    parlist.append(sss);
+                }
+                m_preset_table.append(parlist);
+            }
+
+            int xxx = 2;
+            xmlFile.close();
+        }
+    }
+    if (debug) {
+        std::list<std::list<std::string>> m_preset_table_actual;
+        for (int outer = 0; outer < m_preset_table.count(); outer++) {
+            std::list<std::string> tmp;
+            for (int inner = 0; inner < m_preset_table[outer].count(); inner++) {
+                tmp.push_back(m_preset_table[outer][inner].toStdString());
+            }
+            m_preset_table_actual.push_back(tmp);
+        }
+    }
+    return validXmlFile;
+}
+
 void MainWindow::onCloseWindow()    // Close window
 {
     this->close();
@@ -1009,6 +1195,7 @@ void MainWindow::onSettings()
                            &m_multiInstances,
                            &m_showHdrFlag,
                            &m_timerInterval,
+                           &m_threads,
                            &m_theme,
                            &m_prefixName,
                            &m_suffixName,
@@ -1031,8 +1218,10 @@ void MainWindow::onSettings()
         m_hideInTrayFlag ? m_pTrayIcon->show() : m_pTrayIcon->hide();
         if (m_row != -1)
             get_output_filename();
-        showPopup(tr("You need to restart the program for the settings to take effect."),
-                  PopupMessage::Icon::Warning);
+        if (settings.restart_needed) {
+            showPopup(tr("You need to restart the program for the settings to take effect."),
+                      PopupMessage::Icon::Warning);
+        }
     }
 }
 
@@ -1534,7 +1723,8 @@ void MainWindow::initEncoding()
                              QString(subtitles_color.name(QColor::HexArgb).replace("#", "")),
                              m_subtitles_background,
                              QString(subtitles_background_color.name(QColor::HexArgb).replace("#", "")),
-                             m_subtitles_location
+                             m_subtitles_location,
+                             m_threads
     );
 }
 
@@ -2388,16 +2578,7 @@ void MainWindow::onResetLabels()
 void MainWindow::setDefaultPresets() // Set default presets
 {
     Print("Set defaults...");
-    QFile _prs_file(":/resources/data/default_presets.ini");
-    if (_prs_file.open(QIODevice::ReadOnly)) {
-        QDataStream in(&_prs_file);
-        in.setVersion(QDataStream::Qt_4_0);
-        int ver;
-        in >> ver;
-        if (ver == PRESETS_VERSION) // Replace to open the old version
-            in >> m_curParams >> m_pos_top >> m_pos_cld >> m_preset_table;
-        _prs_file.close();
-    }
+    readXMLPresetFile(":/resources/data/default_presets.xml");
 }
 
 void MainWindow::onApplyPreset()  // Apply preset
@@ -2517,6 +2698,32 @@ void MainWindow::onAddSection()  // Add section
     updatePresetTable();
 }
 
+class params
+{
+    enum paramIndex  {pDescription, pCodec, };
+    QVector<QString> default_values = {
+            "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV",
+            "18", "0", "0", "Auto", "Auto", "Auto", "0", "0", "0", "0", "0", "0", "0", "", "", "", "", "0",
+            "From source", "From source", "0", "0", "Auto", "0", "0", "0", "0", "0", "0", "Emergency", "0",
+            "0", "0"
+    };
+
+    QVector<QString> values;
+
+    public: params() {
+        clear();
+    }
+
+    public: void clear() {
+        copy_values_from(default_values);
+    }
+
+    public: void copy_values_from(QVector<QString> copy_from) {
+        values = QVector<QString>(copy_from);
+        values.detach();
+    }
+};
+
 void MainWindow::onAddPreset()  // Add preset
 {
     if (ui->treeWidget->currentIndex().row() < 0) {
@@ -2524,30 +2731,15 @@ void MainWindow::onAddPreset()  // Add preset
         return;
     }
 
-    QVector<QString> cur_param = QVector<QString>(default_param);
-    // Shim our current values.
+    QVector<QString> cur_param = default_preset.toVector();
+    cur_param[OUTPUT_PARAM] = "Emergency, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV";
     cur_param[SUBTITLE_FONT] = m_subtitles_font;
-    cur_param[SUBTITLE_FONT_SIZE] = m_subtitles_fontSize;
+    cur_param[SUBTITLE_FONT_SIZE] = numToStr(m_subtitles_fontSize);
     cur_param[SUBTITLE_FONT_COLOR] = m_subtitles_color.name();
-    cur_param[SUBTITLE_BACKGROUND] = m_subtitles_background;
+    cur_param[SUBTITLE_BACKGROUND] = numToStr(m_subtitles_background);
     cur_param[SUBTITLE_BACKGROUND_COLOR] = m_subtitles_background_color.name();
-    cur_param[SUBTITLE_BACKGROUND_ALPHA] = m_subtitles_background_alpha;
-    cur_param[SUBTITLE_LOCATION] = m_subtitles_location;
-
-    QFile _prs_file(":/resources/data/default_presets.ini");
-    if (_prs_file.open(QIODevice::ReadOnly)) {
-        QDataStream in(&_prs_file);
-        in.setVersion(QDataStream::Qt_4_0);
-        int ver;
-        in >> ver;
-        if (ver == PRESETS_VERSION) {
-            cur_param.clear();
-            in >> cur_param;
-        } else {
-            Print("Added emergency params...");
-        }
-        _prs_file.close();
-    }
+    cur_param[SUBTITLE_BACKGROUND_ALPHA] = m_subtitles_background_alpha ? "1" : "0";
+    cur_param[SUBTITLE_LOCATION] = numToStr(m_subtitles_location);
     auto *item = ui->treeWidget->currentItem();
     auto *parentItem = item->parent();
     auto *child = new QTreeWidgetItem();

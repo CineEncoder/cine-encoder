@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>589</width>
-    <height>654</height>
+    <width>610</width>
+    <height>711</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -137,7 +137,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QPushButton" name="buttonTab_settingsPathsAndFiles">
+               <widget class="QPushButton" name="buttonTab_1">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -159,7 +159,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_settingsAdvanced">
+               <widget class="QPushButton" name="buttonTab_2">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -181,7 +181,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_settingsSubtitles">
+               <widget class="QPushButton" name="buttonTab_3">
                 <property name="text">
                  <string>Subtitles</string>
                 </property>
@@ -297,7 +297,7 @@
                          </widget>
                         </item>
                         <item row="6" column="1" colspan="2">
-                         <widget class="QLabel" name="label_suffixType">
+                         <widget class="QLabel" name="label_4">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -336,7 +336,7 @@
                          </widget>
                         </item>
                         <item row="2" column="1" colspan="2">
-                         <widget class="QLabel" name="label_prefixType">
+                         <widget class="QLabel" name="label_2">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -378,7 +378,7 @@
                          </spacer>
                         </item>
                         <item row="4" column="1" colspan="2">
-                         <widget class="QLabel" name="label_editPrefix">
+                         <widget class="QLabel" name="label_3">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -391,7 +391,7 @@
                          </widget>
                         </item>
                         <item row="8" column="1" colspan="2">
-                         <widget class="QLabel" name="label_editSuffix">
+                         <widget class="QLabel" name="label_5">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -673,7 +673,7 @@
                          </spacer>
                         </item>
                         <item row="0" column="1">
-                         <widget class="QLabel" name="label_tempPath">
+                         <widget class="QLabel" name="label_temp">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -692,7 +692,7 @@
                          </widget>
                         </item>
                         <item row="2" column="1">
-                         <widget class="QLabel" name="label_outPath">
+                         <widget class="QLabel" name="label_out">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1007,7 +1007,7 @@
                          </widget>
                         </item>
                         <item row="0" column="1" alignment="Qt::AlignRight">
-                         <widget class="QLabel" name="label_lang">
+                         <widget class="QLabel" name="label_1">
                           <property name="enabled">
                            <bool>false</bool>
                           </property>
@@ -1334,7 +1334,106 @@
                         <property name="rightMargin">
                          <number>0</number>
                         </property>
-                        <item row="2" column="2">
+                        <item row="5" column="4">
+                         <spacer name="horizontalSpacer_4">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="3" column="2">
+                         <widget class="QCheckBox" name="checkBox_protection">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>246</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>246</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>Enable overheating protection (for 25 sec)</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="4" column="2">
+                         <spacer name="verticalSpacer_14">
+                          <property name="orientation">
+                           <enum>Qt::Vertical</enum>
+                          </property>
+                          <property name="sizeType">
+                           <enum>QSizePolicy::Fixed</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>20</width>
+                            <height>18</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="1" column="1">
+                         <widget class="QLabel" name="label_threads">
+                          <property name="text">
+                           <string>Threads</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="5" column="1" alignment="Qt::AlignRight">
+                         <widget class="QLabel" name="label_protectionTimer">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="text">
+                           <string>      Every</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="2">
+                         <widget class="QSpinBox" name="spinBox_threads">
+                          <property name="enabled">
+                           <bool>true</bool>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>30</width>
+                            <height>24</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>90</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="5" column="2">
                          <widget class="QSpinBox" name="spinBox_protectionTimer">
                           <property name="enabled">
                            <bool>false</bool>
@@ -1380,77 +1479,7 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="1" column="2">
-                         <spacer name="verticalSpacer_14">
-                          <property name="orientation">
-                           <enum>Qt::Vertical</enum>
-                          </property>
-                          <property name="sizeType">
-                           <enum>QSizePolicy::Fixed</enum>
-                          </property>
-                          <property name="sizeHint" stdset="0">
-                           <size>
-                            <width>20</width>
-                            <height>18</height>
-                           </size>
-                          </property>
-                         </spacer>
-                        </item>
-                        <item row="2" column="1" alignment="Qt::AlignRight">
-                         <widget class="QLabel" name="label_protectionTimer">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>      Every</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="2" column="3" alignment="Qt::AlignLeft">
-                         <widget class="QLabel" name="label_ProtectionTimerSec">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="text">
-                           <string>sec</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="2" colspan="2">
-                         <widget class="QCheckBox" name="checkBox_protection">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>246</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>246</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>Enable overheating protection (for 25 sec)</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="2" column="0">
+                        <item row="5" column="0">
                          <spacer name="horizontalSpacer_6">
                           <property name="orientation">
                            <enum>Qt::Horizontal</enum>
@@ -1466,15 +1495,25 @@
                           </property>
                          </spacer>
                         </item>
-                        <item row="2" column="4">
-                         <spacer name="horizontalSpacer_4">
+                        <item row="5" column="3" alignment="Qt::AlignLeft">
+                         <widget class="QLabel" name="label_protectionTimer2">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="text">
+                           <string>sec</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="2">
+                         <spacer name="verticalSpacer_20">
                           <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
+                           <enum>Qt::Vertical</enum>
                           </property>
                           <property name="sizeHint" stdset="0">
                            <size>
-                            <width>40</width>
-                            <height>20</height>
+                            <width>20</width>
+                            <height>18</height>
                            </size>
                           </property>
                          </spacer>
@@ -1607,14 +1646,14 @@
                        </spacer>
                       </item>
                       <item row="6" column="1">
-                       <widget class="QLabel" name="label_subtitles_background">
+                       <widget class="QLabel" name="label_9">
                         <property name="text">
                          <string>Opacity</string>
                         </property>
                        </widget>
                       </item>
                       <item row="5" column="1">
-                       <widget class="QLabel" name="label_subtitles_bgcol">
+                       <widget class="QLabel" name="label_8">
                         <property name="text">
                          <string>Background</string>
                         </property>
@@ -1662,7 +1701,7 @@
                        </widget>
                       </item>
                       <item row="2" column="1">
-                       <widget class="QLabel" name="label_subtitles_color">
+                       <widget class="QLabel" name="label">
                         <property name="text">
                          <string>Color</string>
                         </property>
@@ -1840,7 +1879,7 @@
                        </widget>
                       </item>
                       <item row="7" column="1">
-                       <widget class="QLabel" name="label_subtitles_location">
+                       <widget class="QLabel" name="label_10">
                         <property name="text">
                          <string>Location</string>
                         </property>

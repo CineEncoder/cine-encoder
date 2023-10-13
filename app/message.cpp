@@ -13,7 +13,7 @@
 #include "message.h"
 #include "ui_message.h"
 #include "helper.h"
-#include <QSound>
+#include <QSoundEffect>
 
 #define ELAPSED_TIME 25
 
@@ -102,7 +102,9 @@ void Message::setMessage()
 #if defined (Q_OS_WIN64)
         QSound::play("./cine-encoder.wav");
 #elif defined (Q_OS_UNIX)
-        QSound::play("/usr/share/sounds/cine-encoder.wav");
+        QSoundEffect se;
+        se.setSource(QUrl::fromLocalFile("/usr/share/sounds/cine-encoder.wav"));
+        se.play();
 #endif
         show_message();
     } else {

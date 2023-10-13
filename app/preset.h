@@ -64,6 +64,7 @@ private:
     void onComboBox_audio_bitrate_textChanged();
     // Metadata
     void onComboBox_master_disp_textChanged(const QString&);
+
     // Font
     void onComboBoxSubtitlesFont_indexChanged(int index);
     // Color
@@ -71,6 +72,7 @@ private:
     void subtitles_background_color_change();
 
     QColor m_pPresetSubtitlesColor_temp, m_pPresetSubtitlesBackgroundColor_temp;
+
     Ui::Preset *ui;
     QVector<QString> *m_pNew_param;
     float m_aspectRatio;

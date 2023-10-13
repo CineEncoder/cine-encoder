@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cineencoder>
+    <version>354</version>
+    <m_pos_top>5</m_pos_top>
+    <m_pos_cld>3</m_pos_cld>
+    <params>
+        <OUTPUT_PARAM>ProRes HQ, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+        <CODEC>19</CODEC>
+        <MODE>0</MODE>
+        <CONTAINER>0</CONTAINER>
+        <BQR>Auto</BQR>
+        <MAXRATE>Auto</MAXRATE>
+        <BUFSIZE>Auto</BUFSIZE>
+        <FRAME_RATE>0</FRAME_RATE>
+        <BLENDING>0</BLENDING>
+        <WIDTH>0</WIDTH>
+        <HEIGHT>0</HEIGHT>
+        <PASS>0</PASS>
+        <PRESET>0</PRESET>
+        <COLOR_RANGE>0</COLOR_RANGE>
+        <MIN_LUM></MIN_LUM>
+        <MAX_LUM></MAX_LUM>
+        <MAX_CLL></MAX_CLL>
+        <MAX_FALL></MAX_FALL>
+        <MASTER_DISPLAY>0</MASTER_DISPLAY>
+        <CHROMA_COORD>From source</CHROMA_COORD>
+        <WHITE_COORD>From source</WHITE_COORD>
+        <AUDIO_CODEC>0</AUDIO_CODEC>
+        <AUDIO_BITRATE>0</AUDIO_BITRATE>
+        <MINRATE>Auto</MINRATE>
+        <LEVEL>0</LEVEL>
+        <ASAMPLE_RATE>0</ASAMPLE_RATE>
+        <ACHANNELS>0</ACHANNELS>
+        <MATRIX>0</MATRIX>
+        <PRIMARY>0</PRIMARY>
+        <TRC>0</TRC>
+        <PRESET_NAME>ProRes HQ</PRESET_NAME>
+        <REP_PRIM>0</REP_PRIM>
+        <REP_MATRIX>0</REP_MATRIX>
+        <REP_TRC>0</REP_TRC>
+    </params>
+    <presettable>
+        <preset0>
+            <OUTPUT_PARAM>High Quality H265 HDR 10 bit</OUTPUT_PARAM>
+            <CODEC></CODEC>
+            <MODE></MODE>
+            <CONTAINER></CONTAINER>
+            <BQR></BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE></FRAME_RATE>
+            <BLENDING></BLENDING>
+            <WIDTH></WIDTH>
+            <HEIGHT></HEIGHT>
+            <PASS></PASS>
+            <PRESET></PRESET>
+            <COLOR_RANGE></COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY></MASTER_DISPLAY>
+            <CHROMA_COORD></CHROMA_COORD>
+            <WHITE_COORD></WHITE_COORD>
+            <AUDIO_CODEC></AUDIO_CODEC>
+            <AUDIO_BITRATE></AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL></LEVEL>
+            <ASAMPLE_RATE></ASAMPLE_RATE>
+            <ACHANNELS></ACHANNELS>
+            <MATRIX></MATRIX>
+            <PRIMARY></PRIMARY>
+            <TRC></TRC>
+            <PRESET_NAME></PRESET_NAME>
+            <REP_PRIM></REP_PRIM>
+            <REP_MATRIX></REP_MATRIX>
+            <REP_TRC></REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset0>
+        <preset1>
+            <OUTPUT_PARAM>H.265/HEVC, Res: Source, Fps: Source, YUV, 4:2:0, 10 bit, VBR 50 MBps, Preset: Slow, 2 Pass, HDR: Enabled, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>1</CODEC>
+            <MODE>2</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>1</PASS>
+            <PRESET>7</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>H.265/HEVC 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset1>
+        <preset2>
+            <OUTPUT_PARAM>NVENC H.265/HEVC, Res: Source, Fps: Source, YUV, 4:2:0, 10 bit, VBR 50 MBps, Preset: Slow, 2 Pass Optimisation, HDR: Enabled, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>13</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>1</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>NVENC H.265/HEVC 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset2>
+        <preset3>
+            <OUTPUT_PARAM>Intel QSV H.265/HEVC, Res: Source, Fps: Source, YUV, 4:2:0, 10 bit, VBR 50 MBps, Preset: Slow, HDR: Enabled, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>6</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>5</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV H.265/HEVC 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset3>
+        <preset4>
+            <OUTPUT_PARAM>High Quality H265 8 bit</OUTPUT_PARAM>
+            <CODEC>6</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>5</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV H.265/HEVC 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset4>
+        <preset5>
+            <OUTPUT_PARAM>H.265/HEVC, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, VBR 50 MBps, Preset: Slow, 2 Pass, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>2</CODEC>
+            <MODE>2</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>1</PASS>
+            <PRESET>7</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>H.265/HEVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset5>
+        <preset6>
+            <OUTPUT_PARAM>NVENC H.265/HEVC, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, VBR 50 MBps, Preset: Slow, 2 Pass Optimisation, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>14</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>1</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>NVENC H.265/HEVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset6>
+        <preset7>
+            <OUTPUT_PARAM>Intel QSV H.265/HEVC, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, VBR 50 MBps, Preset: Slow, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>7</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>5</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV H.265/HEVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset7>
+        <preset8>
+            <OUTPUT_PARAM>High Quality H264 8 bit</OUTPUT_PARAM>
+            <CODEC>7</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>5</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV H.265/HEVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset8>
+        <preset9>
+            <OUTPUT_PARAM>H.264/AVC, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, VBR 50 MBps, Preset: Slow, 2 Pass, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>3</CODEC>
+            <MODE>2</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>1</PASS>
+            <PRESET>7</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>H.264/AVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset9>
+        <preset10>
+            <OUTPUT_PARAM>NVENC H.264/AVC, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, VBR 50 MBps, Preset: Slow, 2 Pass Optimisation, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>15</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>1</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>NVENC H.264/AVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset10>
+        <preset11>
+            <OUTPUT_PARAM>Intel QSV H.264/AVC, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, VBR 50 MBps, Preset: Slow, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>8</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>5</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV H.264/AVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset11>
+        <preset12>
+            <OUTPUT_PARAM>Intel VAAPI H.264/AVC, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, VBR 50 MBps, Preset: Slow, Audio: AC3, 448k, MKV</OUTPUT_PARAM>
+            <CODEC>12</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>5</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>1</AUDIO_CODEC>
+            <AUDIO_BITRATE>1</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel VAAPI H.264/AVC 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset12>
+        <preset13>
+            <OUTPUT_PARAM>Web High Quality VP9 HDR 10 bit</OUTPUT_PARAM>
+            <CODEC>29</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>2</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>From source</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset13>
+        <preset14>
+            <OUTPUT_PARAM>VP9, Res: Source, Fps: Source, YUV, 4:2:0, 10 bit, ABR 50 MBps, 2 Pass, HDR: Enabled, Audio: Opus, 256k, WebM</OUTPUT_PARAM>
+            <CODEC>4</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>1</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>VP9 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset14>
+        <preset15>
+            <OUTPUT_PARAM>VP9, Res: Source, Fps: Source, YUV, 4:2:0, 10 bit, CRF 19, 1 Pass, HDR: Enabled, Audio: Opus, 256k, WebM</OUTPUT_PARAM>
+            <CODEC>4</CODEC>
+            <MODE>1</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>19</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>VP9 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset15>
+        <preset16>
+            <OUTPUT_PARAM>Intel QSV VP9, Res: Source, Fps: Source, YUV, 4:2:0, 10 bit, ABR 50 MBps, HDR: Enabled, Audio: Opus, 256k, WebM</OUTPUT_PARAM>
+            <CODEC>9</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV VP9 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset16>
+        <preset17>
+            <OUTPUT_PARAM>Web High Quality VP9 8 bit</OUTPUT_PARAM>
+            <CODEC>9</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV VP9 4:2:0 10 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset17>
+        <preset18>
+            <OUTPUT_PARAM>VP9, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, ABR 50 MBps, 2 Pass, Audio: Opus, 256k, WebM</OUTPUT_PARAM>
+            <CODEC>5</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>1</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>VP9 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset18>
+        <preset19>
+            <OUTPUT_PARAM>VP9, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, CRF 19, 1 Pass, Audio: Opus, 256k, WebM</OUTPUT_PARAM>
+            <CODEC>5</CODEC>
+            <MODE>1</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>19</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>VP9 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset19>
+        <preset20>
+            <OUTPUT_PARAM>Intel QSV VP9, Res: Source, Fps: Source, YUV, 4:2:0, 8 bit, ABR 50 MBps, Audio: Opus, 256k, WebM</OUTPUT_PARAM>
+            <CODEC>10</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV VP9 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset20>
+        <preset21>
+            <OUTPUT_PARAM>Studio Quality HDR 10 bit</OUTPUT_PARAM>
+            <CODEC>10</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE></BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>2</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>Intel QSV VP9 4:2:0 8 bit</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset21>
+        <preset22>
+            <OUTPUT_PARAM>ProRes Proxy, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>16</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>ProRes Proxy</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset22>
+        <preset23>
+            <OUTPUT_PARAM>ProRes LT, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>17</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>ProRes LT</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset23>
+        <preset24>
+            <OUTPUT_PARAM>ProRes Standard, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>18</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>ProRes Standard</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset24>
+        <preset25>
+            <OUTPUT_PARAM>ProRes HQ, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>19</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>ProRes HQ</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset25>
+        <preset26>
+            <OUTPUT_PARAM>ProRes 4444, Res: Source, Fps: Source, YUV, 4:4:4, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>20</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>ProRes 4444</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset26>
+        <preset27>
+            <OUTPUT_PARAM>ProRes 4444XQ, Res: Source, Fps: Source, YUV, 4:4:4, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>21</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>ProRes 4444XQ</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset27>
+        <preset28>
+            <OUTPUT_PARAM>DNxHR HQX, Res: Source, Fps: Source, YUV, 4:2:2, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>25</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>DNxHR HQX</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset28>
+        <preset29>
+            <OUTPUT_PARAM>DNxHR 444, Res: Source, Fps: Source, YUV, 4:4:4, 10 bit, HDR: Enabled, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>26</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>DNxHR 444</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset29>
+        <preset30>
+            <OUTPUT_PARAM>Studio Quality 8 bit</OUTPUT_PARAM>
+            <CODEC>26</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>DNxHR 444</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset30>
+        <preset31>
+            <OUTPUT_PARAM>DNxHR LB, Res: Source, Fps: Source, YUV, 4:2:2, 8 bit, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>22</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>DNxHR LB</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset31>
+        <preset32>
+            <OUTPUT_PARAM>DNxHR SQ, Res: Source, Fps: Source, YUV, 4:2:2, 8 bit, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>23</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>DNxHR SQ</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset32>
+        <preset33>
+            <OUTPUT_PARAM>DNxHR HQ, Res: Source, Fps: Source, YUV, 4:2:2, 8 bit, Audio: PCM 16 bit, MOV</OUTPUT_PARAM>
+            <CODEC>24</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>DNxHR HQ</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset33>
+        <preset34>
+            <OUTPUT_PARAM>High Quality MPEG-2 8 bit</OUTPUT_PARAM>
+            <CODEC>24</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>Auto</BQR>
+            <MAXRATE>Auto</MAXRATE>
+            <BUFSIZE>Auto</BUFSIZE>
+            <FRAME_RATE>0</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>Auto</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>DNxHR HQ</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>TopLewelItem</TYPE>
+        </preset34>
+        <preset35>
+            <OUTPUT_PARAM>XDCAM HD422, Res: Source, 25 fps, YUV, 4:2:2, 8 bit, VBR 50 MBps, Audio: PCM 16 bit, MXF</OUTPUT_PARAM>
+            <CODEC>27</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>50</BQR>
+            <MAXRATE>50</MAXRATE>
+            <BUFSIZE>50</BUFSIZE>
+            <FRAME_RATE>8</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE>50</MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>XDCAM HD422</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset35>
+        <preset36>
+            <OUTPUT_PARAM>XAVC 4:2:2, Res: Source, 25 fps, YUV, 4:2:2, 8 bit, CBR 480 MBps, Audio: PCM 16 bit, MXF</OUTPUT_PARAM>
+            <CODEC>28</CODEC>
+            <MODE>0</MODE>
+            <CONTAINER>0</CONTAINER>
+            <BQR>480</BQR>
+            <MAXRATE></MAXRATE>
+            <BUFSIZE>480</BUFSIZE>
+            <FRAME_RATE>8</FRAME_RATE>
+            <BLENDING>0</BLENDING>
+            <WIDTH>0</WIDTH>
+            <HEIGHT>0</HEIGHT>
+            <PASS>0</PASS>
+            <PRESET>0</PRESET>
+            <COLOR_RANGE>0</COLOR_RANGE>
+            <MIN_LUM></MIN_LUM>
+            <MAX_LUM></MAX_LUM>
+            <MAX_CLL></MAX_CLL>
+            <MAX_FALL></MAX_FALL>
+            <MASTER_DISPLAY>0</MASTER_DISPLAY>
+            <CHROMA_COORD>From source</CHROMA_COORD>
+            <WHITE_COORD>From source</WHITE_COORD>
+            <AUDIO_CODEC>0</AUDIO_CODEC>
+            <AUDIO_BITRATE>0</AUDIO_BITRATE>
+            <MINRATE></MINRATE>
+            <LEVEL>0</LEVEL>
+            <ASAMPLE_RATE>0</ASAMPLE_RATE>
+            <ACHANNELS>0</ACHANNELS>
+            <MATRIX>0</MATRIX>
+            <PRIMARY>0</PRIMARY>
+            <TRC>0</TRC>
+            <PRESET_NAME>XAVC 4:2:2</PRESET_NAME>
+            <REP_PRIM>0</REP_PRIM>
+            <REP_MATRIX>0</REP_MATRIX>
+            <REP_TRC>0</REP_TRC>
+            <TYPE>ChildItem</TYPE>
+        </preset36>
+    </presettable>
+</cineencoder>
