@@ -1032,10 +1032,9 @@ bool MainWindow::readXMLPresetFile(QString file)
         if (stream.name() != QString("version")) {
             return validXmlFile;
         }
+        validXmlFile = true;
         auto version_from_xml = stream.readElementText();
-        if (version_from_xml == numToStr(PRESETS_VERSION)) {
-            validXmlFile = true;
-        }
+        // Don't actually use the version, but read it in case compatibility shims needed later.
 
         if (validXmlFile) {
             QList<QString> ptable_list[PARAMETERS_COUNT + 1];
