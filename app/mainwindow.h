@@ -255,6 +255,7 @@ private slots:
     void onSortDown();
     void onSortUp();
     void setParameters();
+    bool readXMLPresetFile(QString file);
     void setDocksParameters(const QList<int>& dockSizesX, const QList<int>& dockSizesY);
 
     void showEvent(QShowEvent*);

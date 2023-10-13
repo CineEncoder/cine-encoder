@@ -281,14 +281,6 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
             if (m_pProcessThumbCreation->state() != QProcess::NotRunning)
                 m_pProcessThumbCreation->kill();
         }
-        QFile prs_file(PRESETFILE);
-        if (prs_file.open(QIODevice::WriteOnly)) {
-            QDataStream out(&prs_file);
-            out.setVersion(QDataStream::Qt_4_0);
-            out << PRESETS_VERSION;
-            out << m_curParams << m_pos_top << m_pos_cld << m_preset_table;
-            prs_file.close();
-        }
 
         QFile xmlFile(XMLPRESETFILE);
         if (!xmlFile.open(QFile::WriteOnly | QFile::Text)) { // Open file in write only mode
@@ -717,9 +709,6 @@ void MainWindow::setParameters()    // Set parameters
     createConnections();
     m_newParams.resize(PARAMETERS_COUNT);
     m_curParams.resize(PARAMETERS_COUNT);
-    m_preset_table.resize(PARAMETERS_COUNT + 1);
-    Q_LOOP(i, 0, PARAMETERS_COUNT + 1)
-      m_preset_table[i].resize(5);
 
     m_data.clear();
     m_reportLog.clear();
@@ -790,169 +779,11 @@ void MainWindow::setParameters()    // Set parameters
     }
 
     //************** Read presets ******************//
-    bool debug = true;
-    QFile _prs_file(PRESETFILE);
-    if (_prs_file.open(QIODevice::ReadOnly)) {
-        QDataStream in(&_prs_file);
-        in.setVersion(QDataStream::Qt_4_0);
-        int ver;
-        in >> ver;
-        if (ver == PRESETS_VERSION) {
-            in >> m_curParams >> m_pos_top >> m_pos_cld >> m_preset_table;
-            _prs_file.close();
-        } else {
-            _prs_file.close();
-            setDefaultPresets();
-        }
-    } else {
-        setDefaultPresets();
-    }
-
-    std::list<std::list<std::string>> m_preset_table_ref;
-    for (int outer = 0; outer < m_preset_table.count(); outer++)
-    {
-        std::list<std::string> tmp;
-        for (int inner = 0; inner < m_preset_table[outer].count(); inner++)
-        {
-            tmp.push_back(m_preset_table[outer][inner].toStdString());
-        }
-        m_preset_table_ref.push_back(tmp);
-    }
-
-    m_preset_table.clear();
-
     bool validXmlFile = false;
-    QFile xmlFile(XMLPRESETFILE);
-    int presets_added = 0;
-    if (!xmlFile.open(QFile::ReadOnly | QFile::Text)) { // Open file in write only mode
-        setDefaultPresets();
-    } else {
-        QXmlStreamReader stream(&xmlFile);
-        stream.readNextStartElement();
-        // Check we have a cineencoder XML file.
-        if (stream.name() == QString("cineencoder")) {
-            // Check our version.
-            stream.readNextStartElement();
-            if (stream.name() != QString("version")) {
-                setDefaultPresets();
-                return;
-            }
-            auto version_from_xml = stream.readElementText();
-            if (version_from_xml == numToStr(PRESETS_VERSION)) {
-                validXmlFile = true;
-            }
-
-            if (validXmlFile) {
-                QList<QString> ptable_list[PARAMETERS_COUNT + 1];
-
-                while (!stream.atEnd()) {
-                    stream.readNextStartElement();
-                    QString nnn = stream.name().toString();
-                    std::string sss = nnn.toStdString();
-                    if (nnn == QString("m_pos_top")) {
-                        QString val = stream.readElementText();
-                        m_pos_top = val.toInt();
-                    }
-                    if (nnn == QString("m_pos_cld")) {
-                        QString val = stream.readElementText();
-                        m_pos_cld = val.toInt();
-                    }
-                    if (nnn == QString("params")) {
-                        while (stream.readNextStartElement()) {
-                            QString nnn = stream.name().toString();
-                            QString val = stream.readElementText();
-                            // Do we have this parameter name in our supported list?
-                            int index = param_names->indexOf(nnn);
-
-                            if (index != -1) {
-                                m_curParams[index] = val;
-                            }
-                        }
-                    }
-                    if (nnn == QString("presettable")) {
-                        // Each preset is a start element
-                        while (stream.readNextStartElement()) {
-                            // Set up our defaults.
-                            QString parameters[PARAMETERS_COUNT + 1];
-                            for (int p = 0; p < PARAMETERS_COUNT; p++) {
-                                parameters[p] = default_preset[p];
-                            }
-                            parameters[PARAMETERS_COUNT] = "ChildItem";
-                            while (stream.readNextStartElement()) {
-                                QString nnn = stream.name().toString();
-                                QString val = stream.readElementText();
-                                // Do we have this parameter name in our supported list?
-                                int index = -1;
-                                for (int i = 0; i < PARAMETERS_COUNT; i++)
-                                {
-                                    if (param_names[i] == nnn)
-                                    {
-                                        index = i;
-                                        break;
-                                    }
-                                }
-
-                                if (index >= 0) {
-                                    parameters[index] = val;
-                                    int xx = 0;
-                                } else {
-                                    if (stream.name().toString() == "TYPE") {
-                                        parameters[PARAMETERS_COUNT] = val;
-                                    }
-                                }
-                            }
-
-                            // Use our parameters to extend our list of values.
-                            for (int p = 0; p < PARAMETERS_COUNT + 1; p++) {
-                                ptable_list[p].push_back(parameters[p]);
-                            }
-                            presets_added++;
-
-                        }
-                    }
-                }
-
-                // Dump the table for review.
-                // debug
-                std::list<std::list<std::string>> list_of_list_of_strings;
-                for (int pp = 0; pp < PARAMETERS_COUNT + 1; pp++) {
-                    std::list<std::string> list_of_strings;
-                    for (int pr = 0; pr < presets_added; pr++)
-                    {
-                        list_of_strings.push_back(ptable_list[pp][pr].toStdString());
-                    }
-
-                    list_of_list_of_strings.push_back(list_of_strings);
-                }
-
-                for (int i = 0; i < PARAMETERS_COUNT + 1; i++)
-                {
-                    QList<QString> parlist;
-                    for (int j = 0; j < presets_added; j++)
-                    {
-                        QString sss = ptable_list[i][j];
-                        parlist.append(sss);
-                    }
-                    m_preset_table.append(parlist);
-                }
-
-                int xxx = 2;
-                xmlFile.close();
-            }
-        } else {
-            setDefaultPresets();
-        }
-    }
-
-    std::list<std::list<std::string>> m_preset_table_actual;
-    for (int outer = 0; outer < m_preset_table.count(); outer++)
+    validXmlFile = readXMLPresetFile(XMLPRESETFILE);
+    if (!validXmlFile)
     {
-        std::list<std::string> tmp;
-        for (int inner = 0; inner < m_preset_table[outer].count(); inner++)
-        {
-            tmp.push_back(m_preset_table[outer][inner].toStdString());
-        }
-        m_preset_table_actual.push_back(tmp);
+        setDefaultPresets();
     }
 
     //*********** Table parameters ****************//
@@ -1179,6 +1010,142 @@ void MainWindow::setDocksParameters(const QList<int>& dockSizesX, const QList<in
             m_pDocks[i]->setFloating(true);
         }
     }
+}
+
+bool MainWindow::readXMLPresetFile(QString file)
+{
+    bool debug = false;
+
+    m_preset_table.clear();
+    bool validXmlFile = false;
+    QFile xmlFile(file);
+    int presets_added = 0;
+    if (!xmlFile.open(QFile::ReadOnly | QFile::Text)) { // Open file in write only mode
+        return validXmlFile;
+    }
+    QXmlStreamReader stream(&xmlFile);
+    stream.readNextStartElement();
+    // Check we have a cineencoder XML file.
+    if (stream.name() == QString("cineencoder")) {
+        // Check our version.
+        stream.readNextStartElement();
+        if (stream.name() != QString("version")) {
+            return validXmlFile;
+        }
+        auto version_from_xml = stream.readElementText();
+        if (version_from_xml == numToStr(PRESETS_VERSION)) {
+            validXmlFile = true;
+        }
+
+        if (validXmlFile) {
+            QList<QString> ptable_list[PARAMETERS_COUNT + 1];
+
+            while (!stream.atEnd()) {
+                stream.readNextStartElement();
+                QString nnn = stream.name().toString();
+                std::string sss = nnn.toStdString();
+                if (nnn == QString("m_pos_top")) {
+                    QString val = stream.readElementText();
+                    m_pos_top = val.toInt();
+                }
+                if (nnn == QString("m_pos_cld")) {
+                    QString val = stream.readElementText();
+                    m_pos_cld = val.toInt();
+                }
+                if (nnn == QString("params")) {
+                    while (stream.readNextStartElement()) {
+                        QString nnn = stream.name().toString();
+                        QString val = stream.readElementText();
+                        // Do we have this parameter name in our supported list?
+                        int index = param_names->indexOf(nnn);
+
+                        if (index != -1) {
+                            m_curParams[index] = val;
+                        }
+                    }
+                }
+                if (nnn == QString("presettable")) {
+                    // Each preset is a start element
+                    while (stream.readNextStartElement()) {
+                        // Set up our defaults.
+                        QString parameters[PARAMETERS_COUNT + 1];
+                        for (int p = 0; p < PARAMETERS_COUNT; p++) {
+                            parameters[p] = default_preset[p];
+                        }
+                        parameters[PARAMETERS_COUNT] = "ChildItem";
+                        while (stream.readNextStartElement()) {
+                            QString nnn = stream.name().toString();
+                            QString val = stream.readElementText();
+                            // Do we have this parameter name in our supported list?
+                            int index = -1;
+                            for (int i = 0; i < PARAMETERS_COUNT; i++)
+                            {
+                                if (param_names[i] == nnn)
+                                {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            if (index >= 0) {
+                                parameters[index] = val;
+                                int xx = 0;
+                            } else {
+                                if (stream.name().toString() == "TYPE") {
+                                    parameters[PARAMETERS_COUNT] = val;
+                                }
+                            }
+                        }
+
+                        // Use our parameters to extend our list of values.
+                        for (int p = 0; p < PARAMETERS_COUNT + 1; p++) {
+                            ptable_list[p].push_back(parameters[p]);
+                        }
+                        presets_added++;
+
+                    }
+                }
+            }
+
+            // Dump the table for review.
+            // debug
+            std::list<std::list<std::string>> list_of_list_of_strings;
+            for (int pp = 0; pp < PARAMETERS_COUNT + 1; pp++) {
+                std::list<std::string> list_of_strings;
+                for (int pr = 0; pr < presets_added; pr++)
+                {
+                    list_of_strings.push_back(ptable_list[pp][pr].toStdString());
+                }
+
+                list_of_list_of_strings.push_back(list_of_strings);
+            }
+
+            for (int i = 0; i < PARAMETERS_COUNT + 1; i++)
+            {
+                QList<QString> parlist;
+                for (int j = 0; j < presets_added; j++)
+                {
+                    QString sss = ptable_list[i][j];
+                    parlist.append(sss);
+                }
+                m_preset_table.append(parlist);
+            }
+
+            int xxx = 2;
+            xmlFile.close();
+        }
+    }
+    if (debug) {
+        std::list<std::list<std::string>> m_preset_table_actual;
+        for (int outer = 0; outer < m_preset_table.count(); outer++) {
+            std::list<std::string> tmp;
+            for (int inner = 0; inner < m_preset_table[outer].count(); inner++) {
+                tmp.push_back(m_preset_table[outer][inner].toStdString());
+            }
+            m_preset_table_actual.push_back(tmp);
+        }
+    }
+    return validXmlFile;
 }
 
 void MainWindow::onCloseWindow()    // Close window
@@ -2611,9 +2578,8 @@ void MainWindow::onResetLabels()
 
 void MainWindow::setDefaultPresets() // Set default presets
 {
-    throw("NOT READY YET");
-    return;
     Print("Set defaults...");
+    /*
     QFile _prs_file(":/resources/data/default_presets.ini");
     if (_prs_file.open(QIODevice::ReadOnly)) {
         QDataStream in(&_prs_file);
@@ -2624,6 +2590,8 @@ void MainWindow::setDefaultPresets() // Set default presets
             in >> m_curParams >> m_pos_top >> m_pos_cld >> m_preset_table;
         _prs_file.close();
     }
+     */
+    readXMLPresetFile(":/resources/data/default_presets.xml");
 }
 
 void MainWindow::onApplyPreset()  // Apply preset
