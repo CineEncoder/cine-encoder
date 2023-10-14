@@ -397,7 +397,7 @@ void MainWindow::saveXMLSettingsFile()
     streamSettings.writeStartElement("cineencoder");
     streamSettings.writeTextElement("version", numToStr(SETTINGS_VERSION));
 
-    streamSettings.writeStartElement("Settings");
+    streamSettings.writeStartElement("settings");
     streamSettings.writeStartElement("prefix_type");
     streamSettings.writeCharacters(numToStr(m_prefxType));
     streamSettings.writeEndElement();
@@ -658,7 +658,7 @@ void MainWindow::createConnections()
 
     m_pActSettings = new QAction(tr("Settings"), menuPreferences);
     connect(m_pActSettings, &QAction::triggered, this, SLT(onSettings));
-    menuPreferences->addAction(m_pActSettings);   
+    menuPreferences->addAction(m_pActSettings);
 
     m_pActAbout = new QAction(tr("About"), menuAbout);
     m_pActDonate = new QAction(tr("Donate"), menuAbout);
@@ -963,45 +963,8 @@ void MainWindow::setParameters()    // Set parameters
     m_subtitles_location = 0;
     m_threads = 0;
 
-    // Restore Settings
-    bool useXML = true;
-    if (useXML) {
-        readXMLSettingsFile(XMLSETTINGSFILE);
-    } else {
-        stn.beginGroup("Settings");
-        m_prefxType = stn.value("Settings/prefix_type").toInt();
-        m_suffixType = stn.value("Settings/suffix_type").toInt();
-        m_prefixName = stn.value("Settings/prefix_name").toString();
-        m_suffixName = stn.value("Settings/suffix_name").toString();
-        m_timerInterval = stn.value("Settings/timer_interval").toInt();
-        m_theme = stn.value("Settings/theme").toInt();
-        m_protectFlag = stn.value("Settings/protection").toBool();
-        m_multiInstances = stn.value("Settings/allow_duplicates", false).toBool();
-        m_showHdrFlag = stn.value("Settings/show_hdr_mode").toBool();
-        m_temp_folder = stn.value("Settings/temp_folder").toString();
-        m_output_folder = stn.value("Settings/output_folder").toString();
-        m_openDir = stn.value("Settings/open_dir").toString();
-        m_batch_mode = stn.value("Settings/batch_mode").toBool();
-        m_hideInTrayFlag = stn.value("Settings/tray").toBool();
-        m_language = stn.value("Settings/language", sysLang).toString();
-        m_font = stn.value("Settings/font").toString();
-        m_fontSize = stn.value("Settings/font_size", FONTSIZE).toInt();
-        m_subtitles_font = stn.value("Settings/subtitles_font").toString();
-        m_subtitles_fontSize = stn.value("Settings/subtitles_font_size", FONTSIZE).toInt();
-        m_subtitles_background = stn.value("Settings/subtitles_background").toBool();
-        // DEBUG
-        std::string test = stn.value("Settings/subtitles_color").toString().toStdString();
-        std::string test2 = stn.value("Settings/subtitles_background_color").toString().toStdString();
-        m_subtitles_color = QColor(stn.value("Settings/subtitles_color", DEFAULTSUBTITLECOLOR).toString());
-        m_subtitles_background_color = QColor(stn.value("Settings/subtitles_background_color", DEFAULTSUBTITLEBACKGROUNDCOLOR).toString());
-        m_subtitles_background_alpha = stn.value("Settings/subtitles_background_alpha", 150).toInt();
-        m_subtitles_location = stn.value("Settings/subtitles_location", 0).toInt();
-        m_threads = stn.value("Settings/threads", 0).toInt();
-        m_rowHeight = stn.value("Settings/row_size").toInt();
-        ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
-        ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
-        stn.endGroup();
-    }
+    // Read settings from XML, to overwrite defaults above as-found.
+    readXMLSettingsFile(XMLSETTINGSFILE);
 
     //*********** Preset parameters ****************//
     ui->treeWidget->clear();
