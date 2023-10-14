@@ -839,7 +839,7 @@ void MainWindow::setParameters()    // Set parameters
     //************ Create folders ******************//
     if (!QDir(SETTINGSPATH).exists()) {
         QDir().mkdir(SETTINGSPATH);
-        Print("Setting path not existed and was created ...");
+        Print("Setting path did not exist, so was created ...");
     }
     if (QDir(THUMBNAILPATH).exists()) {
         unsigned int count_thumb = QDir(THUMBNAILPATH).count();
@@ -850,7 +850,7 @@ void MainWindow::setParameters()    // Set parameters
     }
     if (!QDir(THUMBNAILPATH).exists()) {
         QDir().mkdir(THUMBNAILPATH);
-        Print("Thumbnail path not existed and was created ...");
+        Print("Thumbnail path did not exist, so was created ...");
     }
 
     //************** Read presets ******************//
