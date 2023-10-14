@@ -25,6 +25,7 @@
 #define FIELDS(fld) data.fields[Data::fld]
 #define SETTINGSPATH QDir::homePath() + QString("/CineEncoder")
 #define SETTINGSFILE SETTINGSPATH + QString("/settings.ini")
+#define XMLSETTINGSFILE SETTINGSPATH + QString("/settings.xml")
 #define SETTINGS(settings) QSettings settings(SETTINGSFILE, \
                             QSettings::IniFormat);
 

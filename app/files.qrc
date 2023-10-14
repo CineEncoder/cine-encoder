@@ -323,6 +323,7 @@
         <file>resources/icons/16x16/cil-cursor-center.png</file>
         <file>resources/data/default_presets.xml</file>
         <file>resources/data/default_settings.ini</file>
+        <file>resources/data/default_settings.xml</file>
         <file>resources/css/style_4.css</file>
         <file>resources/icons/gif/cil-spinner-circle.gif</file>
         <file>resources/icons/svg/cine-encoder.svg</file>

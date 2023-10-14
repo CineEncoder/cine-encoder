@@ -99,6 +99,8 @@ private:
                           QTreeWidgetItem *item,
                           const bool defaultNameFlag);
     void updatePresetTable();
+    void saveXMLSettingsFile();
+    void readXMLSettingsFile(QString xmlFileName);
 
     // ====================================
     Ui::Widget *ui;

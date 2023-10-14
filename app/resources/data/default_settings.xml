@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cineencoder>
+    <version>355</version>
+    <Settings>
+        <prefix_type>0</prefix_type>
+        <suffix_type>0</suffix_type>
+        <prefix_name></prefix_name>
+        <suffix_name></suffix_name>
+        <timer_interval>30</timer_interval>
+        <theme>0</theme>
+        <protection>0</protection>
+        <allow_duplicates>0</allow_duplicates>
+        <show_hdr_mode>0</show_hdr_mode>
+        <temp_folder></temp_folder>
+        <output_folder></output_folder>
+        <open_dir></open_dir>
+        <batch_mode>0</batch_mode>
+        <tray>0</tray>
+        <language>en</language>
+        <font></font>
+        <font_size>8</font_size>
+        <row_size>0</row_size>
+        <switch_view_mode>0</switch_view_mode>
+        <switch_cut_mode>0</switch_cut_mode>
+        <subtitles_font></subtitles_font>
+        <subtitles_font_size>8</subtitles_font_size>
+        <subtitles_color>#ffffff</subtitles_color>
+        <subtitles_background>0</subtitles_background>
+        <subtitles_background_alpha>150</subtitles_background_alpha>
+        <subtitles_background_color>#000000</subtitles_background_color>
+        <subtitles_location>0</subtitles_location>
+        <threads>0</threads>
+    </Settings>
