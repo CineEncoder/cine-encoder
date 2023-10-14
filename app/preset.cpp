@@ -160,8 +160,6 @@ void Preset::onButtonApply()  // Apply preset
     (*m_pNew_param)[CurParamIndex::REP_PRIM] = QString::number(ui->checkBox_primaries->checkState());
     (*m_pNew_param)[CurParamIndex::REP_MATRIX] = QString::number(ui->checkBox_matrix->checkState());
     (*m_pNew_param)[CurParamIndex::REP_TRC] = QString::number(ui->checkBox_transfer->checkState());
-
-    (*m_pNew_param)[CurParamIndex::REP_TRC] = QString::number(ui->checkBox_transfer->checkState());
     (*m_pNew_param)[CurParamIndex::USE_PRESET_SUBTITLE_SETTINGS] = QString::number(ui->checkBox_use_preset_subtitles->checkState());
     (*m_pNew_param)[CurParamIndex::SUBTITLE_FONT] = ui->comboBox_preset_subtitles_font->currentText();
     int arrFontSize[6] = {8, 9, 10, 11, 12, 13};

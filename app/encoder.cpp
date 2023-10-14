@@ -1274,6 +1274,7 @@ void Encoder::encode()   // Encode
     arguments.removeAll(" ");
 
     //DEBUG
+    /*
     std::string argsarray[arguments.length()];
     for (int i = 0; i < arguments.length(); i++)
     {
@@ -1281,6 +1282,7 @@ void Encoder::encode()   // Encode
     }
 
     std::string myargs = arguments.join(" ").toStdString();
+    */
     //ENDDEBUG
 
     //qDebug() << arguments;
