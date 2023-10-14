@@ -897,6 +897,9 @@ void MainWindow::setParameters()    // Set parameters
     QList<int> dockSizesX{};
     QList<int> dockSizesY{};
     SETTINGS(stn);
+    stn.beginGroup("Settings");
+    stn.remove("");
+    stn.endGroup();
     if (stn.value("Version").toInt() == SETTINGS_VERSION) {
         // Restore Window
         stn.beginGroup("Window");
@@ -1015,7 +1018,7 @@ void MainWindow::setParameters()    // Set parameters
         QTreeWidgetItem *__item = ui->treeWidget->topLevelItem(m_pos_top)->child(m_pos_cld);
         ui->treeWidget->setCurrentItem(__item);
     }
-    Print(NUM_ROWS << " x " << NUM_COLUMNS);
+    // Print(NUM_ROWS << " x " << NUM_COLUMNS);
     Q_LOOP(i, 7, 41)
         ui->treeWidget->hideColumn(i);
 
@@ -1054,7 +1057,7 @@ void MainWindow::setParameters()    // Set parameters
     if (m_theme > 1)
         m_theme = 1;
     setTheme(m_theme);
-    Print("Desktop env.: " << short(Helper::getEnv()));
+    // Print("Desktop env.: " << short(Helper::getEnv()));
 
     ui->treeDirs->setRootIndex(m_pDirModel->setRootPath(m_openDir));
     ui->listFiles->setRootIndex(m_pFileModel->setRootPath(m_openDir));
