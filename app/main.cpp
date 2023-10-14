@@ -20,14 +20,11 @@
 #include <QTranslator>
 #include <QMap>
 #include <iostream>
-#include <QXmlStreamReader>
 #include "mainwindow.h"
 #include "helper.h"
 
 
 int checkForDuplicates();
-
-QString readXMLSettingFromFile(QString tagToFind);
 
 int main(int argc, char *argv[])
 {
@@ -49,25 +46,13 @@ int main(int argc, char *argv[])
         sysFamily = QFontDatabase::applicationFontFamilies(id).at(0);*/
 
     /******************* Read Settings ****************************/
-    QString val = readXMLSettingFromFile(QString("allow_duplicates"));
-    if (val == QString(""))
-    {
-        val = QString("0");
-    }
-    const bool allowDuplicates = val.toInt();
-
-    val = readXMLSettingFromFile("font_size");
-    if (val == QString(""))
-    {
-        val = QString(numToStr(FONTSIZE));
-    }
-    const int fntSize = val.toInt();
-
-    val = readXMLSettingFromFile("font");
-    const QString fntFamily = val;
-
-    val = readXMLSettingFromFile("language");
-    const QString currLang = val;
+    SETTINGS(stn);
+    stn.beginGroup("Settings");
+    const bool allowDuplicates = stn.value("Settings/allow_duplicates", false).toBool();
+    const int fntSize = stn.value("Settings/font_size", FONTSIZE).toInt();
+    const QString fntFamily = stn.value("Settings/font").toString();
+    const QString currLang = stn.value("Settings/language", sysLang).toString();
+    stn.endGroup();
 
     /**************** Check for duplicates ************************/
     if (!allowDuplicates)
@@ -108,45 +93,6 @@ int main(int argc, char *argv[])
     splash->finish(&window);
     delete splash;
     return app.exec();
-}
-
-QString readXMLSettingFromFile(QString tagToFind) {
-    QString val = QString("");
-    QFile xmlFile(XMLSETTINGSFILE);
-    bool settingsXMLFileValid = true;
-    int settingsVer = 0;
-    if (!xmlFile.open(QFile::ReadOnly | QFile::Text)) { // Open file in write only mode
-        settingsXMLFileValid = false;
-    }
-
-    if (settingsXMLFileValid) {
-        settingsXMLFileValid = false;
-        QXmlStreamReader stream(&xmlFile);
-        stream.readNextStartElement();
-        if (stream.name() == QString("cineencoder")) {
-            stream.readNextStartElement();
-            if (stream.name() == QString("version")) {
-                settingsVer = stream.readElementText().toInt();
-                stream.readNextStartElement();
-                if (stream.name() == QString("settings")) {
-                    settingsXMLFileValid = true;
-                }
-            }
-        }
-        if (settingsXMLFileValid) {
-            while (!stream.atEnd()) {
-                stream.readNextStartElement();
-                QString nnn = stream.name().toString();
-                if (nnn == tagToFind) {
-                    val = stream.readElementText();
-                    xmlFile.close();
-                    return val;
-                }
-            }
-        }
-    }
-    xmlFile.close();
-    return val;
 }
 
 int checkForDuplicates()

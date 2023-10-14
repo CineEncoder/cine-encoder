@@ -375,120 +375,45 @@ void MainWindow::closeEvent(QCloseEvent *event) // Show prompt when close app
         stn.setValue("Tables/splitter_state", m_pSpl->saveState());
         stn.setValue("Tables/splitter_source_state", m_pSplSource->saveState());
         stn.endGroup();
-
-        saveXMLSettingsFile();
+        // Save Settings
+        stn.beginGroup("Settings");
+        stn.setValue("Settings/prefix_type", m_prefxType);
+        stn.setValue("Settings/suffix_type", m_suffixType);
+        stn.setValue("Settings/prefix_name", m_prefixName);
+        stn.setValue("Settings/suffix_name", m_suffixName);
+        stn.setValue("Settings/timer_interval", m_timerInterval);
+        stn.setValue("Settings/theme", m_theme);
+        stn.setValue("Settings/protection", m_protectFlag);
+        stn.setValue("Settings/allow_duplicates", m_multiInstances);
+        stn.setValue("Settings/show_hdr_mode", m_showHdrFlag);
+        stn.setValue("Settings/temp_folder", m_temp_folder);
+        stn.setValue("Settings/output_folder", m_output_folder);
+        stn.setValue("Settings/open_dir", m_openDir);
+        stn.setValue("Settings/batch_mode", m_batch_mode);
+        stn.setValue("Settings/tray", m_hideInTrayFlag);
+        stn.setValue("Settings/language", m_language);
+        stn.setValue("Settings/font", m_font);
+        stn.setValue("Settings/font_size", m_fontSize);
+        stn.setValue("Settings/row_size", m_rowHeight);
+        stn.setValue("Settings/switch_view_mode", ui->switchViewMode->currentIndex());
+        stn.setValue("Settings/switch_cut_mode", ui->switchCutting->currentIndex());
+        stn.setValue("Settings/subtitles_font", m_subtitles_font);
+        stn.setValue("Settings/subtitles_font_size", m_subtitles_fontSize);
+        // DEBUG
+        std::string test = m_subtitles_color.name().toStdString();
+        std::string test2 = m_subtitles_background_color.name().toStdString();
+        stn.setValue("Settings/subtitles_color", m_subtitles_color.name());
+        stn.setValue("Settings/subtitles_background", m_subtitles_background);
+        stn.setValue("Settings/subtitles_background_alpha", m_subtitles_background_alpha);
+        stn.setValue("Settings/subtitles_background_color", m_subtitles_background_color.name());
+        stn.setValue("Settings/subtitles_location", m_subtitles_location);
+        stn.setValue("Settings/threads", m_threads);
+        stn.endGroup();
 
         if (m_pTrayIcon)
             m_pTrayIcon->deleteLater();
         event->accept();
     }
-}
-
-void MainWindow::saveXMLSettingsFile()
-{
-    QFile xmlSettingsFile(XMLSETTINGSFILE);
-    if (!xmlSettingsFile.open(QFile::WriteOnly | QFile::Text)) { // Open file in write only mode
-        qDebug() << QString("Cannot write file %1(%2).").arg(XMLSETTINGSFILE).arg(xmlSettingsFile.errorString());
-        return;
-    }
-    QXmlStreamWriter streamSettings(&xmlSettingsFile);
-    streamSettings.setAutoFormatting(true);
-    streamSettings.writeStartDocument();
-    streamSettings.writeStartElement("cineencoder");
-    streamSettings.writeTextElement("version", numToStr(SETTINGS_VERSION));
-
-    streamSettings.writeStartElement("Settings");
-    streamSettings.writeStartElement("prefix_type");
-    streamSettings.writeCharacters(numToStr(m_prefxType));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("suffix_type");
-    streamSettings.writeCharacters(numToStr(m_suffixType));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("prefix_name");
-    streamSettings.writeCharacters(m_prefixName);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("suffix_name");
-    streamSettings.writeCharacters(m_suffixName);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("timer_interval");
-    streamSettings.writeCharacters(numToStr(m_timerInterval));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("theme");
-    streamSettings.writeCharacters(numToStr(m_theme));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("protection");
-    streamSettings.writeCharacters(numToStr(m_protectFlag));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("allow_duplicates");
-    streamSettings.writeCharacters(numToStr(m_multiInstances));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("show_hdr_mode");
-    streamSettings.writeCharacters(numToStr(m_showHdrFlag));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("temp_folder");
-    streamSettings.writeCharacters(m_temp_folder);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("output_folder");
-    streamSettings.writeCharacters(m_output_folder);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("open_dir");
-    streamSettings.writeCharacters(m_openDir);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("batch_mode");
-    streamSettings.writeCharacters(numToStr(m_batch_mode));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("tray");
-    streamSettings.writeCharacters(numToStr(m_hideInTrayFlag));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("language");
-    streamSettings.writeCharacters(m_language);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("font");
-    streamSettings.writeCharacters(m_font);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("font_size");
-    streamSettings.writeCharacters(numToStr(m_fontSize));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("row_size");
-    streamSettings.writeCharacters(numToStr(m_rowHeight));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("switch_view_mode");
-    streamSettings.writeCharacters(numToStr(ui->switchViewMode->currentIndex()));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("switch_cut_mode");
-    streamSettings.writeCharacters(numToStr(ui->switchCutting->currentIndex()));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("subtitles_font");
-    streamSettings.writeCharacters(m_subtitles_font);
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("subtitles_font_size");
-    streamSettings.writeCharacters(numToStr(m_subtitles_fontSize));
-    streamSettings.writeEndElement();
-
-    std::string test = m_subtitles_color.name().toStdString();
-    std::string test2 = m_subtitles_background_color.name().toStdString();
-
-    streamSettings.writeStartElement("subtitles_color");
-    streamSettings.writeCharacters(m_subtitles_color.name());
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("subtitles_background");
-    streamSettings.writeCharacters(numToStr(m_subtitles_background));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("subtitles_background_alpha");
-    streamSettings.writeCharacters(numToStr(m_subtitles_background_alpha));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("subtitles_background_color");
-    streamSettings.writeCharacters(m_subtitles_background_color.name());
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("subtitles_location");
-    streamSettings.writeCharacters(numToStr(m_subtitles_location));
-    streamSettings.writeEndElement();
-    streamSettings.writeStartElement("threads");
-    streamSettings.writeCharacters(numToStr(m_threads));
-    streamSettings.writeEndElement();
-
-    streamSettings.writeEndElement();
-    xmlSettingsFile.close();
 }
 
 void MainWindow::paintEvent(QPaintEvent *event) // Disable QTab draw base
@@ -906,13 +831,13 @@ void MainWindow::setParameters()    // Set parameters
         stn.beginGroup("DocksContainer");
         m_pDocksContainer->restoreState(stn.value("DocksContainer/state").toByteArray());
         int arraySize = stn.beginReadArray("DocksContainer/docks_geometry");
-        for (int i = 0; i < arraySize && i < DOCKS_COUNT; i++) {
-            stn.setArrayIndex(i);
-            QSize size = stn.value("DocksContainer/docks_geometry/dock_size").toSize();
-            dockSizesX.append(size.width());
-            dockSizesY.append(size.height());
-        }
-        stn.endArray();
+            for (int i = 0; i < arraySize && i < DOCKS_COUNT; i++) {
+                stn.setArrayIndex(i);
+                QSize size = stn.value("DocksContainer/docks_geometry/dock_size").toSize();
+                dockSizesX.append(size.width());
+                dockSizesY.append(size.height());
+            }
+            stn.endArray();
         stn.endGroup();
         // Restore Tables
         stn.beginGroup("Tables");
@@ -921,53 +846,7 @@ void MainWindow::setParameters()    // Set parameters
         m_pSpl->restoreState(stn.value("Tables/splitter_state").toByteArray());
         m_pSplSource->restoreState(stn.value("Tables/splitter_source_state").toByteArray());
         stn.endGroup();
-    } else {
-        const QRect scr_rect = QApplication::primaryScreen()->availableGeometry();
-        const QPoint topLeft = scr_rect.translated(100,100).topLeft();
-        const QRect rect(topLeft, WINDOW_SIZE);
-        setGeometry(rect);
-
-        ui->treeWidget->setColumnWidth(0, 230);
-        ui->treeWidget->setColumnWidth(1, 55);
-        ui->treeWidget->setColumnWidth(2, 55);
-        ui->treeWidget->setColumnWidth(3, 55);
-        ui->treeWidget->setColumnWidth(4, 55);
-        ui->treeWidget->setColumnWidth(5, 55);
-        ui->treeWidget->setColumnWidth(6, 55);
-    }
-
-    // Defaults, to then be stomped over by the settings file.
-    m_prefxType = 0;
-    m_suffixType = 0;
-    m_prefixName = "";
-    m_suffixName = "";
-    m_timerInterval = 30;
-    m_theme = 0;
-    m_protectFlag = false;
-    m_multiInstances = false;
-    m_showHdrFlag = false;
-    m_temp_folder = "";
-    m_output_folder = "";
-    m_batch_mode = false;
-    m_hideInTrayFlag = 0;
-    m_language = 0;
-    m_font = "";
-    m_fontSize = 8;
-    m_rowHeight = 0;
-    m_subtitles_font = "";
-    m_subtitles_fontSize = 8;
-    m_subtitles_color = "#ffffff";
-    m_subtitles_background = false;
-    m_subtitles_background_alpha = 150;
-    m_subtitles_background_color = "#000000";
-    m_subtitles_location = 0;
-    m_threads = 0;
-
-    // Restore Settings
-    bool useXML = true;
-    if (useXML) {
-        readXMLSettingsFile(XMLSETTINGSFILE);
-    } else {
+        // Restore Settings
         stn.beginGroup("Settings");
         m_prefxType = stn.value("Settings/prefix_type").toInt();
         m_suffixType = stn.value("Settings/suffix_type").toInt();
@@ -1001,6 +880,20 @@ void MainWindow::setParameters()    // Set parameters
         ui->switchViewMode->setCurrentIndex(stn.value("Settings/switch_view_mode", 0).toInt());
         ui->switchCutting->setCurrentIndex(stn.value("Settings/switch_cut_mode", 0).toInt());
         stn.endGroup();
+
+    } else {
+        const QRect scr_rect = QApplication::primaryScreen()->availableGeometry();
+        const QPoint topLeft = scr_rect.translated(100,100).topLeft();
+        const QRect rect(topLeft, WINDOW_SIZE);
+        setGeometry(rect);
+
+        ui->treeWidget->setColumnWidth(0, 230);
+        ui->treeWidget->setColumnWidth(1, 55);
+        ui->treeWidget->setColumnWidth(2, 55);
+        ui->treeWidget->setColumnWidth(3, 55);
+        ui->treeWidget->setColumnWidth(4, 55);
+        ui->treeWidget->setColumnWidth(5, 55);
+        ui->treeWidget->setColumnWidth(6, 55);
     }
 
     //*********** Preset parameters ****************//
@@ -1095,163 +988,6 @@ void MainWindow::setParameters()    // Set parameters
 
     ui->treeDirs->setRootIndex(m_pDirModel->setRootPath(m_openDir));
     ui->listFiles->setRootIndex(m_pFileModel->setRootPath(m_openDir));
-}
-
-void MainWindow::readXMLSettingsFile(QString xmlFileName)
-{
-    int switchViewMode = 0;
-    int switchCutMode = 0;
-
-    QFile xmlFile(xmlFileName);
-    bool settingsXMLFileValid = true;
-    int settingsVer = 0;
-    if (!xmlFile.open(QFile::ReadOnly | QFile::Text)) { // Open file in write only mode
-        settingsXMLFileValid = false;
-    }
-
-    if (settingsXMLFileValid) {
-        settingsXMLFileValid = false;
-        QXmlStreamReader stream(&xmlFile);
-        stream.readNextStartElement();
-        if (stream.name() == QString("cineencoder")) {
-            stream.readNextStartElement();
-            if (stream.name() == QString("version")) {
-                settingsVer = stream.readElementText().toInt();
-                stream.readNextStartElement();
-                if (stream.name() == QString("settings")) {
-                    settingsXMLFileValid = true;
-                }
-            }
-        }
-        if (settingsXMLFileValid) {
-            while (!stream.atEnd()) {
-                stream.readNextStartElement();
-                QString nnn = stream.name().toString();
-                std::string sss = nnn.toStdString();
-                if (nnn == QString("prefix_type")) {
-                    QString val = stream.readElementText();
-                    m_prefxType = val.toInt();
-                }
-                if (nnn == QString("suffix_type")) {
-                    QString val = stream.readElementText();
-                    m_suffixType = val.toInt();
-                }
-                if (nnn == QString("prefix_name")) {
-                    QString val = stream.readElementText();
-                    m_prefixName = val;
-                }
-                if (nnn == QString("suffix_name")) {
-                    QString val = stream.readElementText();
-                    m_suffixName = val;
-                }
-                if (nnn == QString("timer_interval")) {
-                    QString val = stream.readElementText();
-                    m_timerInterval = val.toInt();
-                }
-                if (nnn == QString("theme")) {
-                    QString val = stream.readElementText();
-                    m_theme = val.toInt();
-                }
-                if (nnn == QString("protection")) {
-                    QString val = stream.readElementText();
-                    m_protectFlag = val.toInt();
-                }
-                if (nnn == QString("allow_duplicates")) {
-                    QString val = stream.readElementText();
-                    m_multiInstances = val.toInt();
-                }
-                if (nnn == QString("show_hdr_mode")) {
-                    QString val = stream.readElementText();
-                    m_showHdrFlag = val.toInt();
-                }
-                if (nnn == QString("temp_folder")) {
-                    QString val = stream.readElementText();
-                    m_temp_folder = val;
-                }
-                if (nnn == QString("output_folder")) {
-                    QString val = stream.readElementText();
-                    m_output_folder = val;
-                }
-                if (nnn == QString("output_folder")) {
-                    QString val = stream.readElementText();
-                    m_output_folder = val;
-                }
-                if (nnn == QString("open_dir")) {
-                    QString val = stream.readElementText();
-                    m_openDir = val;
-                }
-                if (nnn == QString("batch_mode")) {
-                    QString val = stream.readElementText();
-                    m_batch_mode = val.toInt();
-                }
-                if (nnn == QString("tray")) {
-                    QString val = stream.readElementText();
-                    m_hideInTrayFlag = val.toInt();
-                }
-                if (nnn == QString("language")) {
-                    QString val = stream.readElementText();
-                    m_language = val;
-                }
-                if (nnn == QString("font")) {
-                    QString val = stream.readElementText();
-                    m_font = val;
-                }
-                if (nnn == QString("font_size")) {
-                    QString val = stream.readElementText();
-                    m_fontSize = val.toInt();
-                }
-                if (nnn == QString("subtitles_font")) {
-                    QString val = stream.readElementText();
-                    m_subtitles_font = val;
-                }
-                if (nnn == QString("subtitles_font_size")) {
-                    QString val = stream.readElementText();
-                    m_subtitles_fontSize = val.toInt();
-                }
-                if (nnn == QString("subtitles_background")) {
-                    QString val = stream.readElementText();
-                    m_subtitles_background = val.toInt();
-                }
-                if (nnn == QString("subtitles_color")) {
-                    QString val = stream.readElementText();
-                    std::string test = val.toStdString();
-                    m_subtitles_color = val;
-                }
-                if (nnn == QString("subtitles_background_color")) {
-                    QString val = stream.readElementText();
-                    std::string test2 = val.toStdString();
-                    m_subtitles_background_color = val;
-                }
-                if (nnn == QString("subtitles_background_alpha")) {
-                    QString val = stream.readElementText();
-                    m_subtitles_background_alpha = val.toInt();
-                }
-                if (nnn == QString("subtitles_location")) {
-                    QString val = stream.readElementText();
-                    m_subtitles_location = val.toInt();
-                }
-                if (nnn == QString("threads")) {
-                    QString val = stream.readElementText();
-                    m_threads = val.toInt();
-                }
-                if (nnn == QString("row_size")) {
-                    QString val = stream.readElementText();
-                    m_rowHeight = val.toInt();
-                }
-                if (nnn == QString("switch_view_mode")) {
-                    QString val = stream.readElementText();
-                    switchViewMode = val.toInt();
-                }
-                if (nnn == QString("switch_cut_mode")) {
-                    QString val = stream.readElementText();
-                    switchCutMode = val.toInt();
-                }
-            }
-            xmlFile.close();
-        }
-    }
-    ui->switchViewMode->setCurrentIndex(switchViewMode);
-    ui->switchCutting->setCurrentIndex(switchCutMode);
 }
 
 void MainWindow::setDocksParameters(const QList<int>& dockSizesX, const QList<int>& dockSizesY)
@@ -2474,17 +2210,12 @@ void MainWindow::resetView()
 {
     const QString defaultSettings(":/resources/data/default_settings.ini");
     QSettings stn(defaultSettings, QSettings::IniFormat, this);
-    stn.beginGroup("Settings");
-    stn.remove("");
-    stn.endGroup();
     if (stn.value("Version").toInt() == SETTINGS_VERSION) {
         // Restore DocksContainer
         stn.beginGroup("DocksContainer");
         m_pDocksContainer->restoreState(stn.value("DocksContainer/state").toByteArray());
         stn.endGroup();
     }
-
-    readXMLSettingsFile(":/resources/data/default_settings.xml");
 
     QList<int> dockSizesX = {};
     QList<int> dockSizesY = {};
