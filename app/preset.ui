@@ -436,7 +436,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QPushButton" name="buttonTab_1">
+               <widget class="QPushButton" name="buttonTab_presetTransform">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -458,7 +458,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_2">
+               <widget class="QPushButton" name="buttonTab_presetVideo">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -477,7 +477,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_3">
+               <widget class="QPushButton" name="buttonTab_presetAudio">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -496,7 +496,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="buttonTab_4">
+               <widget class="QPushButton" name="buttonTab_presetMetadata">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -511,6 +511,25 @@
                 </property>
                 <property name="text">
                  <string>Metadata</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="buttonTab_presetSubtitles">
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Subtitles</string>
                 </property>
                </widget>
               </item>
@@ -576,8 +595,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>424</width>
-                     <height>660</height>
+                     <width>418</width>
+                     <height>652</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_27">
@@ -702,7 +721,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_3">
+                             <widget class="QLabel" name="label_presetname">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -953,7 +972,7 @@
                              </widget>
                             </item>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_6">
+                             <widget class="QLabel" name="label_FrameRate">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1152,7 +1171,7 @@
                              </widget>
                             </item>
                             <item row="4" column="6" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_8">
+                             <widget class="QLabel" name="label_PAR">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1203,7 +1222,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="4" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_14">
+                             <widget class="QLabel" name="label_AspectRatio">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1244,7 +1263,7 @@
                              </spacer>
                             </item>
                             <item row="4" column="4" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_11">
+                             <widget class="QLabel" name="label_width">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1483,7 +1502,7 @@
                              </spacer>
                             </item>
                             <item row="6" column="4" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_13">
+                             <widget class="QLabel" name="label_height">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1725,7 +1744,7 @@
                              </widget>
                             </item>
                             <item row="6" column="6" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_9">
+                             <widget class="QLabel" name="label_DAR">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -1819,8 +1838,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>424</width>
-                     <height>660</height>
+                     <width>401</width>
+                     <height>520</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
@@ -1931,7 +1950,7 @@
                              <number>24</number>
                             </property>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_credits_18">
+                             <widget class="QLabel" name="label_mode">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2347,7 +2366,7 @@
                              <number>24</number>
                             </property>
                             <item row="1" column="1">
-                             <widget class="QLabel" name="label_credits_17">
+                             <widget class="QLabel" name="label_container">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2663,7 +2682,7 @@
                              </widget>
                             </item>
                             <item row="1" column="4">
-                             <widget class="QLabel" name="label_credits_30">
+                             <widget class="QLabel" name="label_pass">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2889,7 +2908,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_credits_15">
+                             <widget class="QLabel" name="label_codec">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -2923,7 +2942,7 @@
                              </widget>
                             </item>
                             <item row="2" column="4">
-                             <widget class="QLabel" name="label_credits_22">
+                             <widget class="QLabel" name="label_profile">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3038,7 +3057,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_7">
+                             <widget class="QLabel" name="label_preset">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3098,7 +3117,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="4">
-                             <widget class="QLabel" name="label_credits_23">
+                             <widget class="QLabel" name="label_pixfmt">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3319,7 +3338,7 @@
                              </widget>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_4">
+                             <widget class="QLabel" name="label_level">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3416,8 +3435,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>424</width>
-                     <height>660</height>
+                     <width>396</width>
+                     <height>400</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_32">
@@ -3616,7 +3635,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1">
-                             <widget class="QLabel" name="label_credits_49">
+                             <widget class="QLabel" name="label_audio_codec">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3711,7 +3730,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label">
+                             <widget class="QLabel" name="label_audio_channels">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3800,7 +3819,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1">
-                             <widget class="QLabel" name="label_credits_50">
+                             <widget class="QLabel" name="label_audio_sampling">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3825,7 +3844,7 @@
                              </widget>
                             </item>
                             <item row="0" column="4">
-                             <widget class="QLabel" name="label_credits_51">
+                             <widget class="QLabel" name="label_audio_bitrate">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3937,8 +3956,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>424</width>
-                     <height>660</height>
+                     <width>388</width>
+                     <height>580</height>
                     </rect>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_33">
@@ -4138,7 +4157,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_108">
+                             <widget class="QLabel" name="label_chroma_coord">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4172,7 +4191,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_109">
+                             <widget class="QLabel" name="label_white_coord">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4206,7 +4225,7 @@
                              </widget>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_65">
+                             <widget class="QLabel" name="label_master_disp">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4285,7 +4304,7 @@
                              <number>24</number>
                             </property>
                             <item row="1" column="3" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="labelMaxCll">
+                             <widget class="QLabel" name="label_max_cll">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4385,7 +4404,7 @@
                              </widget>
                             </item>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_105">
+                             <widget class="QLabel" name="label_min_lum">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4439,7 +4458,7 @@
                              </spacer>
                             </item>
                             <item row="2" column="3" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_107">
+                             <widget class="QLabel" name="label_max_fall">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4489,7 +4508,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_92">
+                             <widget class="QLabel" name="label_max_lum">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4555,7 +4574,7 @@
                              <number>24</number>
                             </property>
                             <item row="2" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_47">
+                             <widget class="QLabel" name="label_color_matrix">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4703,7 +4722,7 @@
                              </widget>
                             </item>
                             <item row="1" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_44">
+                             <widget class="QLabel" name="label_color_prim">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4833,7 +4852,7 @@
                              </spacer>
                             </item>
                             <item row="0" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_64">
+                             <widget class="QLabel" name="label_color_range">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -4932,7 +4951,7 @@
                              </spacer>
                             </item>
                             <item row="3" column="1" alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_credits_48">
+                             <widget class="QLabel" name="label_transfer">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -5144,6 +5163,378 @@
                    </layout>
                   </widget>
                  </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="tab_5">
+               <attribute name="title">
+                <string>Subtitles</string>
+               </attribute>
+               <layout class="QGridLayout" name="gridLayout_10">
+                <item row="0" column="0">
+                 <layout class="QGridLayout" name="gridLayout_12">
+                  <item row="0" column="0">
+                   <widget class="QGroupBox" name="groupBox">
+                    <property name="title">
+                     <string>Subtitles</string>
+                    </property>
+                    <widget class="QWidget" name="layoutWidget">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>30</y>
+                       <width>407</width>
+                       <height>266</height>
+                      </rect>
+                     </property>
+                     <layout class="QGridLayout" name="gridLayout_21">
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <item row="1" column="5">
+                       <spacer name="horizontalSpacer_16">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QLabel" name="label_preset_subtitles_font">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
+                        <property name="text">
+                         <string>Font</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="7" column="2">
+                       <widget class="QSpinBox" name="spinBox_preset_background">
+                        <property name="maximum">
+                         <number>255</number>
+                        </property>
+                        <property name="value">
+                         <number>150</number>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="4" column="2">
+                       <spacer name="verticalSpacer_18">
+                        <property name="orientation">
+                         <enum>Qt::Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>20</width>
+                          <height>18</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="1" column="2">
+                       <widget class="QComboBox" name="comboBox_preset_subtitles_font">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>155</width>
+                          <height>24</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>155</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="8" column="1">
+                       <widget class="QLabel" name="label_preset_subtitles_location">
+                        <property name="text">
+                         <string>Location</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <spacer name="verticalSpacer_19">
+                        <property name="orientation">
+                         <enum>Qt::Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>20</width>
+                          <height>18</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="6" column="1">
+                       <widget class="QLabel" name="label_preset_subtitles_background_color">
+                        <property name="text">
+                         <string>Background</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <spacer name="horizontalSpacer_12">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Expanding</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QLabel" name="label_preset_subtitles_color">
+                        <property name="text">
+                         <string>Color</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="7" column="1">
+                       <widget class="QLabel" name="label_preset_subtitles_background">
+                        <property name="text">
+                         <string>Opacity</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="3">
+                       <widget class="QLabel" name="label_preset_subtitles_fontsize">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
+                        <property name="text">
+                         <string>Size</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="2">
+                       <widget class="QPushButton" name="preset_subtitles_color">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>24</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Subtitle</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="5" column="2">
+                       <widget class="QCheckBox" name="checkBox_preset_subtitles_background">
+                        <property name="enabled">
+                         <bool>true</bool>
+                        </property>
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>600</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="text">
+                         <string>Background</string>
+                        </property>
+                        <property name="checkable">
+                         <bool>true</bool>
+                        </property>
+                        <property name="checked">
+                         <bool>false</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="4">
+                       <widget class="QComboBox" name="comboBox_preset_subtitles_fontsize">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>30</width>
+                          <height>24</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>50</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string notr="true">8</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string notr="true">9</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string notr="true">10</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string notr="true">11</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string notr="true">12</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item row="8" column="2">
+                       <widget class="QComboBox" name="comboBox_preset_subtitles_location">
+                        <property name="currentIndex">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>Default</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Bottom Left</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Bottom Center</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Bottom Right</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Top Left</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Top Center</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Top Right</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Middle Left</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Middle Center</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Middle Right</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item row="6" column="2">
+                       <widget class="QPushButton" name="preset_subtitles_background_color">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>24</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Background</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="2">
+                       <widget class="QCheckBox" name="checkBox_use_preset_subtitles">
+                        <property name="text">
+                         <string>Use preset settings</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </widget>
