@@ -186,7 +186,7 @@ namespace Constants {
             "OUTPUT_PARAM",
             "CODEC", "MODE",
             "CONTAINER", "BQR", "MAXRATE",
-             "BUFSIZE", "FRAME_RATE", "BLENDING",
+            "BUFSIZE", "FRAME_RATE", "BLENDING",
             "WIDTH", "HEIGHT", "PASS",
             "PRESET", "COLOR_RANGE", "MIN_LUM",
             "MAX_LUM", "MAX_CLL", "MAX_FALL",
