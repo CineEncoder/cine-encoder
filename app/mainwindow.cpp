@@ -1286,7 +1286,15 @@ bool MainWindow::readXMLPresetFile(QString file)
                         QString nnn = stream.name().toString();
                         QString val = stream.readElementText();
                         // Do we have this parameter name in our supported list?
-                        int index = param_names->indexOf(nnn);
+                        int index = -1;
+                        for (int i = 0; i < PARAMETERS_COUNT; i++)
+                        {
+                            if (param_names[i] == nnn)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
 
                         if (index != -1) {
                             m_curParams[index] = val;
