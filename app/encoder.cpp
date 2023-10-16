@@ -1196,27 +1196,6 @@ void Encoder::encode()   // Encode
     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
     emit onEncodingProgress(0, 0.0f);
 
-    // DEBUG
-    /*
-    std::string _extSubPathsarray[_extSubPaths.length()];
-    for (int i = 0; i < _extSubPaths.length(); i++)
-    {
-        _extSubPathsarray[i] = _extSubPaths[i].toStdString();
-    }
-
-    std::string _sub_mux_paramarray[_sub_mux_param.length()];
-    for (int i = 0; i < _extSubPaths.length(); i++)
-    {
-        _sub_mux_paramarray[i] = _sub_mux_param[i].toStdString();
-    }
-
-    std::string _presetarray[_preset.length()];
-    for (int i = 0; i < _preset.length(); i++)
-    {
-        _presetarray[i] = _preset[i].toStdString();
-    }
-    */
-
     if (_mux_mode) {
         Print("Muxing mode ...");
         _encoding_mode = tr("Muxing:");
@@ -1273,20 +1252,7 @@ void Encoder::encode()   // Encode
     arguments.removeAll("");
     arguments.removeAll(" ");
 
-    //DEBUG
-    /*
-    std::string argsarray[arguments.length()];
-    for (int i = 0; i < arguments.length(); i++)
-    {
-        argsarray[i] = arguments[i].toStdString();
-    }
-
-    std::string myargs = arguments.join(" ").toStdString();
-    */
-    //ENDDEBUG
-
-    //qDebug() << arguments;
-     processEncoding->start("ffmpeg", arguments);
+    processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {
         Print("cmd command not found!!!");
         processEncoding->disconnect();
@@ -1329,10 +1295,21 @@ void Encoder::progress_1()   // Progress
         int frame = frame_qstr.toInt();
         if (frame == 0)
             frame = 1;
+
+        // Delta in time since we last reported progress.
         const time_t iter_start = time(nullptr);
-        const int timer = static_cast<int>(iter_start - _loop_start);
-        const float full_time = static_cast<float>(timer * (*fr_count)) / (frame);
-        float rem_time = full_time - static_cast<float>(timer);
+        const int time_from_last_update = static_cast<int>(iter_start - _last_update);
+        _last_update = iter_start;
+
+        // Number of frames processed since last update.
+        const int frames_done_in_last_period = frame - frames_processed;
+        frames_processed = frame;
+
+        // Time per frame, multiplied by remaining frames;
+        const float time_per_frame = (float)time_from_last_update / frames_done_in_last_period;
+        const int frames_remaining = *fr_count - frame;
+        float rem_time = time_per_frame * frames_remaining;
+
         if (rem_time < 0.0f)
             rem_time = 0.0f;
         if (rem_time > MAXIMUM_ALLOWED_TIME)

@@ -86,7 +86,9 @@ private:
     int     *fr_count,
             _threads;
 
-    time_t  _loop_start;
+    int     frames_processed;
+
+    time_t  _loop_start, _last_update;
 
     QStringList _extAudioPaths,
                 _extSubPaths;
