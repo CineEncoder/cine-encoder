@@ -1242,10 +1242,24 @@ void MainWindow::setDocksParameters(const QList<int>& dockSizesX, const QList<in
     }
 }
 
+int MainWindow::doesParamsContain(QString findMe)
+{
+    int index = -1;
+    for (int i = 0; i < PARAMETERS_COUNT; i++)
+    {
+        if (param_names[i] == findMe)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
+
 bool MainWindow::readXMLPresetFile(QString file)
 {
-    bool debug = false;
-
+    const bool debug = false;
     m_preset_table.clear();
     bool validXmlFile = false;
     QFile xmlFile(file);
@@ -1286,16 +1300,7 @@ bool MainWindow::readXMLPresetFile(QString file)
                         QString nnn = stream.name().toString();
                         QString val = stream.readElementText();
                         // Do we have this parameter name in our supported list?
-                        int index = -1;
-                        for (int i = 0; i < PARAMETERS_COUNT; i++)
-                        {
-                            if (param_names[i] == nnn)
-                            {
-                                index = i;
-                                break;
-                            }
-                        }
-
+                        int index = doesParamsContain(nnn);
                         if (index != -1) {
                             m_curParams[index] = val;
                         }
@@ -1314,19 +1319,10 @@ bool MainWindow::readXMLPresetFile(QString file)
                             QString nnn = stream.name().toString();
                             QString val = stream.readElementText();
                             // Do we have this parameter name in our supported list?
-                            int index = -1;
-                            for (int i = 0; i < PARAMETERS_COUNT; i++)
-                            {
-                                if (param_names[i] == nnn)
-                                {
-                                    index = i;
-                                    break;
-                                }
-                            }
+                            int index = doesParamsContain(nnn);
 
-                            if (index >= 0) {
+                            if (index != -1) {
                                 parameters[index] = val;
-                                int xx = 0;
                             } else {
                                 if (stream.name().toString() == "TYPE") {
                                     parameters[PARAMETERS_COUNT] = val;
@@ -1345,16 +1341,16 @@ bool MainWindow::readXMLPresetFile(QString file)
             }
 
             // Dump the table for review.
-            // debug
-            std::list<std::list<std::string>> list_of_list_of_strings;
-            for (int pp = 0; pp < PARAMETERS_COUNT + 1; pp++) {
-                std::list<std::string> list_of_strings;
-                for (int pr = 0; pr < presets_added; pr++)
-                {
-                    list_of_strings.push_back(ptable_list[pp][pr].toStdString());
-                }
+            if (debug) {
+                std::list<std::list<std::string>> list_of_list_of_strings;
+                for (int pp = 0; pp < PARAMETERS_COUNT + 1; pp++) {
+                    std::list<std::string> list_of_strings;
+                    for (int pr = 0; pr < presets_added; pr++) {
+                        list_of_strings.push_back(ptable_list[pp][pr].toStdString());
+                    }
 
-                list_of_list_of_strings.push_back(list_of_strings);
+                    list_of_list_of_strings.push_back(list_of_strings);
+                }
             }
 
             for (int i = 0; i < PARAMETERS_COUNT + 1; i++)
@@ -1367,8 +1363,6 @@ bool MainWindow::readXMLPresetFile(QString file)
                 }
                 m_preset_table.append(parlist);
             }
-
-            int xxx = 2;
             xmlFile.close();
         }
     }

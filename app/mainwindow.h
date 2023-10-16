@@ -100,6 +100,7 @@ private:
                           const bool defaultNameFlag);
     void updatePresetTable();
     void saveXMLSettingsFile();
+    int doesParamsContain(QString findMe);
     void readXMLSettingsFile(QString xmlFileName);
 
     // ====================================
