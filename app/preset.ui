@@ -1872,7 +1872,7 @@
                       <property name="frameShadow">
                        <enum>QFrame::Plain</enum>
                       </property>
-                      <layout class="QGridLayout" name="gridLayout_10">
+                      <layout class="QGridLayout" name="gridLayout_101">
                        <property name="leftMargin">
                         <number>0</number>
                        </property>
@@ -2346,7 +2346,7 @@
                            <number>20</number>
                           </property>
                           <item row="0" column="0">
-                           <layout class="QGridLayout" name="gridLayout_12">
+                           <layout class="QGridLayout" name="gridLayout_121">
                             <property name="leftMargin">
                              <number>0</number>
                             </property>
@@ -5187,7 +5187,7 @@
                        <height>266</height>
                       </rect>
                      </property>
-                     <layout class="QGridLayout" name="gridLayout_21">
+                     <layout class="QGridLayout" name="gridLayout_211">
                       <property name="leftMargin">
                        <number>0</number>
                       </property>
@@ -5198,7 +5198,7 @@
                        <number>0</number>
                       </property>
                       <item row="1" column="5">
-                       <spacer name="horizontalSpacer_16">
+                       <spacer name="horizontalSpacer_161">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
@@ -5299,7 +5299,7 @@
                        </widget>
                       </item>
                       <item row="1" column="0">
-                       <spacer name="horizontalSpacer_12">
+                       <spacer name="horizontalSpacer_121">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
