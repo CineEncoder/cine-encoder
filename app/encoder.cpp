@@ -1191,6 +1191,8 @@ void Encoder::encode()   // Encode
 {
     Print("Encode ...");
     QStringList arguments;
+    frames_processed = 0;
+    _last_update = time(nullptr);
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
@@ -1299,10 +1301,17 @@ void Encoder::progress_1()   // Progress
         // Delta in time since we last reported progress.
         const time_t iter_start = time(nullptr);
         const int time_from_last_update = static_cast<int>(iter_start - _last_update);
-        _last_update = iter_start;
 
         // Number of frames processed since last update.
         const int frames_done_in_last_period = frame - frames_processed;
+
+        // Try to avoid reporting progress too frequently, which messes up the estimate.
+        if (frames_done_in_last_period < 120)
+        {
+            return;
+        }
+
+        _last_update = iter_start;
         frames_processed = frame;
 
         // Time per frame, multiplied by remaining frames;
@@ -1310,7 +1319,8 @@ void Encoder::progress_1()   // Progress
         const int frames_remaining = *fr_count - frame;
         float rem_time = time_per_frame * frames_remaining;
 
-        if (rem_time < 0.0f)
+
+        if (rem_time <= 0.0f)
             rem_time = 0.0f;
         if (rem_time > MAXIMUM_ALLOWED_TIME)
             rem_time = MAXIMUM_ALLOWED_TIME;

@@ -174,18 +174,29 @@ void Helper::openFileDialog(FileDialogType dialogType,
 
 QString Helper::timeConverter(const float time)     // Time converter to hh:mm:ss
 {
+    const int h = trunc(time / 3600);
+    const int m = trunc((time - h * 3600) / 60);
+    const int s = trunc(time  - h * 3600 - m * 60);
+    /*
     const int h = trc(time / 3600);
     const int m = trc((time - float(h * 3600)) / 60);
     const int s = rnd(time - float(h * 3600) - float(m * 60));
+     */
     return QString("%1:%2:%3").arg(intToStr(h,2), intToStr(m,2), intToStr(s,2));
 }
 
 QString Helper::timeConverter(const double time)     // Time converter to hh:mm:ss.msc
 {
+    const int h = trunc(time / 3600);
+    const int m = trunc((time - h * 3600) / 60);
+    const int s = trunc(time  - h * 3600 - m * 60);
+    const int ms = trunc(1000*(time  - h * 3600 - m * 60 - s));
+    /*
     const int h = trc(time / 3600);
     const int m = trc((time - double(h * 3600)) / 60);
     const int s = trc(time - double(h * 3600) - double(m * 60));
     const int ms = rnd(1000 * (time - double(h * 3600) - double(m * 60) - double(s)));
+     */
     return QString("%1:%2:%3.%4").arg(intToStr(h,2), intToStr(m,2), intToStr(s,2), intToStr(ms,3));
 }
 
