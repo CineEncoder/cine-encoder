@@ -420,7 +420,10 @@ QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize
         (burn_subt_vf != "") ||
         _burn_subtitle)
     {
-        codec.append("-vf");
+        // If the complex filter is used, we don't want the -vf switch
+        if (!burn_subt_vf.startsWith("-filter_complex")) {
+            codec.append("-vf");
+        }
     }
     codec.append(hwaccel_filter_vf.split(" "));
     codec.append(fps_vf.split(" "));
@@ -439,16 +442,20 @@ void Encoder::subtitles(const QString &input_file, const QString &subtitle_font,
                         QString &burn_subt_vf, QStringList &_subtitleMapParam, QStringList &_subtitleMetadataParam,
                         int &subtNum) {
     subtNum= 0;
+    std::string debugstr = burn_subt_vf.toStdString();
     subtVF(input_file, subtitle_font, subtitle_font_size, subtitle_font_color, burn_background,
            subtitle_background_color, subtitle_location, data, burn_subt_vf);
+    std::string debugstr2 = burn_subt_vf.toStdString();
 
     QVector<QString> subtitleLang(CHECKS(subtChecks).size(), ""),
                      subtitleTitle(CHECKS(subtChecks).size(), ""),
                      subtitleMap(CHECKS(subtChecks).size(), ""),
-                     subtitleDef(CHECKS(subtChecks).size(), "");
+                     subtitleDef(CHECKS(subtChecks).size(), ""),
+                     subtitleFormats(CHECKS(subtChecks).size(), "");
     if (!_burn_subtitle) {
         Q_LOOP(k, 0, CHECKS(subtChecks).size()) {
             if (CHECKS(subtChecks)[k] == true) {
+                std::string subtitleFormat = FIELDS(subtFormats)[k].toStdString();
                 subtitleMap[k] = QString("-map 0:s:%1? ").arg(numToStr(k));
                 _subtitleMapParam.append({"-map", "0:s:"+numToStr(k)+"?"});
                 subtitleLang[k] = QString("-metadata:s:s:%1 language=%2 ")
@@ -1126,14 +1133,24 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
     burn_string += QString("'\"");
     Q_LOOP(k, 0, CHECKS(subtBurn).size()) {
         if (CHECKS(subtBurn)[k]) {
+            std::string subtitleFormat = FIELDS(subtFormats)[k].toStdString();
+            // FIXME Hard-coded specific check for investigation.
+            if (subtitleFormat == "PGS")
+            {
+                burn_subt_vf = QString("-filter_complex \"[0:v:0][0:%1]overlay[0]\" -map[o]").arg(numToStr(k));
+            }
+            else
+            {
+                QString _input_file(input_file);
+                burn_subt_vf = QString("subtitles='%1':%2:stream_index=%3").arg(_input_file, burn_string, numToStr(k));
+            }
             _burn_subtitle = true;
-            QString _input_file(input_file);
-            burn_subt_vf = QString("subtitles='%1':%2:stream_index=%3").arg(_input_file, burn_string, numToStr(k));
             break;
         }
     }
     Q_LOOP(k, 0, CHECKS(externSubtBurn).size()) {
         if (CHECKS(externSubtBurn)[k]) {
+            std::string subtitleFormat = FIELDS(externSubtFormats)[k].toStdString();
             _burn_subtitle = true;
             burn_subt_vf = QString("subtitles='%1':%2").arg(FIELDS(externSubtPath)[k], burn_string);
             break;
@@ -1253,6 +1270,9 @@ void Encoder::encode()   // Encode
     // Clean up empty slots.
     arguments.removeAll("");
     arguments.removeAll(" ");
+
+    // Debug
+    std::string args = arguments.join(" ").toStdString();
 
     processEncoding->start("ffmpeg", arguments);
     if (!processEncoding->waitForStarted()) {

@@ -136,6 +136,7 @@ void EncoderStream::initEncoding(StreamData *data,
     QString scodec("");
     {
         const QString selected_scodec = t.arr_scodec_sep[SCODEC];
+        std::string selected_scodec_debug = selected_scodec.toStdString();
         if (selected_scodec == "SubRip") {
             scodec = QString("-c:s srt");
         }
