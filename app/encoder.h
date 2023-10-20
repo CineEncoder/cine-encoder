@@ -123,7 +123,7 @@ private slots:
     void subtVF(const QString &input_file, const QString &subtitle_font, int subtitle_font_size,
                 const QString &subtitle_font_color, const bool burn_background,
                 const QString &subtitle_background_color,
-                int subtitle_location, Data &data, QString &burn_subt_vf);
+                int subtitle_location, Data &data, QStringList &burn_subt_vf);
 
     QStringList
     audioModule(const Tables &t, int _CODEC, int _AUDIO_CODEC, int _AUDIO_BITRATE, int _AUDIO_SAMPLING,
@@ -178,12 +178,12 @@ private slots:
     void subtitles(const QString &input_file, const QString &subtitle_font, int subtitle_font_size,
                    const QString &subtitle_font_color, const bool burn_background,
                    const QString &subtitle_background_color,
-                   int subtitle_location, Data &data, QString &burn_subt_vf, QStringList &_subtitleMapParam,
+                   int subtitle_location, Data &data, QStringList &burn_subt_vf, QStringList &_subtitleMapParam,
                    QStringList &_subtitleMetadataParam, int &subtNum);
 
     QStringList getCodec(const Tables &t, int _CODEC, const QString &resize_vf, const QString &fps_vf,
                          const QStringList &_videoMetadataParam, const QStringList &_audioMapParam,
-                         const QStringList &_audioMetadataParam, const QString &burn_subt_vf,
+                         const QStringList &_audioMetadataParam, const QStringList &burn_subt_vf,
                          const QStringList &_subtitleMapParam, const QStringList &_subtitleMetadataParam,
                          const QString &hwaccel_filter_vf, const QStringList &colorprim_vf,
                          const QStringList &colormatrix_vf, const QStringList &transfer_vf) const;

@@ -153,7 +153,8 @@ void Encoder::initEncoding(const QString  &temp_file,
     /********************************* External Audio streams ************************************/
     int extTrackNum = extAudio(data, _audioMapParam, _audioMetadataParam, audioNum);
 
-    /**************************************** Subtitles **************************************/QString burn_subt_vf;
+    /**************************************** Subtitles **************************************/
+    QStringList burn_subt_vf;
     QStringList _subtitleMapParam;
     QStringList _subtitleMetadataParam;
     int subtNum;
@@ -400,11 +401,17 @@ for (int i = 0; i < _preset.length(); i++)
 
 QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize_vf, const QString &fps_vf,
                               const QStringList &_videoMetadataParam, const QStringList &_audioMapParam,
-                              const QStringList &_audioMetadataParam, const QString &burn_subt_vf,
+                              const QStringList &_audioMetadataParam, const QStringList &burn_subt_vf,
                               const QStringList &_subtitleMapParam, const QStringList &_subtitleMetadataParam,
                               const QString &hwaccel_filter_vf, const QStringList &colorprim_vf,
                               const QStringList &colormatrix_vf, const QStringList &transfer_vf) const {
-    QStringList codec = {"-map", "0:v:0?"};
+    QStringList codec;
+    // Need to pay attention to whether the complex filter is being used. It seems to be incompatible with these arguments.
+    if (!_burn_subtitle || (_burn_subtitle && (burn_subt_vf[0] != "-filter_complex")))
+    {
+        codec.append("-map");
+        codec.append("0:v:0?");
+    }
     codec.append(_audioMapParam);
     codec.append(_subtitleMapParam);
     codec.append({"-map_metadata", "-1", "-map_chapters", "-1"});
@@ -417,11 +424,11 @@ QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize
         (colorprim_vf.count() != 0) ||
         (colormatrix_vf.count() != 0) ||
         (transfer_vf.count() != 0) ||
-        (burn_subt_vf != "") ||
+        (burn_subt_vf.count() != 0) ||
         _burn_subtitle)
     {
         // If the complex filter is used, we don't want the -vf switch
-        if (!burn_subt_vf.startsWith("-filter_complex")) {
+        if (burn_subt_vf[0] != "-filter_complex") {
             codec.append("-vf");
         }
     }
@@ -439,13 +446,13 @@ QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize
 void Encoder::subtitles(const QString &input_file, const QString &subtitle_font, int subtitle_font_size,
                         const QString &subtitle_font_color, const bool burn_background,
                         const QString &subtitle_background_color, int subtitle_location, Data &data,
-                        QString &burn_subt_vf, QStringList &_subtitleMapParam, QStringList &_subtitleMetadataParam,
+                        QStringList &burn_subt_vf, QStringList &_subtitleMapParam, QStringList &_subtitleMetadataParam,
                         int &subtNum) {
     subtNum= 0;
-    std::string debugstr = burn_subt_vf.toStdString();
+    std::string debugstr = burn_subt_vf.join(" ").toStdString();
     subtVF(input_file, subtitle_font, subtitle_font_size, subtitle_font_color, burn_background,
            subtitle_background_color, subtitle_location, data, burn_subt_vf);
-    std::string debugstr2 = burn_subt_vf.toStdString();
+    std::string debugstr2 = burn_subt_vf.join(" ").toStdString();
 
     QVector<QString> subtitleLang(CHECKS(subtChecks).size(), ""),
                      subtitleTitle(CHECKS(subtChecks).size(), ""),
@@ -455,6 +462,7 @@ void Encoder::subtitles(const QString &input_file, const QString &subtitle_font,
     if (!_burn_subtitle) {
         Q_LOOP(k, 0, CHECKS(subtChecks).size()) {
             if (CHECKS(subtChecks)[k] == true) {
+                subtitleFormats[k] = FIELDS(subtFormats)[k];
                 std::string subtitleFormat = FIELDS(subtFormats)[k].toStdString();
                 subtitleMap[k] = QString("-map 0:s:%1? ").arg(numToStr(k));
                 _subtitleMapParam.append({"-map", "0:s:"+numToStr(k)+"?"});
@@ -705,6 +713,9 @@ void Encoder::colorPrimaries(const QString _hdr[], int _PRIMARY, int _REP_PRIM, 
     }
 }
 
+// FIXME : I'm not really sure about this. The container plays a role in the supported subtitle
+// streams, but the check here is naive. One can have different stream types (e.g. mov_text, dvd_subtitle)
+// inside mp4 containers. It's not clear that this review is correct.
 QStringList Encoder::subModule(const QString &container) {
     QStringList sub_param;
 
@@ -719,7 +730,9 @@ QStringList Encoder::subModule(const QString &container) {
             _sub_mux_param.append({"-c:s", "webvtt"});
         } else
         if (container == "mp4" || container == "mov") {
-            _sub_mux_param.append({"-c:s", "mov_text"});
+            // _sub_mux_param.append({"-c:s", "mov_text"});
+            // This might be better for VobSub and srt support.
+            _sub_mux_param.append({"-c:s", "dvd_subtitle"});
         } else {
             _sub_mux_param.append("-sn");
             emit onEncodingError(tr("Container \'%1\' will be transcoded without subtitles.")
@@ -1089,7 +1102,7 @@ QStringList Encoder::audioModule(const Tables &t, int _CODEC, int _AUDIO_CODEC, 
 void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, int subtitle_font_size,
                      const QString &subtitle_font_color, const bool burn_background,
                      const QString &subtitle_background_color, int subtitle_location, Data &data,
-                     QString &burn_subt_vf) {
+                     QStringList &burn_subt_vf) {
     // Keep with a QString here as there are no spaces in the parameters.
     QString  burn_string;
     // DEBUG
@@ -1135,14 +1148,15 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
         if (CHECKS(subtBurn)[k]) {
             std::string subtitleFormat = FIELDS(subtFormats)[k].toStdString();
             // FIXME Hard-coded specific check for investigation.
-            if (subtitleFormat == "PGS")
+            if ((subtitleFormat == "PGS") || (subtitleFormat == "VobSub"))
             {
-                burn_subt_vf = QString("-filter_complex \"[0:v:0][0:%1]overlay[0]\" -map[o]").arg(numToStr(k));
+                burn_subt_vf.append(QString("-filter_complex \"[0:v:0][0:s:%1]overlay[v]\"").arg(numToStr(k)));
+                burn_subt_vf.append("-map \"[v]\"");
             }
             else
             {
                 QString _input_file(input_file);
-                burn_subt_vf = QString("subtitles='%1':%2:stream_index=%3").arg(_input_file, burn_string, numToStr(k));
+                burn_subt_vf.append(QString("subtitles='%1':%2:stream_index=%3").arg(_input_file, burn_string, numToStr(k)));
             }
             _burn_subtitle = true;
             break;
@@ -1152,7 +1166,7 @@ void Encoder::subtVF(const QString &input_file, const QString &subtitle_font, in
         if (CHECKS(externSubtBurn)[k]) {
             std::string subtitleFormat = FIELDS(externSubtFormats)[k].toStdString();
             _burn_subtitle = true;
-            burn_subt_vf = QString("subtitles='%1':%2").arg(FIELDS(externSubtPath)[k], burn_string);
+            burn_subt_vf.append(QString("subtitles='%1':%2").arg(FIELDS(externSubtPath)[k], burn_string));
             break;
         }
     }
