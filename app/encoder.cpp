@@ -407,7 +407,7 @@ QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize
                               const QStringList &colormatrix_vf, const QStringList &transfer_vf) const {
     QStringList codec;
     // Need to pay attention to whether the complex filter is being used. It seems to be incompatible with these arguments.
-    if (!_burn_subtitle || (_burn_subtitle && (burn_subt_vf[0] != "-filter_complex")))
+    if (!_burn_subtitle || (_burn_subtitle && (!burn_subt_vf[0].startsWith("-filter_complex"))))
     {
         codec.append("-map");
         codec.append("0:v:0?");
@@ -428,7 +428,7 @@ QStringList Encoder::getCodec(const Tables &t, int _CODEC, const QString &resize
         _burn_subtitle)
     {
         // If the complex filter is used, we don't want the -vf switch
-        if (burn_subt_vf[0] != "-filter_complex") {
+        if (!burn_subt_vf[0].startsWith("-filter_complex")) {
             codec.append("-vf");
         }
     }

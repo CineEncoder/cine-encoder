@@ -4,8 +4,8 @@
     <Settings>
         <prefix_type>0</prefix_type>
         <suffix_type>0</suffix_type>
-        <prefix_name></prefix_name>
-        <suffix_name></suffix_name>
+        <prefix_name>output</prefix_name>
+        <suffix_name>_encoded_</suffix_name>
         <timer_interval>30</timer_interval>
         <theme>0</theme>
         <protection>0</protection>
