@@ -504,8 +504,8 @@ QWidget *QStreamView::createCell(bool &state,
             resetBurnFlags(m_pLayout->indexOf(cell));
             resetDefFlags(m_pLayout->indexOf(cell));
             resetCheckFlags(m_pLayout->indexOf(cell));
-            burn = checked;
-            if (burn || force_burn) {
+            burn = checked || force_burn;
+            if (burn) {
                 QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
                 if (item && item->widget()) {
                     QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>("checkStream");
