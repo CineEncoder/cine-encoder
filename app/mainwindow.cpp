@@ -2287,7 +2287,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
                 const QString smplrt = (smplrt_int != 0) ? numToStr(smplrt_int) : "";
                 if (!audioFormat.isEmpty()) {
                     audioFormat += QString("  %1 kHz").arg(smplrt);
-                    _CHECKS(numRows, audioChecks).push_back(Helper::isSupported(audioFormat));
+                    _CHECKS(numRows, audioChecks).push_back(Helper::isAudioSupported(audioFormat));
                     _FIELDS(numRows, audioFormats).push_back(audioFormat);
                     _FIELDS(numRows, audioChannels).push_back(AINFO(size_t(j), "Channels"));
                     _FIELDS(numRows, audioChLayouts).push_back(AINFO(size_t(j), "ChannelLayout"));
@@ -2304,7 +2304,7 @@ void MainWindow::openFiles(const QStringList &openFileNames)    // Open files
             Q_LOOP(j, 0, MAX_SUBTITLES) {
                 const QString subtitleFormat = SINFO(size_t(j), "Format");
                 if (!subtitleFormat.isEmpty()) {
-                    _CHECKS(numRows, subtChecks).push_back(Helper::isSupported(subtitleFormat));
+                    _CHECKS(numRows, subtChecks).push_back(Helper::isSubtitleSupported(subtitleFormat));
                     _FIELDS(numRows, subtFormats).push_back(subtitleFormat);
                     _FIELDS(numRows, subtDuration).push_back(SINFO(size_t(j), "Duration"));
                     _FIELDS(numRows, subtLangs).push_back(SINFO(size_t(j), "Language"));
@@ -2643,7 +2643,7 @@ void MainWindow::onAddExtStream()
                             const QString smplrt = (smplrt_int != 0) ? numToStr(smplrt_int) : "";
                             if (!audioFormat.isEmpty()) {
                                 audioFormat += QString("  %1 kHz").arg(smplrt);
-                                _CHECKS(m_row, externAudioChecks).push_back(Helper::isSupported(audioFormat));
+                                _CHECKS(m_row, externAudioChecks).push_back(Helper::isAudioSupported(audioFormat));
                                 _FIELDS(m_row, externAudioFormats).push_back(audioFormat);
                                 _FIELDS(m_row, externAudioChannels).push_back(AINFO(0, "Channels"));
                                 _FIELDS(m_row, externAudioChLayouts).push_back(AINFO(0, "ChannelsLayouts"));
@@ -2661,7 +2661,7 @@ void MainWindow::onAddExtStream()
                         if (vcnt == 0 && scnt == 1) {
                             const QString subtitleFormat = SINFO(0, "Format");
                             if (!subtitleFormat.isEmpty()) {
-                                _CHECKS(m_row, externSubtChecks).push_back(Helper::isSupported(subtitleFormat));
+                                _CHECKS(m_row, externSubtChecks).push_back(Helper::isSubtitleSupported(subtitleFormat));
                                 _FIELDS(m_row, externSubtFormats).push_back(subtitleFormat);
                                 _FIELDS(m_row, externSubtDuration).push_back(SINFO(0, "Duration"));
                                 _FIELDS(m_row, externSubtLangs).push_back(SINFO(0, "Language"));

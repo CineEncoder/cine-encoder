@@ -450,9 +450,6 @@ QWidget *QStreamView::createCell(bool &state,
     if (externFlag)
         tit->setText(tr("external") + " ");
 
-    if (!Helper::isSupported(format))
-        tit->setText(tit->text() + tr("unsupported"));
-
     QWidget *info = new QWidget(cell);
     info->setObjectName("infoWidget");
     info->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -475,6 +472,8 @@ QWidget *QStreamView::createCell(bool &state,
 
     // Label channels
     if (m_type == Content::Audio) {
+        if (!Helper::isAudioSupported(format))
+            tit->setText(tit->text() + tr("unsupported"));
         if (chLayouts.isEmpty())
             chLayouts = tr("No layouts");
 
@@ -493,15 +492,20 @@ QWidget *QStreamView::createCell(bool &state,
         infoLut->addWidget(labCh, 0, 1);
     } else
     if (m_type == Content::Subtitle) {
+        bool force_burn = false;
+        if (!Helper::isSubtitleSupported(format)) {
+            tit->setText(tit->text() + tr("Hard-burn only"));
+            force_burn = true;
+        }
         QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", tr("Burn into video"), burn);
         brn_rbtn->setFixedHeight(12 * Helper::scaling());
         brn_rbtn->setToolTip(tr("Burn into video"));
-        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn, &deflt, &state](bool checked) {
+        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn, &deflt, &state, &force_burn](bool checked) {
             resetBurnFlags(m_pLayout->indexOf(cell));
             resetDefFlags(m_pLayout->indexOf(cell));
             resetCheckFlags(m_pLayout->indexOf(cell));
             burn = checked;
-            if (burn) {
+            if (burn || force_burn) {
                 QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
                 if (item && item->widget()) {
                     QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>("checkStream");

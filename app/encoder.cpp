@@ -1231,8 +1231,6 @@ void Encoder::encode()   // Encode
     connect(processEncoding, SIGNAL(finished(int)), this, SLOT(completed(int)));
     emit onEncodingProgress(0, 0.0f);
 
-    std::string debug = _input_file.toStdString();
-
     if (_mux_mode) {
         Print("Muxing mode ...");
         _encoding_mode = tr("Muxing:");
