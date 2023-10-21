@@ -243,7 +243,7 @@ QString Helper::getCss(int theme_index)
 
 // FIXME : Helpers may need to consider container for this to be really useful.....
 // Currently configuring to test with an MP4 target which is more constrained than MKV.
-bool Helper::isAudioSupported(const QString &format)
+bool Helper::isAudioSupported(const QString container, const QString &format)
 {
     const QVector<QString> unspFormats = {
         ""
@@ -251,12 +251,17 @@ bool Helper::isAudioSupported(const QString &format)
     return unspFormats.indexOf(format) == -1 ? true: false;
 }
 
-bool Helper::isSubtitleSupported(const QString &format)
+bool Helper::isSubtitleSupported(const QString container, const QString &format)
 {
-    const QVector<QString> unspFormats = {
-            "PGS", "VobSub"
-    };
-    return unspFormats.indexOf(format) == -1 ? true: false;
+    if (container == "mp4") {
+        const QVector<QString> unspFormats = {
+                "PGS", "VobSub"
+        };
+        return unspFormats.indexOf(format) == -1 ? true : false;
+    }
+
+    // Assume supported.
+    return true;
 }
 
 void Helper::nonBlockDelay(int msec)

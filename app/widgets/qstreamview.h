@@ -21,7 +21,7 @@ public:
     ~QStreamView();
     void setContentType(Content type);
     void clearList();
-    void setList(Data &data);
+    void setList(QString container, Data &data);
     void clearTitles();
     void undoTitles();
 
@@ -34,6 +34,7 @@ private:
     void resetDefFlags(const int ind);
     void resetBurnFlags(const int ind);
     QWidget *createCell(bool &state,
+                        QString &container,
                         const QString &format,
                         const QString &dur,
                         QString &lang,
