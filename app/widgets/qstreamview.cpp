@@ -505,20 +505,21 @@ QWidget *QStreamView::createCell(bool &state,
         QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", tr("Burn into video"), burn);
         brn_rbtn->setFixedHeight(12 * Helper::scaling());
         brn_rbtn->setToolTip(tr("Burn into video"));
+        // Stream can only be burnt for target.
+        if (burn_only) {
+            brn_rbtn->setChecked(true);
+        }
         connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn, &deflt, &state, &burn_only](bool checked) {
             resetBurnFlags(m_pLayout->indexOf(cell));
             resetDefFlags(m_pLayout->indexOf(cell));
             resetCheckFlags(m_pLayout->indexOf(cell));
-            burn = checked;
+            burn = checked || burn_only;
             if (burn) {
                 QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
                 if (item && item->widget()) {
+                    // Cannot copy stream if burn is set.
                     QCheckBox *chkBox = item->widget()->findChild<QCheckBox*>("checkStream");
-                    if (chkBox && !chkBox->isChecked()) {
-                        chkBox->setChecked(true);
-                        state = true;
-                    }
-                    if (burn_only) {
+                    if (chkBox && chkBox->isChecked()) {
                         chkBox->setChecked(false);
                         state = false;
                     }
@@ -588,8 +589,15 @@ QWidget *QStreamView::createCell(bool &state,
         chkBox->setEnabled(true);
         chkBox->setChecked(state);
     }
-    connect(chkBox, &QCheckBox::clicked, this, [this, cell, chkBox, &burn, &state, &deflt](){
+    // Burn is whether the user selected to burn; burn_only is when only burning is an option.
+    // Default marks the default stream, which triggers burn. A stream cannot be burnt if it is not default.
+    connect(chkBox, &QCheckBox::clicked, this, [this, cell, chkBox, &burn, &burn_only, &state, &deflt](){
         state = (chkBox->checkState() == 2) ? true : false;
+        // Burn-only prohibits the copy of subtitle streams (target format cannot support the stream).
+        if (burn_only)
+        {
+            state = false;
+        }
         if (!state) {
             QLayoutItem *item = m_pLayout->itemAt(m_pLayout->indexOf(cell));
             if (item && item->widget()) {
@@ -599,9 +607,13 @@ QWidget *QStreamView::createCell(bool &state,
                     deflt = false;
                 }
                 QRadioButton *brn_rbtn = item->widget()->findChild<QRadioButton*>("burnInto");
-                if (brn_rbtn && brn_rbtn->isChecked()) {
-                    brn_rbtn->setChecked(false);
+                if (brn_rbtn /* && brn_rbtn->isChecked()*/ ) {
                     burn = false;
+                    if (burn_only)
+                    {
+                        burn = true;
+                    }
+                    brn_rbtn->setChecked(burn);
                 }
             }
         }
