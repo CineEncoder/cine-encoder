@@ -111,7 +111,7 @@ void QStreamView::clearList()
     }
 }
 
-void QStreamView::setList(QString container, Data &data)
+void QStreamView::setList(QString extension, Data &data)
 {
     clearList();
     m_pData = &data;
@@ -140,7 +140,7 @@ void QStreamView::setList(QString container, Data &data)
         bool stub = false;
         for (int i = 0; i < FIELDS(audioFormats).size(); i++) {
             QWidget *cell = createCell(CHECKS(audioChecks)[i],
-                                       container,
+                                       extension,
                                        FIELDS(audioFormats)[i],
                                        FIELDS(audioDuration)[i],
                                        FIELDS(audioLangs)[i],
@@ -154,7 +154,7 @@ void QStreamView::setList(QString container, Data &data)
         }
         for (int i = 0; i < FIELDS(externAudioFormats).size(); i++) {
             QWidget *cell = createCell(CHECKS(externAudioChecks)[i],
-                                       container,
+                                       extension,
                                        FIELDS(externAudioFormats)[i],
                                        FIELDS(externAudioDuration)[i],
                                        FIELDS(externAudioLangs)[i],
@@ -171,7 +171,7 @@ void QStreamView::setList(QString container, Data &data)
     if (m_type == Content::Subtitle) {
         for (int i = 0; i < FIELDS(subtFormats).size(); i++) {
             QWidget *cell = createCell(CHECKS(subtChecks)[i],
-                                       container,
+                                       extension,
                                        FIELDS(subtFormats)[i],
                                        FIELDS(subtDuration)[i],
                                        FIELDS(subtLangs)[i],
@@ -185,7 +185,7 @@ void QStreamView::setList(QString container, Data &data)
         }
         for (int i = 0; i < FIELDS(externSubtFormats).size(); i++) {
             QWidget *cell = createCell(CHECKS(externSubtChecks)[i],
-                                       container,
+                                       extension,
                                        FIELDS(externSubtFormats)[i],
                                        FIELDS(externSubtDuration)[i],
                                        FIELDS(externSubtLangs)[i],
@@ -373,7 +373,7 @@ void QStreamView::resetBurnFlags(const int ind)
 }
 
 QWidget *QStreamView::createCell(bool &state,
-                                 QString &container,
+                                 QString &extension,
                                  const QString &format,
                                  const QString &dur,
                                  QString &lang,
@@ -475,9 +475,10 @@ QWidget *QStreamView::createCell(bool &state,
     labDuration->setFixedHeight(ROW_HEIGHT * Helper::scaling());
     infoLut->addWidget(labDuration, 0, 0);
 
+    bool burn_only = false;
     // Label channels
     if (m_type == Content::Audio) {
-        if (!Helper::isAudioSupported(container, format))
+        if (!Helper::isAudioSupported(extension, format))
             tit->setText(tit->text() + tr("unsupported"));
         if (chLayouts.isEmpty())
             chLayouts = tr("No layouts");
@@ -497,13 +498,14 @@ QWidget *QStreamView::createCell(bool &state,
         infoLut->addWidget(labCh, 0, 1);
     } else
     if (m_type == Content::Subtitle) {
-        if (!Helper::isSubtitleSupported(container, format)) {
+        if (!Helper::isSubtitleSupported(extension, format)) {
             tit->setText(tit->text() + tr("Hard-burn only"));
+            burn_only = true;
         }
         QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", tr("Burn into video"), burn);
         brn_rbtn->setFixedHeight(12 * Helper::scaling());
         brn_rbtn->setToolTip(tr("Burn into video"));
-        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn, &deflt, &state](bool checked) {
+        connect(brn_rbtn, &QRadioButton::clicked, this, [this, cell, &burn, &deflt, &state, &burn_only](bool checked) {
             resetBurnFlags(m_pLayout->indexOf(cell));
             resetDefFlags(m_pLayout->indexOf(cell));
             resetCheckFlags(m_pLayout->indexOf(cell));
@@ -515,6 +517,10 @@ QWidget *QStreamView::createCell(bool &state,
                     if (chkBox && !chkBox->isChecked()) {
                         chkBox->setChecked(true);
                         state = true;
+                    }
+                    if (burn_only) {
+                        chkBox->setChecked(false);
+                        state = false;
                     }
                     QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream", Qt::FindDirectChildrenOnly);
                     if (rbtn && !rbtn->isChecked()) {
@@ -573,8 +579,15 @@ QWidget *QStreamView::createCell(bool &state,
     chkBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     chkBox->setFixedWidth(100 * Helper::scaling());
     chkBox->setText(format);
-    chkBox->setEnabled(true);
-    chkBox->setChecked(state);
+    if (burn_only && (m_type == Content::Subtitle)) {
+        chkBox->setEnabled(false);
+        chkBox->setChecked(false);
+    }
+    else
+    {
+        chkBox->setEnabled(true);
+        chkBox->setChecked(state);
+    }
     connect(chkBox, &QCheckBox::clicked, this, [this, cell, chkBox, &burn, &state, &deflt](){
         state = (chkBox->checkState() == 2) ? true : false;
         if (!state) {

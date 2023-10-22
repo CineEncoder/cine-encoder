@@ -34,7 +34,7 @@ private:
     void resetDefFlags(const int ind);
     void resetBurnFlags(const int ind);
     QWidget *createCell(bool &state,
-                        QString &container,
+                        QString &extension,
                         const QString &format,
                         const QString &dur,
                         QString &lang,
