@@ -501,6 +501,7 @@ QWidget *QStreamView::createCell(bool &state,
         if (!Helper::isSubtitleSupported(extension, format)) {
             tit->setText(tit->text() + tr("Hard-burn only"));
             burn_only = true;
+            state = false;
         }
         QRadioButton *brn_rbtn = QStreamViewPrivate::createRadio(info, "burnInto", tr("Burn into video"), burn);
         brn_rbtn->setFixedHeight(12 * Helper::scaling());
@@ -523,10 +524,14 @@ QWidget *QStreamView::createCell(bool &state,
                         chkBox->setChecked(false);
                         state = false;
                     }
-                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton*>("defaultStream", Qt::FindDirectChildrenOnly);
-                    if (rbtn && !rbtn->isChecked()) {
-                        rbtn->setChecked(true);
-                        deflt = true;
+                    // Don't force this here - the default button is the way that the hard-burn is enabled.
+                    if (!burn_only) {
+                        QRadioButton *rbtn = item->widget()->findChild<QRadioButton *>("defaultStream",
+                                                                                       Qt::FindDirectChildrenOnly);
+                        if (rbtn && !rbtn->isChecked()) {
+                            rbtn->setChecked(true);
+                            deflt = true;
+                        }
                     }
                 }
             }
