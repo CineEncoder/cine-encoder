@@ -524,10 +524,10 @@ QWidget *QStreamView::createCell(bool &state,
                         chkBox->setChecked(false);
                         state = false;
                     }
+                    QRadioButton *rbtn = item->widget()->findChild<QRadioButton *>("defaultStream",
+                                                                                   Qt::FindDirectChildrenOnly);
                     // Don't force this here - the default button is the way that the hard-burn is enabled.
                     if (!burn_only) {
-                        QRadioButton *rbtn = item->widget()->findChild<QRadioButton *>("defaultStream",
-                                                                                       Qt::FindDirectChildrenOnly);
                         if (rbtn && !rbtn->isChecked()) {
                             rbtn->setChecked(true);
                             deflt = true;
