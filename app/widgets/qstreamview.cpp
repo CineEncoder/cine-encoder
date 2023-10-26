@@ -284,6 +284,7 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
             QAction *pActExpand = new QAction(expanded ? tr("Collapse") : tr("Expand"), streamMenu);
             QAction *pActCheck = new QAction(checked ? tr("Uncheck") : tr("Check"), streamMenu);
             QAction *pActSetDef = new QAction(tr("Set as default track"), streamMenu);
+            QAction *pActDeselectAll = new QAction(tr("Deselect all"), streamMenu);
             connect(pActExpand, &QAction::triggered, this, [btn]() {
                 if (btn)
                     btn->click();
@@ -295,6 +296,9 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
             connect(pActSetDef, &QAction::triggered, this, [rbtn, deflt]() {
                 if (rbtn && !deflt)
                     rbtn->click();
+            });
+            connect(pActDeselectAll, &QAction::triggered, this, [this]() {
+                deselectTitles();
             });
             QAction *pActExtract = nullptr;
             const bool external = obj->property("External").toBool();
@@ -308,6 +312,7 @@ bool QStreamView::eventFilter(QObject *obj, QEvent *event)
             streamMenu->addAction(pActExpand);
             streamMenu->addSeparator();
             streamMenu->addAction(pActCheck);
+            streamMenu->addAction(pActDeselectAll);
             streamMenu->addAction(pActSetDef);
             if (!external) {
                 streamMenu->addSeparator();
