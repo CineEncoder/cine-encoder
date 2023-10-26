@@ -2825,8 +2825,9 @@ void MainWindow::onApplyPreset()  // Apply preset
     if (m_row != -1)
         get_output_filename();
     // Force a refresh because the preset may not support all streams and we need to update the UI to indicate this.
+    int selected_row = ui->tableWidget->currentRow();
     ui->tableWidget->clearSelection();
-    ui->tableWidget->selectRow(ui->tableWidget->currentRow());
+    ui->tableWidget->selectRow(selected_row);
 }
 
 void MainWindow::onRemovePreset()  // Remove preset
