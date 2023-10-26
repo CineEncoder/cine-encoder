@@ -2824,10 +2824,9 @@ void MainWindow::onApplyPreset()  // Apply preset
     m_pos_cld = parentItem->indexOfChild(item);
     if (m_row != -1)
         get_output_filename();
-    // Does this force a refresh?
+    // Force a refresh because the preset may not support all streams and we need to update the UI to indicate this.
+    ui->tableWidget->clearSelection();
     ui->tableWidget->selectRow(ui->tableWidget->currentRow());
-    // or this?
-    // update();
 }
 
 void MainWindow::onRemovePreset()  // Remove preset

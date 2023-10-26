@@ -1375,7 +1375,7 @@ QPushButton#addExtStream {
     image: url(:/resources/icons/svg/add.svg);
 }
 QPushButton#deselectTitles {
-    image: url(:/resources/icons/svg/remove_file.svg);
+    image: url(:/resources/icons/svg/uncheck.svg);
 }
 QPushButton#clearTitles {
     image: url(:/resources/icons/svg/broomstick.svg);
