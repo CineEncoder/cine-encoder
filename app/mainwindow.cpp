@@ -508,7 +508,7 @@ void MainWindow::setTrayIcon()
 void MainWindow::createConnections()
 {
     // Buttons
-    const int BTN_COUNT = 30;
+    const int BTN_COUNT = 31;
     QPushButton *btns[BTN_COUNT] = {
         ui->closeWindow,  ui->hideWindow,    ui->expandWindow,
         ui->addFiles,     ui->removeFile,    ui->sortUp,
@@ -519,7 +519,8 @@ void MainWindow::createConnections()
         ui->setEndTime,   ui->removePreset,  ui->editPreset,
         ui->applyPreset,  ui->addFilesHot,   ui->setOutFolder,
         ui->closeTWindow, ui->resetLabels,   ui->report,
-        ui->back,         ui->forward, ui->removeAllFiles
+        ui->back,         ui->forward, ui->removeAllFiles,
+        ui->deselectTitles
     };
     FnVoidVoid btn_methods[BTN_COUNT] = {
         SLT(onCloseWindow),  SLT(onHideWindow),    SLT(onExpandWindow),
@@ -531,7 +532,8 @@ void MainWindow::createConnections()
         SLT(onSetEndTime),   SLT(onRemovePreset),  SLT(onEditPreset),
         SLT(onApplyPreset),  SLT(onAddFiles),      SLT(onSetOutFolder),
         SLT(onCloseWindow),  SLT(onResetLabels),   SLT(onReport),
-        SLT(onBack),         SLT(onForward),       SLT(onRemoveAllFiles)
+        SLT(onBack),         SLT(onForward),       SLT(onRemoveAllFiles),
+        SLT(onDeselectTitles)
     };
     Q_LOOP(i, 0, BTN_COUNT)
         connect(btns[i], &QPushButton::clicked, this, btn_methods[i]);
@@ -2691,6 +2693,15 @@ void MainWindow::onAddExtStream()
     }
 }
 
+void MainWindow::onDeselectTitles()
+{
+    if (m_row != -1) {
+        const int ind = ui->tabWidgetStreams->currentIndex();
+        ind == 0 ? ui->streamAudio->deselectTitles() :
+        ui->streamSubtitle->deselectTitles();
+    }
+}
+
 void MainWindow::onClearTitles()
 {
     if (m_row != -1) {
@@ -2813,6 +2824,10 @@ void MainWindow::onApplyPreset()  // Apply preset
     m_pos_cld = parentItem->indexOfChild(item);
     if (m_row != -1)
         get_output_filename();
+    // Does this force a refresh?
+    ui->tableWidget->selectRow(ui->tableWidget->currentRow());
+    // or this?
+    // update();
 }
 
 void MainWindow::onRemovePreset()  // Remove preset

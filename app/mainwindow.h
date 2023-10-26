@@ -289,6 +289,7 @@ private slots:
 
     // ============ Streams Metadata ===============
     void onAddExtStream();
+    void onDeselectTitles();
     void onClearTitles();
     void onUndoTitles();
 

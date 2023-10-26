@@ -179,6 +179,7 @@
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
+                <weight>75</weight>
                 <bold>true</bold>
                 <kerning>true</kerning>
                </font>
@@ -749,6 +750,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -762,6 +764,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -775,6 +778,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -788,6 +792,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -801,6 +806,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -814,6 +820,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -827,6 +834,7 @@
                   </property>
                   <property name="font">
                    <font>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -1166,54 +1174,6 @@
                <property name="verticalSpacing">
                 <number>3</number>
                </property>
-               <item row="1" column="0">
-                <spacer name="horizontalSpacer_36">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>3</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="2">
-                <spacer name="horizontalSpacer_55">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>4</width>
-                   <height>9</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="10">
-                <spacer name="horizontalSpacer_12">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>3</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
                <item row="0" column="1" alignment="Qt::AlignLeft">
                 <widget class="QPushButton" name="addExtStream">
                  <property name="sizePolicy">
@@ -1242,7 +1202,55 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="5">
+               <item row="2" column="11">
+                <widget class="QDoubleButton" name="switchCutting" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="6">
+                <spacer name="horizontalSpacer_57">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>4</width>
+                   <height>9</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_36">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="7">
                 <widget class="QPushButton" name="undoTitles">
                  <property name="minimumSize">
                   <size>
@@ -1264,7 +1272,95 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1" colspan="9">
+               <item row="0" column="11">
+                <spacer name="verticalSpacer_11">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>9</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="3">
+                <widget class="QPushButton" name="deselectTitles">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Deselect Titles</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <spacer name="horizontalSpacer_55">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>4</width>
+                   <height>9</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="5">
+                <widget class="QPushButton" name="clearTitles">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Clear titles</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="11">
                 <widget class="QTabWidget" name="tabWidgetStreams">
                  <property name="enabled">
                   <bool>true</bool>
@@ -1323,8 +1419,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>327</width>
-                        <height>114</height>
+                        <width>321</width>
+                        <height>106</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_11">
@@ -1463,8 +1559,8 @@
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>327</width>
-                        <height>114</height>
+                        <width>321</width>
+                        <height>106</height>
                        </rect>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_14">
@@ -1572,7 +1668,23 @@
                  </widget>
                 </widget>
                </item>
-               <item row="0" column="6">
+               <item row="1" column="12">
+                <spacer name="horizontalSpacer_12">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>3</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="8">
                 <spacer name="horizontalSpacer_56">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -1586,7 +1698,7 @@
                 </spacer>
                </item>
                <item row="0" column="4">
-                <spacer name="horizontalSpacer_57">
+                <spacer name="horizontalSpacer_7">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -1600,66 +1712,6 @@
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item row="0" column="3">
-                <widget class="QPushButton" name="clearTitles">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>30</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Clear titles</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="9">
-                <spacer name="verticalSpacer_11">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>9</width>
-                   <height>22</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="2" column="9">
-                <widget class="QDoubleButton" name="switchCutting" native="true">
-                 <property name="minimumSize">
-                  <size>
-                   <width>50</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>50</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </widget>
                </item>
               </layout>
              </item>
@@ -3400,7 +3452,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>347</width>
+                    <width>338</width>
                     <height>371</height>
                    </rect>
                   </property>
@@ -4241,7 +4293,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>380</width>
-                    <height>308</height>
+                    <height>305</height>
                    </rect>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_35">

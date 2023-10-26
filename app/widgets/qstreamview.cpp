@@ -201,6 +201,23 @@ void QStreamView::setList(QString extension, Data &data)
     }
 }
 
+void QStreamView::deselectTitles()
+{
+    auto lines = findChildren<QCheckBox*>("checkStream");
+            foreach (auto line, lines) {
+            line->setChecked(false);
+        }
+    auto lines2 = findChildren<QRadioButton*>("burnInto");
+            foreach (auto line, lines2) {
+            line->setChecked(false);
+        }
+    auto lines3 = findChildren<QRadioButton*>("defaultStream");
+            foreach (auto line, lines3) {
+            line->setChecked(false);
+        }
+    setFocus();
+}
+
 void QStreamView::clearTitles()
 {
     auto lines = findChildren<QLineEdit*>("lineTitle");

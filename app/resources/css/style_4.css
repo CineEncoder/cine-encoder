@@ -920,6 +920,7 @@ QPushButton#report {
 }
 QPushButton:hover#resetLabels,
 QPushButton:hover#addExtStream,
+QPushButton:hover#deselectTitles,
 QPushButton:hover#clearTitles,
 QPushButton:hover#undoTitles,
 QPushButton:hover#clearMetadata,
@@ -954,6 +955,7 @@ QPushButton:hover#report {
 }
 QPushButton:pressed#resetLabels,
 QPushButton:pressed#addExtStream,
+QPushButton:pressed#deselectTitles,
 QPushButton:pressed#clearTitles,
 QPushButton:pressed#undoTitles,
 QPushButton:pressed#clearMetadata,

@@ -22,6 +22,7 @@ public:
     void setContentType(Content type);
     void clearList();
     void setList(QString container, Data &data);
+    void deselectTitles();
     void clearTitles();
     void undoTitles();
 
