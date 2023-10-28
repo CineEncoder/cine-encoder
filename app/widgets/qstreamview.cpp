@@ -204,17 +204,29 @@ void QStreamView::setList(QString extension, Data &data)
 void QStreamView::deselectTitles()
 {
     auto lines = findChildren<QCheckBox*>("checkStream");
-            foreach (auto line, lines) {
-            line->setChecked(false);
-        }
+    foreach (auto line, lines) {
+        line->setChecked(false);
+    }
     auto lines2 = findChildren<QRadioButton*>("burnInto");
-            foreach (auto line, lines2) {
-            line->setChecked(false);
-        }
+    foreach (auto line, lines2) {
+        line->setChecked(false);
+    }
     auto lines3 = findChildren<QRadioButton*>("defaultStream");
-            foreach (auto line, lines3) {
-            line->setChecked(false);
-        }
+    foreach (auto line, lines3) {
+        line->setChecked(false);
+    }
+    if (m_type == Content::Audio) {
+        m_pData->checks[Data::audioChecks].fill(false);
+        m_pData->checks[Data::externAudioChecks].fill(false);
+        m_pData->checks[Data::audioDef].fill(false);
+    } else
+    if (m_type == Content::Subtitle) {
+        m_pData->checks[Data::subtChecks].fill(false);
+        m_pData->checks[Data::externSubtChecks].fill(false);
+        m_pData->checks[Data::subtDef].fill(false);
+        m_pData->checks[Data::externSubtDef].fill(false);
+        m_pData->checks[Data::externSubtBurn].fill(false);
+    }
     setFocus();
 }
 
