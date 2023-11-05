@@ -17,12 +17,14 @@
 
 #include "xutil.h"
 #include <QDebug>
+#include <QApplication>
 #include <QTimer>
 #include <QWidget>
-#include <QX11Info>
 #include <X11/Xatom.h>
-#include <X11/Xlib.h>
+//#include <X11/Xlib.h>
 #include <X11/extensions/shape.h>
+#include <qguiapplication_platform.h>
+#include <QtGui/private/qtx11extras_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -124,9 +126,15 @@ static XCursorType CornerEdge2XCursor(const CornerEdge &ce)
 
 void ChangeWindowMaximizedState(const QWidget *widget, int wm_state)
 {
-	const auto display = QX11Info::display();
-	const auto screen = QX11Info::appScreen();
-
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	XEvent xev;
 	memset(&xev, 0, sizeof(xev));
 	const Atom net_wm_state = XInternAtom(display, kAtomNameWmState, false);
@@ -149,7 +157,7 @@ void ChangeWindowMaximizedState(const QWidget *widget, int wm_state)
 	xev.xclient.data.l[3] = 1;
 
 	XSendEvent(display,
-			   QX11Info::appRootWindow(screen),
+               QX11Info::appRootWindow(screen),
 			   false,
 			   SubstructureRedirectMask | SubstructureNotifyMask,
 			   &xev);
@@ -182,9 +190,17 @@ CornerEdge GetCornerEdge(const QWidget *widget, int x, int y, const QMargins &ma
 
 void SendMoveResizeMessage(const QWidget *widget, Qt::MouseButton qbutton, int action)
 {
-	const auto display = QX11Info::display();
-	const auto screen = QX11Info::appScreen();
-	int xbtn = qbutton == Qt::LeftButton ? Button1 :
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
+
+    int xbtn = qbutton == Qt::LeftButton ? Button1 :
 			   qbutton == Qt::RightButton ? Button3 :
 			   AnyButton;
 
@@ -203,10 +219,10 @@ void SendMoveResizeMessage(const QWidget *widget, Qt::MouseButton qbutton, int a
 	xev.xclient.data.l[2] = action;
 	xev.xclient.data.l[3] = xbtn;
 	xev.xclient.data.l[4] = 0;
-	XUngrabPointer(display, QX11Info::appTime());
+	XUngrabPointer(display, CurrentTime);
 
 	XSendEvent(display,
-			   QX11Info::appRootWindow(screen),
+               QX11Info::appRootWindow(screen),
 			   false,
 			   SubstructureRedirectMask | SubstructureNotifyMask,
 			   &xev);
@@ -234,7 +250,15 @@ void MoveResizeWindow(const QWidget *widget, Qt::MouseButton qbutton, int x, int
 
 void ResetCursorShape(const QWidget *widget)
 {
-	const auto display = QX11Info::display();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+     */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	const WId window_id = widget->winId();
 	XUndefineCursor(display, window_id);
 	XFlush(display);
@@ -242,7 +266,15 @@ void ResetCursorShape(const QWidget *widget)
 
 bool SetCursorShape(const QWidget *widget, int cursor_id)
 {
-	const auto display = QX11Info::display();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+     */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	const WId window_id = widget->winId();
 	const Cursor cursor = XCreateFontCursor(display, cursor_id);
 	if (!cursor) {
@@ -257,8 +289,15 @@ bool SetCursorShape(const QWidget *widget, int cursor_id)
 void SendButtonRelease(const QWidget *widget,
                        const QPoint &pos, const QPoint &globalPos)
 {
-	const auto display = QX11Info::display();
-	const auto screen = QX11Info::appScreen();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
     Q_UNUSED(screen)
 
 	XEvent xevent;
@@ -279,8 +318,15 @@ void SendButtonRelease(const QWidget *widget,
 
 void ShowFullscreenWindow(const QWidget *widget, bool is_fullscreen)
 {
-	const auto display = QX11Info::display();
-	const auto screen = QX11Info::appScreen();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 
 	XEvent xev;
 	memset(&xev, 0, sizeof(xev));
@@ -302,7 +348,7 @@ void ShowFullscreenWindow(const QWidget *widget, bool is_fullscreen)
 	xev.xclient.data.l[3] = 1;
 
 	XSendEvent(display,
-			   QX11Info::appRootWindow(screen),
+               QX11Info::appRootWindow(screen),
 			   false,
 			   SubstructureRedirectMask | SubstructureNotifyMask,
 			   &xev
@@ -317,9 +363,16 @@ void ShowMaximizedWindow(const QWidget *widget)
 
 void ShowMinimizedWindow(const QWidget *widget, bool minimized)
 {
-	const auto display = QX11Info::display();
-	const auto screen = QX11Info::appScreen();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
 
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	XEvent xev;
 	memset(&xev, 0, sizeof(xev));
 	const Atom net_wm_state = XInternAtom(display, kAtomNameWmState, false);
@@ -340,7 +393,7 @@ void ShowMinimizedWindow(const QWidget *widget, bool minimized)
 	xev.xclient.data.l[3] = 1;
 
 	XSendEvent(display,
-			   QX11Info::appRootWindow(screen),
+               QX11Info::appRootWindow(screen),
 			   false,
 			   SubstructureRedirectMask | SubstructureNotifyMask,
 			   &xev
@@ -376,9 +429,16 @@ void SkipTaskbarPager(const QWidget *widget)
 {
 	Q_ASSERT(widget);
 
-	const auto display = QX11Info::display();
-	const auto screen = QX11Info::appScreen();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
 
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	const auto wmStateAtom = XInternAtom(display, kAtomNameWmState, false);
 	const auto taskBarAtom = XInternAtom(display, kAtomNameWmSkipTaskbar, false);
 	const auto noPagerAtom = XInternAtom(display, kAtomNameWmSkipPager, false);
@@ -398,7 +458,7 @@ void SkipTaskbarPager(const QWidget *widget)
 	xev.xclient.data.l[3] = 1;
 
 	XSendEvent(display,
-			   QX11Info::appRootWindow(screen),
+               QX11Info::appRootWindow(screen),
 			   false,
 			   SubstructureRedirectMask | SubstructureNotifyMask,
 			   &xev);
@@ -409,9 +469,15 @@ void SetStayOnTop(const QWidget *widget, bool on)
 {
 	Q_ASSERT(widget);
 
-	const auto display = QX11Info::display();
-	const auto screen = QX11Info::appScreen();
-
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	const auto wmStateAtom = XInternAtom(display, kAtomNameWmState, false);
 	const auto stateAboveAtom = XInternAtom(display, kAtomNameWmStateAbove, false);
 	const auto stateStaysOnTopAtom = XInternAtom(display,
@@ -432,7 +498,7 @@ void SetStayOnTop(const QWidget *widget, bool on)
 	xev.xclient.data.l[3] = 1;
 
 	XSendEvent(display,
-			   QX11Info::appRootWindow(screen),
+               QX11Info::appRootWindow(screen),
 			   false,
 			   SubstructureRedirectMask | SubstructureNotifyMask,
 			   &xev);
@@ -442,7 +508,15 @@ void SetStayOnTop(const QWidget *widget, bool on)
 void SetMouseTransparent(const QWidget *widget, bool on)
 {
 	Q_ASSERT(widget);
-	const auto display = QX11Info::display();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = widget->screen();
+    auto rootWindow = DefaultRootWindow(&connection);
+    */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	XRectangle XRect;
 	XRect.x = 0;
 	XRect.y = 0;
@@ -470,7 +544,16 @@ void SetWindowExtents(const QWidget *widget, const QMargins &margins, const int 
 
 void PropagateSizeHints(const QWidget *w)
 {
-	const auto display = QX11Info::display();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = w->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	XSizeHints *sh = XAllocSizeHints();
 	sh->flags = PPosition | PSize | PMinSize | PMaxSize | PResizeInc;
 	sh->x = w->x();
@@ -489,7 +572,15 @@ void PropagateSizeHints(const QWidget *w)
 
 void DisableResize(const QWidget *w)
 {
-	Display *display = QX11Info::display();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = w->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	Atom mwmHintsProperty = XInternAtom(display, "_MOTIF_WM_HINTS", 0);
 	struct MwmHints *hints;
 	unsigned char *wm_data;
@@ -540,9 +631,17 @@ void DisableResize(const QWidget *w)
 
 void StartResizing(const QWidget *w, const QPoint &globalPoint, const CornerEdge &ce)
 {
-	const auto display = QX11Info::display();
 	const auto winId = w->winId();
-	const auto screen = QX11Info::appScreen();
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+    const auto screen = w->screen();
+    auto rootWindow = DefaultRootWindow(connection);
+    */
+
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 
 	XEvent xev;
 	const Atom netMoveResize = XInternAtom(display, "_NET_WM_MOVERESIZE", false);
@@ -557,10 +656,10 @@ void StartResizing(const QWidget *w, const QPoint &globalPoint, const CornerEdge
 	xev.xclient.data.l[2] = CornerEdge2WmGravity(ce);
 	xev.xclient.data.l[3] = Button1;
 	xev.xclient.data.l[4] = 1;
-	XUngrabPointer(display, QX11Info::appTime());
+	XUngrabPointer(display, CurrentTime);
 
 	XSendEvent(display,
-			   QX11Info::appRootWindow(screen),
+               QX11Info::appRootWindow(screen),
 			   false,
 			   SubstructureRedirectMask | SubstructureNotifyMask,
 			   &xev);
@@ -574,6 +673,13 @@ void CancelMoveWindow(const QWidget *widget, Qt::MouseButton qbutton)
 
 void SetWindowExtents(uint wid, const QRect &windowRect, const QMargins &margins, const int resizeHandleSize)
 {
+    /*
+    auto *x11App = qApp->nativeInterface<QNativeInterface::QX11Application>();
+    const auto display = x11App->display();
+    const auto connection = x11App->connection();
+     */
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 	Atom frameExtents;
 	unsigned long value[4] = {
 		(unsigned long)(margins.left()),
@@ -581,12 +687,12 @@ void SetWindowExtents(uint wid, const QRect &windowRect, const QMargins &margins
 		(unsigned long)(margins.top()),
 		(unsigned long)(margins.bottom())
 	};
-	frameExtents = XInternAtom(QX11Info::display(), "_GTK_FRAME_EXTENTS", False);
+	frameExtents = XInternAtom(display, "_GTK_FRAME_EXTENTS", False);
 	if (frameExtents == None) {
 		qWarning() << "Failed to create atom with name DEEPIN_WINDOW_SHADOW";
 		return;
 	}
-	XChangeProperty(QX11Info::display(),
+	XChangeProperty(display,
 					wid,
 					frameExtents,
 					XA_CARDINAL,
@@ -604,7 +710,7 @@ void SetWindowExtents(uint wid, const QRect &windowRect, const QMargins &margins
 	contentXRect.y = 0;
 	contentXRect.width = tmp_rect.width() + resizeHandleSize * 2;
 	contentXRect.height = tmp_rect.height() + resizeHandleSize * 2;
-	XShapeCombineRectangles(QX11Info::display(),
+	XShapeCombineRectangles(display,
 							wid,
 							ShapeInput,
 							margins.left() - resizeHandleSize,

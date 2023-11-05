@@ -1,6 +1,7 @@
 # Ignored folders:
 /builddir
 cmake-build-debug/
+cmake-build-release/
 .idea/
 
 # Ignored files:

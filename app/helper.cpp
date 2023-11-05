@@ -1,7 +1,7 @@
 #include "helper.h"
 #include "constants.h"
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QLocale>
 #include <QFileDialog>
 #include <QFontMetrics>
@@ -164,7 +164,7 @@ void Helper::openFileDialog(FileDialogType dialogType,
         dlg.setNameFilter(getFilter(subtitleFilters));
         break;
     case FileDialogType::SELECTFOLDER:
-        dlg.setFileMode(QFileDialog::DirectoryOnly);
+        dlg.setOption(QFileDialog::ShowDirsOnly);
         break;
     }
     if (dlg.exec() == QFileDialog::Accepted) {
@@ -246,7 +246,8 @@ void Helper::nonBlockDelay(int msec)
 
 double Helper::scaling()
 {
-    double scale = double(qApp->desktop()->logicalDpiX()) / 96;
+    QScreen *scrn = QApplication::screens().at(0);
+    double scale = double(scrn->logicalDotsPerInchX()) / 96;
     return (scale < 1.25) ? 1.00 :
            (scale < 1.50) ? 1.25 :
            (scale < 1.75) ? 1.50 :

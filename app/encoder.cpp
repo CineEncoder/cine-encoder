@@ -117,7 +117,10 @@ void Encoder::initEncoding(const QString  &temp_file,
     QVector<double> extDurVect;
     foreach (auto dur, FIELDS(externAudioDuration))
         extDurVect.push_back(0.001*dur.toDouble());
-    double minExtTime = *std::min_element(std::begin(extDurVect), std::end(extDurVect));
+    double minExtTime = 0;
+    if (extDurVect.count() > 0) {
+        minExtTime = *std::min_element(extDurVect.begin(), extDurVect.end());
+    }
     Print("Min external time: " << minExtTime);
 
     QStringList _splitStartParam;
