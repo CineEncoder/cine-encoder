@@ -44,6 +44,7 @@ public:
                        bool       *pMultiInstances,
                        bool       *pShowHdrFlag,
                        int        *pTimerInterval,
+                       int        *pThreads,
                        int        *pTheme,
                        QString    *pPrefixName,
                        QString    *pSuffixName,
@@ -98,6 +99,7 @@ private:
             *m_pPrefxType,
             *m_pSuffixType,
             *m_pTimerInterval,
+            *m_pThreads,
             *m_pTheme,
             *m_pSubtitlesBackgroundAlpha,
             *m_pSubtitlesLocation;
