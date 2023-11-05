@@ -37,7 +37,11 @@ class Settings : public BaseWindow
 public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
-
+    // Below is set to true if a setting is changed in Apply that requires an application restart.
+    // Reset will always prompt for a restart.
+    // There is no explicit set to false - once this is set to true, the prompt should be shown
+    // with successive visits to the settings dialog.
+    bool restart_needed;
     void setParameters(QString    *pOutputFolder,
                        QString    *pTempFolder,
                        bool       *pProtectFlag,

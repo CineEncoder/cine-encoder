@@ -1026,16 +1026,17 @@ void MainWindow::onSettings()
                            &m_subtitles_color,
                            &m_subtitles_background_color,
                            &m_subtitles_background_alpha,
-                           &m_subtitles_location
-                           );
+                           &m_subtitles_location);
     if (settings.exec() == Dialog::Accept) {
         m_pTimer->setInterval(m_timerInterval*1000);
         setTheme(m_theme);
         m_hideInTrayFlag ? m_pTrayIcon->show() : m_pTrayIcon->hide();
         if (m_row != -1)
             get_output_filename();
-        showPopup(tr("You need to restart the program for the settings to take effect."),
-                  PopupMessage::Icon::Warning);
+        if (settings.restart_needed) {
+            showPopup(tr("You need to restart the program for the settings to take effect."),
+                      PopupMessage::Icon::Warning);
+        }
     }
 }
 
