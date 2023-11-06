@@ -86,7 +86,10 @@ private:
     int     *fr_count,
             _threads;
 
-    int     frames_processed;
+    int     frames_processed, tpf_slot;
+
+    // Two slot array for moving average computation.
+    float time_per_frame_history[2];
 
     time_t  _loop_start, _last_update;
 

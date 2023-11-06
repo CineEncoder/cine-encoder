@@ -1225,6 +1225,9 @@ void Encoder::encode()   // Encode
     Print("Encode ...");
     QStringList arguments;
     frames_processed = 0;
+    tpf_slot = 0;
+    time_per_frame_history[0] = -1;
+    time_per_frame_history[1] = -1;
     _last_update = time(nullptr);
     processEncoding->disconnect();
     connect(processEncoding, SIGNAL(readyReadStandardOutput()), this, SLOT(progress_1()));
@@ -1351,7 +1354,14 @@ void Encoder::progress_1()   // Progress
         frames_processed = frame;
 
         // Time per frame, multiplied by remaining frames;
-        const float time_per_frame = (float)time_from_last_update / frames_done_in_last_period;
+        const float last_interval_time_per_frame = (float)time_from_last_update / frames_done_in_last_period;
+        time_per_frame_history[tpf_slot % 2] = last_interval_time_per_frame;
+        float time_per_frame = last_interval_time_per_frame;
+        if (tpf_slot >= 2)
+        {
+            time_per_frame = (time_per_frame_history[0] + time_per_frame_history[1]) * 0.5;
+        }
+        tpf_slot++;
         const int frames_remaining = *fr_count - frame;
         float rem_time = time_per_frame * frames_remaining;
 
